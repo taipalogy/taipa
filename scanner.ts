@@ -61,4 +61,14 @@ export class Scanner {
         }
         return this.char;
     }
+
+    lookahead(offset: number) {
+        let index: number = this.sourceIndex + offset;
+
+        if(index > this.lastIndex) {
+            return "END";
+        } else {
+            return this.sourceText[index];
+        }
+    }
 }
