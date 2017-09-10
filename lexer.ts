@@ -1,13 +1,13 @@
-import { Scanner, Character } from './../core/scanner';
+import { Scanner, Character, Escape } from './../core/scanner';
 
 export class Type {
     public static readonly IDENTIFIER = "Identifier";
     public static readonly WHITESPACE = "Whitespace";
-    public static readonly EOF = "EndOfFile"
+    public static readonly ENDOFFILE = "EndOfFile"
 }
 
 
-class Token {
+export class Token {
     cargo: Type;
     sourceIndex: number;
     lineIndex: number;
@@ -25,30 +25,36 @@ class Token {
     show() {
         let s: string = "";
 
-        if(this.type == this.cargo) {
-            s = s + "Symbol" + ": " + this.type;
-        } else if(this.type == Type.WHITESPACE) {
+        if(this.type == Type.WHITESPACE) {
             s = s + "Whitespace" + ": " + this.cargo.toString();
-        } else {
+        } else if(this.type == Type.IDENTIFIER) {
             s = s + this.type + ": " + this.cargo;
+        } else {
+            // the end of file
+            s = s + this.type + ".";
         }
 
         return s;
     }
+
+    abort(msg: string) {
+        console.log(msg);
+    }
 }
 
-class Lexer {
+export class Lexer {
     scanner: Scanner;
     c1: string;
     c2: string;
     character: Character;
 
-    whiteSpaceChars: RegExp = /[\s|\t|\n]/;
-    identifierChars: RegExp = /[a~zA~Z]/;
+    whiteSpaceChars: RegExp = /[\ ]/;
+    identifierChars: RegExp = /[a-z]/;
 
     constructor(sourceText: string) {
         this.scanner = new Scanner(sourceText);
         this.getChar();
+        //console.log("c1: ", this.c1);
     }
 
     get() {
@@ -63,6 +69,27 @@ class Lexer {
 
             //return token;
         }
+
+        let token = new Token(this.character);
+        //console.log("this.character", this.character);
+
+        if(this.c1 == Escape.ENDOFFILE) {
+            token.type = Type.ENDOFFILE;
+            return token;
+        }
+
+        if(this.c1.match(this.identifierChars)) {
+            token.type = Type.IDENTIFIER;
+            this.getChar();
+
+            while(this.c1.match(this.identifierChars)) {
+                token.cargo += this.c1;
+                this.getChar();
+            }
+            return token;
+        }
+
+        token.abort("I found a character or symbol that I do not recognize" + this.c1.toString());
     }
 
     getChar() {
