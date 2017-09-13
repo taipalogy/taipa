@@ -1,13 +1,13 @@
-import { Group, Series } from './expression';
+import { Expression, Group, Series } from './expression';
 import { PartOfSpeech } from './word';
 
 class Shunter {
-    nodes: any;
+    nodes: Expression[];
     constructor(nodes) {
-        this.nodes = [];
-        for (var key in nodes) {
-          this.nodes.push(nodes[key]);
-        }
+        //for (var i in nodes) {
+          //this.nodes.push(nodes[i]);
+        //}
+        this.nodes = nodes;
         console.log("shunter constructor");
         console.log(this.nodes);
     }
@@ -16,26 +16,26 @@ class Shunter {
         // If you call pop() on an empty array, it returns undefined.
         let o = operators.pop();
         if(typeof o !== 'undefined') {
-        var tmpo = operands.pop();
+            var tmpo = operands.pop();
 
-        if(typeof tmpo !== 'undefined') {
-            o.left = tmpo;
-        } else {
-            o.left = null;
-        }
+            if(typeof tmpo !== 'undefined') {
+                o.left = tmpo;
+            } else {
+                o.left = null;
+            }
 
-        tmpo = operands.pop();
-        if(typeof tmpo !== 'undefined') {
-            o.right = tmpo;
-        } else {
-            o.right = null;
-        }
+            tmpo = operands.pop();
+            if(typeof tmpo !== 'undefined') {
+                o.right = tmpo;
+            } else {
+                o.right = null;
+            }
 
-        operands.push(o);
+            operands.push(o);
         }
     }
 
-    shunt() {
+    shunt(): Series {
         // use shunting yard algorithm
 
         var operators = [];
@@ -48,79 +48,86 @@ class Shunter {
 
         console.log("entering shunt function");
 
-        for (var key in this.nodes) {
+        for (var i in this.nodes) {
 
-        let node = this.nodes[key];
+            let node = this.nodes[i];
 
-        if (node.getOperax().getPartOfSpeech() === PartOfSpeech.VERB) {
-            if (grouping){
-            count = count + 1;
-            }
+            if (node.partOfSpeech === PartOfSpeech.VERB) {
+                if (grouping){
+                    count = count + 1;
+                }
 
-            console.log("operator found");
+                console.log("operator found");
 
-            operators.push(node);
-            console.log("operators length" + operators.length);
-        } else {
-            // non-original tone
-            if (!node.getOperax().isOriginal()){
-            ;
-            }
+                operators.push(node);
+                console.log("operators length" + operators.length);
+            } else {
+                // non-original tone
+                if (!node.isOriginal()){
+                ;
+                }
 
-            operands.push(node);
-            console.log("operands length" + operands.length);
+                operands.push(node);
+                console.log("operands length:" + operands.length);
 
-            if (!node.getOperax().isOriginal() && previousOriginal === true && grouping === false){
-            previousOriginal = false;
-            grouping = true;
-            groupNodes = [];
-            groupNodes.push(node);
-            } else if (node.getOperax().isOriginal() && previousOriginal === false && grouping === true) {
-            previousOriginal = true;
-            grouping = false;
+                if (!node.isOriginal() && previousOriginal === true && grouping === false){
+                    previousOriginal = false;
+                    grouping = true;
+                    groupNodes = [];
+                    groupNodes.push(node);
+                } else if (node.isOriginal() && previousOriginal === false && grouping === true) {
+                    previousOriginal = true;
+                    grouping = false;
 
-            while(count > 0){
-                this.join(operators, operands);
-                count = count - 1;
-            }
+                    while(count > 0){
+                        this.join(operators, operands);
+                        count = count - 1;
+                    }
 
-            groupNodes.push(node);
-            let grpNode = new Group(operands.pop(), groupNodes);
-            sequenceNodes.push(grpNode);
-            operands.push(grpNode);
-            } else if (!node.getOperax().getOriginalTone() && previousOriginal === false && grouping === true){
-            groupNodes.push(node);
-            } else if (node.getOperax().getOriginalTone() && previousOriginal === true && grouping === false){
-            sequenceNodes.push(node);
+                    groupNodes.push(node);
+                    let grpNode = new Group(operands.pop(), groupNodes);
+                    sequenceNodes.push(grpNode);
+                    operands.push(grpNode);
+                } else if (!node.getBaseTone() && previousOriginal === false && grouping === true){
+                    groupNodes.push(node);
+                } else if (node.getBaseTone() && previousOriginal === true && grouping === false){
+                    sequenceNodes.push(node);
+                }
             }
         }
-        }
 
+        console.log("length of operands(before joining):" + operands.length);
+        
         while(operators.length){
-        this.join(operators, operands);
+            this.join(operators, operands);
         }
 
-        let sqn = null;
+        let s: Series = null;
         if(operands.length ==  1) {
         
-        let last = operands.pop();
-        // when i delcared an variable s without using keyword var
-        // this s was assigned to a sequence instance
-        // hence i changed s to sqn and add keyword var before s
-        sqn = new Series(last, sequenceNodes);
-        //console.log(s);
-        } else if (operands.length !== 1){
-        console.log("parsing error!!");
+            let last = operands.pop();
+            // when i delcared an variable s without using keyword var
+            // this s was assigned to a sequence instance
+            // hence i changed s to sqn and add keyword var before s
+            s = new Series(last, sequenceNodes);
+            //console.log(s);
+        } else if (operands.length !== 1) {
+            console.log("length of operands:" + operands.length);
+            console.log("parsing error!!");
         }
 
-        return sqn;
+        console.log(s);
+        return s;
     }
 }
 
 export class Parser {
-    s: Shunter;
-    constructor(nodes: any) {
+    private s: Shunter;
+    constructor(nodes: Expression[]) {
         this.s = new Shunter(nodes);
-        this.s.shunt();
+    }
+
+    parse(): Series {
+        return this.s.shunt();
     }
 }

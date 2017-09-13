@@ -35,15 +35,14 @@ export class Form {
 export class ToneSandhi implements IWord {
   partOfSpeech: PartOfSpeech;
   baseTone: string;
-  sandhiTone: string;
+  private sandhiTone: string;
 
-  currentTone: string;
+  private currentTone: string;
 
-  stem: string;
-  boundMorphemes: string;
+  private stem: string;
+  private boundMorphemes: string;
 
-  constructor(w) {
-    this.baseTone = w;
+  constructor() {
     this.partOfSpeech = 0;
   }
 
@@ -51,7 +50,7 @@ export class ToneSandhi implements IWord {
     return this.currentTone === this.baseTone;
   }
 
-  set PartOfSpeech(pos) {
-    this.partOfSpeech = pos;
+  getBaseTone() {
+    return this.baseTone;
   }
 }

@@ -1,12 +1,32 @@
-export interface Expression {
+import { PartOfSpeech, ToneSandhi } from './word';
 
+export class Expression extends ToneSandhi {
+  partOfSpeech: PartOfSpeech;
+  baseTone: string;
+  literal: string;
+  constructor() {
+    super();
+    this.literal = "";
+  }
+
+  evaluate(context) {}
 }
 
-export class ToneSandhiNoun implements Expression {
+export class ToneSandhiNoun extends Expression {
+  literal: string;
+  constructor(s) {
+    super();
+    this.literal = s;
+    console.log("%cliteral:%s", "color: purple; font-size: large", s);
+  }
   evaluate() {}
+
+  get baseTone() {
+    return this.literal;
+  }
 }
 
-export class ToneSandhiVerb implements Expression {
+export class ToneSandhiVerb extends Expression {
   left: Expression;
   right: Expression;
 
@@ -14,10 +34,11 @@ export class ToneSandhiVerb implements Expression {
   evaluate() {}
 }
 
-export class AstWrapper implements Expression {
+export class AstWrapper extends Expression {
   ast: any;
   nodes: any;
   constructor(ast, sequence) {
+    super();
     this.ast = ast;
     this.nodes = sequence;
   }
@@ -32,12 +53,16 @@ export class AstWrapper implements Expression {
   }
 }
 
-export class Series implements Expression {
-  constructor(ast: any, sequence: any) {}
-  evaluate() {}
+export class Series extends Expression {
+  constructor(ast, sequence) {
+    super();
+  }
+  evaluate(context) {}
 }
 
-export class Group implements Expression {
-  constructor(ast: any, sequence: any) {}
+export class Group extends Expression {
+  constructor(ast, sequence) {
+    super();
+  }
   evaluate() {}
 }
