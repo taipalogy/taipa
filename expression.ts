@@ -17,6 +17,7 @@ export class ToneSandhiNoun extends Expression {
   constructor(s) {
     super();
     this.literal = s;
+    this.partOfSpeech = PartOfSpeech.Noun;
     console.log("%cliteral:%s", "color: purple; font-size: large", s);
   }
   evaluate() {}
@@ -30,6 +31,12 @@ export class ToneSandhiVerb extends Expression {
   left: Expression;
   right: Expression;
 
+  constructor(s) {
+    super();
+    this.literal = s;
+    this.partOfSpeech = PartOfSpeech.Verb;   
+    console.log("%cliteral:%s", "color: purple; font-size: large", s);
+  }
   process() {}
   evaluate() {}
 }
@@ -60,9 +67,9 @@ export class Series extends Expression {
   evaluate(context) {}
 }
 
-export class Group extends Expression {
+export class Group extends AstWrapper {
   constructor(ast, sequence) {
-    super();
+    super(ast, sequence);
   }
   evaluate() {}
 }

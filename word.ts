@@ -1,21 +1,12 @@
-//-----------------------------------------------------------------------------
-//  Case
-//-----------------------------------------------------------------------------
-  
-export class Case {
-  public static readonly SUBJECT: 3;
-  public static readonly OBJECT: 4;
-}
 
 //-----------------------------------------------------------------------------
 //  Part of Speech
 //-----------------------------------------------------------------------------
-  
-export class PartOfSpeech {
-  public static readonly NOUN: 1;
-  public static readonly VERB: 2;
-}
 
+export enum PartOfSpeech {
+  Noun = 1,
+  Verb,
+}
 
 export interface IWord {
   partOfSpeech: PartOfSpeech;
@@ -43,7 +34,7 @@ export class ToneSandhi implements IWord {
   private boundMorphemes: string;
 
   constructor() {
-    this.partOfSpeech = 0;
+    //this.partOfSpeech = 0;
   }
 
   isOriginal() {

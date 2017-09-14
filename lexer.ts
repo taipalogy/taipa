@@ -1,5 +1,9 @@
 import { Scanner, Character, Escape } from './../core/scanner';
 
+//-----------------------------------------------------------------------------
+//  Type constants
+//-----------------------------------------------------------------------------
+
 export class Type {
     public static readonly IDENTIFIER = "Identifier";
     public static readonly WHITESPACE = "Whitespace";
@@ -67,7 +71,7 @@ export class Lexer {
                 token.cargo += this.c1;
             }
 
-            //return token;
+            return token;
         }
 
         let token = new Token(this.character);
