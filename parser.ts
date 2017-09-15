@@ -45,58 +45,62 @@ class Shunter {
     var grouping = false;
     var previousOriginal = true;
     var count = 0;
-    var sequenceNodes = [];
-    var groupNodes = [];
+    var sequenceOfGroups = [];
+    var groupMembers = [];
 
     console.log("entering shunt function");
 
     for (var i in this.nodes) {
 
-        let node = this.nodes[i];
+      let node = this.nodes[i];
 
-        if (node.partOfSpeech == PartOfSpeech.Verb) {
-            if (grouping) {
-                count = count + 1;
-            }
-
-            console.log("verb:%s", node.literal);
-            console.log("operator found");
-
-            operators.push(node);
-            console.log("operators length" + operators.length);
-        } else {
-            // non-original tone
-            if (!node.isOriginal()) {
-              console.log("noun:%s", node.literal);
-            }
-
-            operands.push(node);
-            console.log("operands length:" + operands.length);
-
-            if (!node.isOriginal() && previousOriginal === true && grouping === false) {
-                previousOriginal = false;
-                grouping = true;
-                groupNodes = [];
-                groupNodes.push(node);
-            } else if (node.isOriginal() && previousOriginal === false && grouping === true) {
-                previousOriginal = true;
-                grouping = false;
-
-                while (count > 0) {
-                    this.join(operators, operands);
-                    count = count - 1;
-                }
-
-                groupNodes.push(node);
-                let grpNode = new Group(operands.pop(), groupNodes);
-                sequenceNodes.push(grpNode);
-                operands.push(grpNode);
-            } else if (!node.getBaseTone() && previousOriginal === false && grouping === true) {
-                groupNodes.push(node);
-            } else if (node.getBaseTone() && previousOriginal === true && grouping === false) {
-                sequenceNodes.push(node);
-            }
+      if (node.partOfSpeech == PartOfSpeech.Verb) {
+        // collecting operators/verbs
+        if (grouping) {
+            count = count + 1;
         }
+
+        console.log("verb:%s", node.literal);
+        console.log("operator found");
+
+        operators.push(node);
+        console.log("operators length" + operators.length);
+      } else {
+        // collecting operands/nouns
+        if (!node.isOriginal()) {
+          console.log("noun:%s", node.literal);
+        }
+
+        operands.push(node);
+        console.log("operands length:" + operands.length);
+
+        if (!node.isOriginal() && previousOriginal === true && grouping === false) {
+          // start grouping
+          previousOriginal = false;
+          grouping = true;
+          groupMembers = [];
+          groupMembers.push(node);
+        } else if (node.isOriginal() && previousOriginal === false && grouping === true) {
+          // end grouping
+          previousOriginal = true;
+          grouping = false;
+
+          while (count > 0) {
+              this.join(operators, operands);
+              count = count - 1;
+          }
+
+          groupMembers.push(node);
+          // make group members a group
+          let group = new Group(operands.pop(), groupMembers);
+          sequenceOfGroups.push(group);
+          operands.push(group);
+        } else if (!node.isOriginal() && previousOriginal === false && grouping === true) {
+          groupMembers.push(node);
+        } else if (node.isOriginal() && previousOriginal === true && grouping === false) {
+          sequenceOfGroups.push(node);
+        }
+      }
     }
 
     console.log("length of operands(before joining):" + operands.length);
@@ -112,8 +116,8 @@ class Shunter {
         // when i delcared an variable s without using keyword var
         // this s was assigned to a sequence instance
         // hence i changed s to sqn and add keyword var before s
-        s = new Series(last, sequenceNodes);
-        //console.log(s);
+        s = new Series(last, sequenceOfGroups);
+        console.log(sequenceOfGroups);
     } else if (operands.length !== 1) {
         console.log("length of operands:" + operands.length);
         console.log("parsing error!!");

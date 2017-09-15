@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 
 export enum PartOfSpeech {
+  Unknown = 0,
   Noun = 1,
   Verb,
 }
@@ -34,7 +35,7 @@ export class ToneSandhi implements IWord {
   private boundMorphemes: string;
 
   constructor() {
-    //this.partOfSpeech = 0;
+    this.partOfSpeech = PartOfSpeech.Unknown;
   }
 
   isOriginal() {

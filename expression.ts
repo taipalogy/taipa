@@ -9,6 +9,10 @@ export class Expression extends ToneSandhi {
     this.literal = "";
   }
 
+  getLiteral() {
+    return this.literal;
+  }
+
   evaluate(context) {}
 }
 
@@ -22,7 +26,7 @@ export class ToneSandhiNoun extends Expression {
   }
   evaluate() {}
 
-  get baseTone() {
+  getBaseTone() {
     return this.literal;
   }
 }
@@ -42,34 +46,30 @@ export class ToneSandhiVerb extends Expression {
 }
 
 export class AstWrapper extends Expression {
-  ast: any;
+  ast: Expression;
   nodes: any;
-  constructor(ast, sequence) {
+  constructor(ast, members) {
     super();
     this.ast = ast;
-    this.nodes = sequence;
+    this.nodes = members;
   }
 
-  get Literal() {
-    //return the literals from this.nodes
-    return null;
+  getLiteral() {
+    return this.ast.getLiteral();
   }
 
-  evaluate(context) {
-    return this.ast.evaluate(context);
-  }
 }
 
-export class Series extends Expression {
-  constructor(ast, sequence) {
-    super();
+export class Series extends AstWrapper {
+  constructor(ast, sequenceOfGroups) {
+    super(ast, sequenceOfGroups);
   }
   evaluate(context) {}
 }
 
 export class Group extends AstWrapper {
-  constructor(ast, sequence) {
-    super(ast, sequence);
+  constructor(ast, groupMembers) {
+    super(ast, groupMembers);
   }
   evaluate() {}
 }
