@@ -4,9 +4,18 @@ export class Expression extends ToneSandhi {
   partOfSpeech: PartOfSpeech;
   baseTone: string;
   literal: string;
+
+  // left and right must be promoted to Expression class
+  // left and right are for tree traversal
+  // it is in fact there are no left and right on ToneSandhiNoun
+  left: Expression;
+  right: Expression;
+
   constructor() {
     super();
     this.literal = "";
+    this.left = null;
+    this.right = null;
   }
 
   getLiteral() {
@@ -22,6 +31,8 @@ export class ToneSandhiNoun extends Expression {
     super();
     this.literal = s;
     this.partOfSpeech = PartOfSpeech.Noun;
+    this.left = null;
+    this.right = null;
     console.log("%cliteral:%s", "color: purple; font-size: large", s);
   }
   evaluate() {}
@@ -32,8 +43,6 @@ export class ToneSandhiNoun extends Expression {
 }
 
 export class ToneSandhiVerb extends Expression {
-  left: Expression;
-  right: Expression;
 
   constructor(s) {
     super();
@@ -45,31 +54,47 @@ export class ToneSandhiVerb extends Expression {
   evaluate() {}
 }
 
-export class AstWrapper extends Expression {
+export class AstWrapper {
   ast: Expression;
-  nodes: any;
-  constructor(ast, members) {
-    super();
+  //nodes: any;
+  literal: string;
+  counter: number;
+  constructor(ast) {
+    //super();
     this.ast = ast;
-    this.nodes = members;
+    //this.nodes = members;
+    this.counter = 0;
+    this.literal = "";
+    this.printPreorder(this.ast);
   }
 
-  getLiteral() {
-    return this.ast.getLiteral();
-  }
+  printPreorder(e: Expression) {
 
+    if(e == null) {
+      return;
+    }
+
+    this.counter++;
+    this.literal = this.literal + e.literal;
+    console.log("literal%d:%s", this.counter, e.literal);
+    
+    this.printPreorder(e.left);
+    this.printPreorder(e.right);
+  }
 }
 
 export class Series extends AstWrapper {
-  constructor(ast, sequenceOfGroups) {
-    super(ast, sequenceOfGroups);
+  constructor(ast) {
+    //super(ast, sequenceOfGroups);
+    super(ast);
   }
   evaluate(context) {}
 }
 
 export class Group extends AstWrapper {
-  constructor(ast, groupMembers) {
-    super(ast, groupMembers);
+  constructor(ast) {
+    //super(ast, groupMembers);
+    super(ast);
   }
   evaluate() {}
 }

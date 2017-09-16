@@ -92,7 +92,8 @@ class Shunter {
 
           groupMembers.push(node);
           // make group members a group
-          let group = new Group(operands.pop(), groupMembers);
+          //let group = new Group(operands.pop(), groupMembers);
+          let group = new Group(operands.pop());
           sequenceOfGroups.push(group);
           operands.push(group);
         } else if (!node.isOriginal() && previousOriginal === false && grouping === true) {
@@ -116,7 +117,8 @@ class Shunter {
         // when i delcared an variable s without using keyword var
         // this s was assigned to a sequence instance
         // hence i changed s to sqn and add keyword var before s
-        s = new Series(last, sequenceOfGroups);
+        //s = new Series(last, sequenceOfGroups);
+        s = new Series(last);
         console.log(sequenceOfGroups);
     } else if (operands.length !== 1) {
         console.log("length of operands:" + operands.length);
