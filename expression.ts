@@ -1,15 +1,28 @@
-import { PartOfSpeech, ToneSandhi } from './word';
+import { PartOfSpeech, Lexeme, ToneSandhiLexeme } from './word';
 
-export class Expression extends ToneSandhi {
-  partOfSpeech: PartOfSpeech;
+export class InflectionWord {
+  lemma: string; // uninflected form
+  forms: string; // inflected forms. stems
+  // inflectional rules
+}
+
+export class AgglutinationWord {
+  plainForm: string;
+  forms: string;
+}
+
+export class ToneSandhiWord extends ToneSandhiLexeme {
   baseTone: string;
+  sandhiTone: string;
   literal: string;
 
-  // left and right must be promoted to Expression class
+  // left and right must be promoted to ToneSandhiWord class
   // left and right are for tree traversal
   // it is in fact there are no left and right on ToneSandhiNoun
-  left: Expression;
-  right: Expression;
+  left: ToneSandhiWord;
+  right: ToneSandhiWord;
+
+  private currentTone: string;
 
   constructor() {
     super();
@@ -23,9 +36,17 @@ export class Expression extends ToneSandhi {
   }
 
   evaluate(context) {}
+
+  getBaseTone() {
+    return this.baseTone;
+  }
+
+  isOriginal() {
+    return this.currentTone === this.baseTone;
+  }
 }
 
-export class ToneSandhiNoun extends Expression {
+export class ToneSandhiNoun extends ToneSandhiWord {
   literal: string;
   constructor(s) {
     super();
@@ -42,7 +63,7 @@ export class ToneSandhiNoun extends Expression {
   }
 }
 
-export class ToneSandhiVerb extends Expression {
+export class ToneSandhiVerb extends ToneSandhiWord {
 
   constructor(s) {
     super();
@@ -55,7 +76,7 @@ export class ToneSandhiVerb extends Expression {
 }
 
 export class AstWrapper {
-  ast: Expression;
+  ast: ToneSandhiWord;
   //nodes: any;
   literal: string;
   counter: number;
@@ -68,7 +89,7 @@ export class AstWrapper {
     this.printPreorder(this.ast);
   }
 
-  printPreorder(e: Expression) {
+  printPreorder(e: ToneSandhiWord) {
 
     if(e == null) {
       return;

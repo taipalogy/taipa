@@ -1,8 +1,8 @@
-import { Expression, Group, Series } from './expression';
+import { ToneSandhiWord, Group, Series } from './expression';
 import { PartOfSpeech } from './word';
 
 class Shunter {
-  nodes: Expression[];
+  nodes: ToneSandhiWord[];
 
   constructor(nodes) {
     //for (var i in nodes) {
@@ -132,7 +132,7 @@ class Shunter {
 
 export class Parser {
   private s: Shunter;
-  constructor(nodes: Expression[]) {
+  constructor(nodes: ToneSandhiWord[]) {
     this.s = new Shunter(nodes);
   }
 
