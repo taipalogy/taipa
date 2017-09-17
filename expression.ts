@@ -75,7 +75,7 @@ export class AstWrapper {
     }
 
     this.counter++;
-    this.literal = this.literal + e.literal;
+    this.literal = this.literal + "-" + e.literal;
     console.log("literal%d:%s", this.counter, e.literal);
     
     this.printPreorder(e.left);

@@ -17,20 +17,20 @@ class Shunter {
     // If you call pop() on an empty array, it returns undefined.
     let o = operators.pop();
     if (typeof o !== 'undefined') {
-      var tmpo = operands.pop();
+      var n = operands.pop();
 
-      if (typeof tmpo !== 'undefined') {
-        o.left = tmpo;
-      } else {
-        o.left = null;
-      }
-
-      tmpo = operands.pop();
-
-      if (typeof tmpo !== 'undefined') {
-        o.right = tmpo;
+      if (typeof n !== 'undefined') {
+        o.right = n;
       } else {
         o.right = null;
+      }
+
+      n = operands.pop();
+
+      if (typeof n !== 'undefined') {
+        o.left = n;
+      } else {
+        o.left = null;
       }
 
       operands.push(o);
@@ -45,8 +45,8 @@ class Shunter {
     var grouping = false;
     var previousOriginal = true;
     var count = 0;
-    var sequenceOfGroups = [];
-    var groupMembers = [];
+    //var sequenceOfGroups = [];
+    //var groupMembers = [];
 
     console.log("entering shunt function");
 
@@ -78,8 +78,8 @@ class Shunter {
           // start grouping
           previousOriginal = false;
           grouping = true;
-          groupMembers = [];
-          groupMembers.push(node);
+          //groupMembers = [];
+          //groupMembers.push(node);
         } else if (node.isOriginal() && previousOriginal === false && grouping === true) {
           // end grouping
           previousOriginal = true;
@@ -90,16 +90,16 @@ class Shunter {
               count = count - 1;
           }
 
-          groupMembers.push(node);
+          //groupMembers.push(node);
           // make group members a group
           //let group = new Group(operands.pop(), groupMembers);
           let group = new Group(operands.pop());
-          sequenceOfGroups.push(group);
+          //sequenceOfGroups.push(group);
           operands.push(group);
         } else if (!node.isOriginal() && previousOriginal === false && grouping === true) {
-          groupMembers.push(node);
+          //groupMembers.push(node);
         } else if (node.isOriginal() && previousOriginal === true && grouping === false) {
-          sequenceOfGroups.push(node);
+          //sequenceOfGroups.push(node);
         }
       }
     }
@@ -119,7 +119,7 @@ class Shunter {
         // hence i changed s to sqn and add keyword var before s
         //s = new Series(last, sequenceOfGroups);
         s = new Series(last);
-        console.log(sequenceOfGroups);
+        //console.log(sequenceOfGroups);
     } else if (operands.length !== 1) {
         console.log("length of operands:" + operands.length);
         console.log("parsing error!!");
