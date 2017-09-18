@@ -1,4 +1,30 @@
-import { PartOfSpeech, Lexeme, ToneSandhiLexeme } from './word';
+import { PartOfSpeech, IWord } from './word';
+
+//-----------------------------------------------------------------------------
+//  Expressions
+//-----------------------------------------------------------------------------
+
+export class Word implements IWord {
+  partOfSpeech: PartOfSpeech;
+
+  private stem: string;
+  private boundMorphemes: string;
+
+  // left and right must be promoted to Word class
+  // left and right are for tree traversal
+  // it is in fact there are no left and right on ToneSandhiNoun
+  left: Word;
+  right: Word;
+
+  literal: string;
+
+  constructor() {
+    this.partOfSpeech = PartOfSpeech.Unknown;
+    this.literal = null;
+  }
+
+  isOriginal() {}
+}
 
 export class InflectionWord {
   lemma: string; // uninflected form
@@ -11,16 +37,10 @@ export class AgglutinationWord {
   forms: string;
 }
 
-export class ToneSandhiWord extends ToneSandhiLexeme {
+export class ToneSandhiWord extends Word {
   baseTone: string;
   sandhiTone: string;
   literal: string;
-
-  // left and right must be promoted to ToneSandhiWord class
-  // left and right are for tree traversal
-  // it is in fact there are no left and right on ToneSandhiNoun
-  left: ToneSandhiWord;
-  right: ToneSandhiWord;
 
   private currentTone: string;
 
@@ -75,21 +95,22 @@ export class ToneSandhiVerb extends ToneSandhiWord {
   evaluate() {}
 }
 
+//-----------------------------------------------------------------------------
+//  Wrapper for Abstract Syntax Tree
+//-----------------------------------------------------------------------------
+
 export class AstWrapper {
   ast: ToneSandhiWord;
-  //nodes: any;
   literal: string;
   counter: number;
   constructor(ast) {
-    //super();
     this.ast = ast;
-    //this.nodes = members;
     this.counter = 0;
     this.literal = "";
     this.printPreorder(this.ast);
   }
 
-  printPreorder(e: ToneSandhiWord) {
+  printPreorder(e: Word) {
 
     if(e == null) {
       return;
@@ -106,7 +127,6 @@ export class AstWrapper {
 
 export class Series extends AstWrapper {
   constructor(ast) {
-    //super(ast, sequenceOfGroups);
     super(ast);
   }
   evaluate(context) {}
@@ -114,7 +134,6 @@ export class Series extends AstWrapper {
 
 export class Group extends AstWrapper {
   constructor(ast) {
-    //super(ast, groupMembers);
     super(ast);
   }
   evaluate() {}
