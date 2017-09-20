@@ -1,9 +1,17 @@
+//-----------------------------------------------------------------------------
+//  Escape Characters
+//-----------------------------------------------------------------------------
+
 export class Escape {
     public static readonly ENDOFFILE = "\0";
     public static readonly TAB = "\t";
     public static readonly NEWLINE = "\n";
     public static readonly WHITESPACE = " ";
 }
+
+//-----------------------------------------------------------------------------
+//  Character
+//-----------------------------------------------------------------------------
 
 export class Character {
     
@@ -33,6 +41,10 @@ export class Character {
         return "   " + this.lineIndex.toString() + "      " + this.colIndex.toString() + " " + cargo;
     }
 }
+
+//-----------------------------------------------------------------------------
+//  Scanner
+//-----------------------------------------------------------------------------
 
 export class Scanner {
     

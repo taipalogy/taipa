@@ -10,6 +10,9 @@ export class Type {
     public static readonly ENDOFFILE = "EndOfFile"
 }
 
+//-----------------------------------------------------------------------------
+//  Token
+//-----------------------------------------------------------------------------
 
 export class Token {
     cargo: Type;
@@ -34,7 +37,7 @@ export class Token {
         } else if(this.type == Type.IDENTIFIER) {
             s = s + this.type + ": " + this.cargo;
         } else {
-            // the end of file
+            // the end of the input
             s = s + this.type + ".";
         }
 
@@ -45,6 +48,10 @@ export class Token {
         console.log(msg);
     }
 }
+
+//-----------------------------------------------------------------------------
+//  Lexer
+//-----------------------------------------------------------------------------
 
 export class Lexer {
     scanner: Scanner;

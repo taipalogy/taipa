@@ -1,6 +1,47 @@
 import { PartOfSpeech, IWord } from './word';
 
 //-----------------------------------------------------------------------------
+//  Regular Expressions for Morpheme
+//-----------------------------------------------------------------------------
+
+class Morpheme {
+  stem: string;
+  boundMorpheme: string;
+
+  constructor(s: string){
+    this.stem = s;
+    // bound morepheme y should be acquired by looking up siw in the lexicon
+    this.boundMorpheme = "y";
+  }
+
+  getRegex() {
+    return new RegExp(this.stem);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+//  Factory Method Design Pattern
+//-----------------------------------------------------------------------------
+
+interface WordAbstractFactory {
+}
+
+export class WordFactory implements WordAbstractFactory {
+
+  w: Word;
+
+  getWord(s: string) {
+    let m = new Morpheme(s);
+    if(s.match(m.getRegex())) {
+      this.w = new ToneSandhiNoun(s);
+      console.log("a word created by the factory%s:%s", s, this.w.literal);
+      return this.w;
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 //  Expressions
 //-----------------------------------------------------------------------------
 
@@ -44,9 +85,10 @@ export class ToneSandhiWord extends Word {
 
   private currentTone: string;
 
-  constructor() {
+  constructor(w: string) {
     super();
-    this.literal = "";
+    this.literal = w;
+    console.log("ToneSandhiWord:%s", this.literal);
     this.left = null;
     this.right = null;
   }
@@ -68,8 +110,9 @@ export class ToneSandhiWord extends Word {
 
 export class ToneSandhiNoun extends ToneSandhiWord {
   literal: string;
+
   constructor(s) {
-    super();
+    super(s);
     this.literal = s;
     this.partOfSpeech = PartOfSpeech.Noun;
     this.left = null;
@@ -86,7 +129,7 @@ export class ToneSandhiNoun extends ToneSandhiWord {
 export class ToneSandhiVerb extends ToneSandhiWord {
 
   constructor(s) {
-    super();
+    super(s);
     this.literal = s;
     this.partOfSpeech = PartOfSpeech.Verb;   
     console.log("%cliteral:%s", "color: purple; font-size: large", s);

@@ -14,5 +14,6 @@ export enum PartOfSpeech {
 
 export interface IWord {
   partOfSpeech: PartOfSpeech;
+  literal: string;
 }
 
