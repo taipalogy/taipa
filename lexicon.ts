@@ -12,11 +12,14 @@ export class Lexeme {
     constructor(l: string) {
         this.lemma = l;
         // populate the array of forms
+        this.populateForms();
     }
 
-    matched(w: Word) {
-        //if(this.lemma == w.baseTone) return true;
-        //else if(this.forms == w.sandhiTone) return true;
+    populateForms() {}
+    
+    matched(s: string) {
+        if(this.lemma == s) return true;
+        else if(this.forms == s) return true;
         return false;
     }
 }
@@ -27,18 +30,25 @@ export class Lexeme {
 
 export class Lexicon {
 
-    entries: Lexeme[];
+    entries: Array<Lexeme>;
 
-    add(w: Word) {
-        this.found(w);
+    constructor() {
+        this.entries = new Array();
     }
 
-    found(w: Word) {
+    add(l: Lexeme) {
+        if(!this.found(l.lemma))
+          this.entries.push(l);
+    }
+
+    found(s: string) {
         // find this term in the entries
         for(var i in this.entries) {
-            if(this.entries[i].matched(w)) {
+            if(this.entries[i].matched(s)) {
                 return true;
             }
         }
+
+        return false;
     }
 }

@@ -8,10 +8,19 @@ class Morpheme {
   stem: string;
   boundMorpheme: string;
 
+  stemRegex: RegExp = /si|tiab|ji/;
+  boundMorphemeRegex: RegExp = /b|w|y|zs/;
+
   constructor(s: string){
-    this.stem = s;
-    // bound morepheme y should be acquired by looking up siw in the lexicon
-    this.boundMorpheme = "y";
+    let tmp = s.match(this.stemRegex);
+    if(tmp) {
+      this.stem = tmp.pop();
+    }
+
+    tmp = s.match(this.boundMorphemeRegex);
+    if(tmp) {
+      this.boundMorpheme = tmp.pop();
+    }
   }
 
   getRegex() {
@@ -48,8 +57,8 @@ export class WordFactory implements WordAbstractFactory {
 export class Word implements IWord {
   partOfSpeech: PartOfSpeech;
 
-  private stem: string;
-  private boundMorphemes: string;
+  //private stem: string;
+  //private boundMorphemes: string;
 
   // left and right must be promoted to Word class
   // left and right are for tree traversal
