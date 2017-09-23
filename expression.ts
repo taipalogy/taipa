@@ -1,33 +1,5 @@
 import { PartOfSpeech, IWord } from './word';
-
-//-----------------------------------------------------------------------------
-//  Regular Expressions for Morpheme
-//-----------------------------------------------------------------------------
-
-class Morpheme {
-  stem: string;
-  boundMorpheme: string;
-
-  stemRegex: RegExp = /si|tiab|ji/;
-  boundMorphemeRegex: RegExp = /b|w|y|zs/;
-
-  constructor(s: string){
-    let tmp = s.match(this.stemRegex);
-    if(tmp) {
-      this.stem = tmp.pop();
-    }
-
-    tmp = s.match(this.boundMorphemeRegex);
-    if(tmp) {
-      this.boundMorpheme = tmp.pop();
-    }
-  }
-
-  getRegex() {
-    return new RegExp(this.stem);
-  }
-}
-
+import { MorphologicalAnalyzer } from './morphologicalanalyzer';
 
 //-----------------------------------------------------------------------------
 //  Factory Method Design Pattern
@@ -41,8 +13,8 @@ export class WordFactory implements WordAbstractFactory {
   w: Word;
 
   getWord(s: string) {
-    let m = new Morpheme(s);
-    if(s.match(m.getRegex())) {
+    let m = new MorphologicalAnalyzer(s);
+    if(s.match(m.getStemRegex()) && s.match(m.getBoundMorphemeRegex())) {
       this.w = new ToneSandhiNoun(s);
       console.log("a word created by the factory%s:%s", s, this.w.literal);
       return this.w;
