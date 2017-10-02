@@ -1,4 +1,5 @@
 import { Word } from './expression';
+import { Widget } from './widget';
 
 //-----------------------------------------------------------------------------
 //  Lexeme
@@ -9,8 +10,11 @@ export class Lexeme {
     // string or array of string
     forms: string;
 
+    widget: Widget; // gadget
+
     constructor(l: string) {
         this.lemma = l;
+        this.widget = null;
         // populate the array of forms
         this.populateForms();
     }
@@ -21,6 +25,10 @@ export class Lexeme {
         if(this.lemma == s) return true;
         else if(this.forms == s) return true;
         return false;
+    }
+
+    addWidget(g: Widget) {
+        this.widget = g;
     }
 }
 

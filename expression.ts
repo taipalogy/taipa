@@ -66,6 +66,8 @@ export class ToneSandhiWord extends Word {
 
   private currentTone: string;
 
+  objects: any;
+  
   constructor(w: string) {
     super();
     this.literal = w;
@@ -91,7 +93,7 @@ export class ToneSandhiWord extends Word {
 
 export class ToneSandhiNoun extends ToneSandhiWord {
   literal: string;
-
+  
   constructor(s) {
     super(s);
     this.literal = s;

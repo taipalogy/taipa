@@ -3,9 +3,9 @@
 //-----------------------------------------------------------------------------
 
 class Regex {
-    public static readonly stemRegex = /su|tia|ji/g;
+    public static readonly stemRegex = /ji|si|su|tia/g;
     public static readonly boundMorphemeRegex = 
-        /ss|y|w|pp|tt|kk|hh|x|fx|bx|dx|qx|zzs|zs|bb|dd|qq|ff|xx/g;
+        /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|qx|zzs|zs|bb?|dd?|qq?|ff?|xx/g;
 }
 
 //-----------------------------------------------------------------------------
