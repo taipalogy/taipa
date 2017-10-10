@@ -1,4 +1,4 @@
-import { MorphemeAnalyzer } from './morphemeanalyzer';
+import { MorphemeValidator } from './morphemevalidator';
 import { Regex } from './morpheme';
 import { ToneSandhiMorphemeAnalyzer } from './morpheme';
 
@@ -33,8 +33,8 @@ export class WordFactory implements WordAbstractFactory {
   w: Word;
 
   getWord(s: string) {
-    let ma = new MorphemeAnalyzer(s);
-    if(s.match(ma.getStemRegex()) && s.match(ma.getBoundMorphemeRegex())) {
+    let mv = new MorphemeValidator(s);
+    if(mv.validate()) {
       this.w = new ToneSandhiNoun(s);
       console.log("a word created by the factory%s:%s", s, this.w.literal);
       return this.w;

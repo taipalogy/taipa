@@ -4,20 +4,22 @@ import { Regex } from './morpheme';
 //  LexicalAnalyzer
 //------------------------------------------------------------------------------
 
-export class MorphemeAnalyzer {
+export class MorphemeValidator {
     stem: string = "";
     suffix: string = ""; // tone markers
     counter: number;
+    literal: string;
 
     constructor(s: string) {
-        let stems = s.match(Regex.stemRegex);
+        this.literal = s;
+        let stems = this.literal.match(Regex.stemRegex);
         if (stems) {
             console.log(stems);
             console.log("length of outputs of stem morpheme:%d", stems.length);
             this.counter = stems.length;
         }
 
-        let boundMorphemes = s.match(Regex.boundMorphemeRegex);
+        let boundMorphemes = this.literal.match(Regex.boundMorphemeRegex);
         if (boundMorphemes) {
             console.log("length of outputs of bound morpheme:%d", boundMorphemes.length);
         }
@@ -40,6 +42,14 @@ export class MorphemeAnalyzer {
             console.log("%cStem:%s", "color: lightcoral; font-size: large", this.stem);
             console.log("%cSuffix:%s", "color: lightcoral; font-size: large", this.suffix);
             console.log(this.counter);
+        }
+    }
+
+    validate() {
+        if(this.literal.match(this.getStemRegex()) 
+            && this.literal.match(this.getBoundMorphemeRegex())) {
+            
+            return true;
         }
     }
 
