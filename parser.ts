@@ -1,4 +1,4 @@
-import { Word, Group, Series } from './expression';
+import { Word, Group, Series } from './word';
 import { PartOfSpeech } from './word';
 
 class Shunter {
@@ -132,7 +132,7 @@ class Shunter {
 
 export class Parser {
   private s: Shunter;
-  constructor(nodes: Word[]) {
+  constructor(nodes: Array<Word>) {
     this.s = new Shunter(nodes);
   }
 

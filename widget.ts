@@ -1,7 +1,18 @@
-export class Widget {
+interface IWidget {
+    [key: string]: any
+}
 
-    //fillColor: string;
-    //methodName(g: Gadget): any{};
+export class Widget implements IWidget {
+    name: string;
+    do: (input: any) => any;
+
+    take(widget: Widget, property: string) : Widget {
+        return null;
+    }
+
+    addProperty(widget: Widget, property: string) : Widget {
+        return null;
+    }
 }
 
 export class Banner extends Widget {
@@ -19,7 +30,6 @@ export class Title extends Widget {
     title: string;
     fillColor: string;
     font: string;
-    widget: string;
 
     constructor() {
         super();
@@ -27,7 +37,9 @@ export class Title extends Widget {
         this.fillColor = "orange";
     }
 
-    curry() {}
+    take(w: Widget, prop: string) : Widget {
+        return w.addProperty(w, prop);
+    }
 }
 
 export class Subtitle  extends Widget {
@@ -40,17 +52,20 @@ export class Ruby extends Widget {
 }
 
 export class Color extends Widget {
-    name: string;
+    public name: string;
+
+    constructor() {
+        super();
+    }
 }
 
-export class ColorLabel extends Color {
-
-    getNounWidget(c: Color) {
-        // name of the color
-        return c.name;
+export class ColorLabel extends Widget {
+    constructor() {
+        super();
     }
 
-    getVerbWidget() {
-
+    addProperty(w: Widget, prop: string) : Widget {
+        w[prop] = null;
+        return w;
     }
 }

@@ -1,20 +1,12 @@
-//-----------------------------------------------------------------------------
-//  Regular Expressions
-//-----------------------------------------------------------------------------
+import { Regex } from './morpheme';
 
-class Regex {
-    public static readonly stemRegex = /ji|si|su|tia/g;
-    public static readonly boundMorphemeRegex = 
-        /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|qx|zzs|zs|bb?|dd?|qq?|ff?|xx/g;
-}
+//------------------------------------------------------------------------------
+//  LexicalAnalyzer
+//------------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-//  MorphologicalAnalyzer
-//-----------------------------------------------------------------------------
-
-export class MorphologicalAnalyzer {
+export class MorphemeAnalyzer {
     stem: string = "";
-    boundMorpheme: string = ""; // tone markers
+    suffix: string = ""; // tone markers
     counter: number;
 
     constructor(s: string) {
@@ -32,21 +24,21 @@ export class MorphologicalAnalyzer {
 
         if(stems && boundMorphemes) {
             for(var i = 0; i < this.counter; i++) {
-                // this is either prefix or infix
+                // this is one of the stems
                 this.stem = this.stem + stems.shift();
-                if(i + i == this.counter) {
+                if(i + 1 == this.counter) {
                     // pop out the last element from the array. this is the suffix
-                    this.boundMorpheme = boundMorphemes.pop();
+                    this.suffix = boundMorphemes.pop();
                     break;
                 }
                 else {
-                    // this is the infix
+                    // this is the interfix
                     this.stem = this.stem + boundMorphemes.shift();
                 }
             }
 
             console.log("%cStem:%s", "color: lightcoral; font-size: large", this.stem);
-            console.log("%cBound Morpheme:%s", "color: lightcoral; font-size: large", this.boundMorpheme);
+            console.log("%cSuffix:%s", "color: lightcoral; font-size: large", this.suffix);
             console.log(this.counter);
         }
     }
@@ -57,7 +49,7 @@ export class MorphologicalAnalyzer {
     }
 
     getBoundMorphemeRegex() {
-        console.log("boundMorpheme:%s", this.boundMorpheme);
-        return new RegExp(this.boundMorpheme);
+        console.log("boundMorpheme:%s", this.suffix);
+        return new RegExp(this.suffix);
     }
 }

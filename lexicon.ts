@@ -1,20 +1,20 @@
-import { Word } from './expression';
+import { Word } from './word';
 import { Widget } from './widget';
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //  Lexeme
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 export class Lexeme {
     lemma: string;
     // string or array of string
     forms: string;
 
-    widget: Widget; // gadget
+    object: Widget;
 
     constructor(l: string) {
         this.lemma = l;
-        this.widget = null;
+        this.object = null;
         // populate the array of forms
         this.populateForms();
     }
@@ -27,14 +27,14 @@ export class Lexeme {
         return false;
     }
 
-    addWidget(g: Widget) {
-        this.widget = g;
+    addObject(w: Widget) {
+
     }
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //  Lexicon
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 export class Lexicon {
 
