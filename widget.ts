@@ -4,14 +4,14 @@ interface IWidget {
 
 export class Widget implements IWidget {
     name: string;
-    do: (input: any) => any;
-
-    take(widget: Widget, property: string) : Widget {
-        return null;
-    }
+    funktion: Function;
 
     addProperty(widget: Widget, property: string) : Widget {
         return null;
+    }
+
+    getFunktion() {
+        return this.funktion;
     }
 }
 
@@ -37,8 +37,8 @@ export class Title extends Widget {
         this.fillColor = "orange";
     }
 
-    take(w: Widget, prop: string) : Widget {
-        return w.addProperty(w, prop);
+    getContextualSemantics() {
+        return "orange";
     }
 }
 
@@ -62,10 +62,6 @@ export class Color extends Widget {
 export class ColorLabel extends Widget {
     constructor() {
         super();
-    }
-
-    addProperty(w: Widget, prop: string) : Widget {
-        w[prop] = null;
-        return w;
+        this.funktion = function(s: string) {return s;}
     }
 }

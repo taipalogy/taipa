@@ -51,7 +51,7 @@ export class Lexicon {
 
     found(s: string) {
         // find this term in the entries
-        for(var i in this.entries) {
+        for(let i in this.entries) {
             if(this.entries[i].matched(s)) {
                 return true;
             }
@@ -60,3 +60,5 @@ export class Lexicon {
         return false;
     }
 }
+
+export let lexicon = new Lexicon();

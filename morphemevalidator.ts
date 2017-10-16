@@ -51,6 +51,8 @@ export class MorphemeValidator {
             
             return true;
         }
+
+        return false;
     }
 
     getStemRegex() {

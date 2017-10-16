@@ -17,7 +17,7 @@ class Shunter {
     // If you call pop() on an empty array, it returns undefined.
     let o = operators.pop();
     if (typeof o !== 'undefined') {
-      var n = operands.pop();
+      let n = operands.pop();
 
       if (typeof n !== 'undefined') {
         o.right = n;
@@ -40,17 +40,15 @@ class Shunter {
   shunt(): Series {
     // use shunting yard algorithm
 
-    var operators = [];
-    var operands = [];
-    var grouping = false;
-    var previousOriginal = true;
-    var count = 0;
-    //var sequenceOfGroups = [];
-    //var groupMembers = [];
+    let operators = [];
+    let operands = [];
+    let grouping = false;
+    let previousOriginal = true;
+    let count = 0;
 
     console.log("entering shunt function");
 
-    for (var i in this.nodes) {
+    for (let i in this.nodes) {
 
       let node = this.nodes[i];
 

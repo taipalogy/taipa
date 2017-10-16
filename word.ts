@@ -1,6 +1,7 @@
 import { MorphemeValidator } from './morphemevalidator';
 import { Regex } from './morpheme';
-import { ToneSandhiMorphemeAnalyzer } from './morpheme';
+import { ToneSandhiAffix, ToneSandhiMorphemeAnalyzer } from './morpheme';
+import { Widget } from './widget';
 
 //------------------------------------------------------------------------------
 //  Part of Speech
@@ -107,9 +108,32 @@ export class ToneSandhiWord extends Word {
 
   evaluate(context) {
     console.log("ToneSandhiWord evaluation, literal:%s", this.literal);
-    let aa = new ToneSandhiMorphemeAnalyzer(this.literal);
-    let a = aa.analyze();
+    let ma = new ToneSandhiMorphemeAnalyzer(this.literal);
+    let a: Array<ToneSandhiAffix> = ma.analyze();
     console.log("I have %d affixes", a.length);
+    console.log(a);
+    let aRight: ToneSandhiAffix, aLeft: ToneSandhiAffix;
+    for(let i = 0 ; i < a.length ; i++) {
+      if(i == 0) {
+        aRight = a.pop();
+      } else if(i == 1) {
+        aLeft = a.pop();
+        let obj = this.addProperty(aLeft.getObject(), aRight.getObject().name);
+        console.log(obj);
+        if(Object.prototype.hasOwnProperty.call(obj, aRight.getObject().name)) {
+          obj[aRight.getObject().name] = aRight.getObject().getFunktion();
+          let tmp  = obj[aRight.getObject().name](aLeft.getObject().getContextualSemantics());
+          console.log("a property added" + tmp);
+          return tmp;
+        }
+      }
+
+    }
+  }
+
+  addProperty(w: Widget, prop: string) {
+    w[prop] = null;
+    return w;    
   }
 
   getBaseTone() {
