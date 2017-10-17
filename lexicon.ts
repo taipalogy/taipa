@@ -1,5 +1,6 @@
 import { Word } from './word';
 import { Widget } from './widget';
+import { ToneMarkerChecker } from './tonesandhi';
 
 //------------------------------------------------------------------------------
 //  Lexeme
@@ -21,9 +22,17 @@ export class Lexeme {
 
     populateForms() {}
     
-    matched(s: string) {
-        if(this.lemma == s) return true;
-        else if(this.forms == s) return true;
+    matched(bt: string, st: string) {
+        if(this.lemma == bt && this.forms == st) {
+            return true;
+        }
+        return false;
+    }
+
+    matchedBaseTone(l: string) {
+        if(this.lemma == l) {
+            return true;
+        }
         return false;
     }
 
@@ -49,12 +58,37 @@ export class Lexicon {
           this.entries.push(l);
     }
 
-    found(s: string) {
-        // find this term in the entries
+    foundBaseTone(bt: string) {
         for(let i in this.entries) {
-            if(this.entries[i].matched(s)) {
+            if(this.entries[i].matchedBaseTone(bt)) {
                 return true;
             }
+        }
+    }
+
+    foundSandhiTone(st: string) {
+        let tmc = new ToneMarkerChecker();
+        for(let i in this.entries) {
+            let bt = tmc.checkSandhiTone(st);
+            console.log("checked base tone: %s with its sandhi tone:%s", bt, st);
+            if(this.entries[i].matched(bt, st)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    found(l: string) {
+        // find this lexeme in the lexicon entries
+        console.log("about to find a lexeme as base tone:%s", l);
+        if(this.foundBaseTone(l)) {
+            return true;
+        } 
+
+        console.log("about to find a lexeme as sandhi tone:%s", l);
+        if(this.foundSandhiTone(l)) {
+            return true;
         }
 
         return false;

@@ -69,7 +69,7 @@ export class ToneSandhiMorphemeAnalyzer {
     constructor(l: string) {
         // inject the lexicon
         this.stems = l.match(Regex.stemRegex);
-        console.log("stems:" + this.stems);
+        console.log("literal:" + l + " stems:" + this.stems);
         this.boundMorphemes = l.match(Regex.boundMorphemeRegex);
         // initialize the affix array
         this.affixes = new Array();
@@ -84,26 +84,32 @@ export class ToneSandhiMorphemeAnalyzer {
                 for(let i = 0; i < len; i++) {
                     if(i == 0) {
                         // prefix
+                        console.log("analyzing prefix");
                         let p = new ToneSandhiPrefix();
                         p.stem = this.stems.shift();
                         p.interfix = this.boundMorphemes.shift();
-                        if(this.found(p.stem + p.interfix)) {
+                        if(this.found(p.stem, p.interfix)) {
+                            console.log("analyzing prefix. found");
                             this.affixes.push(p);
                         }
                     } else if(i + 1 < len) {
                         //interfix
+                        console.log("analyzing interfix");
                         let i = new ToneSandhiInterfix();
                         i.stem = this.stems.shift();
                         i.interfix = this.boundMorphemes.shift();
-                        if(this.found(i.stem + i.interfix)) {
+                        if(this.found(i.stem, i.interfix)) {
+                            console.log("analyzing interfix. found");
                             this.affixes.push(i);
                         }
                     } else {
                         // suffix
+                        console.log("analyzing suffix");
                         let s = new ToneSandhiSuffix();
                         s.stem = this.stems.shift();
                         s.suffix = this.boundMorphemes.shift();
-                        if(this.found(s.stem + s.suffix)) {
+                        if(this.found(s.stem, s.suffix)) {
+                            console.log("analyzing suffix. found");
                             this.affixes.push(s);
                         }
                     }
@@ -114,10 +120,12 @@ export class ToneSandhiMorphemeAnalyzer {
         return this.affixes;
     }
 
-    found(l: string) {
-        if(lexicon.found(l)) {
+    found(s: string, bm: string) {
+        if(lexicon.found(s + bm)) {
+            console.log("morpheme found");
             return true;
         }
+        console.log("morpheme not found");
         return false;
     }
 }

@@ -12,8 +12,29 @@ class Tone {
     }
 }
 
-class Tones {
+//------------------------------------------------------------------------------
+//  Tone Sandhi Rules
+//------------------------------------------------------------------------------
+
+class ToneSandhiRule {
+    baseTone: Tone;
+    sandhiTone: Tone;
+
+    constructor(b: Tone, s: Tone) {
+        this.baseTone = b;
+        this.sandhiTone = s;
+    }
+}
+
+//------------------------------------------------------------------------------
+//  BaseToneChecker
+//------------------------------------------------------------------------------
+
+export class ToneMarkerChecker {
+    rules: Array<ToneSandhiRule>;
+
     // level tones
+    toneFirstWithoutToneMark: Tone;
     toneFirst: Tone;
     toneSecond: Tone;
     toneThird: Tone;
@@ -50,7 +71,10 @@ class Tones {
     toneEighthCheckedG: Tone;
 
     constructor() {
-        this.toneFirst = new Tone("First Tone", "");
+        this.rules = new Array();
+
+        this.toneFirstWithoutToneMark = new Tone("First Tone without Tone Mark", "");
+        this.toneFirst = new Tone("First Tone", "ss");
         this.toneSecond = new Tone("Second Tone", "y");
         this.toneThird = new Tone("Third Tone", "w");
         this.toneFifth = new Tone("Fifth Tone", "x");
@@ -81,12 +105,50 @@ class Tones {
         this.toneEighthCheckedD = new Tone("Eighth Checked Tone D", "d");
         this.toneEighthCheckedG = new Tone("Eighth Checked Tone G", "g");
 
+        this.rules.push(new ToneSandhiRule(this.toneFirstWithoutToneMark, this.toneSeventh));
+        this.rules.push(new ToneSandhiRule(this.toneFirst, this.toneSeventh));        
+        this.rules.push(new ToneSandhiRule(this.toneSecond, this.toneFirst));
+        this.rules.push(new ToneSandhiRule(this.toneThird, this.toneSecond));
+        this.rules.push(new ToneSandhiRule(this.toneThird, this.toneNinth));
+        this.rules.push(new ToneSandhiRule(this.toneThirdCheckedBb, this.toneFifthCheckedBx));
+        this.rules.push(new ToneSandhiRule(this.toneThirdCheckedDd, this.toneFifthCheckedDx));
+        this.rules.push(new ToneSandhiRule(this.toneThirdCheckedGg, this.toneFifthCheckedGx));
+        this.rules.push(new ToneSandhiRule(this.toneThirdNeutralFf, this.toneFifthNeutralFx));
+        this.rules.push(new ToneSandhiRule(this.toneFourthCheckedP, this.toneFirstCheckedPp));
+        this.rules.push(new ToneSandhiRule(this.toneFourthCheckedT, this.toneFirstCheckedTt));
+        this.rules.push(new ToneSandhiRule(this.toneFourthCheckedK, this.toneFirstCheckedKk));
+        this.rules.push(new ToneSandhiRule(this.toneFourthNeutralH, this.toneSecondNeutralHy));
+        this.rules.push(new ToneSandhiRule(this.toneFifth, this.toneSeventh));
+        this.rules.push(new ToneSandhiRule(this.toneSeventh, this.toneThird));
+        this.rules.push(new ToneSandhiRule(this.toneSeventh, this.toneNinth));
+        this.rules.push(new ToneSandhiRule(this.toneEighthCheckedB, this.toneThirdCheckedBb));
+        this.rules.push(new ToneSandhiRule(this.toneEighthCheckedD, this.toneThirdCheckedDd));
+        this.rules.push(new ToneSandhiRule(this.toneEighthCheckedG, this.toneThirdCheckedGg));
+        this.rules.push(new ToneSandhiRule(this.toneEighthNeutralF, this.toneThirdNeutralFf));
     }
-}
 
-//------------------------------------------------------------------------------
-//  Tone Sandhi Rules
-//------------------------------------------------------------------------------
+    checkBaseTone(t: string) {
+        console.log(this.rules.length);
+        // check sandhi tone for its base tone
+        for(let i = 0; i < this.rules.length; i++) {
+            let r = this.rules[i];
+            if(t.match(new RegExp(r.baseTone.toneMark))) {
+                console.log("found matched base tone: %s", r.baseTone.name);
+                return t;
+            }
+        }
+        return null;
+    }
 
-class ToneSandhiRules {
+    checkSandhiTone(st: string) {
+        for(let i = 0; i < this.rules.length; i++) {
+            let r = this.rules[i];
+            if(st.match(new RegExp(r.sandhiTone.toneMark))) {
+                console.log("found matched sandhi tone of: %s", r.baseTone.name);
+                let stems = st.split(r.sandhiTone.toneMark);
+                return stems.shift() + r.baseTone.toneMark;
+            }
+        }
+
+    }
 }
