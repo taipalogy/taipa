@@ -1,6 +1,7 @@
 import { Word } from './word';
 import { Widget } from './widget';
 import { ToneMarkerChecker } from './tonesandhi';
+import { PartOfSpeech } from './word';
 
 //------------------------------------------------------------------------------
 //  Lexeme
@@ -13,11 +14,14 @@ export class Lexeme {
 
     object: Widget;
 
+    partOfSpeech: PartOfSpeech;
+
     constructor(l: string) {
         this.lemma = l;
         this.object = null;
         // populate the array of forms
         this.populateForms();
+        this.partOfSpeech = PartOfSpeech.Unknown;
     }
 
     populateForms() {}
@@ -30,7 +34,7 @@ export class Lexeme {
     }
 
     matchedBaseTone(l: string) {
-        if(this.lemma == l) {
+        if(this.lemma.match(l)) {
             return true;
         }
         return false;
@@ -56,6 +60,14 @@ export class Lexicon {
     add(l: Lexeme) {
         if(!this.found(l.lemma))
           this.entries.push(l);
+    }
+
+    getLexeme(literal: string) : Lexeme {
+        for(let i in this.entries) {
+            if(this.entries[i].matchedBaseTone(literal)) {
+                return this.entries[i];
+            }
+        }
     }
 
     foundBaseTone(bt: string) {

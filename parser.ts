@@ -71,6 +71,7 @@ class Shunter {
 
         operands.push(node);
         console.log("operands length:" + operands.length);
+        console.log(operands);
 
         if (!node.isOriginal() && previousOriginal === true && grouping === false) {
           // start grouping

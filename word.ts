@@ -2,6 +2,7 @@ import { MorphemeValidator } from './morphemevalidator';
 import { Regex } from './morpheme';
 import { ToneSandhiAffix, ToneSandhiMorphemeAnalyzer } from './morpheme';
 import { Widget } from './widget';
+import { lexicon } from './lexicon';
 
 //------------------------------------------------------------------------------
 //  Part of Speech
@@ -10,7 +11,7 @@ import { Widget } from './widget';
 export enum PartOfSpeech {
   Unknown = 0,
   Noun = 1,
-  Verb,
+  Verb = 2,
 }
 
 //------------------------------------------------------------------------------
@@ -36,7 +37,13 @@ export class WordFactory implements WordAbstractFactory {
   getWord(s: string) {
     let mv = new MorphemeValidator(s);
     if(mv.validate()) {
-      this.w = new ToneSandhiNoun(s);
+      let l = lexicon.getLexeme(s);
+      console.log(l);
+      if(l.partOfSpeech == PartOfSpeech.Noun) {
+        this.w = new ToneSandhiNoun(s);
+      } else if(l.partOfSpeech == PartOfSpeech.Verb) {
+        this.w = new ToneSandhiVerb(s);
+      }
       console.log("a word created by the factory%s:%s", s, this.w.literal);
       return this.w;
     }
@@ -181,10 +188,11 @@ export class AstWrapper {
   ast: ToneSandhiWord;
   literal: string;
   counter: number;
+
   constructor(ast) {
     this.ast = ast;
     this.counter = 0;
-    this.literal = "";
+    this.literal = ""; // todo: get the literals from the ast.
     this.printPreorder(this.ast);
   }
 
