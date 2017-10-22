@@ -1,6 +1,6 @@
 import { Word } from './word';
 import { Widget } from './widget';
-import { ToneMarkerChecker } from './tonesandhi';
+import { ToneMarkChecker } from './tonesandhi';
 import { PartOfSpeech } from './word';
 
 //------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ import { PartOfSpeech } from './word';
 export class Lexeme {
     lemma: string;
     // string or array of string
-    forms: string;
+    forms: Array<string>
 
     object: Widget;
 
@@ -19,16 +19,28 @@ export class Lexeme {
     constructor(l: string) {
         this.lemma = l;
         this.object = null;
+        this.forms = new Array();
         // populate the array of forms
         this.populateForms();
         this.partOfSpeech = PartOfSpeech.Unknown;
     }
 
-    populateForms() {}
+    populateForms() {
+        let tmc = new ToneMarkChecker();
+        let btm = tmc.checkBaseTone(this.lemma);
+        if(btm) {
+            let stm = tmc.getSandhiToneMark(this.lemma);
+            this.forms.push(this.lemma.split(btm) + stm);
+        }
+    }
     
     matched(bt: string, st: string) {
-        if(this.lemma == bt && this.forms == st) {
-            return true;
+        if(this.lemma == bt) {
+            for(let i = 0; i < this.forms.length; i++) {
+                if(this.forms[i] == st) {
+                    return true;
+                }                
+            }
         }
         return false;
     }
@@ -36,6 +48,15 @@ export class Lexeme {
     matchedBaseTone(l: string) {
         if(this.lemma.match(l)) {
             return true;
+        }
+        return false;
+    }
+
+    matchedSandhiTone(l: string) {
+        for(let i = 0; i < this.forms.length; i++) {
+            if(this.forms[i].match(l)) {
+                return true;
+            }
         }
         return false;
     }
@@ -63,11 +84,40 @@ export class Lexicon {
     }
 
     getLexeme(literal: string) : Lexeme {
-        for(let i in this.entries) {
-            if(this.entries[i].matchedBaseTone(literal)) {
-                return this.entries[i];
+        console.log("about to get lexeme: %s", literal);
+        if(this.isLevelTone(literal)) {
+            console.log("%s is a level tone", literal);
+            for(let i in this.entries) {
+                let e = this.entries[i];
+                if(e.matchedBaseTone(literal)) {
+                    return e;
+                }
+            }
+        } else if(this.isObliqueTone(literal)) {
+            for(let i in this.entries) {
+                let e = this.entries[i];
+                if(e.matchedBaseTone(literal)) {
+                    return e;
+                } else if(e.matchedSandhiTone(literal)) {
+                    return e;
+                }
             }
         }
+
+        console.log("didn't get a lexeme: %s", literal);
+        return null;
+    }
+
+    isLevelTone(l: string) {
+        console.log("isLevel: %s", l);
+        let tmc = new ToneMarkChecker();
+        return tmc.isLevelTone(l);
+    }
+
+    isObliqueTone(l: string) {
+        console.log("isOblique: %s", l);
+        let tmc = new ToneMarkChecker();
+        return tmc.isObliqueTone(l);
     }
 
     foundBaseTone(bt: string) {
@@ -79,7 +129,7 @@ export class Lexicon {
     }
 
     foundSandhiTone(st: string) {
-        let tmc = new ToneMarkerChecker();
+        let tmc = new ToneMarkChecker();
         for(let i in this.entries) {
             let bt = tmc.checkSandhiTone(st);
             console.log("checked base tone: %s with its sandhi tone:%s", bt, st);
