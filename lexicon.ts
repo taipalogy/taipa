@@ -27,10 +27,13 @@ export class Lexeme {
 
     populateForms() {
         let tmc = new ToneMarkChecker();
-        let btm = tmc.checkBaseTone(this.lemma);
+        let btm = tmc.getBaseToneMark(this.lemma);
+        console.log("about to populate with: %s and %s", this.lemma, btm);
         if(btm) {
             let stm = tmc.getSandhiToneMark(this.lemma);
+            console.log("populating forms with: %s", stm);
             this.forms.push(this.lemma.split(btm) + stm);
+            console.log("populated forms: ", this.forms);
         }
     }
     
@@ -53,7 +56,9 @@ export class Lexeme {
     }
 
     matchedSandhiTone(l: string) {
+        console.log("length of forms: %s", this.forms.length);
         for(let i = 0; i < this.forms.length; i++) {
+            console.log(this.forms[i]);
             if(this.forms[i].match(l)) {
                 return true;
             }
@@ -96,6 +101,7 @@ export class Lexicon {
         } else if(this.isObliqueTone(literal)) {
             for(let i in this.entries) {
                 let e = this.entries[i];
+                console.log("literal: %s. entry: %s", literal, e.lemma);
                 if(e.matchedBaseTone(literal)) {
                     return e;
                 } else if(e.matchedSandhiTone(literal)) {
@@ -131,7 +137,7 @@ export class Lexicon {
     foundSandhiTone(st: string) {
         let tmc = new ToneMarkChecker();
         for(let i in this.entries) {
-            let bt = tmc.checkSandhiTone(st);
+            let bt = tmc.getMatchedBaseTone(st);
             console.log("checked base tone: %s with its sandhi tone:%s", bt, st);
             if(this.entries[i].matched(bt, st)) {
                 return true;

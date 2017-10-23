@@ -2,7 +2,7 @@ class Stem {
 
 }
 
-export class StemChecker {
+export class StemValidator {
 
     validate(s: string) {
     

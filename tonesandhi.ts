@@ -1,4 +1,4 @@
-import { StemChecker } from './stem';
+import { StemValidator } from './stem';
 
 //------------------------------------------------------------------------------
 //  Tone
@@ -39,13 +39,13 @@ export class ToneMarkChecker {
 
     // level tones
     toneFirstWithoutToneMark: Tone;
-    toneFirst: Tone;
-    toneSecond: Tone;
-    toneThird: Tone;
-    toneFifth: Tone;
-    toneSixth: Tone;
-    toneSeventh: Tone;
-    toneNinth: Tone;
+    toneFirstSs: Tone;
+    toneSecondY: Tone;
+    toneThirdW: Tone;
+    toneFifthX: Tone;
+    toneSixthZzs: Tone;
+    toneSeventhZs: Tone;
+    toneNinthXx: Tone;
 
     // oblique tones
     // neutral tones
@@ -75,18 +75,17 @@ export class ToneMarkChecker {
     toneEighthCheckedG: Tone;
 
     constructor() {
-        this.rules = new Array();
         this.levelToneRules = new Array();
         this.obliqueToneRules = new Array();
 
         this.toneFirstWithoutToneMark = new Tone("First Tone without Tone Mark", "");
-        this.toneFirst = new Tone("First Tone", "ss");
-        this.toneSecond = new Tone("Second Tone", "y");
-        this.toneThird = new Tone("Third Tone", "w");
-        this.toneFifth = new Tone("Fifth Tone", "x");
-        this.toneSixth = new Tone("Sixth Tone", "zzs");
-        this.toneSeventh = new Tone("Seventh Tone", "zs");
-        this.toneNinth = new Tone("Ninth Tone", "xx");
+        this.toneFirstSs = new Tone("First Tone", "ss");
+        this.toneSecondY = new Tone("Second Tone", "y");
+        this.toneThirdW = new Tone("Third Tone", "w");
+        this.toneFifthX = new Tone("Fifth Tone", "x");
+        this.toneSixthZzs = new Tone("Sixth Tone", "zzs");
+        this.toneSeventhZs = new Tone("Seventh Tone", "zs");
+        this.toneNinthXx = new Tone("Ninth Tone", "xx");
 
         this.toneFirstNeutralHh = new Tone("First Neutral Tone Hh", "hh");
         this.toneSecondNeutralHy = new Tone("Second Neutral Tone Hy", "hy");
@@ -101,7 +100,7 @@ export class ToneMarkChecker {
         this.toneThirdCheckedBb = new Tone("Third Checked Tone Bb", "bb");
         this.toneThirdCheckedDd = new Tone("Third Checked Tone Dd", "dd");
         this.toneThirdCheckedGg = new Tone("Third Checked Tone Gg", "gg");
-        this.toneFourthCheckedP = new Tone("Fourth Checked Tone P", "p");
+        this.toneFourthCheckedP = new Tone("Fourth Checked Tone P", "pp");
         this.toneFourthCheckedT = new Tone("Fourth Checked Tone T", "t");
         this.toneFourthCheckedK = new Tone("Fourth Checked Tone K", "k");
         this.toneFifthCheckedBx = new Tone("Fifth Checked Tone Bx", "bx");
@@ -111,36 +110,15 @@ export class ToneMarkChecker {
         this.toneEighthCheckedD = new Tone("Eighth Checked Tone D", "d");
         this.toneEighthCheckedG = new Tone("Eighth Checked Tone G", "g");
 
-        this.rules.push(new ToneSandhiRule(this.toneFirstWithoutToneMark, this.toneSeventh));
-        this.rules.push(new ToneSandhiRule(this.toneFirst, this.toneSeventh));        
-        this.rules.push(new ToneSandhiRule(this.toneSecond, this.toneFirst));
-        this.rules.push(new ToneSandhiRule(this.toneThird, this.toneSecond));
-        this.rules.push(new ToneSandhiRule(this.toneThird, this.toneNinth));
-        this.rules.push(new ToneSandhiRule(this.toneThirdCheckedBb, this.toneFifthCheckedBx));
-        this.rules.push(new ToneSandhiRule(this.toneThirdCheckedDd, this.toneFifthCheckedDx));
-        this.rules.push(new ToneSandhiRule(this.toneThirdCheckedGg, this.toneFifthCheckedGx));
-        this.rules.push(new ToneSandhiRule(this.toneThirdNeutralFf, this.toneFifthNeutralFx));
-        this.rules.push(new ToneSandhiRule(this.toneFourthCheckedP, this.toneFirstCheckedPp));
-        this.rules.push(new ToneSandhiRule(this.toneFourthCheckedT, this.toneFirstCheckedTt));
-        this.rules.push(new ToneSandhiRule(this.toneFourthCheckedK, this.toneFirstCheckedKk));
-        this.rules.push(new ToneSandhiRule(this.toneFourthNeutralH, this.toneSecondNeutralHy));
-        this.rules.push(new ToneSandhiRule(this.toneFifth, this.toneSeventh));
-        this.rules.push(new ToneSandhiRule(this.toneSeventh, this.toneThird));
-        this.rules.push(new ToneSandhiRule(this.toneSeventh, this.toneNinth));
-        this.rules.push(new ToneSandhiRule(this.toneEighthCheckedB, this.toneThirdCheckedBb));
-        this.rules.push(new ToneSandhiRule(this.toneEighthCheckedD, this.toneThirdCheckedDd));
-        this.rules.push(new ToneSandhiRule(this.toneEighthCheckedG, this.toneThirdCheckedGg));
-        this.rules.push(new ToneSandhiRule(this.toneEighthNeutralF, this.toneThirdNeutralFf));
-
-        this.levelToneRules.push(new ToneSandhiRule(this.toneFirstWithoutToneMark, this.toneSeventh));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneFirst, this.toneSeventh));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneSecond, this.toneFirst));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneSecond, this.toneFirstWithoutToneMark));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneThird, this.toneSecond));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneThird, this.toneNinth));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneSeventh, this.toneThird));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneFifth, this.toneSeventh));
-        this.levelToneRules.push(new ToneSandhiRule(this.toneSeventh, this.toneNinth));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneFirstWithoutToneMark, this.toneSeventhZs));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneFirstSs, this.toneSeventhZs));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneSecondY, this.toneFirstSs));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneSecondY, this.toneFirstWithoutToneMark));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneThirdW, this.toneSecondY));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneThirdW, this.toneNinthXx));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneSeventhZs, this.toneThirdW));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneFifthX, this.toneSeventhZs));
+        this.levelToneRules.push(new ToneSandhiRule(this.toneSeventhZs, this.toneNinthXx));
 
         this.obliqueToneRules.push(new ToneSandhiRule(this.toneThirdCheckedBb, this.toneFifthCheckedBx));
         this.obliqueToneRules.push(new ToneSandhiRule(this.toneThirdCheckedDd, this.toneFifthCheckedDx));
@@ -157,26 +135,58 @@ export class ToneMarkChecker {
 
     }
 
-    checkBaseTone(t: string) {
-        console.log(this.rules.length);
-        for(let i = 0; i < this.rules.length; i++) {
-            let r = this.rules[i];
+    getBaseToneMark(t: string) {
+        //console.log(this.rules.length);
+        for(let i = 0; i < this.obliqueToneRules.length; i++) {
+            // we firstly filter the tone with oblique tone rules
+            let r = this.obliqueToneRules[i];
             if(t.match(new RegExp(r.baseTone.toneMark))) {
-                console.log("found matched base tone: %s", r.baseTone.name);
                 return r.baseTone.toneMark;
+            } else if(t.match(new RegExp(r.sandhiTone.toneMark))) {
+                return r.sandhiTone.toneMark;
             }
         }
-        return null;
+
+        for(let i = 0; i < this.levelToneRules.length; i++) {
+            // we then filter the tone with level tone rules
+            let r = this.levelToneRules[i];
+            if(r.baseTone.toneMark == this.toneFirstWithoutToneMark.toneMark 
+                || r.sandhiTone.toneMark == this.toneFirstWithoutToneMark.toneMark) {
+                    // bypass the first tone without tone mark
+                    continue;
+            } else if(t.match(new RegExp(r.baseTone.toneMark))) {
+                return r.baseTone.toneMark;
+            } else if(t.match(new RegExp(r.sandhiTone.toneMark))) {
+                return r.sandhiTone.toneMark;
+            }
+        }
+
+        // return the first tone mark which is an empty string
+        return "";
     }
 
-    checkSandhiTone(st: string) {
-        for(let i = 0; i < this.rules.length; i++) {
-            let r = this.rules[i];
+    getMatchedBaseTone(st: string) {
+        for(let i = 0; i < this.obliqueToneRules.length; i++) {
+            let r = this.obliqueToneRules[i];
             // check sandhi tone for its base tone
             if(st.match(new RegExp(r.sandhiTone.toneMark))) {
                 console.log("found matched sandhi tone of: %s", r.baseTone.name);
                 let stems = st.split(r.sandhiTone.toneMark);
                 return stems.shift() + r.baseTone.toneMark;
+            }
+        }
+        for(let i = 0; i < this.levelToneRules.length; i++) {
+            let r = this.levelToneRules[i];
+            if(st.match(new RegExp(r.sandhiTone.toneMark))) {
+                if(r.baseTone.toneMark == this.toneFirstWithoutToneMark.toneMark 
+                    || r.sandhiTone.toneMark == this.toneFirstWithoutToneMark.toneMark) {
+                        // bypass the first tone without tone mark
+                        continue;
+                } else if(st.match(new RegExp(r.baseTone.toneMark))) {
+                    return r.baseTone.toneMark;
+                } else if(st.match(new RegExp(r.sandhiTone.toneMark))) {
+                    return r.sandhiTone.toneMark;
+                }
             }
         }
 
@@ -185,27 +195,42 @@ export class ToneMarkChecker {
     getSandhiToneMark(l: string) : string {
         let stm = "";
 
-        for(let i = 0; i < this.rules.length; i++) {
-            let r = this.rules[i];
+        for(let i = 0; i < this.obliqueToneRules.length; i++) {
+            let r = this.obliqueToneRules[i];
             if(l.match(new RegExp(r.baseTone.toneMark))) {
                 return r.sandhiTone.toneMark;
             }
         }
 
-        return null;
+        for(let i = 0; i < this.levelToneRules.length; i++) {
+            let r = this.levelToneRules[i];
+            if(r.baseTone.toneMark == this.toneFirstWithoutToneMark.toneMark 
+                || r.sandhiTone.toneMark == this.toneFirstWithoutToneMark.toneMark) {
+                    // bypass the first tone without tone mark
+                    continue;
+            }
+            if(l.match(new RegExp(r.baseTone.toneMark))) {
+                return r.sandhiTone.toneMark;
+            }
+        }
+
+        // return the first tone mark which is an empty string
+        return "";
     }
 
     isLevelTone(t: string) {
 
-        let sc = new StemChecker();
+        let sv = new StemValidator();
 
         for(let i = 0; i < this.levelToneRules.length; i++) {
             let r = this.levelToneRules[i];
-            if(r.baseTone.name == this.toneFirstWithoutToneMark.name) {
+            if(r.baseTone.name == this.toneFirstWithoutToneMark.name 
+                || r.sandhiTone.name == this.toneFirstWithoutToneMark.name ) {
                 // the first tone is the lemma, it has no tone mark as a word
                 console.log("first tone without tone mark");
-                if(sc.validate(t)) {
-                    //return true;
+                if(sv.validate(t) && !this.isObliqueTone(t)) {
+                    console.log("validate the stem and verify it is not oblique");
+                    return true;
                 }
                 return false;
             }
@@ -222,9 +247,13 @@ export class ToneMarkChecker {
         console.log("isObliqueTone: %s", t);
         for(let i = 0; i < this.obliqueToneRules.length; i++) {
             let r = this.obliqueToneRules[i];
+            console.log(new RegExp(r.baseTone.toneMark));
+            console.log(new RegExp(r.sandhiTone.toneMark));
             if(t.match(new RegExp(r.baseTone.toneMark))) {
+                console.log("matched");
                 return true;
             } else if(t.match(new RegExp(r.sandhiTone.toneMark))) {
+                console.log("matched");
                 return true;
             }
         }
