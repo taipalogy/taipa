@@ -1,4 +1,4 @@
-import { StemValidator } from './stem';
+import { ToneStemValidator } from './tonestem';
 
 //------------------------------------------------------------------------------
 //  Tone
@@ -29,7 +29,7 @@ class ToneSandhiRule {
 }
 
 //------------------------------------------------------------------------------
-//  BaseToneChecker
+//  Tone Mark Checker
 //------------------------------------------------------------------------------
 
 export class ToneMarkChecker {
@@ -220,7 +220,7 @@ export class ToneMarkChecker {
 
     isLevelTone(t: string) {
 
-        let sv = new StemValidator();
+        let sv = new ToneStemValidator();
 
         for(let i = 0; i < this.levelToneRules.length; i++) {
             let r = this.levelToneRules[i];
