@@ -1,6 +1,6 @@
 import { Word } from './word';
 import { Widget } from './widget';
-import { ToneMarkChecker } from './tonesandhi';
+import { ToneMarkChecker } from './tonemark';
 import { PartOfSpeech } from './word';
 
 //------------------------------------------------------------------------------
@@ -31,9 +31,9 @@ export class Lexeme {
         console.log("about to populate with: %s and %s", this.lemma, btm);
         if(btm) {
             let stm = tmc.getSandhiToneMark(this.lemma);
-            console.log("populating forms with: %s", stm);
-            this.forms.push(this.lemma.split(btm) + stm);
-            console.log("populated forms: ", this.forms);
+            console.log("populating forms with sandhi tone mark: %s", stm);
+            this.forms.push(this.lemma.split(btm).shift() + stm);
+            console.log("populated forms: ", this.forms[0]);
         }
     }
     
