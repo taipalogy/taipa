@@ -29,6 +29,7 @@ export class Rectangle extends Widget {
 export class Title extends Widget {
     title: string;
     fillColor: string;
+    borderColor: string;
     font: string;
 
     constructor() {

@@ -99,7 +99,10 @@ export class ToneSandhiWord extends Word {
 
   private currentTone: string;
 
-  objects: any;
+  widgets: Array<Widget>;
+
+  context: {};
+  payload: Array<string>;
   
   constructor(w: string) {
     super();
@@ -107,6 +110,8 @@ export class ToneSandhiWord extends Word {
     console.log("ToneSandhiWord:%s", this.literal);
     this.left = null;
     this.right = null;
+    this.payload = new Array();
+    this.widgets = new Array();
   }
 
   getLiteral() {
