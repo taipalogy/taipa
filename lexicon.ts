@@ -90,15 +90,15 @@ export class Lexicon {
 
     getLexeme(literal: string) : Lexeme {
         console.log("about to get lexeme: %s", literal);
-        if(this.isLevelTone(literal)) {
-            console.log("%s is a level tone", literal);
+        if(this.isUncheckedTone(literal)) {
+            console.log("%s is a unchecked tone", literal);
             for(let i in this.entries) {
                 let e = this.entries[i];
                 if(e.matchedBaseTone(literal)) {
                     return e;
                 }
             }
-        } else if(this.isObliqueTone(literal)) {
+        } else if(this.isCheckedTone(literal)) {
             for(let i in this.entries) {
                 let e = this.entries[i];
                 console.log("literal: %s. entry: %s", literal, e.lemma);
@@ -114,16 +114,16 @@ export class Lexicon {
         return null;
     }
 
-    isLevelTone(l: string) {
-        console.log("isLevel: %s", l);
+    isUncheckedTone(l: string) {
+        console.log("isUnchecked: %s", l);
         let tmc = new ToneMarkChecker();
-        return tmc.isLevelTone(l);
+        return tmc.isUncheckedTone(l);
     }
 
-    isObliqueTone(l: string) {
-        console.log("isOblique: %s", l);
+    isCheckedTone(l: string) {
+        console.log("isChecked: %s", l);
         let tmc = new ToneMarkChecker();
-        return tmc.isObliqueTone(l);
+        return tmc.isCheckedTone(l);
     }
 
     foundBaseTone(bt: string) {

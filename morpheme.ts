@@ -47,7 +47,7 @@ class ToneSandhiPrefix extends ToneSandhiAffix {
     interfix: string;
 }
 
-class ToneSandhiInterfix extends ToneSandhiAffix {
+class ToneSandhiInfix extends ToneSandhiAffix {
     stem: string;
     interfix: string;
 }
@@ -95,7 +95,7 @@ export class ToneSandhiMorphemeAnalyzer {
                     } else if(i + 1 < len) {
                         //interfix
                         console.log("analyzing interfix");
-                        let i = new ToneSandhiInterfix();
+                        let i = new ToneSandhiInfix();
                         i.stem = this.stems.shift();
                         i.interfix = this.boundMorphemes.shift();
                         if(this.found(i.stem, i.interfix)) {
