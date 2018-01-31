@@ -1,4 +1,4 @@
-import { ToneStemValidator } from './tonestem';
+import { RootValidator } from './root';
 
 //------------------------------------------------------------------------------
 //  Tone
@@ -194,7 +194,7 @@ export class ToneMarkChecker {
 
     getSandhiToneMark(l: string) : string {
         let stm = "";
-        let tsv = new ToneStemValidator();
+        let tsv = new RootValidator();
         let matches = tsv.validate(l);
         
         if(matches) {
@@ -228,7 +228,7 @@ export class ToneMarkChecker {
 
     isUncheckedTone(t: string) {
 
-        let sv = new ToneStemValidator();
+        let sv = new RootValidator();
 
         for(let i = 0; i < this.uncheckedToneRules.length; i++) {
             let r = this.uncheckedToneRules[i];

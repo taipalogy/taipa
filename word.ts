@@ -122,7 +122,7 @@ export class ToneSandhiWord extends Word {
     console.log("ToneSandhiWord evaluation, literal:%s", this.literal);
     let ma = new ToneSandhiMorphemeAnalyzer(this.literal);
     let a: Array<ToneSandhiAffix> = ma.analyze();
-    console.log("I have %d affixes", a.length);
+    console.log("%s have %d affixes", this.literal , a.length);
     console.log(a);
     let aRight: ToneSandhiAffix, aLeft: ToneSandhiAffix;
     for(let i = 0 ; i < a.length ; i++) {
