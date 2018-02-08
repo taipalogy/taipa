@@ -139,8 +139,9 @@ export class ToneSandhiWord extends Word {
           return tmp;
         }
       }
-
     }
+    console.log("end of evaluation");
+    return true;
   }
 
   addProperty(w: Widget, prop: string) {
@@ -208,7 +209,7 @@ export class AstWrapper {
     }
 
     this.counter++;
-    this.literal = this.literal + "-" + e.literal;
+    this.literal = this.literal + e.literal;
     console.log("literal%d:%s", this.counter, e.literal);
     
     this.printPreorder(e.left);
@@ -217,7 +218,7 @@ export class AstWrapper {
 
   evaluate(context) {
     console.log("AstWrapper evaluation");
-    this.ast.evaluate(context);
+    return this.ast.evaluate(context);
   }
 }
 

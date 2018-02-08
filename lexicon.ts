@@ -49,7 +49,8 @@ export class Lexeme {
     }
 
     matchedBaseTone(l: string) {
-        if(this.lemma.match(l)) {
+        // exact match
+        if(this.lemma === l) {
             return true;
         }
         return false;
@@ -129,6 +130,7 @@ export class Lexicon {
     foundBaseTone(bt: string) {
         for(let i in this.entries) {
             if(this.entries[i].matchedBaseTone(bt)) {
+                console.log("found a matched base tone. bt:%s", bt);
                 return true;
             }
         }
@@ -151,14 +153,17 @@ export class Lexicon {
         // find this lexeme in the lexicon entries
         console.log("about to find a lexeme as base tone:%s", l);
         if(this.foundBaseTone(l)) {
+            console.log("found a lexeme as base tone");
             return true;
         } 
 
         console.log("about to find a lexeme as sandhi tone:%s", l);
         if(this.foundSandhiTone(l)) {
+            console.log("found a lexeme as sandhi tone");
             return true;
         }
 
+        console.log("didn't find a lexeme");
         return false;
     }
 }
