@@ -62,9 +62,6 @@ export class WordFactory implements WordAbstractFactory {
 export class Word implements IWord {
   partOfSpeech: PartOfSpeech;
 
-  //private stem: string;
-  //private boundMorphemes: string;
-
   // left and right must be promoted to Word class
   // left and right are for tree traversal
   // it is in fact there are no left and right on ToneSandhiNoun
@@ -83,7 +80,7 @@ export class Word implements IWord {
 
 export class InflectionWord {
   lemma: string; // uninflected form
-  forms: string; // inflected forms. stems
+  forms: string; // inflected forms.
   // inflectional rules
 }
 

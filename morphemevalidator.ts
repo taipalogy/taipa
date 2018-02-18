@@ -5,18 +5,18 @@ import { Regex } from './morpheme';
 //------------------------------------------------------------------------------
 
 export class MorphemeValidator {
-    stem: string = "";
+    root: string = "";
     suffix: string = ""; // tone markers
     counter: number;
     literal: string;
 
     constructor(s: string) {
         this.literal = s;
-        let stems = this.literal.match(Regex.stemRegex);
-        if (stems) {
-            console.log(stems);
-            console.log("length of outputs of stem morpheme:%d", stems.length);
-            this.counter = stems.length;
+        let roots = this.literal.match(Regex.rootRegex);
+        if (roots) {
+            console.log(roots);
+            console.log("length of outputs of root morpheme:%d", roots.length);
+            this.counter = roots.length;
         }
 
         let boundMorphemes = this.literal.match(Regex.boundMorphemeRegex);
@@ -24,10 +24,10 @@ export class MorphemeValidator {
             console.log("length of outputs of bound morpheme:%d", boundMorphemes.length);
         }
 
-        if(stems && boundMorphemes) {
+        if(roots && boundMorphemes) {
             for(var i = 0; i < this.counter; i++) {
-                // this is one of the stems
-                this.stem = this.stem + stems.shift();
+                // this is one of the roots
+                this.root = this.root + roots.shift();
                 if(i + 1 == this.counter) {
                     // pop out the last element from the array. this is the suffix
                     this.suffix = boundMorphemes.pop();
@@ -35,18 +35,18 @@ export class MorphemeValidator {
                 }
                 else {
                     // this is the interfix
-                    this.stem = this.stem + boundMorphemes.shift();
+                    this.root = this.root + boundMorphemes.shift();
                 }
             }
 
-            console.log("%cStem:%s", "color: lightcoral; font-size: large", this.stem);
+            console.log("%croot:%s", "color: lightcoral; font-size: large", this.root);
             console.log("%cSuffix:%s", "color: lightcoral; font-size: large", this.suffix);
             console.log(this.counter);
         }
     }
 
     validate() {
-        if(this.literal.match(this.getStemRegex()) 
+        if(this.literal.match(this.getRootRegex()) 
             && this.literal.match(this.getBoundMorphemeRegex())) {
             
             return true;
@@ -55,9 +55,9 @@ export class MorphemeValidator {
         return false;
     }
 
-    getStemRegex() {
-        console.log("stemMorpheme:%s", this.stem);
-        return new RegExp(this.stem);
+    getRootRegex() {
+        console.log("rootMorpheme:%s", this.root);
+        return new RegExp(this.root);
     }
 
     getBoundMorphemeRegex() {

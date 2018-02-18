@@ -5,7 +5,7 @@ import { Lexicon, lexicon } from './lexicon';
 //------------------------------------------------------------------------------
 
 export class Regex {
-    public static readonly stemRegex = /ji|si|su|tia/g;
+    public static readonly rootRegex = /ji|si|su|tia/g;
     public static readonly boundMorphemeRegex = 
         /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|qx|zzs|zs|bb?|dd?|qq?|ff?|xx/g;
 }
@@ -43,17 +43,17 @@ export class ToneSandhiAffix extends Morpheme {
 }
 
 class ToneSandhiPrefix extends ToneSandhiAffix {
-    stem: string;
+    root: string;
     interfix: string;
 }
 
 class ToneSandhiInfix extends ToneSandhiAffix {
-    stem: string;
+    root: string;
     interfix: string;
 }
 
 class ToneSandhiSuffix extends ToneSandhiAffix {
-    stem: string;
+    root: string;
     suffix: string;
 }
 
@@ -62,33 +62,33 @@ class ToneSandhiSuffix extends ToneSandhiAffix {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphemeAnalyzer {
-    stems: Array<string>;
+    roots: Array<string>;
     boundMorphemes: Array<string>;
     affixes: Array<ToneSandhiAffix>;
 
     constructor(l: string) {
         // inject the lexicon
-        this.stems = l.match(Regex.stemRegex);
-        console.log("literal:" + l + " stems:" + this.stems);
+        this.roots = l.match(Regex.rootRegex);
+        console.log("literal:" + l + " roots:" + this.roots);
         this.boundMorphemes = l.match(Regex.boundMorphemeRegex);
         // initialize the affix array
         this.affixes = new Array();
     }
 
     analyze() {
-        if(this.stems && this.boundMorphemes) {
-            console.log("analyzing stems and boundMorphemes");
-            if(this.stems.length == this.boundMorphemes.length) {
-                let len = this.stems.length;
-                console.log("analyzing affixes, length of stems: %d", this.stems.length);
+        if(this.roots && this.boundMorphemes) {
+            console.log("analyzing roots and boundMorphemes");
+            if(this.roots.length == this.boundMorphemes.length) {
+                let len = this.roots.length;
+                console.log("analyzing affixes, length of roots: %d", this.roots.length);
                 for(let i = 0; i < len; i++) {
                     if(i == 0) {
                         // prefix
                         console.log("analyzing prefix");
                         let p = new ToneSandhiPrefix();
-                        p.stem = this.stems.shift();
+                        p.root = this.roots.shift();
                         p.interfix = this.boundMorphemes.shift();
-                        if(this.found(p.stem, p.interfix)) {
+                        if(this.found(p.root, p.interfix)) {
                             console.log("analyzing prefix. found");
                             this.affixes.push(p);
                         }
@@ -96,9 +96,9 @@ export class ToneSandhiMorphemeAnalyzer {
                         //interfix
                         console.log("analyzing interfix");
                         let i = new ToneSandhiInfix();
-                        i.stem = this.stems.shift();
+                        i.root = this.roots.shift();
                         i.interfix = this.boundMorphemes.shift();
-                        if(this.found(i.stem, i.interfix)) {
+                        if(this.found(i.root, i.interfix)) {
                             console.log("analyzing interfix. found");
                             this.affixes.push(i);
                         }
@@ -106,9 +106,9 @@ export class ToneSandhiMorphemeAnalyzer {
                         // suffix
                         console.log("analyzing suffix");
                         let s = new ToneSandhiSuffix();
-                        s.stem = this.stems.shift();
+                        s.root = this.roots.shift();
                         s.suffix = this.boundMorphemes.shift();
-                        if(this.found(s.stem, s.suffix)) {
+                        if(this.found(s.root, s.suffix)) {
                             console.log("analyzing suffix. found");
                             this.affixes.push(s);
                         }

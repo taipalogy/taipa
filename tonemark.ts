@@ -171,8 +171,8 @@ export class ToneMarkChecker {
             // check sandhi tone for its base tone
             if(st.match(new RegExp(r.sandhiTone.toneMark))) {
                 console.log("found matched sandhi tone of: %s", r.baseTone.name);
-                let stems = st.split(r.sandhiTone.toneMark);
-                return stems.shift() + r.baseTone.toneMark;
+                let roots = st.split(r.sandhiTone.toneMark);
+                return roots.shift() + r.baseTone.toneMark;
             }
         }
         for(let i = 0; i < this.uncheckedToneRules.length; i++) {
@@ -237,7 +237,7 @@ export class ToneMarkChecker {
                 // the first tone is the lemma, it has no tone mark as a word
                 console.log("first tone without tone mark");
                 if(sv.validate(t) && !this.isCheckedTone(t)) {
-                    console.log("validate the stem and verify it is not checked");
+                    console.log("validate the root and verify it is not checked");
                     return true;
                 }
                 return false;
