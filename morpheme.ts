@@ -7,7 +7,7 @@ import { Lexicon, lexicon } from './lexicon';
 export class Regex {
     public static readonly rootRegex = /ji|si|su|tia/g;
     public static readonly boundMorphemeRegex = 
-        /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|qx|zzs|zs|bb?|dd?|qq?|ff?|xx/g;
+        /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|gx|zzs|zs|bb?|dd?|gg?|ff?|xx/g;
 }
 
 //------------------------------------------------------------------------------

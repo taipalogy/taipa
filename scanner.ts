@@ -1,8 +1,12 @@
+
 //------------------------------------------------------------------------------
-//  Escape Characters
+//  Regular Expressions
 //------------------------------------------------------------------------------
 
-export class Escape {
+export class ScannerRegex {
+    public static readonly ALPHABET = /a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z/g;
+
+    // escape characters
     public static readonly ENDOFFILE = "\0";
     public static readonly TAB = "\t";
     public static readonly NEWLINE = "\n";
@@ -32,11 +36,12 @@ export class Character {
     toString() {
         let cargo = "";
 
-        if(this.cargo == Escape.WHITESPACE) cargo = " space";
-        else if(this.cargo == Escape.NEWLINE) cargo = " newline";
-        else if(this.cargo == Escape.TAB) cargo = " tab";
-        else if(this.cargo == Escape.ENDOFFILE) cargo = " eof";
-        else cargo = this.cargo;
+        if(this.cargo == ScannerRegex.WHITESPACE) cargo = " space";
+        else if(this.cargo == ScannerRegex.NEWLINE) cargo = " newline";
+        else if(this.cargo == ScannerRegex.TAB) cargo = " tab";
+        else if(this.cargo == ScannerRegex.ENDOFFILE) cargo = " eof";
+        else if(this.cargo.match(ScannerRegex.ALPHABET)) cargo = this.cargo;
+        else cargo = " invalid character";
         
         return "   " + this.lineIndex.toString() + "      " + this.colIndex.toString() + " " + cargo;
     }
@@ -77,7 +82,7 @@ export class Scanner {
         this.colIndex += 1;
 
         if(this.sourceIndex > this.lastIndex) {
-            this.char = new Character(Escape.ENDOFFILE, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
+            this.char = new Character(ScannerRegex.ENDOFFILE, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
         } else {
             this.c = this.sourceText[this.sourceIndex];
             this.char = new Character(this.c, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
@@ -89,7 +94,7 @@ export class Scanner {
         let index: number = this.sourceIndex + offset;
 
         if(index > this.lastIndex) {
-            return Escape.ENDOFFILE;
+            return ScannerRegex.ENDOFFILE;
         } else {
             return this.sourceText[index];
         }

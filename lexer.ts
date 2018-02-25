@@ -1,4 +1,4 @@
-import { Scanner, Character, Escape } from './../core/scanner';
+import { Scanner, Character, ScannerRegex } from './../core/scanner';
 
 //------------------------------------------------------------------------------
 //  Type constants
@@ -84,7 +84,7 @@ export class Lexer {
         let token = new Token(this.character);
         //console.log("this.character", this.character);
 
-        if(this.c1 == Escape.ENDOFFILE) {
+        if(this.c1 == ScannerRegex.ENDOFFILE) {
             token.type = Type.ENDOFFILE;
             return token;
         }
