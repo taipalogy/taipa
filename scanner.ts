@@ -4,8 +4,8 @@
 //------------------------------------------------------------------------------
 
 export class ScannerRegex {
-    public static readonly ALPHABET = /a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z/g;
-
+    public static readonly ALPHABET = /A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z/g;
+    public static readonly aLPHABET = /a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z/g;
     // escape characters
     public static readonly ENDOFFILE = "\0";
     public static readonly TAB = "\t";
@@ -40,7 +40,7 @@ export class Character {
         else if(this.cargo == ScannerRegex.NEWLINE) cargo = " newline";
         else if(this.cargo == ScannerRegex.TAB) cargo = " tab";
         else if(this.cargo == ScannerRegex.ENDOFFILE) cargo = " eof";
-        else if(this.cargo.match(ScannerRegex.ALPHABET)) cargo = this.cargo;
+        else if(this.cargo.match(ScannerRegex.ALPHABET) || this.cargo.match(ScannerRegex.aLPHABET)) cargo = this.cargo;
         else cargo = " invalid character";
         
         return "   " + this.lineIndex.toString() + "      " + this.colIndex.toString() + " " + cargo;

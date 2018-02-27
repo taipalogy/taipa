@@ -1,6 +1,5 @@
 import { MorphemeValidator } from './morphemevalidator';
-import { Regex } from './morpheme';
-import { ToneSandhiAffix, ToneSandhiMorphemeAnalyzer } from './morpheme';
+import { MorphologicalAnalyzerRegex, ToneSandhiAffix, ToneSandhiMorphologicalAnalyzer } from './morphologicalanalyzer';
 import { Widget } from './widget';
 import { lexicon } from './lexicon';
 
@@ -51,12 +50,12 @@ export class WordFactory implements WordAbstractFactory {
 }
 
 //------------------------------------------------------------------------------
+//  Interpreter Pattern
+//------------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------------
 //  Expressions
-//------------------------------------------------------------------------------
-
-
-//------------------------------------------------------------------------------
-//  Word
 //------------------------------------------------------------------------------
 
 export class Word implements IWord {
@@ -117,8 +116,8 @@ export class ToneSandhiWord extends Word {
 
   evaluate(context) {
     console.log("ToneSandhiWord evaluation, literal:%s", this.literal);
-    let ma = new ToneSandhiMorphemeAnalyzer(this.literal);
-    let a: Array<ToneSandhiAffix> = ma.analyze();
+    let tsma = new ToneSandhiMorphologicalAnalyzer(this.literal);
+    let a: Array<ToneSandhiAffix> = tsma.analyze();
     console.log("%s have %d affixes", this.literal , a.length);
     console.log(a);
     let aRight: ToneSandhiAffix, aLeft: ToneSandhiAffix;
@@ -182,6 +181,11 @@ export class ToneSandhiVerb extends ToneSandhiWord {
   }
   process() {}
 }
+
+//-----------------------------------------------------------------------------
+//  Adapter Pattern
+//-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 //  Wrapper for Abstract Syntax Tree

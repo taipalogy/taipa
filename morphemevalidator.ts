@@ -1,4 +1,4 @@
-import { Regex } from './morpheme';
+import { MorphologicalAnalyzerRegex } from './morphologicalanalyzer';
 
 //------------------------------------------------------------------------------
 //  LexicalAnalyzer
@@ -12,30 +12,30 @@ export class MorphemeValidator {
 
     constructor(s: string) {
         this.literal = s;
-        let roots = this.literal.match(Regex.rootRegex);
+        let roots = this.literal.match(MorphologicalAnalyzerRegex.rootRegex);
         if (roots) {
             console.log(roots);
             console.log("length of outputs of root morpheme:%d", roots.length);
             this.counter = roots.length;
         }
 
-        let boundMorphemes = this.literal.match(Regex.boundMorphemeRegex);
-        if (boundMorphemes) {
-            console.log("length of outputs of bound morpheme:%d", boundMorphemes.length);
+        let interfixes = this.literal.match(MorphologicalAnalyzerRegex.interfixRegex);
+        if (interfixes) {
+            console.log("length of outputs of bound morpheme:%d", interfixes.length);
         }
 
-        if(roots && boundMorphemes) {
+        if(roots && interfixes) {
             for(var i = 0; i < this.counter; i++) {
                 // this is one of the roots
                 this.root = this.root + roots.shift();
                 if(i + 1 == this.counter) {
                     // pop out the last element from the array. this is the suffix
-                    this.suffix = boundMorphemes.pop();
+                    this.suffix = interfixes.pop();
                     break;
                 }
                 else {
                     // this is the interfix
-                    this.root = this.root + boundMorphemes.shift();
+                    this.root = this.root + interfixes.shift();
                 }
             }
 
