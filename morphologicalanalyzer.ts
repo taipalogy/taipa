@@ -5,9 +5,13 @@ import { Lexicon, lexicon } from './lexicon';
 //------------------------------------------------------------------------------
 
 export class MorphologicalAnalyzerRegex {
-    public static readonly rootRegex = /ji|si|su|tia/g;
+    public static readonly stemRegex = /ji|si|su|tia/g;
     public static readonly interfixRegex = 
         /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|gx|zzs|zs|bb?|dd?|gg?|ff?|xx/g;
+    public static readonly initial = /b|c|d|g|h|j|k|l|m|n|p|q|s|t|v|z/g;
+    public static readonly medial = /a(i|u)?|e|i(au?|e|o|ur?)?|o|u(ai?|e|r)?/g;
+    public static readonly final = /b(b|x)?|d(d|x)?|f(f|x)?|g(g|x)?|h(h|y)?|kk?|m|n|pp?|ss|tt?|w|xx?|y|zz?s/g;
+    public static readonly nasal = /m|n(g|n)?/g;
 }
 
 //------------------------------------------------------------------------------
@@ -39,21 +43,28 @@ export class ToneSandhiAffix extends Morpheme {
     private object: any;
     funktion: Function;
 
+    initial: string;
+    medialOne: string;
+    medialTwo: string;
+    finalOne: string;
+    finalTwo: string;
+    finalThree: string;
+
     getObject() {return this.object;}
 }
 
 class ToneSandhiPrefix extends ToneSandhiAffix {
-    root: string;
+    stem: string;
     interfix: string;
 }
 
 class ToneSandhiInfix extends ToneSandhiAffix {
-    root: string;
+    stem: string;
     interfix: string;
 }
 
 class ToneSandhiSuffix extends ToneSandhiAffix {
-    root: string;
+    stem: string;
     suffix: string;
 }
 
@@ -62,43 +73,43 @@ class ToneSandhiSuffix extends ToneSandhiAffix {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphologicalAnalyzer {
-    roots: Array<string>;
+    stems: Array<string>;
     interfixes: Array<string>;
     affixes: Array<ToneSandhiAffix>;
 
     constructor(l: string) {
         // inject the lexicon
-        this.roots = l.match(MorphologicalAnalyzerRegex.rootRegex);
-        console.log("literal:" + l + " roots:" + this.roots);
+        this.stems = l.match(MorphologicalAnalyzerRegex.stemRegex);
+        console.log("literal:" + l + " stems:" + this.stems);
         this.interfixes = l.match(MorphologicalAnalyzerRegex.interfixRegex);
         // initialize the affix array
         this.affixes = new Array();
     }
 
     analyze() {
-        if(this.roots && this.interfixes) {
-            console.log("analyzing roots and interfixes");
-            if(this.roots.length == this.interfixes.length) {
-                let len = this.roots.length;
-                console.log("analyzing affixes, length of roots: %d", this.roots.length);
+        if(this.stems && this.interfixes) {
+            console.log("analyzing stems and interfixes");
+            if(this.stems.length == this.interfixes.length) {
+                let len = this.stems.length;
+                console.log("analyzing affixes, length of stems: %d", this.stems.length);
                 for(let i = 0; i < len; i++) {
                     if(i == 0) {
                         // prefix
                         console.log("analyzing prefix");
                         let p = new ToneSandhiPrefix();
-                        p.root = this.roots.shift();
+                        p.stem = this.stems.shift();
                         p.interfix = this.interfixes.shift();
-                        if(this.found(p.root, p.interfix)) {
+                        if(this.found(p.stem, p.interfix)) {
                             console.log("analyzing prefix. found");
                             this.affixes.push(p);
                         }
                     } else if(i + 1 < len) {
-                        //interfix
+                        //infix
                         console.log("analyzing infix");
                         let i = new ToneSandhiInfix();
-                        i.root = this.roots.shift();
+                        i.stem = this.stems.shift();
                         i.interfix = this.interfixes.shift();
-                        if(this.found(i.root, i.interfix)) {
+                        if(this.found(i.stem, i.interfix)) {
                             console.log("analyzing interfix. found");
                             this.affixes.push(i);
                         }
@@ -106,9 +117,9 @@ export class ToneSandhiMorphologicalAnalyzer {
                         // suffix
                         console.log("analyzing suffix");
                         let s = new ToneSandhiSuffix();
-                        s.root = this.roots.shift();
+                        s.stem = this.stems.shift();
                         s.suffix = this.interfixes.shift();
-                        if(this.found(s.root, s.suffix)) {
+                        if(this.found(s.stem, s.suffix)) {
                             console.log("analyzing suffix. found");
                             this.affixes.push(s);
                         }
