@@ -10,8 +10,13 @@ export class MorphologicalAnalyzerRegex {
         /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|gx|zzs|zs|bb?|dd?|gg?|ff?|xx/g;
     public static readonly initial = /b|c|d|g|h|j|k|l|m|n|p|q|s|t|v|z/g;
     public static readonly medial = /a(i|u)?|e|i(au?|e|o|ur?)?|o|u(ai?|e|r)?/g;
-    public static readonly final = /b(b|x)?|d(d|x)?|f(f|x)?|g(g|x)?|h(h|y)?|kk?|m|n|pp?|ss|tt?|w|xx?|y|zz?s/g;
     public static readonly nasal = /m|n(g|n)?/g;
+    //public static readonly final = /b|d|f|g|h|k|p|t/g;
+    public static readonly neutralFinal = /f|h/g;
+    public static readonly nonNeutralFinal = /b|d|g|k|p|t/g;
+    public static readonly uncheckedToneMarker = /ss|y|w|xx?|zz?s/g;
+    public static readonly checkedToneMarker = /b|d|g|k|p|t|x|y/g;
+    public static readonly neutralToneMarker = /f|x|h|y/g;
 }
 
 //------------------------------------------------------------------------------
@@ -48,7 +53,7 @@ export class ToneSandhiAffix extends Morpheme {
     medialTwo: string;
     finalOne: string;
     finalTwo: string;
-    finalThree: string;
+    toneMarker: string;
 
     getObject() {return this.object;}
 }
@@ -68,6 +73,43 @@ class ToneSandhiSuffix extends ToneSandhiAffix {
     suffix: string;
 }
 
+
+//------------------------------------------------------------------------------
+//  State pattern
+//------------------------------------------------------------------------------
+
+interface StateLike {
+    analyze(context: StateContext, literal: string);
+}
+
+class State implements StateLike {
+    analyze(context: StateContext, literal: string) { return null; }
+}
+
+class StemState extends State {
+    analyze(context: StateContext, literal: string) {
+
+    }
+}
+
+class StateContext {
+
+    private myState: State;
+
+    constructor() {
+        this.myState = new State();
+    }
+
+    setState(newState: StateLike) {
+        this.myState = newState;
+
+    }
+
+    analyze(literal: string) {
+        this.myState.analyze(this, literal);
+    }
+}
+
 //------------------------------------------------------------------------------
 //  ToneSandhiMorphologicalAnalyzer
 //------------------------------------------------------------------------------
@@ -84,6 +126,9 @@ export class ToneSandhiMorphologicalAnalyzer {
         this.interfixes = l.match(MorphologicalAnalyzerRegex.interfixRegex);
         // initialize the affix array
         this.affixes = new Array();
+
+        let sc: StateContext = new StateContext();
+        sc.analyze(l);
     }
 
     analyze() {
