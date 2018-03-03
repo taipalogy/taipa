@@ -44,16 +44,22 @@ class Morpheme implements IMorpheme {
     literal: string;
 }
 
+
 export class ToneSandhiAffix extends Morpheme {
+
+    // ToneSandhiAffix is an standalone affix without ToneSandhiPrefix 
+    // and ToneSandhiSuffix
     private object: any;
     funktion: Function;
 
-    initial: string;
-    medialOne: string;
-    medialTwo: string;
-    finalOne: string;
-    finalTwo: string;
-    toneMarker: string;
+    stem: string = "";
+    suffix: string = "";
+    
+    initial: string = "";
+    medial: string = "";
+    nasal: string = "";
+    final: string = "";
+    toneMarker: string = "";
 
     getObject() {return this.object;}
 }
@@ -86,9 +92,83 @@ class State implements StateLike {
     analyze(context: StateContext, literal: string) { return null; }
 }
 
+class NonNeutralFinalState extends State {
+    analyze(context: StateContext, literal: string) {
+        console.log("reached nonneutralfinalstate. literal:%s", literal);
+            context.setState(new ToneSandhiAffixState());
+            context.analyze(literal);
+    }
+}
+
+class UncheckedToneMarkerState extends State {
+    analyze(context: StateContext, literal: string) {
+        console.log("reached uncheckedtonemarkerstate. literal:%s", literal);
+            context.setState(new ToneSandhiAffixState());
+            context.analyze(literal);
+    }
+}
+
+class MedialState extends State {
+    analyze(context: StateContext, literal: string) {
+        console.log("reached medialstate. literal:%s", literal);
+        if(literal.search(MorphologicalAnalyzerRegex.uncheckedToneMarker) == 0) {
+            let m = literal.match(MorphologicalAnalyzerRegex.uncheckedToneMarker)[0];
+            context.affixes[context.affixes.length-1].toneMarker = m;
+            context.affixes[context.affixes.length-1].suffix += m;
+            let l = literal.slice(m.length);
+            context.setState(new UncheckedToneMarkerState());
+            context.analyze(l);
+        } else if(literal.search(MorphologicalAnalyzerRegex.nonNeutralFinal) == 0) {
+            let m = literal.match(MorphologicalAnalyzerRegex.nonNeutralFinal)[0];
+            context.affixes[context.affixes.length-1].final = m;
+            context.affixes[context.affixes.length-1].stem += m;
+            let l = literal.slice(m.length);
+            context.setState(new NonNeutralFinalState());
+            context.analyze(l);
+        }
+    }
+}
+
+class InitialState extends State {
+    analyze(context: StateContext, literal: string) {
+        console.log("reached initialstate. literal:%s", literal);
+        if(literal.search(MorphologicalAnalyzerRegex.medial) == 0) {
+            let m = literal.match(MorphologicalAnalyzerRegex.medial)[0];
+            context.affixes[context.affixes.length-1].medial = m;
+            context.affixes[context.affixes.length-1].stem += m;
+            let l = literal.slice(m.length);
+            context.setState(new MedialState());
+            context.analyze(l);
+        }
+    }
+}
+
 class StemState extends State {
     analyze(context: StateContext, literal: string) {
+        console.log("reached stemstate. literal:%s", literal);
+        if(literal.search(MorphologicalAnalyzerRegex.initial) == 0) {
+            let m = literal.match(MorphologicalAnalyzerRegex.initial)[0];
+            context.affixes[context.affixes.length-1].initial = m;
+            context.affixes[context.affixes.length-1].stem += m;
+            let l = literal.slice(m.length);
+            context.setState(new InitialState());
+            context.analyze(l);
+        }
+    }
+}
 
+class ToneSandhiAffixState extends State {
+    analyze(context: StateContext, literal: string) {
+        context.affixes.push(new ToneSandhiAffix());
+        context.setState(new StemState);
+        context.analyze(literal);
+    }
+}
+
+class WordState extends State {
+    analyze(context: StateContext, literal: string) {
+        context.setState(new ToneSandhiAffixState());
+        context.analyze(literal)
     }
 }
 
@@ -96,8 +176,12 @@ class StateContext {
 
     private myState: State;
 
+    affixes: Array<ToneSandhiAffix>;
+
     constructor() {
         this.myState = new State();
+        this.affixes = new Array();
+        this.setState(new WordState());
     }
 
     setState(newState: StateLike) {
@@ -129,6 +213,7 @@ export class ToneSandhiMorphologicalAnalyzer {
 
         let sc: StateContext = new StateContext();
         sc.analyze(l);
+        console.log(sc.affixes);
     }
 
     analyze() {
