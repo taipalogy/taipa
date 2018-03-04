@@ -28,7 +28,7 @@ interface IMorpheme {
 }
 
 //------------------------------------------------------------------------------
-//  Sub-Expressions
+//  Expressions
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -39,11 +39,17 @@ interface IMorpheme {
     literal: string;
 }
 
-class Morpheme implements IMorpheme {
+export class Morpheme implements IMorpheme {
     next: Morpheme;
     literal: string;
 }
 
+export class AndMorphemeExpression extends Morpheme {
+    constructor() {
+        super();
+        this.literal = '&';
+    }
+}
 
 export class ToneSandhiAffix extends Morpheme {
 
@@ -112,17 +118,17 @@ class MedialState extends State {
     analyze(context: StateContext, literal: string) {
         console.log("reached medialstate. literal:%s", literal);
         if(literal.search(MorphologicalAnalyzerRegex.uncheckedToneMarker) == 0) {
-            let m = literal.match(MorphologicalAnalyzerRegex.uncheckedToneMarker)[0];
-            context.affixes[context.affixes.length-1].toneMarker = m;
-            context.affixes[context.affixes.length-1].suffix += m;
-            let l = literal.slice(m.length);
+            let u = literal.match(MorphologicalAnalyzerRegex.uncheckedToneMarker)[0];
+            context.affixes[context.affixes.length-1].toneMarker = u;
+            context.affixes[context.affixes.length-1].suffix += u;
+            let l = literal.slice(u.length);
             context.setState(new UncheckedToneMarkerState());
             context.analyze(l);
         } else if(literal.search(MorphologicalAnalyzerRegex.nonNeutralFinal) == 0) {
-            let m = literal.match(MorphologicalAnalyzerRegex.nonNeutralFinal)[0];
-            context.affixes[context.affixes.length-1].final = m;
-            context.affixes[context.affixes.length-1].stem += m;
-            let l = literal.slice(m.length);
+            let n = literal.match(MorphologicalAnalyzerRegex.nonNeutralFinal)[0];
+            context.affixes[context.affixes.length-1].final = n;
+            context.affixes[context.affixes.length-1].stem += n;
+            let l = literal.slice(n.length);
             context.setState(new NonNeutralFinalState());
             context.analyze(l);
         }
@@ -147,10 +153,10 @@ class StemState extends State {
     analyze(context: StateContext, literal: string) {
         console.log("reached stemstate. literal:%s", literal);
         if(literal.search(MorphologicalAnalyzerRegex.initial) == 0) {
-            let m = literal.match(MorphologicalAnalyzerRegex.initial)[0];
-            context.affixes[context.affixes.length-1].initial = m;
-            context.affixes[context.affixes.length-1].stem += m;
-            let l = literal.slice(m.length);
+            let i = literal.match(MorphologicalAnalyzerRegex.initial)[0];
+            context.affixes[context.affixes.length-1].initial = i;
+            context.affixes[context.affixes.length-1].stem += i;
+            let l = literal.slice(i.length);
             context.setState(new InitialState());
             context.analyze(l);
         }
@@ -202,18 +208,25 @@ export class ToneSandhiMorphologicalAnalyzer {
     stems: Array<string>;
     interfixes: Array<string>;
     affixes: Array<ToneSandhiAffix>;
+    sc: StateContext;
+    literal: string;
 
     constructor(l: string) {
         // inject the lexicon
         this.stems = l.match(MorphologicalAnalyzerRegex.stemRegex);
         console.log("literal:" + l + " stems:" + this.stems);
         this.interfixes = l.match(MorphologicalAnalyzerRegex.interfixRegex);
+
         // initialize the affix array
         this.affixes = new Array();
+        this.literal = l;
+        this.sc = new StateContext();
+    }
 
-        let sc: StateContext = new StateContext();
-        sc.analyze(l);
-        console.log(sc.affixes);
+    analyzeTwo() {
+        this.sc.analyze(this.literal);
+        console.log(this.sc.affixes);
+        return this.sc.affixes;
     }
 
     analyze() {

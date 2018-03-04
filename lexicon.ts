@@ -7,7 +7,7 @@ import { PartOfSpeech } from './word';
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme {
+export class Entry {
     lemma: string;
     // string or array of string
     forms: Array<string>
@@ -78,18 +78,18 @@ export class Lexeme {
 
 export class Lexicon {
 
-    entries: Array<Lexeme>;
+    entries: Array<Entry>;
 
     constructor() {
         this.entries = new Array();
     }
 
-    add(l: Lexeme) {
+    add(l: Entry) {
         if(!this.found(l.lemma))
           this.entries.push(l);
     }
 
-    getLexeme(literal: string) : Lexeme {
+    getLexeme(literal: string) : Entry {
         console.log("about to get lexeme: %s", literal);
         if(this.isUncheckedTone(literal)) {
             console.log("%s is a unchecked tone", literal);
