@@ -1,4 +1,5 @@
 import { Lexicon, lexicon } from './lexicon';
+import { Expression } from './expression';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -20,14 +21,6 @@ export class MorphologicalAnalyzerRegex {
 }
 
 //------------------------------------------------------------------------------
-//  IMorpheme
-//------------------------------------------------------------------------------
-
-interface IMorpheme {
-    literal: string;
-}
-
-//------------------------------------------------------------------------------
 //  Expressions
 //------------------------------------------------------------------------------
 
@@ -35,13 +28,10 @@ interface IMorpheme {
 //  Morpheme
 //------------------------------------------------------------------------------
 
-interface IMorpheme {
+export class Morpheme implements Expression {
     literal: string;
-}
-
-export class Morpheme implements IMorpheme {
-    next: Morpheme;
-    literal: string;
+    left: Morpheme;
+    right: Morpheme;
 }
 
 export class AndMorphemeExpression extends Morpheme {

@@ -5,7 +5,7 @@ import { ToneSandhiAffix, AndMorphemeExpression, Morpheme } from './morphologica
 //  turn a sequence into a series
 //------------------------------------------------------------------------------
 
-class Serializer {
+export class Serializer {
 
     // turn a sequence of morphemes into a series of morphemes
     serializeMorphemes(morphemes: Array<ToneSandhiAffix>) {
