@@ -1,10 +1,16 @@
-import { Expression } from './expression';
-
 //------------------------------------------------------------------------------
 //  Regular Expressions
 //------------------------------------------------------------------------------
 
 export class LexicalAnalyzerRegex {
+}
+
+//------------------------------------------------------------------------------
+//  ILexeme
+//------------------------------------------------------------------------------
+
+interface ILexeme {
+    literal: string;
 }
 
 //------------------------------------------------------------------------------
@@ -15,10 +21,12 @@ export class LexicalAnalyzerRegex {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme implements Expression {
+interface ILexeme {
     literal: string;
-    left: Lexeme;
-    right: Lexeme;
+}
+
+export class Lexeme implements ILexeme {
+    literal: string;
 }
 
 export class AndLexemeExpression extends Lexeme {
@@ -54,6 +62,5 @@ export class ToneSandhiPartOfSpeech extends Lexeme {
 
     isBaseForm() {
         // look up in the lexicon to check if this lexeme is in base form
-        return true;
     }
 }

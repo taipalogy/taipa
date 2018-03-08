@@ -1,7 +1,7 @@
 import { MorphemeValidator } from './morphemevalidator';
 import { MorphologicalAnalyzerRegex, ToneSandhiAffix, ToneSandhiMorphologicalAnalyzer } from './morphologicalanalyzer';
+import { Widget } from './widget';
 import { lexicon } from './lexicon';
-import { Serializer } from './serializer';
 
 //------------------------------------------------------------------------------
 //  Part of Speech
@@ -95,6 +95,8 @@ export class ToneSandhiWord extends Word {
 
   private currentTone: string;
 
+  widgets: Array<Widget>;
+
   context: {};
   payload: Array<string>;
   
@@ -105,6 +107,7 @@ export class ToneSandhiWord extends Word {
     this.left = null;
     this.right = null;
     this.payload = new Array();
+    this.widgets = new Array();
   }
 
   getLiteral() {
@@ -114,15 +117,32 @@ export class ToneSandhiWord extends Word {
   evaluate(context) {
     console.log("ToneSandhiWord evaluation, literal:%s", this.literal);
     let tsma = new ToneSandhiMorphologicalAnalyzer(this.literal);
-    let a: Array<ToneSandhiAffix> = tsma.analyzeTwo();
+    let a: Array<ToneSandhiAffix> = tsma.analyze();
     console.log("%s have %d affixes", this.literal , a.length);
     console.log(a);
-
-    let srlz = new Serializer();
-    let sm = srlz.serializeMorphemes(a);
-
+    let aRight: ToneSandhiAffix, aLeft: ToneSandhiAffix;
+    for(let i = 0 ; i < a.length ; i++) {
+      if(i == 0) {
+        aRight = a.pop();
+      } else if(i == 1) {
+        aLeft = a.pop();
+        let obj = this.addProperty(aLeft.getObject(), aRight.getObject().name);
+        console.log(obj);
+        if(Object.prototype.hasOwnProperty.call(obj, aRight.getObject().name)) {
+          obj[aRight.getObject().name] = aRight.getObject().getFunktion();
+          let tmp  = obj[aRight.getObject().name](aLeft.getObject().getContextualSemantics());
+          console.log("a property added" + tmp);
+          return tmp;
+        }
+      }
+    }
     console.log("end of evaluation");
     return true;
+  }
+
+  addProperty(w: Widget, prop: string) {
+    w[prop] = null;
+    return w;    
   }
 
   getBaseTone() {
