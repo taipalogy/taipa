@@ -1,5 +1,11 @@
 import { MorphologicalAnalyzerRegex } from './morphologicalanalyzer';
 
+class MorphemeValidatorRegex {
+    public static readonly stemRegex = /ji|si|su|tia/g;
+    public static readonly interfixRegex = 
+        /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|gx|zzs|zs|bb?|dd?|gg?|ff?|xx/g;
+}
+
 //------------------------------------------------------------------------------
 //  Morpheme Validator
 //------------------------------------------------------------------------------
@@ -12,14 +18,14 @@ export class MorphemeValidator {
 
     constructor(s: string) {
         this.literal = s;
-        let stems = this.literal.match(MorphologicalAnalyzerRegex.stemRegex);
+        let stems = this.literal.match(MorphemeValidatorRegex.stemRegex);
         if (stems) {
             console.log(stems);
             console.log("length of outputs of stem morpheme:%d", stems.length);
             this.counter = stems.length;
         }
 
-        let interfixes = this.literal.match(MorphologicalAnalyzerRegex.interfixRegex);
+        let interfixes = this.literal.match(MorphemeValidatorRegex.interfixRegex);
         if (interfixes) {
             console.log("length of outputs of bound morpheme:%d", interfixes.length);
         }

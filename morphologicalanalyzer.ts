@@ -6,9 +6,7 @@ import { Expression } from './expression';
 //------------------------------------------------------------------------------
 
 export class MorphologicalAnalyzerRegex {
-    public static readonly stemRegex = /ji|si|su|tia/g;
-    public static readonly interfixRegex = 
-        /ss|y|w|pp?|tt?|kk?|hh?|x|fx|bx|dx|gx|zzs|zs|bb?|dd?|gg?|ff?|xx/g;
+
     public static readonly initial = /b|c|d|g|h|j|k|l|m|n|p|q|s|t|v|z/g;
     public static readonly medial = /a(i|u)?|e|i(au?|e|o|ur?)?|o|u(ai?|e|r)?/g;
     public static readonly nasal = /m|n(g|n)?/g;

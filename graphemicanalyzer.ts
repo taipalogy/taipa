@@ -5,6 +5,9 @@ import { Expression } from './expression';
 //------------------------------------------------------------------------------
 
 export class GraphemicAnalyzerRegex {
+    public static readonly letter = /c|j|l|m|q|v/g;
+    public static readonly digraph = /ss|zs|xx|nn|ur|dr|or/g;
+    public static readonly trigraph = /zzs/g;
 }
 
 //------------------------------------------------------------------------------
