@@ -1,4 +1,5 @@
 import { Lexicon, lexicon } from './lexicon';
+import { Expression } from './expression';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -20,14 +21,6 @@ export class MorphologicalAnalyzerRegex {
 }
 
 //------------------------------------------------------------------------------
-//  IMorpheme
-//------------------------------------------------------------------------------
-
-interface IMorpheme {
-    literal: string;
-}
-
-//------------------------------------------------------------------------------
 //  Expressions
 //------------------------------------------------------------------------------
 
@@ -35,29 +28,11 @@ interface IMorpheme {
 //  Morpheme
 //------------------------------------------------------------------------------
 
-interface IMorpheme {
+export class Morpheme extends Expression {
     literal: string;
 }
 
-export class Morpheme implements IMorpheme {
-    next: Morpheme;
-    literal: string;
-}
-
-export class AndMorphemeExpression extends Morpheme {
-    constructor() {
-        super();
-        this.literal = '&';
-    }
-}
-
-export class ToneSandhiAffix extends Morpheme {
-
-    // ToneSandhiAffix is an standalone affix without ToneSandhiPrefix 
-    // and ToneSandhiSuffix
-    private object: any;
-    funktion: Function;
-
+export class ToneSandhiMorpheme extends Morpheme {
     stem: string = "";
     suffix: string = "";
     
@@ -66,25 +41,7 @@ export class ToneSandhiAffix extends Morpheme {
     nasal: string = "";
     final: string = "";
     toneMarker: string = "";
-
-    getObject() {return this.object;}
 }
-
-class ToneSandhiPrefix extends ToneSandhiAffix {
-    stem: string;
-    interfix: string;
-}
-
-class ToneSandhiInfix extends ToneSandhiAffix {
-    stem: string;
-    interfix: string;
-}
-
-class ToneSandhiSuffix extends ToneSandhiAffix {
-    stem: string;
-    suffix: string;
-}
-
 
 //------------------------------------------------------------------------------
 //  State pattern
@@ -101,7 +58,7 @@ class State implements StateLike {
 class NonNeutralFinalState extends State {
     analyze(context: StateContext, literal: string) {
         console.log("reached nonneutralfinalstate. literal:%s", literal);
-            context.setState(new ToneSandhiAffixState());
+            context.setState(new ToneSandhiSyllableState());
             context.analyze(literal);
     }
 }
@@ -109,7 +66,7 @@ class NonNeutralFinalState extends State {
 class UncheckedToneMarkerState extends State {
     analyze(context: StateContext, literal: string) {
         console.log("reached uncheckedtonemarkerstate. literal:%s", literal);
-            context.setState(new ToneSandhiAffixState());
+            context.setState(new ToneSandhiSyllableState());
             context.analyze(literal);
     }
 }
@@ -163,18 +120,11 @@ class StemState extends State {
     }
 }
 
-class ToneSandhiAffixState extends State {
+class ToneSandhiSyllableState extends State {
     analyze(context: StateContext, literal: string) {
-        context.affixes.push(new ToneSandhiAffix());
+        context.affixes.push(new ToneSandhiMorpheme());
         context.setState(new StemState);
         context.analyze(literal);
-    }
-}
-
-class WordState extends State {
-    analyze(context: StateContext, literal: string) {
-        context.setState(new ToneSandhiAffixState());
-        context.analyze(literal)
     }
 }
 
@@ -182,12 +132,12 @@ class StateContext {
 
     private myState: State;
 
-    affixes: Array<ToneSandhiAffix>;
+    affixes: Array<ToneSandhiMorpheme>;
 
     constructor() {
         this.myState = new State();
         this.affixes = new Array();
-        this.setState(new WordState());
+        this.setState(new ToneSandhiSyllableState());
     }
 
     setState(newState: StateLike) {
@@ -205,18 +155,11 @@ class StateContext {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphologicalAnalyzer {
-    stems: Array<string>;
-    interfixes: Array<string>;
-    affixes: Array<ToneSandhiAffix>;
+    affixes: Array<ToneSandhiMorpheme>;
     sc: StateContext;
     literal: string;
 
     constructor(l: string) {
-        // inject the lexicon
-        this.stems = l.match(MorphologicalAnalyzerRegex.stemRegex);
-        console.log("literal:" + l + " stems:" + this.stems);
-        this.interfixes = l.match(MorphologicalAnalyzerRegex.interfixRegex);
-
         // initialize the affix array
         this.affixes = new Array();
         this.literal = l;
@@ -227,60 +170,6 @@ export class ToneSandhiMorphologicalAnalyzer {
         this.sc.analyze(this.literal);
         console.log(this.sc.affixes);
         return this.sc.affixes;
-    }
-
-    analyze() {
-        if(this.stems && this.interfixes) {
-            console.log("analyzing stems and interfixes");
-            if(this.stems.length == this.interfixes.length) {
-                let len = this.stems.length;
-                console.log("analyzing affixes, length of stems: %d", this.stems.length);
-                for(let i = 0; i < len; i++) {
-                    if(i == 0) {
-                        // prefix
-                        console.log("analyzing prefix");
-                        let p = new ToneSandhiPrefix();
-                        p.stem = this.stems.shift();
-                        p.interfix = this.interfixes.shift();
-                        if(this.found(p.stem, p.interfix)) {
-                            console.log("analyzing prefix. found");
-                            this.affixes.push(p);
-                        }
-                    } else if(i + 1 < len) {
-                        //infix
-                        console.log("analyzing infix");
-                        let i = new ToneSandhiInfix();
-                        i.stem = this.stems.shift();
-                        i.interfix = this.interfixes.shift();
-                        if(this.found(i.stem, i.interfix)) {
-                            console.log("analyzing interfix. found");
-                            this.affixes.push(i);
-                        }
-                    } else {
-                        // suffix
-                        console.log("analyzing suffix");
-                        let s = new ToneSandhiSuffix();
-                        s.stem = this.stems.shift();
-                        s.suffix = this.interfixes.shift();
-                        if(this.found(s.stem, s.suffix)) {
-                            console.log("analyzing suffix. found");
-                            this.affixes.push(s);
-                        }
-                    }
-                }
-            }
-        }
-
-        return this.affixes;
-    }
-
-    found(s: string, bm: string) {
-        if(lexicon.found(s + bm)) {
-            console.log("morpheme found");
-            return true;
-        }
-        console.log("morpheme not found");
-        return false;
     }
 }
   

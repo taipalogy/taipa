@@ -1,5 +1,4 @@
 import { Word } from './word';
-import { Widget } from './widget';
 import { ToneMarkChecker } from './tonemark';
 import { PartOfSpeech } from './word';
 
@@ -12,13 +11,10 @@ export class Entry {
     // string or array of string
     forms: Array<string>
 
-    object: Widget;
-
     partOfSpeech: PartOfSpeech;
 
     constructor(l: string) {
         this.lemma = l;
-        this.object = null;
         this.forms = new Array();
         // populate the array of forms
         this.populateForms();
@@ -65,10 +61,6 @@ export class Entry {
             }
         }
         return false;
-    }
-
-    addObject(w: Widget) {
-
     }
 }
 

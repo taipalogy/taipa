@@ -1,16 +1,10 @@
+import { Expression } from './expression';
+
 //------------------------------------------------------------------------------
 //  Regular Expressions
 //------------------------------------------------------------------------------
 
 export class LexicalAnalyzerRegex {
-}
-
-//------------------------------------------------------------------------------
-//  ILexeme
-//------------------------------------------------------------------------------
-
-interface ILexeme {
-    literal: string;
 }
 
 //------------------------------------------------------------------------------
@@ -21,41 +15,23 @@ interface ILexeme {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-interface ILexeme {
+export class Lexeme implements Expression {
     literal: string;
 }
 
-export class Lexeme implements ILexeme {
-    literal: string;
-}
-
-export class AndLexemeExpression extends Lexeme {
-    constructor() {
-        super();
-        this.literal = '&';
-    }
-}
-
-export class OrLexemeExpression extends Lexeme {
-    constructor() {
-        super();
-        this.literal = '|';
-    }
-}
-
-export class InflectionPartOfSpeech extends Lexeme {
+export class InflectionLexeme extends Lexeme {
 
     stem: string = "";
     suffix: string = "";    
 }
 
-export class AgglutinationPartOfSpeech extends Lexeme {
+export class AgglutinationLexeme extends Lexeme {
 
     stem: string = "";
     suffix: string = "";    
 }
 
-export class ToneSandhiPartOfSpeech extends Lexeme {
+export class ToneSandhiLexeme extends Lexeme {
 
     stem: string = "";
     suffix: string = "";
