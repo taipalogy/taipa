@@ -153,13 +153,13 @@ class StateContext {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphologicalAnalyzer {
-    affixes: Array<ToneSandhiMorpheme>;
+    //affixes: Array<ToneSandhiMorpheme>;
     sc: StateContext;
     literal: string;
 
     constructor(l: string) {
         // initialize the affix array
-        this.affixes = new Array();
+        //this.affixes = new Array();
         this.literal = l;
         this.sc = new StateContext();
     }
