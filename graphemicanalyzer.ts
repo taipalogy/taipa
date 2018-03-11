@@ -34,14 +34,14 @@ export class Grapheme extends Expression {
 }
 
 export class AlphabetGrapheme extends Expression {
-    // if this grapheme is the beginning of a digraph or trigraph
-    isExpectingNext: boolean;
     // for a single grapheme
     grapheme: string;
+    graphemeTwo: string;
 
     constructor() {
         super();
         this.grapheme = '';
+        this.graphemeTwo = '';
     }
 }
 
@@ -57,21 +57,33 @@ class State implements StateLike {
     analyze(context: StateContext, literal: string) { return null; }
 }
 
+class GraphemeRState extends State {
+    analyze(context: StateContext, literal: string) {
+        console.log("%creached graphemetwostate. literal:%s", "color: blue; font-size: medium", literal);
+        if(literal.search(GraphemicAnalyzerRegex.graphemeR) == 0) {
+            let g = literal.match(GraphemicAnalyzerRegex.graphemeR)[0];
+            context.graphemes[context.graphemes.length-1].graphemeTwo = g;
+        }
+    }
+}
+
 class GraphemeOneState extends State {
     analyze(context: StateContext, literal: string) {
-        console.log("reached graphemeonestate. literal:%s", literal);
+        console.log("%creached graphemeonestate. literal:%s", "color: blue; font-size: medium", literal);
         if(literal.search(GraphemicAnalyzerRegex.singleGrapheme) == 0) {
             // terminal state
+            context.graphemes.push(new AlphabetGrapheme());
             let g = literal.match(GraphemicAnalyzerRegex.singleGrapheme)[0];
             context.graphemes[context.graphemes.length-1].grapheme = g;
-            context.graphemes[context.graphemes.length-1].isExpectingNext = false;
             let l = literal.slice(g.length);
         } else {
             if(literal.search(GraphemicAnalyzerRegex.graphemeU) == 0) {
+                context.graphemes.push(new AlphabetGrapheme());
                 let g = literal.match(GraphemicAnalyzerRegex.graphemeU)[0];
                 context.graphemes[context.graphemes.length-1].grapheme = g;
-                context.graphemes[context.graphemes.length-1].isExpectingNext = true;
-                let l = literal.slice(g.length);    
+                let l = literal.slice(g.length);
+                context.setState(new GraphemeRState());
+                context.analyze(l);
             }
         }
     }
@@ -79,7 +91,6 @@ class GraphemeOneState extends State {
 
 class LetterState extends State {
     analyze(context: StateContext, literal: string) {
-        context.graphemes.push(new AlphabetGrapheme());
         context.setState(new GraphemeOneState());
         context.analyze(literal);
     }
@@ -122,7 +133,7 @@ export class GraphemicAnalyzer implements Expression {
     
     analyze() {
         this.sc.analyze(this.literal);
-        console.log("about to return grapheme array. length %d", this.sc.graphemes.length);
+        console.log("%cabout to return grapheme array. length %d", "color: blue; font-size: medium", this.sc.graphemes.length);
         return this.sc.graphemes;
     }
 }

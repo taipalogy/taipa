@@ -13,6 +13,7 @@ export class ScannerRegex {
     public static readonly ENDOFFILE = "\0";
     public static readonly TAB = "\t";
     public static readonly NEWLINE = "\n";
+    public static readonly CARRIAGERETURN = "\r";
     public static readonly WHITESPACE = " ";
 }
 
@@ -29,7 +30,11 @@ export class Character {
     sourceText: string;
 
     constructor(c: string, lineIndex:number, colIndex: number, sourceIndex: number, sourceText: string) {
+      console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
+
       this.cargo = c;
+      console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
+
       this.lineIndex = lineIndex;
       this.colIndex = colIndex;
       this.sourceIndex = sourceIndex;
@@ -37,16 +42,22 @@ export class Character {
     }
 
     toString() {
-        let cargo = "";
+        console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
+        return this.cargo;
+    }
 
-        if(this.cargo == ScannerRegex.WHITESPACE) cargo = " space";
-        else if(this.cargo == ScannerRegex.NEWLINE) cargo = " newline";
-        else if(this.cargo == ScannerRegex.TAB) cargo = " tab";
-        else if(this.cargo == ScannerRegex.ENDOFFILE) cargo = " eof";
-        else if(this.cargo.match(ScannerRegex.ALPHABET) || this.cargo.match(ScannerRegex.alphabet)) cargo = this.cargo;
-        else cargo = " invalid character";
+    fPrint() {
+        let output = "";
+
+        if(this.cargo == ScannerRegex.WHITESPACE) output = " space";
+        else if(this.cargo == ScannerRegex.NEWLINE) output = " newline";
+        else if(this.cargo == ScannerRegex.TAB) output = " tab";
+        else if(this.cargo == ScannerRegex.CARRIAGERETURN) output = " carriage return";
+        else if(this.cargo == ScannerRegex.ENDOFFILE) output = " eof";
+        else if(this.cargo.match(ScannerRegex.ALPHABET) || this.cargo.match(ScannerRegex.alphabet)) output = this.cargo;
+        else output = " invalid character";
         
-        return "   " + this.lineIndex.toString() + "      " + this.colIndex.toString() + " " + cargo;
+        return "   " + this.lineIndex.toString() + "      " + this.colIndex.toString() + " " + output;
     }
 }
 
