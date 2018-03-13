@@ -39,6 +39,10 @@ export class ToneSandhiMorpheme extends Morpheme {
     nasal: string = "";
     final: string = "";
     toneMarker: string = "";
+
+    isBaseForm() {
+        // look up in the lexicon to check if this morpheme is in base form
+    }
 }
 
 //------------------------------------------------------------------------------

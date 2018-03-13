@@ -11,7 +11,7 @@ import { Grapheme } from './graphemicanalyzer';
 //  Wrapper for Abstract Syntax Tree
 //-----------------------------------------------------------------------------
 
-export class AstWrapperTwo implements Expression {
+export class AstWrapperTwo extends Expression {
     literal: string;
 }
 
@@ -30,9 +30,10 @@ export class SyllableAstWrapper extends AstWrapperTwo {
     }
 }
 
-export class LetterAstWrapper extends AstWrapperTwo {
+export class LetterExpression extends AstWrapperTwo {
     grapheme: Grapheme;
     constructor(grapheme: Grapheme) {
         super();
+        this.grapheme = grapheme;
     }
 }
