@@ -23,9 +23,9 @@ export class SerializerOfGraphemes extends Serializer {
     serialize() {
         let a: Array<Expression> = new Array();
         for(var i in this.graphemes) {
-            let g = this.graphemes.shift();
-            let law = new LetterExpression(g);
-            a.push(law);
+            let g = this.graphemes[i];
+            let le = new LetterExpression(g);
+            a.push(le);
             a.push(new AndExpression());
         }
         return a;
