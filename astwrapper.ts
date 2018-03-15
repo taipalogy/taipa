@@ -13,24 +13,32 @@ import { Grapheme } from './graphemicanalyzer';
 
 export class AstWrapperTwo extends Expression {
     literal: string;
+
+    isBase(){}
 }
 
-export class PhraseAstWrapper extends AstWrapperTwo {
+export class Operand extends AstWrapperTwo {
+
+    isInitialCapitalized() {}
+}
+
+export class PhraseExpression extends Operand {
 
 }
 
-export class WordAstWrapper extends AstWrapperTwo {
-  
+export class WordExpression extends Operand {
+
 }
 
-export class SyllableAstWrapper extends AstWrapperTwo {
+export class SyllableExpression extends Operand {
     morpheme: Morpheme;
     constructor(morpheme: Morpheme) {
         super();
+        this.morpheme = morpheme;
     }
 }
 
-export class LetterExpression extends AstWrapperTwo {
+export class LetterExpression extends Operand {
     grapheme: Grapheme;
     constructor(grapheme: Grapheme) {
         super();

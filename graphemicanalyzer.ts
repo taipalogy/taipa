@@ -275,7 +275,7 @@ class StateContext {
 //  GraphemicAnalyzer
 //------------------------------------------------------------------------------
 
-export class GraphemicAnalyzer implements Expression {
+export class GraphemicAnalyzer {
     sc: StateContext;
     literal: string;
 

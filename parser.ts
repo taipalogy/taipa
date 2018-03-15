@@ -1,141 +1,83 @@
-import { Word, Group, Series } from './word';
-import { PartOfSpeech } from './word';
+import { Expression, Operator, AndExpression, OrExpression, PeriodExpression } from './expression';
+import { Operand } from './astwrapper';
 
 class Shunter {
-  nodes: Word[];
+  nodes: Array<Expression>;
 
   constructor(nodes) {
-    //for (var i in nodes) {
-    //this.nodes.push(nodes[i]);
-    //}
     this.nodes = nodes;
     console.log("shunter constructor");
     //console.log(this.nodes);
   }
 
-  join(operators, operands) {
-    // If you call pop() on an empty array, it returns undefined.
-    let o = operators.pop();
-    if (typeof o !== 'undefined') {
-      let n = operands.pop();
+  join(operators: Array<Operator>, output: Array<Expression>) {
+    try {
+      // If you call pop() on an empty array, it returns null.
+      let o = operators.pop();
+      if (typeof o !== null) {
+        let n = output.pop();
 
-      if (typeof n !== 'undefined') {
-        o.right = n;
-      } else {
-        o.right = null;
+        if (typeof n !== null) {
+          o.right = n;
+        } else {
+          o.right = null;
+        }
+
+        n = output.pop();
+
+        if (typeof n !== null) {
+          o.left = n;
+        } else {
+          o.left = null;
+        }
+
+        output.push(o);
       }
-
-      n = operands.pop();
-
-      if (typeof n !== 'undefined') {
-        o.left = n;
-      } else {
-        o.left = null;
-      }
-
-      operands.push(o);
+    } catch (message) {
+      console.log("failed in join method.");
     }
   }
 
-  shunt(): Series {
+  shunt(): Expression {
     // use shunting yard algorithm
 
-    let operators = [];
-    let operands = [];
-    let grouping = false;
-    let previousOriginal = true;
-    let count = 0;
+    let operators: Array<Operator> = new Array();
+    let output: Array<Expression> = new Array();
 
-    console.log("entering shunt function");
-
-    for (let i in this.nodes) {
-
+    for(var i in this.nodes) {
       let node = this.nodes[i];
 
-      if (node.partOfSpeech == PartOfSpeech.Verb) {
-        // collecting operators/verbs
-        if (grouping) {
-            count = count + 1;
-        }
-
-        console.log("verb:%s", node.literal);
-        console.log("operator found");
-
+      if(node instanceof Operand && !node.isInitialCapitalized()) {
+        output.push(node);
+      } else if(node instanceof AndExpression || node instanceof OrExpression) {
         operators.push(node);
-        console.log("operators length" + operators.length);
-      } else {
-        // collecting operands/nouns
-        if (!node.isOriginal()) {
-          console.log("noun:%s", node.literal);
-        }
-
-        operands.push(node);
-        console.log("operands length:" + operands.length);
-        console.log(operands);
-
-        if (!node.isOriginal() && previousOriginal === true && grouping === false) {
-          // start grouping
-          previousOriginal = false;
-          grouping = true;
-          //groupMembers = [];
-          //groupMembers.push(node);
-        } else if (node.isOriginal() && previousOriginal === false && grouping === true) {
-          // end grouping
-          previousOriginal = true;
-          grouping = false;
-
-          while (count > 0) {
-              this.join(operators, operands);
-              count = count - 1;
-          }
-
-          //groupMembers.push(node);
-          // make group members a group
-          //let group = new Group(operands.pop(), groupMembers);
-          let group = new Group(operands.pop());
-          //sequenceOfGroups.push(group);
-          operands.push(group);
-        } else if (!node.isOriginal() && previousOriginal === false && grouping === true) {
-          //groupMembers.push(node);
-        } else if (node.isOriginal() && previousOriginal === true && grouping === false) {
-          //sequenceOfGroups.push(node);
+      } else if(node instanceof Operand && node.isInitialCapitalized()) {
+        output.push(node);
+      } else if(node instanceof PeriodExpression) {
+        if(output[output.length-1] instanceof Operator) {
+          console.log("something wrong!");
+        } else if(output[output.length-1] instanceof Operand) {
+          this.join(operators, output);
         }
       }
     }
 
-    console.log("length of operands(before joining):" + operands.length);
-
-    while (operators.length) {
-        this.join(operators, operands);
+    while(operators.length > 0){
+      this.join(operators, output);
     }
-
-    let s: Series = null;
-    if (operands.length == 1) {
-
-        let last = operands.pop();
-        // when i delcared an variable s without using keyword var
-        // this s was assigned to a sequence instance
-        // hence i changed s to sqn and add keyword var before s
-        //s = new Series(last, sequenceOfGroups);
-        s = new Series(last);
-        //console.log(sequenceOfGroups);
-    } else if (operands.length !== 1) {
-        console.log("length of operands:" + operands.length);
-        console.log("parsing error!!");
-    }
-
-    console.log(s);
-    return s;
+    
+    console.log(output);
+    return output[0]; // return the top of the ast
   }
 }
 
 export class Parser {
   private s: Shunter;
-  constructor(nodes: Array<Word>) {
+  constructor(nodes: Array<Expression>) {
     this.s = new Shunter(nodes);
   }
 
-  parse(): Series {
+  parse(): Expression {
     return this.s.shunt();
   }
 }
