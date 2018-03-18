@@ -1,6 +1,6 @@
-import { Word } from './word';
+import { Word } from './constituent';
 import { ToneMarkChecker } from './tonemark';
-import { PartOfSpeech } from './word';
+import { PartOfSpeech } from './constituent';
 
 //------------------------------------------------------------------------------
 //  Lexeme

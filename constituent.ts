@@ -2,6 +2,14 @@ import { MorphemeValidator } from './morphemevalidator';
 import { MorphologicalAnalyzerRegex, ToneSandhiMorpheme, ToneSandhiMorphologicalAnalyzer } from './morphologicalanalyzer';
 import { lexicon } from './lexicon';
 
+//-----------------------------------------------------------------------------
+//  Constituent
+//-----------------------------------------------------------------------------
+
+export class Constituent {
+
+}
+
 //------------------------------------------------------------------------------
 //  Part of Speech
 //------------------------------------------------------------------------------
@@ -10,15 +18,6 @@ export enum PartOfSpeech {
   Unknown = 0,
   Noun = 1,
   Verb = 2,
-}
-
-//------------------------------------------------------------------------------
-//  IWord
-//------------------------------------------------------------------------------
-
-export interface IWord {
-  partOfSpeech: PartOfSpeech;
-  literal: string;
 }
 
 //------------------------------------------------------------------------------
@@ -54,10 +53,10 @@ export class WordFactory implements WordAbstractFactory {
 
 
 //------------------------------------------------------------------------------
-//  Expressions
+//  Constituents
 //------------------------------------------------------------------------------
 
-export class Word implements IWord {
+export class Word extends Constituent {
   partOfSpeech: PartOfSpeech;
 
   // left and right must be promoted to Word class
@@ -69,6 +68,7 @@ export class Word implements IWord {
   literal: string;
 
   constructor() {
+    super();
     this.partOfSpeech = PartOfSpeech.Unknown;
     this.literal = null;
   }
@@ -156,57 +156,4 @@ export class ToneSandhiVerb extends ToneSandhiWord {
     console.log("%cliteral:%s", "color: purple; font-size: large", s);
   }
   process() {}
-}
-
-//-----------------------------------------------------------------------------
-//  Adapter Pattern
-//-----------------------------------------------------------------------------
-
-
-//-----------------------------------------------------------------------------
-//  Wrapper for Abstract Syntax Tree
-//-----------------------------------------------------------------------------
-
-export class AstWrapper {
-  ast: ToneSandhiWord;
-  literal: string;
-  counter: number;
-
-  constructor(ast) {
-    this.ast = ast;
-    this.counter = 0;
-    this.literal = ""; // todo: get the literals from the ast.
-    this.printPreorder(this.ast);
-  }
-
-  printPreorder(e: Word) {
-
-    if(e == null) {
-      return;
-    }
-
-    this.counter++;
-    this.literal = this.literal + e.literal;
-    console.log("literal%d:%s", this.counter, e.literal);
-    
-    this.printPreorder(e.left);
-    this.printPreorder(e.right);
-  }
-
-  evaluate(context) {
-    console.log("AstWrapper evaluation");
-    return this.ast.evaluate(context);
-  }
-}
-
-export class Series extends AstWrapper {
-  constructor(ast) {
-    super(ast);
-  }
-}
-
-export class Group extends AstWrapper {
-  constructor(ast) {
-    super(ast);
-  }
 }

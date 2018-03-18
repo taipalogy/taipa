@@ -2,7 +2,7 @@ import { ToneSandhiLexeme, Lexeme} from './lexicalanalyzer';
 import { ToneSandhiMorpheme, Morpheme } from './morphologicalanalyzer';
 import { Expression, AndExpression, OrExpression } from './expression';
 import { Grapheme, AlphabetGrapheme } from './graphemicanalyzer';
-import { LetterExpression } from './astwrapper';
+import { LetterExpression } from './expression';
 
 //------------------------------------------------------------------------------
 //  turn a sequence into a series

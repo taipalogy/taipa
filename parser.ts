@@ -1,5 +1,5 @@
 import { Expression, Operator, AndExpression, OrExpression, PeriodExpression } from './expression';
-import { Operand } from './astwrapper';
+import { Operand } from './expression';
 
 class Shunter {
   nodes: Array<Expression>;

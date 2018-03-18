@@ -46,7 +46,7 @@ export class Character {
         return this.cargo;
     }
 
-    fPrint() {
+    print() {
         let output = "";
 
         if(this.cargo == ScannerRegex.WHITESPACE) output = " space";

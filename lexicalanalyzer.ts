@@ -17,6 +17,8 @@ export class LexicalAnalyzerRegex {
 
 export class Lexeme implements Expression {
     literal: string;
+
+    evaluate() {}
 }
 
 export class InflectionLexeme extends Lexeme {
