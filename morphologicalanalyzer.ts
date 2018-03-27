@@ -1,5 +1,7 @@
 import { Lexicon, lexicon } from './lexicon';
 import { Expression } from './expression';
+import { Grapheme } from './graphemicanalyzer';
+import { State } from './state';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -7,15 +9,16 @@ import { Expression } from './expression';
 
 export class MorphologicalAnalyzerRegex {
 
-    public static readonly initial = /b|c|d|g|h|j|k|l|m|n|p|q|s|t|v|z/g;
+    public static readonly initial = /b|c|d|g|h|j|k|l|p|q|s|t|v|z/g;
+    public static readonly nasalInitial = /m|ng?/g;
     public static readonly medial = /a(i|u)?|e|i(au?|e|o|ur?)?|o|u(ai?|e|r)?/g;
-    public static readonly nasal = /m|n(g|n)?/g;
-    //public static readonly final = /b|d|f|g|h|k|p|t/g;
+    public static readonly nasalNn = /nn/g;
+
     public static readonly neutralFinal = /f|h/g;
     public static readonly nonNeutralFinal = /b|d|g|k|p|t/g;
-    public static readonly uncheckedToneMarker = /ss|y|w|xx?|zz?s/g;
-    public static readonly checkedToneMarker = /b|d|g|k|p|t|x|y/g;
-    public static readonly neutralToneMarker = /f|x|h|y/g;
+    public static readonly freeToneMark = /ss|y|w|xx?|zz?s/g;
+    public static readonly checkedToneMark = /b|d|g|k|p|t|x|y/g;
+    public static readonly neutralToneMark = /f|x|h|y/g;
 }
 
 //------------------------------------------------------------------------------
@@ -31,124 +34,177 @@ export class Morpheme extends Expression {
 }
 
 export class ToneSandhiMorpheme extends Morpheme {
-    stem: string = "";
-    suffix: string = "";
-    
-    initial: string = "";
-    medial: string = "";
-    nasal: string = "";
-    final: string = "";
-    toneMarker: string = "";
+    initial: string;
+    medial: string;
+    nasal: string;
+    final: string;
+    toneMark: string;
 
+    constructor() {
+        super();
+
+        this.initial = '';
+        this.medial = '';
+        this.nasal = '';
+        this.final = '';
+        this.toneMark = '';
+    }
+    
     isBaseForm() {
         // look up in the lexicon to check if this morpheme is in base form
     }
+
+    getStem() { return this.initial + this.medial + this.nasal + this.final; }
+    getSuffix() { return this.toneMark; }
 }
 
 //------------------------------------------------------------------------------
 //  State pattern
 //------------------------------------------------------------------------------
 
-interface StateLike {
-    analyze(context: StateContext, literal: string);
-}
-
-class State implements StateLike {
-    analyze(context: StateContext, literal: string) { return null; }
-}
-
-class NonNeutralFinalState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("reached nonneutralfinalstate. literal:%s", literal);
-            context.setState(new ToneSandhiSyllableState());
-            context.analyze(literal);
+class MorphologicalState implements State {
+    analyze(context: StateContext, graphemes: Array<Grapheme>) { return null; }
+    isAtIndexZero(graphemes: Array<Grapheme>, regex: RegExp) {
+        console.log(graphemes);
+        return graphemes.filter((g: Grapheme) => g.literal.search(regex) == 0);
     }
 }
 
-class UncheckedToneMarkerState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("reached uncheckedtonemarkerstate. literal:%s", literal);
-            context.setState(new ToneSandhiSyllableState());
-            context.analyze(literal);
+class NonNeutralFinalState extends MorphologicalState {
+    analyze(context: StateContext, graphemes: Array<Grapheme>) {
+        console.log("reached nonneutralfinalstate. literal:%s", graphemes[0].literal);
+
+        let s = graphemes[0].literal;
+        // populate the morpheme
+        context.morphemes[context.morphemes.length-1].final += s;
+        graphemes.shift(); // discard the first element
+
+        context.setState(new ToneSandhiSyllableState());
+        context.analyze(graphemes);
     }
 }
 
-class MedialState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("reached medialstate. literal:%s", literal);
-        if(literal.search(MorphologicalAnalyzerRegex.uncheckedToneMarker) == 0) {
-            let u = literal.match(MorphologicalAnalyzerRegex.uncheckedToneMarker)[0];
-            context.affixes[context.affixes.length-1].toneMarker = u;
-            context.affixes[context.affixes.length-1].suffix += u;
-            let l = literal.slice(u.length);
-            context.setState(new UncheckedToneMarkerState());
-            context.analyze(l);
-        } else if(literal.search(MorphologicalAnalyzerRegex.nonNeutralFinal) == 0) {
-            let n = literal.match(MorphologicalAnalyzerRegex.nonNeutralFinal)[0];
-            context.affixes[context.affixes.length-1].final = n;
-            context.affixes[context.affixes.length-1].stem += n;
-            let l = literal.slice(n.length);
+class FreeToneMarkState extends MorphologicalState {
+    analyze(context: StateContext, graphemes: Array<Grapheme>) {
+        console.log("reached freetonemarkerstate. literal:%s", graphemes[0].literal);
+
+        let s = graphemes[0].literal;
+        // populate the morpheme
+        context.morphemes[context.morphemes.length-1].toneMark += s;
+        graphemes.shift(); // discard the first element
+
+        context.setState(new ToneSandhiSyllableState());
+        return context.analyze(graphemes);
+    }
+}
+
+class MedialState extends MorphologicalState {
+    analyze(context: StateContext, graphemes: Array<Grapheme>) {
+        console.log("reached medialstate. literal:%s", graphemes[0].literal);
+        
+        let s = graphemes[0].literal;
+        // populate the morpheme
+        context.morphemes[context.morphemes.length-1].medial += s;
+        graphemes.shift(); // discard the first element
+        if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.freeToneMark)) {
+            context.setState(new FreeToneMarkState());
+            return context.analyze(graphemes);
+        } else if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.nonNeutralFinal)) {
             context.setState(new NonNeutralFinalState());
-            context.analyze(l);
+            return context.analyze(graphemes);
         }
+
     }
 }
 
-class InitialState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("reached initialstate. literal:%s", literal);
-        if(literal.search(MorphologicalAnalyzerRegex.medial) == 0) {
-            let m = literal.match(MorphologicalAnalyzerRegex.medial)[0];
-            context.affixes[context.affixes.length-1].medial = m;
-            context.affixes[context.affixes.length-1].stem += m;
-            let l = literal.slice(m.length);
+class NasalState extends MorphologicalState {
+
+}
+
+class NasalNnState extends MorphologicalState {
+
+}
+
+class InitialState extends MorphologicalState {
+    analyze(context: StateContext, graphemes: Array<Grapheme>) {
+        console.log("reached initialstate. literal:%s", graphemes[0].literal);
+        
+        let s = graphemes[0].literal;
+        // populate the morpheme
+        context.morphemes[context.morphemes.length-1].initial += s;
+        graphemes.shift(); // discard the first element
+        if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.medial)) {
             context.setState(new MedialState());
-            context.analyze(l);
+            return context.analyze(graphemes);
+        } else if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.nasalInitial)) {
+            context.setState(new NasalState());
+            return context.analyze(graphemes);
+        } else if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.nasalNn)) {
+            context.setState(new NasalNnState());
+            return context.analyze(graphemes);
         }
     }
 }
 
-class StemState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("reached stemstate. literal:%s", literal);
-        if(literal.search(MorphologicalAnalyzerRegex.initial) == 0) {
-            let i = literal.match(MorphologicalAnalyzerRegex.initial)[0];
-            context.affixes[context.affixes.length-1].initial = i;
-            context.affixes[context.affixes.length-1].stem += i;
-            let l = literal.slice(i.length);
-            context.setState(new InitialState());
-            context.analyze(l);
-        }
-    }
+class NasalInitialState extends MorphologicalState {
+
 }
 
-class ToneSandhiSyllableState extends State {
-    analyze(context: StateContext, literal: string) {
-        context.affixes.push(new ToneSandhiMorpheme());
-        context.setState(new StemState);
-        context.analyze(literal);
+class ToneSandhiSyllableState extends MorphologicalState {
+    analyze(context: StateContext, graphemes: Array<Grapheme>) {
+        if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.initial) ||
+            this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.medial) ||
+            this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.nasalInitial)) {
+
+                context.morphemes.push(new ToneSandhiMorpheme());
+                if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.initial)) {
+                    // includes m, n, ng.
+                    context.setState(new InitialState());
+                    return context.analyze(graphemes);    
+                } else if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.medial)) {
+                    context.setState(new MedialState());
+                    return context.analyze(graphemes);    
+                } else if(this.isAtIndexZero(graphemes, MorphologicalAnalyzerRegex.nasalInitial)) {
+                    context.setState(new NasalInitialState());
+                    return context.analyze(graphemes);
+                } else {
+                    console.log("something wrong in syllable state");
+                }
+        }
     }
 }
 
 class StateContext {
 
-    private myState: State;
+    private myState: MorphologicalState;
 
-    affixes: Array<ToneSandhiMorpheme>;
+    morphemes: Array<ToneSandhiMorpheme>;
 
     constructor() {
-        this.myState = new State();
-        this.affixes = new Array();
+        this.myState = new MorphologicalState();
+        this.morphemes = new Array();
         this.setState(new ToneSandhiSyllableState());
     }
 
-    setState(newState: StateLike) {
+    setState(newState: MorphologicalState) {
         this.myState = newState;
 
     }
 
-    analyze(literal: string) {
-        this.myState.analyze(this, literal);
+    analyze(graphemes: Array<Grapheme>) {
+        let gs: Array<Grapheme> = new Array();
+        gs = graphemes;
+        do {
+            gs = this.myState.analyze(this, gs);
+            try {
+                console.log("%cremained graphemes after analyzing: %s", "color: green; font-size: medium", gs);
+                if(gs == null) {
+                    break;
+                }
+            } catch(message) {
+                console.log("failed to get length of l");
+            }
+        } while(gs.length > 0);
     }
 }
 
@@ -157,21 +213,19 @@ class StateContext {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphologicalAnalyzer {
-    //affixes: Array<ToneSandhiMorpheme>;
+    graphemes: Array<Grapheme>;
     sc: StateContext;
-    literal: string;
 
-    constructor(l: string) {
-        // initialize the affix array
-        //this.affixes = new Array();
-        this.literal = l;
+    constructor(graphemes: Array<Grapheme>) {
+        //this.graphemes = new Array();
+        this.graphemes = graphemes;
         this.sc = new StateContext();
     }
 
-    analyzeTwo() {
-        this.sc.analyze(this.literal);
-        console.log(this.sc.affixes);
-        return this.sc.affixes;
+    analyze() {
+        this.sc.analyze(this.graphemes);
+        console.log(this.sc.morphemes);
+        return this.sc.morphemes;
     }
 }
   

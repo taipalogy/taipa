@@ -1,5 +1,5 @@
 import { Expression } from './expression';
-import { extend } from 'webdriver-js-extender';
+import { State } from './state';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -54,197 +54,208 @@ export class AlphabetGrapheme extends Expression {
 //------------------------------------------------------------------------------
 
 interface StateLike {
-    analyze(context: StateContext, literal: string);
+    analyze(context: StateContext, chars: string);
 }
 
-class State implements StateLike {
-    analyze(context: StateContext, literal: string) { return null; }
+class GraphemicState implements StateLike {
+    analyze(context: StateContext, chars: string) { return null; }
 }
 
-class SymbolRState extends State {
-    analyze(context: StateContext, literal: string) {
+class SymbolRState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
         // terminal state
-        console.log("%creached symboltwostate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolR) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolR)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+        console.log("%creached symboltwostate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolR) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolR)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;
+            return chars;
         }
     }
 }
 
-class SymbolGState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached graphemegstate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolG) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolG)[0];
+class SymbolGState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached graphemegstate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolG) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolG)[0];
             // move the symbolTwo character of the first letter 
             // to the grapheme character of the second letter
             context.graphemes.push(new AlphabetGrapheme());
             context.graphemes[context.graphemes.length-1].symbolOne = context.graphemes[context.graphemes.length-2].symbolTwo;
             context.graphemes[context.graphemes.length-2].symbolTwo = '';
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;            
+            return chars;            
         }
     }
 }
 
-class SymbolGOrNState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached graphemegornstate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolG) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolG)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+class SymbolGOrNState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached graphemegornstate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolG) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolG)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolN) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolN)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+            return chars.slice(s.length);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolN) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolN)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             context.setState(new SymbolGState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;
+            return chars;
         }
     }
 }
 
-class SymbolThreeSState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached graphemesstate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolS) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolS)[0];
-            context.graphemes[context.graphemes.length-1].symbolThree = g;
+class SymbolThreeSState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached graphemesstate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolS) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolS)[0];
+            context.graphemes[context.graphemes.length-1].symbolThree = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;
+            return chars;
         }
     }
 }
 
-class SymbolSOrZState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached graphemesorzstate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolS) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolS)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+class SymbolSOrZState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached graphemesorzstate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolS) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolS)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolZ) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolZ)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+            return chars.slice(s.length);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolZ) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolZ)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             context.setState(new SymbolThreeSState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;
+            return chars;
         }
     }    
 }
 
 
-class SymbolXState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached graphemexstate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolX) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolX)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+class SymbolXState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached graphemexstate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolX) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolX)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;
+            return chars;
         }
     }
 }
 
-class SymbolSState extends State {
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached symbolsstate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.symbolS) == 0) {
-            let g = literal.match(GraphemicAnalyzerRegex.symbolS)[0];
-            context.graphemes[context.graphemes.length-1].symbolTwo = g;
+class SymbolSState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached symbolsstate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.symbolS) == 0) {
+            let s = chars.match(GraphemicAnalyzerRegex.symbolS)[0];
+            context.graphemes[context.graphemes.length-1].symbolTwo = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // reset the state to SymbolOneState since this is a terminal state
             context.setState(new SymbolOneState());
-            return literal.slice(g.length);
+            return chars.slice(s.length);
         } else {
             context.setState(new SymbolOneState());
-            return literal;
+            return chars;
         }
 
     }
 }
 
-class SymbolOneState extends State {
-    setSymbolOneState(context: StateContext, literal: string, state: State, reg: RegExp) {
+class SymbolOneState extends GraphemicState {
+    setSymbolOneState(context: StateContext, chars: string, state: GraphemicState, reg: RegExp) {
         // non-terminal state
         context.graphemes.push(new AlphabetGrapheme());
-        let g = literal.match(reg)[0];
-        context.graphemes[context.graphemes.length-1].symbolOne = g;
-        let l = literal.slice(g.length);
+        let s = chars.match(reg)[0];
+        context.graphemes[context.graphemes.length-1].symbolOne = s;
+        context.graphemes[context.graphemes.length-1].literal += s;
+        let l = chars.slice(s.length);
         context.setState(state);
         return context.analyze(l);
     }
     
-    analyze(context: StateContext, literal: string) {
-        console.log("%creached graphemeonestate. literal:%s", "color: blue; font-size: medium", literal);
-        if(literal.search(GraphemicAnalyzerRegex.singleSymbol) == 0) {
+    analyze(context: StateContext, chars: string) {
+        console.log("%creached graphemeonestate. chars:%s", "color: blue; font-size: medium", chars);
+        if(chars.search(GraphemicAnalyzerRegex.singleSymbol) == 0) {
             // terminal state
             context.graphemes.push(new AlphabetGrapheme());
-            let g = literal.match(GraphemicAnalyzerRegex.singleSymbol)[0];
-            context.graphemes[context.graphemes.length-1].symbolOne = g;
+            let s = chars.match(GraphemicAnalyzerRegex.singleSymbol)[0];
+            context.graphemes[context.graphemes.length-1].symbolOne = s;
+            context.graphemes[context.graphemes.length-1].literal += s;
             // no need to reset the state since this is the default state
-            return literal.slice(g.length);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolU) == 0) {
+            return chars.slice(s.length);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolU) == 0) {
             // non-terminal state
-            this.setSymbolOneState(context, literal, new SymbolRState(), GraphemicAnalyzerRegex.symbolU);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolN) == 0) {
+            this.setSymbolOneState(context, chars, new SymbolRState(), GraphemicAnalyzerRegex.symbolU);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolN) == 0) {
             // non-terminal state
-            this.setSymbolOneState(context, literal, new SymbolGOrNState(), GraphemicAnalyzerRegex.symbolN);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolZ) == 0) {
+            this.setSymbolOneState(context, chars, new SymbolGOrNState(), GraphemicAnalyzerRegex.symbolN);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolZ) == 0) {
             // non-terminal state
-            this.setSymbolOneState(context, literal, new SymbolSOrZState(), GraphemicAnalyzerRegex.symbolZ);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolX) == 0) {
+            this.setSymbolOneState(context, chars, new SymbolSOrZState(), GraphemicAnalyzerRegex.symbolZ);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolX) == 0) {
             // non-terminal state
-            this.setSymbolOneState(context, literal, new SymbolXState(), GraphemicAnalyzerRegex.symbolX);
-        } else if(literal.search(GraphemicAnalyzerRegex.symbolS) == 0) {
+            this.setSymbolOneState(context, chars, new SymbolXState(), GraphemicAnalyzerRegex.symbolX);
+        } else if(chars.search(GraphemicAnalyzerRegex.symbolS) == 0) {
             // non-terminal state
-            this.setSymbolOneState(context, literal, new SymbolSState(), GraphemicAnalyzerRegex.symbolS);
+            this.setSymbolOneState(context, chars, new SymbolSState(), GraphemicAnalyzerRegex.symbolS);
         }
     }
 }
 
-class LetterState extends State {
-    analyze(context: StateContext, literal: string) {
+class LetterState extends GraphemicState {
+    analyze(context: StateContext, chars: string) {
         context.setState(new SymbolOneState());
-        return context.analyze(literal);
+        return context.analyze(chars);
     }
 }
 
 class StateContext {
 
-    private myState: State;
+    private myState: GraphemicState;
 
     graphemes: Array<AlphabetGrapheme>;
 
     constructor() {
-        this.myState = new State();
+        this.myState = new GraphemicState();
         this.graphemes = new Array();
         this.setState(new LetterState());
     }
@@ -254,19 +265,19 @@ class StateContext {
 
     }
 
-    analyze(literal: string) {
-        let l: string = literal;
+    analyze(chars: string) {
+        let c: string = chars;
         do {
-            l = this.myState.analyze(this, l);
-            console.log("%cremained literal after analyzing: %s", "color: blue; font-size: medium", l);
+            c = this.myState.analyze(this, c);
+            console.log("%cremained characters after analyzing: %s", "color: blue; font-size: medium", c);
             try {
-                if(l == null) {
+                if(c == null) {
                     break;
                 }
             } catch(message) {
                 console.log("failed to get length of l");
             }
-        } while(l.length > 0);
+        } while(c.length > 0);
         
     }
 }
@@ -277,15 +288,15 @@ class StateContext {
 
 export class GraphemicAnalyzer {
     sc: StateContext;
-    literal: string;
+    chars: string;
 
     constructor(l: string) {
         this.sc = new StateContext();
-        this.literal = l;
+        this.chars = l;
     }
     
     analyze() {
-        this.sc.analyze(this.literal);
+        this.sc.analyze(this.chars);
         console.log("%cabout to return grapheme array. length %d", "color: blue; font-size: medium", this.sc.graphemes.length);
         return this.sc.graphemes;
     }

@@ -13,6 +13,7 @@ interface IExpression {
 export class Expression implements IExpression {
     literal: string;
 
+    constructor() {this.literal = '';}
     evaluate(context: Context) {}
 }
 

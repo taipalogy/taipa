@@ -34,10 +34,10 @@ class ToneSandhiRule {
 
 export class ToneMarkChecker {
     rules: Array<ToneSandhiRule>;
-    uncheckedToneRules: Array<ToneSandhiRule>;
+    freeToneRules: Array<ToneSandhiRule>;
     checkedToneRules: Array<ToneSandhiRule>;
 
-    // unchecked tones
+    // free tones
     toneFirstWithoutToneMark: ToneMark;
     toneFirstSs: ToneMark;
     toneSecondY: ToneMark;
@@ -75,7 +75,7 @@ export class ToneMarkChecker {
     toneEighthCheckedG: ToneMark;
 
     constructor() {
-        this.uncheckedToneRules = new Array();
+        this.freeToneRules = new Array();
         this.checkedToneRules = new Array();
 
         this.toneFirstWithoutToneMark = new ToneMark("First Tone without Tone Mark", "");
@@ -110,15 +110,15 @@ export class ToneMarkChecker {
         this.toneEighthCheckedD = new ToneMark("Eighth Checked Tone D", "d");
         this.toneEighthCheckedG = new ToneMark("Eighth Checked Tone G", "g");
 
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneFirstWithoutToneMark, this.toneSeventhZs));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneFirstSs, this.toneSeventhZs));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneSecondY, this.toneFirstSs));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneSecondY, this.toneFirstWithoutToneMark));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneThirdW, this.toneSecondY));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneThirdW, this.toneNinthXx));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneSeventhZs, this.toneThirdW));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneFifthX, this.toneSeventhZs));
-        this.uncheckedToneRules.push(new ToneSandhiRule(this.toneSeventhZs, this.toneNinthXx));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneFirstWithoutToneMark, this.toneSeventhZs));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneFirstSs, this.toneSeventhZs));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneSecondY, this.toneFirstSs));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneSecondY, this.toneFirstWithoutToneMark));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneThirdW, this.toneSecondY));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneThirdW, this.toneNinthXx));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneSeventhZs, this.toneThirdW));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneFifthX, this.toneSeventhZs));
+        this.freeToneRules.push(new ToneSandhiRule(this.toneSeventhZs, this.toneNinthXx));
 
         this.checkedToneRules.push(new ToneSandhiRule(this.toneThirdCheckedBb, this.toneFifthCheckedBx));
         this.checkedToneRules.push(new ToneSandhiRule(this.toneThirdCheckedDd, this.toneFifthCheckedDx));
@@ -147,9 +147,9 @@ export class ToneMarkChecker {
             }
         }
 
-        for(let i = 0; i < this.uncheckedToneRules.length; i++) {
-            // we then filter the tone with unchecked tone rules
-            let r = this.uncheckedToneRules[i];
+        for(let i = 0; i < this.freeToneRules.length; i++) {
+            // we then filter the tone with free tone rules
+            let r = this.freeToneRules[i];
             if(r.baseTone.toneMark == this.toneFirstWithoutToneMark.toneMark 
                 || r.sandhiTone.toneMark == this.toneFirstWithoutToneMark.toneMark) {
                     // bypass the first tone without tone mark
@@ -175,8 +175,8 @@ export class ToneMarkChecker {
                 return roots.shift() + r.baseTone.toneMark;
             }
         }
-        for(let i = 0; i < this.uncheckedToneRules.length; i++) {
-            let r = this.uncheckedToneRules[i];
+        for(let i = 0; i < this.freeToneRules.length; i++) {
+            let r = this.freeToneRules[i];
             if(st.match(new RegExp(r.sandhiTone.toneMark))) {
                 if(r.baseTone.toneMark == this.toneFirstWithoutToneMark.toneMark 
                     || r.sandhiTone.toneMark == this.toneFirstWithoutToneMark.toneMark) {
@@ -210,8 +210,8 @@ export class ToneMarkChecker {
             }
         }
 
-        for(let i = 0; i < this.uncheckedToneRules.length; i++) {
-            let r = this.uncheckedToneRules[i];
+        for(let i = 0; i < this.freeToneRules.length; i++) {
+            let r = this.freeToneRules[i];
             if(r.baseTone.toneMark == this.toneFirstWithoutToneMark.toneMark 
                 || r.sandhiTone.toneMark == this.toneFirstWithoutToneMark.toneMark) {
                     // bypass the first tone without tone mark
@@ -226,12 +226,12 @@ export class ToneMarkChecker {
         return "";
     }
 
-    isUncheckedTone(t: string) {
+    isFreeTone(t: string) {
 
         let sv = new RootValidator();
 
-        for(let i = 0; i < this.uncheckedToneRules.length; i++) {
-            let r = this.uncheckedToneRules[i];
+        for(let i = 0; i < this.freeToneRules.length; i++) {
+            let r = this.freeToneRules[i];
             if(r.baseTone.name == this.toneFirstWithoutToneMark.name 
                 || r.sandhiTone.name == this.toneFirstWithoutToneMark.name ) {
                 // the first tone is the lemma, it has no tone mark as a word

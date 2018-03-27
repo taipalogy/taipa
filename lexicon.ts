@@ -83,8 +83,8 @@ export class Lexicon {
 
     getLexeme(literal: string) : Entry {
         console.log("about to get lexeme: %s", literal);
-        if(this.isUncheckedTone(literal)) {
-            console.log("%s is a unchecked tone", literal);
+        if(this.isFreeTone(literal)) {
+            console.log("%s is a free tone", literal);
             for(let i in this.entries) {
                 let e = this.entries[i];
                 if(e.matchedBaseTone(literal)) {
@@ -107,10 +107,10 @@ export class Lexicon {
         return null;
     }
 
-    isUncheckedTone(l: string) {
-        console.log("isUnchecked: %s", l);
+    isFreeTone(l: string) {
+        console.log("isFree: %s", l);
         let tmc = new ToneMarkChecker();
-        return tmc.isUncheckedTone(l);
+        return tmc.isFreeTone(l);
     }
 
     isCheckedTone(l: string) {

@@ -12,6 +12,8 @@ class Serializer {
 }
 
 export class SerializerOfGraphemes extends Serializer {
+    // turn a sequence of graphemes to a series of letters
+
     graphemes: Array<Grapheme>;
 
     constructor(graphemes: Array<AlphabetGrapheme>) {
