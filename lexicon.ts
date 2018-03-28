@@ -1,6 +1,4 @@
-import { Word } from './constituent';
 import { ToneMarkChecker } from './tonemark';
-import { PartOfSpeech } from './constituent';
 
 //------------------------------------------------------------------------------
 //  Lexeme
@@ -11,14 +9,11 @@ export class Entry {
     // string or array of string
     forms: Array<string>
 
-    partOfSpeech: PartOfSpeech;
-
     constructor(l: string) {
         this.lemma = l;
         this.forms = new Array();
         // populate the array of forms
         this.populateForms();
-        this.partOfSpeech = PartOfSpeech.Unknown;
     }
 
     populateForms() {

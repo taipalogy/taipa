@@ -1,5 +1,6 @@
 import { Morpheme } from './morphologicalanalyzer';
 import { Grapheme } from './graphemicanalyzer';
+import { Lexeme } from './lexicalanalyzer';
 import { Context } from "./context";
 
 //-----------------------------------------------------------------------------
@@ -52,15 +53,16 @@ export class PeriodExpression extends Operator {
 //  Wrapper for Abstract Syntax Tree
 //-----------------------------------------------------------------------------
 
-export class AstWrapperTwo extends Expression {
+export class AstWrapper extends Expression {
     literal: string;
 
-    isBase(){}
+    isBasicForm() : Boolean {return true}
 }
 
-export class Operand extends AstWrapperTwo {
+export class Operand extends AstWrapper {
 
-    isInitialCapitalized() {}
+    isBasicForm() {return this.isInitialLowerCase()}
+    private isInitialLowerCase() {return true}
 }
 
 export class PhraseExpression extends Operand {
@@ -68,7 +70,11 @@ export class PhraseExpression extends Operand {
 }
 
 export class WordExpression extends Operand {
-
+    lexeme: Lexeme;
+    constructor(lexeme: Lexeme) {
+        super();
+        this.lexeme = lexeme;
+    }
 }
 
 export class SyllableExpression extends Operand {

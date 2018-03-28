@@ -7,7 +7,7 @@ class Shunter {
   constructor(nodes) {
     this.nodes = nodes;
     console.log("shunter constructor");
-    //console.log(this.nodes);
+    console.log(this.nodes);
   }
 
   join(operators: Array<Operator>, output: Array<Expression>) {
@@ -47,11 +47,14 @@ class Shunter {
     for(var i in this.nodes) {
       let node = this.nodes[i];
 
-      if(node instanceof Operand && !node.isInitialCapitalized()) {
+      console.log("hit");
+
+      if(node instanceof Operand && node.isBasicForm()) {
+        console.log("hit");
         output.push(node);
       } else if(node instanceof AndExpression || node instanceof OrExpression) {
         operators.push(node);
-      } else if(node instanceof Operand && node.isInitialCapitalized()) {
+      } else if(node instanceof Operand && !node.isBasicForm()) {
         output.push(node);
       } else if(node instanceof PeriodExpression) {
         if(output[output.length-1] instanceof Operator) {
@@ -62,6 +65,10 @@ class Shunter {
       }
     }
 
+    console.log(this.nodes);
+    console.log(operators);
+    console.log(output);
+    
     while(operators.length > 0){
       this.join(operators, output);
     }

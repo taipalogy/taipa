@@ -195,14 +195,15 @@ class StateContext {
         let gs: Array<Grapheme> = new Array();
         gs = graphemes;
         do {
-            gs = this.myState.analyze(this, gs);
             try {
+                gs = this.myState.analyze(this, gs);
+            
                 console.log("%cremained graphemes after analyzing: %s", "color: green; font-size: medium", gs);
                 if(gs == null) {
                     break;
                 }
             } catch(message) {
-                console.log("failed to get length of l");
+                console.log("%cfailed to get length of l", "color: green; font-size: medium");
             }
         } while(gs.length > 0);
     }
