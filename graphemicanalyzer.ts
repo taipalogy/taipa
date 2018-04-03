@@ -1,5 +1,6 @@
 import { Expression } from './expression';
 import { State } from './state';
+import { LetterRule, CharacterRule } from './metadata';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -53,11 +54,7 @@ export class AlphabetGrapheme extends Expression {
 //  State pattern
 //------------------------------------------------------------------------------
 
-interface StateLike {
-    analyze(context: StateContext, chars: string);
-}
-
-class GraphemicState implements StateLike {
+class GraphemicState implements State {
     analyze(context: StateContext, chars: string) { return null; }
 }
 
@@ -248,6 +245,13 @@ class LetterState extends GraphemicState {
     }
 }
 
+class StateNew implements State {
+    patterns;
+    constructor(p: LetterRule) {
+    }
+    analyzeNew(context: StateContext, chars: string){}
+}
+
 class StateContext {
 
     private myState: GraphemicState;
@@ -258,11 +262,14 @@ class StateContext {
         this.myState = new GraphemicState();
         this.graphemes = new Array();
         this.setState(new LetterState());
+
+        //let cp = new CharacterPattern();
+        //let lp = new LetterPattern(cp);
+        //this.setState(new StateNew(lp));
     }
 
-    setState(newState: StateLike) {
+    setState(newState: GraphemicState) {
         this.myState = newState;
-
     }
 
     analyze(chars: string) {
