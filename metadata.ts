@@ -1,32 +1,24 @@
 
-class Character {
-    symbol: string;
-    //components:
-    constructor(s: string) {
-        try {
-            if(s.length == 1) {
-                this.symbol = s;
-            }
-        } catch(message) {
-            console.log("something wrong creating character");
-        }
-    }
+
+class Component {
+
 }
 
-class Letter {
+class MyString {
     characters: Array<Character>;
-    constructor(characters: Array<Character>) {
-        this.characters = new Array();
-        this.characters = characters;
-    }
+    components: Array<Component>;
+    //isIsometric() {}
 }
 
-interface IRule {
-    execute();
+export class Metadata {
+}
+
+export interface IRule {
+    match();
     //isMatch();
 }
 
-interface IEvaluator {
+export interface IEvaluator {
     evaluate();
 }
 
@@ -35,212 +27,820 @@ class RulesEvaluator implements IEvaluator {
     evaluate(){};
 }
 
-interface IValidator {
+//------------------------------------------------------------------------------
+//  Character
+//------------------------------------------------------------------------------
 
+class Character implements IRule {
+    symbol: string;
+
+    match(){}
 }
 
-class SymbolN {
-    SymbolOne: number = 0;
-    SymbolTwo: number = 1;
-    SymbolThree: number = 2;
-    
-    getLength() {
-        return Object.keys(this).length;
-    }
-
-    getNext() {
-
+export class LowerCharacterA extends Character {
+    constructor() {
+        super();
+        this.symbol = 'a';
     }
 }
 
-export class CharacterRule implements IRule {
-    characterA: Character;
-    characterB: Character;
-    characterC: Character;
-    characterD: Character;
-    characterE: Character;
-    characterF: Character;
-    characterG: Character;
-    characterH: Character;
-    characterI: Character;
-    characterJ: Character;
-    characterK: Character;
-    characterL: Character;
-    characterM: Character;
-    characterN: Character;
-    characterO: Character;
-    characterP: Character;
-    characterQ: Character;
-    characterR: Character;
-    characterS: Character;
-    characterT: Character;
-    characterU: Character;
-    characterV: Character;
-    characterW: Character;
-    characterX: Character;
-    characterY: Character;
-    characterZ: Character;
-    characterCapitalizedA: Character;
-    characterCapitalizedB: Character;
-    characterCapitalizedC: Character;
-    characterCapitalizedD: Character;
-    characterCapitalizedE: Character;
-    characterCapitalizedF: Character;
-    characterCapitalizedG: Character;
-    characterCapitalizedH: Character;
-    characterCapitalizedI: Character;
-    characterCapitalizedJ: Character;
-    characterCapitalizedK: Character;
-    characterCapitalizedL: Character;
-    characterCapitalizedM: Character;
-    characterCapitalizedN: Character;
-    characterCapitalizedO: Character;
-    characterCapitalizedP: Character;
-    characterCapitalizedQ: Character;
-    characterCapitalizedR: Character;
-    characterCapitalizedS: Character;
-    characterCapitalizedT: Character;
-    characterCapitalizedU: Character;
-    characterCapitalizedV: Character;
-    characterCapitalizedW: Character;
-    characterCapitalizedX: Character;
-    characterCapitalizedY: Character;
-    characterCapitalizedZ: Character;
+export class LowerCharacterB extends Character {
+    constructor() {
+        super();
+        this.symbol = 'b';
+    }
+}
+
+export class LowerCharacterC extends Character {
+    constructor() {
+        super();
+        this.symbol = 'c';
+    }
+}
+
+export class LowerCharacterD extends Character {
+    constructor() {
+        super();
+        this.symbol = 'd';
+    }
+}
+
+export class LowerCharacterE extends Character {
+    constructor() {
+        super();
+        this.symbol = 'e';
+    }
+}
+
+export class LowerCharacterF extends Character {
+    constructor() {
+        super();
+        this.symbol = 'f';
+    }
+}
+
+export class LowerCharacterG extends Character {
+    constructor() {
+        super();
+        this.symbol = 'g';
+    }
+}
+
+export class LowerCharacterH extends Character {
+    constructor() {
+        super();
+        this.symbol = 'h';
+    }
+}
+
+export class LowerCharacterI extends Character {
+    constructor() {
+        super();
+        this.symbol = 'i';
+    }
+}
+
+export class LowerCharacterJ extends Character {
+    constructor() {
+        super();
+        this.symbol = 'j';
+    }
+}
+
+export class LowerCharacterK extends Character {
+    constructor() {
+        super();
+        this.symbol = 'k';
+    }
+}
+
+export class LowerCharacterL extends Character {
+    constructor() {
+        super();
+        this.symbol = 'l';
+    }
+}
+
+export class LowerCharacterM extends Character {
+    constructor() {
+        super();
+        this.symbol = 'm';
+    }
+}
+
+export class LowerCharacterN extends Character {
+    constructor() {
+        super();
+        this.symbol = 'n';
+    }
+}
+
+export class LowerCharacterO extends Character {
+    constructor() {
+        super();
+        this.symbol = 'o';
+    }
+}
+
+export class LowerCharacterP extends Character {
+    constructor() {
+        super();
+        this.symbol = 'p';
+    }
+}
+
+export class LowerCharacterQ extends Character {
+    constructor() {
+        super();
+        this.symbol = 'q';
+    }
+}
+
+export class LowerCharacterR extends Character {
+    constructor() {
+        super();
+        this.symbol = 'r';
+    }
+}
+
+export class LowerCharacterS extends Character {
+    constructor() {
+        super();
+        this.symbol = 's';
+    }
+}
+
+export class LowerCharacterT extends Character {
+    constructor() {
+        super();
+        this.symbol = 't';
+    }
+}
+
+export class LowerCharacterU extends Character {
+    constructor() {
+        super();
+        this.symbol = 'u';
+    }
+}
+
+export class LowerCharacterV extends Character {
+    constructor() {
+        super();
+        this.symbol = 'v';
+    }
+}
+
+export class LowerCharacterW extends Character {
+    constructor() {
+        super();
+        this.symbol = 'w';
+    }
+}
+
+export class LowerCharacterX extends Character {
+    constructor() {
+        super();
+        this.symbol = 'x';
+    }
+}
+
+export class LowerCharacterY extends Character {
+    constructor() {
+        super();
+        this.symbol = 'y';
+    }
+}
+
+export class LowerCharacterZ extends Character {
+    constructor() {
+        super();
+        this.symbol = 'z';
+    }
+}
+
+class CharacterOne implements IEvaluator {
+    characters: Array<Character>;
+    evaluate(){}
+}
+
+class CharacterTwo implements IEvaluator {
+    characters: Array<Character>;
+    evaluate(){}
+}
+
+class CharacterThree implements IEvaluator {
+    characters: Array<Character>;
+    constructor(){
+        this.characters.push(new LowerCharacterS()); // zzS
+        this.characters.push(new LowerCharacterX()); // xxX
+    }
+    evaluate(){}
+}
+
+//------------------------------------------------------------------------------
+//  Grapheme
+//------------------------------------------------------------------------------
+
+export class Grapheme implements IRule {
+    characters: Array<Character>;
+    match(){}
+}
+
+export class GraphemeA extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterA());
+    }
+}
+
+class GraphemeB extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterB());
+    }
+}
+
+class GraphemeC extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterC());
+    }
+}
+
+
+class GraphemeD extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterD());
+    }
+}
+
+class GraphemeE extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterE());
+    }
+}
+
+class GraphemeF extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterF());
+    }
+}
+
+class GraphemeG extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterG());
+    }
+}
+
+class GraphemeH extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterH());
+    }
+}
+
+class GraphemeN extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterN());
+    }
+}
+
+class GraphemeO extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterO());
+    }
+}
+
+class GraphemeP extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterP());
+    }
+}
+
+class GraphemeQ extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterQ());
+    }
+}
+
+class GraphemeR extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterR());
+    }
+}
+
+class GraphemeS extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterS());
+    }
+}
+
+class GraphemeT extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterT());
+    }
+}
+
+class GraphemeU extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterU());
+    }
+}
+
+class GraphemeV extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterV());
+    }
+}
+
+class GraphemeW extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterW());
+    }
+}
+
+class GraphemeX extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterX());
+    }
+}
+
+class GraphemeY extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterY());
+    }
+}
+
+class GraphemeI extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterI());
+    }
+}
+
+class GraphemeJ extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterJ());
+    }
+}
+
+class GraphemeK extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterK());
+    }
+}
+
+class GraphemeL extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterL());
+    }
+}
+
+class GraphemeM extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterM());
+    }
+}
+
+class GraphemeZ extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterZ());
+    }
+}
+
+class GraphemeNG extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterN());
+        this.characters.push(new LowerCharacterG());
+    }
+}
+
+class GraphemeNN extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterN());
+        this.characters.push(new LowerCharacterN());
+    }
+}
+
+class GraphemeSS extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterS());
+        this.characters.push(new LowerCharacterS());
+    }
+}
+
+class GraphemeUR extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterU());
+        this.characters.push(new LowerCharacterR());
+    }
+}
+
+class GraphemeXX extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterX());
+        this.characters.push(new LowerCharacterX());
+    }
+}
+
+class GraphemeXXX extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterX());
+        this.characters.push(new LowerCharacterX());
+        this.characters.push(new LowerCharacterX());
+    }
+}
+
+class GraphemeZS extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterZ());
+        this.characters.push(new LowerCharacterS());
+    }
+}
+
+class GraphemeZZS extends Grapheme {
+    constructor() {
+        super();
+        this.characters.push(new LowerCharacterZ());
+        this.characters.push(new LowerCharacterZ());
+        this.characters.push(new LowerCharacterS());
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Letter
+//------------------------------------------------------------------------------
+
+class Letter implements IRule {
+    characters: Array<Character>;
+    grapheme: Grapheme;
+    match(){}
+}
+
+class LowerLetterA extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterA());
+        this.grapheme = new GraphemeA();
+    }
+}
+
+class LowerLetterB extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterB());
+        this.grapheme = new GraphemeB();
+    }
+}
+
+class LowerLetterC extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterC());
+        this.grapheme = new GraphemeC();
+    }
+}
+
+class LowerLetterD extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterD());
+        this.grapheme = new GraphemeD();
+    }
+}
+
+class LowerLetterE extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterE());
+        this.grapheme = new GraphemeE();
+    }
+}
+
+class LowerLetterF extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterF());
+        this.grapheme = new GraphemeF();
+    }
+}
+
+class LowerLetterG extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterG());
+        this.grapheme = new GraphemeG();
+    }
+}
+
+class LowerLetterH extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterH());
+        this.grapheme = new GraphemeH();
+    }
+}
+
+class LowerLetterI extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterI());
+        this.grapheme = new GraphemeI();
+    }
+}
+
+class LowerLetterJ extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterJ());
+        this.grapheme = new GraphemeJ();
+    }
+}
+
+class LowerLetterK extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterK());
+        this.grapheme = new GraphemeK();
+    }
+}
+
+class LowerLetterL extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterL());
+        this.grapheme = new GraphemeL();
+    }
+}
+
+class LowerLetterM extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterM());
+        this.grapheme = new GraphemeM();
+    }
+}
+
+class LowerLetterN extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterN());
+        this.grapheme = new GraphemeN();
+    }
+}
+
+class LowerLetterO extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterO());
+        this.grapheme = new GraphemeO();
+    }
+}
+
+class LowerLetterP extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterP());
+        this.grapheme = new GraphemeP();
+    }
+}
+
+class LowerLetterQ extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterQ());
+        this.grapheme = new GraphemeQ();
+    }
+}
+
+class LowerLetterS extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterS());
+        this.grapheme = new GraphemeS();
+    }
+}
+
+class LowerLetterT extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterT());
+        this.grapheme = new GraphemeT();
+    }
+}
+
+class LowerLetterU extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterU());
+        this.grapheme = new GraphemeU();
+    }
+}
+
+class LowerLetterV extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterV());
+        this.grapheme = new GraphemeV();
+    }
+}
+
+class LowerLetterX extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterX());
+        this.grapheme = new GraphemeX();
+    }
+}
+
+class LowerLetterY extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterY());
+        this.grapheme = new GraphemeY();
+    }
+}
+
+class LowerLetterZ extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterZ());
+        this.grapheme = new GraphemeZ();
+    }
+}
+
+class LowerLetterZZS extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterZ());
+        this.characters.push(new LowerCharacterZ());
+        this.characters.push(new LowerCharacterS());
+        this.grapheme = new GraphemeZZS();
+    }
+}
+
+class LowerLetterXX extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterX());
+        this.characters.push(new LowerCharacterX());
+        this.grapheme = new GraphemeXX();
+    }
+}
+
+class LowerLetterXXX extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterX());
+        this.characters.push(new LowerCharacterX());
+        this.characters.push(new LowerCharacterX());
+        this.grapheme = new GraphemeXXX();
+    }
+}
+
+class LowerLetterSS extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterS());
+        this.characters.push(new LowerCharacterS());
+        this.grapheme = new GraphemeSS();
+    }
+}
+
+class LowerLetterZS extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterZ());
+        this.characters.push(new LowerCharacterS());
+        this.grapheme = new GraphemeZS();
+    }
+}
+
+class LowerLetterUR extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterU());
+        this.characters.push(new LowerCharacterR());
+        this.grapheme = new GraphemeUR();
+    }
+}
+
+class LowerLetterW extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterW());
+        this.grapheme = new GraphemeW();
+    }
+}
+
+class LowerLetterNG extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterN());
+        this.characters.push(new LowerCharacterG());
+        this.grapheme = new GraphemeUR();
+    }
+}
+
+class LowerLetterNN extends Letter {
+    constructor() {
+        super();
+        this.characters = new Array();
+        this.characters.push(new LowerCharacterN());
+        this.characters.push(new LowerCharacterN());
+        this.grapheme = new GraphemeNN();
+    }
+}
+
+export class LowerCharacterEvaluator extends RulesEvaluator {
 
     constructor() {
-        this.characterA = new Character("a");
-        this.characterB = new Character("b");
-        this.characterC = new Character("c");
-        this.characterD = new Character("d");
-        this.characterE = new Character("e");
-        this.characterF = new Character("f");
-        this.characterG = new Character("g");
-        this.characterH = new Character("h");
-        this.characterI = new Character("i");
-        this.characterJ = new Character("j");
-        this.characterK = new Character("k");
-        this.characterL = new Character("l");
-        this.characterM = new Character("m");
-        this.characterN = new Character("n");
-        this.characterO = new Character("o");
-        this.characterP = new Character("p");
-        this.characterQ = new Character("q");
-        this.characterR = new Character("r");
-        this.characterS = new Character("s");
-        this.characterT = new Character("t");
-        this.characterU = new Character("u");
-        this.characterV = new Character("v");
-        this.characterW = new Character("w");
-        this.characterX = new Character("x");
-        this.characterY = new Character("y");
-        this.characterZ = new Character("z");
-        this.characterCapitalizedA = new Character("A");
-        this.characterCapitalizedB = new Character("B");
-        this.characterCapitalizedC = new Character("C");
-        this.characterCapitalizedD = new Character("D");
-        this.characterCapitalizedE = new Character("E");
-        this.characterCapitalizedA = new Character("F");
-        this.characterCapitalizedB = new Character("G");
-        this.characterCapitalizedC = new Character("H");
-        this.characterCapitalizedD = new Character("I");
-        this.characterCapitalizedE = new Character("J");
-        this.characterCapitalizedA = new Character("K");
-        this.characterCapitalizedB = new Character("L");
-        this.characterCapitalizedC = new Character("M");
-        this.characterCapitalizedD = new Character("N");
-        this.characterCapitalizedE = new Character("O");
-        this.characterCapitalizedA = new Character("P");
-        this.characterCapitalizedB = new Character("Q");
-        this.characterCapitalizedC = new Character("R");
-        this.characterCapitalizedD = new Character("S");
-        this.characterCapitalizedE = new Character("T");
-        this.characterCapitalizedA = new Character("U");
-        this.characterCapitalizedB = new Character("V");
-        this.characterCapitalizedC = new Character("W");
-        this.characterCapitalizedD = new Character("X");
-        this.characterCapitalizedE = new Character("Y");
-        this.characterCapitalizedE = new Character("Z");
+        super();
+        this.rules = new Array();
+
+        this.rules.push(new LowerCharacterA());
     }
 
-    execute(){}
+    evaluate(){}
 }
 
-export class LetterRule implements IRule {
-    letterA: Letter;
-    letterB: Letter;
-    letterBx: Letter;
-    letterC: Letter;
-    letterD: Letter;
-    letterDx: Letter;
-    letterDr: Letter;
-    letterE: Letter;
-    letterF: Letter;
-    letterFx: Letter;
-    letterG: Letter;
-    letterGx: Letter;
-    letterH: Letter;
-    letterI: Letter;
-    letterJ: Letter;
-    letterK: Letter;
-    letterL: Letter;
-    letterM: Letter;
-    letterN: Letter;
-    letterNn: Letter;
-    letterNg: Letter;
-    letterO: Letter;
-    letterP: Letter;
-    letterQ: Letter;
-    letterS: Letter;
-    letterSs: Letter;
-    letterT: Letter;
-    letterU: Letter;
-    letterUr: Letter;
-    letterV: Letter;
-    letterW: Letter;
-    letterX: Letter;
-    letterXx: Letter;
-    letterXxx: Letter;
-    letterY: Letter;
-    letterZ: Letter;
-    letterZs: Letter;
-    letterZzs: Letter;
-    letterCapitalizedA: Letter;
-    letterCapitalizedB: Letter;
-    letterCapitalizedC: Letter;
-    letterCapitalizedD: Letter;
-    letterCapitalizedDr: Letter;
-    letterCapitalizedE: Letter;
-    letterCapitalizedF: Letter;
-    letterCapitalizedG: Letter;
-    letterCapitalizedH: Letter;
-    letterCapitalizedI: Letter;
-    letterCapitalizedJ: Letter;
-    letterCapitalizedK: Letter;
-    letterCapitalizedL: Letter;
-    letterCapitalizedM: Letter;
-    letterCapitalizedN: Letter;
-    letterCapitalizedNn: Letter;
-    letterCapitalizedNg: Letter;
-    letterCapitalizedO: Letter;
-    letterCapitalizedP: Letter;
-    letterCapitalizedQ: Letter;
-    letterCapitalizedS: Letter;
-    letterCapitalizedSs: Letter;
-    letterCapitalizedT: Letter;
-    letterCapitalizedU: Letter;
-    letterCapitalizedUr: Letter;
-    letterCapitalizedV: Letter;
-    letterCapitalizedW: Letter;
-    letterCapitalizedX: Letter;
-    letterCapitalizedXx: Letter;
-    letterCapitalizedXxx: Letter;
-    letterCapitalizedY: Letter;
-    letterCapitalizedZ: Letter;
-    letterCapitalizedZs: Letter;
-    letterCapitalizedZzs: Letter;
+class UpperCharacterEvaluator extends RulesEvaluator {
 
-    constructor(cp: CharacterRule) {
-        this.letterA = new Letter([cp.characterA]);
+    constructor() {
+        super();
+        this.rules = new Array();
+    }
+}
+
+export class LowerAlphabetEvaluator extends RulesEvaluator {
+
+    constructor() {
+        super();
+        this.rules = new Array();
+
+        this.rules.push(new LowerLetterA());
+/*
         this.letterB = new Letter([cp.characterB]);
         this.letterBx = new Letter([cp.characterB, cp.characterX]);
         this.letterC = new Letter([cp.characterC]);
@@ -310,21 +910,64 @@ export class LetterRule implements IRule {
         this.letterCapitalizedZ = new Letter([cp.characterCapitalizedZ]);
         this.letterCapitalizedZs = new Letter([cp.characterZ, cp.characterCapitalizedS]);
         this.letterCapitalizedZzs = new Letter([cp.characterCapitalizedZ, cp.characterCapitalizedZ, cp.characterCapitalizedS]);
-
+*/
     }
 
-    execute(){}
+    evaluate(){}
 }
 
-class Component {
+class ToneSandhi implements IRule {
+    baseTone: Letter;
+    sandhiTone: Letter
+    match(){}
+}
+
+class ToneSandhiNilToZs extends ToneSandhi {
+    constructor() {
+        super();
+        this.baseTone = null;
+        this.sandhiTone = new LowerLetterZS();
+    }
+}
+
+class ToneSandhiZsToW extends ToneSandhi {
+    constructor() {
+        super();
+        this.baseTone = new LowerLetterZS();
+        this.sandhiTone = new LowerLetterW();
+    }
+}
+
+
+//------------------------------------------------------------------------------
+//  Syllable
+//------------------------------------------------------------------------------
+
+class Morpheme implements IRule {
+    match(){}
+}
+
+class MorphemeA extends Morpheme {
+    graphemes: Array<Grapheme>;
+    constructor() {
+        super();
+
+    }
+    match(){}
+}
+
+class MorphemeAY extends Morpheme {
 
 }
 
-class MyString {
-    characters: Array<Character>;
-    components: Array<Component>;
-    //isIsometric() {}
+class MorphemeAZS extends Morpheme {
+
 }
 
-export class Metadata {
+class Syllable implements IRule {
+    match(){}
+}
+
+class Accent implements IEvaluator {
+    evaluate(){}
 }

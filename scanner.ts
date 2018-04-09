@@ -30,7 +30,7 @@ export class Character {
     sourceText: string;
 
     constructor(c: string, lineIndex:number, colIndex: number, sourceIndex: number, sourceText: string) {
-      console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
+      //console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
 
       this.cargo = c;
       console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);

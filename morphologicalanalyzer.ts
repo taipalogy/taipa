@@ -30,7 +30,6 @@ export class MorphologicalAnalyzerRegex {
 //------------------------------------------------------------------------------
 
 export class Morpheme extends Expression {
-    literal: string;
 }
 
 export class ToneSandhiMorpheme extends Morpheme {
