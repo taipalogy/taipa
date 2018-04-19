@@ -21,7 +21,7 @@ export class ScannerRegex {
 //  Character
 //------------------------------------------------------------------------------
 
-export class Character {
+export class ScannedCharacter {
     
     cargo: string;
     lineIndex: number;
@@ -72,7 +72,7 @@ export class Scanner {
     lastIndex: number;
     lineIndex: number;
     colIndex: number;
-    char: Character;
+    char: ScannedCharacter;
     c: string;
 
     constructor(sourceText: string) {
@@ -96,10 +96,10 @@ export class Scanner {
         this.colIndex += 1;
 
         if(this.sourceIndex > this.lastIndex) {
-            this.char = new Character(ScannerRegex.ENDOFFILE, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
+            this.char = new ScannedCharacter(ScannerRegex.ENDOFFILE, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
         } else {
             this.c = this.sourceText[this.sourceIndex];
-            this.char = new Character(this.c, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
+            this.char = new ScannedCharacter(this.c, this.lineIndex, this.colIndex, this.sourceIndex, this.sourceText);
         }
         return this.char;
     }

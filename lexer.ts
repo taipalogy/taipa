@@ -1,4 +1,4 @@
-import { Scanner, Character, ScannerRegex } from './../core/scanner';
+import { Scanner, ScannedCharacter, ScannerRegex } from './../core/scanner';
 
 //------------------------------------------------------------------------------
 //  Type constants
@@ -57,7 +57,7 @@ export class Lexer {
     scanner: Scanner;
     c1: string;
     c2: string;
-    character: Character;
+    character: ScannedCharacter;
 
     whiteSpaceChars: RegExp = /[\ ]/;
     identifierChars: RegExp = /[a-z]/;
