@@ -108,9 +108,13 @@ export class AlphabetGrapheme extends Grapheme {
     constructor(characters?: Array<Character>) {
         super();
         this.characters = new Array();
-        let len = characters.length;
-        for(var i = 0; i < len; i++) {
-            this.characters.push(characters[i]);
+        if(characters != null) {
+            let len = characters.length;
+            for(var i = 0; i < len; i++) {
+                //this.characters.push(characters[i]);
+                //this.literal += characters[i].symbol;
+                this.pushCharacter(characters[i]);
+            }
         }
     }
 
@@ -137,12 +141,12 @@ class GraphemicState implements State {
     pushToGrapheme(context: StateContext, regex: RegExp){
         //let s = context.chars.match(regex)[0];
         //context.graphemes[context.graphemes.length-1].pushCharacter(s);
-        console.log("context.chars before slicing:%s.length: %d", context.characters, context.characters.length);
+        console.log("context.characters before slicing:%s.length: %d", context.characters, context.characters.length);
         //let tmp = context.chars.slice(s.length);
         //context.chars = '';
         //context.chars = tmp;
         context.graphemes[context.graphemes.length-1].pushCharacter(context.characters.shift());
-        console.log("context.chars after slicing:%s.length: %d", context.characters, context.characters.length);
+        console.log("context.characters after slicing:%s.length: %d", context.characters, context.characters.length);
     }
 
     analyzeNextState(context: StateContext, state: GraphemicState){
@@ -153,6 +157,7 @@ class GraphemicState implements State {
             }
         } catch (message) {
             console.log("failed in analyzeNextState method");
+            //context.characters.shift();
         }
     }
 
@@ -160,9 +165,6 @@ class GraphemicState implements State {
         return context.graphemes[context.graphemes.length-1].characters.pop();
     }
 
-    trimLastCharacterFromLastGrapheme() {
-
-    }
 }
 
 class CharacterRState extends GraphemicState {
