@@ -1,21 +1,21 @@
-import { Morpheme } from './morphologicalanalyzer';
-import { Grapheme } from './graphemicanalyzer';
+
+import { Letter } from './graphemicanalyzer';
 import { Lexeme } from './lexicalanalyzer';
 import { Context } from "./context";
+import { IConstituent} from './constituent';
 
 //-----------------------------------------------------------------------------
 //  Expression
 //-----------------------------------------------------------------------------
 
-interface IExpression {
+export interface IExpression {
     literal: string;
+    evaluate(context: Context);
 }
 
 export class Expression implements IExpression {
-    literal: string;
-
-    constructor() {this.literal = '';}
-    evaluate(context: Context) {}
+    literal: string = '';
+    evaluate(context: Context){}
 }
 
 export class Operator extends Expression {
@@ -50,45 +50,20 @@ export class PeriodExpression extends Operator {
 
 
 //-----------------------------------------------------------------------------
-//  Wrapper for Abstract Syntax Tree
+//  AstWrapper for Abstract Syntax Tree
 //-----------------------------------------------------------------------------
 
-export class AstWrapper extends Expression {
+export interface IOperand extends IExpression {
     literal: string;
 
-    isBasicForm() : Boolean {return true}
+    isBasicForm() : Boolean;
 }
 
-export class Operand extends AstWrapper {
-
+export class Operand implements IOperand, IConstituent {
+    literal: string;
+    partOfSpeech: string;
+    
+    evaluate(context: Context){}
     isBasicForm() {return this.isInitialLowerCase()}
     private isInitialLowerCase() {return true}
-}
-
-export class PhraseExpression extends Operand {
-
-}
-
-export class WordExpression extends Operand {
-    lexeme: Lexeme;
-    constructor(lexeme: Lexeme) {
-        super();
-        this.lexeme = lexeme;
-    }
-}
-
-export class SyllableExpression extends Operand {
-    morpheme: Morpheme;
-    constructor(morpheme: Morpheme) {
-        super();
-        this.morpheme = morpheme;
-    }
-}
-
-export class LetterExpression extends Operand {
-    grapheme: Grapheme;
-    constructor(grapheme: Grapheme) {
-        super();
-        this.grapheme = grapheme;
-    }
 }

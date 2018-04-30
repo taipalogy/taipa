@@ -1,3 +1,3 @@
-interface IConstituent {
+export interface IConstituent {
     partOfSpeech: string;
 }

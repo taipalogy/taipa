@@ -1,5 +1,6 @@
-import { Expression } from './expression';
+import { Operand } from './expression';
 import { State } from './state';
+import { Context } from "./context";
 
 //------------------------------------------------------------------------------
 //  Character
@@ -96,13 +97,15 @@ export class GraphemicAnalyzerRegex {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-//  Grapheme
+//  Letter
 //------------------------------------------------------------------------------
 
-export class Grapheme extends Expression {
+export class Letter extends Operand {
+    literal: string = '';
+    evaluate(context: Context){}
 }
 
-export class AlphabetGrapheme extends Grapheme {
+export class AlphabeticLetter extends Letter {
     characters: Array<Character>;
 
     constructor(characters?: Array<Character>) {
@@ -128,7 +131,7 @@ export class AlphabetGrapheme extends Grapheme {
 //  State pattern
 //------------------------------------------------------------------------------
 
-class GraphemicState implements State {
+class LetterState implements State {
     analyze(context: StateContext) { return null; }
     
     isAtIndexZero(characters: Array<Character>, regex: RegExp) {
@@ -138,18 +141,13 @@ class GraphemicState implements State {
         return characters[0].symbol.search(regex) == 0;
     }
 
-    pushToGrapheme(context: StateContext, regex: RegExp){
-        //let s = context.chars.match(regex)[0];
-        //context.graphemes[context.graphemes.length-1].pushCharacter(s);
+    pushToLetter(context: StateContext, regex: RegExp){
         console.log("context.characters before slicing:%s.length: %d", context.characters, context.characters.length);
-        //let tmp = context.chars.slice(s.length);
-        //context.chars = '';
-        //context.chars = tmp;
-        context.graphemes[context.graphemes.length-1].pushCharacter(context.characters.shift());
+        context.letters[context.letters.length-1].pushCharacter(context.characters.shift());
         console.log("context.characters after slicing:%s.length: %d", context.characters, context.characters.length);
     }
 
-    analyzeNextState(context: StateContext, state: GraphemicState){
+    analyzeNextState(context: StateContext, state: LetterState){
         try{
             if(context.characters.length > 0) {
                 context.setState(state);
@@ -161,18 +159,18 @@ class GraphemicState implements State {
         }
     }
 
-    popFromLastGrapheme(context: StateContext){
-        return context.graphemes[context.graphemes.length-1].characters.pop();
+    popFromLastLetter(context: StateContext){
+        return context.letters[context.letters.length-1].characters.pop();
     }
 
 }
 
-class CharacterRState extends GraphemicState {
+class CharacterRState extends LetterState {
     analyze(context: StateContext) {
         // terminal state
         console.log("%creached characterrstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterRRegexp)) {
-           this.pushToGrapheme(context, context.gar.characterRRegexp);
+           this.pushToLetter(context, context.gar.characterRRegexp);
         } else {
             console.log("gracefull failing in r");
             //context.chars = context.chars.slice(1);
@@ -180,16 +178,16 @@ class CharacterRState extends GraphemicState {
     }
 }
 
-class CharacterGState extends GraphemicState {
+class CharacterGState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached charactergstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterGRegexp)) {
-            // move the symbolTwo character of the first letter 
-            // to the grapheme character of the second letter
-            let c = this.popFromLastGrapheme(context);
-            context.graphemes.push(new AlphabetGrapheme());
-            context.graphemes[context.graphemes.length-1].pushCharacter(c);
-            this.pushToGrapheme(context, context.gar.characterGRegexp);
+            // move the last(2nd) character of the first letter 
+            // to the the second letter
+            let c = this.popFromLastLetter(context);
+            context.letters.push(new AlphabeticLetter());
+            context.letters[context.letters.length-1].pushCharacter(c);
+            this.pushToLetter(context, context.gar.characterGRegexp);
         } else {
             console.log("gracefull failing in g");
             context.characters.shift();
@@ -197,13 +195,13 @@ class CharacterGState extends GraphemicState {
     }
 }
 
-class CharacterGOrNState extends GraphemicState {
+class CharacterGOrNState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached charactergornstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterGRegexp)) {
-           this.pushToGrapheme(context, context.gar.characterGRegexp);
+           this.pushToLetter(context, context.gar.characterGRegexp);
         } else if(this.isAtIndexZero(context.characters, context.gar.characterNRegexp)) {
-           this.pushToGrapheme(context, context.gar.characterNRegexp);
+           this.pushToLetter(context, context.gar.characterNRegexp);
            this.analyzeNextState(context, new CharacterGState());
         } else {
             console.log("gracefull failing gorn");
@@ -212,11 +210,11 @@ class CharacterGOrNState extends GraphemicState {
     }
 }
 
-class CharacterThreeSState extends GraphemicState {
+class CharacterThreeSState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached charactersstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterSRegexp)) {
-           this.pushToGrapheme(context, context.gar.characterSRegexp);
+           this.pushToLetter(context, context.gar.characterSRegexp);
         } else {
             console.log("gracefull failing in three");
             context.characters.shift();
@@ -224,13 +222,13 @@ class CharacterThreeSState extends GraphemicState {
     }
 }
 
-class CharacterSOrZState extends GraphemicState {
+class CharacterSOrZState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached charactersorzstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterSRegexp)) {
-           this.pushToGrapheme(context, context.gar.characterSRegexp);
+           this.pushToLetter(context, context.gar.characterSRegexp);
         } else if(this.isAtIndexZero(context.characters, context.gar.characterZRegexp)) {
-           this.pushToGrapheme(context, context.gar.characterZRegexp);
+           this.pushToLetter(context, context.gar.characterZRegexp);
            this.analyzeNextState(context, new CharacterThreeSState());
         } else {
             console.log("gracefull failing in sorz");
@@ -240,11 +238,11 @@ class CharacterSOrZState extends GraphemicState {
 }
 
 
-class CharacterXState extends GraphemicState {
+class CharacterXState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached characterxstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterXRegexp)) {
-            this.pushToGrapheme(context, context.gar.characterXRegexp);
+            this.pushToLetter(context, context.gar.characterXRegexp);
             this.analyzeNextState(context, new CharacterXState()); // recursive call
         } else {
             console.log("gracefull failing in x");
@@ -253,11 +251,11 @@ class CharacterXState extends GraphemicState {
     }
 }
 
-class CharacterSState extends GraphemicState {
+class CharacterSState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached charactersstate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         if(this.isAtIndexZero(context.characters, context.gar.characterSRegexp)) {
-            this.pushToGrapheme(context, context.gar.characterSRegexp);
+            this.pushToLetter(context, context.gar.characterSRegexp);
         } else {
             console.log("gracefull failing in s");
             //context.characters.shift();
@@ -265,32 +263,32 @@ class CharacterSState extends GraphemicState {
     }
 }
 
-class CharacterOneState extends GraphemicState {
+class CharacterOneState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached characteronestate. chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
-        context.graphemes.push(new AlphabetGrapheme());
+        context.letters.push(new AlphabeticLetter());
         if(this.isAtIndexZero(context.characters, context.gar.singleCharactersRegexp)) {
             // terminal state
-           this.pushToGrapheme(context, context.gar.singleCharactersRegexp);
+           this.pushToLetter(context, context.gar.singleCharactersRegexp);
         } else if(this.isAtIndexZero(context.characters, context.gar.characterURegexp)) {
             // non-terminal state
-            this.pushToGrapheme(context, context.gar.characterURegexp);
+            this.pushToLetter(context, context.gar.characterURegexp);
             this.analyzeNextState(context, new CharacterRState());
         } else if(this.isAtIndexZero(context.characters, context.gar.characterNRegexp)) {
             // non-terminal state
-            this.pushToGrapheme(context, context.gar.characterNRegexp);
+            this.pushToLetter(context, context.gar.characterNRegexp);
             this.analyzeNextState(context, new CharacterGOrNState());
         } else if(this.isAtIndexZero(context.characters, context.gar.characterZRegexp)) {
             // non-terminal state
-            this.pushToGrapheme(context, context.gar.characterZRegexp);
+            this.pushToLetter(context, context.gar.characterZRegexp);
             this.analyzeNextState(context, new CharacterSOrZState());
         } else if(this.isAtIndexZero(context.characters, context.gar.characterXRegexp)) {
             // non-terminal state
-            this.pushToGrapheme(context, context.gar.characterXRegexp);
+            this.pushToLetter(context, context.gar.characterXRegexp);
             this.analyzeNextState(context, new CharacterXState());
         } else if(this.isAtIndexZero(context.characters, context.gar.characterSRegexp)) {
             // non-terminal state
-            this.pushToGrapheme(context, context.gar.characterSRegexp);
+            this.pushToLetter(context, context.gar.characterSRegexp);
             this.analyzeNextState(context, new CharacterSState());
         } else {
             console.log("gracefull failing in characterone");
@@ -299,7 +297,7 @@ class CharacterOneState extends GraphemicState {
     }
 }
 
-class GraphemeInitialState extends GraphemicState {
+class LetterInitialState extends LetterState {
     analyze(context: StateContext) {
         console.log("%creached graphemeinitialstate. context.chars:%s", "color: blue; font-size: medium", context.characters[0].symbol);
         this.analyzeNextState(context, new CharacterOneState());
@@ -308,9 +306,9 @@ class GraphemeInitialState extends GraphemicState {
 
 class StateContext {
 
-    private myState: GraphemicState;
+    private myState: LetterState;
 
-    graphemes: Array<AlphabetGrapheme>;
+    letters: Array<AlphabeticLetter>;
 
     gar: GraphemicAnalyzerRegex;
 
@@ -322,8 +320,8 @@ class StateContext {
     constructor() {
         this.myState = null;
         this.characters = new Array();
-        this.graphemes = new Array();
-        this.setState(new GraphemeInitialState());
+        this.letters = new Array();
+        this.setState(new LetterInitialState());
 
         this.gar = new GraphemicAnalyzerRegex();
         //this.chars = chars;
@@ -332,7 +330,7 @@ class StateContext {
         this.loopCount = 0;
     }
 
-    setState(newState: GraphemicState) {
+    setState(newState: LetterState) {
         this.myState = newState;
     }
 
@@ -348,7 +346,7 @@ class StateContext {
             } catch(message) {
                 console.log("failed to get length of l");
             }
-            this.setState(new GraphemeInitialState());
+            this.setState(new LetterInitialState());
         } while(this.characters.length > 0);
         
     }
@@ -374,8 +372,8 @@ export class GraphemicAnalyzer {
     
     analyze() {
         this.sc.analyze();
-        console.log("%cabout to return grapheme array. length %d. loop count:%d", "color: blue; font-size: medium", this.sc.graphemes.length, this.sc.loopCount);
-        console.log(this.sc.graphemes);
-        return this.sc.graphemes;
+        console.log("%cabout to return letter array. length %d. loop count:%d", "color: blue; font-size: medium", this.sc.letters.length, this.sc.loopCount);
+        console.log(this.sc.letters);
+        return this.sc.letters;
     }
 }

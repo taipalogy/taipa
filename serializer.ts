@@ -1,8 +1,7 @@
 import { ToneSandhiLexeme, Lexeme} from './lexicalanalyzer';
-import { ToneSandhiMorpheme, Morpheme } from './morphologicalanalyzer';
-import { Expression, AndExpression, OrExpression } from './expression';
-import { Grapheme, AlphabetGrapheme } from './graphemicanalyzer';
-import { LetterExpression } from './expression';
+import { Syllable, ToneSandhiSyllable } from './morphologicalanalyzer';
+import { IExpression, Expression, AndExpression, OrExpression } from './expression';
+import { Letter, AlphabeticLetter } from './graphemicanalyzer';
 
 //------------------------------------------------------------------------------
 //  turn a sequence into a series
@@ -14,20 +13,19 @@ class Serializer {
 export class SerializerOfGraphemes extends Serializer {
     // turn a sequence of graphemes to a series of letters
 
-    graphemes: Array<Grapheme>;
+    letters: Array<Letter>;
 
-    constructor(graphemes: Array<AlphabetGrapheme>) {
+    constructor(letters: Array<AlphabeticLetter>) {
         super();
-        this.graphemes = graphemes;
-        console.log(this.graphemes);
+        this.letters = letters;
+        console.log(this.letters);
     }
 
     serialize() {
-        let a: Array<Expression> = new Array();
-        for(var i in this.graphemes) {
-            let g = this.graphemes[i];
-            let le = new LetterExpression(g);
-            a.push(le);
+        let a: Array<IExpression> = new Array();
+        for(var i in this.letters) {
+            let g = this.letters[i];
+            a.push(g);
             a.push(new AndExpression());
         }
         return a;

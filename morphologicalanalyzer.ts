@@ -1,7 +1,8 @@
 import { Lexicon, lexicon } from './lexicon';
-import { Expression } from './expression';
-import { Character, AlphabetGrapheme } from './graphemicanalyzer';
+import { Operand } from './expression';
+import { Character, AlphabeticLetter } from './graphemicanalyzer';
 import { State } from './state';
+import { Context } from "./context";
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -9,134 +10,134 @@ import { State } from './state';
 
 export class MorphologicalAnalyzerRegex {
     // medial
-    graphemeA = new AlphabetGrapheme([new Character('a')]);
-    graphemeE = new AlphabetGrapheme([new Character('e')]);
-    graphemeI = new AlphabetGrapheme([new Character('i')]);
-    graphemeO = new AlphabetGrapheme([new Character('o')]);
-    graphemeU = new AlphabetGrapheme([new Character('u')]);
-    graphemeUR = new AlphabetGrapheme([new Character('u'), new Character('r')]);
+    letterA = new AlphabeticLetter([new Character('a')]);
+    letterE = new AlphabeticLetter([new Character('e')]);
+    letterI = new AlphabeticLetter([new Character('i')]);
+    letterO = new AlphabeticLetter([new Character('o')]);
+    letterU = new AlphabeticLetter([new Character('u')]);
+    letterUR = new AlphabeticLetter([new Character('u'), new Character('r')]);
 
     // initial excludes checked final and neutral final
-    graphemeC = new AlphabetGrapheme([new Character('c')]);
-    graphemeJ = new AlphabetGrapheme([new Character('j')]);
-    graphemeL = new AlphabetGrapheme([new Character('l')]);
-    graphemeQ = new AlphabetGrapheme([new Character('q')]);
-    graphemeS = new AlphabetGrapheme([new Character('s')]);
-    graphemeV = new AlphabetGrapheme([new Character('v')]);
-    graphemeZ = new AlphabetGrapheme([new Character('z')]);
+    letterC = new AlphabeticLetter([new Character('c')]);
+    letterJ = new AlphabeticLetter([new Character('j')]);
+    letterL = new AlphabeticLetter([new Character('l')]);
+    letterQ = new AlphabeticLetter([new Character('q')]);
+    letterS = new AlphabeticLetter([new Character('s')]);
+    letterV = new AlphabeticLetter([new Character('v')]);
+    letterZ = new AlphabeticLetter([new Character('z')]);
 
     // nasal
-    graphemeM = new AlphabetGrapheme([new Character('m')]);
-    graphemeN = new AlphabetGrapheme([new Character('n')]);
-    graphemeNG = new AlphabetGrapheme([new Character('n'), new Character('g')]);
-    graphemeNN = new AlphabetGrapheme([new Character('n'), new Character('n')]);
+    letterM = new AlphabeticLetter([new Character('m')]);
+    letterN = new AlphabeticLetter([new Character('n')]);
+    letterNG = new AlphabeticLetter([new Character('n'), new Character('g')]);
+    letterNN = new AlphabeticLetter([new Character('n'), new Character('n')]);
 
     // free tone mark
-    graphemeSS = new AlphabetGrapheme([new Character('s'), new Character('s')]);
-    graphemeW = new AlphabetGrapheme([new Character('w')]);
-    graphemeY = new AlphabetGrapheme([new Character('y')]); // neutral tone mark
-    graphemeX = new AlphabetGrapheme([new Character('x')]);
-    graphemeXX = new AlphabetGrapheme([new Character('x'), new Character('x')]);
-    graphemeXXX = new AlphabetGrapheme([new Character('x'), new Character('x'), new Character('x')]);
-    graphemeZS = new AlphabetGrapheme([new Character('z'), new Character('s')]);
-    graphemeZZS = new AlphabetGrapheme([new Character('z'), new Character('z'), new Character('s')]);
+    letterSS = new AlphabeticLetter([new Character('s'), new Character('s')]);
+    letterW = new AlphabeticLetter([new Character('w')]);
+    letterY = new AlphabeticLetter([new Character('y')]); // neutral tone mark
+    letterX = new AlphabeticLetter([new Character('x')]);
+    letterXX = new AlphabeticLetter([new Character('x'), new Character('x')]);
+    letterXXX = new AlphabeticLetter([new Character('x'), new Character('x'), new Character('x')]);
+    letterZS = new AlphabeticLetter([new Character('z'), new Character('s')]);
+    letterZZS = new AlphabeticLetter([new Character('z'), new Character('z'), new Character('s')]);
 
     // checked tone mark and final
-    graphemeB = new AlphabetGrapheme([new Character('b')]); // initial
-    graphemeD = new AlphabetGrapheme([new Character('d')]); // initial
-    graphemeG = new AlphabetGrapheme([new Character('g')]); // initial
-    graphemeK = new AlphabetGrapheme([new Character('k')]); // initial
-    graphemeP = new AlphabetGrapheme([new Character('p')]); // initial
-    graphemeT = new AlphabetGrapheme([new Character('t')]); // initial
+    letterB = new AlphabeticLetter([new Character('b')]); // initial
+    letterD = new AlphabeticLetter([new Character('d')]); // initial
+    letterG = new AlphabeticLetter([new Character('g')]); // initial
+    letterK = new AlphabeticLetter([new Character('k')]); // initial
+    letterP = new AlphabeticLetter([new Character('p')]); // initial
+    letterT = new AlphabeticLetter([new Character('t')]); // initial
 
     // neutral final
-    graphemeF = new AlphabetGrapheme([new Character('f')]); // neutral tone mark
-    graphemeH = new AlphabetGrapheme([new Character('h')]); // neutral tone mark, initial
+    letterF = new AlphabeticLetter([new Character('f')]); // neutral tone mark
+    letterH = new AlphabeticLetter([new Character('h')]); // neutral tone mark, initial
 
-    nonNasalInitialGraphemesRegexp: RegExp;
-    nasalInitialGraphemesRegexp: RegExp;
-    medialGraphemesRegexp: RegExp;
-    nasalGraphemesRegexp: RegExp;
-    neutralFinalGraphemesRegexp: RegExp;
-    checkedFinalGraphemesRegexp: RegExp;
-    freeToneMarkGraphemesRegexp: RegExp;
-    checkedToneMarkGraphemesRegexp: RegExp;
-    neutralToneMarkGraphemesRegexp: RegExp;
+    nonNasalInitialLettersRegexp: RegExp;
+    nasalInitialLettersRegexp: RegExp;
+    medialLettersRegexp: RegExp;
+    nasalLettersRegexp: RegExp;
+    neutralFinalLettersRegexp: RegExp;
+    checkedFinalLettersRegexp: RegExp;
+    freeToneMarkLettersRegexp: RegExp;
+    checkedToneMarkLettersRegexp: RegExp;
+    neutralToneMarkLettersRegexp: RegExp;
 
     constructor(){
-        let nonNasalInitials = this.graphemeB.literal
-                                + '|' + this.graphemeC.literal
-                                + '|' + this.graphemeD.literal
-                                + '|' + this.graphemeG.literal
-                                + '|' + this.graphemeH.literal
-                                + '|' + this.graphemeJ.literal
-                                + '|' + this.graphemeK.literal
-                                + '|' + this.graphemeL.literal
-                                + '|' + this.graphemeM.literal
-                                + '|' + this.graphemeN.literal
-                                + '|' + this.graphemeP.literal
-                                + '|' + this.graphemeQ.literal
-                                + '|' + this.graphemeS.literal
-                                + '|' + this.graphemeT.literal
-                                + '|' + this.graphemeV.literal
-                                + '|' + this.graphemeZ.literal;
-        this.nonNasalInitialGraphemesRegexp = new RegExp(nonNasalInitials);
+        let nonNasalInitials = this.letterB.literal
+                                + '|' + this.letterC.literal
+                                + '|' + this.letterD.literal
+                                + '|' + this.letterG.literal
+                                + '|' + this.letterH.literal
+                                + '|' + this.letterJ.literal
+                                + '|' + this.letterK.literal
+                                + '|' + this.letterL.literal
+                                + '|' + this.letterM.literal
+                                + '|' + this.letterN.literal
+                                + '|' + this.letterP.literal
+                                + '|' + this.letterQ.literal
+                                + '|' + this.letterS.literal
+                                + '|' + this.letterT.literal
+                                + '|' + this.letterV.literal
+                                + '|' + this.letterZ.literal;
+        this.nonNasalInitialLettersRegexp = new RegExp(nonNasalInitials);
         
-        let nasalInitials = this.graphemeM.literal
-                            + '|' + this.graphemeN.literal
-                            + '|' + this.graphemeNG.literal;
-        this.nasalInitialGraphemesRegexp = new RegExp(nasalInitials);
+        let nasalInitials = this.letterM.literal
+                            + '|' + this.letterN.literal
+                            + '|' + this.letterNG.literal;
+        this.nasalInitialLettersRegexp = new RegExp(nasalInitials);
 
-        let medials = this.graphemeA.literal
-                        + '|' + this.graphemeE.literal
-                        + '|' + this.graphemeI.literal
-                        + '|' + this.graphemeO.literal
-                        + '|' + this.graphemeU.literal
-                        + '|' + this.graphemeUR.literal;
-        this.medialGraphemesRegexp = new RegExp(medials);
+        let medials = this.letterA.literal
+                        + '|' + this.letterE.literal
+                        + '|' + this.letterI.literal
+                        + '|' + this.letterO.literal
+                        + '|' + this.letterU.literal
+                        + '|' + this.letterUR.literal;
+        this.medialLettersRegexp = new RegExp(medials);
 
-        let nasals = this.graphemeM.literal
-                        + '|' + this.graphemeN.literal
-                        + '|' + this.graphemeNG.literal
-                        + '|' + this.graphemeNN.literal;
-        this.nasalGraphemesRegexp = new RegExp(nasals);
+        let nasals = this.letterM.literal
+                        + '|' + this.letterN.literal
+                        + '|' + this.letterNG.literal
+                        + '|' + this.letterNN.literal;
+        this.nasalLettersRegexp = new RegExp(nasals);
 
-        let neutralFinals = this.graphemeF.literal
-                            + '|' + this.graphemeH.literal;
-        this.neutralFinalGraphemesRegexp = new RegExp(neutralFinals);
+        let neutralFinals = this.letterF.literal
+                            + '|' + this.letterH.literal;
+        this.neutralFinalLettersRegexp = new RegExp(neutralFinals);
 
-        let nonNeutralFinals = this.graphemeB.literal
-                                + '|' + this.graphemeD.literal
-                                + '|' + this.graphemeG.literal
-                                + '|' + this.graphemeP.literal
-                                + '|' + this.graphemeT.literal
-                                + '|' + this.graphemeK.literal;
-        this.checkedFinalGraphemesRegexp = new RegExp(nonNeutralFinals);
+        let nonNeutralFinals = this.letterB.literal
+                                + '|' + this.letterD.literal
+                                + '|' + this.letterG.literal
+                                + '|' + this.letterP.literal
+                                + '|' + this.letterT.literal
+                                + '|' + this.letterK.literal;
+        this.checkedFinalLettersRegexp = new RegExp(nonNeutralFinals);
 
-        let freeToneMarks = this.graphemeSS.literal
-                            + '|' + this.graphemeY.literal
-                            + '|' + this.graphemeW.literal
-                            + '|' + this.graphemeX.literal
-                            + '|' + this.graphemeXX.literal
-                            + '|' + this.graphemeXXX.literal
-                            + '|' + this.graphemeZS.literal
-                            + '|' + this.graphemeZZS.literal;
-        this.freeToneMarkGraphemesRegexp = new RegExp(freeToneMarks);
+        let freeToneMarks = this.letterSS.literal
+                            + '|' + this.letterY.literal
+                            + '|' + this.letterW.literal
+                            + '|' + this.letterX.literal
+                            + '|' + this.letterXX.literal
+                            + '|' + this.letterXXX.literal
+                            + '|' + this.letterZS.literal
+                            + '|' + this.letterZZS.literal;
+        this.freeToneMarkLettersRegexp = new RegExp(freeToneMarks);
         
-        let checkedToneMarks = this.graphemeB.literal
-                                + '|' + this.graphemeD.literal
-                                + '|' + this.graphemeG.literal
-                                + '|' + this.graphemeP.literal
-                                + '|' + this.graphemeT.literal
-                                + '|' + this.graphemeK.literal
-                                + '|' + this.graphemeX.literal;
-        this.checkedToneMarkGraphemesRegexp = new RegExp(checkedToneMarks);
+        let checkedToneMarks = this.letterB.literal
+                                + '|' + this.letterD.literal
+                                + '|' + this.letterG.literal
+                                + '|' + this.letterP.literal
+                                + '|' + this.letterT.literal
+                                + '|' + this.letterK.literal
+                                + '|' + this.letterX.literal;
+        this.checkedToneMarkLettersRegexp = new RegExp(checkedToneMarks);
 
-        let neutralToneMakrs = this.graphemeF.literal
-                                + '|' + this.graphemeH.literal
-                                + '|' + this.graphemeX.literal
-                                + '|' + this.graphemeY.literal;
-        this.neutralToneMarkGraphemesRegexp = new RegExp(neutralToneMakrs);
+        let neutralToneMakrs = this.letterF.literal
+                                + '|' + this.letterH.literal
+                                + '|' + this.letterX.literal
+                                + '|' + this.letterY.literal;
+        this.neutralToneMarkLettersRegexp = new RegExp(neutralToneMakrs);
     }
 }
 
@@ -148,26 +149,28 @@ export class MorphologicalAnalyzerRegex {
 //  Morpheme
 //------------------------------------------------------------------------------
 
-export class Morpheme extends Expression {
+export class Syllable extends Operand {
+    literal: string = '';
+    evaluate(context: Context){}
 }
 
-export class ToneSandhiMorpheme extends Morpheme {
-    graphemes: Array<AlphabetGrapheme>;
+export class ToneSandhiSyllable extends Syllable {
+    letters: Array<AlphabeticLetter>;
 
-    constructor(graphemes?: Array<AlphabetGrapheme>) {
+    constructor(letters?: Array<AlphabeticLetter>) {
         super();
-        this.graphemes = new Array();
+        this.letters = new Array();
     }
 
     isBaseForm() {
-        // look up in the lexicon to check if this morpheme is in base form
+        // look up in the lexicon to check if this syllable is in base form
     }
 
     get Stem() { return ''; }
     get Suffix() { return ''; }
 
-    pushGrapheme(g: AlphabetGrapheme) {
-        this.graphemes.push(g);
+    pushLetter(g: AlphabeticLetter) {
+        this.letters.push(g);
         this.literal += g.literal;
     }
 }
@@ -176,189 +179,189 @@ export class ToneSandhiMorpheme extends Morpheme {
 //  State pattern
 //------------------------------------------------------------------------------
 
-class MorphologicalState implements State {
+class SyllableState implements State {
     analyze(context: StateContext) { return null; }
 
-    isAtIndexZero(graphemes: Array<AlphabetGrapheme>, regex: RegExp) {
-        console.log(graphemes[0].literal);
+    isAtIndexZero(letters: Array<AlphabeticLetter>, regex: RegExp) {
+        console.log(letters[0].literal);
         console.log(regex);
-        //return graphemes.filter((g: AlphabetGrapheme) => g.literal.search(regex) == 0);
-        return graphemes[0].literal.search(regex) == 0;
+        //return letters.filter((g: AlphabeticLetter) => g.literal.search(regex) == 0);
+        return letters[0].literal.search(regex) == 0;
     }
 
     pushToMorpheme(context: StateContext, regex: RegExp){
-        console.log("context.graphemes before pushing:%s.length: %d", context.graphemes, context.graphemes.length);
-        context.morphemes[context.morphemes.length-1].pushGrapheme(context.graphemes.shift());
-        console.log("context.graphemes after pushcing:%s.length: %d", context.graphemes, context.graphemes.length);
+        console.log("context.letters before pushing:%s.length: %d", context.letters, context.letters.length);
+        context.syllables[context.syllables.length-1].pushLetter(context.letters.shift());
+        console.log("context.letters after pushcing:%s.length: %d", context.letters, context.letters.length);
     }
 
-    analyzeNextState(context: StateContext, state: MorphologicalState){
+    analyzeNextState(context: StateContext, state: SyllableState){
         try{
-            if(context.graphemes.length > 0) {
+            if(context.letters.length > 0) {
                 context.setState(state);
                 context.analyze();
             }
         } catch (message) {
             console.log("failed in analyzeNextState method");
-            //context.graphemes.shift();
+            //context.letters.shift();
         }
     }
 }
 
-class CheckedToneMarkState extends MorphologicalState {
+class CheckedToneMarkState extends SyllableState {
     analyze(context: StateContext) {
         // terminal state
-        console.log("%creached checkedtonemarkstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.checkedToneMarkGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.checkedToneMarkGraphemesRegexp);
+        console.log("%creached checkedtonemarkstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.checkedToneMarkLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.checkedToneMarkLettersRegexp);
         }
     }
 }
 
-class NeutralToneMarkState extends MorphologicalState {
+class NeutralToneMarkState extends SyllableState {
     analyze(context: StateContext) {
         // terminal state
-        console.log("%creached neutraltonemarkstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.neutralToneMarkGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.neutralToneMarkGraphemesRegexp);
+        console.log("%creached neutraltonemarkstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.neutralToneMarkLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.neutralToneMarkLettersRegexp);
         }
     }
 }
 
-class FreeToneMarkStateNew extends MorphologicalState {
+class FreeToneMarkStateNew extends SyllableState {
     analyze(context: StateContext) {
         // terminal state
-        console.log("%creached freetonemarkstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.freeToneMarkGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.freeToneMarkGraphemesRegexp);
+        console.log("%creached freetonemarkstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.freeToneMarkLettersRegexp);
         }
     }
 }
 
-class CheckedFinalStateNew extends MorphologicalState {
+class CheckedFinalStateNew extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached nonneutralfinalstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.checkedFinalGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.checkedFinalGraphemesRegexp);
-            if(this.isAtIndexZero(context.graphemes, context.mar.checkedToneMarkGraphemesRegexp)) {
+        console.log("%creached nonneutralfinalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.checkedFinalLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.checkedFinalLettersRegexp);
+            if(this.isAtIndexZero(context.letters, context.mar.checkedToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new CheckedToneMarkState());
             } else {
-                context.graphemes.shift();
+                context.letters.shift();
             }
     
         }
     }
 }
 
-class NeutralFinalState extends MorphologicalState {
+class NeutralFinalState extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached neutralfinalstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.neutralToneMarkGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.neutralFinalGraphemesRegexp);
-            if(this.isAtIndexZero(context.graphemes, context.mar.neutralToneMarkGraphemesRegexp)) {
+        console.log("%creached neutralfinalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.neutralToneMarkLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.neutralFinalLettersRegexp);
+            if(this.isAtIndexZero(context.letters, context.mar.neutralToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new NeutralToneMarkState());
             } else {
-                context.graphemes.shift();
+                context.letters.shift();
             }
         }
     }
 }
 
-class NasalState extends MorphologicalState {
+class NasalState extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached nasalstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.nasalGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.nasalGraphemesRegexp);
-            if(this.isAtIndexZero(context.graphemes, context.mar.freeToneMarkGraphemesRegexp)) {
+        console.log("%creached nasalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.nasalLettersRegexp);
+            if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new FreeToneMarkStateNew());
-            } else if(this.isAtIndexZero(context.graphemes, context.mar.neutralFinalGraphemesRegexp)) {
+            } else if(this.isAtIndexZero(context.letters, context.mar.neutralFinalLettersRegexp)) {
                 this.analyzeNextState(context, new NeutralFinalState());
             } else {
-                context.graphemes.shift();
+                context.letters.shift();
             }
     
         }
     }
 }
 
-class MedialStateNew extends MorphologicalState {
+class MedialStateNew extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached medialstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.medialGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.medialGraphemesRegexp);
-            if(this.isAtIndexZero(context.graphemes, context.mar.nasalGraphemesRegexp)) {
+        console.log("%creached medialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.medialLettersRegexp);
+            if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
                 this.analyzeNextState(context, new MedialStateNew()); // recursive call
-            } else if(this.isAtIndexZero(context.graphemes, context.mar.nasalGraphemesRegexp)) {
+            } else if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
                 this.analyzeNextState(context, new NasalState());
-            } else if(this.isAtIndexZero(context.graphemes, context.mar.freeToneMarkGraphemesRegexp)) {
+            } else if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new FreeToneMarkStateNew());
-            } else if(this.isAtIndexZero(context.graphemes, context.mar.checkedFinalGraphemesRegexp)) {
+            } else if(this.isAtIndexZero(context.letters, context.mar.checkedFinalLettersRegexp)) {
                 this.analyzeNextState(context, new CheckedFinalStateNew());
-            } else if(this.isAtIndexZero(context.graphemes, context.mar.neutralFinalGraphemesRegexp)) {
+            } else if(this.isAtIndexZero(context.letters, context.mar.neutralFinalLettersRegexp)) {
                 this.analyzeNextState(context, new NeutralFinalState());
             } else {
-                context.graphemes.shift();
+                context.letters.shift();
             }
         } 
     }
 }
 
-class InitialStateNew extends MorphologicalState {
+class InitialStateNew extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached morphemeinitialstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        context.morphemes.push(new ToneSandhiMorpheme());
-        if(this.isAtIndexZero(context.graphemes, context.mar.nonNasalInitialGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.nonNasalInitialGraphemesRegexp);
+        console.log("%creached morphemeinitialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        context.syllables.push(new ToneSandhiSyllable());
+        if(this.isAtIndexZero(context.letters, context.mar.nonNasalInitialLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.nonNasalInitialLettersRegexp);
             this.analyzeNextState(context, new MedialStateNew());
-        } else if(this.isAtIndexZero(context.graphemes, context.mar.nasalInitialGraphemesRegexp)) {
-            this.pushToMorpheme(context, context.mar.nasalInitialGraphemesRegexp);
-            if(this.isAtIndexZero(context.graphemes, context.mar.freeToneMarkGraphemesRegexp)) {
+        } else if(this.isAtIndexZero(context.letters, context.mar.nasalInitialLettersRegexp)) {
+            this.pushToMorpheme(context, context.mar.nasalInitialLettersRegexp);
+            if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new FreeToneMarkStateNew());
-            } else if(this.isAtIndexZero(context.graphemes, context.mar.neutralFinalGraphemesRegexp)) {
+            } else if(this.isAtIndexZero(context.letters, context.mar.neutralFinalLettersRegexp)) {
                 this.analyzeNextState(context, new NeutralFinalState());
             }
         } else {
-            context.graphemes.shift();
+            context.letters.shift();
         }
     }
 }
 
-class MorphemeInitialState extends MorphologicalState {
+class SyllableInitialState extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached morphemeinitialstate. context.graphemes:%s", "color: blue; font-size: medium", context.graphemes[0].literal);
-        if(this.isAtIndexZero(context.graphemes, context.mar.nonNasalInitialGraphemesRegexp) ||
-            this.isAtIndexZero(context.graphemes, context.mar.nasalInitialGraphemesRegexp)) {
+        console.log("%creached morphemeinitialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        if(this.isAtIndexZero(context.letters, context.mar.nonNasalInitialLettersRegexp) ||
+            this.isAtIndexZero(context.letters, context.mar.nasalInitialLettersRegexp)) {
             this.analyzeNextState(context, new InitialStateNew());
-        } else if (this.isAtIndexZero(context.graphemes, context.mar.medialGraphemesRegexp)) {
+        } else if (this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
             this.analyzeNextState(context, new MedialStateNew());
         } else {
-            context.graphemes.shift();
+            context.letters.shift();
         }
     }
 }
 
 class StateContext {
 
-    private myState: MorphologicalState;
+    private myState: SyllableState;
 
-    morphemes: Array<ToneSandhiMorpheme>;
+    syllables: Array<ToneSandhiSyllable>;
 
     mar: MorphologicalAnalyzerRegex;
 
-    graphemes: Array<AlphabetGrapheme>;
+    letters: Array<AlphabeticLetter>;
 
     loopCount: number;
 
     constructor() {
         this.myState = null;
-        this.graphemes = new Array();
-        this.morphemes = new Array();
+        this.letters = new Array();
+        this.syllables = new Array();
         this.mar = new MorphologicalAnalyzerRegex();
         this.setState(new InitialStateNew());
         this.loopCount = 0;
     }
 
-    setState(newState: MorphologicalState) {
+    setState(newState: SyllableState) {
         this.myState = newState;
 
     }
@@ -367,16 +370,16 @@ class StateContext {
         do {
             this.loopCount++;
             this.myState.analyze(this);
-            console.log("%cremained characters after analyzing: %s", "color: blue; font-size: medium", this.graphemes);
+            console.log("%cremained characters after analyzing: %s", "color: blue; font-size: medium", this.letters);
             try {
-                if(this.graphemes == null || this.graphemes == undefined || this.graphemes.length == 0) {
+                if(this.letters == null || this.letters == undefined || this.letters.length == 0) {
                     break;
                 }
             } catch(message) {
                 console.log("failed to get length of l");
             }
-            this.setState(new MorphemeInitialState());
-        } while(this.graphemes.length > 0);
+            this.setState(new SyllableInitialState());
+        } while(this.letters.length > 0);
     }
 }
 
@@ -385,20 +388,20 @@ class StateContext {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphologicalAnalyzer {
-    graphemes: Array<AlphabetGrapheme>;
+    letters: Array<AlphabeticLetter>;
     sc: StateContext;
 
-    constructor(graphemes: Array<AlphabetGrapheme>) {
-        this.graphemes = new Array();
-        this.graphemes = graphemes;
+    constructor(letters: Array<AlphabeticLetter>) {
+        this.letters = new Array();
+        this.letters = letters;
         this.sc = new StateContext();
-        this.sc.graphemes = graphemes;
+        this.sc.letters = letters;
     }
 
     analyze() {
         this.sc.analyze();
-        console.log(this.sc.morphemes);
-        return this.sc.morphemes;
+        console.log(this.sc.syllables);
+        return this.sc.syllables;
     }
 }
   
