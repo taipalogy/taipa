@@ -1,59 +1,15 @@
 import { Lexicon, lexicon } from './lexicon';
 import { Operand } from './expression';
-import { Character, AlphabeticLetter } from './graphemicanalyzer';
+import { Syllable, ToneSandhiSyllable, AlphabeticLetter, Letters, Characters } from './metadata';
 import { State } from './state';
 import { Context } from "./context";
+import { Character } from './metadata';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
 //------------------------------------------------------------------------------
 
 export class MorphologicalAnalyzerRegex {
-    // medial
-    letterA = new AlphabeticLetter([new Character('a')]);
-    letterE = new AlphabeticLetter([new Character('e')]);
-    letterI = new AlphabeticLetter([new Character('i')]);
-    letterO = new AlphabeticLetter([new Character('o')]);
-    letterU = new AlphabeticLetter([new Character('u')]);
-    letterUR = new AlphabeticLetter([new Character('u'), new Character('r')]);
-
-    // initial excludes checked final and neutral final
-    letterC = new AlphabeticLetter([new Character('c')]);
-    letterJ = new AlphabeticLetter([new Character('j')]);
-    letterL = new AlphabeticLetter([new Character('l')]);
-    letterQ = new AlphabeticLetter([new Character('q')]);
-    letterS = new AlphabeticLetter([new Character('s')]);
-    letterV = new AlphabeticLetter([new Character('v')]);
-    letterZ = new AlphabeticLetter([new Character('z')]);
-
-    // nasal
-    letterM = new AlphabeticLetter([new Character('m')]);
-    letterN = new AlphabeticLetter([new Character('n')]);
-    letterNG = new AlphabeticLetter([new Character('n'), new Character('g')]);
-    letterNN = new AlphabeticLetter([new Character('n'), new Character('n')]);
-
-    // free tone mark
-    letterSS = new AlphabeticLetter([new Character('s'), new Character('s')]);
-    letterW = new AlphabeticLetter([new Character('w')]);
-    letterY = new AlphabeticLetter([new Character('y')]); // neutral tone mark
-    letterX = new AlphabeticLetter([new Character('x')]);
-    letterXX = new AlphabeticLetter([new Character('x'), new Character('x')]);
-    letterXXX = new AlphabeticLetter([new Character('x'), new Character('x'), new Character('x')]);
-    letterZS = new AlphabeticLetter([new Character('z'), new Character('s')]);
-    letterZZS = new AlphabeticLetter([new Character('z'), new Character('z'), new Character('s')]);
-
-    // checked tone mark and final
-    letterB = new AlphabeticLetter([new Character('b')]); // initial
-    letterD = new AlphabeticLetter([new Character('d')]); // initial
-    letterG = new AlphabeticLetter([new Character('g')]); // initial
-    letterK = new AlphabeticLetter([new Character('k')]); // initial
-    letterP = new AlphabeticLetter([new Character('p')]); // initial
-    letterT = new AlphabeticLetter([new Character('t')]); // initial
-
-    // neutral final
-    letterF = new AlphabeticLetter([new Character('f')]); // neutral tone mark
-    letterH = new AlphabeticLetter([new Character('h')]); // neutral tone mark, initial
-
     nonNasalInitialLettersRegexp: RegExp;
     nasalInitialLettersRegexp: RegExp;
     medialLettersRegexp: RegExp;
@@ -64,114 +20,80 @@ export class MorphologicalAnalyzerRegex {
     checkedToneMarkLettersRegexp: RegExp;
     neutralToneMarkLettersRegexp: RegExp;
 
-    constructor(){
-        let nonNasalInitials = this.letterB.literal
-                                + '|' + this.letterC.literal
-                                + '|' + this.letterD.literal
-                                + '|' + this.letterG.literal
-                                + '|' + this.letterH.literal
-                                + '|' + this.letterJ.literal
-                                + '|' + this.letterK.literal
-                                + '|' + this.letterL.literal
-                                + '|' + this.letterM.literal
-                                + '|' + this.letterN.literal
-                                + '|' + this.letterP.literal
-                                + '|' + this.letterQ.literal
-                                + '|' + this.letterS.literal
-                                + '|' + this.letterT.literal
-                                + '|' + this.letterV.literal
-                                + '|' + this.letterZ.literal;
+    constructor(letters: Letters){
+        let nonNasalInitials = letters.lowerLetterB.literal
+                                + '|' + letters.lowerLetterC.literal
+                                + '|' + letters.lowerLetterD.literal
+                                + '|' + letters.lowerLetterG.literal
+                                + '|' + letters.lowerLetterH.literal
+                                + '|' + letters.lowerLetterJ.literal
+                                + '|' + letters.lowerLetterK.literal
+                                + '|' + letters.lowerLetterL.literal
+                                + '|' + letters.lowerLetterM.literal
+                                + '|' + letters.lowerLetterN.literal
+                                + '|' + letters.lowerLetterP.literal
+                                + '|' + letters.lowerLetterQ.literal
+                                + '|' + letters.lowerLetterS.literal
+                                + '|' + letters.lowerLetterT.literal
+                                + '|' + letters.lowerLetterV.literal
+                                + '|' + letters.lowerLetterZ.literal;
         this.nonNasalInitialLettersRegexp = new RegExp(nonNasalInitials);
         
-        let nasalInitials = this.letterM.literal
-                            + '|' + this.letterN.literal
-                            + '|' + this.letterNG.literal;
+        let nasalInitials = letters.lowerLetterM.literal
+                            + '|' + letters.lowerLetterN.literal
+                            + '|' + letters.lowerLetterNG.literal;
         this.nasalInitialLettersRegexp = new RegExp(nasalInitials);
 
-        let medials = this.letterA.literal
-                        + '|' + this.letterE.literal
-                        + '|' + this.letterI.literal
-                        + '|' + this.letterO.literal
-                        + '|' + this.letterU.literal
-                        + '|' + this.letterUR.literal;
+        let medials = letters.lowerLetterA.literal
+                        + '|' + letters.lowerLetterE.literal
+                        + '|' + letters.lowerLetterI.literal
+                        + '|' + letters.lowerLetterO.literal
+                        + '|' + letters.lowerLetterU.literal
+                        + '|' + letters.lowerLetterUR.literal;
         this.medialLettersRegexp = new RegExp(medials);
 
-        let nasals = this.letterM.literal
-                        + '|' + this.letterN.literal
-                        + '|' + this.letterNG.literal
-                        + '|' + this.letterNN.literal;
+        let nasals = letters.lowerLetterM.literal
+                        + '|' + letters.lowerLetterN.literal
+                        + '|' + letters.lowerLetterNG.literal
+                        + '|' + letters.lowerLetterNN.literal;
         this.nasalLettersRegexp = new RegExp(nasals);
 
-        let neutralFinals = this.letterF.literal
-                            + '|' + this.letterH.literal;
+        let neutralFinals = letters.lowerLetterF.literal
+                            + '|' + letters.lowerLetterH.literal;
         this.neutralFinalLettersRegexp = new RegExp(neutralFinals);
 
-        let nonNeutralFinals = this.letterB.literal
-                                + '|' + this.letterD.literal
-                                + '|' + this.letterG.literal
-                                + '|' + this.letterP.literal
-                                + '|' + this.letterT.literal
-                                + '|' + this.letterK.literal;
+        let nonNeutralFinals = letters.lowerLetterB.literal
+                                + '|' + letters.lowerLetterD.literal
+                                + '|' + letters.lowerLetterG.literal
+                                + '|' + letters.lowerLetterP.literal
+                                + '|' + letters.lowerLetterT.literal
+                                + '|' + letters.lowerLetterK.literal;
         this.checkedFinalLettersRegexp = new RegExp(nonNeutralFinals);
 
-        let freeToneMarks = this.letterSS.literal
-                            + '|' + this.letterY.literal
-                            + '|' + this.letterW.literal
-                            + '|' + this.letterX.literal
-                            + '|' + this.letterXX.literal
-                            + '|' + this.letterXXX.literal
-                            + '|' + this.letterZS.literal
-                            + '|' + this.letterZZS.literal;
+        let freeToneMarks = letters.lowerLetterSS.literal
+                            + '|' + letters.lowerLetterY.literal
+                            + '|' + letters.lowerLetterW.literal
+                            + '|' + letters.lowerLetterX.literal
+                            + '|' + letters.lowerLetterXX.literal
+                            + '|' + letters.lowerLetterXXX.literal
+                            + '|' + letters.lowerLetterZS.literal
+                            + '|' + letters.lowerLetterZZS.literal;
         this.freeToneMarkLettersRegexp = new RegExp(freeToneMarks);
         
-        let checkedToneMarks = this.letterB.literal
-                                + '|' + this.letterD.literal
-                                + '|' + this.letterG.literal
-                                + '|' + this.letterP.literal
-                                + '|' + this.letterT.literal
-                                + '|' + this.letterK.literal
-                                + '|' + this.letterX.literal;
+        let checkedToneMarks = letters.lowerLetterB.literal
+                                + '|' + letters.lowerLetterD.literal
+                                + '|' + letters.lowerLetterG.literal
+                                + '|' + letters.lowerLetterP.literal
+                                + '|' + letters.lowerLetterT.literal
+                                + '|' + letters.lowerLetterK.literal
+                                + '|' + letters.lowerLetterX.literal;
         this.checkedToneMarkLettersRegexp = new RegExp(checkedToneMarks);
 
-        let neutralToneMakrs = this.letterF.literal
-                                + '|' + this.letterH.literal
-                                + '|' + this.letterX.literal
-                                + '|' + this.letterY.literal;
+        let neutralToneMakrs = letters.lowerLetterF.literal
+                                + '|' + letters.lowerLetterH.literal
+                                + '|' + letters.lowerLetterX.literal
+                                + '|' + letters.lowerLetterY.literal;
         this.neutralToneMarkLettersRegexp = new RegExp(neutralToneMakrs);
-    }
-}
-
-//------------------------------------------------------------------------------
-//  Expressions
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-//  Morpheme
-//------------------------------------------------------------------------------
-
-export class Syllable extends Operand {
-    literal: string = '';
-    evaluate(context: Context){}
-}
-
-export class ToneSandhiSyllable extends Syllable {
-    letters: Array<AlphabeticLetter>;
-
-    constructor(letters?: Array<AlphabeticLetter>) {
-        super();
-        this.letters = new Array();
-    }
-
-    isBaseForm() {
-        // look up in the lexicon to check if this syllable is in base form
-    }
-
-    get Stem() { return ''; }
-    get Suffix() { return ''; }
-
-    pushLetter(g: AlphabeticLetter) {
-        this.letters.push(g);
-        this.literal += g.literal;
     }
 }
 
@@ -356,7 +278,7 @@ class StateContext {
         this.myState = null;
         this.letters = new Array();
         this.syllables = new Array();
-        this.mar = new MorphologicalAnalyzerRegex();
+        this.mar = new MorphologicalAnalyzerRegex(new Letters(new Characters())); // dependency injection via constructor
         this.setState(new InitialStateNew());
         this.loopCount = 0;
     }

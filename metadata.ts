@@ -1,4 +1,5 @@
-
+import { Operand } from './expression';
+import { Context } from './context';
 
 class Component {
 
@@ -11,345 +12,260 @@ class MyString {
 }
 
 export class Metadata {
+    static readonly NUMBER_OF_CHARACTERS: number = 26;
+    static readonly NUMBER_OF_LETTERS: number = 34;
+
+    constructor() {
+        let characters = new Characters();
+        console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
+
+        let letters = new Letters(characters);
+        console.log(letters.length === Metadata.NUMBER_OF_LETTERS);
+    }
 }
 
-export interface IRule {
-    match();
-    //isMatch();
-}
-
-export interface IEvaluator {
-    evaluate();
-}
-
-class RulesEvaluator implements IEvaluator {
-    rules: Array<IRule>;
-    evaluate(){};
-}
 
 //------------------------------------------------------------------------------
 //  Character
 //------------------------------------------------------------------------------
 
-class Character implements IRule {
+export class Character {
     symbol: string;
 
-    match(){}
+    constructor(s: string) {
+        this.symbol = s;
+    }
 }
 
-export class LowerCharacterA extends Character {
+export class Characters {
+    lowerCharacterA: Character = new Character('a');
+    lowerCharacterB: Character = new Character('b');
+    lowerCharacterC: Character = new Character('c');
+    lowerCharacterD: Character = new Character('d');
+    lowerCharacterE: Character = new Character('e');
+    lowerCharacterF: Character = new Character('f');
+    lowerCharacterG: Character = new Character('g');
+    lowerCharacterH: Character = new Character('h');
+    lowerCharacterI: Character = new Character('i');
+    lowerCharacterJ: Character = new Character('j');
+    lowerCharacterK: Character = new Character('k');
+    lowerCharacterL: Character = new Character('l');
+    lowerCharacterM: Character = new Character('m');
+    lowerCharacterN: Character = new Character('n');
+    lowerCharacterO: Character = new Character('o');
+    lowerCharacterP: Character = new Character('p');
+    lowerCharacterQ: Character = new Character('q');
+    lowerCharacterR: Character = new Character('r');
+    lowerCharacterS: Character = new Character('s');
+    lowerCharacterT: Character = new Character('t');
+    lowerCharacterU: Character = new Character('u');
+    lowerCharacterV: Character = new Character('v');
+    lowerCharacterW: Character = new Character('w');
+    lowerCharacterX: Character = new Character('x');
+    lowerCharacterY: Character = new Character('y');
+    lowerCharacterZ: Character = new Character('z');
+
+    list: Array<Character>;
     constructor() {
-        super();
-        this.symbol = 'a';
+        this.list = new Array();
+        this.list.push(this.lowerCharacterA);
+        this.list.push(this.lowerCharacterB);
+        this.list.push(this.lowerCharacterC);
+        this.list.push(this.lowerCharacterD);
+        this.list.push(this.lowerCharacterE);
+        this.list.push(this.lowerCharacterF);
+        this.list.push(this.lowerCharacterG);
+        this.list.push(this.lowerCharacterH);
+        this.list.push(this.lowerCharacterI);
+        this.list.push(this.lowerCharacterJ);
+        this.list.push(this.lowerCharacterK);
+        this.list.push(this.lowerCharacterL);
+        this.list.push(this.lowerCharacterM);
+        this.list.push(this.lowerCharacterN);
+        this.list.push(this.lowerCharacterO);
+        this.list.push(this.lowerCharacterP);
+        this.list.push(this.lowerCharacterQ);
+        this.list.push(this.lowerCharacterR);
+        this.list.push(this.lowerCharacterS);
+        this.list.push(this.lowerCharacterT);
+        this.list.push(this.lowerCharacterU);
+        this.list.push(this.lowerCharacterV);
+        this.list.push(this.lowerCharacterW);
+        this.list.push(this.lowerCharacterX);
+        this.list.push(this.lowerCharacterY);
+        this.list.push(this.lowerCharacterZ);
     }
-}
 
-export class LowerCharacterB extends Character {
-    constructor() {
-        super();
-        this.symbol = 'b';
+    get length() {
+        return this.list.length;
     }
-}
-
-export class LowerCharacterC extends Character {
-    constructor() {
-        super();
-        this.symbol = 'c';
-    }
-}
-
-export class LowerCharacterD extends Character {
-    constructor() {
-        super();
-        this.symbol = 'd';
-    }
-}
-
-export class LowerCharacterE extends Character {
-    constructor() {
-        super();
-        this.symbol = 'e';
-    }
-}
-
-export class LowerCharacterF extends Character {
-    constructor() {
-        super();
-        this.symbol = 'f';
-    }
-}
-
-export class LowerCharacterG extends Character {
-    constructor() {
-        super();
-        this.symbol = 'g';
-    }
-}
-
-export class LowerCharacterH extends Character {
-    constructor() {
-        super();
-        this.symbol = 'h';
-    }
-}
-
-export class LowerCharacterI extends Character {
-    constructor() {
-        super();
-        this.symbol = 'i';
-    }
-}
-
-export class LowerCharacterJ extends Character {
-    constructor() {
-        super();
-        this.symbol = 'j';
-    }
-}
-
-export class LowerCharacterK extends Character {
-    constructor() {
-        super();
-        this.symbol = 'k';
-    }
-}
-
-export class LowerCharacterL extends Character {
-    constructor() {
-        super();
-        this.symbol = 'l';
-    }
-}
-
-export class LowerCharacterM extends Character {
-    constructor() {
-        super();
-        this.symbol = 'm';
-    }
-}
-
-export class LowerCharacterN extends Character {
-    constructor() {
-        super();
-        this.symbol = 'n';
-    }
-}
-
-export class LowerCharacterO extends Character {
-    constructor() {
-        super();
-        this.symbol = 'o';
-    }
-}
-
-export class LowerCharacterP extends Character {
-    constructor() {
-        super();
-        this.symbol = 'p';
-    }
-}
-
-export class LowerCharacterQ extends Character {
-    constructor() {
-        super();
-        this.symbol = 'q';
-    }
-}
-
-export class LowerCharacterR extends Character {
-    constructor() {
-        super();
-        this.symbol = 'r';
-    }
-}
-
-export class LowerCharacterS extends Character {
-    constructor() {
-        super();
-        this.symbol = 's';
-    }
-}
-
-export class LowerCharacterT extends Character {
-    constructor() {
-        super();
-        this.symbol = 't';
-    }
-}
-
-export class LowerCharacterU extends Character {
-    constructor() {
-        super();
-        this.symbol = 'u';
-    }
-}
-
-export class LowerCharacterV extends Character {
-    constructor() {
-        super();
-        this.symbol = 'v';
-    }
-}
-
-export class LowerCharacterW extends Character {
-    constructor() {
-        super();
-        this.symbol = 'w';
-    }
-}
-
-export class LowerCharacterX extends Character {
-    constructor() {
-        super();
-        this.symbol = 'x';
-    }
-}
-
-export class LowerCharacterY extends Character {
-    constructor() {
-        super();
-        this.symbol = 'y';
-    }
-}
-
-export class LowerCharacterZ extends Character {
-    constructor() {
-        super();
-        this.symbol = 'z';
-    }
-}
-
-class CharacterOne implements IEvaluator {
-    characters: Array<Character>;
-    evaluate(){}
-}
-
-class CharacterTwo implements IEvaluator {
-    characters: Array<Character>;
-    evaluate(){}
-}
-
-class CharacterThree implements IEvaluator {
-    characters: Array<Character>;
-    constructor(){
-        this.characters.push(new LowerCharacterS()); // zzS
-        this.characters.push(new LowerCharacterX()); // xxX
-    }
-    evaluate(){}
 }
 
 //------------------------------------------------------------------------------
-//  Grapheme
+//  Letter
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+//  Expressions
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 //  Letter
 //------------------------------------------------------------------------------
 
-export class LowerCharacterEvaluator extends RulesEvaluator {
-
-    constructor() {
-        super();
-        this.rules = new Array();
-
-        this.rules.push(new LowerCharacterA());
-    }
-
-    evaluate(){}
+export class Letter extends Operand {
+    literal: string = '';
+    evaluate(context: Context){}
 }
 
-class UpperCharacterEvaluator extends RulesEvaluator {
+export class AlphabeticLetter extends Letter {
+    characters: Array<Character>;
 
-    constructor() {
+    constructor(characters?: Array<Character>) {
         super();
-        this.rules = new Array();
+        this.characters = new Array();
+        if(characters != null) {
+            let len = characters.length;
+            for(var i = 0; i < len; i++) {
+                this.pushCharacter(characters[i]);
+            }
+        }
+    }
+
+    pushCharacter(c: Character){
+        this.characters.push(c);
+        this.literal += c.symbol;
     }
 }
 
-export class LowerAlphabetEvaluator extends RulesEvaluator {
+export class Letters {
+    lowerLetterA: Letter;
+    lowerLetterB: Letter;
+    lowerLetterC: Letter;
+    lowerLetterD: Letter;
+    lowerLetterE: Letter;
+    lowerLetterF: Letter;
+    lowerLetterG: Letter;
+    lowerLetterH: Letter;
+    lowerLetterI: Letter;
+    lowerLetterJ: Letter;
+    lowerLetterK: Letter;
+    lowerLetterL: Letter;
+    lowerLetterM: Letter;
+    lowerLetterN: Letter;
+    lowerLetterNG: Letter;
+    lowerLetterNN: Letter;
+    lowerLetterO: Letter;
+    lowerLetterP: Letter;
+    lowerLetterQ: Letter;
+    lowerLetterR: Letter;
+    lowerLetterS: Letter;
+    lowerLetterSS: Letter;
+    lowerLetterT: Letter;
+    lowerLetterU: Letter;
+    lowerLetterUR: Letter;
+    lowerLetterV: Letter;
+    lowerLetterW: Letter;
+    lowerLetterX: Letter;
+    lowerLetterXX: Letter;
+    lowerLetterXXX: Letter;
+    lowerLetterY: Letter;
+    lowerLetterZ: Letter;
+    lowerLetterZS: Letter;
+    lowerLetterZZS: Letter;
+    
+    list: Array<Letter>;
+    constructor(characters: Characters) {
+        this.list = new Array();
 
-    constructor() {
-        super();
-        this.rules = new Array();
+        // medial
+        this.lowerLetterA = new AlphabeticLetter([characters.lowerCharacterA]);
+        this.lowerLetterE = new AlphabeticLetter([characters.lowerCharacterE]);
+        this.lowerLetterI = new AlphabeticLetter([characters.lowerCharacterI]);
+        this.lowerLetterO = new AlphabeticLetter([characters.lowerCharacterO]);
+        this.lowerLetterU = new AlphabeticLetter([characters.lowerCharacterU]);
+        this.lowerLetterUR = new AlphabeticLetter([characters.lowerCharacterU, characters.lowerCharacterR]);
 
-        //this.rules.push(new LowerLetterA());
-/*
-        this.letterB = new Letter([cp.characterB]);
-        this.letterBx = new Letter([cp.characterB, cp.characterX]);
-        this.letterC = new Letter([cp.characterC]);
-        this.letterD = new Letter([cp.characterD]);
-        this.letterDx = new Letter([cp.characterD, cp.characterX]);
-        this.letterE = new Letter([cp.characterD]);
-        this.letterF = new Letter([cp.characterF]);
-        this.letterFx = new Letter([cp.characterF, cp.characterX]);
-        this.letterG = new Letter([cp.characterG]);
-        this.letterGx = new Letter([cp.characterG, cp.characterX]);
-        this.letterH = new Letter([cp.characterH]);
-        this.letterI = new Letter([cp.characterI]);
-        this.letterJ = new Letter([cp.characterJ]);
-        this.letterK = new Letter([cp.characterK]);
-        this.letterL = new Letter([cp.characterL]);
-        this.letterM = new Letter([cp.characterM]);
-        this.letterN = new Letter([cp.characterN]);
-        this.letterNg = new Letter([cp.characterN, cp.characterG]);
-        this.letterNn = new Letter([cp.characterN, cp.characterN]);
-        this.letterO = new Letter([cp.characterO]);
-        this.letterP = new Letter([cp.characterP]);
-        this.letterQ = new Letter([cp.characterQ]);
-        this.letterS = new Letter([cp.characterS]);
-        this.letterSs = new Letter([cp.characterS, cp.characterS]);
-        this.letterT = new Letter([cp.characterT]);
-        this.letterU = new Letter([cp.characterU]);
-        this.letterUr = new Letter([cp.characterU, cp.characterR]);
-        this.letterV = new Letter([cp.characterV]);
-        this.letterW = new Letter([cp.characterW]);
-        this.letterX = new Letter([cp.characterX]);
-        this.letterXx = new Letter([cp.characterX, cp.characterX]);
-        this.letterXxx = new Letter([cp.characterX, cp.characterX, cp.characterX]);
-        this.letterY = new Letter([cp.characterY]);
-        this.letterZ = new Letter([cp.characterZ]);
-        this.letterZs = new Letter([cp.characterZ, cp.characterS]);
-        this.letterZzs = new Letter([cp.characterZ, cp.characterZ, cp.characterS]);
-        this.letterCapitalizedA = new Letter([cp.characterCapitalizedA]);
-        this.letterCapitalizedB = new Letter([cp.characterCapitalizedB]);
-        this.letterCapitalizedC = new Letter([cp.characterCapitalizedC]);
-        this.letterCapitalizedD = new Letter([cp.characterCapitalizedD]);
-        this.letterCapitalizedE = new Letter([cp.characterCapitalizedD]);
-        this.letterCapitalizedF = new Letter([cp.characterCapitalizedF]);
-        this.letterCapitalizedG = new Letter([cp.characterCapitalizedG]);
-        this.letterCapitalizedH = new Letter([cp.characterCapitalizedH]);
-        this.letterCapitalizedI = new Letter([cp.characterCapitalizedI]);
-        this.letterCapitalizedJ = new Letter([cp.characterCapitalizedJ]);
-        this.letterCapitalizedK = new Letter([cp.characterCapitalizedK]);
-        this.letterCapitalizedL = new Letter([cp.characterCapitalizedL]);
-        this.letterCapitalizedM = new Letter([cp.characterCapitalizedM]);
-        this.letterCapitalizedN = new Letter([cp.characterCapitalizedN]);
-        this.letterCapitalizedNg = new Letter([cp.characterCapitalizedN, cp.characterCapitalizedG]);
-        this.letterCapitalizedNn = new Letter([cp.characterCapitalizedN, cp.characterCapitalizedN]);
-        this.letterCapitalizedO = new Letter([cp.characterCapitalizedO]);
-        this.letterCapitalizedP = new Letter([cp.characterCapitalizedP]);
-        this.letterCapitalizedQ = new Letter([cp.characterCapitalizedQ]);
-        this.letterCapitalizedS = new Letter([cp.characterCapitalizedS]);
-        this.letterCapitalizedSs = new Letter([cp.characterCapitalizedS, cp.characterCapitalizedS]);
-        this.letterCapitalizedT = new Letter([cp.characterCapitalizedT]);
-        this.letterCapitalizedU = new Letter([cp.characterCapitalizedU]);
-        this.letterCapitalizedUr = new Letter([cp.characterCapitalizedU, cp.characterCapitalizedR]);
-        this.letterCapitalizedV = new Letter([cp.characterCapitalizedV]);
-        this.letterCapitalizedW = new Letter([cp.characterCapitalizedW]);
-        this.letterCapitalizedX = new Letter([cp.characterCapitalizedX]);
-        this.letterCapitalizedXx = new Letter([cp.characterCapitalizedX, cp.characterCapitalizedX]);
-        this.letterCapitalizedXxx = new Letter([cp.characterCapitalizedX, cp.characterCapitalizedX, cp.characterCapitalizedX]);
-        this.letterCapitalizedY = new Letter([cp.characterCapitalizedY]);
-        this.letterCapitalizedZ = new Letter([cp.characterCapitalizedZ]);
-        this.letterCapitalizedZs = new Letter([cp.characterZ, cp.characterCapitalizedS]);
-        this.letterCapitalizedZzs = new Letter([cp.characterCapitalizedZ, cp.characterCapitalizedZ, cp.characterCapitalizedS]);
-*/
+        // initial excludes checked final and neutral final
+        this.lowerLetterC = new AlphabeticLetter([characters.lowerCharacterC]);
+        this.lowerLetterJ = new AlphabeticLetter([characters.lowerCharacterJ]);
+        this.lowerLetterL = new AlphabeticLetter([characters.lowerCharacterL]);
+        this.lowerLetterQ = new AlphabeticLetter([characters.lowerCharacterQ]);
+        this.lowerLetterS = new AlphabeticLetter([characters.lowerCharacterS]);
+        this.lowerLetterV = new AlphabeticLetter([characters.lowerCharacterV]);
+        this.lowerLetterZ = new AlphabeticLetter([characters.lowerCharacterZ]);
+
+        // nasal
+        this.lowerLetterM = new AlphabeticLetter([characters.lowerCharacterM]);
+        this.lowerLetterN = new AlphabeticLetter([characters.lowerCharacterN]);
+        this.lowerLetterNG = new AlphabeticLetter([characters.lowerCharacterN, characters.lowerCharacterG]);
+        this.lowerLetterNN = new AlphabeticLetter([characters.lowerCharacterN, characters.lowerCharacterN]);
+
+        // free tone mark
+        this.lowerLetterSS = new AlphabeticLetter([characters.lowerCharacterS, characters.lowerCharacterS]);
+        this.lowerLetterW = new AlphabeticLetter([characters.lowerCharacterW]);
+        this.lowerLetterX = new AlphabeticLetter([characters.lowerCharacterX]);
+        this.lowerLetterXX = new AlphabeticLetter([characters.lowerCharacterX, characters.lowerCharacterX]);
+        this.lowerLetterXXX = new AlphabeticLetter([characters.lowerCharacterX, characters.lowerCharacterX, characters.lowerCharacterX]);
+        this.lowerLetterY = new AlphabeticLetter([characters.lowerCharacterY]);
+        this.lowerLetterZS = new AlphabeticLetter([characters.lowerCharacterZ, characters.lowerCharacterS]);
+        this.lowerLetterZZS = new AlphabeticLetter([characters.lowerCharacterZ, characters.lowerCharacterZ, characters.lowerCharacterS]);
+        
+        // checked tone mark and final
+        this.lowerLetterB = new AlphabeticLetter([characters.lowerCharacterB]);
+        this.lowerLetterD = new AlphabeticLetter([characters.lowerCharacterD]);
+        this.lowerLetterG = new AlphabeticLetter([characters.lowerCharacterG]);
+        this.lowerLetterK = new AlphabeticLetter([characters.lowerCharacterK]);
+        this.lowerLetterP = new AlphabeticLetter([characters.lowerCharacterP]);
+        this.lowerLetterT = new AlphabeticLetter([characters.lowerCharacterT]);
+
+        // neutral final
+        this.lowerLetterF = new AlphabeticLetter([characters.lowerCharacterF]);
+        this.lowerLetterH = new AlphabeticLetter([characters.lowerCharacterH]);
+
+        this.list.push(this.lowerLetterA);
+        this.list.push(this.lowerLetterB);
+        this.list.push(this.lowerLetterC);
+        this.list.push(this.lowerLetterD);
+        this.list.push(this.lowerLetterE);
+        this.list.push(this.lowerLetterF);
+        this.list.push(this.lowerLetterG);
+        this.list.push(this.lowerLetterH);
+        this.list.push(this.lowerLetterI);
+        this.list.push(this.lowerLetterJ);
+        this.list.push(this.lowerLetterK);
+        this.list.push(this.lowerLetterL);
+        this.list.push(this.lowerLetterM);
+        this.list.push(this.lowerLetterN);
+        this.list.push(this.lowerLetterNG);
+        this.list.push(this.lowerLetterNN);
+        this.list.push(this.lowerLetterQ);
+        this.list.push(this.lowerLetterO);
+        this.list.push(this.lowerLetterP);
+        this.list.push(this.lowerLetterQ);
+        this.list.push(this.lowerLetterR);
+        this.list.push(this.lowerLetterS);
+        this.list.push(this.lowerLetterSS);
+        this.list.push(this.lowerLetterT);
+        this.list.push(this.lowerLetterUR);
+        this.list.push(this.lowerLetterV);
+        this.list.push(this.lowerLetterW);
+        this.list.push(this.lowerLetterX);
+        this.list.push(this.lowerLetterXX);
+        this.list.push(this.lowerLetterXXX);
+        this.list.push(this.lowerLetterY);
+        this.list.push(this.lowerLetterZ);
+        this.list.push(this.lowerLetterZS);
+        this.list.push(this.lowerLetterZZS);
     }
 
-    evaluate(){}
+    get length() {
+        return this.list.length;
+    }
 }
 
-class ToneSandhi implements IRule {
+
+class ToneSandhi {
     //baseTone: Letter;
     //sandhiTone: Letter
     match(){}
@@ -360,6 +276,41 @@ class ToneSandhi implements IRule {
 //  Syllable
 //------------------------------------------------------------------------------
 
-class Accent implements IEvaluator {
+class Accent {
     evaluate(){}
+}
+
+
+//------------------------------------------------------------------------------
+//  Expressions
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+//  Morpheme
+//------------------------------------------------------------------------------
+
+export class Syllable extends Operand {
+    literal: string = '';
+    evaluate(context: Context){}
+}
+
+export class ToneSandhiSyllable extends Syllable {
+    letters: Array<AlphabeticLetter>;
+
+    constructor(letters?: Array<AlphabeticLetter>) {
+        super();
+        this.letters = new Array();
+    }
+
+    isBaseForm() {
+        // look up in the lexicon to check if this syllable is in base form
+    }
+
+    get Stem() { return ''; }
+    get Suffix() { return ''; }
+
+    pushLetter(g: AlphabeticLetter) {
+        this.letters.push(g);
+        this.literal += g.literal;
+    }
 }

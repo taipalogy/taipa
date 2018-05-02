@@ -1,5 +1,5 @@
 import { Expression } from './expression';
-import { Morpheme } from './morphologicalanalyzer';
+import { Syllable } from './morphologicalanalyzer';
 import { State } from './state';
 
 //------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ class StateContext {
     }
 
     setState(newState: LexicalState){}
-    analyze(morphemes: Array<Morpheme>){}
+    analyze(morphemes: Array<Syllable>){}
 }
 
 //------------------------------------------------------------------------------
@@ -77,10 +77,10 @@ class StateContext {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiLexicalAnalyzer {
-    morphemes: Array<Morpheme>;
+    morphemes: Array<Syllable>;
     sc: StateContext;
 
-    constructor(morphemes: Array<Morpheme>) {
+    constructor(morphemes: Array<Syllable>) {
         //this.morhemes = new Array();
         this.morphemes = morphemes;
         console.log(this.morphemes);

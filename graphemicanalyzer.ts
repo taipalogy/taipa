@@ -1,17 +1,8 @@
-import { Operand } from './expression';
+//import { Operand } from './expression';
 import { State } from './state';
-import { Context } from "./context";
-
-//------------------------------------------------------------------------------
-//  Character
-//------------------------------------------------------------------------------
-
-export class Character {
-    symbol: string;
-    constructor(s: string) {
-        this.symbol = s;
-    }
-}
+import { Context } from './context';
+import { Character, Characters } from './metadata';
+import { AlphabeticLetter } from './metadata';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -21,33 +12,6 @@ export class GraphemicAnalyzerRegex {
     // first grapheme of a letter, digraph, or trigraph
     // digraph: ss, zs, xx, ng, nn, ur, dr, or
     // trigraph: xxx, zzs
-
-    characterA = new Character('a');
-    characterB = new Character('b');
-    characterC = new Character('c');
-    characterD = new Character('d');
-    characterE = new Character('e');
-    characterF = new Character('f');
-    characterG = new Character('g');
-    characterH = new Character('h');
-    characterI = new Character('i');
-    characterJ = new Character('j');
-    characterK = new Character('k');
-    characterL = new Character('l');
-    characterM = new Character('m');
-    characterN = new Character('n');
-    characterO = new Character('o');
-    characterP = new Character('p');
-    characterQ = new Character('q');
-    characterR = new Character('r');
-    characterS = new Character('s');
-    characterT = new Character('t');
-    characterU = new Character('u');
-    characterV = new Character('v');
-    characterW = new Character('w');
-    characterX = new Character('x');
-    characterY = new Character('y');
-    characterZ = new Character('z');
 
     //singleCharacters: string;
     singleCharactersRegexp: RegExp;
@@ -59,71 +23,36 @@ export class GraphemicAnalyzerRegex {
     characterXRegexp: RegExp;
     characterZRegexp: RegExp;
 
-    constructor() {
+    constructor(characters: Characters) {
         let singleCharacters = '';
-        singleCharacters = this.characterA.symbol
-                                + '|' + this.characterB.symbol
-                                + '|' + this.characterC.symbol
-                                + '|' + this.characterD.symbol
-                                + '|' + this.characterE.symbol
-                                + '|' + this.characterF.symbol
-                                + '|' + this.characterG.symbol
-                                + '|' + this.characterH.symbol
-                                + '|' + this.characterI.symbol
-                                + '|' + this.characterJ.symbol
-                                + '|' + this.characterK.symbol
-                                + '|' + this.characterL.symbol
-                                + '|' + this.characterM.symbol
-                                + '|' + this.characterO.symbol
-                                + '|' + this.characterP.symbol
-                                + '|' + this.characterQ.symbol
-                                + '|' + this.characterT.symbol
-                                + '|' + this.characterV.symbol
-                                + '|' + this.characterW.symbol
-                                + '|' + this.characterY.symbol;
+        singleCharacters = characters.lowerCharacterA.symbol
+                                + '|' + characters.lowerCharacterB.symbol
+                                + '|' + characters.lowerCharacterC.symbol
+                                + '|' + characters.lowerCharacterD.symbol
+                                + '|' + characters.lowerCharacterE.symbol
+                                + '|' + characters.lowerCharacterF.symbol
+                                + '|' + characters.lowerCharacterG.symbol
+                                + '|' + characters.lowerCharacterH.symbol
+                                + '|' + characters.lowerCharacterI.symbol
+                                + '|' + characters.lowerCharacterJ.symbol
+                                + '|' + characters.lowerCharacterK.symbol
+                                + '|' + characters.lowerCharacterL.symbol
+                                + '|' + characters.lowerCharacterM.symbol
+                                + '|' + characters.lowerCharacterO.symbol
+                                + '|' + characters.lowerCharacterP.symbol
+                                + '|' + characters.lowerCharacterQ.symbol
+                                + '|' + characters.lowerCharacterT.symbol
+                                + '|' + characters.lowerCharacterV.symbol
+                                + '|' + characters.lowerCharacterW.symbol
+                                + '|' + characters.lowerCharacterY.symbol;
         this.singleCharactersRegexp = new RegExp(singleCharacters);
-        this.characterGRegexp = new RegExp(this.characterG.symbol);
-        this.characterNRegexp = new RegExp(this.characterN.symbol);
-        this.characterURegexp = new RegExp(this.characterU.symbol);
-        this.characterZRegexp = new RegExp(this.characterZ.symbol);
-        this.characterXRegexp = new RegExp(this.characterX.symbol);
-        this.characterSRegexp = new RegExp(this.characterS.symbol);
-        this.characterRRegexp = new RegExp(this.characterR.symbol);
-    }
-}
-
-//------------------------------------------------------------------------------
-//  Expressions
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-//  Letter
-//------------------------------------------------------------------------------
-
-export class Letter extends Operand {
-    literal: string = '';
-    evaluate(context: Context){}
-}
-
-export class AlphabeticLetter extends Letter {
-    characters: Array<Character>;
-
-    constructor(characters?: Array<Character>) {
-        super();
-        this.characters = new Array();
-        if(characters != null) {
-            let len = characters.length;
-            for(var i = 0; i < len; i++) {
-                //this.characters.push(characters[i]);
-                //this.literal += characters[i].symbol;
-                this.pushCharacter(characters[i]);
-            }
-        }
-    }
-
-    pushCharacter(c: Character){
-        this.characters.push(c);
-        this.literal += c.symbol;
+        this.characterGRegexp = new RegExp(characters.lowerCharacterG.symbol);
+        this.characterNRegexp = new RegExp(characters.lowerCharacterN.symbol);
+        this.characterURegexp = new RegExp(characters.lowerCharacterU.symbol);
+        this.characterZRegexp = new RegExp(characters.lowerCharacterZ.symbol);
+        this.characterXRegexp = new RegExp(characters.lowerCharacterX.symbol);
+        this.characterSRegexp = new RegExp(characters.lowerCharacterS.symbol);
+        this.characterRRegexp = new RegExp(characters.lowerCharacterR.symbol);
     }
 }
 
@@ -323,7 +252,7 @@ class StateContext {
         this.letters = new Array();
         this.setState(new LetterInitialState());
 
-        this.gar = new GraphemicAnalyzerRegex();
+        this.gar = new GraphemicAnalyzerRegex(new Characters()); // dependency injection via constructor
         //this.chars = chars;
 
         // this is to count how many times it falls back to the context from a terminal state

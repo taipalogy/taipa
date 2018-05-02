@@ -1,7 +1,7 @@
 import { ToneSandhiLexeme, Lexeme} from './lexicalanalyzer';
 import { Syllable, ToneSandhiSyllable } from './morphologicalanalyzer';
 import { IExpression, Expression, AndExpression, OrExpression } from './expression';
-import { Letter, AlphabeticLetter } from './graphemicanalyzer';
+import { Letter, AlphabeticLetter } from './metadata';
 
 //------------------------------------------------------------------------------
 //  turn a sequence into a series

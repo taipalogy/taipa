@@ -1,5 +1,5 @@
 
-import { Letter } from './graphemicanalyzer';
+import { Letter } from './metadata';
 import { Lexeme } from './lexicalanalyzer';
 import { Context } from "./context";
 import { IConstituent} from './constituent';
