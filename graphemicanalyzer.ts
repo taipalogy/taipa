@@ -2,7 +2,7 @@
 import { State } from './state';
 import { Context } from './context';
 import { Character, Characters } from './metadata';
-import { AlphabeticLetter } from './metadata';
+import { AlphabeticLetter, Letters } from './metadata';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -300,9 +300,14 @@ export class GraphemicAnalyzer {
     }
     
     analyze() {
-        this.sc.analyze();
+        //this.sc.analyze();
+        let ls = new Letters(new Characters());
+        let letters = ls.match(this.sc.characters);
         console.log("%cabout to return letter array. length %d. loop count:%d", "color: blue; font-size: medium", this.sc.letters.length, this.sc.loopCount);
+        console.log("%cabout to return letter array. length %d.", "color: blue; font-size: medium", letters.length);
         console.log(this.sc.letters);
-        return this.sc.letters;
+        console.log(letters);
+        //return this.sc.letters;
+        return letters;
     }
 }

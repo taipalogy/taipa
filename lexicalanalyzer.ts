@@ -1,5 +1,5 @@
 import { Expression } from './expression';
-import { Syllable } from './morphologicalanalyzer';
+import { Syllable } from './metadata';
 import { State } from './state';
 
 //------------------------------------------------------------------------------

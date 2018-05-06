@@ -1,19 +1,24 @@
 import { Letters, Letter } from './metadata';
 
+
+//------------------------------------------------------------------------------
+//  typescript interface, allomorphemic syllables, tonemarkless syllables, table
+//------------------------------------------------------------------------------
+
 class SyllableEntry {
     literal: string = '';
     stem: string = '';
     tonemark: string = '';
 
     constructor(stem: Array<Letter>, tonemark?: Array<Letter>) {
-        for(var i = 0; i < stem.length; i++) {
-            this.stem += stem[i].literal;
-            this.literal += stem[i].literal;
+        for (let entry of stem) {
+            this.stem += entry.literal;
+            this.literal += entry.literal;
         }
 
-        for(var i = 0; i < tonemark.length; i++) {
-            this.tonemark += tonemark[i].literal;
-            this.literal += tonemark[i].literal;
+        for (let entry of tonemark) {
+            this.tonemark += entry.literal;
+            this.literal += entry.literal;
         }
     }
 }

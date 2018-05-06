@@ -1,5 +1,6 @@
 import { Operand } from './expression';
 import { Context } from './context';
+import { element } from 'protractor';
 
 class Component {
 
@@ -13,7 +14,9 @@ class MyString {
 
 export class Metadata {
     static readonly NUMBER_OF_CHARACTERS: number = 26;
-    static readonly NUMBER_OF_LETTERS: number = 34;
+    static readonly NUMBER_OF_LETTERS: number = 33;
+    static readonly NUMBER_OF_TONEMARKLESS_SYLLABLES = 0;
+    static readonly NUMBER_OF_ALLOMORPHEMIC_SYLLABLES = 0;
 
     constructor() {
         let characters = new Characters();
@@ -102,10 +105,6 @@ export class Characters {
 }
 
 //------------------------------------------------------------------------------
-//  Letter
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
 //  Expressions
 //------------------------------------------------------------------------------
 
@@ -139,42 +138,41 @@ export class AlphabeticLetter extends Letter {
 }
 
 export class Letters {
-    lowerLetterA: Letter;
-    lowerLetterB: Letter;
-    lowerLetterC: Letter;
-    lowerLetterD: Letter;
-    lowerLetterE: Letter;
-    lowerLetterF: Letter;
-    lowerLetterG: Letter;
-    lowerLetterH: Letter;
-    lowerLetterI: Letter;
-    lowerLetterJ: Letter;
-    lowerLetterK: Letter;
-    lowerLetterL: Letter;
-    lowerLetterM: Letter;
-    lowerLetterN: Letter;
-    lowerLetterNG: Letter;
-    lowerLetterNN: Letter;
-    lowerLetterO: Letter;
-    lowerLetterP: Letter;
-    lowerLetterQ: Letter;
-    lowerLetterR: Letter;
-    lowerLetterS: Letter;
-    lowerLetterSS: Letter;
-    lowerLetterT: Letter;
-    lowerLetterU: Letter;
-    lowerLetterUR: Letter;
-    lowerLetterV: Letter;
-    lowerLetterW: Letter;
-    lowerLetterX: Letter;
-    lowerLetterXX: Letter;
-    lowerLetterXXX: Letter;
-    lowerLetterY: Letter;
-    lowerLetterZ: Letter;
-    lowerLetterZS: Letter;
-    lowerLetterZZS: Letter;
+    lowerLetterA: AlphabeticLetter;
+    lowerLetterB: AlphabeticLetter;
+    lowerLetterC: AlphabeticLetter;
+    lowerLetterD: AlphabeticLetter;
+    lowerLetterE: AlphabeticLetter;
+    lowerLetterF: AlphabeticLetter;
+    lowerLetterG: AlphabeticLetter;
+    lowerLetterH: AlphabeticLetter;
+    lowerLetterI: AlphabeticLetter;
+    lowerLetterJ: AlphabeticLetter;
+    lowerLetterK: AlphabeticLetter;
+    lowerLetterL: AlphabeticLetter;
+    lowerLetterM: AlphabeticLetter;
+    lowerLetterN: AlphabeticLetter;
+    lowerLetterNG: AlphabeticLetter;
+    lowerLetterNN: AlphabeticLetter;
+    lowerLetterO: AlphabeticLetter;
+    lowerLetterP: AlphabeticLetter;
+    lowerLetterQ: AlphabeticLetter;
+    lowerLetterS: AlphabeticLetter;
+    lowerLetterSS: AlphabeticLetter;
+    lowerLetterT: AlphabeticLetter;
+    lowerLetterU: AlphabeticLetter;
+    lowerLetterUR: AlphabeticLetter;
+    lowerLetterV: AlphabeticLetter;
+    lowerLetterW: AlphabeticLetter;
+    lowerLetterX: AlphabeticLetter;
+    lowerLetterXX: AlphabeticLetter;
+    lowerLetterXXX: AlphabeticLetter;
+    lowerLetterY: AlphabeticLetter;
+    lowerLetterZ: AlphabeticLetter;
+    lowerLetterZS: AlphabeticLetter;
+    lowerLetterZZS: AlphabeticLetter;
     
-    list: Array<Letter>;
+    list: Array<AlphabeticLetter>;
     constructor(characters: Characters) {
         this.list = new Array();
 
@@ -239,14 +237,13 @@ export class Letters {
         this.list.push(this.lowerLetterN);
         this.list.push(this.lowerLetterNG);
         this.list.push(this.lowerLetterNN);
-        this.list.push(this.lowerLetterQ);
         this.list.push(this.lowerLetterO);
         this.list.push(this.lowerLetterP);
         this.list.push(this.lowerLetterQ);
-        this.list.push(this.lowerLetterR);
         this.list.push(this.lowerLetterS);
         this.list.push(this.lowerLetterSS);
         this.list.push(this.lowerLetterT);
+        this.list.push(this.lowerLetterU);
         this.list.push(this.lowerLetterUR);
         this.list.push(this.lowerLetterV);
         this.list.push(this.lowerLetterW);
@@ -261,6 +258,71 @@ export class Letters {
 
     get length() {
         return this.list.length;
+    }
+/*
+    select(arr: Array<AlphabeticLetter>, begin: number, end?: number) {
+        let selected: Array<AlphabeticLetter> = new Array();
+        if(end != null) {
+            for(let elem in arr) {
+                if(elem.)
+            }
+        }
+        return selected;
+    }
+*/
+    match(characters: Array<Character>) {
+        
+        let letters: Array<AlphabeticLetter> = new Array();
+        console.log("metadata letter array length %d. ", letters.length);
+        console.log(characters);
+        for(let i = 0; i < characters.length; i++) {
+            console.log("metadata letter array looping.");
+            let ls = new Array();
+            ls = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
+            console.log(ls);
+            if(ls.length == 0) {
+                console.log("something wrong");
+            } else if(ls.length == 1) {
+                console.log(ls);
+                letters.push(ls.shift()); // push the matched letter
+            } else if(ls.length > 1) {
+                let j = 0;
+                do {
+                    //ls.filter(l => console.log(l.characters) );
+                    console.log(ls);
+                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    let atLeastJ = new Array();
+                    atLeastJ = ls.filter(l => l.characters.length >= j+1);
+                    console.log(atLeastJ);
+
+                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    let underJ = new Array();
+                    underJ = ls.filter(l => l.characters.length < j+1);
+                    console.log(underJ);
+
+                    if(atLeastJ.length > 0){
+                        ls = atLeastJ.filter(l => l.characters[j].symbol === characters[i+j].symbol);
+                        if(ls.length > 0){
+                            ;
+                        } else {
+                            ls = underJ;
+                        }
+                    }
+                    
+                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    j++;
+                    console.log(ls);
+                    // continue looping when there are more than one results
+                    // stop looping when j goes beyond the end of target
+                } while(ls.length > 1 && i+j < characters.length);
+                i += j; // skip j characters
+                letters.push(ls.shift()); // push the matched letter
+                console.log(letters);
+            }
+        }
+        console.log("metadata letter array length %d", letters.length);
+        console.log(letters);
+        return letters;
     }
 }
 
@@ -279,15 +341,6 @@ class ToneSandhi {
 class Accent {
     evaluate(){}
 }
-
-
-//------------------------------------------------------------------------------
-//  Expressions
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-//  Morpheme
-//------------------------------------------------------------------------------
 
 export class Syllable extends Operand {
     literal: string = '';

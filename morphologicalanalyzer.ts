@@ -111,7 +111,7 @@ class SyllableState implements State {
         return letters[0].literal.search(regex) == 0;
     }
 
-    pushToMorpheme(context: StateContext, regex: RegExp){
+    pushToSyllable(context: StateContext, regex: RegExp){
         console.log("context.letters before pushing:%s.length: %d", context.letters, context.letters.length);
         context.syllables[context.syllables.length-1].pushLetter(context.letters.shift());
         console.log("context.letters after pushcing:%s.length: %d", context.letters, context.letters.length);
@@ -135,7 +135,7 @@ class CheckedToneMarkState extends SyllableState {
         // terminal state
         console.log("%creached checkedtonemarkstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.checkedToneMarkLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.checkedToneMarkLettersRegexp);
+            this.pushToSyllable(context, context.mar.checkedToneMarkLettersRegexp);
         }
     }
 }
@@ -145,7 +145,7 @@ class NeutralToneMarkState extends SyllableState {
         // terminal state
         console.log("%creached neutraltonemarkstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.neutralToneMarkLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.neutralToneMarkLettersRegexp);
+            this.pushToSyllable(context, context.mar.neutralToneMarkLettersRegexp);
         }
     }
 }
@@ -155,7 +155,7 @@ class FreeToneMarkStateNew extends SyllableState {
         // terminal state
         console.log("%creached freetonemarkstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.freeToneMarkLettersRegexp);
+            this.pushToSyllable(context, context.mar.freeToneMarkLettersRegexp);
         }
     }
 }
@@ -164,7 +164,7 @@ class CheckedFinalStateNew extends SyllableState {
     analyze(context: StateContext) {
         console.log("%creached nonneutralfinalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.checkedFinalLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.checkedFinalLettersRegexp);
+            this.pushToSyllable(context, context.mar.checkedFinalLettersRegexp);
             if(this.isAtIndexZero(context.letters, context.mar.checkedToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new CheckedToneMarkState());
             } else {
@@ -179,7 +179,7 @@ class NeutralFinalState extends SyllableState {
     analyze(context: StateContext) {
         console.log("%creached neutralfinalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.neutralToneMarkLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.neutralFinalLettersRegexp);
+            this.pushToSyllable(context, context.mar.neutralFinalLettersRegexp);
             if(this.isAtIndexZero(context.letters, context.mar.neutralToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new NeutralToneMarkState());
             } else {
@@ -193,7 +193,7 @@ class NasalState extends SyllableState {
     analyze(context: StateContext) {
         console.log("%creached nasalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.nasalLettersRegexp);
+            this.pushToSyllable(context, context.mar.nasalLettersRegexp);
             if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new FreeToneMarkStateNew());
             } else if(this.isAtIndexZero(context.letters, context.mar.neutralFinalLettersRegexp)) {
@@ -210,7 +210,7 @@ class MedialStateNew extends SyllableState {
     analyze(context: StateContext) {
         console.log("%creached medialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.medialLettersRegexp);
+            this.pushToSyllable(context, context.mar.medialLettersRegexp);
             if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
                 this.analyzeNextState(context, new MedialStateNew()); // recursive call
             } else if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
@@ -233,10 +233,10 @@ class InitialStateNew extends SyllableState {
         console.log("%creached morphemeinitialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         context.syllables.push(new ToneSandhiSyllable());
         if(this.isAtIndexZero(context.letters, context.mar.nonNasalInitialLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.nonNasalInitialLettersRegexp);
+            this.pushToSyllable(context, context.mar.nonNasalInitialLettersRegexp);
             this.analyzeNextState(context, new MedialStateNew());
         } else if(this.isAtIndexZero(context.letters, context.mar.nasalInitialLettersRegexp)) {
-            this.pushToMorpheme(context, context.mar.nasalInitialLettersRegexp);
+            this.pushToSyllable(context, context.mar.nasalInitialLettersRegexp);
             if(this.isAtIndexZero(context.letters, context.mar.freeToneMarkLettersRegexp)) {
                 this.analyzeNextState(context, new FreeToneMarkStateNew());
             } else if(this.isAtIndexZero(context.letters, context.mar.neutralFinalLettersRegexp)) {

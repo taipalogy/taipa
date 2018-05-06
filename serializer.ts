@@ -1,5 +1,5 @@
 import { ToneSandhiLexeme, Lexeme} from './lexicalanalyzer';
-import { Syllable, ToneSandhiSyllable } from './morphologicalanalyzer';
+import { Syllable, ToneSandhiSyllable } from './metadata';
 import { IExpression, Expression, AndExpression, OrExpression } from './expression';
 import { Letter, AlphabeticLetter } from './metadata';
 
@@ -10,7 +10,7 @@ import { Letter, AlphabeticLetter } from './metadata';
 class Serializer {
 }
 
-export class SerializerOfGraphemes extends Serializer {
+export class SerializerOfLetters extends Serializer {
     // turn a sequence of graphemes to a series of letters
 
     letters: Array<Letter>;
