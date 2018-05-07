@@ -259,25 +259,16 @@ export class Letters {
     get length() {
         return this.list.length;
     }
-/*
-    select(arr: Array<AlphabeticLetter>, begin: number, end?: number) {
-        let selected: Array<AlphabeticLetter> = new Array();
-        if(end != null) {
-            for(let elem in arr) {
-                if(elem.)
-            }
-        }
-        return selected;
-    }
-*/
+
     match(characters: Array<Character>) {
         
         let letters: Array<AlphabeticLetter> = new Array();
-        console.log("metadata letter array length %d. ", letters.length);
+        //console.log("metadata letter array length %d. ", letters.length);
         console.log(characters);
         for(let i = 0; i < characters.length; i++) {
-            console.log("metadata letter array looping.");
-            let ls = new Array();
+            console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
+            //console.log("metadata letter array looping.");
+            let ls: Array<AlphabeticLetter> = new Array();
             ls = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
             console.log(ls);
             if(ls.length == 0) {
@@ -289,13 +280,13 @@ export class Letters {
                 let j = 0;
                 do {
                     //ls.filter(l => console.log(l.characters) );
-                    console.log(ls);
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log(ls);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let atLeastJ = new Array();
                     atLeastJ = ls.filter(l => l.characters.length >= j+1);
                     console.log(atLeastJ);
 
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let underJ = new Array();
                     underJ = ls.filter(l => l.characters.length < j+1);
                     console.log(underJ);
@@ -309,18 +300,18 @@ export class Letters {
                         }
                     }
                     
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     j++;
-                    console.log(ls);
+                    //console.log(ls);
                     // continue looping when there are more than one results
                     // stop looping when j goes beyond the end of target
                 } while(ls.length > 1 && i+j < characters.length);
-                i += j; // skip j characters
+                i += ls[0].characters.length-1; // skip the length-1 of characters of the found letter
                 letters.push(ls.shift()); // push the matched letter
                 console.log(letters);
             }
         }
-        console.log("metadata letter array length %d", letters.length);
+        //console.log("metadata letter array length %d", letters.length);
         console.log(letters);
         return letters;
     }
@@ -362,8 +353,9 @@ export class ToneSandhiSyllable extends Syllable {
     get Stem() { return ''; }
     get Suffix() { return ''; }
 
-    pushLetter(g: AlphabeticLetter) {
-        this.letters.push(g);
-        this.literal += g.literal;
+    pushLetter(l: AlphabeticLetter) {
+        //console.log("%s", l.literal);
+        this.letters.push(l);
+        this.literal += l.literal;
     }
 }

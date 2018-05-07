@@ -47,7 +47,7 @@ class Shunter {
     for(var i in this.nodes) {
       let node = this.nodes[i];
 
-      console.log("hit");
+      //console.log("hit");
 
       if(node instanceof Operand && node.isBasicForm()) {
         console.log("hit");

@@ -107,14 +107,13 @@ class SyllableState implements State {
     isAtIndexZero(letters: Array<AlphabeticLetter>, regex: RegExp) {
         console.log(letters[0].literal);
         console.log(regex);
-        //return letters.filter((g: AlphabeticLetter) => g.literal.search(regex) == 0);
-        return letters[0].literal.search(regex) == 0;
+        return letters[0].literal.search(regex) === 0;
     }
 
     pushToSyllable(context: StateContext, regex: RegExp){
         console.log("context.letters before pushing:%s.length: %d", context.letters, context.letters.length);
         context.syllables[context.syllables.length-1].pushLetter(context.letters.shift());
-        console.log("context.letters after pushcing:%s.length: %d", context.letters, context.letters.length);
+        console.log("context.letters after pushing:%s.length: %d", context.letters, context.letters.length);
     }
 
     analyzeNextState(context: StateContext, state: SyllableState){
@@ -125,7 +124,7 @@ class SyllableState implements State {
             }
         } catch (message) {
             console.log("failed in analyzeNextState method");
-            //context.letters.shift();
+            context.letters.shift();
         }
     }
 }
@@ -162,7 +161,7 @@ class FreeToneMarkStateNew extends SyllableState {
 
 class CheckedFinalStateNew extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached nonneutralfinalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        console.log("%creached checkedfinalstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.checkedFinalLettersRegexp)) {
             this.pushToSyllable(context, context.mar.checkedFinalLettersRegexp);
             if(this.isAtIndexZero(context.letters, context.mar.checkedToneMarkLettersRegexp)) {
@@ -210,8 +209,9 @@ class MedialStateNew extends SyllableState {
     analyze(context: StateContext) {
         console.log("%creached medialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
+            console.log("reached medialstate. isatindexzero");
             this.pushToSyllable(context, context.mar.medialLettersRegexp);
-            if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
+            if(this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
                 this.analyzeNextState(context, new MedialStateNew()); // recursive call
             } else if(this.isAtIndexZero(context.letters, context.mar.nasalLettersRegexp)) {
                 this.analyzeNextState(context, new NasalState());
@@ -230,8 +230,7 @@ class MedialStateNew extends SyllableState {
 
 class InitialStateNew extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached morphemeinitialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
-        context.syllables.push(new ToneSandhiSyllable());
+        console.log("%creached initialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.nonNasalInitialLettersRegexp)) {
             this.pushToSyllable(context, context.mar.nonNasalInitialLettersRegexp);
             this.analyzeNextState(context, new MedialStateNew());
@@ -250,12 +249,17 @@ class InitialStateNew extends SyllableState {
 
 class SyllableInitialState extends SyllableState {
     analyze(context: StateContext) {
-        console.log("%creached morphemeinitialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
+        console.log("%creached syllableinitialstate. context.letters:%s", "color: blue; font-size: medium", context.letters[0].literal);
         if(this.isAtIndexZero(context.letters, context.mar.nonNasalInitialLettersRegexp) ||
-            this.isAtIndexZero(context.letters, context.mar.nasalInitialLettersRegexp)) {
-            this.analyzeNextState(context, new InitialStateNew());
-        } else if (this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
-            this.analyzeNextState(context, new MedialStateNew());
+            this.isAtIndexZero(context.letters, context.mar.nasalInitialLettersRegexp) ||
+            this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
+                context.syllables.push(new ToneSandhiSyllable());
+                if(this.isAtIndexZero(context.letters, context.mar.nonNasalInitialLettersRegexp) ||
+                    this.isAtIndexZero(context.letters, context.mar.nasalInitialLettersRegexp)) {
+                    this.analyzeNextState(context, new InitialStateNew());
+                } else if (this.isAtIndexZero(context.letters, context.mar.medialLettersRegexp)) {
+                    this.analyzeNextState(context, new MedialStateNew());
+                }
         } else {
             context.letters.shift();
         }
@@ -279,7 +283,7 @@ class StateContext {
         this.letters = new Array();
         this.syllables = new Array();
         this.mar = new MorphologicalAnalyzerRegex(new Letters(new Characters())); // dependency injection via constructor
-        this.setState(new InitialStateNew());
+        this.setState(new SyllableInitialState());
         this.loopCount = 0;
     }
 
