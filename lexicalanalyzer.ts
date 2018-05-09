@@ -1,6 +1,5 @@
 import { Expression } from './expression';
 import { Syllable } from './metadata';
-import { State } from './state';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -49,6 +48,10 @@ export class ToneSandhiLexeme extends Lexeme {
 //------------------------------------------------------------------------------
 //  State pattern
 //------------------------------------------------------------------------------
+
+
+export interface State {
+}
 
 class LexicalState implements State {}
 

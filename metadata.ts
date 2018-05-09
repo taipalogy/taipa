@@ -27,7 +27,6 @@ export class Metadata {
     }
 }
 
-
 //------------------------------------------------------------------------------
 //  Character
 //------------------------------------------------------------------------------
@@ -282,12 +281,12 @@ export class Letters {
                     //ls.filter(l => console.log(l.characters) );
                     //console.log(ls);
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
-                    let atLeastJ = new Array();
+                    let atLeastJ: Array<AlphabeticLetter> = new Array();
                     atLeastJ = ls.filter(l => l.characters.length >= j+1);
                     console.log(atLeastJ);
 
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
-                    let underJ = new Array();
+                    let underJ: Array<AlphabeticLetter> = new Array();
                     underJ = ls.filter(l => l.characters.length < j+1);
                     console.log(underJ);
 
@@ -325,37 +324,3 @@ class ToneSandhi {
 }
 
 
-//------------------------------------------------------------------------------
-//  Syllable
-//------------------------------------------------------------------------------
-
-class Accent {
-    evaluate(){}
-}
-
-export class Syllable extends Operand {
-    literal: string = '';
-    evaluate(context: Context){}
-}
-
-export class ToneSandhiSyllable extends Syllable {
-    letters: Array<AlphabeticLetter>;
-
-    constructor(letters?: Array<AlphabeticLetter>) {
-        super();
-        this.letters = new Array();
-    }
-
-    isBaseForm() {
-        // look up in the lexicon to check if this syllable is in base form
-    }
-
-    get Stem() { return ''; }
-    get Suffix() { return ''; }
-
-    pushLetter(l: AlphabeticLetter) {
-        //console.log("%s", l.literal);
-        this.letters.push(l);
-        this.literal += l.literal;
-    }
-}

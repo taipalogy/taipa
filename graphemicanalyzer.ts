@@ -1,5 +1,5 @@
-//import { Operand } from './expression';
-import { State } from './state';
+
+
 import { Context } from './context';
 import { Character, Characters } from './metadata';
 import { AlphabeticLetter, Letters } from './metadata';
@@ -9,15 +9,15 @@ import { AlphabeticLetter, Letters } from './metadata';
 //------------------------------------------------------------------------------
 
 export class GraphemicAnalyzer {
-    characters;
+    characters: Array<Character>;
 
     constructor(l: string) {
         this.characters = new Array();
         let str = l.replace(/\0/g, ""); // get rid of the eof character
-        l = str;
-        let len = l.length;
+        //l = str;
+        let len = str.length;
         for(var i = 0; i < len; i++) {
-            this.characters.push(new Character(l.charAt(i)));
+            this.characters.push(new Character(str.charAt(i)));
         }
     }
     
