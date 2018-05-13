@@ -1,4 +1,4 @@
-import { Operand } from './expression';
+import { GrammaticalUnit } from './expression';
 import { Context } from './context';
 import { element } from 'protractor';
 
@@ -111,7 +111,7 @@ export class Characters {
 //  Letter
 //------------------------------------------------------------------------------
 
-export class Letter extends Operand {
+export class Letter extends GrammaticalUnit {
     literal: string = '';
     evaluate(context: Context){}
 }

@@ -1,5 +1,5 @@
 import { Letters, Letter, AlphabeticLetter } from './metadata';
-import { Operand } from './expression';
+import { GrammaticalUnit } from './expression';
 import { Context } from './context';
 
 //------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ class Accent {
     evaluate(){}
 }
 
-export class Syllable extends Operand {
+export class Syllable extends GrammaticalUnit {
     literal: string = '';
     evaluate(context: Context){}
 }

@@ -1,5 +1,5 @@
 import { Lexicon, lexicon } from './lexicon';
-import { Operand } from './expression';
+//import { GrammaticalUnit } from './expression';
 import { AlphabeticLetter, Letters, Characters } from './metadata';
 import { State } from './lexicalanalyzer';
 import { Context } from "./context";

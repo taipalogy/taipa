@@ -1,5 +1,5 @@
 import { Expression } from './expression';
-import { Syllable } from './metadata';
+import { Syllable } from './syllables';
 
 //------------------------------------------------------------------------------
 //  Regular Expressions

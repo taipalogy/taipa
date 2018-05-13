@@ -1,5 +1,5 @@
 import { Expression, Operator, AndExpression, OrExpression, PeriodExpression } from './expression';
-import { Operand } from './expression';
+import { GrammaticalUnit } from './expression';
 
 class Shunter {
   nodes: Array<Expression>;
@@ -49,17 +49,17 @@ class Shunter {
 
       //console.log("hit");
 
-      if(node instanceof Operand && node.isBasicForm()) {
+      if(node instanceof GrammaticalUnit && node.isBasicForm()) {
         console.log("hit");
         output.push(node);
       } else if(node instanceof AndExpression || node instanceof OrExpression) {
         operators.push(node);
-      } else if(node instanceof Operand && !node.isBasicForm()) {
+      } else if(node instanceof GrammaticalUnit && !node.isBasicForm()) {
         output.push(node);
       } else if(node instanceof PeriodExpression) {
         if(output[output.length-1] instanceof Operator) {
           console.log("something wrong!");
-        } else if(output[output.length-1] instanceof Operand) {
+        } else if(output[output.length-1] instanceof GrammaticalUnit) {
           this.join(operators, output);
         }
       }

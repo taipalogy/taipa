@@ -59,7 +59,7 @@ export interface IOperand extends IExpression {
     isBasicForm() : Boolean;
 }
 
-export class Operand implements IOperand, IConstituent {
+export class GrammaticalUnit implements IOperand, IConstituent {
     literal: string;
     partOfSpeech: string;
     
