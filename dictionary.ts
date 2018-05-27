@@ -1,14 +1,30 @@
-class Entry {
-    partOfSpeech: string;
-    hanji: string;
-}
 
 interface Dictionary {
-    readonly [index: string]: Array<Entry>
+    readonly [index: string]: Array<string>
 }
 
-let map: Dictionary = {'a': new Array<Entry>(), 'b': new Array<Entry>()};
 
-// hawsau/hawsa/hazssa
-// vuannysauw
-// 着多欵
+export let dictionary: Dictionary = {
+    a: ['阿', '鴉'],
+    af: [],
+    ah: [],
+    aiy: [],
+    aiw: [],
+    ainnzs: [],
+    ay: ['仔'],
+    aw: [],
+    azs: ['阿'],
+    diurf: ['着'],
+    e: [],
+    ezs: [],
+    ew: [],
+    kih: [],
+    kuany: ['欵'],
+    nassqahy: [],
+    zaizsianny: ['知', '知 ianny'],
+    zausszing: ['走真'],
+    zuezs: ['多'],
+    zury: [],
+  };
+
+  //console.log(dictionary.diurf[0]);

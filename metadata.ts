@@ -20,7 +20,8 @@ export class Metadata {
 
     constructor() {
         let characters = new Characters();
-        console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
+        //console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
+        console.log(Object.keys(charactersNew.list).length === Metadata.NUMBER_OF_CHARACTERS);
 
         let letters = new Letters(characters);
         console.log(letters.length === Metadata.NUMBER_OF_LETTERS);
@@ -40,66 +41,56 @@ export class Character {
 }
 
 export class Characters {
-    lowerCharacterA: Character = new Character('a');
-    lowerCharacterB: Character = new Character('b');
-    lowerCharacterC: Character = new Character('c');
-    lowerCharacterD: Character = new Character('d');
-    lowerCharacterE: Character = new Character('e');
-    lowerCharacterF: Character = new Character('f');
-    lowerCharacterG: Character = new Character('g');
-    lowerCharacterH: Character = new Character('h');
-    lowerCharacterI: Character = new Character('i');
-    lowerCharacterJ: Character = new Character('j');
-    lowerCharacterK: Character = new Character('k');
-    lowerCharacterL: Character = new Character('l');
-    lowerCharacterM: Character = new Character('m');
-    lowerCharacterN: Character = new Character('n');
-    lowerCharacterO: Character = new Character('o');
-    lowerCharacterP: Character = new Character('p');
-    lowerCharacterQ: Character = new Character('q');
-    lowerCharacterR: Character = new Character('r');
-    lowerCharacterS: Character = new Character('s');
-    lowerCharacterT: Character = new Character('t');
-    lowerCharacterU: Character = new Character('u');
-    lowerCharacterV: Character = new Character('v');
-    lowerCharacterW: Character = new Character('w');
-    lowerCharacterX: Character = new Character('x');
-    lowerCharacterY: Character = new Character('y');
-    lowerCharacterZ: Character = new Character('z');
 
     list: Array<Character>;
     constructor() {
         this.list = new Array();
-        this.list.push(this.lowerCharacterA);
-        this.list.push(this.lowerCharacterB);
-        this.list.push(this.lowerCharacterC);
-        this.list.push(this.lowerCharacterD);
-        this.list.push(this.lowerCharacterE);
-        this.list.push(this.lowerCharacterF);
-        this.list.push(this.lowerCharacterG);
-        this.list.push(this.lowerCharacterH);
-        this.list.push(this.lowerCharacterI);
-        this.list.push(this.lowerCharacterJ);
-        this.list.push(this.lowerCharacterK);
-        this.list.push(this.lowerCharacterL);
-        this.list.push(this.lowerCharacterM);
-        this.list.push(this.lowerCharacterN);
-        this.list.push(this.lowerCharacterO);
-        this.list.push(this.lowerCharacterP);
-        this.list.push(this.lowerCharacterQ);
-        this.list.push(this.lowerCharacterR);
-        this.list.push(this.lowerCharacterS);
-        this.list.push(this.lowerCharacterT);
-        this.list.push(this.lowerCharacterU);
-        this.list.push(this.lowerCharacterV);
-        this.list.push(this.lowerCharacterW);
-        this.list.push(this.lowerCharacterX);
-        this.list.push(this.lowerCharacterY);
-        this.list.push(this.lowerCharacterZ);
+
+        for(let key in charactersNew) {
+            this.list.push(charactersNew.list[key])
+        }
+
     }
 
     get length() {
         return this.list.length;
+    }
+}
+
+interface CharactersNew {
+    list: {
+        readonly [index: string]: Character
+    }
+}
+
+export let charactersNew: CharactersNew = {
+    list: {
+        a: new Character('a'),
+        b: new Character('b'),
+        c: new Character('c'),
+        d: new Character('d'),
+        e: new Character('e'),
+        f: new Character('f'),
+        g: new Character('g'),
+        h: new Character('h'),
+        i: new Character('i'),
+        j: new Character('j'),
+        k: new Character('k'),
+        l: new Character('l'),
+        m: new Character('m'),
+        n: new Character('n'),
+        o: new Character('o'),
+        p: new Character('p'),
+        q: new Character('q'),
+        r: new Character('r'),
+        s: new Character('s'),
+        t: new Character('t'),
+        u: new Character('u'),
+        v: new Character('v'),
+        w: new Character('w'),
+        x: new Character('x'),
+        y: new Character('y'),
+        z: new Character('z'),
     }
 }
 
@@ -137,88 +128,54 @@ export class AlphabeticLetter extends Letter {
 }
 
 export class Letters {
-    lowerLetterA: AlphabeticLetter;
-    lowerLetterB: AlphabeticLetter;
-    lowerLetterC: AlphabeticLetter;
-    lowerLetterD: AlphabeticLetter;
-    lowerLetterE: AlphabeticLetter;
-    lowerLetterF: AlphabeticLetter;
-    lowerLetterG: AlphabeticLetter;
-    lowerLetterH: AlphabeticLetter;
-    lowerLetterI: AlphabeticLetter;
-    lowerLetterJ: AlphabeticLetter;
-    lowerLetterK: AlphabeticLetter;
-    lowerLetterL: AlphabeticLetter;
-    lowerLetterM: AlphabeticLetter;
-    lowerLetterN: AlphabeticLetter;
-    lowerLetterNG: AlphabeticLetter;
-    lowerLetterNN: AlphabeticLetter;
-    lowerLetterO: AlphabeticLetter;
-    lowerLetterP: AlphabeticLetter;
-    lowerLetterQ: AlphabeticLetter;
-    lowerLetterS: AlphabeticLetter;
-    lowerLetterSS: AlphabeticLetter;
-    lowerLetterT: AlphabeticLetter;
-    lowerLetterU: AlphabeticLetter;
-    lowerLetterUR: AlphabeticLetter;
-    lowerLetterV: AlphabeticLetter;
-    lowerLetterW: AlphabeticLetter;
-    lowerLetterX: AlphabeticLetter;
-    lowerLetterXX: AlphabeticLetter;
-    lowerLetterXXX: AlphabeticLetter;
-    lowerLetterY: AlphabeticLetter;
-    lowerLetterZ: AlphabeticLetter;
-    lowerLetterZS: AlphabeticLetter;
-    lowerLetterZZS: AlphabeticLetter;
+    // medial
+    lowerLetterA: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['a']]);
+    lowerLetterE: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['e']]);
+    lowerLetterI: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['i']]);
+    lowerLetterO: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['o']]);
+    lowerLetterU: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['u']]);
+    lowerLetterUR: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['u'], charactersNew.list['r']]);
+
+    // initial excludes checked final and neutral final
+    lowerLetterC: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['c']]);
+    lowerLetterJ: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['j']]);
+    lowerLetterL: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['l']]);
+    lowerLetterQ: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['q']]);
+    lowerLetterS: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['s']]);
+    lowerLetterV: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['v']]);
+    lowerLetterZ: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['z']]);
+
+    // nasal
+    lowerLetterM: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['m']]);
+    lowerLetterN: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['n']]);
+    lowerLetterNG: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['n'], charactersNew.list['g']]);
+    lowerLetterNN: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['n'], charactersNew.list['n']]);
+
+    // free tone mark
+    lowerLetterSS: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['s'], charactersNew.list['s']]);
+    lowerLetterW: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['w']]);
+    lowerLetterX: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['x']]);
+    lowerLetterXX: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['x'], charactersNew.list['x']]);
+    lowerLetterXXX: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['x'], charactersNew.list['x'], charactersNew.list['x']]);
+    lowerLetterY: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['y']]);    
+    lowerLetterZS: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['z'], charactersNew.list['s']]);
+    lowerLetterZZS: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['z'], charactersNew.list['z'], charactersNew.list['s']]);
+
+    // checked tone mark and final
+    lowerLetterB: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['b']]);
+    lowerLetterD: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['d']]);
+    lowerLetterG: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['g']]);
+    lowerLetterK: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['k']]);
+    lowerLetterP: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['p']]);
+    lowerLetterT: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['t']]);
+
+    // neutral final
+    lowerLetterF: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['f']]);
+    lowerLetterH: AlphabeticLetter = new AlphabeticLetter([charactersNew.list['h']]);
     
     list: Array<AlphabeticLetter>;
     constructor(characters: Characters) {
         this.list = new Array();
-
-        // medial
-        this.lowerLetterA = new AlphabeticLetter([characters.lowerCharacterA]);
-        this.lowerLetterE = new AlphabeticLetter([characters.lowerCharacterE]);
-        this.lowerLetterI = new AlphabeticLetter([characters.lowerCharacterI]);
-        this.lowerLetterO = new AlphabeticLetter([characters.lowerCharacterO]);
-        this.lowerLetterU = new AlphabeticLetter([characters.lowerCharacterU]);
-        this.lowerLetterUR = new AlphabeticLetter([characters.lowerCharacterU, characters.lowerCharacterR]);
-
-        // initial excludes checked final and neutral final
-        this.lowerLetterC = new AlphabeticLetter([characters.lowerCharacterC]);
-        this.lowerLetterJ = new AlphabeticLetter([characters.lowerCharacterJ]);
-        this.lowerLetterL = new AlphabeticLetter([characters.lowerCharacterL]);
-        this.lowerLetterQ = new AlphabeticLetter([characters.lowerCharacterQ]);
-        this.lowerLetterS = new AlphabeticLetter([characters.lowerCharacterS]);
-        this.lowerLetterV = new AlphabeticLetter([characters.lowerCharacterV]);
-        this.lowerLetterZ = new AlphabeticLetter([characters.lowerCharacterZ]);
-
-        // nasal
-        this.lowerLetterM = new AlphabeticLetter([characters.lowerCharacterM]);
-        this.lowerLetterN = new AlphabeticLetter([characters.lowerCharacterN]);
-        this.lowerLetterNG = new AlphabeticLetter([characters.lowerCharacterN, characters.lowerCharacterG]);
-        this.lowerLetterNN = new AlphabeticLetter([characters.lowerCharacterN, characters.lowerCharacterN]);
-
-        // free tone mark
-        this.lowerLetterSS = new AlphabeticLetter([characters.lowerCharacterS, characters.lowerCharacterS]);
-        this.lowerLetterW = new AlphabeticLetter([characters.lowerCharacterW]);
-        this.lowerLetterX = new AlphabeticLetter([characters.lowerCharacterX]);
-        this.lowerLetterXX = new AlphabeticLetter([characters.lowerCharacterX, characters.lowerCharacterX]);
-        this.lowerLetterXXX = new AlphabeticLetter([characters.lowerCharacterX, characters.lowerCharacterX, characters.lowerCharacterX]);
-        this.lowerLetterY = new AlphabeticLetter([characters.lowerCharacterY]);
-        this.lowerLetterZS = new AlphabeticLetter([characters.lowerCharacterZ, characters.lowerCharacterS]);
-        this.lowerLetterZZS = new AlphabeticLetter([characters.lowerCharacterZ, characters.lowerCharacterZ, characters.lowerCharacterS]);
-        
-        // checked tone mark and final
-        this.lowerLetterB = new AlphabeticLetter([characters.lowerCharacterB]);
-        this.lowerLetterD = new AlphabeticLetter([characters.lowerCharacterD]);
-        this.lowerLetterG = new AlphabeticLetter([characters.lowerCharacterG]);
-        this.lowerLetterK = new AlphabeticLetter([characters.lowerCharacterK]);
-        this.lowerLetterP = new AlphabeticLetter([characters.lowerCharacterP]);
-        this.lowerLetterT = new AlphabeticLetter([characters.lowerCharacterT]);
-
-        // neutral final
-        this.lowerLetterF = new AlphabeticLetter([characters.lowerCharacterF]);
-        this.lowerLetterH = new AlphabeticLetter([characters.lowerCharacterH]);
 
         this.list.push(this.lowerLetterA);
         this.list.push(this.lowerLetterB);
@@ -253,6 +210,11 @@ export class Letters {
         this.list.push(this.lowerLetterZ);
         this.list.push(this.lowerLetterZS);
         this.list.push(this.lowerLetterZZS);
+/*
+        for(let key in lettersNew.list) {
+            this.list.push(lettersNew.list[key])
+        }
+*/
     }
 
     get length() {
@@ -263,17 +225,17 @@ export class Letters {
         
         let letters: Array<AlphabeticLetter> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
-        console.log(characters);
+        //console.log(characters);
         for(let i = 0; i < characters.length; i++) {
-            console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
+            //console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
             //console.log("metadata letter array looping.");
             let ls: Array<AlphabeticLetter> = new Array();
             ls = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
-            console.log(ls);
+            //console.log(ls);
             if(ls.length == 0) {
                 console.log("something wrong");
             } else if(ls.length == 1) {
-                console.log(ls);
+                //console.log(ls);
                 letters.push(ls.shift()); // push the matched letter
             } else if(ls.length > 1) {
                 let j = 0;
@@ -283,12 +245,12 @@ export class Letters {
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let atLeastJ: Array<AlphabeticLetter> = new Array();
                     atLeastJ = ls.filter(l => l.characters.length >= j+1);
-                    console.log(atLeastJ);
+                    //console.log(atLeastJ);
 
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let underJ: Array<AlphabeticLetter> = new Array();
                     underJ = ls.filter(l => l.characters.length < j+1);
-                    console.log(underJ);
+                    //console.log(underJ);
 
                     if(atLeastJ.length > 0){
                         ls = atLeastJ.filter(l => l.characters[j].symbol === characters[i+j].symbol);
@@ -307,15 +269,70 @@ export class Letters {
                 } while(ls.length > 1 && i+j < characters.length);
                 i += ls[0].characters.length-1; // skip the length-1 of characters of the found letter
                 letters.push(ls.shift()); // push the matched letter
-                console.log(letters);
+                //console.log(letters);
             }
         }
         //console.log("metadata letter array length %d", letters.length);
-        console.log(letters);
+        //console.log(letters);
         return letters;
     }
 }
 
+interface LettersNew {
+    list: {
+        readonly [index: string]: AlphabeticLetter
+    }
+}
+
+
+export let lettersNew: LettersNew = {
+    list: {
+        // medial
+        a: new AlphabeticLetter([charactersNew.list['a']]),
+        e: new AlphabeticLetter([charactersNew.list['e']]),
+        i: new AlphabeticLetter([charactersNew.list['i']]),
+        o: new AlphabeticLetter([charactersNew.list['o']]),
+        u: new AlphabeticLetter([charactersNew.list['u']]),
+        ur: new AlphabeticLetter([charactersNew.list['u'], charactersNew.list['r']]),
+
+        // initial excludes checked final and neutral final
+        c: new AlphabeticLetter([charactersNew.list['c']]),
+        j: new AlphabeticLetter([charactersNew.list['j']]),
+        l: new AlphabeticLetter([charactersNew.list['l']]),
+        q: new AlphabeticLetter([charactersNew.list['q']]),
+        s: new AlphabeticLetter([charactersNew.list['s']]),
+        v: new AlphabeticLetter([charactersNew.list['v']]),
+        z: new AlphabeticLetter([charactersNew.list['z']]),
+
+        // nasal
+        m: new AlphabeticLetter([charactersNew.list['m']]),
+        n: new AlphabeticLetter([charactersNew.list['n']]),
+        ng: new AlphabeticLetter([charactersNew.list['n'], charactersNew.list['g']]),
+        nn: new AlphabeticLetter([charactersNew.list['n'], charactersNew.list['n']]),
+
+        // free tone mark
+        ss: new AlphabeticLetter([charactersNew.list['s'], charactersNew.list['s']]),
+        w: new AlphabeticLetter([charactersNew.list['w']]),
+        x: new AlphabeticLetter([charactersNew.list['x']]),
+        xx: new AlphabeticLetter([charactersNew.list['x'], charactersNew.list['x']]),
+        xxx: new AlphabeticLetter([charactersNew.list['x'], charactersNew.list['x'], charactersNew.list['x']]),
+        y: new AlphabeticLetter([charactersNew.list['y']]),
+        zs: new AlphabeticLetter([charactersNew.list['z'], charactersNew.list['s']]),
+        zzs: new AlphabeticLetter([charactersNew.list['z'], charactersNew.list['z'], charactersNew.list['s']]),
+
+        // checked tone mark and final
+        b: new AlphabeticLetter([charactersNew.list['b']]),
+        d: new AlphabeticLetter([charactersNew.list['d']]),
+        g: new AlphabeticLetter([charactersNew.list['g']]),
+        k: new AlphabeticLetter([charactersNew.list['k']]),
+        p: new AlphabeticLetter([charactersNew.list['p']]),
+        t: new AlphabeticLetter([charactersNew.list['t']]),
+
+        // neutral final
+        f: new AlphabeticLetter([charactersNew.list['f']]),
+        h: new AlphabeticLetter([charactersNew.list['h']]),
+    }
+}
 
 class ToneSandhi {
     //baseTone: Letter;

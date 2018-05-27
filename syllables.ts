@@ -38,7 +38,7 @@ export class ToneSandhiSyllable extends Syllable {
     }
 
     pushLetter(l: AlphabeticLetter) {
-        console.log("%s", l.literal);
+        //console.log("%s", l.literal);
         this.letters.push(l);
         this.literal += l.literal;
     }
@@ -58,6 +58,8 @@ export class Syllables {
     syllableAiy: ToneSandhiSyllable;
     syllableAiw: ToneSandhiSyllable;
     syllableAinnzs: ToneSandhiSyllable;
+
+    //syllableDiurf: ToneSandhiSyllable;
 
     syllableSuy: ToneSandhiSyllable;
     syllableSik: ToneSandhiSyllable;
@@ -83,6 +85,8 @@ export class Syllables {
         this.syllableAiw = new ToneSandhiSyllable([letters.lowerLetterA, letters.lowerLetterI, letters.lowerLetterW]);
         this.syllableAinnzs = new ToneSandhiSyllable([letters.lowerLetterA, letters.lowerLetterI, letters.lowerLetterNN, letters.lowerLetterZS]);
 
+        var syllableDiurf = new ToneSandhiSyllable([letters.lowerLetterD, letters.lowerLetterI, letters.lowerLetterUR, letters.lowerLetterF]);
+
         this.syllableSuy = new ToneSandhiSyllable([letters.lowerLetterS, letters.lowerLetterU, letters.lowerLetterY]);
         this.syllableSik = new ToneSandhiSyllable([letters.lowerLetterS, letters.lowerLetterI, letters.lowerLetterK]);
 
@@ -95,6 +99,8 @@ export class Syllables {
         this.list.push(this.syllableAiy);
         this.list.push(this.syllableAiw);
         this.list.push(this.syllableAinnzs);
+
+        this.list.push(syllableDiurf);
 
         this.list.push(this.syllableSuy);
         this.list.push(this.syllableSik);

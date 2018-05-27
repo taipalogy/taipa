@@ -50,7 +50,6 @@ class Shunter {
       //console.log("hit");
 
       if(node instanceof GrammaticalUnit && node.isBasicForm()) {
-        console.log("hit");
         output.push(node);
       } else if(node instanceof AndExpression || node instanceof OrExpression) {
         operators.push(node);
@@ -65,15 +64,15 @@ class Shunter {
       }
     }
 
-    console.log(this.nodes);
-    console.log(operators);
-    console.log(output);
+    //console.log(this.nodes);
+    //console.log(operators);
+    //console.log(output);
     
     while(operators.length > 0){
       this.join(operators, output);
     }
     
-    console.log(output);
+    //console.log(output);
     return output[0]; // return the top of the ast
   }
 }

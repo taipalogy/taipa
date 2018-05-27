@@ -2,7 +2,6 @@
 import { Letter } from './metadata';
 import { Lexeme } from './lexicalanalyzer';
 import { Context } from "./context";
-import { IConstituent} from './constituent';
 
 //-----------------------------------------------------------------------------
 //  Expression
@@ -59,7 +58,7 @@ export interface IOperand extends IExpression {
     isBasicForm() : Boolean;
 }
 
-export class GrammaticalUnit implements IOperand, IConstituent {
+export class GrammaticalUnit implements IOperand {
     literal: string;
     partOfSpeech: string;
     
