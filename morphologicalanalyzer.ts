@@ -1,4 +1,4 @@
-//import { Lexicon, lexicon } from './lexicon';
+
 import { AlphabeticLetter, Letters, Characters } from './metadata';
 import { State } from './lexicalanalyzer';
 import { Context } from "./context";

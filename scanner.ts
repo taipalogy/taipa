@@ -33,7 +33,7 @@ export class ScannedCharacter {
       //console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
 
       this.cargo = c;
-      console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
+      //console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
 
       this.lineIndex = lineIndex;
       this.colIndex = colIndex;
@@ -42,7 +42,7 @@ export class ScannedCharacter {
     }
 
     toString() {
-        console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
+        //console.log("%cthis cargo is %s.", "color: blue; font-size: medium", this.cargo);
         return this.cargo;
     }
 
@@ -57,7 +57,7 @@ export class ScannedCharacter {
         else if(this.cargo.match(ScannerRegex.ALPHABET) || this.cargo.match(ScannerRegex.alphabet)) output = this.cargo;
         else output = " invalid character";
         
-        return "   " + this.lineIndex.toString() + "      " + this.colIndex.toString() + " " + output;
+        return this.lineIndex.toString() + "    " + this.colIndex.toString() + "      " + output;
     }
 }
 

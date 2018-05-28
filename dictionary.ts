@@ -26,5 +26,3 @@ export let dictionary: Dictionary = {
     zuezs: ['多'],
     zury: [],
   };
-
-  //console.log(dictionary.diurf[0]);

@@ -40,7 +40,7 @@ export class ToneSandhiSyllable extends Syllable {
     pushLetter(l: AlphabeticLetter) {
         this.letters.push(l);
         this.literal += l.literal;
-        console.log("%s", l.literal);
+        //console.log("%s", l.literal);
     }
 }
 
@@ -95,26 +95,26 @@ export class Syllables {
         
         let syllables: Array<ToneSandhiSyllable> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
-        console.log(letters);
+        //console.log(letters);
         let beginOfSyllable: number = 0;
         let ss: Array<ToneSandhiSyllable> = new Array();
         for(let i = 0; i < letters.length; i++) {
-            console.log("examining letter: %s. length of letters: %d", letters[i].literal, letters.length);
-            console.log("metadata letter array looping.");
+            //console.log("examining letter: %s. length of letters: %d", letters[i].literal, letters.length);
+            //console.log("metadata letter array looping.");
             
             if(i-beginOfSyllable == 0) {
-                console.log("begin of syllable hit");
+                //console.log("begin of syllable hit");
                 ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
             } else {
-                console.log("i:%d. beginOfSyllable:%d", i, beginOfSyllable);
+                //console.log("i:%d. beginOfSyllable:%d", i, beginOfSyllable);
                 ss = ss.filter(s => s.letters[i-beginOfSyllable].literal === letters[i].literal);
             }
 
-            console.log(ss);
+            //console.log(ss);
             if(ss.length == 0) {
                 console.log("something wrong");
             } else if(ss.length == 1) {
-                console.log("just one matched. i:%d. ss[0].letters.length:%d", i, ss[0].letters.length);
+                //console.log("just one matched. i:%d. ss[0].letters.length:%d", i, ss[0].letters.length);
                 if(i+1-beginOfSyllable == ss[0].letters.length) {
                     // when index i plus one equals the length of the matched syllable
                     let tmp = ss.shift();
@@ -129,15 +129,15 @@ export class Syllables {
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let atLeastJ = new Array();
                     atLeastJ = ss.filter(s => s.letters.length >= j+1);
-                    console.log(atLeastJ);
+                    //console.log(atLeastJ);
 
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let underJ = new Array();
                     underJ = ss.filter(s => s.letters.length < j+1);
-                    console.log(underJ);
+                    //console.log(underJ);
 
                     if(atLeastJ.length > 0){
-                        console.log(ss);
+                        //console.log(ss);
                         ss = atLeastJ.filter(s => s.letters[j].literal === letters[i+j].literal);
                         if(ss.length > 0){
                             ;
@@ -146,7 +146,7 @@ export class Syllables {
                         }
                     }
                     
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     j++;
                     //console.log(ss);
                     // continue looping when there are more than one results
@@ -161,7 +161,7 @@ export class Syllables {
         }
         //console.log("metadata letter array length %d", letters.length);
         console.log(syllables);
-        console.log("length of syllables: %d", syllables.length);
+        //console.log("length of syllables: %d", syllables.length);
         return syllables;
     }
 

@@ -20,11 +20,12 @@ export class Metadata {
 
     constructor() {
         let characters = new Characters();
-        //console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
-        console.log(Object.keys(charactersNew.list).length === Metadata.NUMBER_OF_CHARACTERS);
+        console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
+        //console.log(Object.keys(characters.list).length === Metadata.NUMBER_OF_CHARACTERS);
 
         let letters = new Letters();
         console.log(letters.length === Metadata.NUMBER_OF_LETTERS);
+        //console.log(Object.keys(letters.list).length === Metadata.NUMBER_OF_LETTERS);
     }
 }
 
@@ -46,8 +47,8 @@ export class Characters {
     constructor() {
         this.list = new Array();
 
-        for(let key in charactersNew) {
-            this.list.push(charactersNew.list[key])
+        for(let key in characters.list) {
+            this.list.push(characters.list[key])
         }
 
     }
@@ -63,7 +64,7 @@ interface ICharacters {
     }
 }
 
-export let charactersNew: ICharacters = {
+let characters: ICharacters = {
     list: {
         a: new Character('a'),
         b: new Character('b'),
@@ -146,7 +147,7 @@ export class Letters {
         
         let letters: Array<AlphabeticLetter> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
-        console.log(characters);
+        //console.log(characters);
         let ls: Array<AlphabeticLetter> = new Array();
         for(let i = 0; i < characters.length; i++) {
             //console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
@@ -154,27 +155,26 @@ export class Letters {
             
             ls = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
 
-
-            console.log(ls);
+            //console.log(ls);
             if(ls.length == 0) {
                 console.log("something wrong");
             } else if(ls.length == 1) {
-                console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
+                //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
                 letters.push(ls.shift()); // push the matched letter
             } else if(ls.length > 1) {
                 let j = 0;
                 do {
-                    ls.filter(l => console.log(l.characters) );
-                    console.log(ls);
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //ls.filter(l => console.log(l.characters) );
+                    //console.log(ls);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let atLeastJ: Array<AlphabeticLetter> = new Array();
                     atLeastJ = ls.filter(l => l.characters.length >= j+1);
-                    console.log(atLeastJ);
+                    //console.log(atLeastJ);
 
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let underJ: Array<AlphabeticLetter> = new Array();
                     underJ = ls.filter(l => l.characters.length < j+1);
-                    console.log(underJ);
+                    //console.log(underJ);
 
                     if(atLeastJ.length > 0){
                         ls = atLeastJ.filter(l => l.characters[j].symbol === characters[i+j].symbol);
@@ -185,18 +185,18 @@ export class Letters {
                         }
                     }
                     
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     j++;
                     // continue looping when there are more than one results
                     // stop looping when j goes beyond the end of target
                 } while(ls.length > 1 && i+j < characters.length);
                 i += ls[0].characters.length-1; // skip the length-1 of characters of the found letter
                 letters.push(ls.shift()); // push the matched letter
-                console.log(letters);
+                //console.log(letters);
             }
         }
         //console.log("metadata letter array length %d", letters.length);
-        console.log(letters);
+        //console.log(letters);
         return letters;
     }
 }
@@ -210,49 +210,49 @@ interface ILetters {
 export let letters: ILetters = {
     list: {
         // medial
-        a: new AlphabeticLetter([charactersNew.list['a']]),
-        e: new AlphabeticLetter([charactersNew.list['e']]),
-        i: new AlphabeticLetter([charactersNew.list['i']]),
-        o: new AlphabeticLetter([charactersNew.list['o']]),
-        u: new AlphabeticLetter([charactersNew.list['u']]),
-        ur: new AlphabeticLetter([charactersNew.list['u'], charactersNew.list['r']]),
+        a: new AlphabeticLetter([characters.list['a']]),
+        e: new AlphabeticLetter([characters.list['e']]),
+        i: new AlphabeticLetter([characters.list['i']]),
+        o: new AlphabeticLetter([characters.list['o']]),
+        u: new AlphabeticLetter([characters.list['u']]),
+        ur: new AlphabeticLetter([characters.list['u'], characters.list['r']]),
 
         // initial excludes checked final and neutral final
-        c: new AlphabeticLetter([charactersNew.list['c']]),
-        j: new AlphabeticLetter([charactersNew.list['j']]),
-        l: new AlphabeticLetter([charactersNew.list['l']]),
-        q: new AlphabeticLetter([charactersNew.list['q']]),
-        s: new AlphabeticLetter([charactersNew.list['s']]),
-        v: new AlphabeticLetter([charactersNew.list['v']]),
-        z: new AlphabeticLetter([charactersNew.list['z']]),
+        c: new AlphabeticLetter([characters.list['c']]),
+        j: new AlphabeticLetter([characters.list['j']]),
+        l: new AlphabeticLetter([characters.list['l']]),
+        q: new AlphabeticLetter([characters.list['q']]),
+        s: new AlphabeticLetter([characters.list['s']]),
+        v: new AlphabeticLetter([characters.list['v']]),
+        z: new AlphabeticLetter([characters.list['z']]),
 
         // nasal
-        m: new AlphabeticLetter([charactersNew.list['m']]),
-        n: new AlphabeticLetter([charactersNew.list['n']]),
-        ng: new AlphabeticLetter([charactersNew.list['n'], charactersNew.list['g']]),
-        nn: new AlphabeticLetter([charactersNew.list['n'], charactersNew.list['n']]),
+        m: new AlphabeticLetter([characters.list['m']]),
+        n: new AlphabeticLetter([characters.list['n']]),
+        ng: new AlphabeticLetter([characters.list['n'], characters.list['g']]),
+        nn: new AlphabeticLetter([characters.list['n'], characters.list['n']]),
 
         // free tone mark
-        ss: new AlphabeticLetter([charactersNew.list['s'], charactersNew.list['s']]),
-        w: new AlphabeticLetter([charactersNew.list['w']]),
-        x: new AlphabeticLetter([charactersNew.list['x']]),
-        xx: new AlphabeticLetter([charactersNew.list['x'], charactersNew.list['x']]),
-        xxx: new AlphabeticLetter([charactersNew.list['x'], charactersNew.list['x'], charactersNew.list['x']]),
-        y: new AlphabeticLetter([charactersNew.list['y']]),
-        zs: new AlphabeticLetter([charactersNew.list['z'], charactersNew.list['s']]),
-        zzs: new AlphabeticLetter([charactersNew.list['z'], charactersNew.list['z'], charactersNew.list['s']]),
+        ss: new AlphabeticLetter([characters.list['s'], characters.list['s']]),
+        w: new AlphabeticLetter([characters.list['w']]),
+        x: new AlphabeticLetter([characters.list['x']]),
+        xx: new AlphabeticLetter([characters.list['x'], characters.list['x']]),
+        xxx: new AlphabeticLetter([characters.list['x'], characters.list['x'], characters.list['x']]),
+        y: new AlphabeticLetter([characters.list['y']]),
+        zs: new AlphabeticLetter([characters.list['z'], characters.list['s']]),
+        zzs: new AlphabeticLetter([characters.list['z'], characters.list['z'], characters.list['s']]),
 
         // checked tone mark and final
-        b: new AlphabeticLetter([charactersNew.list['b']]),
-        d: new AlphabeticLetter([charactersNew.list['d']]),
-        g: new AlphabeticLetter([charactersNew.list['g']]),
-        k: new AlphabeticLetter([charactersNew.list['k']]),
-        p: new AlphabeticLetter([charactersNew.list['p']]),
-        t: new AlphabeticLetter([charactersNew.list['t']]),
+        b: new AlphabeticLetter([characters.list['b']]),
+        d: new AlphabeticLetter([characters.list['d']]),
+        g: new AlphabeticLetter([characters.list['g']]),
+        k: new AlphabeticLetter([characters.list['k']]),
+        p: new AlphabeticLetter([characters.list['p']]),
+        t: new AlphabeticLetter([characters.list['t']]),
 
         // neutral final
-        f: new AlphabeticLetter([charactersNew.list['f']]),
-        h: new AlphabeticLetter([charactersNew.list['h']]),
+        f: new AlphabeticLetter([characters.list['f']]),
+        h: new AlphabeticLetter([characters.list['h']]),
     }
 }
 
