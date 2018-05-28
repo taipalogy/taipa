@@ -1,4 +1,4 @@
-import { Lexicon, lexicon } from './lexicon';
+//import { Lexicon, lexicon } from './lexicon';
 import { AlphabeticLetter, Letters, Characters } from './metadata';
 import { State } from './lexicalanalyzer';
 import { Context } from "./context";
@@ -34,7 +34,7 @@ export class ToneSandhiMorphologicalAnalyzer {
     }
 
     analyze() {
-        let ss = new Syllables(new Letters(new Characters()));
+        let ss = new Syllables();
         console.log(this.letters);
         let syllables = ss.match(this.letters);
         console.log(syllables);

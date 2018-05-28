@@ -22,7 +22,7 @@ export class GraphemicAnalyzer {
     }
     
     analyze() {
-        let ls = new Letters(new Characters());
+        let ls = new Letters();
         let letters = ls.match(this.characters);
         //console.log("%cabout to return letter array. length %d.", "color: blue; font-size: medium", letters.length);
         //console.log(letters);
