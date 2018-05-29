@@ -1,10 +1,15 @@
-import { AlphabeticLetter, letters } from './metadata';
-import { GrammaticalUnit } from './expression';
-import { Context } from './context';
+import { AlphabeticLetter, letters } from './metadata'
+import { GrammaticalUnit } from './expression'
+import { Context } from './context'
+import { allomorphemicsyllables } from './allomorphemicsyllables'
 
 //------------------------------------------------------------------------------
-//  Syllables
+//  Morpheme
 //------------------------------------------------------------------------------
+
+class Morpheme {
+
+}
 
 //------------------------------------------------------------------------------
 //  Syllable
@@ -45,50 +50,30 @@ export class ToneSandhiSyllable extends Syllable {
 }
 
 //------------------------------------------------------------------------------
-//  Allomorphemic Syllables
+//  ISyllables
+//------------------------------------------------------------------------------
+
+export interface ISyllables {
+    list: {
+        readonly [index: string]: ToneSandhiSyllable
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Syllables
 //------------------------------------------------------------------------------
 
 export class Syllables {
-    syllableA: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a']]);
-    syllableAy: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['y']]);
-    syllableAzs: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['zs']]);
-    syllableAh: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['h']]);
-    syllableAf: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['f']]);
-    syllableAi: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['i']]);
-    syllableAiy: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['i'], letters.list['y']]);
-    syllableAiw: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['i'], letters.list['w']]);
-    syllableAinnzs: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['a'], letters.list['i'], letters.list['nn'], letters.list['zs']]);
-
-    syllableDiurf: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['d'], letters.list['i'], letters.list['ur'], letters.list['f']]);
-
-    syllableSuy: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['s'], letters.list['u'], letters.list['y']]);
-    syllableSik: ToneSandhiSyllable = new ToneSandhiSyllable([letters.list['s'], letters.list['i'], letters.list['k']]);
 
     list: Array<ToneSandhiSyllable>;
 
 
     get length() {
-        return this.list.length;
+        //return this.list.length;
+        return 0;
     }
 
     constructor(){
-
-        this.list = new Array();
-
-        this.list.push(this.syllableA);
-        this.list.push(this.syllableAy);
-        this.list.push(this.syllableAzs);
-        this.list.push(this.syllableAh);
-        this.list.push(this.syllableAf);
-        this.list.push(this.syllableAi);
-        this.list.push(this.syllableAiy);
-        this.list.push(this.syllableAiw);
-        this.list.push(this.syllableAinnzs);
-
-        this.list.push(this.syllableDiurf);
-
-        this.list.push(this.syllableSuy);
-        this.list.push(this.syllableSik);
     }
 
     match(letters: Array<AlphabeticLetter>) {

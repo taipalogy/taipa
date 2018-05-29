@@ -1,8 +1,8 @@
 
 
-import { Context } from './context';
-import { Character, Characters } from './metadata';
-import { AlphabeticLetter, Letters } from './metadata';
+
+import { Character } from './metadata';
+import { Letters } from './metadata';
 
 //------------------------------------------------------------------------------
 //  GraphemicAnalyzer

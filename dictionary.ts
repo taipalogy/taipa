@@ -1,4 +1,5 @@
 
+
 interface Dictionary {
     readonly [index: string]: Array<string>
 }

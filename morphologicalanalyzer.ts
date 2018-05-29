@@ -1,9 +1,6 @@
 
-import { AlphabeticLetter, Letters, Characters } from './metadata';
-import { State } from './lexicalanalyzer';
-import { Context } from "./context";
-import { Character } from './metadata';
-import { Syllable, ToneSandhiSyllable, Syllables } from './syllables';
+import { AlphabeticLetter } from './metadata'
+import { AllomorphemicSyllables } from './allomorphemicsyllables'
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -34,7 +31,7 @@ export class ToneSandhiMorphologicalAnalyzer {
     }
 
     analyze() {
-        let ss = new Syllables();
+        let ss = new AllomorphemicSyllables();//Syllables();
         console.log(this.letters);
         let syllables = ss.match(this.letters);
         console.log(syllables);
