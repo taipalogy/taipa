@@ -22,7 +22,7 @@ export class MorphologicalAnalyzerRegex {
 //  ToneSandhiMorphologicalAnalyzer
 //------------------------------------------------------------------------------
 
-export class ToneSandhiMorphologicalAnalyzer {
+export class ToneSandhiSyllableMatcher {
     letters: Array<AlphabeticLetter>;
 
     constructor(letters: Array<AlphabeticLetter>) {

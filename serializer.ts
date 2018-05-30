@@ -1,5 +1,5 @@
-import { ToneSandhiLexeme, Lexeme} from './lexicalanalyzer';
-import { Syllable, ToneSandhiSyllable } from './syllables';
+
+import { Syllable, ToneSandhiSyllable } from './syllable';
 import { IExpression, Expression, AndExpression, OrExpression } from './expression';
 import { Letter, AlphabeticLetter } from './metadata';
 

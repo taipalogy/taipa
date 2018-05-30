@@ -1,6 +1,6 @@
 
 import { Letter } from './metadata';
-import { Lexeme } from './lexicalanalyzer';
+
 import { Context } from "./context";
 
 //-----------------------------------------------------------------------------

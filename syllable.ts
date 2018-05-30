@@ -1,15 +1,8 @@
 import { AlphabeticLetter, letters } from './metadata'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
-import { allomorphemicsyllables } from './allomorphemicsyllables'
+import { allomorphemic_syllables_with_tone_mark } from './allomorphemicsyllables'
 
-//------------------------------------------------------------------------------
-//  Morpheme
-//------------------------------------------------------------------------------
-
-class Morpheme {
-
-}
 
 //------------------------------------------------------------------------------
 //  Syllable

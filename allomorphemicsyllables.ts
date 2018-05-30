@@ -18,8 +18,8 @@ export class AllomorphemicSyllables extends Syllables {
     constructor() {
         super();
         this.list = new Array();
-        for(let key in allomorphemicsyllables.list) {
-            this.list.push(allomorphemicsyllables.list[key])
+        for(let key in allomorphemic_syllables_with_tone_mark.list) {
+            this.list.push(allomorphemic_syllables_with_tone_mark.list[key])
         }
     }
 
@@ -28,7 +28,7 @@ export class AllomorphemicSyllables extends Syllables {
     }
 }
 
-export let allomorphemicsyllables: ISyllables = {
+export let allomorphemic_syllables_with_tone_mark: ISyllables = {
     list: {
         a: new ToneSandhiSyllable([letters.list['a']]),
         ay: new ToneSandhiSyllable([letters.list['a'], letters.list['y']]),

@@ -6,7 +6,7 @@ import { ToneSandhiWords } from './word'
 //  LexicalAnalyzer
 //------------------------------------------------------------------------------
 
-export class ToneSandhiLexicalAnalyzer {
+export class ToneSandhiWordMatcher {
     syllables: Array<ToneSandhiSyllable>;
 
     constructor(syllables: Array<ToneSandhiSyllable>) {

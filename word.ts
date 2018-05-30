@@ -5,14 +5,6 @@ import { dictionary } from './dictionary';
 
 
 //------------------------------------------------------------------------------
-//  Lexeme
-//------------------------------------------------------------------------------
-
-class Lexeme {
-
-}
-
-//------------------------------------------------------------------------------
 //  Word
 //------------------------------------------------------------------------------
 
@@ -23,22 +15,12 @@ export class Word extends GrammaticalUnit {
 }
 
 export class InflectionWord extends Word {
-
-    stem: string = "";
-    suffix: string = "";    
 }
 
 export class AgglutinationWord extends Word {
-
-    stem: string = "";
-    suffix: string = "";    
 }
 
 export class ToneSandhiWord extends Word {
-
-    stem: string = "";
-    suffix: string = "";
-
     isBaseForm() {
         // look up in the lexicon to check if this lexeme is in base form
     }

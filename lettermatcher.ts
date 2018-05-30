@@ -8,7 +8,7 @@ import { Letters } from './metadata';
 //  GraphemicAnalyzer
 //------------------------------------------------------------------------------
 
-export class GraphemicAnalyzer {
+export class LetterMatcher {
     characters: Array<Character>;
 
     constructor(l: string) {
