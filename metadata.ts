@@ -29,6 +29,33 @@ export class Metadata {
     }
 }
 
+//------------------------------------------------------------------------------
+//  Grapheme
+//------------------------------------------------------------------------------
+
+class Grapheme {
+
+}
+
+//------------------------------------------------------------------------------
+//  Morpheme
+//------------------------------------------------------------------------------
+
+class Morpheme {
+    baseForm: string
+}
+
+class ToneSandhiMorpheme extends Morpheme {
+    sandhiRule: string
+}
+
+class CheckedToneMorpheme extends Morpheme {
+    sandhiRule: string
+}
+
+class NeutralToneMorpheme extends Morpheme {
+    sandhiRule: string
+}
 
 //------------------------------------------------------------------------------
 //  Expressions
