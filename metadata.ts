@@ -2,15 +2,6 @@ import { GrammaticalUnit } from './expression';
 import { Context } from './context';
 import { element } from 'protractor';
 
-class Component {
-
-}
-
-class MyString {
-    characters: Array<Character>;
-    components: Array<Component>;
-    //isIsometric() {}
-}
 
 export class Metadata {
     static readonly NUMBER_OF_CHARACTERS: number = 26;
