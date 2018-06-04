@@ -274,11 +274,3 @@ export let letters: ILetters = {
         h: new AlphabeticLetter([characters.list['h']]),
     }
 }
-
-class ToneSandhi {
-    //baseTone: Letter;
-    //sandhiTone: Letter
-    match(){}
-}
-
-

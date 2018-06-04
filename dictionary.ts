@@ -69,6 +69,7 @@ export let dictionary: Dictionary = {
     kihh: [],
     ku: [],
     kuainnw: [],
+    kunw: ['困'],
     kuannymaixiay: [],
     kuannymaizs: [],
     kuh: [],
