@@ -13,7 +13,7 @@ export class ToneSandhiWordMatcher {
         this.syllables = syllables;
     }
     
-    analyze() {
+    match() {
         let ws = new ToneSandhiWords();
         console.log(this.syllables);
         let words = ws.match(this.syllables);

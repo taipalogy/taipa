@@ -21,7 +21,7 @@ export class LetterMatcher {
         }
     }
     
-    analyze() {
+    match() {
         let ls = new Letters();
         let letters = ls.match(this.characters);
         //console.log("%cabout to return letter array. length %d.", "color: blue; font-size: medium", letters.length);

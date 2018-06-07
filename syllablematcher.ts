@@ -1,6 +1,6 @@
 
 import { AlphabeticLetter } from './metadata'
-import { AllomorphemicSyllables } from './allomorphemicsyllables'
+import { Syllables } from './syllable'
 
 //------------------------------------------------------------------------------
 //  Regular Expressions
@@ -30,8 +30,8 @@ export class ToneSandhiSyllableMatcher {
         this.letters = letters;
     }
 
-    analyze() {
-        let ss = new AllomorphemicSyllables();//Syllables();
+    match() {
+        let ss = new Syllables();
         console.log(this.letters);
         let syllables = ss.match(this.letters);
         console.log(syllables);
