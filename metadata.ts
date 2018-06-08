@@ -1,6 +1,5 @@
 import { GrammaticalUnit } from './expression';
 import { Context } from './context';
-import { element } from 'protractor';
 
 
 export class Metadata {
@@ -12,7 +11,7 @@ export class Metadata {
     constructor() {
         //let characters = new Characters();
         //console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
-        console.log(Object.keys(characters.list).length === Metadata.NUMBER_OF_CHARACTERS);
+        console.log(Object.keys(characters).length === Metadata.NUMBER_OF_CHARACTERS);
 
         //let letters = new Letters();
         //console.log(letters.length === Metadata.NUMBER_OF_LETTERS);
@@ -70,8 +69,8 @@ export class Characters {
     constructor() {
         this.list = new Array();
 
-        for(let key in characters.list) {
-            this.list.push(characters.list[key])
+        for(let key in characters) {
+            this.list.push(characters[key])
         }
 
     }
@@ -82,40 +81,37 @@ export class Characters {
 }
 
 interface ICharacters {
-    list: {
-        readonly [index: string]: Character
-    }
+    readonly [index: string]: Character
+
 }
 
 let characters: ICharacters = {
-    list: {
-        a: new Character('a'),
-        b: new Character('b'),
-        c: new Character('c'),
-        d: new Character('d'),
-        e: new Character('e'),
-        f: new Character('f'),
-        g: new Character('g'),
-        h: new Character('h'),
-        i: new Character('i'),
-        j: new Character('j'),
-        k: new Character('k'),
-        l: new Character('l'),
-        m: new Character('m'),
-        n: new Character('n'),
-        o: new Character('o'),
-        p: new Character('p'),
-        q: new Character('q'),
-        r: new Character('r'),
-        s: new Character('s'),
-        t: new Character('t'),
-        u: new Character('u'),
-        v: new Character('v'),
-        w: new Character('w'),
-        x: new Character('x'),
-        y: new Character('y'),
-        z: new Character('z'),
-    }
+    a: new Character('a'),
+    b: new Character('b'),
+    c: new Character('c'),
+    d: new Character('d'),
+    e: new Character('e'),
+    f: new Character('f'),
+    g: new Character('g'),
+    h: new Character('h'),
+    i: new Character('i'),
+    j: new Character('j'),
+    k: new Character('k'),
+    l: new Character('l'),
+    m: new Character('m'),
+    n: new Character('n'),
+    o: new Character('o'),
+    p: new Character('p'),
+    q: new Character('q'),
+    r: new Character('r'),
+    s: new Character('s'),
+    t: new Character('t'),
+    u: new Character('u'),
+    v: new Character('v'),
+    w: new Character('w'),
+    x: new Character('x'),
+    y: new Character('y'),
+    z: new Character('z'),
 }
 
 //------------------------------------------------------------------------------
@@ -230,47 +226,47 @@ interface ILetters {
 
 export let lowerLetters: ILetters = {
     // medial
-    'a': new AlphabeticLetter([characters.list['a']]),
-    'e': new AlphabeticLetter([characters.list['e']]),
-    'i': new AlphabeticLetter([characters.list['i']]),
-    'o': new AlphabeticLetter([characters.list['o']]),
-    'u': new AlphabeticLetter([characters.list['u']]),
-    'ur': new AlphabeticLetter([characters.list['u'], characters.list['r']]),
+    'a': new AlphabeticLetter([characters['a']]),
+    'e': new AlphabeticLetter([characters['e']]),
+    'i': new AlphabeticLetter([characters['i']]),
+    'o': new AlphabeticLetter([characters['o']]),
+    'u': new AlphabeticLetter([characters['u']]),
+    'ur': new AlphabeticLetter([characters['u'], characters['r']]),
 
     // initial excludes checked final and neutral final
-    'c': new AlphabeticLetter([characters.list['c']]),
-    'j': new AlphabeticLetter([characters.list['j']]),
-    'l': new AlphabeticLetter([characters.list['l']]),
-    'q': new AlphabeticLetter([characters.list['q']]),
-    's': new AlphabeticLetter([characters.list['s']]),
-    'v': new AlphabeticLetter([characters.list['v']]),
-    'z': new AlphabeticLetter([characters.list['z']]),
+    'c': new AlphabeticLetter([characters['c']]),
+    'j': new AlphabeticLetter([characters['j']]),
+    'l': new AlphabeticLetter([characters['l']]),
+    'q': new AlphabeticLetter([characters['q']]),
+    's': new AlphabeticLetter([characters['s']]),
+    'v': new AlphabeticLetter([characters['v']]),
+    'z': new AlphabeticLetter([characters['z']]),
 
     // nasal
-    'm': new AlphabeticLetter([characters.list['m']]),
-    'n': new AlphabeticLetter([characters.list['n']]),
-    'ng': new AlphabeticLetter([characters.list['n'], characters.list['g']]),
-    'nn': new AlphabeticLetter([characters.list['n'], characters.list['n']]),
+    'm': new AlphabeticLetter([characters['m']]),
+    'n': new AlphabeticLetter([characters['n']]),
+    'ng': new AlphabeticLetter([characters['n'], characters['g']]),
+    'nn': new AlphabeticLetter([characters['n'], characters['n']]),
 
     // free tone mark
-    'ss': new AlphabeticLetter([characters.list['s'], characters.list['s']]),
-    'w': new AlphabeticLetter([characters.list['w']]),
-    'x': new AlphabeticLetter([characters.list['x']]),
-    'xx': new AlphabeticLetter([characters.list['x'], characters.list['x']]),
-    'xxx': new AlphabeticLetter([characters.list['x'], characters.list['x'], characters.list['x']]),
-    'y': new AlphabeticLetter([characters.list['y']]),
-    'zs': new AlphabeticLetter([characters.list['z'], characters.list['s']]),
-    'zzs': new AlphabeticLetter([characters.list['z'], characters.list['z'], characters.list['s']]),
+    'ss': new AlphabeticLetter([characters['s'], characters['s']]),
+    'w': new AlphabeticLetter([characters['w']]),
+    'x': new AlphabeticLetter([characters['x']]),
+    'xx': new AlphabeticLetter([characters['x'], characters['x']]),
+    'xxx': new AlphabeticLetter([characters['x'], characters['x'], characters['x']]),
+    'y': new AlphabeticLetter([characters['y']]),
+    'zs': new AlphabeticLetter([characters['z'], characters['s']]),
+    'zzs': new AlphabeticLetter([characters['z'], characters['z'], characters['s']]),
    
     // checked tone mark and final
-    'b': new AlphabeticLetter([characters.list['b']]),
-    'd': new AlphabeticLetter([characters.list['d']]),
-    'g': new AlphabeticLetter([characters.list['g']]),
-    'k': new AlphabeticLetter([characters.list['k']]),
-    'p': new AlphabeticLetter([characters.list['p']]),
-    't': new AlphabeticLetter([characters.list['t']]),
+    'b': new AlphabeticLetter([characters['b']]),
+    'd': new AlphabeticLetter([characters['d']]),
+    'g': new AlphabeticLetter([characters['g']]),
+    'k': new AlphabeticLetter([characters['k']]),
+    'p': new AlphabeticLetter([characters['p']]),
+    't': new AlphabeticLetter([characters['t']]),
     
     // neutral final
-    'f': new AlphabeticLetter([characters.list['f']]),
-    'h': new AlphabeticLetter([characters.list['h']]),
+    'f': new AlphabeticLetter([characters['f']]),
+    'h': new AlphabeticLetter([characters['h']]),
 }
