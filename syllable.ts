@@ -1,8 +1,7 @@
-import { AlphabeticLetter, AlphabetFactory } from './metadata'
+import { AlphabeticLetter, lowerLetters } from './metadata'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
-import { ToneSandhiSyllableMatcher } from './syllablematcher'
 
 
 //------------------------------------------------------------------------------
@@ -15,28 +14,28 @@ abstract class Rule {
 
 class FromSSToZS extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterZS());
+        b.pushLetter(lowerLetters['zs']);
         return b;
     }
 }
 
 class FromSSToXX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterXX());
+        b.pushLetter(lowerLetters['xx']);
         return b;
     }
 }
 
 class FromSSToXXX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterXXX());
+        b.pushLetter(lowerLetters['xxx']);
         return b;
     }
 }
 
 class FromYToSS extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterY())) {
+        if(b.splitAtLastIndex(lowerLetters['y'])) {
             return b;
         }
     }
@@ -44,8 +43,8 @@ class FromYToSS extends Rule {
 
 class FromWToY extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterW())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterY());
+        if(b.splitAtLastIndex(lowerLetters['w'])) {
+            b.pushLetter(lowerLetters['y']);
             return b;
         }
     }
@@ -53,8 +52,8 @@ class FromWToY extends Rule {
 
 class FromZSToW extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterZS())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterW());
+        if(b.splitAtLastIndex(lowerLetters['zs'])) {
+            b.pushLetter(lowerLetters['w']);
             return b;
         }
 
@@ -63,8 +62,8 @@ class FromZSToW extends Rule {
 
 class FromZSToXX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterZS())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterXX());
+        if(b.splitAtLastIndex(lowerLetters['zs'])) {
+            b.pushLetter(lowerLetters['xx']);
             return b;
         }
 
@@ -73,8 +72,8 @@ class FromZSToXX extends Rule {
 
 class FromZSToXXX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterZS())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterXXX());
+        if(b.splitAtLastIndex(lowerLetters['zs'])) {
+            b.pushLetter(lowerLetters['xxx']);
             return b;
         }
     }
@@ -82,8 +81,8 @@ class FromZSToXXX extends Rule {
 
 class FromXToZS extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterX())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterZS());
+        if(b.splitAtLastIndex(lowerLetters['x'])) {
+            b.pushLetter(lowerLetters['zs']);
             return b;
         }
     }
@@ -91,8 +90,8 @@ class FromXToZS extends Rule {
 
 class FromXToXX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterX())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterXX());
+        if(b.splitAtLastIndex(lowerLetters['x'])) {
+            b.pushLetter(lowerLetters['xx']);
             return b;
         }
     }
@@ -100,8 +99,8 @@ class FromXToXX extends Rule {
 
 class FromXToXXX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(new AlphabetFactory().createLowerLetterX())) {
-            b.pushLetter(new AlphabetFactory().createLowerLetterXXX());
+        if(b.splitAtLastIndex(lowerLetters['x'])) {
+            b.pushLetter(lowerLetters['xxx']);
             return b;
         }
     }
@@ -109,84 +108,84 @@ class FromXToXXX extends Rule {
 
 class FromKToKK extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterK());
+        b.pushLetter(lowerLetters['k']);
         return b;
     }
 }
 
 class FromPToPP extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterP());
+        b.pushLetter(lowerLetters['p']);
         return b;
     }
 }
 
 class FromTToTT extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterT());
+        b.pushLetter(lowerLetters['t']);
         return b;
     }
 }
 
 class FromBToBX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterX());
+        b.pushLetter(lowerLetters['x']);
         return b;
     }
 }
 
 class FromBToBB extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterB());
+        b.pushLetter(lowerLetters['b']);
         return b;
     }
 }
 
 class FromDToDX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterX());
+        b.pushLetter(lowerLetters['x']);
         return b;
     }
 }
 
 class FromDToDD extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterD());
+        b.pushLetter(lowerLetters['d']);
         return b;
     }
 }
 
 class FromGToGX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterX());
+        b.pushLetter(lowerLetters['x']);
         return b;
     }
 }
 
 class FromGToGG extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterG());
+        b.pushLetter(lowerLetters['g']);
         return b;
     }
 }
 
 class FromHToHY extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterY());
+        b.pushLetter(lowerLetters['y']);
         return b;
     }
 }
 
 class FromFToFX extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterX());
+        b.pushLetter(lowerLetters['x']);
         return b;
     }
 }
 
 class FromFToFF extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
-        b.pushLetter(new AlphabetFactory().createLowerLetterF());
+        b.pushLetter(lowerLetters['f']);
         return b;
     }
 }
@@ -335,7 +334,7 @@ export class Syllables {
     }
 
     populateSandhiFormTo(ss: Array<ToneSandhiSyllable>) {
-        console.log(ss)
+        //console.log(ss)
 
         let baseforms: Array<ToneSandhiSyllable> = new Array();
         for(let k in ss) {
@@ -345,17 +344,19 @@ export class Syllables {
         let rost = new RulesOfSandhiTone();
         let sandhiforms;
         for(let m in baseforms) {
+            /*
             for(let x in ss[0].letters) {
                 console.log(ss[0].letters[x].literal)
             }
+            */
             sandhiforms = rost.getSandhiForms(baseforms[m]);
-            console.log(sandhiforms)
+            //console.log(sandhiforms)
             for(let r in ss) {
                 // filter out duplicates
                 for(let n in sandhiforms) {            
-                    console.log("r: %s, n: %s.", r, n)
-                    console.log(ss[r])
-                    console.log(sandhiforms[n])
+                    //console.log("r: %s, n: %s.", r, n)
+                    //console.log(ss[r])
+                    //console.log(sandhiforms[n])
                     if(ss[r].literal != sandhiforms[n].literal) {
                         ss.push(sandhiforms[n]);
                     }
@@ -381,12 +382,10 @@ export class Syllables {
                 //ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
 
                 let arr = list.filter(s => s[0] === letters[i].literal);
-                console.log(arr)
                 for(let k in arr) {
                     ss.push(this.create(arr[k]));
                 }
-                console.log(ss[0])
-                this.populateSandhiFormTo(ss);
+                //this.populateSandhiFormTo(ss);
             } else {
                 console.log("i:%d. beginOfSyllable:%d", i, beginOfSyllable);
                 ss = ss.filter(s => s[i-beginOfSyllable] === letters[i].literal);
@@ -416,16 +415,16 @@ export class Syllables {
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let underJ = new Array();
                     underJ = ss.filter(s => s.letters.length < j+1);
-                    console.log(underJ);
+                    //console.log(underJ);
 
                     if(atLeastJ.length > 0){
-                        console.log(ss);
-                        console.log("%s. %s", ss[0].literal, letters[i+j].literal)
+                        //console.log(ss);
+                        //console.log("%s. %s", ss[0].literal, letters[i+j].literal)
                         ss = atLeastJ.filter(s => s.letters[j].literal === letters[i+j].literal);
-                        console.log("%s. %s", ss[0].literal, letters[i+j].literal)
-                        console.log("length of ss is: %d", ss.length)
-                        console.log(ss);
-                        console.log("length of ss is: %d", ss.length)
+                        //console.log("%s. %s", ss[0].literal, letters[i+j].literal)
+                        //console.log("length of ss is: %d", ss.length)
+                        //console.log(ss);
+                        //console.log("length of ss is: %d", ss.length)
                         if(ss.length > 0){
                             ;
                         } else {
@@ -434,18 +433,18 @@ export class Syllables {
                     }
                     
                     j++;
-                    console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
+                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     //console.log(ss);
                     // continue looping when there are more than one results
                     // stop looping when j goes beyond the end of target
                 } while(ss.length > 1 && i+j < letters.length);
                 i += ss[0].letters.length-1; // skip the length-1 of characters of the found letter
-                console.log("i:%d", i)
+                //console.log("i:%d", i)
                 // we want it only when the whole syllable is matched
                 let tmp = ss.shift();
                 beginOfSyllable += tmp.letters.length;
                 syllables.push(tmp); // push the matched letter
-                console.log(tmp);
+                //console.log(tmp);
             }
         }
         //console.log("metadata letter array length %d", letters.length);

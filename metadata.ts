@@ -10,13 +10,13 @@ export class Metadata {
     static readonly NUMBER_OF_ALLOMORPHEMIC_SYLLABLES = 0;
 
     constructor() {
-        let characters = new Characters();
-        console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
-        //console.log(Object.keys(characters.list).length === Metadata.NUMBER_OF_CHARACTERS);
+        //let characters = new Characters();
+        //console.log(characters.length === Metadata.NUMBER_OF_CHARACTERS);
+        console.log(Object.keys(characters.list).length === Metadata.NUMBER_OF_CHARACTERS);
 
-        let letters = new Letters();
-        console.log(letters.length === Metadata.NUMBER_OF_LETTERS);
-        //console.log(Object.keys(letters.list).length === Metadata.NUMBER_OF_LETTERS);
+        //let letters = new Letters();
+        //console.log(letters.length === Metadata.NUMBER_OF_LETTERS);
+        console.log(Object.keys(lowerLetters).length === Metadata.NUMBER_OF_LETTERS);
     }
 }
 
@@ -149,106 +149,17 @@ export class AlphabeticLetter extends Letter {
 
 class AbstractLetterFactory {}
 
-export class AlphabetFactory extends AbstractLetterFactory {
-    createAll() {
-        let ret: Array<AlphabeticLetter> = new Array();
-        ret.push(this.createLowerLetterA());
-        ret.push(this.createLowerLetterE());
-        ret.push(this.createLowerLetterI());
-        ret.push(this.createLowerLetterO());
-        ret.push(this.createLowerLetterU());
-        ret.push(this.createLowerLetterUR());
-        ret.push(this.createLowerLetterC());
-        ret.push(this.createLowerLetterJ());
-        ret.push(this.createLowerLetterL());
-        ret.push(this.createLowerLetterQ());
-        ret.push(this.createLowerLetterS());
-        ret.push(this.createLowerLetterV());
-        ret.push(this.createLowerLetterZ());
-        ret.push(this.createLowerLetterM());
-        ret.push(this.createLowerLetterN());
-        ret.push(this.createLowerLetterNG());
-        ret.push(this.createLowerLetterNN());
-        ret.push(this.createLowerLetterSS());
-        ret.push(this.createLowerLetterW());
-        ret.push(this.createLowerLetterX());
-        ret.push(this.createLowerLetterXX());
-        ret.push(this.createLowerLetterXXX());
-        ret.push(this.createLowerLetterY());
-        ret.push(this.createLowerLetterZS());
-        ret.push(this.createLowerLetterZZS());
-        ret.push(this.createLowerLetterB());
-        ret.push(this.createLowerLetterD());
-        ret.push(this.createLowerLetterG());
-        ret.push(this.createLowerLetterP());
-        ret.push(this.createLowerLetterT());
-        ret.push(this.createLowerLetterK());
-        ret.push(this.createLowerLetterF());
-        ret.push(this.createLowerLetterH());
-        return ret;
-    }
-
-    // medial
-    createLowerLetterA() {return new AlphabeticLetter([characters.list['a']]);}
-    createLowerLetterE() {return new AlphabeticLetter([characters.list['e']]);}
-    createLowerLetterI() {return new AlphabeticLetter([characters.list['i']]);}
-    createLowerLetterO() {return new AlphabeticLetter([characters.list['o']]);}
-    createLowerLetterU() {return new AlphabeticLetter([characters.list['u']]);}
-    createLowerLetterUR() {return new AlphabeticLetter([characters.list['u'], characters.list['r']]);}
-
-    // initial excludes checked final and neutral final
-    createLowerLetterC() {return new AlphabeticLetter([characters.list['c']]);}
-    createLowerLetterJ() {return new AlphabeticLetter([characters.list['j']]);}
-    createLowerLetterL() {return new AlphabeticLetter([characters.list['l']]);}
-    createLowerLetterQ() {return new AlphabeticLetter([characters.list['q']]);}
-    createLowerLetterS() {return new AlphabeticLetter([characters.list['s']]);}
-    createLowerLetterV() {return new AlphabeticLetter([characters.list['v']]);}
-    createLowerLetterZ() {return new AlphabeticLetter([characters.list['z']]);}
- 
-    // nasal
-    createLowerLetterM() {return new AlphabeticLetter([characters.list['m']]);}
-    createLowerLetterN() {return new AlphabeticLetter([characters.list['n']]);}
-    createLowerLetterNG() {return new AlphabeticLetter([characters.list['n'], characters.list['g']]);}
-    createLowerLetterNN() {return new AlphabeticLetter([characters.list['n'], characters.list['n']]);}
-
-    // free tone mark
-    createLowerLetterSS() {return new AlphabeticLetter([characters.list['s'], characters.list['s']]);}
-    createLowerLetterW() {return new AlphabeticLetter([characters.list['w']]);}
-    createLowerLetterX() {return new AlphabeticLetter([characters.list['x']]);}
-    createLowerLetterXX() {return new AlphabeticLetter([characters.list['x'], characters.list['x']]);}
-    createLowerLetterXXX() {return new AlphabeticLetter([characters.list['x'], characters.list['x'], characters.list['x']]);}
-    createLowerLetterY() {return new AlphabeticLetter([characters.list['y']]);}
-    createLowerLetterZS() {return new AlphabeticLetter([characters.list['z'], characters.list['s']]);}
-    createLowerLetterZZS() {return new AlphabeticLetter([characters.list['z'], characters.list['z'], characters.list['s']]);}
-
-    // checked tone mark and final
-    createLowerLetterB() {return new AlphabeticLetter([characters.list['b']]);}
-    createLowerLetterD() {return new AlphabeticLetter([characters.list['d']]);}
-    createLowerLetterG() {return new AlphabeticLetter([characters.list['g']]);}
-    createLowerLetterK() {return new AlphabeticLetter([characters.list['k']]);}
-    createLowerLetterP() {return new AlphabeticLetter([characters.list['p']]);}
-    createLowerLetterT() {return new AlphabeticLetter([characters.list['t']]);}
-
-    // neutral final
-    createLowerLetterF() {return new AlphabeticLetter([characters.list['f']]);}
-    createLowerLetterH() {return new AlphabeticLetter([characters.list['h']]);}
-}
+export class AlphabetFactory extends AbstractLetterFactory {}
 
 export class Letters {
     list: Array<AlphabeticLetter>;
     constructor() {
         this.list = new Array();
 
-        let af = new AlphabetFactory();
-        let alphabet = af.createAll();
-        for(let key in alphabet) {
-            this.list.push(alphabet[key]);
+        for(let key in lowerLetters) {
+            this.list.push(lowerLetters[key])
         }
-/*
-        for(let key in lowerLetters.list) {
-            this.list.push(lowerLetters.list[key])
-        }
-*/
+
     }
 
     get length() {
@@ -311,4 +222,55 @@ export class Letters {
         //console.log(letters);
         return letters;
     }
+}
+
+interface ILetters {
+    readonly [index: string]: AlphabeticLetter
+}
+
+export let lowerLetters: ILetters = {
+    // medial
+    'a': new AlphabeticLetter([characters.list['a']]),
+    'e': new AlphabeticLetter([characters.list['e']]),
+    'i': new AlphabeticLetter([characters.list['i']]),
+    'o': new AlphabeticLetter([characters.list['o']]),
+    'u': new AlphabeticLetter([characters.list['u']]),
+    'ur': new AlphabeticLetter([characters.list['u'], characters.list['r']]),
+
+    // initial excludes checked final and neutral final
+    'c': new AlphabeticLetter([characters.list['c']]),
+    'j': new AlphabeticLetter([characters.list['j']]),
+    'l': new AlphabeticLetter([characters.list['l']]),
+    'q': new AlphabeticLetter([characters.list['q']]),
+    's': new AlphabeticLetter([characters.list['s']]),
+    'v': new AlphabeticLetter([characters.list['v']]),
+    'z': new AlphabeticLetter([characters.list['z']]),
+
+    // nasal
+    'm': new AlphabeticLetter([characters.list['m']]),
+    'n': new AlphabeticLetter([characters.list['n']]),
+    'ng': new AlphabeticLetter([characters.list['n'], characters.list['g']]),
+    'nn': new AlphabeticLetter([characters.list['n'], characters.list['n']]),
+
+    // free tone mark
+    'ss': new AlphabeticLetter([characters.list['s'], characters.list['s']]),
+    'w': new AlphabeticLetter([characters.list['w']]),
+    'x': new AlphabeticLetter([characters.list['x']]),
+    'xx': new AlphabeticLetter([characters.list['x'], characters.list['x']]),
+    'xxx': new AlphabeticLetter([characters.list['x'], characters.list['x'], characters.list['x']]),
+    'y': new AlphabeticLetter([characters.list['y']]),
+    'zs': new AlphabeticLetter([characters.list['z'], characters.list['s']]),
+    'zzs': new AlphabeticLetter([characters.list['z'], characters.list['z'], characters.list['s']]),
+   
+    // checked tone mark and final
+    'b': new AlphabeticLetter([characters.list['b']]),
+    'd': new AlphabeticLetter([characters.list['d']]),
+    'g': new AlphabeticLetter([characters.list['g']]),
+    'k': new AlphabeticLetter([characters.list['k']]),
+    'p': new AlphabeticLetter([characters.list['p']]),
+    't': new AlphabeticLetter([characters.list['t']]),
+    
+    // neutral final
+    'f': new AlphabeticLetter([characters.list['f']]),
+    'h': new AlphabeticLetter([characters.list['h']]),
 }
