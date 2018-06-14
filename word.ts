@@ -55,8 +55,27 @@ export class AgglutinationWord extends Word {
 }
 
 export class ToneSandhiWord extends Word {
+    syllables: Array<ToneSandhiSyllable>;
+
+    constructor(syllables?: Array<ToneSandhiSyllable>) {
+        super();
+        this.syllables = new Array();
+        if(syllables != undefined) {
+            let len = syllables.length;
+            for(var i = 0; i < len; i++) {
+                this.pushSyllable(syllables[i]);
+            }
+        }
+    }
+
     isBaseForm() {
         // look up in the lexicon to check if this lexeme is in base form
+    }
+
+    pushSyllable(tss: ToneSandhiSyllable) {
+        this.syllables.push(tss);
+        this.literal += tss.literal;
+        console.log("%s", tss.literal);
     }
 }
 
@@ -78,11 +97,12 @@ export class Words {
 }
 
 export class ToneSandhiWords extends Words {
+    create(syllables: Array<ToneSandhiSyllable>) {
+        return new ToneSandhiWord(syllables);
+    }
     match(syllables: Array<ToneSandhiSyllable>){
         let words: Array<ToneSandhiWord> = new Array();
-        for(let i in syllables) {
-            ;
-        }
+        words.push(this.create(syllables));
         return words;
     }
 }

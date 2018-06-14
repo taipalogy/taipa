@@ -59,7 +59,7 @@ export interface IOperand extends IExpression {
 }
 
 export class GrammaticalUnit implements IOperand {
-    literal: string;
+    literal: string = '';
     partOfSpeech: string;
     
     evaluate(context: Context){}

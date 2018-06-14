@@ -10,6 +10,7 @@ export class ToneSandhiWordMatcher {
     syllables: Array<ToneSandhiSyllable>;
 
     constructor(syllables: Array<ToneSandhiSyllable>) {
+        this.syllables = new Array();
         this.syllables = syllables;
     }
     
