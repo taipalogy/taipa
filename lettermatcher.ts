@@ -17,7 +17,9 @@ export class LetterMatcher {
         //l = str;
         let len = l.length;
         for(var i = 0; i < len; i++) {
-            this.characters.push(new Character(l.charAt(i)));
+            if(l.charAt(i) != '\0') {
+                this.characters.push(new Character(l.charAt(i)));
+            }
         }
     }
     

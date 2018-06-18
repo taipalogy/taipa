@@ -2,24 +2,9 @@
 import { AlphabeticLetter } from './metadata'
 import { Syllables } from './syllable'
 
-//------------------------------------------------------------------------------
-//  Regular Expressions
-//------------------------------------------------------------------------------
-/*
-export class MorphologicalAnalyzerRegex {
-    nonNasalInitialLettersRegexp: RegExp;
-    nasalInitialLettersRegexp: RegExp;
-    medialLettersRegexp: RegExp;
-    nasalLettersRegexp: RegExp;
-    neutralFinalLettersRegexp: RegExp;
-    checkedFinalLettersRegexp: RegExp;
-    freeToneMarkLettersRegexp: RegExp;
-    checkedToneMarkLettersRegexp: RegExp;
-    neutralToneMarkLettersRegexp: RegExp;
-*/
 
 //------------------------------------------------------------------------------
-//  ToneSandhiMorphologicalAnalyzer
+//  ToneSandhiSyllableMatcher
 //------------------------------------------------------------------------------
 
 export class ToneSandhiSyllableMatcher {

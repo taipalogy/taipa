@@ -113,6 +113,53 @@ let characters: ICharacters = {
 }
 
 //------------------------------------------------------------------------------
+//  Initial, Medial, and Final Consonants
+//------------------------------------------------------------------------------
+
+export class LetterFilters {
+    nonNasalInitialLetters: string;
+    nasalInitialLetters: AlphabeticLetter[] = [lowerLetters['m'],
+                                                lowerLetters['n'],
+                                                lowerLetters['ng'],];
+    medialLetters: AlphabeticLetter[] = [lowerLetters['a'],
+                                            lowerLetters['e'],
+                                            lowerLetters['i'],
+                                            lowerLetters['o'],
+                                            lowerLetters['u'],
+                                            lowerLetters['ur']];
+    nasalLetters: string;
+    neutralFinalLetters: string;
+    checkedFinalLetters: string;
+    freeToneMarkLetters: string;
+    checkedToneMarkLetters: string;
+    neutralToneMarkLetters: string;
+
+    isInLetters(l: AlphabeticLetter, ls: Array<AlphabeticLetter>) {
+        for(let i in ls) {
+            if(ls[i].literal === l.literal) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    isMedial(l: AlphabeticLetter) {
+        if(this.isInLetters(l, this.medialLetters)) {
+            return true;
+        }
+        return false;
+    }
+
+    isNasalInitial(l: AlphabeticLetter) {
+        if(this.isInLetters(l, this.nasalInitialLetters)) {
+            return true;
+        }
+        return false;
+    }
+
+}
+
+//------------------------------------------------------------------------------
 //  Letter
 //------------------------------------------------------------------------------
 
@@ -174,6 +221,7 @@ export class Letters {
 
             //console.log(ls);
             if(ls.length == 0) {
+                console.log("i: %d. characters[i].symbol: %s", i, characters[i].symbol);
                 console.log("something wrong");
             } else if(ls.length == 1) {
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
@@ -223,7 +271,7 @@ interface ILetters {
 }
 
 export let lowerLetters: ILetters = {
-    // medial
+    // medials
     'a': new AlphabeticLetter([characters['a']]),
     'e': new AlphabeticLetter([characters['e']]),
     'i': new AlphabeticLetter([characters['i']]),
@@ -231,7 +279,7 @@ export let lowerLetters: ILetters = {
     'u': new AlphabeticLetter([characters['u']]),
     'ur': new AlphabeticLetter([characters['u'], characters['r']]),
 
-    // initial excludes checked final and neutral final
+    // initials excludes checked finals and neutral finals
     'c': new AlphabeticLetter([characters['c']]),
     'j': new AlphabeticLetter([characters['j']]),
     'l': new AlphabeticLetter([characters['l']]),
@@ -240,23 +288,29 @@ export let lowerLetters: ILetters = {
     'v': new AlphabeticLetter([characters['v']]),
     'z': new AlphabeticLetter([characters['z']]),
 
-    // nasal
+    // initials and nasals
     'm': new AlphabeticLetter([characters['m']]),
     'n': new AlphabeticLetter([characters['n']]),
     'ng': new AlphabeticLetter([characters['n'], characters['g']]),
+    
+    // nasals
     'nn': new AlphabeticLetter([characters['n'], characters['n']]),
 
-    // free tone mark
+    // free tone marks
     'ss': new AlphabeticLetter([characters['s'], characters['s']]),
     'w': new AlphabeticLetter([characters['w']]),
-    'x': new AlphabeticLetter([characters['x']]),
     'xx': new AlphabeticLetter([characters['x'], characters['x']]),
     'xxx': new AlphabeticLetter([characters['x'], characters['x'], characters['x']]),
-    'y': new AlphabeticLetter([characters['y']]),
     'zs': new AlphabeticLetter([characters['z'], characters['s']]),
     'zzs': new AlphabeticLetter([characters['z'], characters['z'], characters['s']]),
-   
-    // checked tone mark and final
+
+    // checked tone marks
+    'x': new AlphabeticLetter([characters['x']]),
+
+    // neutral tone marks
+    'y': new AlphabeticLetter([characters['y']]),
+
+    // initials, checked tone marks, and finals
     'b': new AlphabeticLetter([characters['b']]),
     'd': new AlphabeticLetter([characters['d']]),
     'g': new AlphabeticLetter([characters['g']]),
@@ -264,14 +318,17 @@ export let lowerLetters: ILetters = {
     'p': new AlphabeticLetter([characters['p']]),
     't': new AlphabeticLetter([characters['t']]),
     
-    // neutral final
+    // neutral finals
     'f': new AlphabeticLetter([characters['f']]),
+
+    // initials and finals
     'h': new AlphabeticLetter([characters['h']]),
 }
 
 let ziangLetters: ILetters = {
     // medial
     'ee': new AlphabeticLetter([characters['e'], characters['e']]),
+    'or': new AlphabeticLetter([characters['o'], characters['r']]),
 }
 
 let zuanxLetters: ILetters = {
@@ -280,12 +337,21 @@ let zuanxLetters: ILetters = {
     'ir': new AlphabeticLetter([characters['i'], characters['r']]),
 }
 
+let consonantLetters: ILetters = {
+    // voiced l
+    'lr': new AlphabeticLetter([characters['l'], characters['r']]),
+    // voiced d
+    'dr': new AlphabeticLetter([characters['d'], characters['r']]),
+    // palatal
+    'gn': new AlphabeticLetter([characters['g'], characters['n']]),
+}
+
 let list_of_rime_of_ziang_accent = [
     'ee', 'eeh', 'eef', 'eng', 'ek', 'eg', 'ionn', 'ionnh', 'ionnf', 
 ]
 
 let list_of_rime_of_zuanx_accent = [
-    'er', 'erh', 'erf', 'ere', 'ereh', 'eref', 'eru', 'ir', 'ire', 'irf', 'irinn', 'irm', 'irn', 'irng', 'irp', 'irt', 'ird', 'irk',
+    'er', 'erh', 'erf', 'ere', 'ereh', 'eref', 'eru', 'ir', 'irh', 'irf', 'irinn', 'irm', 'irn', 'irng', 'irp', 'irt', 'ird', 'irk',
     'irg',
 ]
 

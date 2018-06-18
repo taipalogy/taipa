@@ -1,4 +1,4 @@
-import { AlphabeticLetter, lowerLetters, list_of_syllables } from './metadata'
+import { AlphabeticLetter, lowerLetters, list_of_syllables, LetterFilters } from './metadata'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
@@ -314,12 +314,27 @@ export class Syllables {
     //list: Array<ToneSandhiSyllable>;
     
 
-
+/*
     get length() {
         //return this.list.length;
         return 0;
     }
+*/
+/*
+    isMedial(l: AlphabeticLetter) {
+        let arr = new LetterFilters().medialLetters;
+        for(let i in arr) {
+            if(arr[i].literal === l.literal) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    isNasalInitial(l: AlphabeticLetter) {
+        return false;
+    }
+*/
     create(str: string): ToneSandhiSyllable {
         // create just one syllable object using string
         // Letter Matcher
@@ -381,13 +396,20 @@ export class Syllables {
                 console.log("i:%d. begin of syllable hit", i);
                 //ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
 
-                let arr = list_of_syllables.filter(s => s[0] === letters[i].literal);
-                for(let k in arr) {
-                    ss.push(this.create(arr[k]));
-                }
+                if(new LetterFilters().isMedial(letters[i]) || new LetterFilters().isNasalInitial(letters[i])) {
+                    // if the first letter of this syllable is a medial or nasal,
+                    // we populate the array
+                    // if the first letter of the syllable is an initial,
+                    // we just don't populate
+                    let arr = list_of_syllables.filter(s => s[0] === letters[i].literal);
+                    for(let k in arr) {
+                        ss.push(this.create(arr[k]));
+                    }
+                } 
+                
                 //this.populateSandhiFormTo(ss);
             } else {
-                console.log("i:%d. beginOfSyllable:%d", i, beginOfSyllable);
+                console.log("i:%d. beginOfSyllable:%d. i-beginOfSyllable:%d", i, beginOfSyllable, i-beginOfSyllable);
                 ss = ss.filter(s => s[i-beginOfSyllable] === letters[i].literal);
             }
 
