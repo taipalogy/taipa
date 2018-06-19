@@ -244,6 +244,37 @@ class RulesOfSandhiTone {
 }
 
 //------------------------------------------------------------------------------
+//  Syllable Patterns
+//------------------------------------------------------------------------------
+
+class SyllablePatterns {
+    // match base forms only
+
+    list;
+
+    constructor() {
+        let lf = new LetterFilters();
+        this.list.push([lf.medialLetters]);
+        this.list.push([lf.medialLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.medialLetters, lf.finalLetters]);
+        this.list.push([lf.nasalInitialLetters]);
+        this.list.push([lf.nasalInitialLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.nasalInitialLetters, lf.nasalLetters]);
+        this.list.push([lf.nasalInitialLetters, lf.nasalLetters, lf.neutralFinalLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.finalLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.finalLetters]);
+        this.list.push([lf.initialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.nasalLetters, lf.finalLetters]);
+
+        // lueifx, lurifx
+    }
+}
+
+//------------------------------------------------------------------------------
 //  Syllable
 //------------------------------------------------------------------------------
 
@@ -335,7 +366,7 @@ export class Syllables {
         return false;
     }
 */
-    create(str: string): ToneSandhiSyllable {
+    matchSequenceOfLetters(str: string) {
         // create just one syllable object using string
         // Letter Matcher
         let seqofletters: Array<AlphabeticLetter>;
@@ -343,9 +374,12 @@ export class Syllables {
         // Letter Matcher
         let ga = new LetterMatcher(str);
         seqofletters = ga.match();
-  
-        //console.log(new ToneSandhiSyllable(seqofletters))
-        return new ToneSandhiSyllable(seqofletters);
+
+        return seqofletters;
+    }
+
+    createSyllable(letters: Array<AlphabeticLetter>): ToneSandhiSyllable {
+        return new ToneSandhiSyllable(letters);
     }
 
     populateSandhiFormTo(ss: Array<ToneSandhiSyllable>) {
@@ -396,22 +430,23 @@ export class Syllables {
                 console.log("i:%d. begin of syllable hit", i);
                 //ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
 
-                if(new LetterFilters().isMedial(letters[i]) || new LetterFilters().isNasalInitial(letters[i])) {
-                    // if the first letter of this syllable is a medial or nasal,
-                    // we populate the array
-                    // if the first letter of the syllable is an initial,
-                    // we just don't populate
-                    let arr = list_of_syllables.filter(s => s[0] === letters[i].literal);
-                    for(let k in arr) {
-                        ss.push(this.create(arr[k]));
-                    }
-                } 
-                
-                //this.populateSandhiFormTo(ss);
+                let lf = new LetterFilters();
+                let arr;
+
+                arr = list_of_syllables.filter(s => s[0] === letters[i].literal);
+                for(let k in arr) {
+                    ss.push(this.createSyllable(this.matchSequenceOfLetters(arr[k])));
+                }
+
+                if(ss.length == 1) {
+                    this.populateSandhiFormTo(ss);
+                }
+    
             } else {
                 console.log("i:%d. beginOfSyllable:%d. i-beginOfSyllable:%d", i, beginOfSyllable, i-beginOfSyllable);
                 ss = ss.filter(s => s[i-beginOfSyllable] === letters[i].literal);
             }
+
 
             //console.log(ss);
             if(ss.length == 0) {

@@ -117,46 +117,54 @@ let characters: ICharacters = {
 //------------------------------------------------------------------------------
 
 export class LetterFilters {
-    nonNasalInitialLetters: string;
-    nasalInitialLetters: AlphabeticLetter[] = [lowerLetters['m'],
-                                                lowerLetters['n'],
-                                                lowerLetters['ng'],];
-    medialLetters: AlphabeticLetter[] = [lowerLetters['a'],
-                                            lowerLetters['e'],
-                                            lowerLetters['i'],
-                                            lowerLetters['o'],
-                                            lowerLetters['u'],
-                                            lowerLetters['ur']];
-    nasalLetters: string;
-    neutralFinalLetters: string;
-    checkedFinalLetters: string;
-    freeToneMarkLetters: string;
-    checkedToneMarkLetters: string;
-    neutralToneMarkLetters: string;
+    nonNasalInitialLetters: string = lowerLetters['c'] + '|' +
+                                        lowerLetters['j'] + '|' +
+                                        lowerLetters['l'] + '|' +
+                                        lowerLetters['q'] + '|' +
+                                        lowerLetters['s'] + '|' +
+                                        lowerLetters['v'] + '|' +
+                                        lowerLetters['z'];
 
-    isInLetters(l: AlphabeticLetter, ls: Array<AlphabeticLetter>) {
-        for(let i in ls) {
-            if(ls[i].literal === l.literal) {
-                return true;
-            }
-        }
-        return false;
-    }
+    nasalInitialLetters: string = lowerLetters['m'] + '|' +
+                                    lowerLetters['n'] + '|' +
+                                    lowerLetters['ng'];
 
-    isMedial(l: AlphabeticLetter) {
-        if(this.isInLetters(l, this.medialLetters)) {
-            return true;
-        }
-        return false;
-    }
+    medialLetters: string = lowerLetters['a'] + '|' +
+                            lowerLetters['e'] + '|' +
+                            lowerLetters['i'] + '|' +
+                            lowerLetters['o'] + '|' +
+                            lowerLetters['u'] + '|' +
+                            lowerLetters['ur'];
 
-    isNasalInitial(l: AlphabeticLetter) {
-        if(this.isInLetters(l, this.nasalInitialLetters)) {
-            return true;
-        }
-        return false;
-    }
+    nasalLetters: string = lowerLetters['m'] + '|' +
+                            lowerLetters['n'] + '|' +
+                            lowerLetters['ng'] + '|' +
+                            lowerLetters['nn'];
+                            
+    neutralFinalLetters: string = lowerLetters['h'] + '|' +
+                                    lowerLetters['f'];
 
+    freeToneMarkLetters: string = lowerLetters['ss'] + '|' +
+                                    lowerLetters['w'] + '|' +
+                                    lowerLetters['x'] + '|' +
+                                    lowerLetters['xx'] + '|' +
+                                    lowerLetters['xxx'] + '|' +
+                                    lowerLetters['zs'] + '|' +
+                                    lowerLetters['zzs'];
+
+    checkedFinalLetters: string = lowerLetters['p'] + '|' +
+                                    lowerLetters['t'] + '|' +
+                                    lowerLetters['k'] + '|' +
+                                    lowerLetters['b'] + '|' +
+                                    lowerLetters['d'] + '|' +
+                                    lowerLetters['g'];
+                                    
+    finalLetters: string = this.checkedFinalLetters + '|' +
+                            this.neutralFinalLetters;
+
+    initialLetters: string = this.nasalInitialLetters + '|' +
+                                this.nonNasalInitialLetters; 
+                        
 }
 
 //------------------------------------------------------------------------------
@@ -304,7 +312,7 @@ export let lowerLetters: ILetters = {
     'zs': new AlphabeticLetter([characters['z'], characters['s']]),
     'zzs': new AlphabeticLetter([characters['z'], characters['z'], characters['s']]),
 
-    // checked tone marks
+    // free tone mark, checked tone mark
     'x': new AlphabeticLetter([characters['x']]),
 
     // neutral tone marks
