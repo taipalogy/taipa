@@ -117,53 +117,54 @@ let characters: ICharacters = {
 //------------------------------------------------------------------------------
 
 export class LetterFilters {
-    nonNasalInitialLetters: string = lowerLetters['c'] + '|' +
-                                        lowerLetters['j'] + '|' +
-                                        lowerLetters['l'] + '|' +
-                                        lowerLetters['q'] + '|' +
-                                        lowerLetters['s'] + '|' +
-                                        lowerLetters['v'] + '|' +
-                                        lowerLetters['z'];
+    nonNasalInitialLetters: string = lowerLetters['c'].literal + '|' +
+                                        lowerLetters['j'].literal + '|' +
+                                        lowerLetters['l'].literal + '|' +
+                                        lowerLetters['q'].literal + '|' +
+                                        lowerLetters['s'].literal + '|' +
+                                        lowerLetters['v'].literal + '|' +
+                                        lowerLetters['z'].literal;
 
-    nasalInitialLetters: string = lowerLetters['m'] + '|' +
-                                    lowerLetters['n'] + '|' +
-                                    lowerLetters['ng'];
+    nasalInitialLetters: string = lowerLetters['m'].literal + '|' +
+                                    lowerLetters['n'].literal + '|' +
+                                    lowerLetters['ng'].literal;
 
-    medialLetters: string = lowerLetters['a'] + '|' +
-                            lowerLetters['e'] + '|' +
-                            lowerLetters['i'] + '|' +
-                            lowerLetters['o'] + '|' +
-                            lowerLetters['u'] + '|' +
-                            lowerLetters['ur'];
+    medialLetters: string = lowerLetters['a'].literal + '|' +
+                            lowerLetters['e'].literal + '|' +
+                            lowerLetters['i'].literal + '|' +
+                            lowerLetters['o'].literal + '|' +
+                            lowerLetters['u'].literal + '|' +
+                            lowerLetters['ur'].literal;
 
-    nasalLetters: string = lowerLetters['m'] + '|' +
-                            lowerLetters['n'] + '|' +
-                            lowerLetters['ng'] + '|' +
-                            lowerLetters['nn'];
+    nasalLetters: string = lowerLetters['m'].literal + '|' +
+                            lowerLetters['n'].literal + '|' +
+                            lowerLetters['ng'].literal + '|' +
+                            lowerLetters['nn'].literal;
                             
-    neutralFinalLetters: string = lowerLetters['h'] + '|' +
-                                    lowerLetters['f'];
+    neutralFinalLetters: string = lowerLetters['h'].literal + '|' +
+                                    lowerLetters['f'].literal;
 
-    freeToneMarkLetters: string = lowerLetters['ss'] + '|' +
-                                    lowerLetters['w'] + '|' +
-                                    lowerLetters['x'] + '|' +
-                                    lowerLetters['xx'] + '|' +
-                                    lowerLetters['xxx'] + '|' +
-                                    lowerLetters['zs'] + '|' +
-                                    lowerLetters['zzs'];
+    freeToneMarkLetters: string = lowerLetters['ss'].literal + '|' +
+                                    lowerLetters['w'].literal + '|' +
+                                    lowerLetters['x'].literal + '|' +
+                                    lowerLetters['xx'].literal + '|' +
+                                    lowerLetters['xxx'].literal + '|' +
+                                    lowerLetters['zs'].literal + '|' +
+                                    lowerLetters['zzs'].literal;
 
-    checkedFinalLetters: string = lowerLetters['p'] + '|' +
-                                    lowerLetters['t'] + '|' +
-                                    lowerLetters['k'] + '|' +
-                                    lowerLetters['b'] + '|' +
-                                    lowerLetters['d'] + '|' +
-                                    lowerLetters['g'];
+    checkedFinalLetters: string = lowerLetters['p'].literal + '|' +
+                                    lowerLetters['t'].literal + '|' +
+                                    lowerLetters['k'].literal + '|' +
+                                    lowerLetters['b'].literal + '|' +
+                                    lowerLetters['d'].literal + '|' +
+                                    lowerLetters['g'].literal;
                                     
     finalLetters: string = this.checkedFinalLetters + '|' +
                             this.neutralFinalLetters;
 
     initialLetters: string = this.nasalInitialLetters + '|' +
-                                this.nonNasalInitialLetters; 
+                                this.nonNasalInitialLetters + '|' +
+                                this.checkedFinalLetters; 
                         
 }
 

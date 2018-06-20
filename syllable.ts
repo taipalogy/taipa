@@ -250,13 +250,17 @@ class RulesOfSandhiTone {
 class SyllablePatterns {
     // match base forms only
 
-    list;
+    list = new Array();
 
     constructor() {
         let lf = new LetterFilters();
         this.list.push([lf.medialLetters]);
         this.list.push([lf.medialLetters, lf.freeToneMarkLetters]);
         this.list.push([lf.medialLetters, lf.finalLetters]);
+        this.list.push([lf.medialLetters, lf.medialLetters]);
+        this.list.push([lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.medialLetters, lf.medialLetters, lf.nasalLetters]);
+        this.list.push([lf.medialLetters, lf.medialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
         this.list.push([lf.nasalInitialLetters]);
         this.list.push([lf.nasalInitialLetters, lf.freeToneMarkLetters]);
         this.list.push([lf.nasalInitialLetters, lf.nasalLetters]);
@@ -430,14 +434,57 @@ export class Syllables {
                 console.log("i:%d. begin of syllable hit", i);
                 //ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
 
-                let lf = new LetterFilters();
-                let arr;
 
-                arr = list_of_syllables.filter(s => s[0] === letters[i].literal);
+                let sp = new SyllablePatterns();
+                let matchedLen = 0;
+                for(let m in sp.list) {
+                    let min = Math.min(letters.length-beginOfSyllable, sp.list[m].length);
+                    console.log("min: %d", min)
+                    if(sp.list[m].length == min) {
+                        for(let n = 0; n < min; n++) {
+                            console.log("i: %d. n: %d.", i, n)
+                            console.log(letters)
+                            if(letters[i+n].literal.search(new RegExp(sp.list[m][n])) == 0) {
+                                console.log(sp.list[m])
+                                console.log(letters[i+n].literal)
+                                console.log(new RegExp(sp.list[m][n]))
+                                //matchedLen++;
+                                
+                                if(n+1 == min && min > matchedLen) {
+                                    matchedLen = min
+                                }
+                                console.log(matchedLen)
+                            }
+                        }
+                    }
+                }
+
+                console.log("matchedLen: %d", matchedLen);
+
+                let arr = list_of_syllables.filter(s => s.search(letters[i].literal) === 0 &&
+                                                this.matchSequenceOfLetters(s).length === matchedLen);
+
+                console.log(arr)
+                for(let x = 0; x < arr.length; x++) {
+                    let ls = this.matchSequenceOfLetters(arr[x]);
+                    for(let y = 1; y < ls.length; y++) {
+                        // just by-pass the first letter which has been matched previously
+                        if(ls[y].literal != letters[i+y].literal) {
+                            break;
+                        } else if(ls[y].literal === letters[i+y].literal) {
+                            if(y == ls.length-1) {
+                                ss.push(this.createSyllable(ls));
+                            }
+                        }
+                    }
+                }
+
+                /*                
                 for(let k in arr) {
                     ss.push(this.createSyllable(this.matchSequenceOfLetters(arr[k])));
                 }
-
+*/
+                console.log(ss);
                 if(ss.length == 1) {
                     this.populateSandhiFormTo(ss);
                 }
@@ -448,9 +495,9 @@ export class Syllables {
             }
 
 
-            //console.log(ss);
+            console.log(ss);
             if(ss.length == 0) {
-                console.log("something wrong");
+                console.log("nothing matched");
             } else if(ss.length == 1) {
                 //console.log("just one matched. i:%d. ss[0].letters.length:%d", i, ss[0].letters.length);
                 if(i+1-beginOfSyllable == ss[0].letters.length) {
@@ -496,7 +543,7 @@ export class Syllables {
                     // stop looping when j goes beyond the end of target
                 } while(ss.length > 1 && i+j < letters.length);
                 i += ss[0].letters.length-1; // skip the length-1 of characters of the found letter
-                //console.log("i:%d", i)
+                console.log("i:%d", i)
                 // we want it only when the whole syllable is matched
                 let tmp = ss.shift();
                 beginOfSyllable += tmp.letters.length;

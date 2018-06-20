@@ -20,7 +20,7 @@ export class ToneSandhiSyllableMatcher {
         console.log(this.letters);
         let syllables = ss.match(this.letters);
         console.log(syllables);
-        console.log(syllables[0].literal);
+        //console.log(syllables[0].literal);
         return syllables;
     }
 }
