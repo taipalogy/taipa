@@ -140,11 +140,14 @@ export class LetterFilters {
                             lowerLetters['n'].literal + '|' +
                             lowerLetters['ng'].literal + '|' +
                             lowerLetters['nn'].literal;
-                            
+
+    neutralFinalLetterH: string = lowerLetters['h'].literal;
+                    
     neutralFinalLetters: string = lowerLetters['h'].literal + '|' +
                                     lowerLetters['f'].literal;
-
+    
     freeToneMarkLetters: string = lowerLetters['ss'].literal + '|' +
+                                    lowerLetters['y'].literal + '|' +
                                     lowerLetters['w'].literal + '|' +
                                     lowerLetters['x'].literal + '|' +
                                     lowerLetters['xx'].literal + '|' +
@@ -302,7 +305,7 @@ export let lowerLetters: ILetters = {
     'n': new AlphabeticLetter([characters['n']]),
     'ng': new AlphabeticLetter([characters['n'], characters['g']]),
     
-    // nasals
+    // nasal
     'nn': new AlphabeticLetter([characters['n'], characters['n']]),
 
     // free tone marks
@@ -316,7 +319,7 @@ export let lowerLetters: ILetters = {
     // free tone mark, checked tone mark
     'x': new AlphabeticLetter([characters['x']]),
 
-    // neutral tone marks
+    // free tone mark, neutral tone mark
     'y': new AlphabeticLetter([characters['y']]),
 
     // initials, checked tone marks, and finals
@@ -327,10 +330,10 @@ export let lowerLetters: ILetters = {
     'p': new AlphabeticLetter([characters['p']]),
     't': new AlphabeticLetter([characters['t']]),
     
-    // neutral finals
+    // neutral final
     'f': new AlphabeticLetter([characters['f']]),
 
-    // initials and finals
+    // initial and final
     'h': new AlphabeticLetter([characters['h']]),
 }
 
@@ -403,7 +406,7 @@ export let list_of_syllables = [
     'diuw', 'diux', 'diuzs', 'diuh', 'diunn', 'diunny', 'diunnw', 'diunnx', 'diunnzs', 'dng', 'dngy', 'dngw', 'dngx', 'dngzs',
     'dur', 'dury', 'durw', 'durx', 'durzs', 'durh', 'durf', 'dok', 'dog', 'domx', 'dong', 'dongy', 'dongw', 'dongx', 'dongzs', 'do',
     'doy', 'dow', 'dox', 'dozs', 'du', 'duy', 'duw', 'dux', 'duzs', 'duaw', 'duazs', 'duan', 'duany', 'duanw', 'duanzs', 'duann',
-    'duannw', 'duannx', 'duannzs', 'duat', 'duad', 'duew', 'duex', 'duezs', 'tuh', 'duh', 'dui', 'duiw', 'duix', 'duizs', 'dun',
+    'duannw', 'duannx', 'duannzs', 'duat', 'duad', 'duew', 'duex', 'duezs', 'duh', 'duf', 'dui', 'duiw', 'duix', 'duizs', 'dun',
     'duny', 'dunw', 'dunzs', 'dud', 
 
     'e', 'ey', 'ew', 'ex', 'ezs', 'eh', 'ef', 'enn', 'ennx',

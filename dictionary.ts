@@ -148,7 +148,7 @@ export let dictionary: Dictionary = {
     qam: [],
     qannzs: [],
     qausszanycah: ['九層 cah'],
-    qauxx: ['猿'],
+    qaux: ['猿'],
     qianny: ['子'],
     queh: [],
     quefflaih: [],
