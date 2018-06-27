@@ -104,25 +104,7 @@ class FromXToZS extends Rule {
         }
     }
 }
-/*
-class FromXToXX extends Rule {
-    getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(lowerLetters['x'])) {
-            b.pushLetter(lowerLetters['xx']);
-            return b;
-        }
-    }
-}
 
-class FromXToXXX extends Rule {
-    getSandhiForm(b: ToneSandhiSyllable) {
-        if(b.splitAtLastIndex(lowerLetters['x'])) {
-            b.pushLetter(lowerLetters['xxx']);
-            return b;
-        }
-    }
-}
-*/
 class FromNoneToK extends Rule {
     getSandhiForm(b: ToneSandhiSyllable) {
         b.pushLetter(lowerLetters['k']);
@@ -241,6 +223,249 @@ class RulesOfSandhiTone {
 }
 
 //------------------------------------------------------------------------------
+//  Allomorph
+//------------------------------------------------------------------------------
+
+class Allomorph {
+    literal: string = '';
+    finals: Final[] = null;
+}
+
+class FreeToneMark extends Allomorph {
+}
+
+class FinalToneMark extends Allomorph {
+}
+
+class Final extends Allomorph {
+}
+
+class FreeToneMarkNone extends FreeToneMark {
+}
+
+class FreeToneMarkSS extends FreeToneMark {
+    literal = 'ss';
+}
+
+class FreeToneMarkY extends FreeToneMark {
+    literal = 'y';
+}
+
+class FreeToneMarkW extends FreeToneMark {
+    literal = 'w';
+}
+
+class FreeToneMarkX extends FreeToneMark {
+    literal = 'x';
+}
+
+class FreeToneMarkXX extends FreeToneMark {
+    literal = 'xx';
+}
+
+class FreeToneMarkXXX extends FreeToneMark {
+    literal = 'xxx';
+}
+
+class FreeToneMarkZZS extends FreeToneMark {
+    literal = 'zzs';
+}
+
+class FreeToneMarkZS extends FreeToneMark {
+    literal = 'zs';
+}
+
+class FinalP extends Final {
+    literal = 'p';
+}
+
+class FinalT extends Final {
+    literal = 't';
+}
+
+class FinalK extends Final {
+    literal = 'k';
+}
+
+class FinalH extends Final {
+    literal = 'h';
+}
+
+class FinalB extends Final {
+    literal = 'b';
+}
+
+class FinalD extends Final {
+    literal = 'd';
+}
+
+class FinalG extends Final {
+    literal = 'g';
+}
+
+class FinalF extends Final {
+    literal = 'f';
+}
+
+class FinalToneMarkP extends FinalToneMark {
+    literal = 'p';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalP());
+    }
+}
+
+class FinalToneMarkT extends FinalToneMark {
+    literal = 't';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalT());
+    }
+}
+
+class FinalToneMarkK extends FinalToneMark {
+    literal = 'k';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalK());
+    }
+
+}
+
+class FinalToneMarkH extends FinalToneMark {
+    literal = 'h';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalH());
+    }
+
+}
+
+class FinalToneMarkY extends FinalToneMark {
+    literal = 'y';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalH());
+    }
+}
+
+class FinalToneMarkB extends FinalToneMark {
+    literal = 'b';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalB());
+    }
+}
+
+class FinalToneMarkD extends FinalToneMark {
+    literal = 'd';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalD());
+    }
+}
+
+class FinalToneMarkG extends FinalToneMark {
+    literal = 'g';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalG());
+    }
+}
+
+class FinalToneMarkF extends FinalToneMark {
+    literal = 'f';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalF());
+    }
+}
+
+class FinalToneMarkX extends FinalToneMark {
+    literal = 'x';
+    finals: Final[] = new Array();
+    constructor() {
+        super();
+        this.finals.push(new FinalB());
+        this.finals.push(new FinalD());
+        this.finals.push(new FinalG());
+        this.finals.push(new FinalF());
+    }
+}
+
+class Allomorphs {
+    list: Array<Allomorph>  = new Array();
+    constructor() {
+        //this.list.push(new FreeToneMarkNone());
+        this.list.push(new FreeToneMarkSS());
+        this.list.push(new FreeToneMarkY());
+        this.list.push(new FreeToneMarkW());
+        this.list.push(new FreeToneMarkX());
+        this.list.push(new FreeToneMarkXX());
+        this.list.push(new FreeToneMarkXXX());
+        this.list.push(new FreeToneMarkZZS());
+        this.list.push(new FreeToneMarkZS());
+        this.list.push(new FinalToneMarkP());
+        this.list.push(new FinalToneMarkT());
+        this.list.push(new FinalToneMarkK());
+        this.list.push(new FinalToneMarkH());
+        this.list.push(new FinalToneMarkB());
+        this.list.push(new FinalToneMarkD());
+        this.list.push(new FinalToneMarkG());
+        this.list.push(new FinalToneMarkF());
+        this.list.push(new FinalToneMarkY());
+        this.list.push(new FinalToneMarkX());
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Morpheme
+//------------------------------------------------------------------------------
+
+class Morpheme {
+    lemma: string
+}
+
+class ToneSandhiMorpheme extends Morpheme {
+    getBaseForm(letters: Array<AlphabeticLetter>) {
+        let allomorphs = new Allomorphs();
+        let arr = new Array();
+        for(let key in allomorphs.list) {
+            if(allomorphs.list[key].literal === letters[letters.length-1].literal) {
+                arr.push(allomorphs.list[key]);
+            }
+        }
+        console.log(arr)
+        if(arr.length != 0) {
+            for(let key in arr) {
+                if(arr[key].finals != null) {
+                    for(let k in arr[key].finals) {
+                        if(arr[key].finals[k].literal === letters[letters.length-2].literal) {
+                            let larr: Array<AlphabeticLetter> = new Array();
+                            for(let i = 0; i < letters.length-2; i++) {
+                                larr.push(letters[i]);
+                            }
+                            return larr;
+                        }
+                    }
+                }
+            }
+        }
+        console.log(letters)
+        return letters;
+    }
+}
+
+//------------------------------------------------------------------------------
 //  Syllable Patterns
 //------------------------------------------------------------------------------
 
@@ -273,15 +498,18 @@ class SyllablePatterns {
         this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters]);
         this.list.push([lf.nasalInitialLetters, lf.nasalLetters, lf.neutralFinalLetters]);
         this.list.push([lf.initialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.medialLetters, lf.finalLetters, lf.finalToneMarkLetters]);
 
         // four letters
         this.list.push([lf.medialLetters, lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
         this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.medialLetters]);
         this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
         this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.finalLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.finalLetters, lf.finalToneMarkLetters]);
         this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.nasalLetters]);
         this.list.push([lf.initialLetters, lf.medialLetters, lf.nasalLetters, lf.neutralFinalLetterH]);
         this.list.push([lf.medialLetters, lf.medialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
+        this.list.push([lf.initialLetters, lf.medialLetters, lf.finalLetters, lf.finalToneMarkLetters]);
 
         // five letters
         this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.nasalLetters, lf.neutralFinalLetters]);
@@ -315,7 +543,7 @@ class MatchedPattern {
         return false;
     }
     isMatched(ls: Array<AlphabeticLetter>) {
-        console.log("matching %s with %s", new ToneSandhiSyllable(ls).literal, new ToneSandhiSyllable(this.letters).literal)
+        //console.log("matching %s with %s", new ToneSandhiSyllable(ls).literal, new ToneSandhiSyllable(this.letters).literal)
         if(this.isAllomorphemicStem(ls)) {
             return true;
         } else if(ls.length < this.letters.length) {
@@ -324,8 +552,8 @@ class MatchedPattern {
         }
         for(let n = 0; n < this.letters.length; n++) {
             // does it match the matched pattern
-            console.log("n: %d", n)
-            console.log("ls[n]: %s", ls[n].literal)
+            //console.log("n: %d", n)
+            //console.log("ls[n]: %s", ls[n].literal)
             if(ls[n].literal.search(this.letters[n].literal) == 0) {
                 if(n+1 == this.letters.length) {
                     // the last loop, check the last letter
@@ -426,31 +654,7 @@ export interface ISyllables {
 
 export class Syllables {
 
-    //list: Array<ToneSandhiSyllable>;
-    
-
-/*
-    get length() {
-        //return this.list.length;
-        return 0;
-    }
-*/
-/*
-    isMedial(l: AlphabeticLetter) {
-        let arr = new LetterFilters().medialLetters;
-        for(let i in arr) {
-            if(arr[i].literal === l.literal) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    isNasalInitial(l: AlphabeticLetter) {
-        return false;
-    }
-*/
-    matchSequenceOfLetters(str: string) {
+    matchLetters(str: string) {
         // create just one syllable object using string
         // Letter Matcher
         let seqofletters: Array<AlphabeticLetter>;
@@ -499,7 +703,8 @@ export class Syllables {
         }
     }
 
-    getMatchedPattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
+    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
+        // get the longest matched syllable pattern
         let sp = new SyllablePatterns();
         let matchedLen = 0; // to be deleted
         let mp = new MatchedPattern();
@@ -512,7 +717,10 @@ export class Syllables {
                     //console.log(letters)
                     if(letters[i+n].literal.search(new RegExp(sp.list[m][n])) == 0) {
                         if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
                             matchedLen = min;
+                            // copy the matched letters
                             for(let q = 0; q < matchedLen; q++) {
                                 mp.letters[q] = letters[i+q];
                             }
@@ -534,22 +742,25 @@ export class Syllables {
     filter(ls: Array<AlphabeticLetter>, letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
         console.log("%s matching", new ToneSandhiSyllable(ls).literal)
         let min = Math.min(ls.length, letters.length-beginOfSyllable);
-        for(let y = 0; y < min; y++) {
-            console.log("y: %d. ls.length: %d.",  y, ls.length)
-            if(ls[y].literal != letters[i+y].literal) {
-                console.log("%s != %s", ls[y].literal, letters[i+y].literal)
+        for(let q = 0; q < min; q++) {
+            console.log("q: %d. ls.length: %d.",  q, ls.length)
+            if(ls[q].literal != letters[i+q].literal) {
+                // not equal at this letter
+                console.log("%s != %s", ls[q].literal, letters[i+q].literal)
                 break;
-            } else if(ls[y].literal === letters[i+y].literal) {
-                if(y == ls.length-1) {
+            } else if(ls[q].literal === letters[i+q].literal) {
+                if(q == ls.length-1) {
+                    // all letters are equal
                     //ss.push(new ToneSandhiSyllable(ls));
                     return new ToneSandhiSyllable(ls);
-                } else if(y == ls.length-2) {
-                    if(ls[y+1].literal === lowerLetters['y'].literal) {
-                        if(letters.length === i+y+1) {
+                } else if(q == ls.length-2) {
+                    if(ls[q+1].literal === lowerLetters['y'].literal) {
+                        if(letters.length === i+q+1) {
                             // '' != 'y'. 'ss' != 'y'. first tone != second tone
                             break;
-                        } else if(letters.length === i+y+1+1) {
-                            if(letters[i+y+1].literal === lowerLetters['ss'].literal) {
+                        } else if(letters.length === i+q+1+1) {
+                            if(letters[i+q+1].literal === lowerLetters['ss'].literal) {
+                                // replace y with ss
                                 let s = new ToneSandhiSyllable(ls);
                                 s.popLetter();
                                 s.pushLetter(lowerLetters['ss']);
@@ -579,58 +790,34 @@ export class Syllables {
                 console.log("i:%d. begin of syllable hit", i);
                 //ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
                 
-                let mp = this.getMatchedPattern(letters, i, beginOfSyllable);
+                let msp = this.getMatchedSyllablePattern(letters, i, beginOfSyllable);
 
-                console.log("matchedLen: %d", mp.matchedLength);
-                console.log(mp.pattern);
+                console.log("matchedLen: %d", msp.matchedLength);
+                console.log(msp.pattern);
 
                 let arr = list_of_syllables.filter(s => s.search(letters[i].literal) === 0
-                             && mp.isMatched(this.matchSequenceOfLetters(s)));
+                             && msp.isMatched(this.matchLetters(s)));
+
+                //<--------------------------------------------------------------------------------
+                let tmp = this.createSyllable(new ToneSandhiMorpheme().getBaseForm(letters)).literal;
+                console.log(tmp)
+                let ind = arr.indexOf(tmp);
+                console.log("base form: %s", ind);
+
+                if(ind >= 0) {
+                }
+                //-------------------------------------------------------------------------------->
 
                 console.log(arr)
 
                 for(let x = 0; x < arr.length; x++) {
                     console.log("x: %d. arr: %s",  x, arr[x])
-                    let s = this.filter(this.matchSequenceOfLetters(arr[x]), letters, i, beginOfSyllable);
+                    let s = this.filter(this.matchLetters(arr[x]), letters, i, beginOfSyllable);
                     if(s != null) {
                         ss.push(s);
                     }
-/*
-                    let ls = this.matchSequenceOfLetters(arr[x]);
-                    let min = Math.min(ls.length, letters.length);
-                    for(let y = 0; y < min; y++) {
-                        console.log("y: %d. ls.length: %d.",  y, ls.length)
-                        if(ls[y].literal != letters[i+y].literal) {
-                            console.log("i: %d.", i)
-                            break;
-                        } else if(ls[y].literal === letters[i+y].literal) {
-                            if(y == ls.length-1) {
-                                ss.push(this.createSyllable(ls));
-                            } else if(y == ls.length-2) {
-                                if(ls[y+1].literal === lowerLetters['y'].literal) {
-                                    if(letters.length === i+y+1) {
-                                        // '' != 'y'. 'ss' != 'y'. first tone != second tone
-                                        break;
-                                    } else if(letters.length === i+y+1+1) {
-                                        if(letters[i+y+1].literal === lowerLetters['ss'].literal) {
-                                            let s = this.createSyllable(ls);
-                                            s.popLetter();
-                                            s.pushLetter(lowerLetters['ss']);
-                                            ss.push(s);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-*/
                 }
 
-                /*                
-                for(let k in arr) {
-                    ss.push(this.createSyllable(this.matchSequenceOfLetters(arr[k])));
-                }
-*/
                 console.log(ss);
                 if(ss.length == 1) {
                     this.populateSandhiFormTo(ss);

@@ -26,26 +26,6 @@ class Grapheme {
 }
 
 //------------------------------------------------------------------------------
-//  Morpheme
-//------------------------------------------------------------------------------
-
-class Morpheme {
-    baseForm: string
-}
-
-class ToneSandhiMorpheme extends Morpheme {
-    sandhiRule: string
-}
-
-class CheckedToneMorpheme extends Morpheme {
-    sandhiRule: string
-}
-
-class NeutralToneMorpheme extends Morpheme {
-    sandhiRule: string
-}
-
-//------------------------------------------------------------------------------
 //  Expressions
 //------------------------------------------------------------------------------
 
@@ -117,13 +97,15 @@ let characters: ICharacters = {
 //------------------------------------------------------------------------------
 
 export class LetterFilters {
-    nonNasalInitialLetters: string = lowerLetters['c'].literal + '|' +
+    nonNasalNonFinalInitialLetters: string = lowerLetters['c'].literal + '|' +
                                         lowerLetters['j'].literal + '|' +
                                         lowerLetters['l'].literal + '|' +
                                         lowerLetters['q'].literal + '|' +
                                         lowerLetters['s'].literal + '|' +
                                         lowerLetters['v'].literal + '|' +
                                         lowerLetters['z'].literal;
+
+    initialNeutralLetterH: string = lowerLetters['h'].literal;
 
     nasalInitialLetters: string = lowerLetters['m'].literal + '|' +
                                     lowerLetters['n'].literal + '|' +
@@ -144,8 +126,23 @@ export class LetterFilters {
     neutralFinalLetterH: string = lowerLetters['h'].literal;
                     
     neutralFinalLetters: string = lowerLetters['h'].literal + '|' +
-                                    lowerLetters['f'].literal;
+                                  lowerLetters['f'].literal;
     
+    neutralToneMarkLetterX: string = lowerLetters['x'].literal;
+    
+    neutralToneMarkLetterY: string = lowerLetters['y'].literal;
+
+    checkedFinalLetters: string = lowerLetters['p'].literal + '|' +
+                                    lowerLetters['t'].literal + '|' +
+                                    lowerLetters['k'].literal + '|' +
+                                    lowerLetters['b'].literal + '|' +
+                                    lowerLetters['d'].literal + '|' +
+                                    lowerLetters['g'].literal;
+
+    checkedToneMarkLetters: string = this.checkedFinalLetters;
+
+    initialCheckedLetters: string = this.checkedFinalLetters
+
     freeToneMarkLetters: string = lowerLetters['ss'].literal + '|' +
                                     lowerLetters['y'].literal + '|' +
                                     lowerLetters['w'].literal + '|' +
@@ -154,21 +151,19 @@ export class LetterFilters {
                                     lowerLetters['xxx'].literal + '|' +
                                     lowerLetters['zs'].literal + '|' +
                                     lowerLetters['zzs'].literal;
-
-    checkedFinalLetters: string = lowerLetters['p'].literal + '|' +
-                                    lowerLetters['t'].literal + '|' +
-                                    lowerLetters['k'].literal + '|' +
-                                    lowerLetters['b'].literal + '|' +
-                                    lowerLetters['d'].literal + '|' +
-                                    lowerLetters['g'].literal;
                                     
     finalLetters: string = this.checkedFinalLetters + '|' +
-                            this.neutralFinalLetters;
+                          this.neutralFinalLetters;
 
     initialLetters: string = this.nasalInitialLetters + '|' +
-                                this.nonNasalInitialLetters + '|' +
-                                this.checkedFinalLetters; 
-                        
+                                this.nonNasalNonFinalInitialLetters + '|' +
+                                this.initialCheckedLetters + '|' +
+                                this.initialNeutralLetterH;
+
+    finalToneMarkLetters: string = this.checkedToneMarkLetters + '|' +
+                                    this.neutralFinalLetters + '|' +
+                                    this.neutralToneMarkLetterX + '|' +
+                                    this.neutralToneMarkLetterY;
 }
 
 //------------------------------------------------------------------------------
