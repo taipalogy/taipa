@@ -93,7 +93,7 @@ let characters: ICharacters = {
 }
 
 //------------------------------------------------------------------------------
-//  Initial, Medial, and Final Consonants
+//  Initial, Medial, Nasal, Final Consonant, Tone Mark
 //------------------------------------------------------------------------------
 
 export class LetterFilters {
@@ -117,6 +117,9 @@ export class LetterFilters {
                             lowerLetters['o'].literal + '|' +
                             lowerLetters['u'].literal + '|' +
                             lowerLetters['ur'].literal;
+
+    nasalMedialLetters: string = lowerLetters['m'].literal + '|' +
+                            lowerLetters['ng'].literal;
 
     nasalLetters: string = lowerLetters['m'].literal + '|' +
                             lowerLetters['n'].literal + '|' +
@@ -199,6 +202,11 @@ class AbstractLetterFactory {}
 
 export class AlphabetFactory extends AbstractLetterFactory {}
 
+class MatchedSequence {
+    characters: Array<Character> = new Array();
+    get matchedLength() { return this.characters.length; }
+}
+
 export class Letters {
     list: Array<AlphabeticLetter>;
     constructor() {
@@ -214,26 +222,88 @@ export class Letters {
         return this.list.length;
     }
 
+    getMatchedSequence(characters: Array<Character>, i: number, beginOfLetter: number) {
+        let ms = new MatchedSequence();
+        let matchedLen = 0;
+        for(let m in this.list) {
+            let min = Math.min(characters.length-beginOfLetter, this.list[m].literal.length);
+            //console.log("min: %d", min)
+            if(this.list[m].literal.length == min) {
+                for(let n = 0; n < min; n++) {
+                    //console.log("i: %d. n: %d.", i, n)
+                    //console.log(letters)
+                    if(characters[i+n].symbol.search(this.list[m].literal[n]) == 0) {
+                        if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
+                            matchedLen = min;
+                            // copy the matched letters
+                            for(let q = 0; q < matchedLen; q++) {
+                                ms.characters[q] = characters[i+q];
+                            }
+                            //console.log(this.list[m])
+                            //console.log(characters[i+n].symbol)
+                            //console.log(new RegExp(sp.list[m][n]))
+                            //console.log(matchedLen)    
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return ms;
+    }
+
     match(characters: Array<Character>) {
         
         let letters: Array<AlphabeticLetter> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
         //console.log(characters);
+        let beginOfLetter: number = 0;
         let ls: Array<AlphabeticLetter> = new Array();
         for(let i = 0; i < characters.length; i++) {
             //console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
             //console.log("metadata letter array looping.");
             
-            ls = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
+            if(i-beginOfLetter == 0) {
+                let ms = this.getMatchedSequence(characters, i, beginOfLetter);
+                //console.log("matchedLen: %d", ms.matchedLength);
+                //console.log(ms.characters)
+
+                let candidates = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
+
+                //console.log(candidates)
+
+                if(ms.matchedLength > 0) {
+                    for(let key in candidates) {
+                        if(candidates[key].literal === new AlphabeticLetter(ms.characters).literal) {
+                            ls.push(candidates[key]);
+                        }
+                    }
+                }
+            } else {
+
+            }
 
             //console.log(ls);
             if(ls.length == 0) {
                 console.log("i: %d. characters[i].symbol: %s", i, characters[i].symbol);
                 console.log("something wrong");
             } else if(ls.length == 1) {
+                //console.log("just one matched. i:%d. ls[0].characters.length:%d. ls[0]:", i, ls[0].characters.length, ls[0])
+                //letters.push(ls.shift()); // push the matched letter
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
-                letters.push(ls.shift()); // push the matched letter
+                if(i+1-beginOfLetter == ls[0].characters.length) {
+                    //for(let k in ls[0].characters) {console.log(ls[0].characters[k])}
+                    // when index i plus one equals the length of the matched syllable
+                    let tmp = ls.shift();
+                    beginOfLetter +=  tmp.characters.length;
+                    letters.push(tmp);
+                }
+
             } else if(ls.length > 1) {
+                /*
                 let j = 0;
                 do {
                     //ls.filter(l => console.log(l.characters) );
@@ -241,12 +311,12 @@ export class Letters {
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let atLeastJ: Array<AlphabeticLetter> = new Array();
                     atLeastJ = ls.filter(l => l.characters.length >= j+1);
-                    //console.log(atLeastJ);
+                    console.log(atLeastJ);
 
                     //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
                     let underJ: Array<AlphabeticLetter> = new Array();
                     underJ = ls.filter(l => l.characters.length < j+1);
-                    //console.log(underJ);
+                    console.log(underJ);
 
                     if(atLeastJ.length > 0){
                         ls = atLeastJ.filter(l => l.characters[j].symbol === characters[i+j].symbol);
@@ -264,7 +334,8 @@ export class Letters {
                 } while(ls.length > 1 && i+j < characters.length);
                 i += ls[0].characters.length-1; // skip the length-1 of characters of the found letter
                 letters.push(ls.shift()); // push the matched letter
-                //console.log(letters);
+                console.log(letters[letters.length-1].literal);
+                */
             }
         }
         //console.log("metadata letter array length %d", letters.length);
