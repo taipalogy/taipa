@@ -261,7 +261,7 @@ export class Letters {
         //console.log("metadata letter array length %d. ", letters.length);
         //console.log(characters);
         let beginOfLetter: number = 0;
-        let ls: Array<AlphabeticLetter> = new Array();
+        let ltts: Array<AlphabeticLetter> = new Array();
         for(let i = 0; i < characters.length; i++) {
             //console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
             //console.log("metadata letter array looping.");
@@ -278,7 +278,7 @@ export class Letters {
                 if(ms.matchedLength > 0) {
                     for(let key in candidates) {
                         if(candidates[key].literal === new AlphabeticLetter(ms.characters).literal) {
-                            ls.push(candidates[key]);
+                            ltts.push(candidates[key]);
                         }
                     }
                 }
@@ -287,55 +287,19 @@ export class Letters {
             }
 
             //console.log(ls);
-            if(ls.length == 0) {
+            if(ltts.length == 0) {
                 console.log("i: %d. characters[i].symbol: %s", i, characters[i].symbol);
                 console.log("something wrong");
-            } else if(ls.length == 1) {
+            } else if(ltts.length == 1) {
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d. ls[0]:", i, ls[0].characters.length, ls[0])
-                //letters.push(ls.shift()); // push the matched letter
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
-                if(i+1-beginOfLetter == ls[0].characters.length) {
-                    //for(let k in ls[0].characters) {console.log(ls[0].characters[k])}
+                if(i+1-beginOfLetter == ltts[0].characters.length) {
                     // when index i plus one equals the length of the matched syllable
-                    let tmp = ls.shift();
+                    let tmp = ltts.shift();
                     beginOfLetter +=  tmp.characters.length;
                     letters.push(tmp);
                 }
 
-            } else if(ls.length > 1) {
-                /*
-                let j = 0;
-                do {
-                    //ls.filter(l => console.log(l.characters) );
-                    //console.log(ls);
-                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
-                    let atLeastJ: Array<AlphabeticLetter> = new Array();
-                    atLeastJ = ls.filter(l => l.characters.length >= j+1);
-                    console.log(atLeastJ);
-
-                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
-                    let underJ: Array<AlphabeticLetter> = new Array();
-                    underJ = ls.filter(l => l.characters.length < j+1);
-                    console.log(underJ);
-
-                    if(atLeastJ.length > 0){
-                        ls = atLeastJ.filter(l => l.characters[j].symbol === characters[i+j].symbol);
-                        if(ls.length > 0){
-                            ;
-                        } else {
-                            ls = underJ;
-                        }
-                    }
-                    
-                    //console.log("i: %d, j: %d, i+j: %d.", i, j, i+j);
-                    j++;
-                    // continue looping when there are more than one results
-                    // stop looping when j goes beyond the end of target
-                } while(ls.length > 1 && i+j < characters.length);
-                i += ls[0].characters.length-1; // skip the length-1 of characters of the found letter
-                letters.push(ls.shift()); // push the matched letter
-                console.log(letters[letters.length-1].literal);
-                */
             }
         }
         //console.log("metadata letter array length %d", letters.length);

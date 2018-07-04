@@ -69,7 +69,7 @@ export let dictionary: Dictionary = {
     gunw: ['阮'],
     guny: ['阮'],
     gunzs: ['阮'],
-    huan: ['吪'],
+    hua: ['吪'],
     huang: ['風'],
     he: [],
     hitt: [],
