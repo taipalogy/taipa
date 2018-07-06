@@ -1,8 +1,8 @@
 
 
 
-import { Character } from './metadata';
-import { Letters } from './metadata';
+import { Character } from './character';
+import { Letters } from './grapheme';
 
 //------------------------------------------------------------------------------
 //  GraphemicAnalyzer

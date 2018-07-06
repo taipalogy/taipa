@@ -1,5 +1,5 @@
 
-import { Letter } from './metadata';
+import { Letter } from './grapheme';
 
 import { Context } from "./context";
 

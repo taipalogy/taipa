@@ -1,5 +1,5 @@
 
-import { AlphabeticLetter } from './metadata'
+import { AlphabeticLetter } from './grapheme'
 import { Syllables } from './syllable'
 
 
