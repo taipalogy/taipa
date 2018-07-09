@@ -1,39 +1,61 @@
 
-//------------------------------------------------------------------------------
-//  Grapheme
-//------------------------------------------------------------------------------
-
-class Grapheme {
-
-}
-
-class GrphemeP extends Grapheme {
-    initial: InitialP
-    final: FinalP
-    tonemark: ToneMarkP
-}
-
-class Initial {}
-class Medial {}
-class Final {}
-class Nasal {}
-class ToneMark {}
-class ZeroToneMark {}
-
-class InitialP extends Initial {
-    letter = lowerLetters['p'];
-}
-
-class FinalP extends Final {}
-class ToneMarkP extends ToneMark {}
-
-class InitialNG extends Initial {}
-class MedialNG extends Medial {}
-class NasalNG extends Nasal {}
 
 import { GrammaticalUnit } from './expression';
 import { Character, characters } from './character';
 import { Context } from './context';
+
+
+//------------------------------------------------------------------------------
+//  Grapheme
+//------------------------------------------------------------------------------
+
+class Grapheme {}
+
+export class AlphabeticGrpheme extends Grapheme {
+    letter: AlphabeticLetter
+    toString() {
+        if(this.letter != null) {
+            return this.letter.literal;
+        }
+        return '';
+    }
+}
+
+export class Initial extends AlphabeticGrpheme {}
+export class Medial extends AlphabeticGrpheme {}
+export class Final extends AlphabeticGrpheme {}
+export class Nasal extends AlphabeticGrpheme {}
+export class ToneMark extends AlphabeticGrpheme {}
+
+export class ZeroToneMark extends AlphabeticGrpheme {letter = null;}
+
+export class ToneMarkZS extends ToneMark {letter = lowerLetters['zs']}
+export class ToneMarkW extends ToneMark {letter = lowerLetters['w']}
+export class ToneMarkSS extends ToneMark {letter = lowerLetters['ss']}
+export class ToneMarkXX extends ToneMark {letter = lowerLetters['xx']}
+export class ToneMarkXXX extends ToneMark {letter = lowerLetters['xxx']}
+export class ToneMarkZZS extends ToneMark {letter = lowerLetters['zzs']}
+
+export class ToneMarkP extends ToneMark {letter = lowerLetters['p']}
+export class ToneMarkT extends ToneMark {letter = lowerLetters['t']}
+export class ToneMarkK extends ToneMark {letter = lowerLetters['k']}
+export class ToneMarkH extends ToneMark {letter = lowerLetters['h']}
+export class ToneMarkB extends ToneMark {letter = lowerLetters['b']}
+export class ToneMarkD extends ToneMark {letter = lowerLetters['d']}
+export class ToneMarkG extends ToneMark {letter = lowerLetters['g']}
+export class ToneMarkF extends ToneMark {letter = lowerLetters['f']}
+
+export class ToneMarkX extends ToneMark {letter = lowerLetters['x']}
+export class ToneMarkY extends ToneMark {letter = lowerLetters['y']}
+
+export class FinalP extends Final {letter = lowerLetters['p']}
+export class FinalT extends Final {letter = lowerLetters['t']}
+export class FinalK extends Final {letter = lowerLetters['k']}
+export class FinalH extends Final {letter = lowerLetters['h']}
+export class FinalB extends Final {letter = lowerLetters['b']}
+export class FinalD extends Final {letter = lowerLetters['d']}
+export class FinalG extends Final {letter = lowerLetters['g']}
+export class FinalF extends Final {letter = lowerLetters['f']}
 
 //------------------------------------------------------------------------------
 //  Initial, Medial, Nasal, Final Consonant, Tone Mark
@@ -95,7 +117,7 @@ export class LetterFilters {
                                     lowerLetters['x'].literal + '|' +
                                     lowerLetters['xx'].literal + '|' +
                                     lowerLetters['xxx'].literal + '|' +
-                                    lowerLetters['zs'].literal + '|' +
+                                    new ToneMarkZS().toString() + '|' +
                                     lowerLetters['zzs'].literal;
                                     
     finalLetters: string = this.checkedFinalLetters + '|' +
@@ -330,12 +352,3 @@ let consonantLetters: ILetters = {
     // palatal
     'gn': new AlphabeticLetter([characters['g'], characters['n']]),
 }
-
-let list_of_rime_of_ziang_accent = [
-    'ee', 'eeh', 'eef', 'eng', 'ek', 'eg', 'ionn', 'ionnh', 'ionnf', 
-]
-
-let list_of_rime_of_zuanx_accent = [
-    'er', 'erh', 'erf', 'ere', 'ereh', 'eref', 'eru', 'ir', 'irh', 'irf', 'irinn', 'irm', 'irn', 'irng', 'irp', 'irt', 'ird', 'irk',
-    'irg',
-]

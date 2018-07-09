@@ -1,7 +1,6 @@
 
 import { GrammaticalUnit } from './expression'
 import { ToneSandhiSyllable } from './syllable';
-import { dictionary } from './dictionary';
 
 
 //------------------------------------------------------------------------------

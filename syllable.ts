@@ -1,190 +1,176 @@
-import { AlphabeticLetter, lowerLetters, LetterFilters } from './grapheme'
+import { AlphabeticLetter, LetterFilters, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
+        ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS } from './grapheme'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
-import { Allomorph } from './morpheme'
 
 //------------------------------------------------------------------------------
 //  Allomorph
 //------------------------------------------------------------------------------
 
-
-class FreeToneMark extends Allomorph {
-    baseToneMarks: Array<AlphabeticLetter> = null;
+export class Allomorph {
+    toneMark: ToneMark
 }
 
-class FinalToneMark extends Allomorph {
-    finals: Array<Final> = null;
+class FreeAllomorph extends Allomorph {
+    baseToneMarks: Array<ToneMark> = null;
 }
 
-class Final extends Allomorph {
+class FinalAllomorph extends Allomorph {
+    final: Final;
 }
 
-class ZeroSuffix extends FreeToneMark {
-    baseToneMarks = [lowerLetters['y']];
+class ZeroAllomorph extends FreeAllomorph {
+    toneMark = new ZeroToneMark();
+    baseToneMarks = [new ToneMarkY()];
 }
 
-class FreeToneMarkSS extends FreeToneMark {
-    literal = 'ss';
-    baseToneMarks = [lowerLetters['y']];
+class AllomorphSS extends FreeAllomorph {
+    toneMark = new ToneMarkSS();
+    baseToneMarks = [new ToneMarkY()];
 }
 
-class FreeToneMarkY extends FreeToneMark {
-    literal = 'y';
-    baseToneMarks = [lowerLetters['w']];
+class AllomorphY extends FreeAllomorph {
+    toneMark = new ToneMarkY();
+    baseToneMarks = [new ToneMarkW()];
 }
 
-class FreeToneMarkW extends FreeToneMark {
-    literal = 'w';
-    baseToneMarks = [lowerLetters['zs']];
+class AllomorphW extends FreeAllomorph {
+    toneMark = new ToneMarkW();
+    baseToneMarks = [new ToneMarkZS()];
 }
 
-class FreeToneMarkX extends FreeToneMark {
-    literal = 'x';
+class AllomorphX extends FreeAllomorph {
+    toneMark = new ToneMarkX();
 }
 
-class FreeToneMarkXX extends FreeToneMark {
-    literal = 'xx';
-    baseToneMarks = [lowerLetters['zs'], lowerLetters['ss'], lowerLetters['x'], null];
+class AllomorphXX extends FreeAllomorph {
+    toneMark = new ToneMarkXX();
+    baseToneMarks = [new ToneMarkZS(), new ToneMarkSS(), new ToneMarkX()];
 }
 
-class FreeToneMarkXXX extends FreeToneMark {
-    literal = 'xxx';
-    baseToneMarks = [lowerLetters['zs'], lowerLetters['ss'], lowerLetters['x'], null];
+class AllomorphXXX extends FreeAllomorph {
+    toneMark = new ToneMarkXXX();
+    baseToneMarks = [new ToneMarkZS(), new ToneMarkSS(), new ToneMarkX()];
 }
 
-class FreeToneMarkZZS extends FreeToneMark {
-    literal = 'zzs';
+class AllomorphZZS extends FreeAllomorph {
+    toneMark = new ToneMarkZZS();
 }
 
-class FreeToneMarkZS extends FreeToneMark {
-    literal = 'zs';
-    baseToneMarks = [lowerLetters['x'], lowerLetters['ss'], null];
+class AllomorphZS extends FreeAllomorph {
+    toneMark = new ToneMarkZS();
+    baseToneMarks = [new ToneMarkX(), new ToneMarkSS(), new ZeroToneMark()];
 }
 
-class FinalP extends Final {
-    literal = 'p';
+class AllomorphPP extends FinalAllomorph {
+    toneMark = new ToneMarkP();
+    final = new FinalP();
 }
 
-class FinalT extends Final {
-    literal = 't';
+class AllomorphTT extends FinalAllomorph {
+    toneMark = new ToneMarkT();
+    final = new FinalT();
 }
 
-class FinalK extends Final {
-    literal = 'k';
+class AllomorphKK extends FinalAllomorph {
+    toneMark = new ToneMarkK();
+    final = new FinalK();
 }
 
-class FinalH extends Final {
-    literal = 'h';
+class AllomorphHH extends FinalAllomorph {
+    toneMark = new ToneMarkH();
+    final = new FinalH();
 }
 
-class FinalB extends Final {
-    literal = 'b';
+class AllomorphHY extends FinalAllomorph {
+    toneMark = new ToneMarkY();
+    final = new FinalH();
 }
 
-class FinalD extends Final {
-    literal = 'd';
+class AllomorphBB extends FinalAllomorph {
+    toneMark = new ToneMarkB();
+    final = new FinalB();
 }
 
-class FinalG extends Final {
-    literal = 'g';
+class AllomorphDD extends FinalAllomorph {
+    toneMark = new ToneMarkD();
+    final = new FinalD();
 }
 
-class FinalF extends Final {
-    literal = 'f';
+class AllomorphGG extends FinalAllomorph {
+    toneMark = new ToneMarkG();
+    final = new FinalG();
 }
 
-class FinalToneMarkP extends FinalToneMark {
-    literal = 'p';
-    finals = [new FinalP()];
+class AllomorphFF extends FinalAllomorph {
+    toneMark = new ToneMarkF();
+    final = new FinalF();
 }
 
-class FinalToneMarkT extends FinalToneMark {
-    literal = 't';
-    finals = [new FinalT()];
+class AllomorphBX extends FinalAllomorph {
+    toneMark = new ToneMarkX();
+    final = new FinalB();
 }
 
-class FinalToneMarkK extends FinalToneMark {
-    literal = 'k';
-    finals = [new FinalK()];
+class AllomorphDX extends FinalAllomorph {
+    toneMark = new ToneMarkX();
+    final = new FinalD();
 }
 
-class FinalToneMarkH extends FinalToneMark {
-    literal = 'h';
-    finals = [new FinalH()];
+class AllomorphGX extends FinalAllomorph {
+    toneMark = new ToneMarkX();
+    final = new FinalG();
 }
 
-class FinalToneMarkY extends FinalToneMark {
-    literal = 'y';
-    finals = [new FinalH()];
-}
-
-class FinalToneMarkB extends FinalToneMark {
-    literal = 'b';
-    finals = [new FinalB()]
-}
-
-class FinalToneMarkD extends FinalToneMark {
-    literal = 'd';
-    finals = [new FinalD()];
-}
-
-class FinalToneMarkG extends FinalToneMark {
-    literal = 'g';
-    finals = [new FinalG()];
-}
-
-class FinalToneMarkF extends FinalToneMark {
-    literal = 'f';
-    finals = [new FinalF()];
-}
-
-class FinalToneMarkX extends FinalToneMark {
-    literal = 'x';
-    finals = [new FinalB(), new FinalD(), new FinalG(), new FinalF()];
+class AllomorphFX extends FinalAllomorph {
+    toneMark = new ToneMarkX();
+    final = new FinalF();
 }
 
 class AllomorphsOfToneMorpheme {
-    listOfFreeToneMarks: Array<Allomorph>  = new Array();
-    listOfCheckedToneMarks: Array<Allomorph>  = new Array();
+    listOfFreeAllomorph: Array<Allomorph>  = new Array();
+    listOfFinalAllomorph: Array<Allomorph>  = new Array();
 
     constructor() {
-        //this.list.push(new FreeToneMarkNone());
-        this.listOfFreeToneMarks.push(new FreeToneMarkSS());
-        this.listOfFreeToneMarks.push(new FreeToneMarkY());
-        this.listOfFreeToneMarks.push(new FreeToneMarkW());
-        this.listOfFreeToneMarks.push(new FreeToneMarkX());
-        this.listOfFreeToneMarks.push(new FreeToneMarkXX());
-        this.listOfFreeToneMarks.push(new FreeToneMarkXXX());
-        this.listOfFreeToneMarks.push(new FreeToneMarkZZS());
-        this.listOfFreeToneMarks.push(new FreeToneMarkZS());
+        this.listOfFreeAllomorph.push(new AllomorphSS());
+        this.listOfFreeAllomorph.push(new AllomorphY());
+        this.listOfFreeAllomorph.push(new AllomorphW());
+        this.listOfFreeAllomorph.push(new AllomorphX());
+        this.listOfFreeAllomorph.push(new AllomorphXX());
+        this.listOfFreeAllomorph.push(new AllomorphXXX());
+        this.listOfFreeAllomorph.push(new AllomorphZZS());
+        this.listOfFreeAllomorph.push(new AllomorphZS());
 
-        this.listOfCheckedToneMarks.push(new FinalToneMarkP());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkT());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkK());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkH());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkB());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkD());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkG());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkF());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkY());
-        this.listOfCheckedToneMarks.push(new FinalToneMarkX());
+        this.listOfFinalAllomorph.push(new AllomorphPP());
+        this.listOfFinalAllomorph.push(new AllomorphTT());
+        this.listOfFinalAllomorph.push(new AllomorphKK());
+        this.listOfFinalAllomorph.push(new AllomorphHH());
+        this.listOfFinalAllomorph.push(new AllomorphBB());
+        this.listOfFinalAllomorph.push(new AllomorphDD());
+        this.listOfFinalAllomorph.push(new AllomorphGG());
+        this.listOfFinalAllomorph.push(new AllomorphFF());
+        this.listOfFinalAllomorph.push(new AllomorphHY());
+        this.listOfFinalAllomorph.push(new AllomorphBX());
+        this.listOfFinalAllomorph.push(new AllomorphDX());
+        this.listOfFinalAllomorph.push(new AllomorphGX());
+        this.listOfFinalAllomorph.push(new AllomorphFX());
     }
 
     getMatchedFreeToneMark(letter: AlphabeticLetter) {
-        for(let key in this.listOfFreeToneMarks) {
-            if(this.listOfFreeToneMarks[key].literal === letter.literal) {
-                return this.listOfFreeToneMarks[key];
+        for(let key in this.listOfFreeAllomorph) {
+            if(this.listOfFreeAllomorph[key].toneMark.toString() === letter.literal) {
+                return this.listOfFreeAllomorph[key];
             }
         }
     }
 
     getMatchedCheckedToneMark(letter: AlphabeticLetter) {
         console.log("letter: %s", letter.literal);
-        for(let key in this.listOfCheckedToneMarks) {
-            //console.log("this.listOfCheckedToneMarks[key].literal: %s", this.listOfCheckedToneMarks[key].literal)
-            if(this.listOfCheckedToneMarks[key].literal === letter.literal) {
-                return this.listOfCheckedToneMarks[key];
+        for(let key in this.listOfFinalAllomorph) {
+            if(this.listOfFinalAllomorph[key].toneMark.toString() === letter.literal) {
+                return this.listOfFinalAllomorph[key];
             }
         }
     }
@@ -199,7 +185,7 @@ class Morpheme {
 }
 
 class ToneSandhiMorpheme extends Morpheme {
-    syllable: ToneSandhiSyllable;// = new ToneSandhiSyllable();
+    syllable: ToneSandhiSyllable;
     allomorphOfTone = null;
 
     constructor(letters: Array<AlphabeticLetter>) {
@@ -210,18 +196,16 @@ class ToneSandhiMorpheme extends Morpheme {
 
     assignAllomorphOfTone() {
         let allomorphs = new AllomorphsOfToneMorpheme();
-        let tm;// = new Array();
+        let tm;
 
-        //console.log(arr.length)
         console.log(tm)
         tm = allomorphs.getMatchedCheckedToneMark(this.syllable.letters[this.syllable.letters.length-1]);
         console.log(tm)
 
         if(tm != undefined) {
-            //console.log(arr.length)
-            for(let i = 0; i < tm.finals.length; i++) {
-                if(this.syllable.letters[this.syllable.letters.length-2].literal === tm.finals[i].literal) {
-                    this.allomorphOfTone = tm;
+            for(let i = 0; i < tm.length; i++) {
+                if(this.syllable.letters[this.syllable.letters.length-2].literal === tm[i].final.toString()) {
+                    this.allomorphOfTone = tm[i];
                 }
                 // when there are no matches, it means this syllable is already in base form
             }
@@ -233,9 +217,9 @@ class ToneSandhiMorpheme extends Morpheme {
         console.log(tm)
 
         if(tm == undefined) {
-            this.allomorphOfTone = new ZeroSuffix();
+            this.allomorphOfTone = new ZeroAllomorph();
         } else if(tm) {
-            if(tm.literal === new FreeToneMarkX().literal) {
+            if(tm.literal === new AllomorphX().toneMark.toString()) {
                 // this syllable is already in base form
             } else {
                 this.allomorphOfTone = tm;
@@ -245,13 +229,13 @@ class ToneSandhiMorpheme extends Morpheme {
 
     getBaseForms(): Array<ToneSandhiSyllable> {
         if(this.allomorphOfTone != null) {
-            if(this.allomorphOfTone instanceof FreeToneMark) {
-                if(this.allomorphOfTone.literal == '') {
+            if(this.allomorphOfTone instanceof FreeAllomorph) {
+                if(this.allomorphOfTone.toneMark.toString() == '') {
                     console.log(this.syllable)
                     // no need to pop letter
                     // push letter
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(this.allomorphOfTone.baseToneMarks[0]);
+                    s.pushLetter(this.allomorphOfTone.baseToneMarks[0].letter);
                     return [s];
                 } else {
                     // pop letter
@@ -259,19 +243,19 @@ class ToneSandhiMorpheme extends Morpheme {
                     // the 7th tone has mutilple baseforms
                     let ret = [];
                     for(let i in this.allomorphOfTone.baseToneMarks) {
-                        if(this.allomorphOfTone.baseToneMarks != null) {
+                        if(this.allomorphOfTone.baseToneMarks[i].letter != null) {
                             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                             s.popLetter();
                             if(this.allomorphOfTone.baseToneMarks[i] != null) {
                                 // includes ss and x, exclude zero suffix
-                                s.pushLetter(this.allomorphOfTone.baseToneMarks[i]);
+                                s.pushLetter(this.allomorphOfTone.baseToneMarks[i].letter);
                             }
                             ret.push(s);
                         }
                     }
                     return ret;
                 }
-            } else if(this.allomorphOfTone instanceof FinalToneMark) {
+            } else if(this.allomorphOfTone instanceof FinalAllomorph) {
                 // pop the last letter
                 // no need to push letter
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
@@ -359,11 +343,6 @@ export class Syllable extends GrammaticalUnit {
 
 export class ToneSandhiSyllable extends Syllable {
     letters: Array<AlphabeticLetter>;
-    //initial
-    //medial
-    //nasal
-    //final
-    //tonemark
 
     constructor(letters?: Array<AlphabeticLetter>) {
         super();
@@ -555,6 +534,15 @@ export class Syllables {
     }
 }
 
+
+let list_of_rime_of_ziang_accent = [
+    'ee', 'eeh', 'eef', 'eng', 'ek', 'eg', 'ionn', 'ionnh', 'ionnf', 
+]
+
+let list_of_rime_of_zuanx_accent = [
+    'er', 'erh', 'erf', 'ere', 'ereh', 'eref', 'eru', 'ir', 'irh', 'irf', 'irinn', 'irm', 'irn', 'irng', 'irp', 'irt', 'ird', 'irk',
+    'irg',
+]
 
 let list_of_ziang_syllables = []
 
