@@ -11,7 +11,9 @@ import { Context } from './context';
 
 class Grapheme {}
 
-export class AlphabeticGrpheme extends Grapheme {
+class AlphabeticGrpheme extends Grapheme {}
+
+class Siann {
     letter: AlphabeticLetter
     toString() {
         if(this.letter != null) {
@@ -21,13 +23,13 @@ export class AlphabeticGrpheme extends Grapheme {
     }
 }
 
-export class Initial extends AlphabeticGrpheme {}
-export class Medial extends AlphabeticGrpheme {}
-export class Final extends AlphabeticGrpheme {}
-export class Nasal extends AlphabeticGrpheme {}
-export class ToneMark extends AlphabeticGrpheme {}
+export class Initial extends Siann {}
+export class Medial extends Siann {}
+export class Final extends Siann {}
+export class Nasal extends Siann {}
+export class ToneMark extends Siann {}
 
-export class ZeroToneMark extends AlphabeticGrpheme {letter = null;}
+export class ZeroToneMark extends Siann {letter = null;}
 
 export class ToneMarkZS extends ToneMark {letter = lowerLetters['zs']}
 export class ToneMarkW extends ToneMark {letter = lowerLetters['w']}
@@ -57,6 +59,9 @@ export class FinalD extends Final {letter = lowerLetters['d']}
 export class FinalG extends Final {letter = lowerLetters['g']}
 export class FinalF extends Final {letter = lowerLetters['f']}
 
+class InitialH extends Initial {letter = lowerLetters['h']}
+
+
 //------------------------------------------------------------------------------
 //  Initial, Medial, Nasal, Final Consonant, Tone Mark
 //------------------------------------------------------------------------------
@@ -70,7 +75,7 @@ export class LetterFilters {
                                         lowerLetters['v'].literal + '|' +
                                         lowerLetters['z'].literal;
 
-    initialNeutralLetterH: string = lowerLetters['h'].literal;
+    initialNeutralLetterH: string = new InitialH().toString();//lowerLetters['h'].literal;
 
     nasalInitialLetters: string = lowerLetters['m'].literal + '|' +
                                     lowerLetters['n'].literal + '|' +
@@ -91,14 +96,14 @@ export class LetterFilters {
                             lowerLetters['ng'].literal + '|' +
                             lowerLetters['nn'].literal;
 
-    neutralFinalLetterH: string = lowerLetters['h'].literal;
+    neutralFinalLetterH: string = new FinalH().toString();//lowerLetters['h'].literal;
                     
     neutralFinalLetters: string = lowerLetters['h'].literal + '|' +
                                   lowerLetters['f'].literal;
     
-    neutralToneMarkLetterX: string = lowerLetters['x'].literal;
+    neutralToneMarkLetterX: string = new ToneMarkX().toString();//lowerLetters['x'].literal;
     
-    neutralToneMarkLetterY: string = lowerLetters['y'].literal;
+    neutralToneMarkLetterY: string = new ToneMarkY().toString();//lowerLetters['y'].literal;
 
     checkedFinalLetters: string = lowerLetters['p'].literal + '|' +
                                     lowerLetters['t'].literal + '|' +

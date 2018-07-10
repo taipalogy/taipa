@@ -135,13 +135,14 @@ class AllomorphsOfToneMorpheme {
 
     constructor() {
         this.listOfFreeAllomorph.push(new AllomorphSS());
-        this.listOfFreeAllomorph.push(new AllomorphY());
         this.listOfFreeAllomorph.push(new AllomorphW());
-        this.listOfFreeAllomorph.push(new AllomorphX());
         this.listOfFreeAllomorph.push(new AllomorphXX());
         this.listOfFreeAllomorph.push(new AllomorphXXX());
         this.listOfFreeAllomorph.push(new AllomorphZZS());
         this.listOfFreeAllomorph.push(new AllomorphZS());
+
+        this.listOfFreeAllomorph.push(new AllomorphY());
+        this.listOfFreeAllomorph.push(new AllomorphX());
 
         this.listOfFinalAllomorph.push(new AllomorphPP());
         this.listOfFinalAllomorph.push(new AllomorphTT());
@@ -151,6 +152,7 @@ class AllomorphsOfToneMorpheme {
         this.listOfFinalAllomorph.push(new AllomorphDD());
         this.listOfFinalAllomorph.push(new AllomorphGG());
         this.listOfFinalAllomorph.push(new AllomorphFF());
+
         this.listOfFinalAllomorph.push(new AllomorphHY());
         this.listOfFinalAllomorph.push(new AllomorphBX());
         this.listOfFinalAllomorph.push(new AllomorphDX());
@@ -158,7 +160,7 @@ class AllomorphsOfToneMorpheme {
         this.listOfFinalAllomorph.push(new AllomorphFX());
     }
 
-    getMatchedFreeToneMark(letter: AlphabeticLetter) {
+    getMatchedFreeAllomorph(letter: AlphabeticLetter) {
         for(let key in this.listOfFreeAllomorph) {
             if(this.listOfFreeAllomorph[key].toneMark.toString() === letter.literal) {
                 return this.listOfFreeAllomorph[key];
@@ -166,7 +168,7 @@ class AllomorphsOfToneMorpheme {
         }
     }
 
-    getMatchedCheckedToneMark(letter: AlphabeticLetter) {
+    getMatchedFinalAllomorph(letter: AlphabeticLetter) {
         console.log("letter: %s", letter.literal);
         for(let key in this.listOfFinalAllomorph) {
             if(this.listOfFinalAllomorph[key].toneMark.toString() === letter.literal) {
@@ -199,7 +201,7 @@ class ToneSandhiMorpheme extends Morpheme {
         let tm;
 
         console.log(tm)
-        tm = allomorphs.getMatchedCheckedToneMark(this.syllable.letters[this.syllable.letters.length-1]);
+        tm = allomorphs.getMatchedFinalAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
         console.log(tm)
 
         if(tm != undefined) {
@@ -213,7 +215,7 @@ class ToneSandhiMorpheme extends Morpheme {
         }
 
         console.log(tm)
-        tm = allomorphs.getMatchedFreeToneMark(this.syllable.letters[this.syllable.letters.length-1]);
+        tm = allomorphs.getMatchedFreeAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
         console.log(tm)
 
         if(tm == undefined) {

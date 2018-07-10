@@ -1,5 +1,5 @@
-import { AlphabeticGrpheme, ToneMark, Final } from './grapheme'
-import { ToneSandhiSyllable, Allomorph } from './syllable';
+import { ToneMark } from './grapheme'
+import { Allomorph } from './syllable';
 
 class ToneMorpheme {
     sandhiForm: Allomorph
@@ -10,14 +10,13 @@ class ToneMorpheme {
 }
 
 export class LexicalAffix {
-    syllable: ToneSandhiSyllable
     stem: LexicalStem
     affix: Affix
 }
 
-class Prefix {}
-class Infix {}
-class Suffix {}
+class LexicalPrefix {}
+class LexicalInfix {}
+class LexicalSuffix {}
 
 class Affix {
     toneMark: ToneMark
@@ -50,7 +49,6 @@ class LexicalStem {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
-    graphemes: Array<AlphabeticGrpheme>
 }
 
 
@@ -59,14 +57,11 @@ class InflectionalStem {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
-    graphemes: Array<AlphabeticGrpheme>
-
 }
 
 class DerivationalMorpheme {}
 class InflectionalMorpheme {}
 class AgglutinativeMorpheme {}
-class ToneSandhiMorpheme {}
 class PluralMorpheme {}
 
 class DerivationalAffix {}
