@@ -13,7 +13,7 @@ class Grapheme {}
 
 class AlphabeticGrpheme extends Grapheme {}
 
-class Siann {
+export class Siann {
     letter: AlphabeticLetter
     toString() {
         if(this.letter != null) {

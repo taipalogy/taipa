@@ -186,17 +186,17 @@ class Morpheme {
     lemma: string
 }
 
-class ToneSandhiMorpheme extends Morpheme {
+export class ToneSandhiMorpheme extends Morpheme {
     syllable: ToneSandhiSyllable;
-    allomorphOfTone = null;
+    allomorphOfToneMorpheme = null;
 
     constructor(letters: Array<AlphabeticLetter>) {
         super();
         this.syllable = new ToneSandhiSyllable(letters);
-        this.assignAllomorphOfTone();
+        this.assignAllomorphOfToneMorpheme();
     }
 
-    assignAllomorphOfTone() {
+    assignAllomorphOfToneMorpheme() {
         let allomorphs = new AllomorphsOfToneMorpheme();
         let tm;
 
@@ -207,7 +207,7 @@ class ToneSandhiMorpheme extends Morpheme {
         if(tm != undefined) {
             for(let i = 0; i < tm.length; i++) {
                 if(this.syllable.letters[this.syllable.letters.length-2].literal === tm[i].final.toString()) {
-                    this.allomorphOfTone = tm[i];
+                    this.allomorphOfToneMorpheme = tm[i];
                 }
                 // when there are no matches, it means this syllable is already in base form
             }
@@ -219,45 +219,45 @@ class ToneSandhiMorpheme extends Morpheme {
         console.log(tm)
 
         if(tm == undefined) {
-            this.allomorphOfTone = new ZeroAllomorph();
+            this.allomorphOfToneMorpheme = new ZeroAllomorph();
         } else if(tm) {
             if(tm.literal === new AllomorphX().toneMark.toString()) {
                 // this syllable is already in base form
             } else {
-                this.allomorphOfTone = tm;
+                this.allomorphOfToneMorpheme = tm;
             }
         }
     }
 
     getBaseForms(): Array<ToneSandhiSyllable> {
-        if(this.allomorphOfTone != null) {
-            if(this.allomorphOfTone instanceof FreeAllomorph) {
-                if(this.allomorphOfTone.toneMark.toString() == '') {
+        if(this.allomorphOfToneMorpheme != null) {
+            if(this.allomorphOfToneMorpheme instanceof FreeAllomorph) {
+                if(this.allomorphOfToneMorpheme.toneMark.toString() == '') {
                     console.log(this.syllable)
                     // no need to pop letter
                     // push letter
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(this.allomorphOfTone.baseToneMarks[0].letter);
+                    s.pushLetter(this.allomorphOfToneMorpheme.baseToneMarks[0].letter);
                     return [s];
                 } else {
                     // pop letter
                     // push letter
                     // the 7th tone has mutilple baseforms
                     let ret = [];
-                    for(let i in this.allomorphOfTone.baseToneMarks) {
-                        if(this.allomorphOfTone.baseToneMarks[i].letter != null) {
+                    for(let i in this.allomorphOfToneMorpheme.baseToneMarks) {
+                        if(this.allomorphOfToneMorpheme.baseToneMarks[i].letter != null) {
                             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                             s.popLetter();
-                            if(this.allomorphOfTone.baseToneMarks[i] != null) {
+                            if(this.allomorphOfToneMorpheme.baseToneMarks[i] != null) {
                                 // includes ss and x, exclude zero suffix
-                                s.pushLetter(this.allomorphOfTone.baseToneMarks[i].letter);
+                                s.pushLetter(this.allomorphOfToneMorpheme.baseToneMarks[i].letter);
                             }
                             ret.push(s);
                         }
                     }
                     return ret;
                 }
-            } else if(this.allomorphOfTone instanceof FinalAllomorph) {
+            } else if(this.allomorphOfToneMorpheme instanceof FinalAllomorph) {
                 // pop the last letter
                 // no need to push letter
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
