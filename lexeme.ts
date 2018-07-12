@@ -1,55 +1,55 @@
 
 import { ToneSandhiSyllable, ToneSandhiMorpheme } from './syllable'
-import { ToneMark, Siann } from './grapheme'
-
-class ToneMarkMorpheme {}
-
-class Affix {
-    toneMark: ToneMark
-}
-
-class ZeroSuffix extends Affix {}
-class SuffixZS extends Affix {
-}
-class InterfixZS extends Affix {
-}
-class SuffixY extends Affix {}
-class InterfixY extends Affix {}
-class SuffixW extends Affix {}
-class InterfixW extends Affix {}
-class SuffixX extends Affix {}
-class InterfixSS extends Affix {}
-class InterfixXX extends Affix {}
-class InterfixXXX extends Affix {}
-class InterfixP extends Affix {
-}
-class InterfixT extends Affix {}
-class InterfixK extends Affix {}
-class InterfixH extends Affix {}
-class InterfixB extends Affix {}
-class InterfixD extends Affix {}
-class InterfixG extends Affix {}
-class InterfixF extends Affix {}
-
-class LexcialSuffixes {
-
-}
+import { ToneSandhiWord } from './word';
+import { Affix, FreeToneSuffix, FinalToneSuffix, SuffixY, SuffixW, SuffixX } from './morpheme'
 
 export class LexicalAffix {
-    stem: LexicalStem
+    // affixes
     affix: Affix
 }
 
 class LexicalPrefix {}
 class LexicalInfix {}
-class LexicalSuffix {}
+class LexicalSuffix extends LexicalAffix{}
 
-class LexicalStem {
-    //stem of free tone
-    //stem of checked tone
-    //stem of neutral tone
-    sianns: Array<Siann>
+class BaseFormForFreeTone extends LexicalSuffix {
+    // affixes
+    freeToneSuffix: FreeToneSuffix
 }
+
+class BaseFormForFreeToneY extends BaseFormForFreeTone {
+    affix = new SuffixY();
+    freeToneSuffix = new SuffixW();
+}
+
+class BaseFormForFinalTone extends LexicalSuffix {
+    // affixes
+    //finalToneSuffix: FinalToneSuffix
+}
+
+class BaseFormForFinalToneX extends BaseFormForFinalTone {
+    affix = new SuffixX();
+}
+
+class LexcialSuffixes {
+    list_of_base_form_for_free_tone: Array<BaseFormForFreeTone> = new Array();
+    list_of_base_form_for_final_tone: Array<BaseFormForFinalTone> = new Array();
+
+    constructor() {
+        this.list_of_base_form_for_free_tone.push(new BaseFormForFreeToneY());
+    }
+
+    getMatchedBaseFormForFreeTone(syllable: ToneSandhiSyllable) {
+        for(let key in this.list_of_base_form_for_free_tone) {
+            /*
+            if(syllable.isSuffixMatched(this.list_of_base_form_for_free_tone[key].affix)) {
+                return this.list_of_base_form_for_free_tone[key];
+            }
+            */
+        }
+    }
+}
+
 
 class DerivationalAffix {}
 class InflectionalAffix {}
@@ -60,14 +60,23 @@ class Lexeme {
 }
 
 class ToneSandhiLexeme extends Lexeme {
+    word: ToneSandhiWord
+    form
+    assimilation
+    consonantMutation
+
     constructor(syllables: Array<ToneSandhiSyllable>) {
         super();
+        this.word = new ToneSandhiWord(syllables);
         this.assignLexicalSuffix();
     }
 
-    assignLexicalSuffix() {}
+    assignLexicalSuffix() {
+        let lss
+        lss = new LexcialSuffixes().getMatchedBaseFormForFreeTone(this.word.syllables[this.word.syllables.length-1]);
+        this.form = lss[0];
+    }
 
     getBaseForm() {
-        
     }
 }

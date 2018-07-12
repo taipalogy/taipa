@@ -4,6 +4,7 @@ import { AlphabeticLetter, LetterFilters, Final, ToneMark, FinalP, FinalT, Final
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
+import { Affix } from './morpheme';
 
 //------------------------------------------------------------------------------
 //  Allomorph
@@ -198,33 +199,33 @@ export class ToneSandhiMorpheme extends Morpheme {
 
     assignAllomorphOfToneMorpheme() {
         let allomorphs = new AllomorphsOfToneMorpheme();
-        let tm;
+        let aotms;
 
-        console.log(tm)
-        tm = allomorphs.getMatchedFinalAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
-        console.log(tm)
+        console.log(aotms)
+        aotms = allomorphs.getMatchedFinalAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
+        console.log(aotms)
 
-        if(tm != undefined) {
-            for(let i = 0; i < tm.length; i++) {
-                if(this.syllable.letters[this.syllable.letters.length-2].literal === tm[i].final.toString()) {
-                    this.allomorphOfToneMorpheme = tm[i];
+        if(aotms != undefined) {
+            for(let i = 0; i < aotms.length; i++) {
+                if(this.syllable.letters[this.syllable.letters.length-2].literal === aotms[i].final.toString()) {
+                    this.allomorphOfToneMorpheme = aotms[i];
                 }
                 // when there are no matches, it means this syllable is already in base form
             }
             return;
         }
 
-        console.log(tm)
-        tm = allomorphs.getMatchedFreeAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
-        console.log(tm)
+        console.log(aotms)
+        aotms = allomorphs.getMatchedFreeAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
+        console.log(aotms)
 
-        if(tm == undefined) {
+        if(aotms == undefined) {
             this.allomorphOfToneMorpheme = new ZeroAllomorph();
-        } else if(tm) {
-            if(tm.literal === new AllomorphX().toneMark.toString()) {
+        } else if(aotms) {
+            if(aotms.literal === new AllomorphX().toneMark.toString()) {
                 // this syllable is already in base form
             } else {
-                this.allomorphOfToneMorpheme = tm;
+                this.allomorphOfToneMorpheme = aotms;
             }
         }
     }
