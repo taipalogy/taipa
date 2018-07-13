@@ -5,11 +5,15 @@ class ToneMorpheme {
 }
 
 
+class DerivationalAffix {}
+class InflectionalAffix {}
+
+
 class LexicalStem {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
-    sianns: Array<Sound>
+    sounds: Array<Sound>
 }
 
 

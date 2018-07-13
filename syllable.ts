@@ -296,6 +296,14 @@ export class ToneSandhiMorpheme extends Morpheme {
     }
 }
 
+
+export class LexicalAffix extends ToneSandhiMorpheme {
+}
+
+class LexicalPrefix extends LexicalAffix {}
+class LexicalInfix extends LexicalAffix {}
+class LexicalSuffix extends LexicalAffix {}
+
 //------------------------------------------------------------------------------
 //  Syllable Patterns
 //------------------------------------------------------------------------------
