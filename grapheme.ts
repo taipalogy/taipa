@@ -13,23 +13,38 @@ class Grapheme {}
 
 class AlphabeticGrpheme extends Grapheme {}
 
-export class Siann {
+export class Sound extends AlphabeticGrpheme {
     letter: AlphabeticLetter
+    
+    constructor(letter?: AlphabeticLetter) {
+        super();
+        this.letter = letter;
+    }
+
+    isEqualTo(letter: AlphabeticLetter) {
+        if(letter.literal === this.letter.literal) {
+            return true;
+        }
+        return false;
+    }
+
+    // used in letter filters to compose regular expressions
     toString() {
         if(this.letter != null) {
             return this.letter.literal;
         }
         return '';
     }
+    
 }
 
-export class Initial extends Siann {}
-export class Medial extends Siann {}
-export class Final extends Siann {}
-export class Nasal extends Siann {}
-export class ToneMark extends Siann {}
+export class Initial extends Sound {}
+export class Medial extends Sound {}
+export class Final extends Sound {}
+export class Nasal extends Sound {}
+export class ToneMark extends Sound {}
 
-export class ZeroToneMark extends Siann {letter = null;}
+export class ZeroToneMark extends Sound {letter = null;}
 
 export class ToneMarkZS extends ToneMark {letter = lowerLetters['zs']}
 export class ToneMarkW extends ToneMark {letter = lowerLetters['w']}
@@ -228,6 +243,7 @@ export class Letters {
     match(characters: Array<Character>) {
         
         let letters: Array<AlphabeticLetter> = new Array();
+        let sounds: Array<Sound> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
         //console.log(characters);
         let beginOfLetter: number = 0;
@@ -268,13 +284,17 @@ export class Letters {
                     let tmp = ltts.shift();
                     beginOfLetter +=  tmp.characters.length;
                     letters.push(tmp);
+                    // pack letters into sounds
+                    let sound = new Sound(tmp);
+                    sounds.push(sound);
                 }
 
             }
         }
         //console.log("metadata letter array length %d", letters.length);
         //console.log(letters);
-        return letters;
+        //return letters;
+        return sounds;
     }
 }
 

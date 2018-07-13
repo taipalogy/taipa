@@ -25,9 +25,11 @@ export class LetterMatcher {
     
     match() {
         let ls = new Letters();
-        let letters = ls.match(this.characters);
+        //let letters = ls.match(this.characters);
+        let sounds = ls.match(this.characters);
         //console.log("%cabout to return letter array. length %d.", "color: blue; font-size: medium", letters.length);
         //console.log(letters);
-        return letters;
+        //return letters;
+        return sounds;
     }
 }

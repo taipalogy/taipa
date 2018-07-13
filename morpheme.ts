@@ -1,5 +1,5 @@
 
-import { ToneMark, Siann } from './grapheme';
+import { ToneMark, Sound } from './grapheme';
 
 class ToneMorpheme {
 }
@@ -9,7 +9,7 @@ class LexicalStem {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
-    sianns: Array<Siann>
+    sianns: Array<Sound>
 }
 
 

@@ -1,6 +1,6 @@
 import { AlphabeticLetter, LetterFilters, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
         ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
-        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS } from './grapheme'
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound } from './grapheme'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
@@ -160,7 +160,7 @@ class AllomorphsOfToneMorpheme {
         this.listOfFinalAllomorph.push(new AllomorphGX());
         this.listOfFinalAllomorph.push(new AllomorphFX());
     }
-
+/*
     getMatchedFreeAllomorph(letter: AlphabeticLetter) {
         for(let key in this.listOfFreeAllomorph) {
             if(this.listOfFreeAllomorph[key].toneMark.toString() === letter.literal) {
@@ -168,7 +168,8 @@ class AllomorphsOfToneMorpheme {
             }
         }
     }
-
+*/
+/*
     getMatchedFinalAllomorph(letter: AlphabeticLetter) {
         console.log("letter: %s", letter.literal);
         for(let key in this.listOfFinalAllomorph) {
@@ -177,6 +178,7 @@ class AllomorphsOfToneMorpheme {
             }
         }
     }
+*/
 }
 
 //------------------------------------------------------------------------------
@@ -197,12 +199,27 @@ export class ToneSandhiMorpheme extends Morpheme {
         this.assignAllomorphOfToneMorpheme();
     }
 
+    isEqualTo(allomorph: Allomorph) {
+        // if the last letter of this syllable equal to that of the tone mark of the allomorph
+        if(allomorph.toneMark.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+            return true;
+        }
+        return false;
+    }
+
     assignAllomorphOfToneMorpheme() {
         let allomorphs = new AllomorphsOfToneMorpheme();
         let aotms;
 
         console.log(aotms)
-        aotms = allomorphs.getMatchedFinalAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
+        //aotms = allomorphs.getMatchedFinalAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
+        for(let key in allomorphs.listOfFinalAllomorph) {
+            //if(allomorphs.listOfFreeAllomorph[key].toneMark.toString() === letter.literal) {
+            if(this.isEqualTo(allomorphs.listOfFinalAllomorph[key])) {
+                aotms = allomorphs.listOfFinalAllomorph[key];
+                break;
+            }
+        }
         console.log(aotms)
 
         if(aotms != undefined) {
@@ -216,7 +233,14 @@ export class ToneSandhiMorpheme extends Morpheme {
         }
 
         console.log(aotms)
-        aotms = allomorphs.getMatchedFreeAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
+        //aotms = allomorphs.getMatchedFreeAllomorph(this.syllable.letters[this.syllable.letters.length-1]);
+        for(let key in allomorphs.listOfFreeAllomorph) {
+            //if(allomorphs.listOfFreeAllomorph[key].toneMark.toString() === letter.literal) {
+            if(this.isEqualTo(allomorphs.listOfFreeAllomorph[key])) {
+                aotms = allomorphs.listOfFreeAllomorph[key];
+                break;
+            }
+        }
         console.log(aotms)
 
         if(aotms == undefined) {
@@ -400,12 +424,15 @@ export class Syllables {
         // create just one syllable object using string
         // Letter Matcher
         let seqofletters: Array<AlphabeticLetter>;
+        let seqOfSounds: Array<Sound>
         
         // Letter Matcher
         let lm = new LetterMatcher(str);
-        seqofletters = lm.match();
+        //seqofletters = lm.match();
+        seqOfSounds = lm.match();
 
-        return seqofletters;
+        //return seqofletters;
+        return seqOfSounds;
     }
 
     createSyllable(letters: Array<AlphabeticLetter>): ToneSandhiSyllable {
@@ -448,9 +475,17 @@ export class Syllables {
         return mp;
     }
 
-    match(letters: Array<AlphabeticLetter>) {
+    //match(letters: Array<AlphabeticLetter>) {
+    match(sounds: Array<Sound>) {
         let syllables: Array<ToneSandhiSyllable> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
+        
+        // unpack sounds and get letters from them
+        let letters: Array<AlphabeticLetter> = new Array();
+        for(let key in sounds) {
+            letters.push(sounds[key].letter);
+        }
+
         console.log(letters);
         let beginOfSyllable: number = 0;
         let slbs: Array<ToneSandhiSyllable> = new Array(); // syllables
