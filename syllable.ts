@@ -18,7 +18,7 @@ class FreeAllomorph extends Allomorph {
     baseToneMarks: Array<ToneMark> = null;
 }
 
-class FinalAllomorph extends Allomorph {
+class CheckedAllomorph extends Allomorph {
     final: Final;
 }
 
@@ -65,67 +65,67 @@ class AllomorphZS extends FreeAllomorph {
     baseToneMarks = [new ToneMarkX(), new ToneMarkSS(), new ZeroToneMark()];
 }
 
-class AllomorphPP extends FinalAllomorph {
+class AllomorphPP extends CheckedAllomorph {
     toneMark = new ToneMarkP();
     final = new FinalP();
 }
 
-class AllomorphTT extends FinalAllomorph {
+class AllomorphTT extends CheckedAllomorph {
     toneMark = new ToneMarkT();
     final = new FinalT();
 }
 
-class AllomorphKK extends FinalAllomorph {
+class AllomorphKK extends CheckedAllomorph {
     toneMark = new ToneMarkK();
     final = new FinalK();
 }
 
-class AllomorphHH extends FinalAllomorph {
+class AllomorphHH extends CheckedAllomorph {
     toneMark = new ToneMarkH();
     final = new FinalH();
 }
 
-class AllomorphHY extends FinalAllomorph {
+class AllomorphHY extends CheckedAllomorph {
     toneMark = new ToneMarkY();
     final = new FinalH();
 }
 
-class AllomorphBB extends FinalAllomorph {
+class AllomorphBB extends CheckedAllomorph {
     toneMark = new ToneMarkB();
     final = new FinalB();
 }
 
-class AllomorphDD extends FinalAllomorph {
+class AllomorphDD extends CheckedAllomorph {
     toneMark = new ToneMarkD();
     final = new FinalD();
 }
 
-class AllomorphGG extends FinalAllomorph {
+class AllomorphGG extends CheckedAllomorph {
     toneMark = new ToneMarkG();
     final = new FinalG();
 }
 
-class AllomorphFF extends FinalAllomorph {
+class AllomorphFF extends CheckedAllomorph {
     toneMark = new ToneMarkF();
     final = new FinalF();
 }
 
-class AllomorphBX extends FinalAllomorph {
+class AllomorphBX extends CheckedAllomorph {
     toneMark = new ToneMarkX();
     final = new FinalB();
 }
 
-class AllomorphDX extends FinalAllomorph {
+class AllomorphDX extends CheckedAllomorph {
     toneMark = new ToneMarkX();
     final = new FinalD();
 }
 
-class AllomorphGX extends FinalAllomorph {
+class AllomorphGX extends CheckedAllomorph {
     toneMark = new ToneMarkX();
     final = new FinalG();
 }
 
-class AllomorphFX extends FinalAllomorph {
+class AllomorphFX extends CheckedAllomorph {
     toneMark = new ToneMarkX();
     final = new FinalF();
 }
@@ -160,25 +160,6 @@ class AllomorphsOfToneMorpheme {
         this.listOfFinalAllomorph.push(new AllomorphGX());
         this.listOfFinalAllomorph.push(new AllomorphFX());
     }
-/*
-    getMatchedFreeAllomorph(letter: AlphabeticLetter) {
-        for(let key in this.listOfFreeAllomorph) {
-            if(this.listOfFreeAllomorph[key].toneMark.toString() === letter.literal) {
-                return this.listOfFreeAllomorph[key];
-            }
-        }
-    }
-*/
-/*
-    getMatchedFinalAllomorph(letter: AlphabeticLetter) {
-        console.log("letter: %s", letter.literal);
-        for(let key in this.listOfFinalAllomorph) {
-            if(this.listOfFinalAllomorph[key].toneMark.toString() === letter.literal) {
-                return this.listOfFinalAllomorph[key];
-            }
-        }
-    }
-*/
 }
 
 //------------------------------------------------------------------------------
@@ -193,9 +174,10 @@ export class ToneSandhiMorpheme extends Morpheme {
     syllable: ToneSandhiSyllable;
     allomorphOfToneMorpheme = null;
 
-    constructor(letters: Array<AlphabeticLetter>) {
+    //constructor(letters: Array<AlphabeticLetter>) {
+    constructor(syllable: ToneSandhiSyllable) {
         super();
-        this.syllable = new ToneSandhiSyllable(letters);
+        this.syllable = syllable;//new ToneSandhiSyllable(letters);
         this.assignAllomorphOfToneMorpheme();
     }
 
@@ -282,7 +264,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                     }
                     return ret;
                 }
-            } else if(this.allomorphOfToneMorpheme instanceof FinalAllomorph) {
+            } else if(this.allomorphOfToneMorpheme instanceof CheckedAllomorph) {
                 // pop the last letter
                 // no need to push letter
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
@@ -486,6 +468,7 @@ export class Syllables {
     //match(letters: Array<AlphabeticLetter>) {
     match(sounds: Array<Sound>) {
         let syllables: Array<ToneSandhiSyllable> = new Array();
+        let lexicalAffixes: Array<LexicalAffix> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
         
         // unpack sounds and get letters from them
@@ -519,7 +502,7 @@ export class Syllables {
                     for(let j in msp.letters) {
                         console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    tsm = new ToneSandhiMorpheme(msp.letters);
+                    tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
                     baseforms = tsm.getBaseForms();
                     slbs.push(tsm.syllable);
                 }
@@ -564,7 +547,9 @@ export class Syllables {
                 //beginOfSyllable += msp.letters.length;
                 if(msp.matchedLength > 0) {
                     for(let k in slbs) {
-                        syllables.push(slbs[k]); // push the matched letter
+                        //syllables.push(slbs[k]); // push the matched letter
+                        // pack syllables into lexical affixes
+                        lexicalAffixes.push(new LexicalAffix(slbs[k]));
                     }
                     slbs = [];
                     console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);
@@ -574,9 +559,12 @@ export class Syllables {
             }
         }
         //console.log("metadata letter array length %d", letters.length);
-        console.log(syllables);
-        console.log("length of syllables: %d", syllables.length);
-        return syllables;
+        //console.log(syllables);
+        //console.log("length of syllables: %d", syllables.length);
+        //return syllables;
+        //console.log(lexicalAffixes);
+        //console.log("length of lexical affixes: %d", lexicalAffixes.length);
+        return lexicalAffixes;
     }
 }
 

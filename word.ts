@@ -1,41 +1,16 @@
 
 import { GrammaticalUnit } from './expression'
-import { ToneSandhiSyllable } from './syllable';
-
+import { ToneSandhiSyllable, LexicalAffix } from './syllable';
+import { PartOfSpeech } from './lexeme'
 
 //------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
 
-class Lexeme {
-}
-
 //------------------------------------------------------------------------------
 //  Lexemes
 //------------------------------------------------------------------------------
 
-abstract class ToneSandhiLexeme extends Lexeme {
-    baseForm: ToneSandhiWord
-}
-
-class PronounLexeme extends ToneSandhiLexeme {
-    sandhiRule: string
-    hanji: string
-}
-
-class ParticleLexeme extends ToneSandhiLexeme {
-    sandhiRule: string
-}
-
-class CopulaLexeme extends ToneSandhiLexeme {
-}
-
-class VerbLexeme extends ToneSandhiLexeme {
-    sandhiRule: string
-}
-
-class AdverbLexeme extends ToneSandhiLexeme {
-}
 
 //------------------------------------------------------------------------------
 //  Word
@@ -99,10 +74,20 @@ export class ToneSandhiWords extends Words {
     create(syllables: Array<ToneSandhiSyllable>) {
         return new ToneSandhiWord(syllables);
     }
-    match(syllables: Array<ToneSandhiSyllable>){
+    //match(syllables: Array<ToneSandhiSyllable>){
+    match(lexicalAffixes: Array<LexicalAffix>){
         let words: Array<ToneSandhiWord> = new Array();
-        words.push(this.create(syllables));
-        return words;
+        let partOfSpeeches: Array<PartOfSpeech> = new Array();
+        // unpack lexical affixes and get syllables from them
+        let syllables: Array<ToneSandhiSyllable> = new Array();
+        for(let key in lexicalAffixes) {
+            syllables.push(lexicalAffixes[key].syllable);
+        }
+        //words.push(this.create(syllables));
+        let pos = new PartOfSpeech(this.create(syllables));
+        partOfSpeeches.push(pos);
+        //return words;
+        return partOfSpeeches
     }
 }
 

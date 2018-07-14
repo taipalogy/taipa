@@ -1,9 +1,11 @@
 import { ToneSandhiWord } from "./word"
 
-class FormsOfPhraseme {
+class ExternalSandhi {
 
-    getMatchedBaseFormForFreeTone(word: ToneSandhiWord){
-    }
+}
+
+class ExternalSandhiOfPhraseme {
+
 }
 
 class Phraseme {
@@ -20,7 +22,6 @@ class ToneSandhiPhraseme extends Phraseme {
 
     assignPartOfSpeech() {
         let pos
-        pos = new FormsOfPhraseme().getMatchedBaseFormForFreeTone(this.phrase.words[this.phrase.words.length-1]);
         this.partOfSpeech = pos[0]
     }
 

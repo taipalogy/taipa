@@ -26,10 +26,12 @@ export class ToneSandhiSyllableMatcher {
         //console.log(this.letters);
         console.log(this.sounds);
         //let syllables = ss.match(this.letters);
-        let syllables = ss.match(this.sounds);
-        console.log(syllables);
+        let lexicalAffixes = ss.match(this.sounds);
+        //console.log(syllables);
+        console.log(lexicalAffixes);
         //console.log(syllables[0].literal);
-        return syllables;
+        //return syllables;
+        return lexicalAffixes;
     }
 }
   

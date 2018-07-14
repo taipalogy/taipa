@@ -1,8 +1,11 @@
 
-import { ToneSandhiSyllable, ToneSandhiMorpheme } from './syllable'
+import { ToneSandhiSyllable, Allomorph } from './syllable'
 import { ToneSandhiWord } from './word';
-import { Affix, FreeToneSuffix, FinalToneSuffix, SuffixY, SuffixW, SuffixX } from './morpheme'
+import { GrammaticalUnit } from './expression'
 
+class InternalSandhi {
+    allomorph: Allomorph
+}
 
 class InflectionalStem {
     //stem of free tone
@@ -10,14 +13,11 @@ class InflectionalStem {
     //stem of neutral tone
 }
 
-class FormsOfLexeme {
-
-    getMatchedBaseFormForFreeTone(syllable: ToneSandhiSyllable) {
-    }
+class InternalSandhiOfLexeme {
 }
 
 
-class Lexeme {
+class Lexeme extends GrammaticalUnit {
 }
 
 class ToneSandhiLexeme extends Lexeme {
@@ -26,16 +26,13 @@ class ToneSandhiLexeme extends Lexeme {
     assimilation
     consonantMutation
 
-    constructor(syllables: Array<ToneSandhiSyllable>) {
+    constructor(word: ToneSandhiWord) {
         super();
-        this.word = new ToneSandhiWord(syllables);
+        this.word = word;
         this.assignLexicalSuffix();
     }
 
     assignLexicalSuffix() {
-        let lss
-        lss = new FormsOfLexeme().getMatchedBaseFormForFreeTone(this.word.syllables[this.word.syllables.length-1]);
-        this.form = lss[0];
     }
 
     getBaseForm() {
@@ -43,7 +40,7 @@ class ToneSandhiLexeme extends Lexeme {
 }
 
 
-class PartOfSpeech extends ToneSandhiLexeme {
+export class PartOfSpeech extends ToneSandhiLexeme {
 }
 
 class Verb extends PartOfSpeech {}

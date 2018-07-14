@@ -46,7 +46,7 @@ class SuffixG extends FinalToneSuffix {}
 class SuffixF extends FinalToneSuffix {}
 
 class FreeToneInterfix extends Affix {}
-class FinalToneInterfix extends Affix {}
+class CheckedToneInterfix extends Affix {}
 
 class InterfixZS extends FreeToneInterfix {}
 class InterfixY extends FreeToneInterfix {}
@@ -55,16 +55,12 @@ class InterfixSS extends FreeToneInterfix {}
 class InterfixXX extends FreeToneInterfix {}
 class InterfixXXX extends FreeToneInterfix {}
 
-class InterfixPP extends FinalToneInterfix {}
-class InterfixTT extends FinalToneInterfix {}
-class InterfixKK extends FinalToneInterfix {}
-class InterfixHH extends FinalToneInterfix {}
-class InterfixHY extends FinalToneInterfix {}
-class InterfixBB extends FinalToneInterfix {}
-class InterfixDD extends FinalToneInterfix {}
-class InterfixGG extends FinalToneInterfix {}
-class InterfixFF extends FinalToneInterfix {}
-class InterfixBX extends FinalToneInterfix {}
-class InterfixDX extends FinalToneInterfix {}
-class InterfixGX extends FinalToneInterfix {}
-class InterfixFX extends FinalToneInterfix {}
+class InterfixP extends CheckedToneInterfix {}
+class InterfixT extends CheckedToneInterfix {}
+class InterfixK extends CheckedToneInterfix {}
+class InterfixH extends CheckedToneInterfix {}
+class InterfixB extends CheckedToneInterfix {}
+class InterfixD extends CheckedToneInterfix {}
+class InterfixG extends CheckedToneInterfix {}
+class InterfixF extends CheckedToneInterfix {}
+class InterfixX extends CheckedToneInterfix {}
