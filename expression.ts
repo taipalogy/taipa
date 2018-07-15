@@ -55,7 +55,7 @@ export class PeriodExpression extends Operator {
 export interface IOperand extends IExpression {
     literal: string;
 
-    isBasicForm() : Boolean;
+    isBaseForm() : Boolean;
 }
 
 export class GrammaticalUnit implements IOperand {
@@ -63,6 +63,6 @@ export class GrammaticalUnit implements IOperand {
     partOfSpeech: string;
     
     evaluate(context: Context){}
-    isBasicForm() {return this.isInitialLowerCase()}
+    isBaseForm() {return this.isInitialLowerCase()}
     private isInitialLowerCase() {return true}
 }

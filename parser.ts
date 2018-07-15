@@ -49,11 +49,11 @@ class Shunter {
 
       //console.log("hit");
 
-      if(node instanceof GrammaticalUnit && node.isBasicForm()) {
+      if(node instanceof GrammaticalUnit && node.isBaseForm()) {
         output.push(node);
       } else if(node instanceof AndExpression || node instanceof OrExpression) {
         operators.push(node);
-      } else if(node instanceof GrammaticalUnit && !node.isBasicForm()) {
+      } else if(node instanceof GrammaticalUnit && !node.isBaseForm()) {
         output.push(node);
       } else if(node instanceof PeriodExpression) {
         if(output[output.length-1] instanceof Operator) {

@@ -1,8 +1,15 @@
 import { ToneSandhiWord } from "./word"
+import { PartOfSpeech } from "./lexeme";
 
-class ExternalSandhi {
-
+class Inflection {
+    partOfSpeeches: Array<PartOfSpeech>
+    isBaseForm() {}
 }
+
+class Conjugation extends Inflection {
+    isConjugated() {}
+}
+class Declension extends Inflection {}
 
 class ExternalSandhiOfPhraseme {
 

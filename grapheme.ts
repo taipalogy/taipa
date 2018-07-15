@@ -158,7 +158,7 @@ export class LetterFilters {
 //  Letter
 //------------------------------------------------------------------------------
 
-export class Letter extends GrammaticalUnit {
+export class Letter {
     literal: string = '';
     evaluate(context: Context){}
 }

@@ -1,5 +1,4 @@
 
-import { Syllable, ToneSandhiSyllable } from './syllable';
 import { IExpression, Expression, AndExpression, OrExpression } from './expression';
 import { Letter, AlphabeticLetter } from './grapheme';
 

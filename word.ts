@@ -1,6 +1,5 @@
 
-import { GrammaticalUnit } from './expression'
-import { ToneSandhiSyllable, LexicalAffix } from './syllable';
+import { ToneSandhiSyllable, LexicalAffix } from './morpheme';
 import { PartOfSpeech } from './lexeme'
 
 //------------------------------------------------------------------------------
@@ -16,8 +15,8 @@ import { PartOfSpeech } from './lexeme'
 //  Word
 //------------------------------------------------------------------------------
 
-export class Word extends GrammaticalUnit {
-    literal: string;
+export class Word {
+    literal: string = '';
 
     evaluate() {}
 }

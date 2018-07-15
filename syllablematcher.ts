@@ -1,6 +1,6 @@
 
-import { AlphabeticLetter, Sound } from './grapheme'
-import { Syllables } from './syllable'
+import { Sound } from './grapheme'
+import { Syllables } from './morpheme'
 
 
 //------------------------------------------------------------------------------

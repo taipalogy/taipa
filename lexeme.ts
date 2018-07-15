@@ -1,19 +1,9 @@
 
-import { ToneSandhiSyllable, Allomorph } from './syllable'
 import { ToneSandhiWord } from './word';
 import { GrammaticalUnit } from './expression'
+import { LexicalAffix } from './morpheme';
 
-class InternalSandhi {
-    allomorph: Allomorph
-}
-
-class InflectionalStem {
-    //stem of free tone
-    //stem of checked tone
-    //stem of neutral tone
-}
-
-class InternalSandhiOfLexeme {
+class PartOfSpeeches {
 }
 
 
@@ -22,7 +12,7 @@ class Lexeme extends GrammaticalUnit {
 
 class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
-    form
+    baseForm
     assimilation
     consonantMutation
 
@@ -39,8 +29,10 @@ class ToneSandhiLexeme extends Lexeme {
     }
 }
 
-
 export class PartOfSpeech extends ToneSandhiLexeme {
+    lexicalAffixes: Array<LexicalAffix>
+    isAssimilated() {}
+    isConsonantMutated() {}
 }
 
 class Verb extends PartOfSpeech {}
@@ -49,3 +41,4 @@ class Adjective extends PartOfSpeech {}
 class Particle extends PartOfSpeech {}
 class Preposition extends PartOfSpeech {}
 class Pronoun extends PartOfSpeech {}
+class Adverb extends PartOfSpeech {}

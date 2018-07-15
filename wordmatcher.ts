@@ -1,5 +1,5 @@
-import { Expression } from './expression'
-import { ToneSandhiSyllable, LexicalAffix } from './syllable'
+
+import { LexicalAffix } from './morpheme'
 import { ToneSandhiWords } from './word'
 
 //------------------------------------------------------------------------------
