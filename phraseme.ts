@@ -1,5 +1,7 @@
-import { ToneSandhiWord } from "./word"
+import { ToneSandhiWord } from "./lexeme"
 import { PartOfSpeech } from "./lexeme";
+
+class InflectionRule {}
 
 class Inflection {
     partOfSpeeches: Array<PartOfSpeech>
@@ -11,8 +13,7 @@ class Conjugation extends Inflection {
 }
 class Declension extends Inflection {}
 
-class ExternalSandhiOfPhraseme {
-
+class InflectionRules {
 }
 
 class Phraseme {
@@ -36,3 +37,14 @@ class ToneSandhiPhraseme extends Phraseme {
         
     }
 }
+
+
+
+//------------------------------------------------------------------------------
+//  Phrase
+//------------------------------------------------------------------------------
+
+class Phrase {
+
+}
+

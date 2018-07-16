@@ -1,6 +1,6 @@
 
-import { LexicalAffix } from './morpheme'
-import { ToneSandhiWords } from './word'
+import { LexicalAffix,  } from './morpheme'
+import { ToneSandhiWords } from './lexeme'
 
 //------------------------------------------------------------------------------
 //  LexicalAnalyzer

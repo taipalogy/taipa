@@ -165,15 +165,20 @@ class AllomorphsOfToneMorpheme {
 }
 
 //------------------------------------------------------------------------------
-//  Morpheme
+//  Internal Sandhi Rule
 //------------------------------------------------------------------------------
 
 class DerivationalAffix {}
-class InflectionalAffix {}
 
-class InternalSandhiRule {
-    stem: LexicalStem
+export class InternalSandhiRule {
+    lexicalStem: LexicalStem
     affix: Affix
+
+    isEqualTo(syllable: ToneSandhiSyllable) {
+        if(this.lexicalStem.isLastSoundChecked() && this.affix.isChecked()) {
+
+        }
+    }
 }
 
 export class LexicalStem {
@@ -183,7 +188,6 @@ export class LexicalStem {
     sounds: Array<Sound>
 
     isLastSoundChecked() {}
-    isLastSoundUnchecked() {}
 }
 
 class PluralMorpheme {}
@@ -197,8 +201,11 @@ export class Affix {
     isY() {}
 }
 
+class FreeToneLexicalStem extends LexicalStem {}
+class CheckedToneLexicalStem extends LexicalStem {}
+
 export class FreeToneSuffix extends Affix {}
-export class FinalToneSuffix extends Affix {}
+export class CheckedToneSuffix extends Affix {}
 
 class ZeroSuffix extends FreeToneSuffix {}
 class SuffixZS extends FreeToneSuffix {}
@@ -207,14 +214,14 @@ export class SuffixW extends FreeToneSuffix {}
 
 export class SuffixX extends FreeToneSuffix {}
 
-class SuffixP extends FinalToneSuffix {}
-class SuffixT extends FinalToneSuffix {}
-class SuffixK extends FinalToneSuffix {}
-class SuffixH extends FinalToneSuffix {}
-class SuffixB extends FinalToneSuffix {}
-class SuffixD extends FinalToneSuffix {}
-class SuffixG extends FinalToneSuffix {}
-class SuffixF extends FinalToneSuffix {}
+class SuffixP extends CheckedToneSuffix {}
+class SuffixT extends CheckedToneSuffix {}
+class SuffixK extends CheckedToneSuffix {}
+class SuffixH extends CheckedToneSuffix {}
+class SuffixB extends CheckedToneSuffix {}
+class SuffixD extends CheckedToneSuffix {}
+class SuffixG extends CheckedToneSuffix {}
+class SuffixF extends CheckedToneSuffix {}
 
 class FreeToneInterfix extends Affix {}
 class CheckedToneInterfix extends Affix {}
@@ -236,8 +243,26 @@ class InterfixG extends CheckedToneInterfix {}
 class InterfixF extends CheckedToneInterfix {}
 class InterfixX extends CheckedToneInterfix {}
 
+export class FreeToneSandhiRule extends InternalSandhiRule {
+    baseAffix: Affix
+}
+
+export class CheckedToneSandhiRule extends InternalSandhiRule {
+}
+
+class FreeToneSandhiRuleX extends FreeToneSandhiRule {
+    affix = new SuffixX()
+}
+class FreeToneSandhiRuleY extends FreeToneSandhiRule {
+    affix = new SuffixY()
+    baseAffix = new SuffixW();
+}
+
+class CheckedToneSandhiRuleX extends CheckedToneSandhiRule {}
+class CheckedToneSandhiRuleY extends CheckedToneSandhiRule {}
+
 //------------------------------------------------------------------------------
-//  Morpheme
+//  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
 
 class Morpheme {
@@ -354,14 +379,12 @@ export class ToneSandhiMorpheme extends Morpheme {
 
 
 export class LexicalAffix extends ToneSandhiMorpheme {
-    internalSandhiRule: InternalSandhiRule
+    internalSandhiRules: Array<InternalSandhiRule>
 }
 
 class LexicalPrefix extends LexicalAffix {}
 class LexicalInfix extends LexicalAffix {}
-class LexicalSuffix extends LexicalAffix {
-    isBaseForm() {}
-}
+export class LexicalSuffix extends LexicalAffix {}
 
 //------------------------------------------------------------------------------
 //  Syllable Patterns
