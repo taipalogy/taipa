@@ -1,17 +1,28 @@
+
 import { ToneSandhiWord } from "./lexeme"
-import { PartOfSpeech } from "./lexeme";
 
-class InflectionRule {}
+class ExternalSandhiRule {}
 
-class Inflection {
-    partOfSpeeches: Array<PartOfSpeech>
-    isBaseForm() {}
+class ExternalToneSandhi extends ExternalSandhiRule {
 }
 
-class Conjugation extends Inflection {
-    isConjugated() {}
-}
-class Declension extends Inflection {}
+class ExternalSoundChange extends ExternalSandhiRule {}
+
+class Conversion extends ExternalSandhiRule {}
+
+class Conjugation extends ExternalToneSandhi {}
+
+class Declension extends ExternalToneSandhi {}
+
+class Transitivity extends Conjugation {}
+
+class AdjectiveModifier extends Conjugation {}
+
+class Counter extends Declension {}
+
+class NounModifier extends Declension {}
+
+class PronounDeclension extends Declension {}
 
 class InflectionRules {
 }

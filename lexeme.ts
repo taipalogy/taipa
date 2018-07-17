@@ -1,38 +1,99 @@
 
-import { ToneSandhiSyllable, LexicalAffix, InternalSandhiRule, FreeToneSandhiRule, CheckedToneSandhiRule } from './morpheme';
+import { ToneSandhiSyllable, LexicalAffix, LexicalStem, Affix } from './morpheme';
 import { GrammaticalUnit } from './expression'
 
+//------------------------------------------------------------------------------
+//  Internal Sandhi Rule
+//------------------------------------------------------------------------------
+
+class DerivationalAffix {}
 class InflectionalAffix {}
 
-class InflectionalSuffix extends InflectionalAffix {}
+export class InternalSandhiRule {}
 
-class InflectionalFreeTone extends InflectionalSuffix {
+class ToneSandhiRule extends InternalSandhiRule {
+    lexicalStem: LexicalStem
+    affix: Affix
+
+    isEqualTo(syllable: ToneSandhiSyllable) {}
 }
 
-class InflectionalCheckedTone extends InflectionalSuffix {
+class FreeToneLexicalStem extends LexicalStem {}
+class CheckedToneLexicalStem extends LexicalStem {}
+
+class NeutralToneLexicalStemH extends CheckedToneLexicalStem {}
+class CheckedToneLexicalStemBDGF extends CheckedToneLexicalStem {}
+
+export class FreeToneSuffix extends Affix {}
+export class CheckedToneSuffix extends Affix {}
+
+class ZeroSuffix extends FreeToneSuffix {}
+class SuffixZS extends FreeToneSuffix {}
+export class SuffixW extends FreeToneSuffix {}
+
+export class SuffixY extends Affix {}
+export class SuffixX extends Affix {}
+
+class SuffixP extends CheckedToneSuffix {}
+class SuffixT extends CheckedToneSuffix {}
+class SuffixK extends CheckedToneSuffix {}
+class SuffixH extends CheckedToneSuffix {}
+class SuffixB extends CheckedToneSuffix {}
+class SuffixD extends CheckedToneSuffix {}
+class SuffixG extends CheckedToneSuffix {}
+class SuffixF extends CheckedToneSuffix {}
+
+class FreeToneInterfix extends Affix {}
+class CheckedToneInterfix extends Affix {}
+
+class InterfixZS extends FreeToneInterfix {}
+class InterfixY extends FreeToneInterfix {}
+class InterfixW extends FreeToneInterfix {}
+class InterfixSS extends FreeToneInterfix {}
+class InterfixXX extends FreeToneInterfix {}
+class InterfixXXX extends FreeToneInterfix {}
+
+class InterfixP extends CheckedToneInterfix {}
+class InterfixT extends CheckedToneInterfix {}
+class InterfixK extends CheckedToneInterfix {}
+class InterfixH extends CheckedToneInterfix {}
+class InterfixB extends CheckedToneInterfix {}
+class InterfixD extends CheckedToneInterfix {}
+class InterfixG extends CheckedToneInterfix {}
+class InterfixF extends CheckedToneInterfix {}
+class InterfixX extends CheckedToneInterfix {}
+
+export class FreeToneSandhiRule extends ToneSandhiRule {
+    baseAffix: Affix
 }
 
-class InflectionalFreeToneX extends InflectionalFreeTone {}
-class InflectionalFreeToneY extends InflectionalFreeTone {}
-class InflectionalCheckedToneX extends InflectionalCheckedTone {}
-class InflectionalCheckedToneY extends InflectionalCheckedTone {}
+export class CheckedToneSandhiRule extends ToneSandhiRule {
+}
 
-class ExternalSandhiRule {
-    internalSandhiRule: InternalSandhiRule
+class FreeToneSandhiRuleX extends FreeToneSandhiRule {
+    baseAffix = null;
+}
 
-    isEqualTo(word: ToneSandhiWord) {
-        if(this.internalSandhiRule.isEqualTo(word.syllables[word.syllables.length-1])) {
-            return true;
-        }
-        return false;
-    }
+class FreeToneSandhiRuleY extends FreeToneSandhiRule {
+    lexicalStem = new FreeToneLexicalStem();
+    affix = new SuffixY()
+    baseAffix = new SuffixW();
+}
+
+class CheckedToneSandhiRuleX extends CheckedToneSandhiRule {
+    lexicalStem = new CheckedToneLexicalStemBDGF();
+    affix = new SuffixX();
+}
+
+class CheckedToneSandhiRuleY extends CheckedToneSandhiRule {
+    lexicalStem = new NeutralToneLexicalStemH();
+    affix = new SuffixY();
 }
 
 
-class ExternalSandhiRules {
+class NasalizationRule extends InternalSandhiRule {}
 
-
-
+class InternalSandhiRules {
 }
 
 
@@ -41,7 +102,7 @@ class Lexeme extends GrammaticalUnit {
 
 class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
-    externalSandhiRule: ExternalSandhiRule
+    internalSandhiRule: InternalSandhiRule
     baseForm
     assimilation
     consonantMutation
@@ -63,7 +124,7 @@ class ToneSandhiLexeme extends Lexeme {
 export class PartOfSpeech extends ToneSandhiLexeme {
     //lexicalAffixes: Array<LexicalAffix> = null;
     
-    externalSandhiRules: ExternalSandhiRules = null;
+    internalSandhiRules: InternalSandhiRule = null;
     isAssimilated() {}
     isConsonantMutated() {}
 }
