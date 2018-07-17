@@ -49,6 +49,12 @@ class ToneSandhiPhraseme extends Phraseme {
     }
 }
 
+class PartOfSpeechOfPhrase extends ToneSandhiPhraseme {}
+class AForm extends ToneSandhiPhraseme {}
+class EForm extends ToneSandhiPhraseme {}
+class LeForm extends ToneSandhiPhraseme {}
+
+class PhrasalVerb extends PartOfSpeechOfPhrase {}
 
 
 //------------------------------------------------------------------------------
