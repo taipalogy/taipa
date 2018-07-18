@@ -1,6 +1,7 @@
 
 import { ToneSandhiSyllable, LexicalAffix, LexicalStem, Affix } from './morpheme';
 import { GrammaticalUnit } from './expression'
+import { checkAndUpdateBinding } from '../../../node_modules/@angular/core/src/view/util';
 
 //------------------------------------------------------------------------------
 //  Internal Sandhi Rule
@@ -14,8 +15,6 @@ export class InternalSandhiRule {}
 class ToneSandhiRule extends InternalSandhiRule {
     lexicalStem: LexicalStem
     affix: Affix
-
-    isEqualTo(syllable: ToneSandhiSyllable) {}
 }
 
 class FreeToneLexicalStem extends LexicalStem {}
@@ -88,12 +87,54 @@ class CheckedToneSandhiRuleX extends CheckedToneSandhiRule {
 class CheckedToneSandhiRuleY extends CheckedToneSandhiRule {
     lexicalStem = new NeutralToneLexicalStemH();
     affix = new SuffixY();
+    verify(syllable: ToneSandhiSyllable) {
+        //this.lexicalStem.isLastSoundNeutralH(syllable);
+        //this.affix.isY(syllable);
+    }
 }
 
+class BaseForm {
+    lexicalStem: LexicalStem = new LexicalStem
+    // check if the syllable is in baseform, if not just replace it, a.k.a. pop and push
+    // if member allomorph is not null
+/*
+    isAllomorphObjectAvailable() {
+        if(this.lexicalAffix.allomorphOfToneMorpheme != null) {
+            return true;
+        }
+        return false;
+    }
+    */
+}
+
+/*
+class BaseFormForFreeTone extends BaseForm {
+}
+
+class BaseFormForCheckedTone extends BaseForm {}
+*/
 
 class NasalizationRule extends InternalSandhiRule {}
 
 class InternalSandhiRules {
+    /*
+    lexicalAffix: LexicalAffix
+
+    set LexicalAffix(lexicalAffix: LexicalAffix) {
+        this.lexicalAffix = lexicalAffix;
+    }
+
+    get BaseForm() {
+        let bf = new BaseForm();
+        if(this.lexicalAffix != null) {
+            if(this.lexicalAffix.allomorphOfToneMorpheme != null) {
+                bf.lexicalStem.populate(this.lexicalAffix.allomorphOfToneMorpheme);
+                return bf;
+            }
+        }
+        return null;
+    }
+    */
 }
 
 
@@ -103,18 +144,16 @@ class Lexeme extends GrammaticalUnit {
 class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
     internalSandhiRule: InternalSandhiRule
-    baseForm
+    baseForms: Array<BaseForm>
     assimilation
     consonantMutation
 
     constructor(word: ToneSandhiWord) {
         super();
         this.word = word;
-        this.assignExternalSandhiRule();
     }
 
-    assignExternalSandhiRule() {
-        //let results = new ExternalSandhiRule().isEqualTo(this.word);
+    assignInternalSandhiRule(lexicalAffix: LexicalAffix) {
     }
 
     getBaseForm() {
@@ -122,8 +161,6 @@ class ToneSandhiLexeme extends Lexeme {
 }
 
 export class PartOfSpeech extends ToneSandhiLexeme {
-    //lexicalAffixes: Array<LexicalAffix> = null;
-    
     internalSandhiRules: InternalSandhiRule = null;
     isAssimilated() {}
     isConsonantMutated() {}
@@ -205,22 +242,29 @@ export class Words {
 }
 
 export class ToneSandhiWords extends Words {
-    create(syllables: Array<ToneSandhiSyllable>) {
-        return new ToneSandhiWord(syllables);
-    }
-    //match(syllables: Array<ToneSandhiSyllable>){
     match(lexicalAffixes: Array<LexicalAffix>){
-        let words: Array<ToneSandhiWord> = new Array();
+        //let words: Array<ToneSandhiWord> = new Array();
         let partOfSpeeches: Array<PartOfSpeech> = new Array();
+
         // unpack lexical affixes and get syllables from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
         for(let key in lexicalAffixes) {
             syllables.push(lexicalAffixes[key].syllable);
         }
-        //words.push(this.create(syllables));
-        let pos = new PartOfSpeech(this.create(syllables));
+
+        let pos = new PartOfSpeech(new ToneSandhiWord(syllables));
+        //pos.assignInternalSandhiRule(lexicalAffixes[lexicalAffixes.length-1]);
+        if(lexicalAffixes.length > 0) {
+            let stems: Array<LexicalStem> = lexicalAffixes[lexicalAffixes.length-1].lexicalStems;
+            for(let key in stems) {
+                let bf = new BaseForm();
+                bf.lexicalStem = stems[key];
+                pos.baseForms.push(bf);
+            }
+        }
+        console.log(pos.getBaseForm())
         partOfSpeeches.push(pos);
-        //return words;
+
         return partOfSpeeches
     }
 }
