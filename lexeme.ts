@@ -97,22 +97,18 @@ class BaseForm {
     lexicalStem: LexicalStem = new LexicalStem
     // check if the syllable is in baseform, if not just replace it, a.k.a. pop and push
     // if member allomorph is not null
-/*
-    isAllomorphObjectAvailable() {
-        if(this.lexicalAffix.allomorphOfToneMorpheme != null) {
-            return true;
-        }
-        return false;
-    }
-    */
+
+    //makeAffix(){}
 }
 
-/*
+
 class BaseFormForFreeTone extends BaseForm {
+    affix: Affix
+    //makeAffix(){}
 }
 
 class BaseFormForCheckedTone extends BaseForm {}
-*/
+
 
 class NasalizationRule extends InternalSandhiRule {}
 
@@ -255,11 +251,12 @@ export class ToneSandhiWords extends Words {
         let pos = new PartOfSpeech(new ToneSandhiWord(syllables));
         //pos.assignInternalSandhiRule(lexicalAffixes[lexicalAffixes.length-1]);
         if(lexicalAffixes.length > 0) {
-            let stems: Array<LexicalStem> = lexicalAffixes[lexicalAffixes.length-1].lexicalStems;
-            for(let key in stems) {
-                let bf = new BaseForm();
-                bf.lexicalStem = stems[key];
-                pos.baseForms.push(bf);
+            let stem: LexicalStem = lexicalAffixes[lexicalAffixes.length-1].lexicalStem;
+            let affixes: Array<Affix> = lexicalAffixes[lexicalAffixes.length-1].affixes;
+            if(affixes != null) {
+
+            } else {
+
             }
         }
         console.log(pos.getBaseForm())

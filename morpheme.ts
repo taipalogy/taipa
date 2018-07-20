@@ -1,6 +1,8 @@
 import { AlphabeticLetter, LetterFilters, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
         ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
-        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound } from './grapheme'
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound, Medial } from './grapheme'
+import { MedialA, MedialE, MedialI, MedialO, MedialU, MedialUR } from './grapheme'
+import { NasalInitialM, NasalInitialN, NasalInitialNG } from './grapheme'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
@@ -169,6 +171,7 @@ export class LexicalStem {
     //stem of checked tone
     //stem of neutral tone
     sounds: Array<Sound>;
+    // abstract factory
 }
 
 class PluralMorpheme {}
@@ -176,6 +179,9 @@ class PluralMorpheme {}
 export class Affix {
     toneMark: ToneMark
 }
+
+class Interfix extends Affix {}
+class Suffix extends Affix {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -187,7 +193,8 @@ class Morpheme {
 
 export class ToneSandhiMorpheme extends Morpheme {
     syllable: ToneSandhiSyllable;
-    allomorphOfToneMorpheme = null;
+    allomorphOfToneMorpheme: Allomorph = null; // required to populate lexical stems
+    matchedPattern: MatchedPattern; // required to populate lexical stems
 
     //constructor(letters: Array<AlphabeticLetter>) {
     constructor(syllable: ToneSandhiSyllable) {
@@ -296,8 +303,11 @@ export class ToneSandhiMorpheme extends Morpheme {
 
 
 export class LexicalAffix extends ToneSandhiMorpheme {
-    get lexicalStems() {
-        return [];
+    get lexicalStem() {
+        return null;
+    }
+    get affixes() {
+        return null;
     }
 }
 
@@ -308,6 +318,128 @@ export class LexicalSuffix extends LexicalAffix {}
 //------------------------------------------------------------------------------
 //  Syllable Patterns
 //------------------------------------------------------------------------------
+
+class SyllablePattern {
+    list: Array<Sound>
+
+    copyMatched(letter: AlphabeticLetter) {
+        for(let key in this.list) {
+            if(this.list[key].isEqualTo(letter)) {
+                return this.list[key];
+            }
+        }
+    }
+
+    toString() {
+        let str;
+        for(let i = 0; i < this.list.length; i++) {
+            if(i+1 < this.list.length) {
+                str += this.list[i].toString();
+                str += '|';
+            } else if(i+1 == this.list.length) {
+                str += this.list[i].toString();
+            }
+        }
+    }
+}
+
+class Medials extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new MedialA());
+        this.list.push(new MedialE());
+        this.list.push(new MedialI());
+        this.list.push(new MedialO());
+        this.list.push(new MedialU());
+        this.list.push(new MedialUR());
+    }
+}
+
+class NasalInitials extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new NasalInitialM());
+        this.list.push(new NasalInitialN());
+        this.list.push(new NasalInitialNG());
+    }
+}
+
+class FreeToneMarks extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new ToneMarkSS());
+        this.list.push(new ToneMarkY());
+        this.list.push(new ToneMarkW());
+        this.list.push(new ToneMarkX());
+        this.list.push(new ToneMarkXX());
+        this.list.push(new ToneMarkXXX());
+        this.list.push(new ToneMarkZS());
+        this.list.push(new ToneMarkZZS());
+    }
+}
+
+class NeutralFinals extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new ToneMarkH());
+        this.list.push(new ToneMarkF());
+    }
+}
+
+class CheckedFinals extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new ToneMarkP());
+        this.list.push(new ToneMarkT());
+        this.list.push(new ToneMarkK());
+        this.list.push(new ToneMarkB());
+        this.list.push(new ToneMarkD());
+        this.list.push(new ToneMarkG());
+    }
+}
+
+class Finals extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+
+        let nf = new NeutralFinals();
+        for(let key in nf) {
+            this.list.push(nf[key]);
+        }
+
+        let cf = new CheckedFinals();
+        for(let key in cf) {
+            this.list.push(cf[key]);
+        }
+    }
+}
+
+class Initials extends SyllablePattern {
+    list: Array<Sound> = new Array();
+}
+
+class Nasals extends SyllablePattern {}
+class FinalToneMarks extends SyllablePattern {}
+
+class SyllableNewPatterns {
+    list = new Array();
+
+    constructor() {
+        // one letter
+        this.list.push([new Medials()]);
+        this.list.push([new NasalInitials()]);
+
+        // two letters
+        this.list.push([new Medials(), new Medials()]);
+        this.list.push([new Medials(), new FreeToneMarks()]);
+    }
+}
 
 class SyllablePatterns {
     // match base forms only
@@ -448,6 +580,39 @@ export class Syllables {
         return new ToneSandhiSyllable(letters);
     }
 
+    getMatchedSyllableNewPattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
+        // get the longest matched syllable pattern
+        let sp = new SyllableNewPatterns();
+        let matchedLen = 0;
+        let mp = new MatchedPattern();
+        for(let m in sp.list) {
+            let min = Math.min(letters.length-beginOfSyllable, sp.list[m].length);
+            if(sp.list[m].length == min) {
+                for(let n = 0; n < min; n++) {
+                    if(letters[i+n].literal.search(new RegExp(sp.list[m][n].toString())) == 0) {
+                        if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
+                            matchedLen = min;
+                            // copy the matched letters
+                            for(let q = 0; q < matchedLen; q++) {
+                                mp.letters[q] = letters[i+q];
+                            }
+                            mp.pattern = sp.list[m];
+                            for(let key in sp.list[m]) {
+                                console.log(sp.list[m][key])
+                            }
+                            console.log(letters[i+n].literal)
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return mp;
+    }
+
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
         // get the longest matched syllable pattern
         let sp = new SyllablePatterns();
@@ -524,6 +689,7 @@ export class Syllables {
                     }
                     //tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
                     la =  new LexicalAffix(new ToneSandhiSyllable(msp.letters));
+                    la.matchedPattern = msp;
                     //baseforms = tsm.getBaseForms();
                     //slbs.push(tsm.syllable);
                     lexicalAffixes.push(la);

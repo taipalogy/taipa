@@ -44,6 +44,19 @@ export class Final extends Sound {}
 export class Nasal extends Sound {}
 export class ToneMark extends Sound {}
 
+export class MedialA extends Initial {letter = lowerLetters['a']}
+export class MedialE extends Initial {letter = lowerLetters['e']}
+export class MedialI extends Initial {letter = lowerLetters['i']}
+export class MedialO extends Initial {letter = lowerLetters['o']}
+export class MedialU extends Initial {letter = lowerLetters['u']}
+export class MedialUR extends Initial {letter = lowerLetters['ur']}
+
+export class NasalInitialM extends Initial {letter = lowerLetters['m']}
+export class NasalInitialN extends Initial {letter = lowerLetters['n']}
+export class NasalInitialNG extends Initial {letter = lowerLetters['ng']}
+
+export class InitialH extends Initial {letter = lowerLetters['h']}
+
 export class ZeroToneMark extends Sound {letter = null;}
 
 export class ToneMarkZS extends ToneMark {letter = lowerLetters['zs']}
@@ -73,8 +86,6 @@ export class FinalB extends Final {letter = lowerLetters['b']}
 export class FinalD extends Final {letter = lowerLetters['d']}
 export class FinalG extends Final {letter = lowerLetters['g']}
 export class FinalF extends Final {letter = lowerLetters['f']}
-
-class InitialH extends Initial {letter = lowerLetters['h']}
 
 
 //------------------------------------------------------------------------------
@@ -182,10 +193,6 @@ export class AlphabeticLetter extends Letter {
         this.literal += c.symbol;
     }
 }
-
-class AbstractLetterFactory {}
-
-export class AlphabetFactory extends AbstractLetterFactory {}
 
 class MatchedSequence {
     characters: Array<Character> = new Array();
