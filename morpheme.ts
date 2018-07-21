@@ -1,11 +1,15 @@
-import { AlphabeticLetter, LetterFilters, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
+import { AlphabeticLetter, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
         ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
-        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound, Medial } from './grapheme'
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound } from './grapheme'
 import { MedialA, MedialE, MedialI, MedialO, MedialU, MedialUR } from './grapheme'
 import { NasalInitialM, NasalInitialN, NasalInitialNG } from './grapheme'
+import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, InitialP, InitialT, InitialK, InitialB, InitialD,
+        InitialG, InitialH } from './grapheme'
+import { NasalM, NasalN, NasalNG, NasalNN } from './grapheme'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
+
 
 //------------------------------------------------------------------------------
 //  Allomorph
@@ -366,18 +370,30 @@ class NasalInitials extends SyllablePattern {
     }
 }
 
+class ToneMarks extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new ToneMarkX());
+        this.list.push(new ToneMarkY());
+    }
+}
+
 class FreeToneMarks extends SyllablePattern {
     list: Array<Sound> = new Array();
     constructor() {
         super();
         this.list.push(new ToneMarkSS());
-        this.list.push(new ToneMarkY());
         this.list.push(new ToneMarkW());
-        this.list.push(new ToneMarkX());
         this.list.push(new ToneMarkXX());
         this.list.push(new ToneMarkXXX());
         this.list.push(new ToneMarkZS());
         this.list.push(new ToneMarkZZS());
+
+        let tm = new ToneMarks();
+        for(let key in tm) {
+            this.list.push(tm[key]);
+        }
     }
 }
 
@@ -385,8 +401,8 @@ class NeutralFinals extends SyllablePattern {
     list: Array<Sound> = new Array();
     constructor() {
         super();
-        this.list.push(new ToneMarkH());
-        this.list.push(new ToneMarkF());
+        this.list.push(new FinalH());
+        this.list.push(new FinalF());
     }
 }
 
@@ -394,12 +410,12 @@ class CheckedFinals extends SyllablePattern {
     list: Array<Sound> = new Array();
     constructor() {
         super();
-        this.list.push(new ToneMarkP());
-        this.list.push(new ToneMarkT());
-        this.list.push(new ToneMarkK());
-        this.list.push(new ToneMarkB());
-        this.list.push(new ToneMarkD());
-        this.list.push(new ToneMarkG());
+        this.list.push(new FinalP());
+        this.list.push(new FinalT());
+        this.list.push(new FinalK());
+        this.list.push(new FinalB());
+        this.list.push(new FinalD());
+        this.list.push(new FinalG());
     }
 }
 
@@ -422,10 +438,86 @@ class Finals extends SyllablePattern {
 
 class Initials extends SyllablePattern {
     list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new InitialC());
+        this.list.push(new InitialJ());
+        this.list.push(new InitialL());
+        this.list.push(new InitialQ());
+        this.list.push(new InitialS());
+        this.list.push(new InitialV());
+        this.list.push(new InitialZ());
+
+        this.list.push(new InitialP());
+        this.list.push(new InitialT());
+        this.list.push(new InitialK());
+        this.list.push(new InitialB());
+        this.list.push(new InitialD());
+        this.list.push(new InitialG());
+
+        this.list.push(new InitialH());
+
+        let ni = new NasalInitials();
+        for(let key in ni) {
+            this.list.push(ni[key]);
+        }
+    }
 }
 
-class Nasals extends SyllablePattern {}
-class FinalToneMarks extends SyllablePattern {}
+class Nasals extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new NasalM());
+        this.list.push(new NasalN());
+        this.list.push(new NasalNG());
+        this.list.push(new NasalNN());
+    }
+}
+
+class CheckedToneMarks extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new ToneMarkP());
+        this.list.push(new ToneMarkT());
+        this.list.push(new ToneMarkK());
+        this.list.push(new ToneMarkB());
+        this.list.push(new ToneMarkD());
+        this.list.push(new ToneMarkG());
+    }
+}
+
+class NeutralToneMarks extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+        this.list.push(new ToneMarkH());
+        this.list.push(new ToneMarkF());
+    }
+}
+
+class FinalToneMarks extends SyllablePattern {
+    list: Array<Sound> = new Array();
+    constructor() {
+        super();
+
+        let ctm = new CheckedToneMarks();
+        for(let key in ctm) {
+            this.list.push(ctm[key]);
+        }
+
+        let ntm = new NeutralToneMarks();
+        for(let key in ntm) {
+            this.list.push(ntm[key]);
+        }
+
+        let tm = new ToneMarks();
+        for(let key in tm) {
+            this.list.push(tm[key]);
+        }
+    }
+}
 
 class SyllableNewPatterns {
     list = new Array();
@@ -438,56 +530,38 @@ class SyllableNewPatterns {
         // two letters
         this.list.push([new Medials(), new Medials()]);
         this.list.push([new Medials(), new FreeToneMarks()]);
-    }
-}
-
-class SyllablePatterns {
-    // match base forms only
-
-    list = new Array();
-
-    constructor() {
-        let lf = new LetterFilters();
-
-        // one letter
-        this.list.push([lf.medialLetters]);
-        this.list.push([lf.nasalInitialLetters]);
-
-        // two letters
-        this.list.push([lf.medialLetters, lf.medialLetters]);
-        this.list.push([lf.medialLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.medialLetters, lf.finalLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters]);        
-        this.list.push([lf.nasalInitialLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.nasalInitialLetters, lf.nasalLetters]);
+        this.list.push([new Medials(), new Finals()]);
+        this.list.push([new Initials(), new Medials()]);
+        this.list.push([new NasalInitials, new FreeToneMarks()]);
+        this.list.push([new NasalInitials(), new Nasals()]);
 
         // three letters
-        this.list.push([lf.medialLetters, lf.medialLetters, lf.medialLetters]);
-        this.list.push([lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.medialLetters, lf.medialLetters, lf.nasalLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.finalLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.nasalLetters]);
-        this.list.push([lf.nasalInitialLetters, lf.nasalLetters, lf.neutralFinalLetters]);
-        this.list.push([lf.initialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.medialLetters, lf.finalLetters, lf.finalToneMarkLetters]);
+        this.list.push([new Medials(), new Medials(), new Medials()]);
+        this.list.push([new Medials(), new Medials(), new FreeToneMarks()]);
+        this.list.push([new Medials(), new Medials(), new Nasals()]);
+        this.list.push([new Initials(), new Medials(), new FreeToneMarks()]);
+        this.list.push([new Initials(), new Medials(), new Finals()]);
+        this.list.push([new Initials(), new Medials(), new Medials()]);
+        this.list.push([new Initials(), new Medials(), new Nasals()]);
+        this.list.push([new Nasals(), new Nasals(), new NeutralFinals()]);
+        this.list.push([new Initials(), new Nasals(), new FreeToneMarks()]);
+        this.list.push([new Medials(), new Finals(), new FinalToneMarks()]);
 
         // four letters
-        this.list.push([lf.medialLetters, lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.medialLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.finalLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.finalLetters, lf.finalToneMarkLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.nasalLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.nasalLetters, lf.neutralFinalLetterH]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.medialLetters, lf.medialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.finalLetters, lf.finalToneMarkLetters]);
+        this.list.push([new Medials(), new Medials(), new Medials(), new FreeToneMarks()]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new Medials()]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new FreeToneMarks()]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new Finals()]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new Nasals()]);
+        this.list.push([new Initials(), new Medials(), new Nasals(), new NeutralFinals()]);
+        this.list.push([new Initials(), new Medials(), new Nasals(), new FreeToneMarks()]);
+        this.list.push([new Medials(), new Medials(), new Nasals(), new FreeToneMarks()]);
+        this.list.push([new Initials(), new Medials(), new Finals(), new FinalToneMarks]);
 
         // five letters
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.nasalLetters, lf.neutralFinalLetters]);
-        this.list.push([lf.initialLetters, lf.medialLetters, lf.medialLetters, lf.nasalLetters, lf.freeToneMarkLetters]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new Nasals(), new NeutralFinals()]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new Nasals(), new FreeToneMarks()]);
+        this.list.push([new Initials(), new Medials(), new Medials(), new Finals(), new FinalToneMarks()]);
 
         // lueifx, lurifx
     }
@@ -613,45 +687,8 @@ export class Syllables {
         return mp;
     }
 
-    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
-        // get the longest matched syllable pattern
-        let sp = new SyllablePatterns();
-        let matchedLen = 0;
-        let mp = new MatchedPattern();
-        for(let m in sp.list) {
-            let min = Math.min(letters.length-beginOfSyllable, sp.list[m].length);
-            //console.log("min: %d", min)
-            if(sp.list[m].length == min) {
-                for(let n = 0; n < min; n++) {
-                    //console.log("i: %d. n: %d.", i, n)
-                    //console.log(letters)
-                    if(letters[i+n].literal.search(new RegExp(sp.list[m][n])) == 0) {
-                        if(n+1 == min && min > matchedLen) {
-                            // to make sure it is longer than previous patterns
-                            // last letter matched for the pattern
-                            matchedLen = min;
-                            // copy the matched letters
-                            for(let q = 0; q < matchedLen; q++) {
-                                mp.letters[q] = letters[i+q];
-                            }
-                            mp.pattern = sp.list[m];
-                            console.log(sp.list[m])
-                            console.log(letters[i+n].literal)
-                            //console.log(new RegExp(sp.list[m][n]))
-                            //console.log(matchedLen)    
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-        return mp;
-    }
-
-    //match(letters: Array<AlphabeticLetter>) {
     match(sounds: Array<Sound>) {
-        //let syllables: Array<ToneSandhiSyllable> = new Array();
+
         let lexicalAffixes: Array<LexicalAffix> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
         
@@ -671,10 +708,9 @@ export class Syllables {
             let msp: MatchedPattern;
             if(i-beginOfSyllable == 0) {
                 console.log("i:%d. begin of syllable hit: %d", i, beginOfSyllable);
-                //ss = this.list.filter(s => s.letters[0].literal === letters[i].literal);
                 
                 console.log(letters[letters.length-1].literal)
-                msp = this.getMatchedSyllablePattern(letters, i, beginOfSyllable);
+                msp = this.getMatchedSyllableNewPattern(letters, i, beginOfSyllable);
 
                 console.log("matchedLen: %d", msp.matchedLength);
                 console.log(msp.pattern);

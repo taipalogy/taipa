@@ -44,6 +44,10 @@ export class Final extends Sound {}
 export class Nasal extends Sound {}
 export class ToneMark extends Sound {}
 
+//------------------------------------------------------------------------------
+//  Initial, Medial, Nasal, Final Consonant, Tone Mark
+//------------------------------------------------------------------------------
+
 export class MedialA extends Initial {letter = lowerLetters['a']}
 export class MedialE extends Initial {letter = lowerLetters['e']}
 export class MedialI extends Initial {letter = lowerLetters['i']}
@@ -55,7 +59,27 @@ export class NasalInitialM extends Initial {letter = lowerLetters['m']}
 export class NasalInitialN extends Initial {letter = lowerLetters['n']}
 export class NasalInitialNG extends Initial {letter = lowerLetters['ng']}
 
+export class InitialC extends Initial {letter = lowerLetters['c']}
+export class InitialJ extends Initial {letter = lowerLetters['j']}
+export class InitialL extends Initial {letter = lowerLetters['l']}
+export class InitialQ extends Initial {letter = lowerLetters['q']}
+export class InitialS extends Initial {letter = lowerLetters['s']}
+export class InitialV extends Initial {letter = lowerLetters['v']}
+export class InitialZ extends Initial {letter = lowerLetters['z']}
+
+export class InitialP extends Initial {letter = lowerLetters['p']}
+export class InitialT extends Initial {letter = lowerLetters['t']}
+export class InitialK extends Initial {letter = lowerLetters['k']}
+export class InitialB extends Initial {letter = lowerLetters['b']}
+export class InitialD extends Initial {letter = lowerLetters['d']}
+export class InitialG extends Initial {letter = lowerLetters['g']}
+
 export class InitialH extends Initial {letter = lowerLetters['h']}
+
+export class NasalM extends Initial {letter = lowerLetters['m']}
+export class NasalN extends Initial {letter = lowerLetters['n']}
+export class NasalNG extends Initial {letter = lowerLetters['ng']}
+export class NasalNN extends Initial {letter = lowerLetters['nn']}
 
 export class ZeroToneMark extends Sound {letter = null;}
 
@@ -86,84 +110,6 @@ export class FinalB extends Final {letter = lowerLetters['b']}
 export class FinalD extends Final {letter = lowerLetters['d']}
 export class FinalG extends Final {letter = lowerLetters['g']}
 export class FinalF extends Final {letter = lowerLetters['f']}
-
-
-//------------------------------------------------------------------------------
-//  Initial, Medial, Nasal, Final Consonant, Tone Mark
-//------------------------------------------------------------------------------
-
-export class LetterFilters {
-    nonNasalNonFinalInitialLetters: string = lowerLetters['c'].literal + '|' +
-                                        lowerLetters['j'].literal + '|' +
-                                        lowerLetters['l'].literal + '|' +
-                                        lowerLetters['q'].literal + '|' +
-                                        lowerLetters['s'].literal + '|' +
-                                        lowerLetters['v'].literal + '|' +
-                                        lowerLetters['z'].literal;
-
-    initialNeutralLetterH: string = new InitialH().toString();//lowerLetters['h'].literal;
-
-    nasalInitialLetters: string = lowerLetters['m'].literal + '|' +
-                                    lowerLetters['n'].literal + '|' +
-                                    lowerLetters['ng'].literal;
-
-    medialLetters: string = lowerLetters['a'].literal + '|' +
-                            lowerLetters['e'].literal + '|' +
-                            lowerLetters['i'].literal + '|' +
-                            lowerLetters['o'].literal + '|' +
-                            lowerLetters['u'].literal + '|' +
-                            lowerLetters['ur'].literal;
-
-    nasalMedialLetters: string = lowerLetters['m'].literal + '|' +
-                            lowerLetters['ng'].literal;
-
-    nasalLetters: string = lowerLetters['m'].literal + '|' +
-                            lowerLetters['n'].literal + '|' +
-                            lowerLetters['ng'].literal + '|' +
-                            lowerLetters['nn'].literal;
-
-    neutralFinalLetterH: string = new FinalH().toString();//lowerLetters['h'].literal;
-                    
-    neutralFinalLetters: string = lowerLetters['h'].literal + '|' +
-                                  lowerLetters['f'].literal;
-    
-    neutralToneMarkLetterX: string = new ToneMarkX().toString();//lowerLetters['x'].literal;
-    
-    neutralToneMarkLetterY: string = new ToneMarkY().toString();//lowerLetters['y'].literal;
-
-    checkedFinalLetters: string = lowerLetters['p'].literal + '|' +
-                                    lowerLetters['t'].literal + '|' +
-                                    lowerLetters['k'].literal + '|' +
-                                    lowerLetters['b'].literal + '|' +
-                                    lowerLetters['d'].literal + '|' +
-                                    lowerLetters['g'].literal;
-
-    checkedToneMarkLetters: string = this.checkedFinalLetters;
-
-    initialCheckedLetters: string = this.checkedFinalLetters
-
-    freeToneMarkLetters: string = lowerLetters['ss'].literal + '|' +
-                                    lowerLetters['y'].literal + '|' +
-                                    lowerLetters['w'].literal + '|' +
-                                    lowerLetters['x'].literal + '|' +
-                                    lowerLetters['xx'].literal + '|' +
-                                    lowerLetters['xxx'].literal + '|' +
-                                    new ToneMarkZS().toString() + '|' +
-                                    lowerLetters['zzs'].literal;
-                                    
-    finalLetters: string = this.checkedFinalLetters + '|' +
-                          this.neutralFinalLetters;
-
-    initialLetters: string = this.nasalInitialLetters + '|' +
-                                this.nonNasalNonFinalInitialLetters + '|' +
-                                this.initialCheckedLetters + '|' +
-                                this.initialNeutralLetterH;
-
-    finalToneMarkLetters: string = this.checkedToneMarkLetters + '|' +
-                                    this.neutralFinalLetters + '|' +
-                                    this.neutralToneMarkLetterX + '|' +
-                                    this.neutralToneMarkLetterY;
-}
 
 //------------------------------------------------------------------------------
 //  Letter
