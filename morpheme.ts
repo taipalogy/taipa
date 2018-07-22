@@ -10,6 +10,10 @@ import { GrammaticalUnit } from './expression'
 import { Context } from './context'
 import { LetterMatcher } from './lettermatcher'
 
+//------------------------------------------------------------------------------
+//  Morph
+//------------------------------------------------------------------------------
+
 
 //------------------------------------------------------------------------------
 //  Allomorph
@@ -26,7 +30,7 @@ export class FreeAllomorph extends Allomorph {
     baseToneMarks: Array<ToneMark> = null;
 }
 
-class CheckedAllomorph extends Allomorph {
+export class CheckedAllomorph extends Allomorph {
     final: Final;
 }
 
@@ -180,12 +184,12 @@ export class LexicalStem {
 
 class PluralMorpheme {}
 
-export class Affix {
-    toneMark: ToneMark
+export class LexicalAffix {
+    toneMark: ToneMark = new ToneMark();
 }
 
-class Interfix extends Affix {}
-class Suffix extends Affix {}
+class LexicalInterfix extends LexicalAffix {}
+class LexicalSuffix extends LexicalAffix {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -300,23 +304,25 @@ export class ToneSandhiMorpheme extends Morpheme {
 }
 
 
-export class LexicalAffix extends ToneSandhiMorpheme {
-    lexicalStem: LexicalStem
-    affixes: Array<Affix>
+export class Affix extends ToneSandhiMorpheme {
+    //lexicalStem: LexicalStem
+    //lexicalAffixes: Array<LexicalAffix>
 
     populateLexicalStem(msp: MatchedPattern) {
+        /*
         if(this.allomorphOfToneMorpheme == null) {
             this.lexicalStem = new LexicalStem();
             for(let key in this.syllable.letters) {
                 this.lexicalStem[key] = msp.pattern[key].copyMatched(this.syllable.letters[key]);
             }
         }
+        */
     }
 }
 
-class LexicalPrefix extends LexicalAffix {}
-class LexicalInfix extends LexicalAffix {}
-export class LexicalSuffix extends LexicalAffix {}
+class Prefix extends Affix {}
+class Infix extends Affix {}
+export class Suffix extends Affix {}
 
 //------------------------------------------------------------------------------
 //  Syllable Patterns
@@ -643,7 +649,7 @@ export class Syllables {
 
     match(sounds: Array<Sound>) {
 
-        let lexicalAffixes: Array<LexicalAffix> = new Array();
+        let affixes: Array<Affix> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
         
         // unpack sounds and get letters from them
@@ -671,19 +677,19 @@ export class Syllables {
                 console.log(msp.letters)
 
                 //let tsm: ToneSandhiMorpheme;
-                let la: LexicalAffix;
+                let la: Affix;
                 //let baseforms: Array<ToneSandhiSyllable> = new Array();
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         console.log("msp.letters: %s", msp.letters[j].literal)
                     }
                     //tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
-                    la =  new LexicalAffix(new ToneSandhiSyllable(msp.letters));
-                    la.populateLexicalStem(msp);
+                    la =  new Affix(new ToneSandhiSyllable(msp.letters));
+                    //la.populateLexicalStem(msp);
 
                     //baseforms = tsm.getBaseForms();
                     //slbs.push(tsm.syllable);
-                    lexicalAffixes.push(la);
+                    affixes.push(la);
                 }
 
                 /*
@@ -708,7 +714,7 @@ export class Syllables {
                     //slbs.push(tsm.syllable);
                 }
 */
-                console.log(lexicalAffixes);
+                console.log(affixes);
                 //for(let p in syllables) {
                 //    console.log(syllables[p].literal)
                 //}
@@ -717,16 +723,16 @@ export class Syllables {
                 console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
             }
 
-            console.log(lexicalAffixes);
+            console.log(affixes);
             //for(let p in syllables) {
             //    console.log(syllables[p].literal)
             //}
             
             //if(slbs.length == 0) {
-            if(lexicalAffixes.length == 0) {
+            if(affixes.length == 0) {
                 console.log("nothing matched");
             //} else if(slbs.length >= 1) {
-            } else if(lexicalAffixes.length >= 1) {
+            } else if(affixes.length >= 1) {
                 //beginOfSyllable += msp.letters.length;
                 if(msp.matchedLength > 0) {
                     //for(let k in slbs) {
@@ -747,7 +753,7 @@ export class Syllables {
         //return syllables;
         //console.log(lexicalAffixes);
         //console.log("length of lexical affixes: %d", lexicalAffixes.length);
-        return lexicalAffixes;
+        return affixes;
     }
 }
 

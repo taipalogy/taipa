@@ -1,136 +1,44 @@
 
-import { ToneSandhiSyllable, LexicalAffix, LexicalStem, Affix } from './morpheme';
+import { ToneSandhiSyllable, LexicalAffix, LexicalStem, Affix, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
 import { GrammaticalUnit } from './expression'
-import { checkAndUpdateBinding } from '../../../node_modules/@angular/core/src/view/util';
+import { ThrowStmt } from '../../../node_modules/@angular/compiler';
+
 
 //------------------------------------------------------------------------------
 //  Internal Sandhi Rule
 //------------------------------------------------------------------------------
 
 class DerivationalAffix {}
-class InflectionalAffix {}
 
-export class InternalSandhiRule {}
-
-class ToneSandhiRule extends InternalSandhiRule {
+export class InternalSandhiRule {
     lexicalStem: LexicalStem
-    affix: Affix
+    lexicalAffix: LexicalAffix
 }
 
-class FreeToneLexicalStem extends LexicalStem {}
-class CheckedToneLexicalStem extends LexicalStem {}
+class Assimilation extends InternalSandhiRule {}
+class ConsonantMutation extends InternalSandhiRule {}
+class Epenthesis extends InternalSandhiRule {}
 
-class NeutralToneLexicalStemH extends CheckedToneLexicalStem {}
-class CheckedToneLexicalStemBDGF extends CheckedToneLexicalStem {}
-
-export class FreeToneSuffix extends Affix {}
-export class CheckedToneSuffix extends Affix {}
-
-class ZeroSuffix extends FreeToneSuffix {}
-class SuffixZS extends FreeToneSuffix {}
-export class SuffixW extends FreeToneSuffix {}
-
-export class SuffixY extends Affix {}
-export class SuffixX extends Affix {}
-
-class SuffixP extends CheckedToneSuffix {}
-class SuffixT extends CheckedToneSuffix {}
-class SuffixK extends CheckedToneSuffix {}
-class SuffixH extends CheckedToneSuffix {}
-class SuffixB extends CheckedToneSuffix {}
-class SuffixD extends CheckedToneSuffix {}
-class SuffixG extends CheckedToneSuffix {}
-class SuffixF extends CheckedToneSuffix {}
-
-class FreeToneInterfix extends Affix {}
-class CheckedToneInterfix extends Affix {}
-
-class InterfixZS extends FreeToneInterfix {}
-class InterfixY extends FreeToneInterfix {}
-class InterfixW extends FreeToneInterfix {}
-class InterfixSS extends FreeToneInterfix {}
-class InterfixXX extends FreeToneInterfix {}
-class InterfixXXX extends FreeToneInterfix {}
-
-class InterfixP extends CheckedToneInterfix {}
-class InterfixT extends CheckedToneInterfix {}
-class InterfixK extends CheckedToneInterfix {}
-class InterfixH extends CheckedToneInterfix {}
-class InterfixB extends CheckedToneInterfix {}
-class InterfixD extends CheckedToneInterfix {}
-class InterfixG extends CheckedToneInterfix {}
-class InterfixF extends CheckedToneInterfix {}
-class InterfixX extends CheckedToneInterfix {}
-
-export class FreeToneSandhiRule extends ToneSandhiRule {
-    baseAffix: Affix
-}
-
-export class CheckedToneSandhiRule extends ToneSandhiRule {
-}
-
-class FreeToneSandhiRuleX extends FreeToneSandhiRule {
-    baseAffix = null;
-}
-
-class FreeToneSandhiRuleY extends FreeToneSandhiRule {
-    lexicalStem = new FreeToneLexicalStem();
-    affix = new SuffixY()
-    baseAffix = new SuffixW();
-}
-
-class CheckedToneSandhiRuleX extends CheckedToneSandhiRule {
-    lexicalStem = new CheckedToneLexicalStemBDGF();
-    affix = new SuffixX();
-}
-
-class CheckedToneSandhiRuleY extends CheckedToneSandhiRule {
-    lexicalStem = new NeutralToneLexicalStemH();
-    affix = new SuffixY();
-    verify(syllable: ToneSandhiSyllable) {
-        //this.lexicalStem.isLastSoundNeutralH(syllable);
-        //this.affix.isY(syllable);
-    }
-}
-
-class BaseForm {
-    lexicalStem: LexicalStem = new LexicalStem
+class InflectionalAffix {
+    lexicalAffix: LexicalAffix = new LexicalAffix();
     // check if the syllable is in baseform, if not just replace it, a.k.a. pop and push
     // if member allomorph is not null
 
     //makeAffix(){}
 }
 
-
-class BaseFormForFreeTone extends BaseForm {
-    affix: Affix
+class FreeInflectionalAffix extends InflectionalAffix {
+    baseLexicalAffixes: Array<LexicalAffix> = new Array();
     //makeAffix(){}
 }
 
-class BaseFormForCheckedTone extends BaseForm {}
-
+class CheckedInflectionalAffix extends InflectionalAffix {
+}
 
 class NasalizationRule extends InternalSandhiRule {}
 
 class InternalSandhiRules {
-    /*
-    lexicalAffix: LexicalAffix
 
-    set LexicalAffix(lexicalAffix: LexicalAffix) {
-        this.lexicalAffix = lexicalAffix;
-    }
-
-    get BaseForm() {
-        let bf = new BaseForm();
-        if(this.lexicalAffix != null) {
-            if(this.lexicalAffix.allomorphOfToneMorpheme != null) {
-                bf.lexicalStem.populate(this.lexicalAffix.allomorphOfToneMorpheme);
-                return bf;
-            }
-        }
-        return null;
-    }
-    */
 }
 
 
@@ -139,27 +47,38 @@ class Lexeme extends GrammaticalUnit {
 
 class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
-    internalSandhiRule: InternalSandhiRule
-    baseForms: Array<BaseForm>
-    assimilation
-    consonantMutation
+    inflectionalAffix: InflectionalAffix
 
     constructor(word: ToneSandhiWord) {
         super();
         this.word = word;
+        this.inflectionalAffix = new InflectionalAffix();
+    }
+
+    assignInflectionalAffix(allomorph: Allomorph) {
+        if(allomorph instanceof FreeAllomorph) {
+            let fia = new FreeInflectionalAffix();
+            fia.lexicalAffix.toneMark = allomorph.toneMark;
+            for(let key in allomorph.baseToneMarks) {
+                //fia.baseLexicalAffixes[key].toneMark = allomorph.baseToneMarks[key];
+            }
+        } else if(allomorph instanceof CheckedAllomorph) {
+            let cia = new CheckedInflectionalAffix();
+            //cia.lexicalAffix.toneMark = allomorph.toneMark;
+        }
     }
 
     assignInternalSandhiRule(lexicalAffix: LexicalAffix) {
     }
 
     getBaseForm() {
+        if(this.inflectionalAffix.lexicalAffix instanceof FreeInflectionalAffix) {
+        } else if(this.inflectionalAffix.lexicalAffix instanceof CheckedInflectionalAffix) {
+        }
     }
 }
 
 export class PartOfSpeech extends ToneSandhiLexeme {
-    internalSandhiRules: InternalSandhiRule = null;
-    isAssimilated() {}
-    isConsonantMutated() {}
 }
 
 class Verb extends PartOfSpeech {}
@@ -238,23 +157,21 @@ export class Words {
 }
 
 export class ToneSandhiWords extends Words {
-    match(lexicalAffixes: Array<LexicalAffix>){
+    match(affixes: Array<Affix>){
         //let words: Array<ToneSandhiWord> = new Array();
         let partOfSpeeches: Array<PartOfSpeech> = new Array();
 
         // unpack lexical affixes and get syllables from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
-        for(let key in lexicalAffixes) {
-            syllables.push(lexicalAffixes[key].syllable);
+        for(let key in affixes) {
+            syllables.push(affixes[key].syllable);
         }
 
         let pos = new PartOfSpeech(new ToneSandhiWord(syllables));
         //pos.assignInternalSandhiRule(lexicalAffixes[lexicalAffixes.length-1]);
-        if(lexicalAffixes.length > 0) {
-            let stem: LexicalStem = lexicalAffixes[lexicalAffixes.length-1].lexicalStem;
-            let affixes: Array<Affix> = lexicalAffixes[lexicalAffixes.length-1].affixes;
-            if(affixes != null) {
-
+        if(affixes.length > 0) {
+            if(affixes[affixes.length-1].allomorphOfToneMorpheme != null) {
+                pos.assignInflectionalAffix(affixes[affixes.length-1].allomorphOfToneMorpheme);
             } else {
 
             }

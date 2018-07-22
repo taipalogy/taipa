@@ -1,5 +1,5 @@
 
-import { LexicalAffix,  } from './morpheme'
+import { Affix,  } from './morpheme'
 import { ToneSandhiWords } from './lexeme'
 
 //------------------------------------------------------------------------------
@@ -8,7 +8,7 @@ import { ToneSandhiWords } from './lexeme'
 
 export class ToneSandhiWordMatcher {
     //syllables: Array<ToneSandhiSyllable>;
-    lexicalAffixes: Array<LexicalAffix>;
+    affixes: Array<Affix>;
 /*
     constructor(syllables: Array<ToneSandhiSyllable>) {
         this.syllables = new Array();
@@ -16,17 +16,17 @@ export class ToneSandhiWordMatcher {
     }
 */    
 
-    constructor(lexicalAffixes: Array<LexicalAffix>) {
-        this.lexicalAffixes = new Array();
-        this.lexicalAffixes = lexicalAffixes;
+    constructor(affixes: Array<Affix>) {
+        this.affixes = new Array();
+        this.affixes = affixes;
     }
 
     match() {
         let ws = new ToneSandhiWords();
         //console.log(this.syllables);
-        console.log(this.lexicalAffixes);
+        console.log(this.affixes);
         //let words = ws.match(this.syllables);
-        let partOfSpeeches = ws.match(this.lexicalAffixes);
+        let partOfSpeeches = ws.match(this.affixes);
         //console.log(words);
         //console.log(words[0].literal);
         console.log(partOfSpeeches);
