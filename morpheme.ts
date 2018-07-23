@@ -24,6 +24,10 @@ class ToneMorpheme {
 
 export class Allomorph {
     toneMark: ToneMark
+
+    isZeroToneMark() {
+        //if(this.toneMark.isLetterNull()){}
+    }
 }
 
 export class FreeAllomorph extends Allomorph {
@@ -184,12 +188,20 @@ export class LexicalStem {
 
 class PluralMorpheme {}
 
-export class LexicalAffix {
+export class Affix {
     toneMark: ToneMark = new ToneMark();
 }
 
-class LexicalInterfix extends LexicalAffix {}
-class LexicalSuffix extends LexicalAffix {}
+class Interfix extends Affix {}
+class Suffix extends Affix {}
+
+class DerivationalAffix {}
+
+class InflectionalAffix {}
+class GrammaticalSuffix {
+    // desinence
+}
+class InflectionalStem {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -304,7 +316,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 }
 
 
-export class Affix extends ToneSandhiMorpheme {
+export class RootMorpheme extends ToneSandhiMorpheme {
     //lexicalStem: LexicalStem
     //lexicalAffixes: Array<LexicalAffix>
 
@@ -319,10 +331,6 @@ export class Affix extends ToneSandhiMorpheme {
         */
     }
 }
-
-class Prefix extends Affix {}
-class Infix extends Affix {}
-export class Suffix extends Affix {}
 
 //------------------------------------------------------------------------------
 //  Syllable Patterns
@@ -649,7 +657,7 @@ export class Syllables {
 
     match(sounds: Array<Sound>) {
 
-        let affixes: Array<Affix> = new Array();
+        let affixes: Array<RootMorpheme> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
         
         // unpack sounds and get letters from them
@@ -677,14 +685,14 @@ export class Syllables {
                 console.log(msp.letters)
 
                 //let tsm: ToneSandhiMorpheme;
-                let la: Affix;
+                let la: RootMorpheme;
                 //let baseforms: Array<ToneSandhiSyllable> = new Array();
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         console.log("msp.letters: %s", msp.letters[j].literal)
                     }
                     //tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
-                    la =  new Affix(new ToneSandhiSyllable(msp.letters));
+                    la =  new RootMorpheme(new ToneSandhiSyllable(msp.letters));
                     //la.populateLexicalStem(msp);
 
                     //baseforms = tsm.getBaseForms();

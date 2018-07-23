@@ -1,38 +1,36 @@
 
-import { ToneSandhiSyllable, LexicalAffix, LexicalStem, Affix, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
+import { ToneSandhiSyllable, Affix, LexicalStem, RootMorpheme, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
 import { GrammaticalUnit } from './expression'
-import { ThrowStmt } from '../../../node_modules/@angular/compiler';
 
 
 //------------------------------------------------------------------------------
 //  Internal Sandhi Rule
 //------------------------------------------------------------------------------
 
-class DerivationalAffix {}
 
 export class InternalSandhiRule {
     lexicalStem: LexicalStem
-    lexicalAffix: LexicalAffix
+    Affix: Affix
 }
 
 class Assimilation extends InternalSandhiRule {}
 class ConsonantMutation extends InternalSandhiRule {}
 class Epenthesis extends InternalSandhiRule {}
 
-class InflectionalAffix {
-    lexicalAffix: LexicalAffix = new LexicalAffix();
+class InflectionalEnding {
+    affix: Affix = new Affix();
     // check if the syllable is in baseform, if not just replace it, a.k.a. pop and push
     // if member allomorph is not null
 
     //makeAffix(){}
 }
 
-class FreeInflectionalAffix extends InflectionalAffix {
-    baseLexicalAffixes: Array<LexicalAffix> = new Array();
+class FreeInflectionalEnding extends InflectionalEnding {
+    baseAffixes: Array<Affix> = new Array();
     //makeAffix(){}
 }
 
-class CheckedInflectionalAffix extends InflectionalAffix {
+class CheckedInflectionalEnding extends InflectionalEnding {
 }
 
 class NasalizationRule extends InternalSandhiRule {}
@@ -47,34 +45,39 @@ class Lexeme extends GrammaticalUnit {
 
 class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
-    inflectionalAffix: InflectionalAffix
+    inflectionalAffix: InflectionalEnding
 
     constructor(word: ToneSandhiWord) {
         super();
         this.word = word;
-        this.inflectionalAffix = new InflectionalAffix();
+        this.inflectionalAffix = new InflectionalEnding();
     }
 
     assignInflectionalAffix(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
-            let fia = new FreeInflectionalAffix();
-            fia.lexicalAffix.toneMark = allomorph.toneMark;
+            let fia = new FreeInflectionalEnding();
+            fia.affix.toneMark = allomorph.toneMark;
             for(let key in allomorph.baseToneMarks) {
-                //fia.baseLexicalAffixes[key].toneMark = allomorph.baseToneMarks[key];
+                let a = new Affix();
+                a.toneMark = allomorph.baseToneMarks[key];
+                fia.baseAffixes.push(a);
             }
         } else if(allomorph instanceof CheckedAllomorph) {
-            let cia = new CheckedInflectionalAffix();
-            //cia.lexicalAffix.toneMark = allomorph.toneMark;
+            let cia = new CheckedInflectionalEnding();
+            cia.affix.toneMark = allomorph.toneMark;
         }
     }
 
-    assignInternalSandhiRule(lexicalAffix: LexicalAffix) {
+    assignInternalSandhiRule(affix: Affix) {
     }
 
     getBaseForm() {
-        if(this.inflectionalAffix.lexicalAffix instanceof FreeInflectionalAffix) {
-        } else if(this.inflectionalAffix.lexicalAffix instanceof CheckedInflectionalAffix) {
+        if(this.inflectionalAffix != null) {
+            if(this.inflectionalAffix instanceof FreeInflectionalEnding) {
+            } else if(this.inflectionalAffix instanceof CheckedInflectionalEnding) {
+            }    
         }
+
     }
 }
 
@@ -157,7 +160,7 @@ export class Words {
 }
 
 export class ToneSandhiWords extends Words {
-    match(affixes: Array<Affix>){
+    match(affixes: Array<RootMorpheme>){
         //let words: Array<ToneSandhiWord> = new Array();
         let partOfSpeeches: Array<PartOfSpeech> = new Array();
 
