@@ -14,19 +14,23 @@ import { LetterMatcher } from './lettermatcher'
 //  Morph
 //------------------------------------------------------------------------------
 
+class Morph {
+}
 
 //------------------------------------------------------------------------------
 //  Allomorph
 //------------------------------------------------------------------------------
 
-class ToneMorpheme {
-}
 
-export class Allomorph {
+export class Allomorph extends Morph {
     toneMark: ToneMark
 
+    containingLetterOf(syllable: ToneSandhiSyllable) {
+        this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
+    }
+
     isZeroToneMark() {
-        //if(this.toneMark.isLetterNull()){}
+        return this.toneMark.isLetterNull();
     }
 }
 
@@ -178,7 +182,7 @@ class AllomorphsOfToneMorpheme {
     }
 }
 
-export class LexicalStem {
+export class LexicalStem extends Morph {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
@@ -186,10 +190,17 @@ export class LexicalStem {
     // abstract factory
 }
 
-class PluralMorpheme {}
+class VowelStem extends LexicalStem {}
+class ConsonantStem extends LexicalStem {}
 
-export class Affix {
+class PluralMorpheme {}
+class ToneMorpheme {}
+
+export class Affix extends Morph {
     toneMark: ToneMark = new ToneMark();
+    isZeroToneMark() {
+        //if(this.toneMark.isLetterNull()){}
+    }
 }
 
 class Interfix extends Affix {}
@@ -197,11 +208,11 @@ class Suffix extends Affix {}
 
 class DerivationalAffix {}
 
-class InflectionalAffix {}
+class InflectionalAffix extends Morph {}
 class GrammaticalSuffix {
     // desinence
 }
-class InflectionalStem {}
+class InflectionalStem extends Morph {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -221,21 +232,13 @@ export class ToneSandhiMorpheme extends Morpheme {
         this.assignAllomorphOfToneMorpheme();
     }
 
-    isEqualTo(allomorph: Allomorph) {
-        // if the last letter of this syllable equal to that of the tone mark of the allomorph
-        if(allomorph.toneMark.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
-            return true;
-        }
-        return false;
-    }
-
     assignAllomorphOfToneMorpheme() {
         let allomorphs = new AllomorphsOfToneMorpheme();
         let aotms;
 
         console.log(aotms)
         for(let key in allomorphs.listOfFinalAllomorph) {
-            if(this.isEqualTo(allomorphs.listOfFinalAllomorph[key])) {
+            if(allomorphs.listOfFinalAllomorph[key].containingLetterOf(this.syllable)) {
                 aotms = allomorphs.listOfFinalAllomorph[key];
                 break;
             }
@@ -254,7 +257,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 
         console.log(aotms)
         for(let key in allomorphs.listOfFreeAllomorph) {
-            if(this.isEqualTo(allomorphs.listOfFreeAllomorph[key])) {
+            if(allomorphs.listOfFreeAllomorph[key].containingLetterOf(this.syllable)) {
                 aotms = allomorphs.listOfFreeAllomorph[key];
                 break;
             }
@@ -276,7 +279,8 @@ export class ToneSandhiMorpheme extends Morpheme {
         // get base forms as strings
         if(this.allomorphOfToneMorpheme != null) {
             if(this.allomorphOfToneMorpheme instanceof FreeAllomorph) {
-                if(this.allomorphOfToneMorpheme.toneMark.toString() == '') {
+                //if(this.allomorphOfToneMorpheme.toneMark.toString() == '') {
+                if(this.allomorphOfToneMorpheme.isZeroToneMark()) {
                     console.log(this.syllable)
                     // no need to pop letter
                     // push letter
@@ -317,18 +321,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 
 
 export class RootMorpheme extends ToneSandhiMorpheme {
-    //lexicalStem: LexicalStem
-    //lexicalAffixes: Array<LexicalAffix>
-
     populateLexicalStem(msp: MatchedPattern) {
-        /*
-        if(this.allomorphOfToneMorpheme == null) {
-            this.lexicalStem = new LexicalStem();
-            for(let key in this.syllable.letters) {
-                this.lexicalStem[key] = msp.pattern[key].copyMatched(this.syllable.letters[key]);
-            }
-        }
-        */
     }
 }
 
@@ -338,16 +331,6 @@ export class RootMorpheme extends ToneSandhiMorpheme {
 
 class SoundsOfPattern {
     list: Array<Sound>
-
-    copyMatched(letter: AlphabeticLetter) {
-        console.log(letter);
-        console.log(this.list)
-        for(let key in this.list) {
-            if(this.list[key].isEqualTo(letter)) {
-                return this.list[key];
-            }
-        }
-    }
 
     toString() {
         let str = '';

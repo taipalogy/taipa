@@ -4,6 +4,40 @@ import { GrammaticalUnit } from './expression';
 import { Character, characters } from './character';
 import { Context } from './context';
 
+//------------------------------------------------------------------------------
+//  Graph
+//------------------------------------------------------------------------------
+
+class Graph {
+    letter: AlphabeticLetter
+
+    isLetterNull() {
+        if(this.letter == null) {
+            return true;
+        }
+        return false;
+    }
+
+    isEqualTo(letter: AlphabeticLetter) {
+        if(letter.literal === this.letter.literal) {
+            return true;
+        }
+        return false;
+    }
+
+    toString() {
+        if(this.letter != null) {
+            return this.letter.literal;
+        }
+        return '';
+    }
+}
+
+export class Initial extends Graph {}
+export class Medial extends Graph {}
+export class Final extends Graph {}
+export class Nasal extends Graph {}
+export class ToneMark extends Graph {}
 
 //------------------------------------------------------------------------------
 //  Grapheme
@@ -20,29 +54,7 @@ export class Sound extends AlphabeticGrpheme {
         super();
         this.letter = letter;
     }
-
-    isEqualTo(letter: AlphabeticLetter) {
-        if(letter.literal === this.letter.literal) {
-            return true;
-        }
-        return false;
-    }
-
-    // used in letter filters to compose regular expressions
-    toString() {
-        if(this.letter != null) {
-            return this.letter.literal;
-        }
-        return '';
-    }
-    
 }
-
-export class Initial extends Sound {}
-export class Medial extends Sound {}
-export class Final extends Sound {}
-export class Nasal extends Sound {}
-export class ToneMark extends Sound {}
 
 //------------------------------------------------------------------------------
 //  Initial, Medial, Nasal, Final Consonant, Tone Mark
@@ -81,7 +93,7 @@ export class NasalN extends Initial {letter = lowerLetters['n']}
 export class NasalNG extends Initial {letter = lowerLetters['ng']}
 export class NasalNN extends Initial {letter = lowerLetters['nn']}
 
-export class ZeroToneMark extends Sound {letter = null;}
+export class ZeroToneMark extends ToneMark {letter = null;}
 
 export class ToneMarkZS extends ToneMark {letter = lowerLetters['zs']}
 export class ToneMarkW extends ToneMark {letter = lowerLetters['w']}
