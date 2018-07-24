@@ -1,6 +1,6 @@
 import { AlphabeticLetter, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
         ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
-        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound } from './grapheme'
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound, Graph } from './grapheme'
 import { MedialA, MedialE, MedialI, MedialO, MedialU, MedialUR } from './grapheme'
 import { NasalInitialM, NasalInitialN, NasalInitialNG } from './grapheme'
 import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, InitialP, InitialT, InitialK, InitialB, InitialD,
@@ -29,7 +29,7 @@ export class Allomorph extends Morph {
         this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
     }
 
-    isZeroToneMark() {
+    havingZeroToneMark() {
         return this.toneMark.isLetterNull();
     }
 }
@@ -186,7 +186,7 @@ export class LexicalStem extends Morph {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
-    sounds: Array<Sound>;
+    graphs: Array<Graph>;
     // abstract factory
 }
 
@@ -198,9 +198,11 @@ class ToneMorpheme {}
 
 export class Affix extends Morph {
     toneMark: ToneMark = new ToneMark();
-    isZeroToneMark() {
-        //if(this.toneMark.isLetterNull()){}
+    /*
+    havingZeroToneMark() {
+        return this.toneMark.isLetterNull();
     }
+    */
 }
 
 class Interfix extends Affix {}
@@ -280,7 +282,7 @@ export class ToneSandhiMorpheme extends Morpheme {
         if(this.allomorphOfToneMorpheme != null) {
             if(this.allomorphOfToneMorpheme instanceof FreeAllomorph) {
                 //if(this.allomorphOfToneMorpheme.toneMark.toString() == '') {
-                if(this.allomorphOfToneMorpheme.isZeroToneMark()) {
+                if(this.allomorphOfToneMorpheme.havingZeroToneMark()) {
                     console.log(this.syllable)
                     // no need to pop letter
                     // push letter
@@ -293,7 +295,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                     // the 7th tone has two baseforms
                     let ret = [];
                     for(let i in this.allomorphOfToneMorpheme.baseToneMarks) {
-                        if(this.allomorphOfToneMorpheme.baseToneMarks[i].letter != null) {
+                        if(!this.allomorphOfToneMorpheme.baseToneMarks[i].isLetterNull()) {
                             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                             s.popLetter();
                             if(this.allomorphOfToneMorpheme.baseToneMarks[i] != null) {
@@ -330,7 +332,7 @@ export class RootMorpheme extends ToneSandhiMorpheme {
 //------------------------------------------------------------------------------
 
 class SoundsOfPattern {
-    list: Array<Sound>
+    list: Array<Graph>
 
     toString() {
         let str = '';
@@ -347,7 +349,7 @@ class SoundsOfPattern {
 }
 
 class Medials extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
         this.list.push(new MedialA());
@@ -360,7 +362,7 @@ class Medials extends SoundsOfPattern {
 }
 
 class NasalInitials extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
         this.list.push(new NasalInitialM());
@@ -370,7 +372,7 @@ class NasalInitials extends SoundsOfPattern {
 }
 
 class FreeToneMarks extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
         this.list.push(new ToneMarkSS());
@@ -386,7 +388,7 @@ class FreeToneMarks extends SoundsOfPattern {
 }
 
 class NeutralFinals extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
         this.list.push(new FinalH());
@@ -395,7 +397,7 @@ class NeutralFinals extends SoundsOfPattern {
 }
 
 class Finals extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
 
@@ -412,7 +414,7 @@ class Finals extends SoundsOfPattern {
 }
 
 class Initials extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
         this.list.push(new InitialC());
@@ -439,7 +441,7 @@ class Initials extends SoundsOfPattern {
 }
 
 class Nasals extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
         this.list.push(new NasalM());
@@ -450,7 +452,7 @@ class Nasals extends SoundsOfPattern {
 }
 
 class FinalToneMarks extends SoundsOfPattern {
-    list: Array<Sound> = new Array();
+    list: Array<Graph> = new Array();
     constructor() {
         super();
 

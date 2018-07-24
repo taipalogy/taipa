@@ -8,7 +8,7 @@ import { Context } from './context';
 //  Graph
 //------------------------------------------------------------------------------
 
-class Graph {
+export class Graph {
     letter: AlphabeticLetter
 
     isLetterNull() {
