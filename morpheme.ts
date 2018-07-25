@@ -23,10 +23,10 @@ class Morph {
 
 
 export class Allomorph extends Morph {
-    toneMark: ToneMark
+    toneMark: ToneMark = null;
 
     containingLetterOf(syllable: ToneSandhiSyllable) {
-        this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
+        return this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
     }
 
     havingZeroToneMark() {
@@ -236,43 +236,51 @@ export class ToneSandhiMorpheme extends Morpheme {
 
     assignAllomorphOfToneMorpheme() {
         let allomorphs = new AllomorphsOfToneMorpheme();
-        let aotms;
+        let aotms = [];
 
         console.log(aotms)
         for(let key in allomorphs.listOfFinalAllomorph) {
             if(allomorphs.listOfFinalAllomorph[key].containingLetterOf(this.syllable)) {
-                aotms = allomorphs.listOfFinalAllomorph[key];
+                aotms.push(allomorphs.listOfFinalAllomorph[key]);
                 break;
             }
         }
         console.log(aotms)
 
-        if(aotms != undefined) {
+        if(aotms.length) {
             for(let i = 0; i < aotms.length; i++) {
-                if(this.syllable.letters[this.syllable.letters.length-2].literal === aotms[i].final.toString()) {
+                console.log("aotms[i].final: %s", aotms[i].final.letter.literal);
+                console.log("letter: %s", this.syllable.letters[this.syllable.letters.length-2].literal)
+                if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-2])) {
+                    console.log("hit. i: %d.", i)
                     this.allomorphOfToneMorpheme = aotms[i];
                 }
                 // when there are no matches, it means this syllable is already in base form
             }
-            return;
+            if(this.allomorphOfToneMorpheme != null) {
+                return;
+            }
         }
-
         console.log(aotms)
+
+        aotms = [];
         for(let key in allomorphs.listOfFreeAllomorph) {
             if(allomorphs.listOfFreeAllomorph[key].containingLetterOf(this.syllable)) {
-                aotms = allomorphs.listOfFreeAllomorph[key];
+                aotms.push(allomorphs.listOfFreeAllomorph[key]);
                 break;
             }
         }
         console.log(aotms)
 
-        if(aotms == undefined) {
+        if(aotms.length == 0) {
             this.allomorphOfToneMorpheme = new ZeroAllomorph();
-        } else if(aotms) {
-            if(aotms.literal === new AllomorphX().toneMark.toString()) {
-                // this syllable is already in base form
-            } else {
-                this.allomorphOfToneMorpheme = aotms;
+        } else if(aotms.length) {
+            for(let i = 0; i < aotms.length; i++) {
+                if(aotms[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
+                    // this syllable is already in base form
+                } else {
+                    this.allomorphOfToneMorpheme = aotms[i];
+                }
             }
         }
     }
@@ -283,11 +291,11 @@ export class ToneSandhiMorpheme extends Morpheme {
             if(this.allomorphOfToneMorpheme instanceof FreeAllomorph) {
                 //if(this.allomorphOfToneMorpheme.toneMark.toString() == '') {
                 if(this.allomorphOfToneMorpheme.havingZeroToneMark()) {
-                    console.log(this.syllable)
                     // no need to pop letter
                     // push letter
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                     s.pushLetter(this.allomorphOfToneMorpheme.baseToneMarks[0].letter);
+                    console.log(this.syllable)
                     return [s];
                 } else {
                     // pop letter
@@ -295,16 +303,20 @@ export class ToneSandhiMorpheme extends Morpheme {
                     // the 7th tone has two baseforms
                     let ret = [];
                     for(let i in this.allomorphOfToneMorpheme.baseToneMarks) {
+                        let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                         if(!this.allomorphOfToneMorpheme.baseToneMarks[i].isLetterNull()) {
-                            let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                             s.popLetter();
                             if(this.allomorphOfToneMorpheme.baseToneMarks[i] != null) {
                                 // includes ss and x, exclude zero suffix
                                 s.pushLetter(this.allomorphOfToneMorpheme.baseToneMarks[i].letter);
                             }
                             ret.push(s);
+                        } else {
+                            s.popLetter();
+                            ret.push(s);
                         }
                     }
+                    console.log(ret)
                     return ret;
                 }
             } else if(this.allomorphOfToneMorpheme instanceof CheckedAllomorph) {
@@ -312,6 +324,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                 // no need to push letter
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                 s.popLetter();
+                console.log(s)
                 return [s];
             }
         } else {
@@ -543,7 +556,7 @@ export class ToneSandhiSyllable extends Syllable {
         this.letters = new Array();
         if(letters != undefined) {
             let len = letters.length;
-            for(var i = 0; i < len; i++) {
+            for(let i = 0; i < len; i++) {
                 this.pushLetter(letters[i]);
             }
         }
@@ -560,7 +573,7 @@ export class ToneSandhiSyllable extends Syllable {
     }
 
     popLetter() {
-        var tmp = this.literal.substr(0, this.literal.length-this.letters[this.letters.length-1].literal.length);
+        let tmp = this.literal.substr(0, this.literal.length-this.letters[this.letters.length-1].literal.length);
         this.literal = '';
         this.literal = tmp;
         this.letters = this.letters.slice(0, this.letters.length-1);

@@ -67,9 +67,11 @@ class ToneSandhiLexeme extends Lexeme {
                 a.toneMark = allomorph.baseToneMarks[key];
                 fia.baseAffixes.push(a);
             }
+            this.inflectionalAffix = fia;
         } else if(allomorph instanceof CheckedAllomorph) {
             let cia = new CheckedInflectionalEnding();
             cia.affix.toneMark = allomorph.toneMark;
+            this.inflectionalAffix = cia;
         }
     }
 
@@ -80,6 +82,7 @@ class ToneSandhiLexeme extends Lexeme {
         let word = new ToneSandhiWord(this.word.syllables);
         word.popSyllable();
         word.pushSyllable(rootMorphemes[rootMorphemes.length-1].getBaseForms()[0]);
+        console.log(word.literal)
         return word;
     }
 
@@ -91,6 +94,7 @@ class ToneSandhiLexeme extends Lexeme {
                 } else if(this.inflectionalAffix.baseAffixes.length > 1) {
                     let ret = [];
                     let arr = rootMorphemes[rootMorphemes.length-1].getBaseForms();
+                    console.log(arr)
                     for(let key in arr) {
                         let word = new ToneSandhiWord(this.word.syllables);
                         word.popSyllable();
@@ -165,8 +169,7 @@ export class ToneSandhiWord extends Word {
     }
 
     popSyllable() {
-        var tmp = this.literal.substr(0, this.literal.length-this.syllables[this.syllables.length-1].literal.length);
-        this.literal = '';
+        let tmp = this.literal.substr(0, this.literal.length-this.syllables[this.syllables.length-1].literal.length);
         this.literal = tmp;
         this.syllables = this.syllables.slice(0, this.syllables.length-1);
     }
@@ -174,7 +177,6 @@ export class ToneSandhiWord extends Word {
     pushSyllable(tss: ToneSandhiSyllable) {
         this.syllables.push(tss);
         this.literal += tss.literal;
-        console.log("%s", tss.literal);
     }
 }
 
@@ -207,11 +209,15 @@ export class ToneSandhiWords extends Words {
         if(rootMorphemes.length > 0) {
             if(rootMorphemes[rootMorphemes.length-1].allomorphOfToneMorpheme != null) {
                 pos.assignInflectionalAffix(rootMorphemes[rootMorphemes.length-1].allomorphOfToneMorpheme);
+                console.log("pos got assigned inflectional affix")
             }
         }
 
-        console.log(pos.getBaseForms(rootMorphemes).length)
-        console.log(pos.getBaseForms(rootMorphemes)[0])
+        let tmp = pos.getBaseForms(rootMorphemes);
+        console.log(tmp.length)
+        for(let key in tmp) {
+            console.log(tmp[key])
+        }
         partOfSpeeches.push(pos);
 
         return partOfSpeeches

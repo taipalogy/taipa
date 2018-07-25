@@ -25,6 +25,13 @@ export class Graph {
         return false;
     }
 
+    isEqualToToneMark(toneMark: ToneMark) {
+        if(this.letter.literal === toneMark.letter.literal) {
+            return true;
+        }
+        return false;
+    }
+
     toString() {
         if(this.letter != null) {
             return this.letter.literal;
