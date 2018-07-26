@@ -254,10 +254,14 @@ export class ToneSandhiMorpheme extends Morpheme {
                 if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-2])) {
                     console.log("hit. i: %d.", i)
                     this.allomorphOfToneMorpheme = aotms[i];
+                } else if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+                    // if final is equal to tone mark
+                    return;
                 }
                 // when there are no matches, it means this syllable is already in base form
             }
             if(this.allomorphOfToneMorpheme != null) {
+                // if there are allomorph
                 return;
             }
         }

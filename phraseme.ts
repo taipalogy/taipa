@@ -1,5 +1,5 @@
 
-import { ToneSandhiWord } from "./lexeme"
+import { ToneSandhiWord, InflectionalEnding } from "./lexeme"
 
 class ExternalSandhiRule {}
 
@@ -25,6 +25,19 @@ class NounModifier extends Declension {}
 class PronounDeclension extends Declension {}
 
 class InflectionRules {
+}
+
+class SandhiForm {
+    inflectionalEnding: InflectionalEnding = null;
+}
+
+class FreeSandhiForm extends SandhiForm {
+    inflectionalEnding = new InflectionalEnding();
+    baseInflectionalEndings: Array<InflectionalEnding> = new Array();
+}
+
+class CheckedSandhiForm extends SandhiForm {
+    inflectionalEnding = new InflectionalEnding();
 }
 
 class Phraseme {

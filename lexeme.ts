@@ -10,22 +10,24 @@ import { GrammaticalUnit } from './expression'
 
 export class InternalSandhiRule {
     lexicalStem: LexicalStem
-    Affix: Affix
+    affix: Affix
 }
 
 class Assimilation extends InternalSandhiRule {}
 class ConsonantMutation extends InternalSandhiRule {}
 class Epenthesis extends InternalSandhiRule {}
+class NasalizationRule extends InternalSandhiRule {}
 
-class InflectionalEnding {
-    affix: Affix = new Affix();
-    // check if the syllable is in baseform, if not just replace it, a.k.a. pop and push
-    // if member allomorph is not null
+class InternalSandhiRules {}
+
+export class InflectionalEnding {
+    affix: Affix = null;
 
     //makeAffix(){}
 }
 
 class FreeInflectionalEnding extends InflectionalEnding {
+    affix: Affix = new Affix();
     baseAffixes: Array<Affix> = new Array();
 /*
     havingZeroAffix() {
@@ -36,12 +38,7 @@ class FreeInflectionalEnding extends InflectionalEnding {
 }
 
 class CheckedInflectionalEnding extends InflectionalEnding {
-}
-
-class NasalizationRule extends InternalSandhiRule {}
-
-class InternalSandhiRules {
-
+    affix: Affix = new Affix();
 }
 
 
