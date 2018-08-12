@@ -1,4 +1,4 @@
-import { Scanner, ScannedCharacter, ScannerRegex } from './../core/scanner';
+import { Scanner, ScannedCharacter, ScannerRegex } from './scanner';
 
 //------------------------------------------------------------------------------
 //  Type constants
