@@ -6,7 +6,7 @@ import { ToneSandhiWords } from './lexeme'
 //  LexicalAnalyzer
 //------------------------------------------------------------------------------
 
-export class ToneSandhiWordMatcher {
+export class ToneSandhiWordTransformer {
     //syllables: Array<ToneSandhiSyllable>;
     rootMorphemes: Array<RootMorpheme>;
 /*
@@ -21,7 +21,7 @@ export class ToneSandhiWordMatcher {
         this.rootMorphemes = rootMorphemes;
     }
 
-    match() {
+    transform() {
         let ws = new ToneSandhiWords();
         //console.log(this.syllables);
         console.log(this.rootMorphemes);

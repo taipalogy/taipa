@@ -7,7 +7,7 @@ import { Syllables } from './morpheme'
 //  ToneSandhiSyllableMatcher
 //------------------------------------------------------------------------------
 
-export class ToneSandhiSyllableMatcher {
+export class ToneSandhiSyllableTransformer {
     //letters: Array<AlphabeticLetter>;
     sounds: Array<Sound>;
 /*
@@ -21,7 +21,7 @@ export class ToneSandhiSyllableMatcher {
         this.sounds = sounds;
     }
 
-    match() {
+    transform() {
         let ss = new Syllables();
         //console.log(this.letters);
         console.log(this.sounds);

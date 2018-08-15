@@ -8,7 +8,7 @@ import { Letters } from './grapheme';
 //  GraphemicAnalyzer
 //------------------------------------------------------------------------------
 
-export class LetterMatcher {
+export class LetterTransformer {
     characters: Array<Character>;
 
     constructor(l: string) {
@@ -23,7 +23,7 @@ export class LetterMatcher {
         }
     }
     
-    match() {
+    transform() {
         let ls = new Letters();
         //let letters = ls.match(this.characters);
         let sounds = ls.match(this.characters);

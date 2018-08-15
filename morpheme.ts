@@ -8,7 +8,7 @@ import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, I
 import { NasalM, NasalN, NasalNG, NasalNN } from './grapheme'
 import { GrammaticalUnit } from './expression'
 import { Context } from './context'
-import { LetterMatcher } from './lettermatcher'
+import { LetterTransformer } from './lettertransformer'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -611,9 +611,9 @@ export class Syllables {
         let seqOfSounds: Array<Sound>
         
         // Letter Matcher
-        let lm = new LetterMatcher(str);
+        let lm = new LetterTransformer(str);
         //seqofletters = lm.match();
-        seqOfSounds = lm.match();
+        seqOfSounds = lm.transform();
 
         //return seqofletters;
         return seqOfSounds;
