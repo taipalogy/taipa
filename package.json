@@ -1,0 +1,18 @@
+{
+  "name": "turbine",
+  "version": "1.0.0",
+  "description": "turbine command line tool",
+  "main": ".bin/main.js",
+  "scripts": {
+    "build": "tsc --outDir bin"
+  },
+  "author": "souising",
+  "license": "MIT",
+  "bin": {
+    "turbine": "./bin/main.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.7.0"
+  }
+}
