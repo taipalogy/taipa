@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { Parser } from './parser';
+import { TextInputClient } from '../inputmethod/textinputclient'
 
 const argc = process.argv.splice(2);
 
@@ -11,10 +11,16 @@ if (argc.length != 1) {
 
 const inputNumber = argc[0];
 
-if (! /^\d+$/.test(inputNumber)) {
-    console.error(`Invalid input ${inputNumber}`);
+console.log(`Hello World!`);
+
+if(! /w+/.test(inputNumber)) {
+    console.error("Invalid input token");
     process.exit(1);
 }
 
-//let trees = new Parser();
-console.log(`Hello World!`);
+let tic = new TextInputClient();
+let res = tic.lookup(inputNumber);
+
+console.log(inputNumber);
+console.log(res);
+
