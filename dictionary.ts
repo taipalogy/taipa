@@ -1,11 +1,11 @@
 
 
-interface Lexicon {
+interface Dictionary {
     readonly [index: string]: Array<string>
 }
 
 
-export let lexicon: Lexicon = {
+export let dictionary: Dictionary = {
     a: ['阿', '鴉'],
     af: [],
     ah: [],
