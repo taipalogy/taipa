@@ -1,6 +1,6 @@
 import { AlphabeticLetter, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
         ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
-        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, Sound, Graph } from './grapheme'
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, AlphabeticGrpheme, Graph } from './grapheme'
 import { MedialA, MedialE, MedialI, MedialO, MedialU, MedialUR } from './grapheme'
 import { NasalInitialM, NasalInitialN, NasalInitialNG } from './grapheme'
 import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, InitialP, InitialT, InitialK, InitialB, InitialD,
@@ -338,7 +338,6 @@ export class ToneSandhiMorpheme extends Morpheme {
     }
 }
 
-
 export class RootMorpheme extends ToneSandhiMorpheme {
     populateLexicalStem(msp: MatchedPattern) {
     }
@@ -608,15 +607,15 @@ export class Syllables {
         // create just one syllable object using string
         // Letter Matcher
         let seqofletters: Array<AlphabeticLetter>;
-        let seqOfSounds: Array<Sound>
+        let seqOfGraphemes: Array<AlphabeticGrpheme>
         
         // Letter Matcher
         let lm = new LetterTransformer(str);
         //seqofletters = lm.match();
-        seqOfSounds = lm.transform();
+        seqOfGraphemes = lm.transform();
 
         //return seqofletters;
-        return seqOfSounds;
+        return seqOfGraphemes;
     }
 
     createSyllable(letters: Array<AlphabeticLetter>): ToneSandhiSyllable {
@@ -657,15 +656,15 @@ export class Syllables {
         return mp;
     }
 
-    match(sounds: Array<Sound>) {
+    match(graphemes: Array<AlphabeticGrpheme>) {
 
-        let morphemes: Array<RootMorpheme> = new Array();
+        let morphemes: Array<ToneSandhiMorpheme> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
         
-        // unpack sounds and get letters from them
+        // unpack graphemes and get letters from them
         let letters: Array<AlphabeticLetter> = new Array();
-        for(let key in sounds) {
-            letters.push(sounds[key].letter);
+        for(let key in graphemes) {
+            letters.push(graphemes[key].letter);
         }
 
         console.log(letters);
@@ -687,14 +686,14 @@ export class Syllables {
                 console.log(msp.letters)
 
                 //let tsm: ToneSandhiMorpheme;
-                let rm: RootMorpheme;
+                let rm: ToneSandhiMorpheme;
                 //let baseforms: Array<ToneSandhiSyllable> = new Array();
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         console.log("msp.letters: %s", msp.letters[j].literal)
                     }
                     //tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
-                    rm =  new RootMorpheme(new ToneSandhiSyllable(msp.letters));
+                    rm =  new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
                     //la.populateLexicalStem(msp);
 
                     //baseforms = tsm.getBaseForms();

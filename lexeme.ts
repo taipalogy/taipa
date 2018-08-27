@@ -1,5 +1,5 @@
 
-import { ToneSandhiSyllable, Affix, LexicalStem, RootMorpheme, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
+import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
 import { GrammaticalUnit } from './expression'
 
 
@@ -75,22 +75,22 @@ class ToneSandhiLexeme extends Lexeme {
     assignInternalSandhiRule() {
     }
 
-    replaceLastSyllable(rootMorphemes: Array<RootMorpheme>) {
+    replaceLastSyllable(morphemes: Array<ToneSandhiMorpheme>) {
         let word = new ToneSandhiWord(this.word.syllables);
         word.popSyllable();
-        word.pushSyllable(rootMorphemes[rootMorphemes.length-1].getBaseForms()[0]);
+        word.pushSyllable(morphemes[morphemes.length-1].getBaseForms()[0]);
         console.log(word.literal)
         return word;
     }
 
-    getBaseForms(rootMorphemes: Array<RootMorpheme>): Array<ToneSandhiWord> {
+    getBaseForms(morphemes: Array<ToneSandhiMorpheme>): Array<ToneSandhiWord> {
         if(this.inflectionalAffix != null) {
             if(this.inflectionalAffix instanceof FreeInflectionalEnding) {
                 if(this.inflectionalAffix.baseAffixes.length == 1) {
-                    return [this.replaceLastSyllable(rootMorphemes)];
+                    return [this.replaceLastSyllable(morphemes)];
                 } else if(this.inflectionalAffix.baseAffixes.length > 1) {
                     let ret = [];
-                    let arr = rootMorphemes[rootMorphemes.length-1].getBaseForms();
+                    let arr = morphemes[morphemes.length-1].getBaseForms();
                     console.log(arr)
                     for(let key in arr) {
                         let word = new ToneSandhiWord(this.word.syllables);
@@ -101,7 +101,7 @@ class ToneSandhiLexeme extends Lexeme {
                     return ret;
                 }
             } else if(this.inflectionalAffix instanceof CheckedInflectionalEnding) {
-                return [this.replaceLastSyllable(rootMorphemes)];
+                return [this.replaceLastSyllable(morphemes)];
             }
         }
 
@@ -181,24 +181,24 @@ export class Words {
 }
 
 export class ToneSandhiWords extends Words {
-    match(rootMorphemes: Array<RootMorpheme>){
+    match(morphemes: Array<ToneSandhiMorpheme>){
         let lexemes: Array<ToneSandhiLexeme> = new Array();
 
         // unpack lexical affixes and get syllables from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
-        for(let key in rootMorphemes) {
-            syllables.push(rootMorphemes[key].syllable);
+        for(let key in morphemes) {
+            syllables.push(morphemes[key].syllable);
         }
 
         let pos = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
-        if(rootMorphemes.length > 0) {
-            if(rootMorphemes[rootMorphemes.length-1].allomorphOfToneMorpheme != null) {
-                pos.assignInflectionalAffix(rootMorphemes[rootMorphemes.length-1].allomorphOfToneMorpheme);
+        if(morphemes.length > 0) {
+            if(morphemes[morphemes.length-1].allomorphOfToneMorpheme != null) {
+                pos.assignInflectionalAffix(morphemes[morphemes.length-1].allomorphOfToneMorpheme);
                 console.log("pos got assigned inflectional affix")
             }
         }
 
-        let tmp = pos.getBaseForms(rootMorphemes);
+        let tmp = pos.getBaseForms(morphemes);
         console.log(tmp.length)
         for(let key in tmp) {
             console.log(tmp[key])

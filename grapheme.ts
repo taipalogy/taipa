@@ -52,9 +52,7 @@ export class ToneMark extends Graph {}
 
 class Grapheme {}
 
-class AlphabeticGrpheme extends Grapheme {}
-
-export class Sound extends AlphabeticGrpheme {
+export class AlphabeticGrpheme extends Grapheme {
     letter: AlphabeticLetter
     
     constructor(letter?: AlphabeticLetter) {
@@ -215,7 +213,7 @@ export class Letters {
     match(characters: Array<Character>) {
         
         let letters: Array<AlphabeticLetter> = new Array();
-        let sounds: Array<Sound> = new Array();
+        let graphemes: Array<AlphabeticGrpheme> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
         //console.log(characters);
         let beginOfLetter: number = 0;
@@ -257,8 +255,8 @@ export class Letters {
                     beginOfLetter +=  tmp.characters.length;
                     letters.push(tmp);
                     // pack letters into sounds
-                    let sound = new Sound(tmp);
-                    sounds.push(sound);
+                    let gr = new AlphabeticGrpheme(tmp);
+                    graphemes.push(gr);
                 }
 
             }
@@ -266,7 +264,7 @@ export class Letters {
         //console.log("metadata letter array length %d", letters.length);
         //console.log(letters);
         //return letters;
-        return sounds;
+        return graphemes;
     }
 }
 

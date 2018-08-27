@@ -1,5 +1,5 @@
 
-import { RootMorpheme  } from './morpheme'
+import { ToneSandhiMorpheme  } from './morpheme'
 import { ToneSandhiWords } from './lexeme'
 
 //------------------------------------------------------------------------------
@@ -8,7 +8,7 @@ import { ToneSandhiWords } from './lexeme'
 
 export class ToneSandhiWordTransformer {
     //syllables: Array<ToneSandhiSyllable>;
-    rootMorphemes: Array<RootMorpheme>;
+    morphemes: Array<ToneSandhiMorpheme>;
 /*
     constructor(syllables: Array<ToneSandhiSyllable>) {
         this.syllables = new Array();
@@ -16,17 +16,17 @@ export class ToneSandhiWordTransformer {
     }
 */    
 
-    constructor(rootMorphemes: Array<RootMorpheme>) {
-        this.rootMorphemes = new Array();
-        this.rootMorphemes = rootMorphemes;
+    constructor(morphemes: Array<ToneSandhiMorpheme>) {
+        this.morphemes = new Array();
+        this.morphemes = morphemes;
     }
 
     transform() {
         let ws = new ToneSandhiWords();
         //console.log(this.syllables);
-        console.log(this.rootMorphemes);
+        console.log(this.morphemes);
         //let words = ws.match(this.syllables);
-        let partOfSpeeches = ws.match(this.rootMorphemes);
+        let partOfSpeeches = ws.match(this.morphemes);
         //console.log(words);
         //console.log(words[0].literal);
         console.log(partOfSpeeches);
