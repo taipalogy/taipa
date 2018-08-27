@@ -15,12 +15,12 @@ if (argc.length != 1) {
 const inputNumber = argc[0];
 
 console.log(`Hello World!`);
-
+/*
 if(! /w+/.test(inputNumber)) {
     console.error("Invalid input token");
     process.exit(1);
 }
-
+*/
 class Client {
     lookup(k: string) {
         for(let key in dictionary) {
