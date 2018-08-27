@@ -659,7 +659,7 @@ export class Syllables {
 
     match(sounds: Array<Sound>) {
 
-        let affixes: Array<RootMorpheme> = new Array();
+        let morphemes: Array<RootMorpheme> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);
         
         // unpack sounds and get letters from them
@@ -687,19 +687,19 @@ export class Syllables {
                 console.log(msp.letters)
 
                 //let tsm: ToneSandhiMorpheme;
-                let la: RootMorpheme;
+                let rm: RootMorpheme;
                 //let baseforms: Array<ToneSandhiSyllable> = new Array();
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         console.log("msp.letters: %s", msp.letters[j].literal)
                     }
                     //tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
-                    la =  new RootMorpheme(new ToneSandhiSyllable(msp.letters));
+                    rm =  new RootMorpheme(new ToneSandhiSyllable(msp.letters));
                     //la.populateLexicalStem(msp);
 
                     //baseforms = tsm.getBaseForms();
                     //slbs.push(tsm.syllable);
-                    affixes.push(la);
+                    morphemes.push(rm);
                 }
 
                 /*
@@ -724,7 +724,7 @@ export class Syllables {
                     //slbs.push(tsm.syllable);
                 }
 */
-                console.log(affixes);
+                console.log(morphemes);
                 //for(let p in syllables) {
                 //    console.log(syllables[p].literal)
                 //}
@@ -733,16 +733,16 @@ export class Syllables {
                 console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
             }
 
-            console.log(affixes);
+            console.log(morphemes);
             //for(let p in syllables) {
             //    console.log(syllables[p].literal)
             //}
             
             //if(slbs.length == 0) {
-            if(affixes.length == 0) {
+            if(morphemes.length == 0) {
                 console.log("nothing matched");
             //} else if(slbs.length >= 1) {
-            } else if(affixes.length >= 1) {
+            } else if(morphemes.length >= 1) {
                 //beginOfSyllable += msp.letters.length;
                 if(msp.matchedLength > 0) {
                     //for(let k in slbs) {
@@ -763,7 +763,7 @@ export class Syllables {
         //return syllables;
         //console.log(lexicalAffixes);
         //console.log("length of lexical affixes: %d", lexicalAffixes.length);
-        return affixes;
+        return morphemes;
     }
 }
 

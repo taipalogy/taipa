@@ -109,18 +109,6 @@ class ToneSandhiLexeme extends Lexeme {
     }
 }
 
-export class PartOfSpeech extends ToneSandhiLexeme {
-}
-
-class Verb extends PartOfSpeech {}
-class Noun extends PartOfSpeech {}
-class Adjective extends PartOfSpeech {}
-class Particle extends PartOfSpeech {}
-class Preposition extends PartOfSpeech {}
-class Pronoun extends PartOfSpeech {}
-class Adverb extends PartOfSpeech {}
-
-
 
 //------------------------------------------------------------------------------
 //  Lexeme
@@ -194,7 +182,7 @@ export class Words {
 
 export class ToneSandhiWords extends Words {
     match(rootMorphemes: Array<RootMorpheme>){
-        let partOfSpeeches: Array<PartOfSpeech> = new Array();
+        let lexemes: Array<ToneSandhiLexeme> = new Array();
 
         // unpack lexical affixes and get syllables from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
@@ -202,7 +190,7 @@ export class ToneSandhiWords extends Words {
             syllables.push(rootMorphemes[key].syllable);
         }
 
-        let pos = new PartOfSpeech(new ToneSandhiWord(syllables));
+        let pos = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
         if(rootMorphemes.length > 0) {
             if(rootMorphemes[rootMorphemes.length-1].allomorphOfToneMorpheme != null) {
                 pos.assignInflectionalAffix(rootMorphemes[rootMorphemes.length-1].allomorphOfToneMorpheme);
@@ -215,9 +203,9 @@ export class ToneSandhiWords extends Words {
         for(let key in tmp) {
             console.log(tmp[key])
         }
-        partOfSpeeches.push(pos);
+        lexemes.push(pos);
 
-        return partOfSpeeches
+        return lexemes
     }
 }
 
