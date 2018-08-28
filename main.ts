@@ -12,15 +12,8 @@ if (argc.length != 1) {
     process.exit(1);
 }
 
-const inputNumber = argc[0];
+const input = argc[0];
 
-console.log(`Hello World!`);
-/*
-if(! /w+/.test(inputNumber)) {
-    console.error("Invalid input token");
-    process.exit(1);
-}
-*/
 class Client {
     lookup(k: string) {
         for(let key in dictionary) {
@@ -36,7 +29,7 @@ class Client {
     }
 
     take(str: string) {
-        console.log("%ctext: %s", "color: black; font-size: large", str)
+        console.log("input: %s", str)
         
         // Letter Transformer
         let lt = new LetterTransformer(str);
@@ -50,16 +43,14 @@ class Client {
         let wt = new ToneSandhiWordTransformer(seqOfMorphemes);
         let seqOfLexemes = wt.transform();
 
-        console.log(seqOfLexemes[0].word.literal)
-        //console.log(seqOfPartOfSpeeches[0].baseForms)
+        //console.log(seqOfLexemes[0].word.literal)
+        //console.log(seqOfLexemes[0].baseForms)
         return seqOfLexemes[0].word.literal;
     }
 }
 
 let clt = new Client();
-let query = clt.take(inputNumber);
+let query = clt.take(input);
 let results = clt.lookup(query);
 
-console.log(inputNumber);
 console.log(results);
-

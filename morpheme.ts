@@ -238,21 +238,21 @@ export class ToneSandhiMorpheme extends Morpheme {
         let allomorphs = new AllomorphsOfToneMorpheme();
         let aotms = [];
 
-        console.log(aotms)
+        //console.log(aotms)
         for(let key in allomorphs.listOfFinalAllomorph) {
             if(allomorphs.listOfFinalAllomorph[key].containingLetterOf(this.syllable)) {
                 aotms.push(allomorphs.listOfFinalAllomorph[key]);
                 break;
             }
         }
-        console.log(aotms)
+        //console.log(aotms)
 
         if(aotms.length) {
             for(let i = 0; i < aotms.length; i++) {
-                console.log("aotms[i].final: %s", aotms[i].final.letter.literal);
-                console.log("letter: %s", this.syllable.letters[this.syllable.letters.length-2].literal)
+                //console.log("aotms[i].final: %s", aotms[i].final.letter.literal);
+                //console.log("letter: %s", this.syllable.letters[this.syllable.letters.length-2].literal)
                 if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-2])) {
-                    console.log("hit. i: %d.", i)
+                    //console.log("hit. i: %d.", i)
                     this.allomorphOfToneMorpheme = aotms[i];
                 } else if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
                     // if final is equal to tone mark
@@ -265,7 +265,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                 return;
             }
         }
-        console.log(aotms)
+        //console.log(aotms)
 
         aotms = [];
         for(let key in allomorphs.listOfFreeAllomorph) {
@@ -274,7 +274,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                 break;
             }
         }
-        console.log(aotms)
+        //console.log(aotms)
 
         if(aotms.length == 0) {
             this.allomorphOfToneMorpheme = new ZeroAllomorph();
@@ -299,7 +299,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                     // push letter
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                     s.pushLetter(this.allomorphOfToneMorpheme.baseToneMarks[0].letter);
-                    console.log(this.syllable)
+                    //console.log(this.syllable)
                     return [s];
                 } else {
                     // pop letter
@@ -320,7 +320,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                             ret.push(s);
                         }
                     }
-                    console.log(ret)
+                    //console.log(ret)
                     return ret;
                 }
             } else if(this.allomorphOfToneMorpheme instanceof CheckedAllomorph) {
@@ -328,7 +328,7 @@ export class ToneSandhiMorpheme extends Morpheme {
                 // no need to push letter
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                 s.popLetter();
-                console.log(s)
+                //console.log(s)
                 return [s];
             }
         } else {
@@ -632,7 +632,7 @@ export class Syllables {
             if(sp.list[m].length == min) {
                 for(let n = 0; n < min; n++) {
                     if(letters[i+n].literal.search(new RegExp(sp.list[m][n].toString())) == 0) {
-                        console.log(sp.list[m][n].toString())
+                        //console.log(sp.list[m][n].toString())
                         if(n+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
@@ -642,10 +642,8 @@ export class Syllables {
                                 mp.letters[q] = letters[i+q];
                             }
                             mp.pattern = sp.list[m];
-                            //for(let key in sp.list[m]) {
-                                console.log(sp.list[m])
-                            //}
-                            console.log(letters[i+n].literal)
+                            //console.log(sp.list[m])
+                            //console.log(letters[i+n].literal)
                         }
                     } else {
                         break;
@@ -667,99 +665,53 @@ export class Syllables {
             letters.push(graphemes[key].letter);
         }
 
-        console.log(letters);
+        //console.log(letters);
         let beginOfSyllable: number = 0;
-        //let slbs: Array<ToneSandhiSyllable> = new Array(); // syllables
         for(let i = 0; i < letters.length; i++) {
-            console.log("examining letter: %s. length of letters: %d. i: %d. beginOfSyllable: %d", letters[i].literal, letters.length, i, beginOfSyllable);
+            //console.log("examining letter: %s. length of letters: %d. i: %d. beginOfSyllable: %d", letters[i].literal, letters.length, i, beginOfSyllable);
             //console.log("metadata letter array looping.");
             
             let msp: MatchedPattern;
             if(i-beginOfSyllable == 0) {
-                console.log("i:%d. begin of syllable hit: %d", i, beginOfSyllable);
+                //console.log("i:%d. begin of syllable hit: %d", i, beginOfSyllable);
                 
-                console.log(letters[letters.length-1].literal)
+                //console.log(letters[letters.length-1].literal)
                 msp = this.getMatchedSyllablePattern(letters, i, beginOfSyllable);
 
-                console.log("matchedLen: %d", msp.matchedLength);
-                console.log(msp.pattern);
-                console.log(msp.letters)
+                //console.log("matchedLen: %d", msp.matchedLength);
+                //console.log(msp.pattern);
+                //console.log(msp.letters)
 
-                //let tsm: ToneSandhiMorpheme;
                 let rm: ToneSandhiMorpheme;
-                //let baseforms: Array<ToneSandhiSyllable> = new Array();
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
-                        console.log("msp.letters: %s", msp.letters[j].literal)
+                        //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    //tsm = new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
                     rm =  new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
-                    //la.populateLexicalStem(msp);
 
-                    //baseforms = tsm.getBaseForms();
-                    //slbs.push(tsm.syllable);
                     morphemes.push(rm);
                 }
 
-                /*
-                let n: number = 0;
-                for(let k = 0; k < baseforms.length; k++) {
-                    console.log("baseform: %s", baseforms[k].literal)
-                    let match = list_of_lexical_roots.filter(s => s === baseforms[k].literal);
-                    if(match.length == 1) {
-                        // push base form into slbs array
-                        //slbs.push(baseforms[k]);
-                    } else {
-                        console.log("no match or multiple matches")
-                    }
-                    if(tsm.syllable.literal != baseforms[k].literal) {
-                        n++;
-                    }
-                }
-
-                if(n == baseforms.length && baseforms.length > 0) {
-                    // when there are baseforms
-                    // no matches found in array of syllables, push the sandhi form
-                    //slbs.push(tsm.syllable);
-                }
-*/
-                console.log(morphemes);
-                //for(let p in syllables) {
-                //    console.log(syllables[p].literal)
-                //}
-                console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
+                //console.log(morphemes);
+                //console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
                 beginOfSyllable += msp.matchedLength;
-                console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
+                //console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
             }
 
-            console.log(morphemes);
-            //for(let p in syllables) {
-            //    console.log(syllables[p].literal)
-            //}
+            //console.log(morphemes);
+            //console.log(syllables[p].literal)
             
-            //if(slbs.length == 0) {
             if(morphemes.length == 0) {
-                console.log("nothing matched");
-            //} else if(slbs.length >= 1) {
+                //console.log("nothing matched");
             } else if(morphemes.length >= 1) {
                 //beginOfSyllable += msp.letters.length;
                 if(msp.matchedLength > 0) {
-                    //for(let k in slbs) {
-                        //syllables.push(slbs[k]); // push the matched letter
-                        // pack syllables into lexical affixes
-                        //lexicalAffixes.push(new LexicalAffix(slbs[k]));
-                    //}
-                    //slbs = [];
-                    console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);
+                    //console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);
                     i += beginOfSyllable-i-1;
-                    console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);    
+                    //console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);    
                 }
             }
         }
-        //console.log("metadata letter array length %d", letters.length);
-        //console.log(syllables);
-        //console.log("length of syllables: %d", syllables.length);
-        //return syllables;
         //console.log(lexicalAffixes);
         //console.log("length of lexical affixes: %d", lexicalAffixes.length);
         return morphemes;

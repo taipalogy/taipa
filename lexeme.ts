@@ -79,7 +79,7 @@ class ToneSandhiLexeme extends Lexeme {
         let word = new ToneSandhiWord(this.word.syllables);
         word.popSyllable();
         word.pushSyllable(morphemes[morphemes.length-1].getBaseForms()[0]);
-        console.log(word.literal)
+        //console.log(word.literal)
         return word;
     }
 
@@ -91,7 +91,7 @@ class ToneSandhiLexeme extends Lexeme {
                 } else if(this.inflectionalAffix.baseAffixes.length > 1) {
                     let ret = [];
                     let arr = morphemes[morphemes.length-1].getBaseForms();
-                    console.log(arr)
+                    //console.log(arr)
                     for(let key in arr) {
                         let word = new ToneSandhiWord(this.word.syllables);
                         word.popSyllable();
@@ -194,14 +194,14 @@ export class ToneSandhiWords extends Words {
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorphOfToneMorpheme != null) {
                 pos.assignInflectionalAffix(morphemes[morphemes.length-1].allomorphOfToneMorpheme);
-                console.log("pos got assigned inflectional affix")
+                //console.log("pos got assigned inflectional affix")
             }
         }
 
         let tmp = pos.getBaseForms(morphemes);
-        console.log(tmp.length)
+        //console.log(tmp.length)
         for(let key in tmp) {
-            console.log(tmp[key])
+            //console.log(tmp[key])
         }
         lexemes.push(pos);
 
