@@ -1,6 +1,6 @@
 {
   "name": "turbine",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "turbine command line tool",
   "main": ".bin/main.js",
   "scripts": {
@@ -13,6 +13,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^10.7.0"
+    "@types/node": "^10.9.3"
   }
 }
