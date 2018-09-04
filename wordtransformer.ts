@@ -17,9 +17,9 @@ export class ToneSandhiWordTransformer {
     transform() {
         let ws = new ToneSandhiWords();
 //        console.log(this.morphemes);
-        let partOfSpeeches = ws.match(this.morphemes);
+        let ls = ws.match(this.morphemes);
 //        console.log(partOfSpeeches);
 //        console.log(partOfSpeeches[0].word.literal);
-        return partOfSpeeches;
+        return ls;
     }
 }

@@ -48,6 +48,7 @@ class Lexeme extends GrammaticalUnit {
 export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
     inflectionalAffix: InflectionalEnding
+    baseForms: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
         super();
@@ -106,6 +107,20 @@ export class ToneSandhiLexeme extends Lexeme {
         }
 
         return [];
+    }
+
+    populsateBaseForms(morphemes: Array<ToneSandhiMorpheme>) {
+        this.baseForms = new Array();
+
+        let bfs = this.getBaseForms(morphemes);
+        //console.log(tmp.length)
+        if(bfs.length > 0) {
+            for(let key in bfs) {
+                //console.log(bfs[key].literal)
+                this.baseForms.push(bfs[key]);
+            }
+        }
+
     }
 }
 
@@ -190,20 +205,17 @@ export class ToneSandhiWords extends Words {
             syllables.push(morphemes[key].syllable);
         }
 
-        let pos = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
+        let tsl = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorphOfToneMorpheme != null) {
-                pos.assignInflectionalAffix(morphemes[morphemes.length-1].allomorphOfToneMorpheme);
+                tsl.assignInflectionalAffix(morphemes[morphemes.length-1].allomorphOfToneMorpheme);
                 //console.log("pos got assigned inflectional affix")
             }
         }
 
-        let bfs = pos.getBaseForms(morphemes);
-        //console.log(tmp.length)
-        for(let key in bfs) {
-            console.log(bfs[key].literal)
-        }
-        lexemes.push(pos);
+        tsl.populsateBaseForms(morphemes);
+
+        lexemes.push(tsl);
 
         return lexemes
     }
