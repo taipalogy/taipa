@@ -11,11 +11,10 @@ if (argc.length != 1) {
 
 const input = argc[0];
 
-
 let clt = new Client();
-let query = clt.take(input);
-let results = clt.lookup(query);
+let doc = clt.take(input);
+for(let i in doc.lexemes) {
+    console.log(clt.lookup(doc.lexemes[i].word.literal));
+}
 
-console.log(results);
-
-let doc: Document = clt.process("baggziu");
+doc = clt.process("sia tingzssik");

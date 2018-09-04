@@ -339,6 +339,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 }
 
 export class RootMorpheme extends ToneSandhiMorpheme {
+    // lexical affix
     populateLexicalStem(msp: MatchedPattern) {
     }
 }
@@ -712,7 +713,7 @@ export class Syllables {
                 }
             }
         }
-        //console.log(lexicalAffixes);
+        //console.log(morphemes);
         //console.log("length of lexical affixes: %d", lexicalAffixes.length);
         return morphemes;
     }

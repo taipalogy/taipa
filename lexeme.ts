@@ -45,7 +45,7 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 class Lexeme extends GrammaticalUnit {
 }
 
-class ToneSandhiLexeme extends Lexeme {
+export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
     inflectionalAffix: InflectionalEnding
 
@@ -198,10 +198,10 @@ export class ToneSandhiWords extends Words {
             }
         }
 
-        let tmp = pos.getBaseForms(morphemes);
+        let bfs = pos.getBaseForms(morphemes);
         //console.log(tmp.length)
-        for(let key in tmp) {
-            //console.log(tmp[key])
+        for(let key in bfs) {
+            console.log(bfs[key].literal)
         }
         lexemes.push(pos);
 
