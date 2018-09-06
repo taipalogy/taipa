@@ -7,7 +7,7 @@ import { Syllables } from './morpheme'
 //  ToneSandhiSyllableMatcher
 //------------------------------------------------------------------------------
 
-export class ToneSandhiSyllableTransformer {
+export class ToneSandhiSyllableWrapper {
     graphemes: Array<AlphabeticGrpheme>;
     constructor(graphemes: Array<AlphabeticGrpheme>) {
         this.graphemes = new Array();

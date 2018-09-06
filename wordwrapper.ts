@@ -6,7 +6,7 @@ import { ToneSandhiWords } from './lexeme'
 //  LexicalAnalyzer
 //------------------------------------------------------------------------------
 
-export class ToneSandhiWordTransformer {
+export class ToneSandhiWordWrapper {
     morphemes: Array<ToneSandhiMorpheme>;
 
     constructor(morphemes: Array<ToneSandhiMorpheme>) {

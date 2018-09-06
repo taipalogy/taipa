@@ -6,9 +6,8 @@ import { NasalInitialM, NasalInitialN, NasalInitialNG } from './grapheme'
 import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, InitialP, InitialT, InitialK, InitialB, InitialD,
         InitialG, InitialH } from './grapheme'
 import { NasalM, NasalN, NasalNG, NasalNN } from './grapheme'
-import { GrammaticalUnit } from './expression'
 import { Context } from './context'
-import { LetterTransformer } from './lettertransformer'
+import { LetterWrapper } from './letterwrapper'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -607,11 +606,10 @@ export class Syllables {
     matchLetters(str: string) {
         // create just one syllable object using string
         // Letter Matcher
-        let seqofletters: Array<AlphabeticLetter>;
         let seqOfGraphemes: Array<AlphabeticGrpheme>
         
         // Letter Matcher
-        let lm = new LetterTransformer(str);
+        let lm = new LetterWrapper(str);
         //seqofletters = lm.match();
         seqOfGraphemes = lm.transform();
 

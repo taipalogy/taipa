@@ -8,7 +8,7 @@ import { Letters } from './grapheme';
 //  GraphemicAnalyzer
 //------------------------------------------------------------------------------
 
-export class LetterTransformer {
+export class LetterWrapper {
     characters: Array<Character>;
 
     constructor(l: string) {
