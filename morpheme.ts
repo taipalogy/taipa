@@ -7,7 +7,7 @@ import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, I
         InitialG, InitialH } from './grapheme'
 import { NasalM, NasalN, NasalNG, NasalNN } from './grapheme'
 import { Context } from './context'
-import { LetterWrapper } from './letterwrapper'
+import { GraphemeMaker } from './graphememaker'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -609,9 +609,9 @@ export class Syllables {
         let seqOfGraphemes: Array<AlphabeticGrpheme>
         
         // Letter Matcher
-        let lm = new LetterWrapper(str);
+        let lm = new GraphemeMaker(str);
         //seqofletters = lm.match();
-        seqOfGraphemes = lm.transform();
+        seqOfGraphemes = lm.makeGrapheme();
 
         //return seqofletters;
         return seqOfGraphemes;

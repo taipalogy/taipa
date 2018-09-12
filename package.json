@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --outDir bin"
   },
-  "author": "souising",
+  "author": "sotronx",
   "license": "MIT",
   "bin": {
     "turbine": "./bin/main.js"

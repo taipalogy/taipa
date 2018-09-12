@@ -48,7 +48,7 @@ class Lexeme extends GrammaticalUnit {
 export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
     inflectionalAffix: InflectionalEnding
-    baseForms: Array<ToneSandhiWord>
+    lemmata: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
         super();
@@ -109,15 +109,16 @@ export class ToneSandhiLexeme extends Lexeme {
         return [];
     }
 
-    populsateBaseForms(morphemes: Array<ToneSandhiMorpheme>) {
-        this.baseForms = new Array();
+    populateLemmata(morphemes: Array<ToneSandhiMorpheme>) {
+        this.lemmata = new Array();
 
-        let bfs = this.getBaseForms(morphemes);
+        // turn morphemes into lemmas
+        let lms = this.getBaseForms(morphemes);
         //console.log(tmp.length)
-        if(bfs.length > 0) {
-            for(let key in bfs) {
+        if(lms.length > 0) {
+            for(let key in lms) {
                 //console.log(bfs[key].literal)
-                this.baseForms.push(bfs[key]);
+                this.lemmata.push(lms[key]);
             }
         }
 
@@ -196,7 +197,12 @@ export class Words {
 }
 
 export class ToneSandhiWords extends Words {
-    match(morphemes: Array<ToneSandhiMorpheme>){
+    process(morphemes: Array<ToneSandhiMorpheme>){
+        // extract syllables from morphemes. concatenate syllables into a word.
+        // wrap the word in a lexeme. use morephemes to populate lemmata of a lexeme.
+        // assign inflectinal affix to a lexeme.
+        // push the lexeme into an array of lexeme.
+
         let lexemes: Array<ToneSandhiLexeme> = new Array();
 
         // unpack lexical affixes and get syllables from them
@@ -213,7 +219,7 @@ export class ToneSandhiWords extends Words {
             }
         }
 
-        tsl.populsateBaseForms(morphemes);
+        tsl.populateLemmata(morphemes);
 
         lexemes.push(tsl);
 

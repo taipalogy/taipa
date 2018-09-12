@@ -1,7 +1,7 @@
 
-import { LetterWrapper } from './letterwrapper'
-import { ToneSandhiSyllableWrapper } from './syllablewrapper'
-import { ToneSandhiWordWrapper } from './wordwrapper'
+import { GraphemeMaker } from './graphememaker'
+import { ToneSandhiMorphemeMaker } from './morephememaker'
+import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 
@@ -26,16 +26,16 @@ export class Client {
     take(str: string) {
         
         // Letter Transformer
-        let lt = new LetterWrapper(str);
-        let seqOfGraphemes = lt.transform();
+        let lt = new GraphemeMaker(str);
+        let seqOfGraphemes = lt.makeGrapheme();
 
         // Syllable Transformer
-        let st = new ToneSandhiSyllableWrapper(seqOfGraphemes);
-        let seqOfMorphemes = st.transform();
+        let st = new ToneSandhiMorphemeMaker(seqOfGraphemes);
+        let seqOfMorphemes = st.makeMorpheme();
 
         // Word Transformer
-        let wt = new ToneSandhiWordWrapper(seqOfMorphemes);
-        let seqOfLexemes = wt.transform();
+        let wt = new ToneSandhiLexemeMaker(seqOfMorphemes);
+        let seqOfLexemes = wt.makeLexeme();
 
         let doc: Document = new Document();
         doc.lexemes = seqOfLexemes

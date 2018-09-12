@@ -8,7 +8,7 @@ import { Letters } from './grapheme';
 //  GraphemicAnalyzer
 //------------------------------------------------------------------------------
 
-export class LetterWrapper {
+export class GraphemeMaker {
     characters: Array<Character>;
 
     constructor(l: string) {
@@ -21,7 +21,7 @@ export class LetterWrapper {
         }
     }
     
-    transform() {
+    makeGrapheme() {
         let ls = new Letters();
         let graphemes = ls.match(this.characters);
         return graphemes;

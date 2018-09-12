@@ -6,7 +6,7 @@ import { ToneSandhiWords } from './lexeme'
 //  LexicalAnalyzer
 //------------------------------------------------------------------------------
 
-export class ToneSandhiWordWrapper {
+export class ToneSandhiLexemeMaker {
     morphemes: Array<ToneSandhiMorpheme>;
 
     constructor(morphemes: Array<ToneSandhiMorpheme>) {
@@ -14,12 +14,12 @@ export class ToneSandhiWordWrapper {
         this.morphemes = morphemes;
     }
 
-    transform() {
+    makeLexeme() {
         let ws = new ToneSandhiWords();
 //        console.log(this.morphemes);
-        let ls = ws.match(this.morphemes);
+        let lexemes = ws.process(this.morphemes);
 //        console.log(partOfSpeeches);
 //        console.log(partOfSpeeches[0].word.literal);
-        return ls;
+        return lexemes;
     }
 }
