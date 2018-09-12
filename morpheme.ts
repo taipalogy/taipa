@@ -653,7 +653,7 @@ export class Syllables {
         return mp;
     }
 
-    match(graphemes: Array<AlphabeticGrpheme>) {
+    process(graphemes: Array<AlphabeticGrpheme>) {
 
         let morphemes: Array<ToneSandhiMorpheme> = new Array();
         //console.log("metadata letter array length %s. ", letters[0].literal);

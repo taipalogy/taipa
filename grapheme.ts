@@ -1,7 +1,6 @@
 
 
-import { GrammaticalUnit } from './expression';
-import { Character, characters } from './character';
+import { Character, characters, CharacterCase } from './character';
 import { Context } from './context';
 
 //------------------------------------------------------------------------------
@@ -10,6 +9,7 @@ import { Context } from './context';
 
 export class Graph {
     letter: AlphabeticLetter
+    lowerCase: CharacterCase = null;
 
     isLetterNull() {
         if(this.letter == null) {
@@ -45,21 +45,6 @@ export class Medial extends Graph {}
 export class Final extends Graph {}
 export class Nasal extends Graph {}
 export class ToneMark extends Graph {}
-
-//------------------------------------------------------------------------------
-//  Grapheme
-//------------------------------------------------------------------------------
-
-class Grapheme {}
-
-export class AlphabeticGrpheme extends Grapheme {
-    letter: AlphabeticLetter
-    
-    constructor(letter?: AlphabeticLetter) {
-        super();
-        this.letter = letter;
-    }
-}
 
 //------------------------------------------------------------------------------
 //  Initial, Medial, Nasal, Final Consonant, Tone Mark
@@ -127,6 +112,21 @@ export class FinalB extends Final {letter = lowerLetters['b']}
 export class FinalD extends Final {letter = lowerLetters['d']}
 export class FinalG extends Final {letter = lowerLetters['g']}
 export class FinalF extends Final {letter = lowerLetters['f']}
+
+//------------------------------------------------------------------------------
+//  Grapheme
+//------------------------------------------------------------------------------
+
+class Grapheme {}
+
+export class AlphabeticGrpheme extends Grapheme {
+    letter: AlphabeticLetter
+    
+    constructor(letter?: AlphabeticLetter) {
+        super();
+        this.letter = letter;
+    }
+}
 
 //------------------------------------------------------------------------------
 //  Letter
@@ -210,7 +210,7 @@ export class Letters {
         return ms;
     }
 
-    match(characters: Array<Character>) {
+    process(characters: Array<Character>) {
         
         let letters: Array<AlphabeticLetter> = new Array();
         let graphemes: Array<AlphabeticGrpheme> = new Array();
@@ -267,6 +267,10 @@ export class Letters {
         return graphemes;
     }
 }
+
+//------------------------------------------------------------------------------
+//  Alphabet
+//------------------------------------------------------------------------------
 
 interface ILetters {
     readonly [index: string]: AlphabeticLetter

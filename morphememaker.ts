@@ -16,7 +16,7 @@ export class ToneSandhiMorphemeMaker {
 
     makeMorpheme() {
         let ss = new Syllables();
-        let morphemes = ss.match(this.graphemes);
+        let morphemes = ss.process(this.graphemes);
         return morphemes;
     }
 }

@@ -13,12 +13,11 @@ export class InternalSandhiRule {
     affix: Affix
 }
 
-class Assimilation extends InternalSandhiRule {}
 class ConsonantMutation extends InternalSandhiRule {}
 class Epenthesis extends InternalSandhiRule {}
-class NasalizationRule extends InternalSandhiRule {}
-
-class InternalSandhiRules {}
+class Nasalization extends InternalSandhiRule {}
+class Aspiration extends InternalSandhiRule {}
+class Reduplication extends InternalSandhiRule {}
 
 export class InflectionalEnding {
     affix: Affix = null;

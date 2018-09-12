@@ -1,6 +1,6 @@
 
 import { GraphemeMaker } from './graphememaker'
-import { ToneSandhiMorphemeMaker } from './morephememaker'
+import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { dictionary } from './dictionary'

@@ -23,7 +23,7 @@ export class GraphemeMaker {
     
     makeGrapheme() {
         let ls = new Letters();
-        let graphemes = ls.match(this.characters);
+        let graphemes = ls.process(this.characters);
         return graphemes;
     }
 }

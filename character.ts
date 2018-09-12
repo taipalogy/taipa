@@ -28,6 +28,16 @@ export class Characters {
     }
 }
 
+//------------------------------------------------------------------------------
+//  CharacterCase
+//------------------------------------------------------------------------------
+
+export class CharacterCase {
+}
+
+class UpperCharacterCase extends CharacterCase {}
+class LowerCharacterCase extends CharacterCase {}
+
 interface ICharacters {
     readonly [index: string]: Character
 
