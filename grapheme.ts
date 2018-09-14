@@ -1,7 +1,8 @@
 
 
-import { Character, characters, CharacterCase } from './character';
+import { Character, characters, charactersNew } from './character';
 import { Context } from './context';
+import { IDictionary, Dictionary } from './dictionary'
 
 //------------------------------------------------------------------------------
 //  Graph
@@ -9,7 +10,7 @@ import { Context } from './context';
 
 export class Graph {
     letter: AlphabeticLetter
-    lowerCase: CharacterCase = null;
+    characters: Character[]
 
     isLetterNull() {
         if(this.letter == null) {
@@ -112,6 +113,117 @@ export class FinalB extends Final {letter = lowerLetters['b']}
 export class FinalD extends Final {letter = lowerLetters['d']}
 export class FinalG extends Final {letter = lowerLetters['g']}
 export class FinalF extends Final {letter = lowerLetters['f']}
+
+// -- new character --
+
+export class MedialANew extends Initial {characters = [charactersNew['a']]}
+export class MedialENew extends Initial {characters = [charactersNew['e']]}
+export class MedialINew extends Initial {characters = [charactersNew['i']]}
+export class MedialONew extends Initial {characters = [charactersNew['o']]}
+export class MedialUNew extends Initial {characters = [charactersNew['u']]}
+export class MedialURNew extends Initial {characters = [charactersNew['u'], charactersNew['r']]}
+
+export class NasalInitialMNew extends Initial {characters = [charactersNew['m']]}
+export class NasalInitialNNew extends Initial {characters = [charactersNew['n']]}
+export class NasalInitialNGNew extends Initial {characters = [charactersNew['n'], charactersNew['g']]}
+
+export class InitialCNew extends Initial {characters = [charactersNew['c']]}
+export class InitialJNew extends Initial {characters = [charactersNew['j']]}
+export class InitialLNew extends Initial {characters = [charactersNew['l']]}
+export class InitialQNew extends Initial {characters = [charactersNew['q']]}
+export class InitialSNew extends Initial {characters = [charactersNew['s']]}
+export class InitialVNew extends Initial {characters = [charactersNew['v']]}
+export class InitialZNew extends Initial {characters = [charactersNew['z']]}
+
+export class InitialPNew extends Initial {characters = [charactersNew['p']]}
+export class InitialTNew extends Initial {characters = [charactersNew['t']]}
+export class InitialKNew extends Initial {characters = [charactersNew['k']]}
+export class InitialBNew extends Initial {characters = [charactersNew['b']]}
+export class InitialDNew extends Initial {characters = [charactersNew['d']]}
+export class InitialGNew extends Initial {characters = [charactersNew['g']]}
+
+export class InitialHNew extends Initial {characters = [charactersNew['h']]}
+
+export class NasalMNew extends Initial {characters = [charactersNew['m']]}
+export class NasalNNew extends Initial {characters = [charactersNew['n']]}
+export class NasalNGNew extends Initial {characters = [charactersNew['n'], charactersNew['g']]}
+export class NasalNNNew extends Initial {characters = [charactersNew['n'], charactersNew['n']]}
+
+export class ZeroToneMarkNew extends ToneMark {letter = null;}
+
+export class ToneMarkZSNew extends Initial {characters = [charactersNew['z'], charactersNew['s']]}
+export class ToneMarkWNew extends Initial {characters = [charactersNew['w']]}
+export class ToneMarkSSNew extends Initial {characters = [charactersNew['s'], charactersNew['s']]}
+export class ToneMarkXXNew extends Initial {characters = [charactersNew['x'], charactersNew['x']]}
+export class ToneMarkXXXNew extends Initial {characters = [charactersNew['x'], charactersNew['x'], charactersNew['x']]}
+export class ToneMarkZZSNew extends Initial {characters = [charactersNew['z'], charactersNew['z'], charactersNew['s']]}
+
+export class ToneMarkXNew extends Initial {characters = [charactersNew['x']]}
+export class ToneMarkYNew extends Initial {characters = [charactersNew['y']]}
+
+export class FinalPNew extends Final {characters = [charactersNew['p']]}
+export class FinalTNew extends Final {characters = [charactersNew['t']]}
+export class FinalKNew extends Final {characters = [charactersNew['k']]}
+export class FinalHNew extends Final {characters = [charactersNew['h']]}
+export class FinalBNew extends Final {characters = [charactersNew['b']]}
+export class FinalDNew extends Final {characters = [charactersNew['d']]}
+export class FinalGNew extends Final {characters = [charactersNew['g']]}
+export class FinalFNew extends Final {characters = [charactersNew['f']]}
+
+
+interface ISoundDictionary extends IDictionary {
+    values(): Array<Character>[];
+    toString(): string;
+}
+
+class SoundDictionary extends Dictionary {
+    constructor(init: { key: string; value: Array<Character>; }[]) {
+        super(init);
+    }
+
+    values(): Array<Character>[] {
+        return this._values;
+    }
+
+    toString(): string {
+        let str = '';
+        let values = this.values();
+        for(let i = 0; i < values.length; i++) {
+            if(i+1 < values.length) {
+                for(let c in values[i]) {
+                    str += values[i][c].symbol;
+                }
+                str += '|';
+            } else if(i+1 == values.length) {
+                for(let c in values[i]) {
+                    str += values[i][c].symbol;
+                }
+            }
+        }
+        return str;
+    }
+
+    toLookup(): ISoundDictionary {
+        return this;
+    }
+}
+
+class MedialSound {
+    readonly medials = new SoundDictionary([
+        { key: "a", value: [new Character('a')] },
+        { key: "e", value: [new Character('e')] },
+        { key: "i", value: [new Character('i')] },
+        { key: "o", value: [new Character('o')] },
+        { key: "u", value: [new Character('u')] },
+        { key: "ur", value: [new Character('u'), new Character('u')] },
+    ]).toLookup();
+}
+
+class NasalInitialSound {}
+class InitialSound {}
+class NasalSound {}
+class ToneMarkSound {}
+class FinalSound {}
 
 //------------------------------------------------------------------------------
 //  Grapheme

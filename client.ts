@@ -3,7 +3,7 @@ import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
-import { dictionary } from './dictionary'
+import { indexed_dictionary } from './indexeddictionary'
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();
@@ -11,9 +11,9 @@ export class Document {
 
 export class Client {
     lookup(k: string) {
-        for(let key in dictionary) {
+        for(let key in indexed_dictionary) {
             if(key == k) {
-            var value = dictionary[key];
+            var value = indexed_dictionary[key];
             }
             if(value != null) {
             //console.log(value[0]);

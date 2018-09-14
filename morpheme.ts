@@ -1,6 +1,6 @@
 import { AlphabeticLetter, Final, ToneMark, FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF,
         ToneMarkX, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, ToneMarkY, ToneMarkZS,
-        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, AlphabeticGrpheme, Graph } from './grapheme'
+        ToneMarkW, ToneMarkSS, ToneMarkXX, ToneMarkXXX, ZeroToneMark, ToneMarkZZS, AlphabeticGrpheme, Graph, Nasal, Medial } from './grapheme'
 import { MedialA, MedialE, MedialI, MedialO, MedialU, MedialUR } from './grapheme'
 import { NasalInitialM, NasalInitialN, NasalInitialNG } from './grapheme'
 import { InitialC, InitialJ, InitialL, InitialQ, InitialS, InitialV, InitialZ, InitialP, InitialT, InitialK, InitialB, InitialD,
@@ -711,6 +711,7 @@ export class Syllables {
                 }
             }
         }
+
         //console.log(morphemes);
         //console.log("length of lexical affixes: %d", lexicalAffixes.length);
         return morphemes;
