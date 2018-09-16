@@ -57,73 +57,78 @@ export class Medial extends Graph {}
 export class Final extends Graph {}
 export class Nasal extends Graph {}
 export class ToneMark extends Graph {}
+export class FreeToneMark extends ToneMark {}
+export class CheckedToneMark extends ToneMark {}
 
 //------------------------------------------------------------------------------
 //  Initial, Medial, Nasal, Final Consonant, Tone Mark
 //------------------------------------------------------------------------------
 
-export class MedialA extends Medial {characters = [characters['a']]}
-export class MedialE extends Medial {characters = [characters['e']]}
-export class MedialI extends Medial {characters = [characters['i']]}
-export class MedialO extends Medial {characters = [characters['o']]}
-export class MedialU extends Medial {characters = [characters['u']]}
-export class MedialUR extends Medial {characters = [characters['u'], characters['r']]}
+class MedialA extends Medial {characters = [characters['a']]}
+class MedialE extends Medial {characters = [characters['e']]}
+class MedialI extends Medial {characters = [characters['i']]}
+class MedialO extends Medial {characters = [characters['o']]}
+class MedialU extends Medial {characters = [characters['u']]}
+class MedialUR extends Medial {characters = [characters['u'], characters['r']]}
 
-export class NasalInitialM extends Nasal {characters = [characters['m']]}
-export class NasalInitialN extends Nasal {characters = [characters['n']]}
-export class NasalInitialNG extends Nasal {characters = [characters['n'], characters['g']]}
+class InitialNasalM extends Initial {characters = [characters['m']]}
+class InitialNasalN extends Initial {characters = [characters['n']]}
+class InitialNasalNG extends Initial {characters = [characters['n'], characters['g']]}
 
-export class InitialC extends Initial {characters = [characters['c']]}
-export class InitialJ extends Initial {characters = [characters['j']]}
-export class InitialL extends Initial {characters = [characters['l']]}
-export class InitialQ extends Initial {characters = [characters['q']]}
-export class InitialS extends Initial {characters = [characters['s']]}
-export class InitialV extends Initial {characters = [characters['v']]}
-export class InitialZ extends Initial {characters = [characters['z']]}
+class InitialC extends Initial {characters = [characters['c']]}
+class InitialJ extends Initial {characters = [characters['j']]}
+class InitialL extends Initial {characters = [characters['l']]}
+class InitialQ extends Initial {characters = [characters['q']]}
+class InitialS extends Initial {characters = [characters['s']]}
+class InitialV extends Initial {characters = [characters['v']]}
+class InitialZ extends Initial {characters = [characters['z']]}
 
-export class InitialP extends Initial {characters = [characters['p']]}
-export class InitialT extends Initial {characters = [characters['t']]}
-export class InitialK extends Initial {characters = [characters['k']]}
-export class InitialB extends Initial {characters = [characters['b']]}
-export class InitialD extends Initial {characters = [characters['d']]}
-export class InitialG extends Initial {characters = [characters['g']]}
+class InitialP extends Initial {characters = [characters['p']]}
+class InitialT extends Initial {characters = [characters['t']]}
+class InitialK extends Initial {characters = [characters['k']]}
+class InitialB extends Initial {characters = [characters['b']]}
+class InitialD extends Initial {characters = [characters['d']]}
+class InitialG extends Initial {characters = [characters['g']]}
 
-export class InitialH extends Initial {characters = [characters['h']]}
+class InitialH extends Initial {characters = [characters['h']]}
 
-export class NasalM extends Nasal {characters = [characters['m']]}
-export class NasalN extends Nasal {characters = [characters['n']]}
-export class NasalNG extends Nasal {characters = [characters['n'], characters['g']]}
-export class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
+class NasalM extends Nasal {characters = [characters['m']]}
+class NasalN extends Nasal {characters = [characters['n']]}
+class NasalNG extends Nasal {characters = [characters['n'], characters['g']]}
+class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
 
 export class ZeroToneMark extends ToneMark {characters = null;}
 
-export class ToneMarkZS extends ToneMark {characters = [characters['z'], characters['s']]}
-export class ToneMarkW extends ToneMark {characters = [characters['w']]}
-export class ToneMarkSS extends ToneMark {characters = [characters['s'], characters['s']]}
-export class ToneMarkXX extends ToneMark {characters = [characters['x'], characters['x']]}
-export class ToneMarkXXX extends ToneMark {characters = [characters['x'], characters['x'], characters['x']]}
-export class ToneMarkZZS extends ToneMark {characters = [characters['z'], characters['z'], characters['s']]}
+class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
+class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
+class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters['s']]}
+class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
+class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
+class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
 
-export class ToneMarkP extends ToneMark {characters = [characters['p']]}
-export class ToneMarkT extends ToneMark {characters = [characters['t']]}
-export class ToneMarkK extends ToneMark {characters = [characters['k']]}
-export class ToneMarkH extends ToneMark {characters = [characters['h']]}
-export class ToneMarkB extends ToneMark {characters = [characters['b']]}
-export class ToneMarkD extends ToneMark {characters = [characters['d']]}
-export class ToneMarkG extends ToneMark {characters = [characters['g']]}
-export class ToneMarkF extends ToneMark {characters = [characters['f']]}
+class ToneMarkP extends CheckedToneMark {characters = [characters['p']]}
+class ToneMarkT extends CheckedToneMark {characters = [characters['t']]}
+class ToneMarkK extends CheckedToneMark {characters = [characters['k']]}
+class ToneMarkH extends CheckedToneMark {characters = [characters['h']]}
+class ToneMarkB extends CheckedToneMark {characters = [characters['b']]}
+class ToneMarkD extends CheckedToneMark {characters = [characters['d']]}
+class ToneMarkG extends CheckedToneMark {characters = [characters['g']]}
+class ToneMarkF extends CheckedToneMark {characters = [characters['f']]}
 
-export class ToneMarkX extends ToneMark {characters = [characters['x']]}
-export class ToneMarkY extends ToneMark {characters = [characters['y']]}
+class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
+class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
 
-export class FinalP extends Final {characters = [characters['p']]}
-export class FinalT extends Final {characters = [characters['t']]}
-export class FinalK extends Final {characters = [characters['k']]}
-export class FinalH extends Final {characters = [characters['h']]}
-export class FinalB extends Final {characters = [characters['b']]}
-export class FinalD extends Final {characters = [characters['d']]}
-export class FinalG extends Final {characters = [characters['g']]}
-export class FinalF extends Final {characters = [characters['f']]}
+class CheckedToneMarkX extends CheckedToneMark {characters = [characters['x']]}
+class CheckedToneMarkY extends CheckedToneMark {characters = [characters['y']]}
+
+class FinalP extends Final {characters = [characters['p']]}
+class FinalT extends Final {characters = [characters['t']]}
+class FinalK extends Final {characters = [characters['k']]}
+class FinalH extends Final {characters = [characters['h']]}
+class FinalB extends Final {characters = [characters['b']]}
+class FinalD extends Final {characters = [characters['d']]}
+class FinalG extends Final {characters = [characters['g']]}
+class FinalF extends Final {characters = [characters['f']]}
 
 
 interface IGraphDictionary extends IDictionary {
@@ -193,17 +198,6 @@ export class NasalGraph extends Collection {
     }
 }
 
-export class SecondAndFifthToneMarkGraph extends Collection {
-    readonly secondAndFifthToneMarks = new GraphDictionary([
-        { key: 'x', value: new ToneMarkX() },
-        { key: 'y', value: new ToneMarkY() },
-    ]).toLookup();
-
-    toString() {
-        return this.secondAndFifthToneMarks.toString();
-    }
-}
-
 export class FreeToneMarkGraph extends Collection {
     readonly freeToneMarks = new GraphDictionary([
         { key: 'ss', value: new ToneMarkSS() },
@@ -213,8 +207,8 @@ export class FreeToneMarkGraph extends Collection {
         { key: 'zs', value: new ToneMarkZS() },
         { key: 'zzs', value: new ToneMarkZZS() },
 
-        { key: 'x', value: new ToneMarkX() },
-        { key: 'y', value: new ToneMarkY() },
+        { key: 'x', value: new FreeToneMarkX() },
+        { key: 'y', value: new FreeToneMarkY() },
     ]).toLookup();
 
     toString() {
@@ -233,15 +227,15 @@ export class NeutralFinalGraph extends Collection {
     }
 }
 
-export class NasalInitialGraph extends Collection {
-    readonly nasalInitials = new GraphDictionary([
-        { key: 'm', value: new NasalInitialM() },
-        { key: 'n', value: new NasalInitialN() },
-        { key: 'ng', value: new NasalInitialNG() },
+export class InitialNasalGraph extends Collection {
+    readonly initialNasals = new GraphDictionary([
+        { key: 'm', value: new InitialNasalM() },
+        { key: 'n', value: new InitialNasalN() },
+        { key: 'ng', value: new InitialNasalNG() },
     ]).toLookup();
 
     toString() {
-        return this.nasalInitials.toString();
+        return this.initialNasals.toString();
     }
 }
 
@@ -262,9 +256,9 @@ export class InitialGraph extends Collection {
         { key: 'd', value: new InitialD() },
         { key: 'g', value: new InitialG() },
 
-        { key: 'm', value: new NasalInitialM() },
-        { key: 'n', value: new NasalInitialN() },
-        { key: 'ng', value: new NasalInitialNG() },
+        { key: 'm', value: new InitialNasalM() },
+        { key: 'n', value: new InitialNasalN() },
+        { key: 'ng', value: new InitialNasalNG() },
 
         { key: 'h', value: new InitialH()},
     ]).toLookup();
@@ -274,8 +268,8 @@ export class InitialGraph extends Collection {
     }
 }
 
-export class FinalToneMarkGraph extends Collection {
-    readonly finalToneMarks = new GraphDictionary([
+export class CheckedToneMarkGraph extends Collection {
+    readonly checkedToneMarks = new GraphDictionary([
         { key: 'p', value: new ToneMarkP() },
         { key: 't', value: new ToneMarkT() },
         { key: 'k', value: new ToneMarkK() },
@@ -286,12 +280,12 @@ export class FinalToneMarkGraph extends Collection {
         { key: 'h', value: new ToneMarkH() },
         { key: 'f', value: new ToneMarkF() },
 
-        { key: 'x', value: new ToneMarkX() },
-        { key: 'y', value: new ToneMarkY() },
+        { key: 'x', value: new CheckedToneMarkX() },
+        { key: 'y', value: new CheckedToneMarkY() },
     ]).toLookup();
 
     toString() {
-        return this.finalToneMarks.toString();
+        return this.checkedToneMarks.toString();
     }
 }
 

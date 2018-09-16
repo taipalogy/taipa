@@ -21,8 +21,6 @@ class Reduplication extends InternalSandhiRule {}
 
 export class InflectionalEnding {
     affix: Affix = null;
-
-    //makeAffix(){}
 }
 
 class FreeInflectionalEnding extends InflectionalEnding {
@@ -33,7 +31,6 @@ class FreeInflectionalEnding extends InflectionalEnding {
         return this.affix.havingZeroToneMark();
     }
 */
-    //makeAffix(){}
 }
 
 class CheckedInflectionalEnding extends InflectionalEnding {

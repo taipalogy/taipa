@@ -1,9 +1,6 @@
-import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Graph, Nasal, Medial, ToneMarkY, ToneMarkSS, ToneMarkW, 
-    ToneMarkZS, ToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkP, FinalP, ToneMarkT, FinalT, 
-    ToneMarkK, FinalK, ToneMarkH, FinalH, ToneMarkB, FinalB, ToneMarkD, FinalD, ToneMarkG, FinalG, 
-    ToneMarkF, FinalF } from './grapheme'
-import { InitialGraph, FreeToneMarkGraph, FinalToneMarkGraph, SecondAndFifthToneMarkGraph, FinalGraph, ZeroToneMark,
-        MedialGraph, NasalInitialGraph, NasalGraph, NeutralFinalGraph } from './grapheme'
+import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Graph } from './grapheme'
+import { InitialGraph, FreeToneMarkGraph, CheckedToneMarkGraph, FinalGraph, ZeroToneMark,
+        MedialGraph, InitialNasalGraph, NasalGraph, NeutralFinalGraph, FreeToneMark, CheckedToneMark } from './grapheme'
 import { Context } from './context'
 import { GraphemeMaker } from './graphememaker'
 
@@ -41,206 +38,117 @@ export class CheckedAllomorph extends Allomorph {
 }
 
 class ZeroAllomorph extends FreeAllomorph {
-    //toneMark = new ZeroToneMark();
-    //baseToneMarks = [new ToneMarkY()];
     toneMark = new ZeroToneMark()
-    baseToneMarks = [new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['y']]
-    //baseToneMarks = [new ToneMarkY()];
+    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['y']]
 }
 
 class AllomorphSS extends FreeAllomorph {
-    //toneMark = new ToneMarkSS();
-    //baseToneMarks = [new ToneMarkY()];
     toneMark = new FreeToneMarkGraph().freeToneMarks['ss']
-    baseToneMarks = [new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['y']]
-    //toneMark = new ToneMarkSS();
-    //baseToneMarks = [new ToneMarkY()];
+    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['y']]
 }
 
-export class AllomorphY extends FreeAllomorph {
-    //toneMark = new ToneMarkY();
-    //baseToneMarks = [new ToneMarkW()];
-    toneMark = new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['y']
+class AllomorphY extends FreeAllomorph {
+    toneMark = new FreeToneMarkGraph().freeToneMarks['y']
     baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['w']]
-    //toneMark = new ToneMarkY();
-    //baseToneMarks = [new ToneMarkW()];
 }
 
-export class AllomorphW extends FreeAllomorph {
-    //toneMark = new ToneMarkW();
-    //baseToneMarks = [new ToneMarkZS()];
+class AllomorphW extends FreeAllomorph {
     toneMark = new FreeToneMarkGraph().freeToneMarks['w']
     baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['zs']]
-    //toneMark = new ToneMarkW();
-    //baseToneMarks = [new ToneMarkZS()];
 }
 
 class AllomorphX extends FreeAllomorph {
-    //toneMark = new ToneMarkX();
-    toneMark = new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['x']
-    //toneMark = new ToneMarkX();
+    toneMark = new FreeToneMarkGraph().freeToneMarks['x']
 }
 
 class AllomorphXX extends FreeAllomorph {
-    //toneMark = new ToneMarkXX();
-    //baseToneMarks = [new ToneMarkZS(), new ToneMarkSS(), new ToneMarkX()];
-
     toneMark = new FreeToneMarkGraph().freeToneMarks['xx']
     baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['zs'],
                     new FreeToneMarkGraph().freeToneMarks['ss'],
                     new FreeToneMarkGraph().freeToneMarks['x']]
-                    
-    //toneMark = new ToneMarkXX();
-    //baseToneMarks = [new ToneMarkZS(), new ToneMarkSS(), new ToneMarkX()];
 }
 
 class AllomorphXXX extends FreeAllomorph {
-    //toneMark = new ToneMarkXXX();
-    //baseToneMarks = [new ToneMarkZS(), new ToneMarkSS(), new ToneMarkX()];
-
     toneMark = new FreeToneMarkGraph().freeToneMarks['xxx']
     baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['zs'],
                     new FreeToneMarkGraph().freeToneMarks['ss'],
                     new FreeToneMarkGraph().freeToneMarks['x']]
-                    
-    //toneMark = new ToneMarkXXX();
-    //baseToneMarks = [new ToneMarkZS(), new ToneMarkSS(), new ToneMarkX()];
 }
 
 class AllomorphZZS extends FreeAllomorph {
-    //toneMark = new ToneMarkZZS();
     toneMark = new FreeToneMarkGraph().freeToneMarks['zzs']
-    //toneMark = new ToneMarkZZS();
 }
 
 class AllomorphZS extends FreeAllomorph {
-    //toneMark = new ToneMarkZS();
-    //baseToneMarks = [new ToneMarkX(), new ToneMarkSS(), new ZeroToneMark()];
-
     toneMark = new FreeToneMarkGraph().freeToneMarks['zs']
     baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['x'],
                     new FreeToneMarkGraph().freeToneMarks['ss'],
                     new ZeroToneMark()]
-
-    //toneMark = new ToneMarkZS();
-    //baseToneMarks = [new ToneMarkX(), new ToneMarkSS(), new ZeroToneMark()];
 }
 
 class AllomorphPP extends CheckedAllomorph {
-    //toneMark = new ToneMarkP();
-    //final = new FinalP();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['p']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['p']
     final = new FinalGraph().finals['p']
-    //toneMark = new ToneMarkP();
-    //final = new FinalP();
 }
 
 class AllomorphTT extends CheckedAllomorph {
-    //toneMark = new ToneMarkT();
-    //final = new FinalT();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['t']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['t']
     final = new FinalGraph().finals['t']
-    //toneMark = new ToneMarkT();
-    //final = new FinalT();
 }
 
 class AllomorphKK extends CheckedAllomorph {
-    //toneMark = new ToneMarkK();
-    //final = new FinalK();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['k']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['k']
     final = new FinalGraph().finals['k']
-    //toneMark = new ToneMarkK();
-    //final = new FinalK();
 }
 
 class AllomorphHH extends CheckedAllomorph {
-    //toneMark = new ToneMarkH();
-    //final = new FinalH();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['h']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['h']
     final = new FinalGraph().finals['h']
-    //toneMark = new ToneMarkH();
-    //final = new FinalH();
 }
 
 class AllomorphHY extends CheckedAllomorph {
-    //toneMark = new ToneMarkY();
-    //final = new FinalH();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['y']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['y']
     final = new FinalGraph().finals['h']
-    //toneMark = new ToneMarkY();
-    //final = new FinalH();
 }
 
 class AllomorphBB extends CheckedAllomorph {
-    //toneMark = new ToneMarkB();
-    //final = new FinalB();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['b']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['b']
     final = new FinalGraph().finals['b']
-    //toneMark = new ToneMarkB();
-    //final = new FinalB();
 }
 
 class AllomorphDD extends CheckedAllomorph {
-    //toneMark = new ToneMarkD();
-    //final = new FinalD();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['d']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['d']
     final = new FinalGraph().finals['d']
-    //toneMark = new ToneMarkD();
-    //final = new FinalD();
 }
 
 class AllomorphGG extends CheckedAllomorph {
-    //toneMark = new ToneMarkG();
-    //final = new FinalG();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['g']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['g']
     final = new FinalGraph().finals['g']
-    //toneMark = new ToneMarkG();
-    //final = new FinalG();
 }
 
 class AllomorphFF extends CheckedAllomorph {
-    //toneMark = new ToneMarkF();
-    //final = new FinalF();
-    toneMark = new FinalToneMarkGraph().finalToneMarks['f']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['f']
     final = new FinalGraph().finals['f']
-    //toneMark = new ToneMarkF();
-    //final = new FinalF();
 }
 
 class AllomorphBX extends CheckedAllomorph {
-    //toneMark = new ToneMarkX();
-    //final = new FinalB();
-    toneMark = new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['x']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
     final = new FinalGraph().finals['b']
-    //toneMark = new ToneMarkX();
-    //final = new FinalB();
 }
 
 class AllomorphDX extends CheckedAllomorph {
-    //toneMark = new ToneMarkX();
-    //final = new FinalD();
-    toneMark = new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['x']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
     final = new FinalGraph().finals['d']
-    //toneMark = new ToneMarkX();
-    //final = new FinalD();
 }
 
 class AllomorphGX extends CheckedAllomorph {
-    //toneMark = new ToneMarkX();
-    //final = new FinalG();
-    toneMark = new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['x']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
     final = new FinalGraph().finals['g']
-    //toneMark = new ToneMarkX();
-    //final = new FinalG();
 }
 
 class AllomorphFX extends CheckedAllomorph {
-    //toneMark = new ToneMarkX();
-    //final = new FinalF();
-    toneMark = new SecondAndFifthToneMarkGraph().secondAndFifthToneMarks['x']
+    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
     final = new FinalGraph().finals['f']
-    //toneMark = new ToneMarkX();
-    //final = new FinalF();
 }
 
 class AllomorphsOfToneMorpheme {
@@ -298,6 +206,9 @@ export class Affix extends Morph {
     */
 }
 
+class FreeAffix extends Affix {}
+class CheckedAffix extends Affix {}
+
 class Interfix extends Affix {}
 class Suffix extends Affix {}
 
@@ -325,6 +236,16 @@ export class ToneSandhiMorpheme extends Morpheme {
         super();
         this.syllable = syllable;
         this.assignAllomorphOfToneMorpheme();
+    }
+
+    assignInflectionalSuffix(graph: Graph) {
+        if(graph instanceof ToneMark) {
+            if(graph instanceof FreeToneMark) {
+                let fa = new FreeAffix();
+            } else if(graph instanceof CheckedToneMark) {
+                let ca = new CheckedAffix();
+            }
+        }
     }
 
     assignAllomorphOfToneMorpheme() {
@@ -464,15 +385,15 @@ class SyllablePatterns {
     constructor() {
         // one letter
         this.list.push([new MedialGraph()]);
-        this.list.push([new NasalInitialGraph()]);
+        this.list.push([new InitialNasalGraph()]);
 
         // two letters
         this.list.push([new MedialGraph(), new MedialGraph()]);
         this.list.push([new MedialGraph(), new FreeToneMarkGraph()]);
         this.list.push([new MedialGraph(), new FinalGraph()]);
         this.list.push([new InitialGraph(), new MedialGraph()]);
-        this.list.push([new NasalInitialGraph, new FreeToneMarkGraph()]);
-        this.list.push([new NasalInitialGraph(), new NasalGraph()]);
+        this.list.push([new InitialNasalGraph, new FreeToneMarkGraph()]);
+        this.list.push([new InitialNasalGraph(), new NasalGraph()]);
 
         // three letters
         this.list.push([new MedialGraph(), new MedialGraph(), new MedialGraph()]);
@@ -484,7 +405,7 @@ class SyllablePatterns {
         this.list.push([new InitialGraph(), new MedialGraph(), new NasalGraph()]);
         this.list.push([new NasalGraph(), new NasalGraph(), new NeutralFinalGraph()]);
         this.list.push([new InitialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new MedialGraph(), new FinalGraph(), new FinalToneMarkGraph()]);
+        this.list.push([new MedialGraph(), new FinalGraph(), new CheckedToneMarkGraph()]);
 
         // four letters
         this.list.push([new MedialGraph(), new MedialGraph(), new MedialGraph(), new FreeToneMarkGraph()]);
@@ -495,12 +416,12 @@ class SyllablePatterns {
         this.list.push([new InitialGraph(), new MedialGraph(), new NasalGraph(), new NeutralFinalGraph()]);
         this.list.push([new InitialGraph(), new MedialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
         this.list.push([new MedialGraph(), new MedialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new FinalGraph(), new FinalToneMarkGraph]);
+        this.list.push([new InitialGraph(), new MedialGraph(), new FinalGraph(), new CheckedToneMarkGraph]);
 
         // five letters
         this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new NasalGraph(), new NeutralFinalGraph()]);
         this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new FinalGraph(), new FinalToneMarkGraph()]);
+        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new FinalGraph(), new CheckedToneMarkGraph()]);
 
         // lueifx, lurifx
     }
