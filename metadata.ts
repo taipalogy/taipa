@@ -10,7 +10,7 @@ export class Metadata {
     static readonly NUMBER_OF_ROOTS = 2209;
 
     constructor() {
-        console.log(Object.keys(characters).length === Metadata.NUMBER_OF_CHARACTERS);
+        console.log(characters.keys().length === Metadata.NUMBER_OF_CHARACTERS);
 
         console.log(Object.keys(lowerLetters).length === Metadata.NUMBER_OF_LETTERS);
 

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 import { Client, Document } from './client'
+import { Metadata } from './metadata'
+
+//var metadata = new Metadata();
 
 const argc = process.argv.splice(2);
 

@@ -1,5 +1,5 @@
 
-import { AlphabeticGrpheme } from './grapheme'
+import { AlphabeticGrapheme } from './grapheme'
 import { Syllables } from './morpheme'
 
 
@@ -8,8 +8,8 @@ import { Syllables } from './morpheme'
 //------------------------------------------------------------------------------
 
 export class ToneSandhiMorphemeMaker {
-    graphemes: Array<AlphabeticGrpheme>;
-    constructor(graphemes: Array<AlphabeticGrpheme>) {
+    graphemes: Array<AlphabeticGrapheme>;
+    constructor(graphemes: Array<AlphabeticGrapheme>) {
         this.graphemes = new Array();
         this.graphemes = graphemes;
     }
