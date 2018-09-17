@@ -1,5 +1,5 @@
 
-import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
+import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, FreeAffix, CheckedAffix } from './morpheme';
 import { GrammaticalUnit } from './expression'
 
 
@@ -41,35 +41,36 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 class Lexeme extends GrammaticalUnit {
 }
 
+//------------------------------------------------------------------------------
+//  Lexeme
+//------------------------------------------------------------------------------
+
 export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
-    inflectionalAffix: InflectionalEnding
+    inflectionalEnding: InflectionalEnding = null
     lemmata: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
         super();
         this.word = word;
-        this.inflectionalAffix = new InflectionalEnding();
+        //this.inflectionalEnding = new InflectionalEnding();
     }
 
-    assignInflectionalAffix(allomorph: Allomorph) {
-        if(allomorph instanceof FreeAllomorph) {
-            let fia = new FreeInflectionalEnding();
-            fia.affix.toneMark = allomorph.toneMark;
-            for(let key in allomorph.baseToneMarks) {
-                let a = new Affix();
-                a.toneMark = allomorph.baseToneMarks[key];
-                fia.baseAffixes.push(a);
+    assignInflectionalEnding(affix: Affix) {
+        if(affix instanceof FreeAffix) {
+            let fie = new FreeInflectionalEnding();
+            fie.affix = affix;
+            for(let key in affix.baseToneMarks) {
+                let fa = new Affix();
+                fa.toneMark = affix.baseToneMarks[key];
+                fie.baseAffixes.push(fa);
             }
-            this.inflectionalAffix = fia;
-        } else if(allomorph instanceof CheckedAllomorph) {
-            let cia = new CheckedInflectionalEnding();
-            cia.affix.toneMark = allomorph.toneMark;
-            this.inflectionalAffix = cia;
+            this.inflectionalEnding = fie;
+        } else if(affix instanceof CheckedAffix) {
+            let cie = new CheckedInflectionalEnding();
+            cie.affix = affix;
+            this.inflectionalEnding = cie;
         }
-    }
-
-    assignInternalSandhiRule() {
     }
 
     replaceLastSyllable(morphemes: Array<ToneSandhiMorpheme>) {
@@ -81,11 +82,11 @@ export class ToneSandhiLexeme extends Lexeme {
     }
 
     getBaseForms(morphemes: Array<ToneSandhiMorpheme>): Array<ToneSandhiWord> {
-        if(this.inflectionalAffix != null) {
-            if(this.inflectionalAffix instanceof FreeInflectionalEnding) {
-                if(this.inflectionalAffix.baseAffixes.length == 1) {
+        if(this.inflectionalEnding != null) {
+            if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
+                if(this.inflectionalEnding.baseAffixes.length == 1) {
                     return [this.replaceLastSyllable(morphemes)];
-                } else if(this.inflectionalAffix.baseAffixes.length > 1) {
+                } else if(this.inflectionalEnding.baseAffixes.length > 1) {
                     let ret = [];
                     let arr = morphemes[morphemes.length-1].getBaseForms();
                     //console.log(arr)
@@ -97,7 +98,7 @@ export class ToneSandhiLexeme extends Lexeme {
                     }
                     return ret;
                 }
-            } else if(this.inflectionalAffix instanceof CheckedInflectionalEnding) {
+            } else if(this.inflectionalEnding instanceof CheckedInflectionalEnding) {
                 return [this.replaceLastSyllable(morphemes)];
             }
         }
@@ -120,16 +121,6 @@ export class ToneSandhiLexeme extends Lexeme {
 
     }
 }
-
-
-//------------------------------------------------------------------------------
-//  Lexeme
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-//  Lexemes
-//------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
 //  Word
@@ -180,11 +171,7 @@ export class ToneSandhiWord extends Word {
 //------------------------------------------------------------------------------
 //  IWords
 //------------------------------------------------------------------------------
-/*
-export interface IWords {
-    readonly [index: string]: ToneSandhiWord
-}
-*/
+
 //------------------------------------------------------------------------------
 //  Words
 //------------------------------------------------------------------------------
@@ -209,9 +196,8 @@ export class ToneSandhiWords extends Words {
 
         let tsl = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
         if(morphemes.length > 0) {
-            if(morphemes[morphemes.length-1].allomorphOfToneMorpheme != null) {
-                tsl.assignInflectionalAffix(morphemes[morphemes.length-1].allomorphOfToneMorpheme);
-                //console.log("pos got assigned inflectional affix")
+            if(morphemes[morphemes.length-1].affix != null) {
+                tsl.assignInflectionalEnding(morphemes[morphemes.length-1].affix);
             }
         }
 
@@ -226,7 +212,3 @@ export class ToneSandhiWords extends Words {
 //------------------------------------------------------------------------------
 //  Tone Sandhi Words
 //------------------------------------------------------------------------------
-/*
-export let tonesandhiwords: IWords = {
-}
-*/

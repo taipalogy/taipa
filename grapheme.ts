@@ -9,7 +9,7 @@ import { IDictionary, Dictionary } from './dictionary'
 //------------------------------------------------------------------------------
 
 export class Graph {
-    characters: Character[]
+    characters: Array<Character> = null
 
     getLiteral() {
         let l: string = '';
@@ -30,20 +30,6 @@ export class Graph {
         return false;
     }
 
-    isEqualTo(letter: AlphabeticLetter) {
-        if(this.getLiteral() === letter.literal) {
-            return true;
-        }
-        return false;
-    }
-
-    isEqualToToneMark(toneMark: ToneMark) {
-        if(this.getLiteral() === toneMark.getLiteral()) {
-            return true;
-        }
-        return false;
-    }
-
     toString() {
         if(this.characters != null) {
             return this.getLiteral();
@@ -56,8 +42,19 @@ export class Initial extends Graph {}
 export class Medial extends Graph {}
 export class Final extends Graph {}
 export class Nasal extends Graph {}
-export class ToneMark extends Graph {}
-export class FreeToneMark extends ToneMark {}
+export class ToneMark extends Graph {
+    isEqualToToneMark(toneMark: ToneMark) {
+        if(this.getLiteral() === toneMark.getLiteral()) {
+            return true;
+        }
+        return false;
+    }
+}
+
+export class FreeToneMark extends ToneMark {
+    baseStrings: Array<Character>[] = null;
+}
+
 export class CheckedToneMark extends ToneMark {}
 
 //------------------------------------------------------------------------------
@@ -97,14 +94,44 @@ class NasalN extends Nasal {characters = [characters['n']]}
 class NasalNG extends Nasal {characters = [characters['n'], characters['g']]}
 class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
 
-export class ZeroToneMark extends ToneMark {characters = null;}
+export class ZeroToneMark extends FreeToneMark {
+    characters = null;
+    baseStrings = [[characters['y']]];
+}
 
-class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
-class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
-class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters['s']]}
-class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
-class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
+class ToneMarkZS extends FreeToneMark {
+    characters = [characters['z'], characters['s']]
+    baseStrings = [[characters['x']], 
+                    [characters['s'], characters['s']], 
+                    null];
+}
+class ToneMarkW extends FreeToneMark {
+    characters = [characters['w']]
+    baseStrings = [[characters['z'], characters['s']]];
+}
+class ToneMarkSS extends FreeToneMark {
+    characters = [characters['s'], characters['s']]
+    baseStrings = [[characters['y']]];
+}
+class ToneMarkXX extends FreeToneMark {
+    characters = [characters['x'], characters['x']]
+    baseStrings = [[characters['z'], characters['s']], 
+                    [characters['s'], characters['s']], 
+                    [characters['x']]];
+}
+class ToneMarkXXX extends FreeToneMark {
+    characters = [characters['x'], characters['x'], characters['x']]
+    baseStrings = [[characters['z'], characters['s']], 
+                    [characters['s'], characters['s']], 
+                    [characters['x']]];
+}
 class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
+
+class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
+class FreeToneMarkY extends FreeToneMark {
+    characters = [characters['y']]
+    baseStrings = [[characters['w']]];
+}
 
 class ToneMarkP extends CheckedToneMark {characters = [characters['p']]}
 class ToneMarkT extends CheckedToneMark {characters = [characters['t']]}
@@ -114,9 +141,6 @@ class ToneMarkB extends CheckedToneMark {characters = [characters['b']]}
 class ToneMarkD extends CheckedToneMark {characters = [characters['d']]}
 class ToneMarkG extends CheckedToneMark {characters = [characters['g']]}
 class ToneMarkF extends CheckedToneMark {characters = [characters['f']]}
-
-class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
-class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
 
 class CheckedToneMarkX extends CheckedToneMark {characters = [characters['x']]}
 class CheckedToneMarkY extends CheckedToneMark {characters = [characters['y']]}
@@ -170,7 +194,7 @@ class GraphDictionary extends Dictionary {
 
 class Collection {}
 
-export class MedialGraph extends Collection {
+export class MedialGraphs extends Collection {
     readonly medials = new GraphDictionary([
         { key: 'a', value: new MedialA() },
         { key: 'e', value: new MedialE() },
@@ -185,7 +209,7 @@ export class MedialGraph extends Collection {
     }
 }
 
-export class NasalGraph extends Collection {
+export class NasalGraphs extends Collection {
     readonly nasals = new GraphDictionary([
         { key: 'm', value: new NasalM() },
         { key: 'n', value: new NasalN() },
@@ -198,7 +222,7 @@ export class NasalGraph extends Collection {
     }
 }
 
-export class FreeToneMarkGraph extends Collection {
+export class FreeToneMarkGraphs extends Collection {
     readonly freeToneMarks = new GraphDictionary([
         { key: 'ss', value: new ToneMarkSS() },
         { key: 'w', value: new ToneMarkW() },
@@ -216,7 +240,7 @@ export class FreeToneMarkGraph extends Collection {
     }
 }
 
-export class NeutralFinalGraph extends Collection {
+export class NeutralFinalGraphs extends Collection {
     readonly neutralFinals = new GraphDictionary([
         { key: 'h', value: new FinalH() },
         { key: 'f', value: new FinalF() },
@@ -227,7 +251,7 @@ export class NeutralFinalGraph extends Collection {
     }
 }
 
-export class InitialNasalGraph extends Collection {
+export class InitialNasalGraphs extends Collection {
     readonly initialNasals = new GraphDictionary([
         { key: 'm', value: new InitialNasalM() },
         { key: 'n', value: new InitialNasalN() },
@@ -239,7 +263,7 @@ export class InitialNasalGraph extends Collection {
     }
 }
 
-export class InitialGraph extends Collection {
+export class InitialGraphs extends Collection {
     readonly initials = new GraphDictionary([
         { key: 'c', value: new InitialC() },
         { key: 'j', value: new InitialJ() },
@@ -268,7 +292,7 @@ export class InitialGraph extends Collection {
     }
 }
 
-export class CheckedToneMarkGraph extends Collection {
+export class CheckedToneMarkGraphs extends Collection {
     readonly checkedToneMarks = new GraphDictionary([
         { key: 'p', value: new ToneMarkP() },
         { key: 't', value: new ToneMarkT() },
@@ -289,7 +313,7 @@ export class CheckedToneMarkGraph extends Collection {
     }
 }
 
-export class FinalGraph extends Collection {
+export class FinalGraphs extends Collection {
     readonly finals = new GraphDictionary([
         { key: 'p', value: new FinalP() },
         { key: 't', value: new FinalT() },
@@ -457,7 +481,6 @@ export class Letters {
         }
         //console.log("metadata letter array length %d", letters.length);
         //console.log(letters);
-        //return letters;
         return graphemes;
     }
 }
