@@ -2,7 +2,7 @@
 
 import { Character, characters } from './character';
 import { Context } from './context';
-import { IDictionary, Dictionary } from './dictionary'
+import { IDictionary, Dictionary } from './collection'
 
 //------------------------------------------------------------------------------
 //  Graph
@@ -168,9 +168,7 @@ class GraphDictionary extends Dictionary {
     }
 }
 
-class Collection {}
-
-export class MedialGraph extends Collection {
+export class MedialGraphs {
     readonly medials = new GraphDictionary([
         { key: 'a', value: new MedialA() },
         { key: 'e', value: new MedialE() },
@@ -185,7 +183,7 @@ export class MedialGraph extends Collection {
     }
 }
 
-export class NasalGraph extends Collection {
+export class NasalGraphs {
     readonly nasals = new GraphDictionary([
         { key: 'm', value: new NasalM() },
         { key: 'n', value: new NasalN() },
@@ -198,7 +196,7 @@ export class NasalGraph extends Collection {
     }
 }
 
-export class FreeToneMarkGraph extends Collection {
+export class FreeToneMarkGraphs {
     readonly freeToneMarks = new GraphDictionary([
         { key: 'ss', value: new ToneMarkSS() },
         { key: 'w', value: new ToneMarkW() },
@@ -216,7 +214,7 @@ export class FreeToneMarkGraph extends Collection {
     }
 }
 
-export class NeutralFinalGraph extends Collection {
+export class NeutralFinalGraphs {
     readonly neutralFinals = new GraphDictionary([
         { key: 'h', value: new FinalH() },
         { key: 'f', value: new FinalF() },
@@ -227,7 +225,7 @@ export class NeutralFinalGraph extends Collection {
     }
 }
 
-export class InitialNasalGraph extends Collection {
+export class InitialNasalGraphs {
     readonly initialNasals = new GraphDictionary([
         { key: 'm', value: new InitialNasalM() },
         { key: 'n', value: new InitialNasalN() },
@@ -239,7 +237,7 @@ export class InitialNasalGraph extends Collection {
     }
 }
 
-export class InitialGraph extends Collection {
+export class InitialGraphs {
     readonly initials = new GraphDictionary([
         { key: 'c', value: new InitialC() },
         { key: 'j', value: new InitialJ() },
@@ -268,7 +266,7 @@ export class InitialGraph extends Collection {
     }
 }
 
-export class CheckedToneMarkGraph extends Collection {
+export class CheckedToneMarkGraphs {
     readonly checkedToneMarks = new GraphDictionary([
         { key: 'p', value: new ToneMarkP() },
         { key: 't', value: new ToneMarkT() },
@@ -289,7 +287,7 @@ export class CheckedToneMarkGraph extends Collection {
     }
 }
 
-export class FinalGraph extends Collection {
+export class FinalGraphs {
     readonly finals = new GraphDictionary([
         { key: 'p', value: new FinalP() },
         { key: 't', value: new FinalT() },

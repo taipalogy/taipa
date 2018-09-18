@@ -1,57 +1,175 @@
 
-export interface IDictionary {
-    add(key: string, value: any): void;
-    remove(key: string): void;
-    containsKey(key: string): boolean;
-    keys(): string[];
-    values(): any[];
+
+interface IndexedDictionary {
+    readonly [index: string]: Array<string>
 }
 
-export class Dictionary {
 
-    _keys: string[] = new Array();
-    _values: any[] = new Array();
-
-    constructor(init: { key: string; value: any; }[]) {
-
-        for (var x = 0; x < init.length; x++) {
-            this[init[x].key] = init[x].value; // -- gotcha --
-            this._keys.push(init[x].key);
-            this._values.push(init[x].value);
-        }
-    }
-
-    add(key: string, value: any) {
-        this[key] = value;
-        this._keys.push(key);
-        this._values.push(value);
-    }
-
-    remove(key: string) {
-        var index = this._keys.indexOf(key, 0);
-        this._keys.splice(index, 1);
-        this._values.splice(index, 1);
-
-        delete this[key];
-    }
-
-    keys(): string[] {
-        return this._keys;
-    }
-
-    values(): any[] {
-        return this._values;
-    }
-
-    containsKey(key: string) {
-        if (typeof this[key] === "undefined") {
-            return false;
-        }
-
-        return true;
-    }
-
-    toLookup(): IDictionary {
-        return this;
-    }
-}
+export let indexed_dictionary: IndexedDictionary = {
+    a: ['阿', '鴉'],
+    af: [],
+    ah: [],
+    aiy: [],
+    aiw: [],
+    ainnzs: [],
+    ay: ['仔'],
+    aw: [],
+    azs: ['阿'],
+    ang: ['尫'],
+    angx: ['紅'],
+    baggziu: ['目周'],
+    bah: ['肉'],
+    baiy: [],
+    bax: [],
+    beh: ['卜'],
+    buaxqiny: [],
+    bueh: [],
+    burx: ['無'],
+    burzs: ['無'], 
+    canzscauy: ['canzs 草'],
+    cenn: ['青'],
+    cezs: ['尋'],
+    cinn: ['青'],
+    cienzscauy: ['cienzs 草'],
+    cuazs: ['𤆬'],
+    cuaih: [],
+    cuddkih: [],
+    cuddlaih: [],
+    cuezs: ['尋'],
+    cuiw: ['嘴'],
+    da: ['焦', '乾'],
+    daizsgiy: ['台語'],
+    daizsguy: ['台語'],
+    daizsuanx: ['台灣', '臺灣'],
+    daizsuanzsuezs: ['台灣話'],
+    dak: [],
+    damy: [],
+    damwvurfxuay: ['淡薄仔'],
+    damwvurfxua: ['淡薄仔'],
+    diamy: [],
+    diurf: ['着'],
+    diurh: [],
+    diurhh: [],
+    dit: [],
+    dngy: ['返'],
+    dngffkih: [],
+    dngfflaih: [],
+    durh: [],
+    e: [],
+    ezs: [],
+    ew: [],
+    ex: ['个'],
+    gaux: [],
+    giax: ['夯'],
+    giny: ['囝'],
+    ginssnassqianny: [],
+    gua: [],
+    guaw: [],
+    guay: [],
+    guazs: [],
+    gun: [],
+    gunw: [],
+    guny: [],
+    gunzs: [],
+    huang: ['風'],
+    he: [],
+    hitt: [],
+    i: [],
+    iw: [],
+    inw: [],
+    izs: [],
+    iaw: [],
+    in: [],
+    inzs: [],
+    jibbkih: [],
+    jibbbaih: [],
+    ka: ['脚'],
+    kazscng: ['尻'],
+    kahh: [],
+    kaih: [],
+    ki: [],
+    kiffkih: [],
+    kifflih: [],
+    kifflaih: [],
+    kihhlaizs: [],
+    kih: [],
+    kihh: [],
+    ku: [],
+    kuainnw: [],
+    kuany: ['欵'],
+    kuannymaixiay: [],
+    kuannymaizs: [],
+    kuannwinnw: ['看'],
+    kuh: [],
+    kuhh: [],
+    kuih: [],
+    laih: [],
+    laizs: [],
+    lan: [],
+    lanw: [],
+    lany: [],
+    lanzs: ['玍'],
+    langh: [],
+    le: [],
+    leh: [],
+    lehh: [],
+    lih: [],
+    lit: [],
+    li: [],
+    liw: [],
+    liy: [],
+    lizs: [],
+    lim: [],
+    lin: [],
+    linw: [],
+    liny: [],
+    linzs: [],
+    luaih: [],
+    lueh: [],
+    lurffkih: [],
+    lurfflaih: [],
+    mw: ['不'],
+    maizs: [],
+    mih: ['乜'],
+    nazs: ['若'],
+    naw: [],
+    o: ['烏', '黑'],
+    pah: ['拍'],
+    painny: ['歹'],
+    pet: ['丿'],
+    piet: ['丿'],
+    qahh: [],
+    qahy: [],
+    qam: [],
+    qannzs: [],
+    qausszanycah: ['九層 cah'],
+    qianny: ['子'],
+    queh: [],
+    quefflaih: [],
+    puah: [],
+    nassqay: [],
+    sia: ['賒'],
+    siay: ['寫'],
+    siaw: ['舍'],
+    siauw: ['賬', '數'],
+    simssmi: [],
+    sih: [],
+    suzsjibbhuat: ['輸入法'],
+    tingzssik: ['程式'],
+    urygiurx: [],
+    uw: [],
+    vuttlissia: [],
+    vuttzissia: [],
+    zaizsianny: ['知', '知 ianny'],
+    zausszing: ['走真'],
+    zeh: [],
+    ziddleh: [],
+    zi: [],
+    ze: [],
+    zit: [],
+    zitt: [],
+    zuannzs: ['濺'],
+    zuezs: ['多'],
+    zury: [],
+    zunzs: ['拵'],
+  };

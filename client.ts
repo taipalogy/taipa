@@ -3,7 +3,7 @@ import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
-import { indexed_dictionary } from './indexeddictionary'
+import { indexed_dictionary } from './dictionary'
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();

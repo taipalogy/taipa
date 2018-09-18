@@ -1,5 +1,5 @@
 
-import { IDictionary, Dictionary } from './dictionary'
+import { IDictionary, Dictionary } from './collection'
 
 interface ICharacterDictionary extends IDictionary {
     values(): Character[];

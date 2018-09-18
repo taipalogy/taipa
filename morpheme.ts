@@ -1,6 +1,6 @@
 import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Graph } from './grapheme'
-import { InitialGraph, FreeToneMarkGraph, CheckedToneMarkGraph, FinalGraph, ZeroToneMark,
-        MedialGraph, InitialNasalGraph, NasalGraph, NeutralFinalGraph, FreeToneMark, CheckedToneMark } from './grapheme'
+import { InitialGraphs, FreeToneMarkGraphs, CheckedToneMarkGraphs, FinalGraphs, ZeroToneMark,
+        MedialGraphs, InitialNasalGraphs, NasalGraphs, NeutralFinalGraphs, FreeToneMark, CheckedToneMark } from './grapheme'
 import { Context } from './context'
 import { GraphemeMaker } from './graphememaker'
 
@@ -19,7 +19,7 @@ class Morph {
 export class Allomorph extends Morph {
     toneMark: ToneMark = null;
 
-    containingLetterOf(syllable: ToneSandhiSyllable) {
+    isToneMarkEqualTo(syllable: ToneSandhiSyllable) {
         return this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
     }
 
@@ -34,121 +34,121 @@ export class FreeAllomorph extends Allomorph {
 }
 
 export class CheckedAllomorph extends Allomorph {
-    final: Final;
+    final: Final = null;
 }
 
 class ZeroAllomorph extends FreeAllomorph {
     toneMark = new ZeroToneMark()
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['y']]
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['y']]
 }
 
 class AllomorphSS extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['ss']
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['y']]
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['ss']
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['y']]
 }
 
 class AllomorphY extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['y']
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['w']]
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['y']
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['w']]
 }
 
 class AllomorphW extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['w']
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['zs']]
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['w']
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['zs']]
 }
 
 class AllomorphX extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['x']
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['x']
 }
 
 class AllomorphXX extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['xx']
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['zs'],
-                    new FreeToneMarkGraph().freeToneMarks['ss'],
-                    new FreeToneMarkGraph().freeToneMarks['x']]
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['xx']
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['zs'],
+                    new FreeToneMarkGraphs().freeToneMarks['ss'],
+                    new FreeToneMarkGraphs().freeToneMarks['x']]
 }
 
 class AllomorphXXX extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['xxx']
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['zs'],
-                    new FreeToneMarkGraph().freeToneMarks['ss'],
-                    new FreeToneMarkGraph().freeToneMarks['x']]
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['xxx']
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['zs'],
+                    new FreeToneMarkGraphs().freeToneMarks['ss'],
+                    new FreeToneMarkGraphs().freeToneMarks['x']]
 }
 
 class AllomorphZZS extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['zzs']
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['zzs']
 }
 
 class AllomorphZS extends FreeAllomorph {
-    toneMark = new FreeToneMarkGraph().freeToneMarks['zs']
-    baseToneMarks = [new FreeToneMarkGraph().freeToneMarks['x'],
-                    new FreeToneMarkGraph().freeToneMarks['ss'],
+    toneMark = new FreeToneMarkGraphs().freeToneMarks['zs']
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['x'],
+                    new FreeToneMarkGraphs().freeToneMarks['ss'],
                     new ZeroToneMark()]
 }
 
 class AllomorphPP extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['p']
-    final = new FinalGraph().finals['p']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['p']
+    final = new FinalGraphs().finals['p']
 }
 
 class AllomorphTT extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['t']
-    final = new FinalGraph().finals['t']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['t']
+    final = new FinalGraphs().finals['t']
 }
 
 class AllomorphKK extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['k']
-    final = new FinalGraph().finals['k']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['k']
+    final = new FinalGraphs().finals['k']
 }
 
 class AllomorphHH extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['h']
-    final = new FinalGraph().finals['h']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['h']
+    final = new FinalGraphs().finals['h']
 }
 
 class AllomorphHY extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['y']
-    final = new FinalGraph().finals['h']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['y']
+    final = new FinalGraphs().finals['h']
 }
 
 class AllomorphBB extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['b']
-    final = new FinalGraph().finals['b']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['b']
+    final = new FinalGraphs().finals['b']
 }
 
 class AllomorphDD extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['d']
-    final = new FinalGraph().finals['d']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['d']
+    final = new FinalGraphs().finals['d']
 }
 
 class AllomorphGG extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['g']
-    final = new FinalGraph().finals['g']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['g']
+    final = new FinalGraphs().finals['g']
 }
 
 class AllomorphFF extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['f']
-    final = new FinalGraph().finals['f']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['f']
+    final = new FinalGraphs().finals['f']
 }
 
 class AllomorphBX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
-    final = new FinalGraph().finals['b']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['x']
+    final = new FinalGraphs().finals['b']
 }
 
 class AllomorphDX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
-    final = new FinalGraph().finals['d']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['x']
+    final = new FinalGraphs().finals['d']
 }
 
 class AllomorphGX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
-    final = new FinalGraph().finals['g']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['x']
+    final = new FinalGraphs().finals['g']
 }
 
 class AllomorphFX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkGraph().checkedToneMarks['x']
-    final = new FinalGraph().finals['f']
+    toneMark = new CheckedToneMarkGraphs().checkedToneMarks['x']
+    final = new FinalGraphs().finals['f']
 }
 
 class AllomorphsOfToneMorpheme {
@@ -198,7 +198,7 @@ class PluralMorpheme {}
 class ToneMorpheme {}
 
 export class Affix extends Morph {
-    toneMark: ToneMark = new ToneMark();
+    toneMark: ToneMark = null;
     /*
     havingZeroToneMark() {
         return this.toneMark.isLetterNull();
@@ -206,15 +206,24 @@ export class Affix extends Morph {
     */
 }
 
-class FreeAffix extends Affix {}
-class CheckedAffix extends Affix {}
+class FreeAffix extends Affix {
+    baseToneMarks: Array<ToneMark> = null;
+}
+
+class CheckedAffix extends Affix {
+    final: Final = null;
+}
+
+class ZeroAffix extends FreeAffix {
+    toneMark = new ZeroToneMark()
+    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['y']]
+}
 
 class Interfix extends Affix {}
 class Suffix extends Affix {}
 
 class DerivationalAffix {}
 
-class InflectionalAffix extends Morph {}
 class GrammaticalSuffix {
     // desinence
 }
@@ -231,21 +240,12 @@ class Morpheme {
 export class ToneSandhiMorpheme extends Morpheme {
     syllable: ToneSandhiSyllable;
     allomorphOfToneMorpheme: Allomorph = null; // required to populate lexical stems
+    //inflectionalSuffix: Affix;
 
     constructor(syllable: ToneSandhiSyllable) {
         super();
         this.syllable = syllable;
         this.assignAllomorphOfToneMorpheme();
-    }
-
-    assignInflectionalSuffix(graph: Graph) {
-        if(graph instanceof ToneMark) {
-            if(graph instanceof FreeToneMark) {
-                let fa = new FreeAffix();
-            } else if(graph instanceof CheckedToneMark) {
-                let ca = new CheckedAffix();
-            }
-        }
     }
 
     assignAllomorphOfToneMorpheme() {
@@ -254,7 +254,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 
         //console.log(aotms)
         for(let key in allomorphs.listOfFinalAllomorph) {
-            if(allomorphs.listOfFinalAllomorph[key].containingLetterOf(this.syllable)) {
+            if(allomorphs.listOfFinalAllomorph[key].isToneMarkEqualTo(this.syllable)) {
                 aotms.push(allomorphs.listOfFinalAllomorph[key]);
                 break;
             }
@@ -283,7 +283,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 
         aotms = [];
         for(let key in allomorphs.listOfFreeAllomorph) {
-            if(allomorphs.listOfFreeAllomorph[key].containingLetterOf(this.syllable)) {
+            if(allomorphs.listOfFreeAllomorph[key].isToneMarkEqualTo(this.syllable)) {
                 aotms.push(allomorphs.listOfFreeAllomorph[key]);
                 break;
             }
@@ -292,6 +292,7 @@ export class ToneSandhiMorpheme extends Morpheme {
 
         if(aotms.length == 0) {
             this.allomorphOfToneMorpheme = new ZeroAllomorph();
+            //this.inflectionalSuffix = new ZeroAffix();
         } else if(aotms.length) {
             for(let i = 0; i < aotms.length; i++) {
                 if(aotms[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
@@ -384,44 +385,44 @@ class SyllablePatterns {
 
     constructor() {
         // one letter
-        this.list.push([new MedialGraph()]);
-        this.list.push([new InitialNasalGraph()]);
+        this.list.push([new MedialGraphs()]);
+        this.list.push([new InitialNasalGraphs()]);
 
         // two letters
-        this.list.push([new MedialGraph(), new MedialGraph()]);
-        this.list.push([new MedialGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new MedialGraph(), new FinalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph()]);
-        this.list.push([new InitialNasalGraph, new FreeToneMarkGraph()]);
-        this.list.push([new InitialNasalGraph(), new NasalGraph()]);
+        this.list.push([new MedialGraphs(), new MedialGraphs()]);
+        this.list.push([new MedialGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new MedialGraphs(), new FinalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs()]);
+        this.list.push([new InitialNasalGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new InitialNasalGraphs(), new NasalGraphs()]);
 
         // three letters
-        this.list.push([new MedialGraph(), new MedialGraph(), new MedialGraph()]);
-        this.list.push([new MedialGraph(), new MedialGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new MedialGraph(), new MedialGraph(), new NasalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new FinalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new NasalGraph()]);
-        this.list.push([new NasalGraph(), new NasalGraph(), new NeutralFinalGraph()]);
-        this.list.push([new InitialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new MedialGraph(), new FinalGraph(), new CheckedToneMarkGraph()]);
+        this.list.push([new MedialGraphs(), new MedialGraphs(), new MedialGraphs()]);
+        this.list.push([new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new MedialGraphs(), new MedialGraphs(), new NasalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new FinalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs()]);
+        this.list.push([new NasalGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
+        this.list.push([new InitialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
 
         // four letters
-        this.list.push([new MedialGraph(), new MedialGraph(), new MedialGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new MedialGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new FinalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new NasalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new NasalGraph(), new NeutralFinalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new MedialGraph(), new MedialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new FinalGraph(), new CheckedToneMarkGraph]);
+        this.list.push([new MedialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new MedialGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FinalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
 
         // five letters
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new NasalGraph(), new NeutralFinalGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new NasalGraph(), new FreeToneMarkGraph()]);
-        this.list.push([new InitialGraph(), new MedialGraph(), new MedialGraph(), new FinalGraph(), new CheckedToneMarkGraph()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
+        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
 
         // lueifx, lurifx
     }
@@ -573,14 +574,14 @@ export class Syllables {
                 //console.log(msp.pattern);
                 //console.log(msp.letters)
 
-                let rm: ToneSandhiMorpheme;
+                let tsm: ToneSandhiMorpheme;
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    rm =  new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
+                    tsm =  new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
 
-                    morphemes.push(rm);
+                    morphemes.push(tsm);
                 }
 
                 //console.log(morphemes);
