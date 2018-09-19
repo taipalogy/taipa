@@ -23,6 +23,7 @@ export class Graph {
                 l += this.characters[k].symbol;
             }
         }
+
         return l;
     }
 

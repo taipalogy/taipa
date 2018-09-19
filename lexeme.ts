@@ -67,11 +67,11 @@ export class ToneSandhiLexeme extends Lexeme {
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
             fie.affix.toneMark = allomorph.toneMark;
-            for(let key in allomorph.baseToneMarks) {
-            //for(let key in facrs.rules[allomorph.toneMark.getLiteral()]) {
+            for(let key in facrs.rules[allomorph.getLiteral()]) {
+                //console.log(`k is ${key}`)
                 let a = new Affix();
-                a.toneMark = allomorph.baseToneMarks[key];
-                //a.toneMark = facrs.rules[allomorph.toneMark.getLiteral()][key];
+                a.toneMark = facrs.rules[allomorph.getLiteral()][key];
+                //console.log(`a.toneMark is ${a.toneMark}`)
                 fie.baseAffixes.push(a);
             }
             this.InflectionalEnding = fie;

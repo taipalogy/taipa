@@ -24,15 +24,20 @@ export class Allomorph extends Morph {
         return this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
     }
 
-    havingZeroToneMark() {
+    hasZeroToneMark() {
         //return this.toneMark.isLetterNull();
         return this.toneMark.isCharacterNull();
     }
+
+    getLiteral() {
+        if(this.toneMark.getLiteral().length == 0) { 
+            // return string 'zero' for first tone. member variable characters for graph is still null.
+            return 'zero'; 
+        } else return this.toneMark.getLiteral();
+    }
 }
 
-export class FreeAllomorph extends Allomorph {
-    baseToneMarks: Array<ToneMark> = null;
-}
+export class FreeAllomorph extends Allomorph {}
 
 export class CheckedAllomorph extends Allomorph {
     final: Final = null;
@@ -40,22 +45,18 @@ export class CheckedAllomorph extends Allomorph {
 
 class ZeroAllomorph extends FreeAllomorph {
     toneMark = new ZeroToneMark()
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['y']]
 }
 
 class AllomorphSS extends FreeAllomorph {
     toneMark = new FreeToneMarkGraphs().freeToneMarks['ss']
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['y']]
 }
 
 class AllomorphY extends FreeAllomorph {
     toneMark = new FreeToneMarkGraphs().freeToneMarks['y']
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['w']]
 }
 
 class AllomorphW extends FreeAllomorph {
     toneMark = new FreeToneMarkGraphs().freeToneMarks['w']
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['zs']]
 }
 
 class AllomorphX extends FreeAllomorph {
@@ -64,19 +65,10 @@ class AllomorphX extends FreeAllomorph {
 
 class AllomorphXX extends FreeAllomorph {
     toneMark = new FreeToneMarkGraphs().freeToneMarks['xx']
-
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['zs'],
-                    new FreeToneMarkGraphs().freeToneMarks['ss'],
-                    new FreeToneMarkGraphs().freeToneMarks['x']]
-
 }
 
 class AllomorphXXX extends FreeAllomorph {
     toneMark = new FreeToneMarkGraphs().freeToneMarks['xxx']
-
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['zs'],
-                    new FreeToneMarkGraphs().freeToneMarks['ss'],
-                    new FreeToneMarkGraphs().freeToneMarks['x']]
 }
 
 class AllomorphZZS extends FreeAllomorph {
@@ -85,11 +77,6 @@ class AllomorphZZS extends FreeAllomorph {
 
 class AllomorphZS extends FreeAllomorph {
     toneMark = new FreeToneMarkGraphs().freeToneMarks['zs']
-
-    baseToneMarks = [new FreeToneMarkGraphs().freeToneMarks['x'],
-                    new FreeToneMarkGraphs().freeToneMarks['ss'],
-                    new ZeroToneMark()]
-
 }
 
 class AllomorphPP extends CheckedAllomorph {
@@ -286,25 +273,25 @@ export class ToneSandhiMorpheme extends Morpheme {
 
     assignAllomorph() {
         let allomorphs = new Allomorphs();
-        let aotms = [];
+        let aoas = []; // array of allomorphs
 
         //console.log(aotms)
         for(let key in allomorphs.listOfFinalAllomorph) {
             if(allomorphs.listOfFinalAllomorph[key].isToneMarkEqualTo(this.syllable)) {
-                aotms.push(allomorphs.listOfFinalAllomorph[key]);
+                aoas.push(allomorphs.listOfFinalAllomorph[key]);
                 break;
             }
         }
         //console.log(aotms)
 
-        if(aotms.length) {
-            for(let i = 0; i < aotms.length; i++) {
+        if(aoas.length) {
+            for(let i = 0; i < aoas.length; i++) {
                 //console.log("aotms[i].final: %s", aotms[i].final.letter.literal);
                 //console.log("letter: %s", this.syllable.letters[this.syllable.letters.length-2].literal)
-                if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-2])) {
+                if(aoas[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-2])) {
                     //console.log("hit. i: %d.", i)
-                    this.allomorph = aotms[i];
-                } else if(aotms[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+                    this.allomorph = aoas[i];
+                } else if(aoas[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
                     // if final is equal to tone mark
                     return;
                 }
@@ -317,25 +304,21 @@ export class ToneSandhiMorpheme extends Morpheme {
         }
         //console.log(aotms)
 
-        aotms = [];
+        aoas = [];
         for(let key in allomorphs.listOfFreeAllomorph) {
             if(allomorphs.listOfFreeAllomorph[key].isToneMarkEqualTo(this.syllable)) {
-                aotms.push(allomorphs.listOfFreeAllomorph[key]);
+                aoas.push(allomorphs.listOfFreeAllomorph[key]);
                 break;
             }
         }
         //console.log(aotms)
 
-        if(aotms.length == 0) {
+        if(aoas.length == 0) {
             this.allomorph = new ZeroAllomorph();
-            //this.inflectionalSuffix = new ZeroAffix();
-        } else if(aotms.length) {
-            for(let i = 0; i < aotms.length; i++) {
-                if(aotms[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
-                    // this syllable is already in base form
-                } else {
-                    this.allomorph = aotms[i];
-                }
+        } else if(aoas.length) {
+            // are there multiple allomorphs? there should be only one.
+            for(let i = 0; i < aoas.length; i++) {
+                this.allomorph = aoas[i];
             }
         }
     }
@@ -345,14 +328,12 @@ export class ToneSandhiMorpheme extends Morpheme {
         // get base forms as strings
         if(this.allomorph != null) {
             if(this.allomorph instanceof FreeAllomorph) {
-                //if(this.allomorph.toneMark.toString() == '') {
-                if(this.allomorph.havingZeroToneMark()) {
+                if(this.allomorph.hasZeroToneMark()) {
                     // no need to pop letter
                     // push letter
                     // the base tone of the first tone is the second tone
                     // 1 to 2
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    //s.pushLetter(new AlphabeticLetter(this.allomorph.baseToneMarks[0].characters));
                     s.pushLetter(new AlphabeticLetter(facrs.rules['zero'][0].characters));
                     //console.log(this.syllable)
                     return [s];
@@ -361,19 +342,14 @@ export class ToneSandhiMorpheme extends Morpheme {
                     // push letter
                     // the 7th tone has two baseforms
                     let ret = [];
-                    //for(let i in this.allomorph.baseToneMarks) {
-                    for(let i in facrs.rules[this.allomorph.toneMark.getLiteral()]) {
+                    for(let i in facrs.rules[this.allomorph.getLiteral()]) {
                         let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                        //if(!this.allomorph.baseToneMarks[i].isCharacterNull()) {
-                        if(!facrs.rules[this.allomorph.toneMark.getLiteral()][i].isCharacterNull()) {
+                        if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
                             // 2 to 3. 3 to 7. 7 to 5. 5 to 3.
                             s.popLetter();
-                            //if(this.allomorph.baseToneMarks[i] != null) {
-                                // there are base tonemarks
-                                // includes ss and x, exclude zero suffix
-                                //s.pushLetter(new AlphabeticLetter(this.allomorph.baseToneMarks[i].characters));
-                                s.pushLetter(new AlphabeticLetter(facrs.rules[this.allomorph.toneMark.getLiteral()][i].characters));
-                            //}
+                            // there are base tonemarks
+                            // includes ss and x, exclude zero suffix
+                            s.pushLetter(new AlphabeticLetter(facrs.rules[this.allomorph.getLiteral()][i].characters));
                             ret.push(s);
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
