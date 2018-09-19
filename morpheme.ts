@@ -174,7 +174,6 @@ class AllomorphsOfToneMorpheme {
         this.listOfFinalAllomorph.push(new AllomorphDD());
         this.listOfFinalAllomorph.push(new AllomorphGG());
         this.listOfFinalAllomorph.push(new AllomorphFF());
-
         this.listOfFinalAllomorph.push(new AllomorphHY());
         this.listOfFinalAllomorph.push(new AllomorphBX());
         this.listOfFinalAllomorph.push(new AllomorphDX());

@@ -9,7 +9,7 @@ import { IDictionary, Dictionary } from './collection'
 //------------------------------------------------------------------------------
 
 export class Graph {
-    characters: Character[]
+    characters: Array<Character> = null
 
     getLiteral() {
         let l: string = '';
@@ -23,13 +23,6 @@ export class Graph {
         return l;
     }
 
-    isCharacterNull() {
-        if(this.characters == null) {
-            return true;
-        }
-        return false;
-    }
-
     isEqualTo(letter: AlphabeticLetter) {
         if(this.getLiteral() === letter.literal) {
             return true;
@@ -37,8 +30,8 @@ export class Graph {
         return false;
     }
 
-    isEqualToToneMark(toneMark: ToneMark) {
-        if(this.getLiteral() === toneMark.getLiteral()) {
+    isCharacterNull() {
+        if(this.characters == null) {
             return true;
         }
         return false;
@@ -56,8 +49,19 @@ export class Initial extends Graph {}
 export class Medial extends Graph {}
 export class Final extends Graph {}
 export class Nasal extends Graph {}
-export class ToneMark extends Graph {}
-export class FreeToneMark extends ToneMark {}
+export class ToneMark extends Graph {
+    isEqualToToneMark(toneMark: ToneMark) {
+        if(this.getLiteral() === toneMark.getLiteral()) {
+            return true;
+        }
+        return false;
+    }
+}
+
+export class FreeToneMark extends ToneMark {
+    baseStrings: Array<Character>[] = null;
+}
+
 export class CheckedToneMark extends ToneMark {}
 
 //------------------------------------------------------------------------------
@@ -105,6 +109,8 @@ class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters
 class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
 class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
 class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
+class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
+class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
 
 class ToneMarkP extends CheckedToneMark {characters = [characters['p']]}
 class ToneMarkT extends CheckedToneMark {characters = [characters['t']]}
@@ -114,9 +120,6 @@ class ToneMarkB extends CheckedToneMark {characters = [characters['b']]}
 class ToneMarkD extends CheckedToneMark {characters = [characters['d']]}
 class ToneMarkG extends CheckedToneMark {characters = [characters['g']]}
 class ToneMarkF extends CheckedToneMark {characters = [characters['f']]}
-
-class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
-class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
 
 class CheckedToneMarkX extends CheckedToneMark {characters = [characters['x']]}
 class CheckedToneMarkY extends CheckedToneMark {characters = [characters['y']]}
@@ -455,7 +458,6 @@ export class Letters {
         }
         //console.log("metadata letter array length %d", letters.length);
         //console.log(letters);
-        //return letters;
         return graphemes;
     }
 }

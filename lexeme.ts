@@ -1,5 +1,5 @@
 
-import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, Allomorph, FreeAllomorph, CheckedAllomorph } from './morpheme';
+import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph } from './morpheme';
 import { GrammaticalUnit } from './expression'
 
 
@@ -48,6 +48,10 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 class Lexeme extends GrammaticalUnit {
 }
 
+//------------------------------------------------------------------------------
+//  Lexeme
+//------------------------------------------------------------------------------
+
 export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
     InflectionalEnding: InflectionalEnding = null
@@ -74,9 +78,6 @@ export class ToneSandhiLexeme extends Lexeme {
             cie.affix.toneMark = allomorph.toneMark;
             this.InflectionalEnding = cie;
         }
-    }
-
-    assignInternalSandhiRule() {
     }
 
     replaceLastSyllable(morphemes: Array<ToneSandhiMorpheme>) {
@@ -177,11 +178,7 @@ export class ToneSandhiWord extends Word {
 //------------------------------------------------------------------------------
 //  IWords
 //------------------------------------------------------------------------------
-/*
-export interface IWords {
-    readonly [index: string]: ToneSandhiWord
-}
-*/
+
 //------------------------------------------------------------------------------
 //  Words
 //------------------------------------------------------------------------------
@@ -223,7 +220,3 @@ export class ToneSandhiWords extends Words {
 //------------------------------------------------------------------------------
 //  Tone Sandhi Words
 //------------------------------------------------------------------------------
-/*
-export let tonesandhiwords: IWords = {
-}
-*/
