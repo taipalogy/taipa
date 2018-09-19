@@ -58,9 +58,7 @@ export class ToneMark extends Graph {
     }
 }
 
-export class FreeToneMark extends ToneMark {
-    baseStrings: Array<Character>[] = null;
-}
+export class FreeToneMark extends ToneMark {}
 
 export class CheckedToneMark extends ToneMark {}
 
@@ -101,7 +99,10 @@ class NasalN extends Nasal {characters = [characters['n']]}
 class NasalNG extends Nasal {characters = [characters['n'], characters['g']]}
 class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
 
-export class ZeroToneMark extends ToneMark {characters = null;}
+export class ZeroToneMark extends FreeToneMark {
+    characters = null;
+    baseStrings = [[characters['y']]];
+}
 
 class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
 class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
@@ -109,6 +110,7 @@ class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters
 class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
 class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
 class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
+
 class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
 class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
 
