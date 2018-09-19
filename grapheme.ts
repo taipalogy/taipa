@@ -9,8 +9,11 @@ import { IDictionary, Dictionary } from './collection'
 //------------------------------------------------------------------------------
 
 export class Graph {
+    // an array of character objects. can be used to make a word object.
     characters: Array<Character> = null
 
+    // we still need a method for combinning characters from each character objects.
+    // this is different from an array of character objects. it is a string.
     getLiteral() {
         let l: string = '';
         // there is no characters for 1st tone
@@ -99,10 +102,7 @@ class NasalN extends Nasal {characters = [characters['n']]}
 class NasalNG extends Nasal {characters = [characters['n'], characters['g']]}
 class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
 
-export class ZeroToneMark extends FreeToneMark {
-    characters = null;
-    baseStrings = [[characters['y']]];
-}
+export class ZeroToneMark extends FreeToneMark {characters = null;}
 
 class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
 class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
