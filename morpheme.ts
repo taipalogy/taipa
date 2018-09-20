@@ -146,7 +146,7 @@ class AllomorphFX extends CheckedAllomorph {
 
 class Allomorphs {
     listOfFreeAllomorph: Array<Allomorph>  = new Array();
-    listOfFinalAllomorph: Array<Allomorph>  = new Array();
+    listOfChechedAllomorph: Array<Allomorph>  = new Array();
 
     constructor() {
         this.listOfFreeAllomorph.push(new AllomorphSS());
@@ -159,19 +159,19 @@ class Allomorphs {
         this.listOfFreeAllomorph.push(new AllomorphY());
         this.listOfFreeAllomorph.push(new AllomorphX());
 
-        this.listOfFinalAllomorph.push(new AllomorphPP());
-        this.listOfFinalAllomorph.push(new AllomorphTT());
-        this.listOfFinalAllomorph.push(new AllomorphKK());
-        this.listOfFinalAllomorph.push(new AllomorphHH());
-        this.listOfFinalAllomorph.push(new AllomorphBB());
-        this.listOfFinalAllomorph.push(new AllomorphDD());
-        this.listOfFinalAllomorph.push(new AllomorphGG());
-        this.listOfFinalAllomorph.push(new AllomorphFF());
-        this.listOfFinalAllomorph.push(new AllomorphHY());
-        this.listOfFinalAllomorph.push(new AllomorphBX());
-        this.listOfFinalAllomorph.push(new AllomorphDX());
-        this.listOfFinalAllomorph.push(new AllomorphGX());
-        this.listOfFinalAllomorph.push(new AllomorphFX());
+        this.listOfChechedAllomorph.push(new AllomorphPP());
+        this.listOfChechedAllomorph.push(new AllomorphTT());
+        this.listOfChechedAllomorph.push(new AllomorphKK());
+        this.listOfChechedAllomorph.push(new AllomorphHH());
+        this.listOfChechedAllomorph.push(new AllomorphBB());
+        this.listOfChechedAllomorph.push(new AllomorphDD());
+        this.listOfChechedAllomorph.push(new AllomorphGG());
+        this.listOfChechedAllomorph.push(new AllomorphFF());
+        this.listOfChechedAllomorph.push(new AllomorphHY());
+        this.listOfChechedAllomorph.push(new AllomorphBX());
+        this.listOfChechedAllomorph.push(new AllomorphDX());
+        this.listOfChechedAllomorph.push(new AllomorphGX());
+        this.listOfChechedAllomorph.push(new AllomorphFX());
     }
 }
 
@@ -239,13 +239,13 @@ class DictionaryOfRules extends Dictionary {
 export class FreeAllomorphCyclingRules {
     readonly rules = new DictionaryOfRules([
         { key: 'ss', value: [new FreeToneMarkGraphs().freeToneMarks['y']] },
-        { key: 'w', value: [new FreeToneMarkGraphs().freeToneMarks['zs']] },
+        { key: 'w', value: [new FreeToneMarkGraphs().freeToneMarks['zs'], new FreeToneMarkGraphs().freeToneMarks['x']] },
         { key: 'xx', value: [new FreeToneMarkGraphs().freeToneMarks['zs'], new FreeToneMarkGraphs().freeToneMarks['ss'], new FreeToneMarkGraphs().freeToneMarks['x']] },
         { key: 'xxx', value: [new FreeToneMarkGraphs().freeToneMarks['zs'], new FreeToneMarkGraphs().freeToneMarks['ss'], new FreeToneMarkGraphs().freeToneMarks['x']] },
         { key: 'zs', value: [new FreeToneMarkGraphs().freeToneMarks['x'], new FreeToneMarkGraphs().freeToneMarks['ss'], new ZeroToneMark()] },
         { key: 'zzs', value: [] },
 
-        { key: 'x', value: [new FreeToneMarkGraphs().freeToneMarks['w']] },
+        { key: 'x', value: [] },
         { key: 'y', value: [new FreeToneMarkGraphs().freeToneMarks['w']] },
 
         { key: 'zero', value: [new FreeToneMarkGraphs().freeToneMarks['y']] },
@@ -276,9 +276,9 @@ export class ToneSandhiMorpheme extends Morpheme {
         let aoas = []; // array of allomorphs
 
         //console.log(aotms)
-        for(let key in allomorphs.listOfFinalAllomorph) {
-            if(allomorphs.listOfFinalAllomorph[key].isToneMarkEqualTo(this.syllable)) {
-                aoas.push(allomorphs.listOfFinalAllomorph[key]);
+        for(let key in allomorphs.listOfChechedAllomorph) {
+            if(allomorphs.listOfChechedAllomorph[key].isToneMarkEqualTo(this.syllable)) {
+                aoas.push(allomorphs.listOfChechedAllomorph[key]);
                 break;
             }
         }
@@ -318,7 +318,11 @@ export class ToneSandhiMorpheme extends Morpheme {
         } else if(aoas.length) {
             // are there multiple allomorphs? there should be only one.
             for(let i = 0; i < aoas.length; i++) {
-                this.allomorph = aoas[i];
+                if(aoas[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
+                    // this syllable is already in base form
+                } else {
+                    this.allomorph = aoas[i];
+                }
             }
         }
     }

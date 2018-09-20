@@ -151,6 +151,7 @@ export let indexed_dictionary: IndexedDictionary = {
     sia: ['賒'],
     siay: ['寫'],
     siaw: ['舍'],
+    siax: ['邪'],
     siauw: ['賬', '數'],
     simssmi: [],
     sih: [],

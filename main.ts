@@ -2,6 +2,7 @@
 
 import { Client, Document } from './client'
 import { Metadata } from './metadata'
+import { Dictionary } from './collection';
 
 //var metadata = new Metadata();
 
@@ -35,5 +36,3 @@ if(argc.length == 1) {
 
 let clt = new Client();
 let doc = clt.process("sia tingzssik");
-
-
