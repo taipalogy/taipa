@@ -1,7 +1,7 @@
 {
-  "name": "turbine",
+  "name": "parser",
   "version": "0.0.1",
-  "description": "turbine command line tool",
+  "description": "parser command line tool",
   "main": ".bin/main.js",
   "scripts": {
     "build": "tsc --outDir bin"
@@ -9,7 +9,7 @@
   "author": "sotronx",
   "license": "MIT",
   "bin": {
-    "turbine": "./bin/main.js"
+    "parser": "./bin/main.js"
   },
   "dependencies": {},
   "devDependencies": {
