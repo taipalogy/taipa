@@ -7,21 +7,13 @@ import { GrammaticalUnit } from './expression'
 //  Internal Sandhi Rule
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+//  Inflectional Combining and Ending
+//------------------------------------------------------------------------------
 
-export class InternalSandhiRule {
-    lexicalStem: LexicalStem
-    affix: Affix
+class InflectionalCombining {
+    affix: Affix = null;
 }
-
-class ConsonantMutation extends InternalSandhiRule {}
-class Epenthesis extends InternalSandhiRule {}
-class Nasalization extends InternalSandhiRule {}
-class Aspiration extends InternalSandhiRule {}
-class Reduplication extends InternalSandhiRule {}
-
-//------------------------------------------------------------------------------
-//  Lexemes
-//------------------------------------------------------------------------------
 
 export class InflectionalEnding {
     affix: Affix = null;
@@ -47,13 +39,9 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 class Lexeme extends GrammaticalUnit {
 }
 
-//------------------------------------------------------------------------------
-//  Lexeme
-//------------------------------------------------------------------------------
-
 export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
-    InflectionalEnding: InflectionalEnding = null
+    ending: InflectionalEnding = null
     lemmata: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
@@ -74,11 +62,11 @@ export class ToneSandhiLexeme extends Lexeme {
                 //console.log(`a.toneMark is ${a.toneMark}`)
                 fie.baseAffixes.push(a);
             }
-            this.InflectionalEnding = fie;
+            this.ending = fie;
         } else if(allomorph instanceof CheckedAllomorph) {
             let cie = new CheckedInflectionalEnding();
             cie.affix.toneMark = allomorph.toneMark;
-            this.InflectionalEnding = cie;
+            this.ending = cie;
         }
     }
 
@@ -91,11 +79,11 @@ export class ToneSandhiLexeme extends Lexeme {
     }
 
     getBaseForms(morphemes: Array<ToneSandhiMorpheme>): Array<ToneSandhiWord> {
-        if(this.InflectionalEnding != null) {
-            if(this.InflectionalEnding instanceof FreeInflectionalEnding) {
-                if(this.InflectionalEnding.baseAffixes.length == 1) {
+        if(this.ending != null) {
+            if(this.ending instanceof FreeInflectionalEnding) {
+                if(this.ending.baseAffixes.length == 1) {
                     return [this.replaceLastSyllable(morphemes)];
-                } else if(this.InflectionalEnding.baseAffixes.length > 1) {
+                } else if(this.ending.baseAffixes.length > 1) {
                     let ret = [];
                     let arr = morphemes[morphemes.length-1].getBaseForms();
                     //console.log(arr)
@@ -107,7 +95,7 @@ export class ToneSandhiLexeme extends Lexeme {
                     }
                     return ret;
                 }
-            } else if(this.InflectionalEnding instanceof CheckedInflectionalEnding) {
+            } else if(this.ending instanceof CheckedInflectionalEnding) {
                 return [this.replaceLastSyllable(morphemes)];
             }
         }

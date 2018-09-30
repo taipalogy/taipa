@@ -1,4 +1,4 @@
-import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Graph } from './grapheme'
+import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Sound } from './grapheme'
 import { InitialGraphs, FreeToneMarkGraphs, CheckedToneMarkGraphs, FinalGraphs, ZeroToneMark,
         MedialGraphs, InitialNasalGraphs, NasalGraphs, NeutralFinalGraphs, FreeToneMark, CheckedToneMark } from './grapheme'
 import { Context } from './context'
@@ -9,8 +9,7 @@ import { IDictionary, Dictionary } from './collection'
 //  Morph
 //------------------------------------------------------------------------------
 
-class Morph {
-}
+class Morph {}
 
 //------------------------------------------------------------------------------
 //  Allomorph
@@ -175,11 +174,20 @@ class Allomorphs {
     }
 }
 
-export class LexicalStem extends Morph {
+//------------------------------------------------------------------------------
+//  Root
+//------------------------------------------------------------------------------
+
+class Root {
+    lexicalStem: LexicalStem
+    affix: Affix
+}
+
+export class LexicalStem {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
-    graphs: Array<Graph>;
+    sounds: Array<Sound>;
     // abstract factory
 }
 
@@ -211,7 +219,6 @@ class DerivationalAffix {}
 class GrammaticalSuffix {
     // desinence
 }
-class InflectionalStem extends Morph {}
 
 //------------------------------------------------------------------------------
 //  Free Allomorph Cycling Rules
@@ -392,7 +399,7 @@ export class RootMorpheme extends ToneSandhiMorpheme {
 //------------------------------------------------------------------------------
 
 class SoundsOfPattern {
-    list: Array<Graph>
+    list: Array<Sound>
 
     toString() {
         let str = '';

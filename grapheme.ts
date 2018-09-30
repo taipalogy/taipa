@@ -5,10 +5,10 @@ import { Context } from './context';
 import { IDictionary, Dictionary } from './collection'
 
 //------------------------------------------------------------------------------
-//  Graph
+//  Sound
 //------------------------------------------------------------------------------
 
-export class Graph {
+export class Sound {
     // an array of character objects. can be used to make a word object.
     characters: Array<Character> = null
 
@@ -49,11 +49,11 @@ export class Graph {
     }
 }
 
-export class Initial extends Graph {}
-export class Medial extends Graph {}
-export class Final extends Graph {}
-export class Nasal extends Graph {}
-export class ToneMark extends Graph {
+export class Initial extends Sound {}
+export class Medial extends Sound {}
+export class Final extends Sound {}
+export class Nasal extends Sound {}
+export class ToneMark extends Sound {
     isEqualToToneMark(toneMark: ToneMark) {
         if(this.getLiteral() === toneMark.getLiteral()) {
             return true;
@@ -138,16 +138,16 @@ class FinalF extends Final {characters = [characters['f']]}
 
 
 interface IGraphDictionary extends IDictionary {
-    values(): Graph[];
+    values(): Sound[];
     toString(): string;
 }
 
 class GraphDictionary extends Dictionary {
-    constructor(init: { key: string; value: Graph; }[]) {
+    constructor(init: { key: string; value: Sound; }[]) {
         super(init);
     }
 
-    values(): Graph[] {
+    values(): Sound[] {
         return this._values;
     }
 
