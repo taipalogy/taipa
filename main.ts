@@ -2,7 +2,7 @@
 
 import { Client, Document } from './client'
 import { Metadata } from './metadata'
-import { Dictionary } from './collection';
+import { STOP_WORDS } from  './stopwords'
 
 //var metadata = new Metadata();
 
@@ -36,3 +36,7 @@ if(argc.length == 1) {
 
 let clt = new Client();
 let doc = clt.process("sia tingzssik");
+
+STOP_WORDS.forEach(function(w) {
+    console.log(w)
+})
