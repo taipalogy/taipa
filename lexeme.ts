@@ -1,6 +1,6 @@
 
 import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphCyclingRules } from './morpheme';
-import { GrammaticalUnit } from './expression'
+import { GrammaticalUnit } from './shuntingyard'
 
 
 //------------------------------------------------------------------------------

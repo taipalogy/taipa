@@ -1,5 +1,5 @@
 
-import { IExpression, Expression, AndExpression, OrExpression } from './expression';
+import { IExpression, Expression, AndExpression, OrExpression } from './shuntingyard';
 import { Letter, AlphabeticLetter } from './grapheme';
 
 //------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Sound } from './grapheme'
 import { InitialGraphs, FreeToneMarkGraphs, CheckedToneMarkGraphs, FinalGraphs, ZeroToneMark,
         MedialGraphs, InitialNasalGraphs, NasalGraphs, NeutralFinalGraphs, FreeToneMark, CheckedToneMark } from './grapheme'
-import { Context } from './context'
+import { Context } from './shuntingyard'
 import { GraphemeMaker } from './graphememaker'
 import { IDictionary, Dictionary } from './collection'
 

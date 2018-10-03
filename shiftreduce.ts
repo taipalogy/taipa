@@ -1,0 +1,6 @@
+
+
+class ShiftReduce {
+    tokens
+    output
+}

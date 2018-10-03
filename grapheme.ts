@@ -1,7 +1,7 @@
 
 
 import { Character, characters } from './character';
-import { Context } from './context';
+import { Context } from './shuntingyard';
 import { IDictionary, Dictionary } from './collection'
 
 //------------------------------------------------------------------------------
