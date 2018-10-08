@@ -4,9 +4,11 @@ import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { indexed_dictionary } from './dictionary'
+import { DependencyParser, Configuration, Guide, Transition, Dependencies } from './dependencyparser'
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();
+    dependencies: Dependencies
 }
 
 export class Client {
@@ -25,15 +27,15 @@ export class Client {
 
     take(str: string) {
         
-        // Letter Transformer
+        // Grapheme Maker
         let lt = new GraphemeMaker(str);
         let seqOfGraphemes = lt.makeGrapheme();
 
-        // Syllable Transformer
+        // Morpheme Maker
         let st = new ToneSandhiMorphemeMaker(seqOfGraphemes);
         let seqOfMorphemes = st.makeMorpheme();
 
-        // Word Transformer
+        // Lexeme Maker
         let wt = new ToneSandhiLexemeMaker(seqOfMorphemes);
         let seqOfLexemes = wt.makeLexeme();
 
@@ -43,6 +45,17 @@ export class Client {
     }
 
     process(str: string): Document {
+        /*
+        let dp = new DependencyParser();
+        let c: Configuration = dp.getInitialConfiguration(str);
+        let guide = new Guide()
+        while(!c.isTerminalConfiguration()) {
+            let t: Transition = guide.getNextTransition(c);
+            c = c.makeTransition(t);
+        }
+*/
+        let d = new Document();
+        //d.dependencies = c.getGraph();
         return new Document;
     }
 }

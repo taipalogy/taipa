@@ -1,6 +1,6 @@
 
-import { ToneSandhiSyllable, Affix, LexicalStem, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphCyclingRules } from './morpheme';
-import { GrammaticalUnit } from './shuntingyard'
+import { ToneSandhiSyllable, Affix, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphCyclingRules } from './morpheme';
+import { GrammaticalUnit } from './expressionparser'
 
 
 //------------------------------------------------------------------------------
@@ -38,6 +38,10 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 
 class Lexeme extends GrammaticalUnit {
 }
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Lexeme
+//------------------------------------------------------------------------------
 
 export class ToneSandhiLexeme extends Lexeme {
     word: ToneSandhiWord
@@ -129,11 +133,9 @@ export class Word {
     evaluate() {}
 }
 
-export class InflectionWord extends Word {
-}
-
-export class AgglutinationWord extends Word {
-}
+//------------------------------------------------------------------------------
+//  Tone Sandhi Word
+//------------------------------------------------------------------------------
 
 export class ToneSandhiWord extends Word {
     syllables: Array<ToneSandhiSyllable>;
@@ -201,4 +203,22 @@ export class ToneSandhiWords extends Words {
 
         return lexemes
     }
+}
+
+//------------------------------------------------------------------------------
+//  Inflectional Lexeme
+//------------------------------------------------------------------------------
+
+class InflectionalLexeme {
+    word: InflectionalWord
+}
+
+//------------------------------------------------------------------------------
+//  Inflectional Word
+//------------------------------------------------------------------------------
+
+export class InflectionalWord extends Word {
+}
+
+export class AgglutinationalWord extends Word {
 }

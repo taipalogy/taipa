@@ -1,7 +1,6 @@
 import { AlphabeticLetter, Final, ToneMark, AlphabeticGrapheme, Sound } from './grapheme'
 import { InitialGraphs, FreeToneMarkGraphs, CheckedToneMarkGraphs, FinalGraphs, ZeroToneMark,
-        MedialGraphs, InitialNasalGraphs, NasalGraphs, NeutralFinalGraphs, FreeToneMark, CheckedToneMark } from './grapheme'
-import { Context } from './shuntingyard'
+        MedialGraphs, InitialNasalGraphs, NasalGraphs, NeutralFinalGraphs } from './grapheme'
 import { GraphemeMaker } from './graphememaker'
 import { IDictionary, Dictionary } from './collection'
 
@@ -178,12 +177,12 @@ class Allomorphs {
 //  Root
 //------------------------------------------------------------------------------
 
-class Root {
-    lexicalStem: LexicalStem
+class LexicalRoot {
+    stem: Stem
     affix: Affix
 }
 
-export class LexicalStem {
+export class Stem {
     //stem of free tone
     //stem of checked tone
     //stem of neutral tone
@@ -191,8 +190,8 @@ export class LexicalStem {
     // abstract factory
 }
 
-class VowelStem extends LexicalStem {}
-class ConsonantStem extends LexicalStem {}
+class VowelStem extends Stem {}
+class ConsonantStem extends Stem {}
 
 class PluralMorpheme {}
 class ToneMorpheme {}
@@ -269,7 +268,7 @@ class Morpheme {
 
 export class ToneSandhiMorpheme extends Morpheme {
     syllable: ToneSandhiSyllable;
-    allomorph: Allomorph = null; // required to populate lexical stems
+    allomorph: Allomorph = null; // required to populate stems
 
     constructor(syllable: ToneSandhiSyllable) {
         super();
@@ -389,8 +388,8 @@ export class ToneSandhiMorpheme extends Morpheme {
 }
 
 export class RootMorpheme extends ToneSandhiMorpheme {
-    // lexical affix
-    populateLexicalStem(msp: MatchedPattern) {
+    // affix
+    populateStem(msp: MatchedPattern) {
     }
 }
 
@@ -476,7 +475,6 @@ class MatchedPattern {
 
 export class Syllable {
     literal: string = '';
-    evaluate(context: Context){}
 }
 
 export class ToneSandhiSyllable extends Syllable {
@@ -641,7 +639,7 @@ export class Syllables {
         }
 
         //console.log(morphemes);
-        //console.log("length of lexical affixes: %d", lexicalAffixes.length);
+        //console.log("length of affixes: %d", affixes.length);
         return morphemes;
     }
 }

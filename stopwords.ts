@@ -3,11 +3,15 @@
 export let STOP_WORDS = `
 a
 
-e 
+e
+
+kahh
+
+langx
 
 qaw qazs
 
 siw
 
 gua guaw guay guazs
-`.split(' ');
+`.match(/\w+/g);
