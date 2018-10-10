@@ -36,8 +36,7 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-class Lexeme extends GrammaticalUnit {
-}
+export class Lexeme extends GrammaticalUnit {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
@@ -129,8 +128,6 @@ export class ToneSandhiLexeme extends Lexeme {
 
 export class Word {
     literal: string = '';
-
-    evaluate() {}
 }
 
 //------------------------------------------------------------------------------
@@ -209,16 +206,25 @@ export class ToneSandhiWords extends Words {
 //  Inflectional Lexeme
 //------------------------------------------------------------------------------
 
-class InflectionalLexeme {
-    word: InflectionalWord
+class InflectionalLexeme extends Lexeme {
+    word: InflectiveWord
+}
+
+//------------------------------------------------------------------------------
+//  Dummy Lexeme
+//------------------------------------------------------------------------------
+
+export class DummyLexeme extends Lexeme {
+    word: Word
 }
 
 //------------------------------------------------------------------------------
 //  Inflectional Word
 //------------------------------------------------------------------------------
 
-export class InflectionalWord extends Word {
+export class InflectiveWord extends Word {
 }
 
-export class AgglutinationalWord extends Word {
+export class AgglutinativeWord extends Word {
 }
+

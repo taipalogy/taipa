@@ -262,9 +262,7 @@ export class FreeAllomorphCyclingRules {
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
 
-class Morpheme {
-    lemma: string
-}
+export class Morpheme {}
 
 export class ToneSandhiMorpheme extends Morpheme {
     syllable: ToneSandhiSyllable;

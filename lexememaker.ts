@@ -1,6 +1,6 @@
 
 import { ToneSandhiMorpheme  } from './morpheme'
-import { ToneSandhiWords } from './lexeme'
+import { ToneSandhiWords, DummyLexeme, Word } from './lexeme'
 
 //------------------------------------------------------------------------------
 //  LexicalAnalyzer
@@ -23,3 +23,14 @@ export class ToneSandhiLexemeMaker {
         return lexemes;
     }
 }
+
+export class DummyLexemeMaker {
+    makeLexeme(str: string) {
+        let l = new DummyLexeme();
+        l.word = new Word();
+        l.word.literal = str;
+        return l;
+    }
+}
+
+class InflectiveLexemeMaker {}

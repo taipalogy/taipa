@@ -4,11 +4,11 @@ import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { indexed_dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Dependencies } from './dependencyparser'
+import { DependencyParser, Configuration, Guide, Transition, Arc } from './dependencyparser'
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();
-    dependencies: Dependencies
+    graph: Set<Arc>
 }
 
 export class Client {
@@ -25,8 +25,7 @@ export class Client {
         return null;
     }
 
-    take(str: string) {
-        
+    turnLexeme(str: string) {
         // Grapheme Maker
         let lt = new GraphemeMaker(str);
         let seqOfGraphemes = lt.makeGrapheme();
@@ -39,23 +38,37 @@ export class Client {
         let wt = new ToneSandhiLexemeMaker(seqOfMorphemes);
         let seqOfLexemes = wt.makeLexeme();
 
+        return seqOfLexemes;
+    }
+    
+    processOneToken(str: string) {
         let doc: Document = new Document();
-        doc.lexemes = seqOfLexemes
+        doc.lexemes = this.turnLexeme(str.match(/\w+/g)[0]);
         return doc;
     }
 
     process(str: string): Document {
-        /*
+
+        console.log(str)
         let dp = new DependencyParser();
-        let c: Configuration = dp.getInitialConfiguration(str);
+        let c: Configuration = dp.getInitialConfiguration();
+        console.log(c.isTerminalConfiguration())
+        let tokens = str.match(/\w+/g);
+        
+        for(let key in tokens) {
+            console.log(tokens[key])
+            c.queue.push(this.turnLexeme(tokens[key])[0])
+        }
+        
         let guide = new Guide()
+        /*
         while(!c.isTerminalConfiguration()) {
             let t: Transition = guide.getNextTransition(c);
             c = c.makeTransition(t);
         }
 */
-        let d = new Document();
-        //d.dependencies = c.getGraph();
-        return new Document;
+        let doc = new Document();
+        //doc.dependencies = c.getGraph();
+        return doc;
     }
 }
