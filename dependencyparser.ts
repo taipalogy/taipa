@@ -1,16 +1,50 @@
-import { Lexeme } from "./lexeme";
-import { DummyLexemeMaker } from "./lexememaker";
+import { Lexeme } from './lexeme';
+import { DummyLexemeMaker } from './lexememaker';
+import { MORPH_RULES } from './morphrules'
 
-export class Arc {
-    head: Lexeme = null
-    dependent: Lexeme = null
+enum Dependency {
+    csubj,
+    dobj,
+    nobj,
+    nsubj,
+    root,
 }
 
-class RightArc {}
+export class Arc {
+    dep: Dependency
+    head: Lexeme = null
+    dependent: Lexeme = null
+    constructor(dep: Dependency, head: Lexeme, dependent: Lexeme) {
+        this.dep = dep;
+        this.head = head;
+        this.dependent = dependent
+    }
+}
 
-class LeftArc {}
+export abstract class Transition {
+    abstract do(c: Configuration)
+}
 
-export class Transition {}
+class Shift {
+    do(c: Configuration) {
+        c.stack.push(c.queue.shift());
+        return c;
+    }
+}
+
+class RightArc {
+    do(c: Configuration) {
+        c.graph.add(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+        c.stack.pop();
+        return c;
+    }
+}
+
+class LeftArc {
+    do(c: Configuration) {
+        return c;
+    }
+}
 
 export class Configuration {
     queue: Array<Lexeme> = new Array()
@@ -23,7 +57,7 @@ export class Configuration {
     }
 
     makeTransition(t: Transition) {
-        return null;
+        return t.do(this);
     }
 
     getGraph() {
@@ -41,16 +75,32 @@ export class Configuration {
     }
 }
 
-export class Guide {
-    getNextTransition(c: Configuration) {
-        let l = c.queue.shift();
-        c.stack.push(l);
-        return null;
-    }
-}
-
 export class DependencyParser {
     getInitialConfiguration() {
         return new Configuration();
+    }
+}
+
+export class Guide {
+    matchMorphRules(l: Lexeme) {
+        for(let key in MORPH_RULES.PRP) {
+            /*
+            if(l.word.literal === key) {
+                console.log(l.word.literal)
+                return true;
+            }
+            */
+        }
+        return false
+    }
+
+    getNextTransition(c: Configuration) {
+        if(this.matchMorphRules(c.stack[c.stack.length-1])) {
+            
+        } else {
+            
+        }
+        //return new Shift();
+        return null;
     }
 }

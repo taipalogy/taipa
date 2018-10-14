@@ -1,6 +1,10 @@
 
-import { IExpression, Expression, AndExpression, OrExpression } from './expressionparser';
-import { ToneSandhiLexeme } from './lexeme';
+import { IExpression, Expression, AndExpression, OrExpression, GrammaticalUnit } from './expressionparser';
+import { ToneSandhiLexeme, Lexeme } from './lexeme';
+
+class Node extends GrammaticalUnit {
+    lexeme: Lexeme
+}
 
 //------------------------------------------------------------------------------
 //  turn a sequence into a series
@@ -12,18 +16,18 @@ class SeriesMaker {
 export class SeriesOfLexeme extends SeriesMaker {
     // turn a sequence of lexemes to a series of lexemes
 
-    lexemes: Array<ToneSandhiLexeme>;
+    nodes: Array<Node>;
 
-    constructor(lexemes: Array<ToneSandhiLexeme>) {
+    constructor(nodes: Array<Node>) {
         super();
-        this.lexemes = lexemes;
-        console.log(this.lexemes);
+        this.nodes = nodes;
+        console.log(this.nodes);
     }
 
     make() {
         let a: Array<IExpression> = new Array();
-        for(var i in this.lexemes) {
-            let g = this.lexemes[i];
+        for(var i in this.nodes) {
+            let g = this.nodes[i];
             a.push(g);
             a.push(new AndExpression());
         }

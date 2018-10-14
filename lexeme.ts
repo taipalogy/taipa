@@ -36,7 +36,7 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme extends GrammaticalUnit {}
+export class Lexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme

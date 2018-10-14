@@ -61,14 +61,14 @@ export class Client {
         }
         
         let guide = new Guide()
-        /*
+        
         while(!c.isTerminalConfiguration()) {
             let t: Transition = guide.getNextTransition(c);
             c = c.makeTransition(t);
         }
-*/
+
         let doc = new Document();
-        //doc.dependencies = c.getGraph();
+        doc.graph = c.getGraph();
         return doc;
     }
 }
