@@ -8,10 +8,10 @@ import { GrammaticalUnit } from './expressionparser'
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-//  Inflectional Combining and Ending
+//  Inflectional Ending and Inflectional Tone Mark
 //------------------------------------------------------------------------------
 
-class InflectionalCombining {
+class InflectionalToneMark {
     affix: Affix = null;
 }
 
@@ -29,7 +29,7 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 }
 
 //------------------------------------------------------------------------------
-//  Free Desinence Cycling Rules
+//  Free Inflectional Ending Cycling Rules
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------

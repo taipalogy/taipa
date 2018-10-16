@@ -25,14 +25,14 @@ export abstract class Transition {
     abstract do(c: Configuration)
 }
 
-class Shift {
+class Shift extends Transition {
     do(c: Configuration) {
         c.stack.push(c.queue.shift());
         return c;
     }
 }
 
-class RightArc {
+class RightArc extends Transition {
     do(c: Configuration) {
         c.graph.add(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
         c.stack.pop();
@@ -40,8 +40,16 @@ class RightArc {
     }
 }
 
-class LeftArc {
+class LeftArc extends Transition {
     do(c: Configuration) {
+        return c;
+    }
+}
+
+class EmptyStackAndQueue extends Transition {
+    do(c: Configuration) {
+        while(c.stack.pop())
+        while(c.queue.shift())
         return c;
     }
 }
@@ -51,10 +59,7 @@ export class Configuration {
     stack: Array<Lexeme> = new Array()
     graph: Set<Arc> = new Set();
 
-    constructor() {
-        let root = new DummyLexemeMaker().makeLexeme('ROOT');
-        this.stack.push(root);
-    }
+    constructor() {}
 
     makeTransition(t: Transition) {
         return t.do(this);
@@ -68,7 +73,7 @@ export class Configuration {
         if(this.queue.length > 0) {
             return false;
         }
-        if(this.stack.length == 1) {
+        if(this.stack.length == 1 && this.queue.length == 0) {
             return true;
         }
         return false;
@@ -82,6 +87,10 @@ export class DependencyParser {
 }
 
 export class Guide {
+    checkTransitivity(l: Lexeme) {
+        return new Shift();
+    }
+
     matchMorphRules(l: Lexeme) {
         for(let key in MORPH_RULES.PRP) {
             /*
@@ -95,12 +104,27 @@ export class Guide {
     }
 
     getNextTransition(c: Configuration) {
+        if(c.stack.length == 0 && c.queue.length > 0) {
+            // initial configuration
+            // shift the first lexeme from queue to stack
+            return new Shift();
+        }
+
         if(this.matchMorphRules(c.stack[c.stack.length-1])) {
-            
+            return this.checkTransitivity(c.queue[0]);
         } else {
             
         }
-        //return new Shift();
-        return null;
+
+        if(c.queue.length == 0) {
+            // when there are no lexemes left in the queue
+            if(c.stack.length == 2) {
+                // when there are two lexemes left in the stack
+                // from root to the second last lexeme left
+                return new RightArc();
+            }
+        }
+
+        return new EmptyStackAndQueue();
     }
 }
