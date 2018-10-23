@@ -1,6 +1,7 @@
-import { Lexeme } from './lexeme';
-import { DummyLexemeMaker } from './lexememaker';
+
+import { ToneLexeme } from './lexeme';
 import { MORPH_RULES } from './morphrules'
+import { Node } from './rulebasedtagger'
 
 enum Dependency {
     csubj,
@@ -12,9 +13,9 @@ enum Dependency {
 
 export class Arc {
     dep: Dependency
-    head: Lexeme = null
-    dependent: Lexeme = null
-    constructor(dep: Dependency, head: Lexeme, dependent: Lexeme) {
+    head: ToneLexeme = null
+    dependent: ToneLexeme = null
+    constructor(dep: Dependency, head: ToneLexeme, dependent: ToneLexeme) {
         this.dep = dep;
         this.head = head;
         this.dependent = dependent
@@ -55,8 +56,8 @@ class EmptyStackAndQueue extends Transition {
 }
 
 export class Configuration {
-    queue: Array<Lexeme> = new Array()
-    stack: Array<Lexeme> = new Array()
+    queue: Array<Node> = new Array()
+    stack: Array<Node> = new Array()
     graph: Set<Arc> = new Set();
 
     constructor() {}
@@ -87,18 +88,24 @@ export class DependencyParser {
 }
 
 export class Guide {
-    checkTransitivity(l: Lexeme) {
-        return new Shift();
+    isIntransitive(n: Node) {
+        return false;
     }
 
-    matchMorphRules(l: Lexeme) {
+    isDitransitive(n: Node) {}
+
+    isTransitive(n: Node) {
+        return false
+    }
+
+    isDative(n: Node) {
         for(let key in MORPH_RULES.PRP) {
-            /*
-            if(l.word.literal === key) {
-                console.log(l.word.literal)
-                return true;
+            if(n.word.literal === key) {
+                if(MORPH_RULES.PRP[key].Case === 'Dat') {
+                    console.log(n.word.literal)
+                    return true;
+                }
             }
-            */
         }
         return false
     }
@@ -110,10 +117,16 @@ export class Guide {
             return new Shift();
         }
 
-        if(this.matchMorphRules(c.stack[c.stack.length-1])) {
-            return this.checkTransitivity(c.queue[0]);
-        } else {
-            
+        if(this.isIntransitive(c.stack[c.stack.length-1])) {
+            return new RightArc();
+        }
+
+        if(this.isDative(c.stack[c.stack.length-1])) {
+            return new Shift();
+        }
+
+        if(this.isTransitive(c.stack[c.stack.length-1])) {
+            return new Shift();
         }
 
         if(c.queue.length == 0) {

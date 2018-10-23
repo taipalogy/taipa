@@ -36,13 +36,23 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme {}
+class Lexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneSandhiLexeme extends Lexeme {
+export class ToneLexeme extends Lexeme {
+    word: Word
+}
+
+class ToneMarkLessLexeme extends ToneLexeme {}
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Lexeme
+//------------------------------------------------------------------------------
+
+export class ToneSandhiLexeme extends ToneLexeme {
     word: ToneSandhiWord
     ending: InflectionalEnding = null
     lemmata: Array<ToneSandhiWord>

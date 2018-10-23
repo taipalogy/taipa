@@ -1,22 +1,24 @@
 
 
 export let MORPH_RULES = {
-    "PRP": {
-        "guay":            {LEMMA: "PRON_LEMMA", Case: "Nom"},
-        "gua":             {LEMMA: "guay", Case: "Dat"},
-        "guazs":           {LEMMA: "guay", Case: ""},
-        "guaw":            {LEMMA: "guay", Case: ""},
+    'PRP': {
+        'guay':            {LEMMA: 'PRON_LEMMA', Case: 'Nom'},
+        'gua':             {LEMMA: 'guay', Case: 'Dat'},
+        'guazs':           {LEMMA: 'guay', Case: ''},
+        'guaw':            {LEMMA: 'guay', Case: ''},
     },
 
-    "VB": {
-        "hingzs":           {LEMMA: "hingx"},
-        "ziurhy":           {LEMMA: "ziurh"},
-        "how":              {LEMMA: "hozs"},
-        "sangy":            {LEMMA: "sangw"},
-        "mngw":             {LEMMA: "mngzs"},
+    'VB': {
+        'hingzs':           {LEMMA: 'hingx', Type: 'ditransitive'},
+        'ziurhy':           {LEMMA: 'ziurh', Type: 'ditransitive'},
+        'how':              {LEMMA: 'hozs', Type: 'ditransitive'},
+        'sangy':            {LEMMA: 'sangw', Type: 'ditransitive'},
+        'mngw':             {LEMMA: 'mngzs', Type: 'ditransitive'},
+
+        'uannw':            {LEMMA: 'uannzs', Type: 'causative'},
     },
 
-    "PART": {
-        "hongx":            {LEMMA: "hozs"},
+    'PART': {
+        'hongx':            {LEMMA: 'hozs'},
     },
 }

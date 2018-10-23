@@ -5,6 +5,7 @@ import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { indexed_dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc } from './dependencyparser'
+import { Node, RuleBasedTagger } from './rulebasedtagger'
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();
@@ -52,12 +53,17 @@ export class Client {
         console.log(str)
         let dp = new DependencyParser();
         let c: Configuration = dp.getInitialConfiguration();
-        console.log(c.isTerminalConfiguration())
         let tokens = str.match(/\w+/g);
-        
+
+        let lexemes: Array<ToneSandhiLexeme> = new Array();
         for(let key in tokens) {
-            console.log(tokens[key])
-            c.queue.push(this.turnLexeme(tokens[key])[0])
+            lexemes.push(this.turnLexeme(tokens[key])[0])
+        }
+        let tagger = new RuleBasedTagger(lexemes);
+        let nodes = tagger.nodes;
+
+        for(let key in nodes) {
+            c.queue.push(nodes[key])
         }
         
         let guide = new Guide()
