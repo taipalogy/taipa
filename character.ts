@@ -24,10 +24,10 @@ class CharacterDictionary extends Dictionary {
 //------------------------------------------------------------------------------
 
 export class Character {
-    symbol: string;
+    character: string;
 
     constructor(s: string) {
-        this.symbol = s;
+        this.character = s;
     }
 }
 

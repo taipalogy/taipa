@@ -19,7 +19,7 @@ export class Sound {
         if(this.characters != undefined) {
             // when it is not 1st tone
             for(let k in this.characters) {
-                l += this.characters[k].symbol;
+                l += this.characters[k].character;
             }
         }
 
@@ -104,209 +104,214 @@ class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
 
 export class ZeroToneMark extends FreeToneMark {characters = null;}
 
-class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
-class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
-class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters['s']]}
-class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
-class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
-class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
+export class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
+export class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
+export class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters['s']]}
+export class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
+export class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
+export class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
 
-class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
-class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
+export class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
+export class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
 
-class ToneMarkP extends CheckedToneMark {characters = [characters['p']]}
-class ToneMarkT extends CheckedToneMark {characters = [characters['t']]}
-class ToneMarkK extends CheckedToneMark {characters = [characters['k']]}
-class ToneMarkH extends CheckedToneMark {characters = [characters['h']]}
-class ToneMarkB extends CheckedToneMark {characters = [characters['b']]}
-class ToneMarkD extends CheckedToneMark {characters = [characters['d']]}
-class ToneMarkG extends CheckedToneMark {characters = [characters['g']]}
-class ToneMarkF extends CheckedToneMark {characters = [characters['f']]}
+export class ToneMarkP extends CheckedToneMark {characters = [characters['p']]}
+export class ToneMarkT extends CheckedToneMark {characters = [characters['t']]}
+export class ToneMarkK extends CheckedToneMark {characters = [characters['k']]}
+export class ToneMarkH extends CheckedToneMark {characters = [characters['h']]}
+export class ToneMarkB extends CheckedToneMark {characters = [characters['b']]}
+export class ToneMarkD extends CheckedToneMark {characters = [characters['d']]}
+export class ToneMarkG extends CheckedToneMark {characters = [characters['g']]}
+export class ToneMarkF extends CheckedToneMark {characters = [characters['f']]}
 
-class CheckedToneMarkX extends CheckedToneMark {characters = [characters['x']]}
-class CheckedToneMarkY extends CheckedToneMark {characters = [characters['y']]}
+export class CheckedToneMarkX extends CheckedToneMark {characters = [characters['x']]}
+export class CheckedToneMarkY extends CheckedToneMark {characters = [characters['y']]}
 
-class FinalP extends Final {characters = [characters['p']]}
-class FinalT extends Final {characters = [characters['t']]}
-class FinalK extends Final {characters = [characters['k']]}
-class FinalH extends Final {characters = [characters['h']]}
-class FinalB extends Final {characters = [characters['b']]}
-class FinalD extends Final {characters = [characters['d']]}
-class FinalG extends Final {characters = [characters['g']]}
-class FinalF extends Final {characters = [characters['f']]}
+export class FinalP extends Final {characters = [characters['p']]}
+export class FinalT extends Final {characters = [characters['t']]}
+export class FinalK extends Final {characters = [characters['k']]}
+export class FinalH extends Final {characters = [characters['h']]}
+export class FinalB extends Final {characters = [characters['b']]}
+export class FinalD extends Final {characters = [characters['d']]}
+export class FinalG extends Final {characters = [characters['g']]}
+export class FinalF extends Final {characters = [characters['f']]}
 
-
-interface IGraphDictionary extends IDictionary {
-    values(): Sound[];
-    toString(): string;
-}
-
-class GraphDictionary extends Dictionary {
-    constructor(init: { key: string; value: Sound; }[]) {
-        super(init);
-    }
-
-    values(): Sound[] {
-        return this._values;
-    }
-
-    toString(): string {
+class Graphs {
+    toString(elements: Array<Sound>) {
         let str = '';
-        let values = this.values();
-        for(let i = 0; i < values.length; i++) {
-            if(i+1 < values.length) {
-                for(let c in values[i].characters) {
-                    str += values[i].characters[c].symbol;
+        for(let i = 0; i < elements.length; i++) {
+            if(i+1 < elements.length) {
+                for(let k in elements[i].characters) {
+                    str += elements[i].characters[k].character;
                 }
                 str += '|';
-            } else if(i+1 == values.length) {
-                for(let c in values[i].characters) {
-                    str += values[i].characters[c].symbol;
+            } else if(i+1 == elements.length) {
+                for(let k in elements[i].characters) {
+                    str += elements[i].characters[k].character;
                 }
             }
         }
         return str;
     }
+}
 
-    toLookup(): IGraphDictionary {
-        return this;
+export class MedialGraphs extends Graphs {
+    medials: Array<Sound> = new Array()
+
+    constructor() {
+        super()
+        this.medials.push(new MedialA())
+        this.medials.push(new MedialE())
+        this.medials.push(new MedialI())
+        this.medials.push(new MedialO())
+        this.medials.push(new MedialU())
+        this.medials.push(new MedialUR())
+    }
+
+    toString() {
+        return super.toString(this.medials)
     }
 }
 
-export class MedialGraphs {
-    readonly medials = new GraphDictionary([
-        { key: 'a', value: new MedialA() },
-        { key: 'e', value: new MedialE() },
-        { key: 'i', value: new MedialI() },
-        { key: 'o', value: new MedialO() },
-        { key: 'u', value: new MedialU() },
-        { key: 'ur', value: new MedialUR() },
-    ]).toLookup();
+export class NasalGraphs extends Graphs {
+    nasals: Array<Sound> = new Array()
+
+    constructor() {
+        super()
+        this.nasals.push(new NasalM())
+        this.nasals.push(new NasalN())
+        this.nasals.push(new NasalNG())
+        this.nasals.push(new NasalNN())
+    }
 
     toString() {
-        return this.medials.toString();
+        return super.toString(this.nasals)
     }
 }
 
-export class NasalGraphs {
-    readonly nasals = new GraphDictionary([
-        { key: 'm', value: new NasalM() },
-        { key: 'n', value: new NasalN() },
-        { key: 'ng', value: new NasalNG() },
-        { key: 'nn', value: new NasalNN() },
-    ]).toLookup();
+export class FreeToneMarkGraphs extends Graphs {
+    freeToneMarks: Array<Sound> = new Array()
+
+    constructor() {
+        super()
+        this.freeToneMarks.push(new ToneMarkSS())
+        this.freeToneMarks.push(new ToneMarkW())
+        this.freeToneMarks.push(new ToneMarkXX())
+        this.freeToneMarks.push(new ToneMarkXXX())
+        this.freeToneMarks.push(new ToneMarkZS())
+        this.freeToneMarks.push(new ToneMarkZZS())
+
+        this.freeToneMarks.push(new FreeToneMarkX())
+        this.freeToneMarks.push(new FreeToneMarkY())
+    }
 
     toString() {
-        return this.nasals.toString();
+        return super.toString(this.freeToneMarks)
     }
 }
 
-export class FreeToneMarkGraphs {
-    readonly freeToneMarks = new GraphDictionary([
-        { key: 'ss', value: new ToneMarkSS() },
-        { key: 'w', value: new ToneMarkW() },
-        { key: 'xx', value: new ToneMarkXX() },
-        { key: 'xxx', value: new ToneMarkXXX() },
-        { key: 'zs', value: new ToneMarkZS() },
-        { key: 'zzs', value: new ToneMarkZZS() },
+export class CheckedToneMarkGraphs extends Graphs {
+    checkedToneMarks: Array<Sound> = new Array()
 
-        { key: 'x', value: new FreeToneMarkX() },
-        { key: 'y', value: new FreeToneMarkY() },
-    ]).toLookup();
+    constructor() {
+        super()
+        this.checkedToneMarks.push(new ToneMarkP())
+        this.checkedToneMarks.push(new ToneMarkT())
+        this.checkedToneMarks.push(new ToneMarkK())
+        this.checkedToneMarks.push(new ToneMarkB())
+        this.checkedToneMarks.push(new ToneMarkD())
+        this.checkedToneMarks.push(new ToneMarkG())
+
+        this.checkedToneMarks.push(new ToneMarkH())
+        this.checkedToneMarks.push(new ToneMarkF())
+
+        this.checkedToneMarks.push(new CheckedToneMarkX())
+        this.checkedToneMarks.push(new CheckedToneMarkY())
+    }
 
     toString() {
-        return this.freeToneMarks.toString();
+        return super.toString(this.checkedToneMarks)
     }
 }
 
-export class NeutralFinalGraphs {
-    readonly neutralFinals = new GraphDictionary([
-        { key: 'h', value: new FinalH() },
-        { key: 'f', value: new FinalF() },
-    ]).toLookup();
+export class NeutralFinalGraphs extends Graphs {
+    neutralFinals: Array<Sound> = new Array()
+
+    constructor() {
+        super()
+        this.neutralFinals.push(new FinalH())
+        this.neutralFinals.push(new FinalF())
+    }
 
     toString() {
-        return this.neutralFinals.toString();
+        return super.toString(this.neutralFinals)
     }
 }
 
-export class InitialNasalGraphs {
-    readonly initialNasals = new GraphDictionary([
-        { key: 'm', value: new InitialNasalM() },
-        { key: 'n', value: new InitialNasalN() },
-        { key: 'ng', value: new InitialNasalNG() },
-    ]).toLookup();
+export class FinalGraphs extends Graphs {
+    finals: Array<Sound> = new Array()
+
+    constructor() {
+        super()
+        this.finals.push(new FinalP())
+        this.finals.push(new FinalT())
+        this.finals.push(new FinalK())
+        this.finals.push(new FinalB())
+        this.finals.push(new FinalD())
+        this.finals.push(new FinalG())
+
+        this.finals.push(new FinalH())
+        this.finals.push(new FinalF())
+    }
 
     toString() {
-        return this.initialNasals.toString();
+        return super.toString(this.finals)
     }
 }
 
-export class InitialGraphs {
-    readonly initials = new GraphDictionary([
-        { key: 'c', value: new InitialC() },
-        { key: 'j', value: new InitialJ() },
-        { key: 'l', value: new InitialL() },
-        { key: 'q', value: new InitialQ() },
-        { key: 's', value: new InitialS() },
-        { key: 'v', value: new InitialV() },
-        { key: 'z', value: new InitialZ() },
+export class InitialNasalGraphs extends Graphs {
+    initialNasals: Array<Sound> = new Array()
 
-        { key: 'p', value: new InitialP() },
-        { key: 't', value: new InitialT() },
-        { key: 'k', value: new InitialK() },
-        { key: 'b', value: new InitialB() },
-        { key: 'd', value: new InitialD() },
-        { key: 'g', value: new InitialG() },
-
-        { key: 'm', value: new InitialNasalM() },
-        { key: 'n', value: new InitialNasalN() },
-        { key: 'ng', value: new InitialNasalNG() },
-
-        { key: 'h', value: new InitialH()},
-    ]).toLookup();
+    constructor() {
+        super()
+        this.initialNasals.push(new InitialNasalM())
+        this.initialNasals.push(new InitialNasalN())
+        this.initialNasals.push(new InitialNasalNG())
+    }
 
     toString() {
-        return this.initials.toString();
+        return super.toString(this.initialNasals)
     }
 }
 
-export class CheckedToneMarkGraphs {
-    readonly checkedToneMarks = new GraphDictionary([
-        { key: 'p', value: new ToneMarkP() },
-        { key: 't', value: new ToneMarkT() },
-        { key: 'k', value: new ToneMarkK() },
-        { key: 'b', value: new ToneMarkB() },
-        { key: 'd', value: new ToneMarkD() },
-        { key: 'g', value: new ToneMarkG() },
+export class InitialGraphs extends Graphs {
+    initials: Array<Sound> = new Array()
 
-        { key: 'h', value: new ToneMarkH() },
-        { key: 'f', value: new ToneMarkF() },
+    constructor() {
+        super()
+        this.initials.push(new InitialC())
+        this.initials.push(new InitialJ())
+        this.initials.push(new InitialL())
+        this.initials.push(new InitialQ())
+        this.initials.push(new InitialS())
+        this.initials.push(new InitialV())
+        this.initials.push(new InitialZ())
 
-        { key: 'x', value: new CheckedToneMarkX() },
-        { key: 'y', value: new CheckedToneMarkY() },
-    ]).toLookup();
+        this.initials.push(new InitialP())
+        this.initials.push(new InitialT())
+        this.initials.push(new InitialK())
+        this.initials.push(new InitialB())
+        this.initials.push(new InitialD())
+        this.initials.push(new InitialG())
 
-    toString() {
-        return this.checkedToneMarks.toString();
+        this.initials.push(new InitialNasalM())
+        this.initials.push(new InitialNasalN())
+        this.initials.push(new InitialNasalNG())
+
+        this.initials.push(new InitialH())
     }
-}
-
-export class FinalGraphs {
-    readonly finals = new GraphDictionary([
-        { key: 'p', value: new FinalP() },
-        { key: 't', value: new FinalT() },
-        { key: 'k', value: new FinalK() },
-        { key: 'b', value: new FinalB() },
-        { key: 'd', value: new FinalD() },
-        { key: 'g', value: new FinalG() },
-
-        { key: 'h', value: new FinalH() },
-        { key: 'f', value: new FinalF() },
-    ]).toLookup();
 
     toString() {
-        return this.finals.toString();
+        return super.toString(this.initials)
     }
 }
 
@@ -349,7 +354,7 @@ export class AlphabeticLetter extends Letter {
 
     pushCharacter(c: Character){
         this.characters.push(c);
-        this.literal += c.symbol;
+        this.literal += c.character;
     }
 }
 
@@ -383,7 +388,7 @@ export class Letters {
                 for(let n = 0; n < min; n++) {
                     //console.log("i: %d. n: %d.", i, n)
                     //console.log(letters)
-                    if(characters[i+n].symbol.search(this.list[m].literal[n]) == 0) {
+                    if(characters[i+n].character.search(this.list[m].literal[n]) == 0) {
                         if(n+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
@@ -423,7 +428,7 @@ export class Letters {
                 //console.log("matchedLen: %d", ms.matchedLength);
                 //console.log(ms.characters)
 
-                let candidates = this.list.filter(l => l.characters[0].symbol === characters[i].symbol);
+                let candidates = this.list.filter(l => l.characters[0].character === characters[i].character);
 
                 //console.log(candidates)
 
@@ -440,7 +445,7 @@ export class Letters {
 
             //console.log(ls);
             if(ltts.length == 0) {
-                console.log("i: %d. characters[i].symbol: %s", i, characters[i].symbol);
+                console.log("i: %d. characters[i].symbol: %s", i, characters[i].character);
                 console.log("something wrong");
             } else if(ltts.length == 1) {
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d. ls[0]:", i, ls[0].characters.length, ls[0])

@@ -4,7 +4,7 @@ import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { indexed_dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Arc } from './dependencyparser'
+import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, LeftArc } from './dependencyparser'
 import { Node, RuleBasedTagger } from './rulebasedtagger'
 
 export class Document {
@@ -68,8 +68,14 @@ export class Client {
         
         let guide = new Guide()
         
+        if(c.stack.length == 0 && c.queue.length > 0) {
+            // initial configuration
+            // shift the first lexeme from queue to stack
+            guide.transitions.push(new Shift())
+        }
+
         while(!c.isTerminalConfiguration()) {
-            let t: Transition = guide.getNextTransition(c);
+            let t: Transition = guide.getNextTransition();
             c = c.makeTransition(t);
         }
 

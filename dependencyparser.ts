@@ -26,14 +26,14 @@ export abstract class Transition {
     abstract do(c: Configuration)
 }
 
-class Shift extends Transition {
+export class Shift extends Transition {
     do(c: Configuration) {
         c.stack.push(c.queue.shift());
         return c;
     }
 }
 
-class RightArc extends Transition {
+export class RightArc extends Transition {
     do(c: Configuration) {
         c.graph.add(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
         c.stack.pop();
@@ -41,7 +41,7 @@ class RightArc extends Transition {
     }
 }
 
-class LeftArc extends Transition {
+export class LeftArc extends Transition {
     do(c: Configuration) {
         return c;
     }
@@ -88,56 +88,9 @@ export class DependencyParser {
 }
 
 export class Guide {
-    isIntransitive(n: Node) {
-        return false;
-    }
+    transitions: Array<Transition>  = new Array()
 
-    isDitransitive(n: Node) {}
-
-    isTransitive(n: Node) {
-        return false
-    }
-
-    isDative(n: Node) {
-        for(let key in MORPH_RULES.PRP) {
-            if(n.word.literal === key) {
-                if(MORPH_RULES.PRP[key].Case === 'Dat') {
-                    console.log(n.word.literal)
-                    return true;
-                }
-            }
-        }
-        return false
-    }
-
-    getNextTransition(c: Configuration) {
-        if(c.stack.length == 0 && c.queue.length > 0) {
-            // initial configuration
-            // shift the first lexeme from queue to stack
-            return new Shift();
-        }
-
-        if(this.isIntransitive(c.stack[c.stack.length-1])) {
-            return new RightArc();
-        }
-
-        if(this.isDative(c.stack[c.stack.length-1])) {
-            return new Shift();
-        }
-
-        if(this.isTransitive(c.stack[c.stack.length-1])) {
-            return new Shift();
-        }
-
-        if(c.queue.length == 0) {
-            // when there are no lexemes left in the queue
-            if(c.stack.length == 2) {
-                // when there are two lexemes left in the stack
-                // from root to the second last lexeme left
-                return new RightArc();
-            }
-        }
-
-        return new EmptyStackAndQueue();
+    getNextTransition() {
+        return this.transitions.shift();
     }
 }

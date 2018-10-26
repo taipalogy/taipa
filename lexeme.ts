@@ -60,7 +60,6 @@ export class ToneSandhiLexeme extends ToneLexeme {
     constructor(word: ToneSandhiWord) {
         super();
         this.word = word;
-        //this.inflectionalAffix = new InflectionalEnding();
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {
@@ -163,13 +162,16 @@ export class ToneSandhiWord extends Word {
     }
 
     popSyllable() {
+        // trim the literal
         let tmp = this.literal.substr(0, this.literal.length-this.syllables[this.syllables.length-1].literal.length);
         this.literal = tmp;
+        // get rid off the last syllable from array
         this.syllables = this.syllables.slice(0, this.syllables.length-1);
     }
 
     pushSyllable(tss: ToneSandhiSyllable) {
         this.syllables.push(tss);
+        // concatenate the new syllable
         this.literal += tss.literal;
     }
 }

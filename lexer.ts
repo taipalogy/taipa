@@ -15,7 +15,7 @@ export class Type {
 //------------------------------------------------------------------------------
 
 export class Token {
-    cargo: Type;
+    cargo: string;
     sourceIndex: number;
     lineIndex: number;
     colIndex: number;
