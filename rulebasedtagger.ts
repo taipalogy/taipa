@@ -1,5 +1,5 @@
 
-import { Word, ToneLexeme } from './lexeme'
+import { Word, ToneLexeme, ToneSandhiWord } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { MORPH_RULES } from './morphrules';
 import { IDictionary, Dictionary } from './collection'
@@ -19,7 +19,6 @@ class PatternOfPartOfSpeech {
 }
 
 interface IDictionaryOfStopWords extends IDictionary {
-    //values(): PatternOfPartOfSpeech[];
     toString(): string;
 }
 
@@ -27,11 +26,7 @@ class DictionaryOfStopWords extends Dictionary {
     constructor(init: { key: string; value: PatternOfPartOfSpeech; }[]) {
         super(init);
     }
-/*
-    values(): PatternOfPartOfSpeech[] {
-        return this._values;
-    }
-*/
+
     toLookup(): IDictionaryOfStopWords {
         return this;
     }
@@ -39,39 +34,43 @@ class DictionaryOfStopWords extends Dictionary {
 
 export class Causatives {
     readonly causatives = new DictionaryOfStopWords([
-        { key: 'uannw', value: new PatternOfPartOfSpeech(['verb', 'pronoun', 'verb']) },
+        { key: 'uannw', value: new PatternOfPartOfSpeech([SYMBOLS.VB, SYMBOLS.PRP, SYMBOLS.VB]) },
+        { key: 'uannw', value: new PatternOfPartOfSpeech([SYMBOLS.VB, SYMBOLS.PRP]) },
     ]).toLookup();
+}
+
+export class Ditransitives {
+    readonly ditransitives = new DictionaryOfStopWords([
+        { key: 'hingzs', value: new PatternOfPartOfSpeech([SYMBOLS.VB, SYMBOLS.PRP, SYMBOLS.NN]) },
+    ]).toLookup();
+}
+
+class MatchedPattern {
+    words: Array<ToneSandhiWord> = new Array();
+    pattern: Array<PatternOfPartOfSpeech> = new Array();
+    get matchedLength() { return this.pattern.length; }
 }
 
 export class Node {
     word: Word
     tag: SYMBOLS
-
-    constructor (word: Word) {
-        this.word = word;
-    }
 }
 
 export class RuleBasedTagger {
     nodes: Array<Node> = new Array();
     constructor(lexemes: Array<ToneLexeme>) {
-
-        for(let index in lexemes) {
-            if(this.match(lexemes[index].word, SYMBOLS.VB)) { continue }
-            if(this.match(lexemes[index].word, SYMBOLS.PRP)) { continue }
-            this.nodes.push(new Node(lexemes[index].word))
-        }
+        this.match(lexemes[0].word)
     }
 
-    match(w: Word, symbol: SYMBOLS) {
-        let kvps = MORPH_RULES[symbol]
-        let k = Object.keys(kvps).find(key => w.literal === key )
-        if(k != undefined) {
-            console.log('key is ' + k)
-            let n = new Node(w)
-            n.tag = symbol
-            this.nodes.push(n)
-            return true;
+    match(w: Word) {
+        for(let s in MORPH_RULES) {
+            let kvps = MORPH_RULES[s]
+            let k = Object.keys(kvps).find(key => w.literal === key )
+            if(k != undefined) {
+                console.log('key is ' + k)
+                console.log('type is ' + kvps[k].Type)
+                return true;
+            }
         }
         return false;
     }

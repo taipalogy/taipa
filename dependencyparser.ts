@@ -1,6 +1,7 @@
 
-import { ToneLexeme } from './lexeme';
+import { ToneLexeme, Word } from './lexeme';
 import { MORPH_RULES } from './morphrules'
+import { SYMBOLS } from './symbols';
 import { Node } from './rulebasedtagger'
 
 enum Dependency {
@@ -13,9 +14,9 @@ enum Dependency {
 
 export class Arc {
     dep: Dependency
-    head: ToneLexeme = null
-    dependent: ToneLexeme = null
-    constructor(dep: Dependency, head: ToneLexeme, dependent: ToneLexeme) {
+    head: Node = null
+    dependent: Node = null
+    constructor(dep: Dependency, head: Node, dependent: Node) {
         this.dep = dep;
         this.head = head;
         this.dependent = dependent
@@ -43,14 +44,6 @@ export class RightArc extends Transition {
 
 export class LeftArc extends Transition {
     do(c: Configuration) {
-        return c;
-    }
-}
-
-class EmptyStackAndQueue extends Transition {
-    do(c: Configuration) {
-        while(c.stack.pop())
-        while(c.queue.shift())
         return c;
     }
 }
@@ -91,6 +84,7 @@ export class Guide {
     transitions: Array<Transition>  = new Array()
 
     getNextTransition() {
+        if(this.transitions.length == 0) return null;
         return this.transitions.shift();
     }
 }

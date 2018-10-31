@@ -2,8 +2,8 @@
 
 export let MORPH_RULES = {
     'PRP': {
-        'guay':            {LEMMA: 'PRON_LEMMA', Case: 'Nom'},
-        'gua':             {LEMMA: 'guay', Case: 'Dat'},
+        'guay':            {LEMMA: 'PRON_LEMMA', Case: 'Acc'},
+        'gua':             {LEMMA: 'guay', Case: ''},
         'guazs':           {LEMMA: 'guay', Case: ''},
         'guaw':            {LEMMA: 'guay', Case: ''},
     },

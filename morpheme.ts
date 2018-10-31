@@ -558,14 +558,14 @@ export class Syllables {
 
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
         // get the longest matched syllable pattern
-        let sp = new SyllablePatterns();
+        let sps = new SyllablePatterns();
         let matchedLen = 0;
         let mp = new MatchedPattern();
-        for(let m in sp.list) {
-            let min = Math.min(letters.length-beginOfSyllable, sp.list[m].length);
-            if(sp.list[m].length == min) {
+        for(let m in sps.list) {
+            let min = Math.min(letters.length-beginOfSyllable, sps.list[m].length);
+            if(sps.list[m].length == min) {
                 for(let n = 0; n < min; n++) {
-                    if(letters[i+n].literal.search(new RegExp(sp.list[m][n].toString())) == 0) {
+                    if(letters[i+n].literal.search(new RegExp(sps.list[m][n].toString())) == 0) {
                         //console.log(sp.list[m][n].toString())
                         if(n+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
@@ -575,7 +575,7 @@ export class Syllables {
                             for(let q = 0; q < matchedLen; q++) {
                                 mp.letters[q] = letters[i+q];
                             }
-                            mp.pattern = sp.list[m];
+                            mp.pattern = sps.list[m];
                             //console.log(sp.list[m])
                             //console.log(letters[i+n].literal)
                         }

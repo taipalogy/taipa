@@ -5,7 +5,7 @@ import { ToneSandhiLexemeMaker } from './lexememaker'
 import { ToneSandhiLexeme } from './lexeme'
 import { indexed_dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, LeftArc } from './dependencyparser'
-import { Node, RuleBasedTagger } from './rulebasedtagger'
+import { RuleBasedTagger } from './rulebasedtagger'
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();
@@ -76,6 +76,7 @@ export class Client {
 
         while(!c.isTerminalConfiguration()) {
             let t: Transition = guide.getNextTransition();
+            if(t == null) break;
             c = c.makeTransition(t);
         }
 
