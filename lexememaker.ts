@@ -1,9 +1,9 @@
 
-import { ToneSandhiMorpheme  } from './morpheme'
-import { ToneSandhiWords, DummyLexeme, Word } from './lexeme'
+import { ToneSandhiMorpheme, ToneSandhiSyllable  } from './morpheme'
+import { ToneSandhiLexeme, ToneSandhiWord, DummyLexeme, Word } from './lexeme'
 
 //------------------------------------------------------------------------------
-//  LexicalAnalyzer
+//  Tone Sandhi Lexeme Maker
 //------------------------------------------------------------------------------
 
 export class ToneSandhiLexemeMaker {
@@ -14,13 +14,38 @@ export class ToneSandhiLexemeMaker {
         this.morphemes = morphemes;
     }
 
-    makeLexeme() {
-        let ws = new ToneSandhiWords();
-//        console.log(this.morphemes);
-        let lexemes = ws.process(this.morphemes);
-//        console.log(partOfSpeeches);
-//        console.log(partOfSpeeches[0].word.literal);
-        return lexemes;
+    makeLexemes() {
+        //        console.log(this.morphemes);
+
+        // extract syllables from morphemes. concatenate syllables into a word.
+        // wrap the word in a lexeme. use morephemes to populate lemmata of a lexeme.
+        // assign inflectinal affix to a lexeme.
+        // push the lexeme into an array of lexeme.
+
+        let lexemes: Array<ToneSandhiLexeme> = new Array();
+
+        // unpack lexical affixes and get syllables from them
+        let syllables: Array<ToneSandhiSyllable> = new Array();
+        for(let key in this.morphemes) {
+            syllables.push(this.morphemes[key].syllable);
+        }
+
+        let tsl = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
+        if(this.morphemes.length > 0) {
+            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
+                tsl.assignInflectionalEnding(this.morphemes[this.morphemes.length-1].allomorph);
+                //console.log("pos got assigned inflectional affix")
+            }
+        }
+
+        tsl.populateLemmata(this.morphemes);
+
+        lexemes.push(tsl);
+
+        //        console.log(lexemes);
+        //        console.log(lexemes[0].word.literal);
+
+        return lexemes
     }
 }
 

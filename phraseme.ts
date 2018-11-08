@@ -1,5 +1,5 @@
 
-import { ToneSandhiWord, InflectionalEnding, Word } from "./lexeme"
+import { ToneSandhiWord, InflectionalEnding, Word, ToneSandhiLexeme } from "./lexeme"
 
 //------------------------------------------------------------------------------
 //  Tone Group
@@ -16,7 +16,7 @@ class ToneSandhiGroup extends ToneGroup{}
 class Phraseme {
 }
 
-class ToneSandhiPhraseme extends Phraseme {
+export class ToneSandhiPhraseme extends Phraseme {
     phrase: ToneSandhiPhrase
 
     constructor(words: Array<ToneSandhiWord>) {

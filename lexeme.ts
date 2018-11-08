@@ -177,44 +177,6 @@ export class ToneSandhiWord extends Word {
 }
 
 //------------------------------------------------------------------------------
-//  Words
-//------------------------------------------------------------------------------
-
-export class Words {
-}
-
-export class ToneSandhiWords extends Words {
-    process(morphemes: Array<ToneSandhiMorpheme>){
-        // extract syllables from morphemes. concatenate syllables into a word.
-        // wrap the word in a lexeme. use morephemes to populate lemmata of a lexeme.
-        // assign inflectinal affix to a lexeme.
-        // push the lexeme into an array of lexeme.
-
-        let lexemes: Array<ToneSandhiLexeme> = new Array();
-
-        // unpack lexical affixes and get syllables from them
-        let syllables: Array<ToneSandhiSyllable> = new Array();
-        for(let key in morphemes) {
-            syllables.push(morphemes[key].syllable);
-        }
-
-        let tsl = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
-        if(morphemes.length > 0) {
-            if(morphemes[morphemes.length-1].allomorph != null) {
-                tsl.assignInflectionalEnding(morphemes[morphemes.length-1].allomorph);
-                //console.log("pos got assigned inflectional affix")
-            }
-        }
-
-        tsl.populateLemmata(morphemes);
-
-        lexemes.push(tsl);
-
-        return lexemes
-    }
-}
-
-//------------------------------------------------------------------------------
 //  Inflectional Lexeme
 //------------------------------------------------------------------------------
 

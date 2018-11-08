@@ -1,5 +1,5 @@
 
-import { Word, ToneLexeme, ToneSandhiWord } from './lexeme'
+import { Word, ToneLexeme, ToneSandhiWord, ToneSandhiLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { MORPH_RULES } from './morphrules';
 import { IDictionary, Dictionary } from './collection'
@@ -8,7 +8,7 @@ import { IDictionary, Dictionary } from './collection'
 //  Patterns of Part-of-Speeches
 //------------------------------------------------------------------------------
 
-class PatternOfPartOfSpeech {
+class PatternOfPhrase {
     poses: Array<string> = new Array()
 
     constructor(arr: Array<string>){
@@ -18,37 +18,72 @@ class PatternOfPartOfSpeech {
     }
 }
 
-interface IDictionaryOfStopWords extends IDictionary {
-    toString(): string;
+interface IDictionaryOfWordForms extends IDictionary {
 }
 
-class DictionaryOfStopWords extends Dictionary {
-    constructor(init: { key: string; value: PatternOfPartOfSpeech; }[]) {
+class DictionaryOfWordForms extends Dictionary {
+    constructor(init: { key: string, value: string }[]) {
         super(init);
     }
 
-    toLookup(): IDictionaryOfStopWords {
+    toLookup(): IDictionaryOfWordForms {
         return this;
     }
 }
 
-export class Causatives {
-    readonly causatives = new DictionaryOfStopWords([
-        { key: 'uannw', value: new PatternOfPartOfSpeech([SYMBOLS.VB, SYMBOLS.PRP, SYMBOLS.VB]) },
-        { key: 'uannw', value: new PatternOfPartOfSpeech([SYMBOLS.VB, SYMBOLS.PRP]) },
-    ]).toLookup();
+class FormsOfWord extends ToneSandhiLexeme {
 }
 
-export class Ditransitives {
-    readonly ditransitives = new DictionaryOfStopWords([
-        { key: 'hingzs', value: new PatternOfPartOfSpeech([SYMBOLS.VB, SYMBOLS.PRP, SYMBOLS.NN]) },
-    ]).toLookup();
+class FormsOfVerb extends FormsOfWord {
+    ruleOfInflectionalEnding
+    readonly wordForms: IDictionaryOfWordForms = null
+
+    get baseForm() { return this.word.literal }
+    get sandhiForm() { return '' }
 }
 
-class MatchedPattern {
-    words: Array<ToneSandhiWord> = new Array();
-    pattern: Array<PatternOfPartOfSpeech> = new Array();
-    get matchedLength() { return this.pattern.length; }
+class FormsOfDitransitive extends FormsOfVerb {
+    readonly wordForms = new DictionaryOfWordForms([
+        { key: 'ditransitive', value: this.sandhiForm },
+        { key: 'intransitive', value: this.baseForm },
+    ]).toLookup()
+}
+
+class FormsOfCausative extends FormsOfVerb {
+    readonly wordForms = new DictionaryOfWordForms([
+        { key: 'causative', value: this.sandhiForm },
+        { key: 'transitive', value: this.sandhiForm },
+        { key: 'intransitive', value: this.baseForm },
+        { key: 'realis', value: this.baseForm },
+    ]).toLookup()
+}
+
+class FormsOfPronoun extends FormsOfWord {
+    ruleOfInflectionalEnding
+    readonly wordForms: IDictionaryOfWordForms = null
+
+    get baseForm() { return this.word.literal }
+    get sandhiForm() { return '' }
+}
+
+class PatternOfClause {
+    isSeperable
+}
+
+class FormsOfPhrase {}
+
+class TypeOfPhrase {
+    patterns: Array<PatternOfPhrase> = null;
+}
+
+class PhrasalVerb extends TypeOfPhrase {
+    patterns = [new PatternOfPhrase(['intransitive', 'intransitive']),
+                new PatternOfPhrase(['transitive', 'accusative', 'intransitive']),
+                new PatternOfPhrase(['conjunctive', 'conjunctive', 'intransitive'])]
+}
+
+class DitransitiveVerb extends TypeOfPhrase {
+    patterns = [new PatternOfPhrase(['ditransitive', 'dative', 'accusative'])]
 }
 
 export class Node {

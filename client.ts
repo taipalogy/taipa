@@ -6,6 +6,7 @@ import { ToneSandhiLexeme } from './lexeme'
 import { indexed_dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, LeftArc } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
+import { AlphabeticGrapheme } from './grapheme';
 
 export class Document {
     lexemes: Array<ToneSandhiLexeme> = new Array();
@@ -28,18 +29,18 @@ export class Client {
 
     turnLexeme(str: string) {
         // Grapheme Maker
-        let lt = new GraphemeMaker(str);
-        let seqOfGraphemes = lt.makeGrapheme();
+        let gm = new GraphemeMaker(str);
+        let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
-        let st = new ToneSandhiMorphemeMaker(seqOfGraphemes);
-        let seqOfMorphemes = st.makeMorpheme();
+        let tsmm = new ToneSandhiMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeMorphemes();
 
         // Lexeme Maker
-        let wt = new ToneSandhiLexemeMaker(seqOfMorphemes);
-        let seqOfLexemes = wt.makeLexeme();
+        let tslm = new ToneSandhiLexemeMaker(morphemes);
+        let lexemes = tslm.makeLexemes();
 
-        return seqOfLexemes;
+        return lexemes;
     }
     
     processOneToken(str: string) {
