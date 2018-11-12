@@ -15,7 +15,7 @@ export let MORPH_RULES = {
         'sangy':            {LEMMA: 'sangw', Type: 'ditransitive'},
         'mngw':             {LEMMA: 'mngzs', Type: 'ditransitive'},
 
-        'uannw':            {LEMMA: 'uannzs', Type: 'causative'},
+        'uannw':            {LEMMA: 'uannzs', Type: 'transitive'},
     },
 
     'PART': {

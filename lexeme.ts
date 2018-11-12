@@ -36,14 +36,16 @@ class CheckedInflectionalEnding extends InflectionalEnding {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-class Lexeme {}
+export class Lexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
 export class ToneLexeme extends Lexeme {
-    word: Word
+    // this is used in rule-based tagger for both tone-sandhi and 
+    // tone-mark-less lexemes
+    word: ToneWord
 }
 
 class ToneMarkLessLexeme extends ToneLexeme {}
@@ -54,7 +56,7 @@ class ToneMarkLessLexeme extends ToneLexeme {}
 
 export class ToneSandhiLexeme extends ToneLexeme {
     word: ToneSandhiWord
-    ending: InflectionalEnding = null
+    inflectionalEnding: InflectionalEnding = null
     lemmata: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
@@ -74,11 +76,11 @@ export class ToneSandhiLexeme extends ToneLexeme {
                 //console.log(`a.toneMark is ${a.toneMark}`)
                 fie.baseAffixes.push(a);
             }
-            this.ending = fie;
+            this.inflectionalEnding = fie;
         } else if(allomorph instanceof CheckedAllomorph) {
             let cie = new CheckedInflectionalEnding();
             cie.affix.toneMark = allomorph.toneMark;
-            this.ending = cie;
+            this.inflectionalEnding = cie;
         }
     }
 
@@ -91,11 +93,11 @@ export class ToneSandhiLexeme extends ToneLexeme {
     }
 
     getBaseForms(morphemes: Array<ToneSandhiMorpheme>): Array<ToneSandhiWord> {
-        if(this.ending != null) {
-            if(this.ending instanceof FreeInflectionalEnding) {
-                if(this.ending.baseAffixes.length == 1) {
+        if(this.inflectionalEnding != null) {
+            if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
+                if(this.inflectionalEnding.baseAffixes.length == 1) {
                     return [this.replaceLastSyllable(morphemes)];
-                } else if(this.ending.baseAffixes.length > 1) {
+                } else if(this.inflectionalEnding.baseAffixes.length > 1) {
                     let ret = [];
                     let arr = morphemes[morphemes.length-1].getBaseForms();
                     //console.log(arr)
@@ -107,7 +109,7 @@ export class ToneSandhiLexeme extends ToneLexeme {
                     }
                     return ret;
                 }
-            } else if(this.ending instanceof CheckedInflectionalEnding) {
+            } else if(this.inflectionalEnding instanceof CheckedInflectionalEnding) {
                 return [this.replaceLastSyllable(morphemes)];
             }
         }
@@ -139,11 +141,14 @@ export class Word {
     literal: string = '';
 }
 
+export class ToneWord extends Word {}
+export class ToneMarkLessWord extends ToneWord {}
+
 //------------------------------------------------------------------------------
 //  Tone Sandhi Word
 //------------------------------------------------------------------------------
 
-export class ToneSandhiWord extends Word {
+export class ToneSandhiWord extends ToneWord {
     syllables: Array<ToneSandhiSyllable>;
 
     constructor(syllables?: Array<ToneSandhiSyllable>) {

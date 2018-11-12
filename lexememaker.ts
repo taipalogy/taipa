@@ -24,7 +24,7 @@ export class ToneSandhiLexemeMaker {
 
         let lexemes: Array<ToneSandhiLexeme> = new Array();
 
-        // unpack lexical affixes and get syllables from them
+        // unpack morphemes and take syllables out from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
         for(let key in this.morphemes) {
             syllables.push(this.morphemes[key].syllable);

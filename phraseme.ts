@@ -1,11 +1,13 @@
 
-import { ToneSandhiWord, InflectionalEnding, Word, ToneSandhiLexeme } from "./lexeme"
+import { ToneSandhiWord, InflectionalEnding } from "./lexeme"
 
 //------------------------------------------------------------------------------
 //  Tone Group
 //------------------------------------------------------------------------------
 
-class ToneGroup {}
+export class ToneGroup {
+    inflectionalEndings: Array<InflectionalEnding> = new Array()
+}
 
 class ToneSandhiGroup extends ToneGroup{}
 
@@ -19,9 +21,12 @@ class Phraseme {
 export class ToneSandhiPhraseme extends Phraseme {
     phrase: ToneSandhiPhrase
 
-    constructor(words: Array<ToneSandhiWord>) {
+    constructor(phrase: ToneSandhiPhrase) {
         super();
+        this.phrase = phrase
     }
+
+    assignToneGroup(InflectionalEnding: InflectionalEnding) {}
 
     getBaseForm() {
         
@@ -36,10 +41,10 @@ class Phrase {
     literal: string = ''
 }
 
-class ToneSandhiPhrase extends Phrase {
-    words: Array<Word>
+export class ToneSandhiPhrase extends Phrase {
+    words: Array<ToneSandhiWord>
 
-    constructor(words?: Array<Word>) {
+    constructor(words?: Array<ToneSandhiWord>) {
         super()
         this.words = new Array();
         if(words != undefined) {
@@ -58,7 +63,7 @@ class ToneSandhiPhrase extends Phrase {
         this.words = this.words.slice(0, this.words.length-1);
     }
 
-    pushWord(w: Word) {
+    pushWord(w: ToneSandhiWord) {
         // push the word
         this.words.push(w);
         // concatenate a white space and the new word

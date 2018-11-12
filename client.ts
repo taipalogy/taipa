@@ -60,6 +60,8 @@ export class Client {
         for(let key in tokens) {
             lexemes.push(this.turnLexeme(tokens[key])[0])
         }
+
+        // can lexemes be replaced by a phraseme?
         let tagger = new RuleBasedTagger(lexemes);
         let nodes = tagger.nodes;
 
