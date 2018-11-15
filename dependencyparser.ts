@@ -1,5 +1,5 @@
 
-import { ToneLexeme, Word } from './lexeme';
+
 import { MORPH_RULES } from './morphrules'
 import { SYMBOLS } from './symbols';
 import { Node } from './rulebasedtagger'

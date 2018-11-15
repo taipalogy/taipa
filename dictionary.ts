@@ -5,7 +5,7 @@ interface IndexedDictionary {
 }
 
 
-export let indexed_dictionary: IndexedDictionary = {
+export let dictionary: IndexedDictionary = {
     a: ['阿', '鴉'],
     af: [],
     ah: [],

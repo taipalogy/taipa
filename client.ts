@@ -2,22 +2,21 @@
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
-import { ToneSandhiLexeme } from './lexeme'
-import { indexed_dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, LeftArc } from './dependencyparser'
+import { ToneSandhiInputingLexeme } from './lexeme'
+import { dictionary } from './dictionary'
+import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
-import { AlphabeticGrapheme } from './grapheme';
 
 export class Document {
-    lexemes: Array<ToneSandhiLexeme> = new Array();
+    lexemes: Array<ToneSandhiInputingLexeme> = new Array();
     graph: Set<Arc>
 }
 
 export class Client {
     lookup(k: string) {
-        for(let key in indexed_dictionary) {
+        for(let key in dictionary) {
             if(key == k) {
-            var value = indexed_dictionary[key];
+            var value = dictionary[key];
             }
             if(value != null) {
             //console.log(value[0]);
@@ -56,7 +55,7 @@ export class Client {
         let c: Configuration = dp.getInitialConfiguration();
         let tokens = str.match(/\w+/g);
 
-        let lexemes: Array<ToneSandhiLexeme> = new Array();
+        let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
         for(let key in tokens) {
             lexemes.push(this.turnLexeme(tokens[key])[0])
         }

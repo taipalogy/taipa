@@ -1,9 +1,9 @@
 
 import { IExpression, Expression, AndExpression, OrExpression, GrammaticalUnit } from './expressionparser';
-import { ToneLexeme } from './lexeme';
+import { ToneInputingLexeme } from './lexeme';
 
 class Node extends GrammaticalUnit {
-    lexeme: ToneLexeme
+    lexeme: ToneInputingLexeme
 }
 
 //------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 
-import { Word, ToneLexeme, Lexeme, ToneSandhiWord, ToneWord, ToneSandhiLexeme, ToneMarkLessWord } from './lexeme'
+import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { MORPH_RULES } from './morphrules';
 
@@ -38,44 +38,82 @@ export let FORMS = {
 //  Pattern of Phrase
 //------------------------------------------------------------------------------
 
-class PatternOfPhrase {
-    pops: Array<string> = new Array()
+class ConstructionOfPhrase {
+    elements: Array<ConstructionElement> = new Array()
 
-    constructor(arr: Array<string>){
+    constructor(arr: Array<ConstructionElement>){
         for(let key in arr) {
-            this.pops.push(arr[key])
+            this.elements.push(arr[key])
         }
     }
 }
 
-class FormsOfToneWord extends Lexeme {}
+class ParsingLexeme extends Lexeme {}
 
-class FormsOfToneSandhiWord extends FormsOfToneWord {
+class ToneSandhiParsingLexeme extends ParsingLexeme {
     rulesOfInflection
     word: ToneSandhiWord
+    preceded
+    followed
+    isProceeding
+    partOfSpeech: string
 
-    makeSandhiForm() {}
-    get baseForm() { return '' }
-    get sandhiForm() { return this.makeSandhiForm() }
-    get adverbialForm () { return '' }
-}
-/*
-class VerbWithTransitiveForm {
-    
-}
-*/
-class TransitiveVerb {
-    id: string = 'transitive'
-    forms: FormsOfToneSandhiWord
-    words: Array<FormsOfToneSandhiWord> = new Array()
-
-    addWord(w: ToneSandhiWord) {
-        let fotsw = new FormsOfToneSandhiWord()
-        fotsw.word = new ToneSandhiWord(w.syllables)
-        this.words.push(fotsw)
+    constructor(w: ToneSandhiWord) {
+        super()
+        this.word = w
     }
 
-    isTransitive(w: ToneSandhiWord) {}
+    add(id: string) {
+        let kvps = FORMS.VERB
+        let k = Object.keys(kvps).find(key => id === key )
+        this[k] = kvps[k]
+    }
+
+    get baseForm() { return this.word.literal }
+
+    toString() {}
+}
+
+class Verb extends ToneSandhiParsingLexeme {}
+
+class Pronoun extends ToneSandhiParsingLexeme {}
+
+class PersonalPronoun extends Pronoun {
+    get adverbialForm () { return '' }
+}
+
+class DemonstrativePronoun extends Pronoun {}
+
+class Noun extends ToneSandhiParsingLexeme {}
+
+class Unit extends Noun {
+    get sandhiForm() { return '' }
+    get adverbialForm () { return '' }
+}
+
+class Adjective extends ToneSandhiParsingLexeme {}
+
+class Particle extends ToneSandhiParsingLexeme {}
+
+class Preposition extends ToneSandhiParsingLexeme {}
+
+class Exclamation extends ToneSandhiParsingLexeme {}
+
+class ConstructionElement{
+    id: string = ''
+    lexemes: Array<ToneSandhiParsingLexeme> = new Array()
+
+    constructor(id: string) {
+        this.id = id
+    }
+
+    addWord(w: ToneSandhiWord) {
+        this.lexemes.push(new ToneSandhiParsingLexeme(new ToneSandhiWord(w.syllables)))
+    }
+
+    check(w: ToneSandhiWord) {
+        return false
+    }
 }
 
 class PatternOfClause {
@@ -84,19 +122,23 @@ class PatternOfClause {
 
 class FormsOfPhrase {}
 
-class TypeOfPhrase {
-    patterns: Array<PatternOfPhrase> = null;
+abstract class TypeOfConstruction {
+    abstract constructions: Array<ConstructionOfPhrase> = null;
 }
 
-class PhrasalVerb extends TypeOfPhrase {
-    patterns = [new PatternOfPhrase(['intransitive', 'intransitive']),
-                new PatternOfPhrase(['transitive', 'accusative', 'intransitive']),
-                new PatternOfPhrase(['serial-verb', 'serial-verb', 'intransitive']),
-                new PatternOfPhrase(['causative', 'accusative', 'intransitive'])]
+class VerbPhrase extends TypeOfConstruction {
+    //new ConstructionOfPhrase(['intransitive', 'intransitive']),
+    //new ConstructionOfPhrase(['serial', 'serial', 'intransitive']),
+    //new ConstructionOfPhrase(['causative', 'accusative', 'intransitive'])
+
+    constructions = [new ConstructionOfPhrase([new ConstructionElement('transitive') , 
+                                                new ConstructionElement('accusative'), 
+                                                new ConstructionElement('intransitive')])]
 }
 
-class DitransitiveVerb extends TypeOfPhrase {
-    patterns = [new PatternOfPhrase(['ditransitive', 'dative', 'accusative'])]
+class DitransitiveVerbPhrase extends TypeOfConstruction {
+    //new ConstructionOfPhrase(['ditransitive', 'dative', 'accusative'])
+    constructions = []
 }
 
 export class Node {
@@ -106,35 +148,27 @@ export class Node {
 
 export class RuleBasedTagger {
     nodes: Array<Node> = new Array();
-    constructor(lexemes: Array<ToneLexeme>) {
+
+    constructor(lexemes: Array<ToneInputingLexeme>) {
         this.match(lexemes)
     }
 
-    match(lexemes: Array<ToneLexeme>) {
+    match(lexemes: Array<ToneInputingLexeme>) {
         let w: ToneWord = lexemes[0].word
-        let tv = new TransitiveVerb()
-        
-        if(w instanceof ToneSandhiWord) {
-            tv.isTransitive(w)
-        } else if(w instanceof ToneMarkLessWord) {}
 
-        let pattern: PatternOfPhrase
-        for(let s in MORPH_RULES) {
-            let kvps = MORPH_RULES[s]
-            let k = Object.keys(kvps).find(key => w.literal === key )
-            if(k != undefined) {
-                console.log('key is ' + k)
-                console.log('type is ' + kvps[k].Type)
-                let pv = new PhrasalVerb();
-                for(let key in pv.patterns) {
-                    if(kvps[k].Type === pv.patterns[key].pops[0]) {
-                        pattern = pv.patterns[key]
-                        console.log('matched!')
-                    }
+        let cop: ConstructionOfPhrase        
+        if(w instanceof ToneSandhiWord) {
+            let pv = new VerbPhrase();
+            for(let key in pv.constructions) {
+                if(pv.constructions[key].elements[0].check(w)) {
+                    cop = pv.constructions[key]
+                    console.log('matched!')
                 }
             }
-        }
+        } else if(w instanceof ToneMarkLessWord) {}
 
+        console.log(cop.elements[1].id)
+        console.log(cop.elements[2].id)
         return false;
     }
 }

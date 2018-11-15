@@ -1,6 +1,6 @@
 
 import { ToneSandhiMorpheme, ToneSandhiSyllable  } from './morpheme'
-import { ToneSandhiLexeme, ToneSandhiWord, DummyLexeme, Word } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiWord, DummyLexeme, Word } from './lexeme'
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme Maker
@@ -22,7 +22,7 @@ export class ToneSandhiLexemeMaker {
         // assign inflectinal affix to a lexeme.
         // push the lexeme into an array of lexeme.
 
-        let lexemes: Array<ToneSandhiLexeme> = new Array();
+        let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
 
         // unpack morphemes and take syllables out from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
@@ -30,7 +30,7 @@ export class ToneSandhiLexemeMaker {
             syllables.push(this.morphemes[key].syllable);
         }
 
-        let tsl = new ToneSandhiLexeme(new ToneSandhiWord(syllables));
+        let tsl = new ToneSandhiInputingLexeme(new ToneSandhiWord(syllables));
         if(this.morphemes.length > 0) {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
                 tsl.assignInflectionalEnding(this.morphemes[this.morphemes.length-1].allomorph);

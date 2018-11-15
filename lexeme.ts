@@ -42,19 +42,21 @@ export class Lexeme {}
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneLexeme extends Lexeme {
+class InputingLexeme extends Lexeme {}
+
+export class ToneInputingLexeme extends InputingLexeme {
     // this is used in rule-based tagger for both tone-sandhi and 
     // tone-mark-less lexemes
     word: ToneWord
 }
 
-class ToneMarkLessLexeme extends ToneLexeme {}
+class ToneMarkLessLexeme extends ToneInputingLexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneSandhiLexeme extends ToneLexeme {
+export class ToneSandhiInputingLexeme extends ToneInputingLexeme {
     word: ToneSandhiWord
     inflectionalEnding: InflectionalEnding = null
     lemmata: Array<ToneSandhiWord>

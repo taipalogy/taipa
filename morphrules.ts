@@ -2,23 +2,23 @@
 
 export let MORPH_RULES = {
     'PRP': {
-        'guay':            {LEMMA: 'PRON_LEMMA', Case: 'Acc'},
-        'gua':             {LEMMA: 'guay', Case: ''},
-        'guazs':           {LEMMA: 'guay', Case: ''},
-        'guaw':            {LEMMA: 'guay', Case: ''},
+        'guay':            {lemma: 'PRON_LEMMA', case: 'Acc'},
+        'gua':             {lemma: 'guay', case: ''},
+        'guazs':           {lemma: 'guay', case: ''},
+        'guaw':            {lemma: 'guay', case: ''},
     },
 
     'VB': {
-        'hingzs':           {LEMMA: 'hingx', Type: 'ditransitive'},
-        'ziurhy':           {LEMMA: 'ziurh', Type: 'ditransitive'},
-        'how':              {LEMMA: 'hozs', Type: 'ditransitive'},
-        'sangy':            {LEMMA: 'sangw', Type: 'ditransitive'},
-        'mngw':             {LEMMA: 'mngzs', Type: 'ditransitive'},
+        'hingzs':           {lemma: 'hingx', type: 'ditransitive'},
+        'ziurhy':           {lemma: 'ziurh', type: 'ditransitive'},
+        'how':              {lemma: 'hozs', type: 'ditransitive'},
+        'sangy':            {lemma: 'sangw', type: 'ditransitive'},
+        'mngw':             {lemma: 'mngzs', type: 'ditransitive'},
 
-        'uannw':            {LEMMA: 'uannzs', Type: 'transitive'},
+        'uannw':            {lemma: 'uannzs', type: 'transitive'},
     },
 
     'PART': {
-        'hongx':            {LEMMA: 'hozs'},
+        'hongx':            {lemma: 'hozs'},
     },
 }
