@@ -147,6 +147,7 @@ export let dictionary: IndexedDictionary = {
     qannzs: [],
     qausszanycah: ['九層 cah'],
     qianny: ['子'],
+    qinzsnassjid: ['今仔日'],
     queh: [],
     quefflaih: [],
     nassqay: [],

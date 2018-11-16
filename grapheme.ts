@@ -1,7 +1,6 @@
 
 
 import { Character, characters } from './character';
-import { IDictionary, Dictionary } from './collection'
 
 //------------------------------------------------------------------------------
 //  Sound

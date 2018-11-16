@@ -247,7 +247,7 @@ class DictionaryOfRules extends Dictionary {
 
 export class FreeAllomorphCyclingRules {
     readonly rules = new DictionaryOfRules([
-        { key: 'ss', value: [new FreeToneMarkY] },
+        { key: 'ss', value: [new FreeToneMarkY()] },
         { key: 'w', value: [new ToneMarkZS(), new FreeToneMarkX()] },
         { key: 'xx', value: [new ToneMarkZS(), new ToneMarkSS, new FreeToneMarkX()] },
         { key: 'xxx', value: [new ToneMarkZS(), new ToneMarkSS(), new FreeToneMarkX()] },

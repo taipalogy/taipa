@@ -1,6 +1,8 @@
 
 import { ToneSandhiSyllable, Affix, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphCyclingRules } from './morpheme';
-import { GrammaticalUnit } from './expressionparser'
+import { GraphemeMaker } from './graphememaker';
+import { ToneSandhiMorphemeMaker } from './morphememaker';
+import { ToneSandhiLexemeMaker } from './lexememaker';
 
 
 //------------------------------------------------------------------------------
@@ -19,7 +21,7 @@ export class InflectionalEnding {
     affix: Affix = null;
 }
 
-class FreeInflectionalEnding extends InflectionalEnding {
+export class FreeInflectionalEnding extends InflectionalEnding {
     affix: Affix = new Affix();
     baseAffixes: Array<Affix> = new Array();
 }
@@ -209,3 +211,20 @@ export class InflectiveWord extends Word {
 export class AgglutinativeWord extends Word {
 }
 
+export class TurnLexemeFromString {
+    turnLexeme(str: string) {
+        // Grapheme Maker
+        let gm = new GraphemeMaker(str);
+        let graphemes = gm.makeGraphemes();
+
+        // Morpheme Maker
+        let tsmm = new ToneSandhiMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeMorphemes();
+
+        // Lexeme Maker
+        let tslm = new ToneSandhiLexemeMaker(morphemes);
+        let lexemes = tslm.makeLexemes();
+
+        return lexemes;
+    }
+}

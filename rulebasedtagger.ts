@@ -1,7 +1,7 @@
 
-import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme } from './lexeme'
+import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme, TurnLexemeFromString, InflectionalEnding, FreeInflectionalEnding } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { MORPH_RULES } from './morphrules';
+import { IDictionary, Dictionary } from './collection';
 
 export let FORMS = {
     'VERB': {
@@ -35,7 +35,7 @@ export let FORMS = {
 }
 
 //------------------------------------------------------------------------------
-//  Pattern of Phrase
+//  Construction of Phrase
 //------------------------------------------------------------------------------
 
 class ConstructionOfPhrase {
@@ -47,6 +47,20 @@ class ConstructionOfPhrase {
         }
     }
 }
+
+class ConstructionOfClause {
+    isSeperable
+}
+
+//------------------------------------------------------------------------------
+//  Free Desinence Cycling Rules
+//------------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------------
+//  Parsing Lexeme
+//------------------------------------------------------------------------------
+
 
 class ParsingLexeme extends Lexeme {}
 
@@ -70,8 +84,11 @@ class ToneSandhiParsingLexeme extends ParsingLexeme {
     }
 
     get baseForm() { return this.word.literal }
+    get sandhiForm() { return '' }
 
-    toString() {}
+    toString(id: string) {
+        return this[id]
+    }
 }
 
 class Verb extends ToneSandhiParsingLexeme {}
@@ -99,6 +116,11 @@ class Preposition extends ToneSandhiParsingLexeme {}
 
 class Exclamation extends ToneSandhiParsingLexeme {}
 
+
+//------------------------------------------------------------------------------
+//  Construction Element
+//------------------------------------------------------------------------------
+
 class ConstructionElement{
     id: string = ''
     lexemes: Array<ToneSandhiParsingLexeme> = new Array()
@@ -112,15 +134,18 @@ class ConstructionElement{
     }
 
     check(w: ToneSandhiWord) {
+        for(let k in this.lexemes) {
+            if(this.lexemes[k].toString(this.id) === w.literal) {
+                return true
+            }
+        }
         return false
     }
 }
 
-class PatternOfClause {
-    isSeperable
-}
-
-class FormsOfPhrase {}
+//------------------------------------------------------------------------------
+//  Type of Construction
+//------------------------------------------------------------------------------
 
 abstract class TypeOfConstruction {
     abstract constructions: Array<ConstructionOfPhrase> = null;
@@ -131,15 +156,31 @@ class VerbPhrase extends TypeOfConstruction {
     //new ConstructionOfPhrase(['serial', 'serial', 'intransitive']),
     //new ConstructionOfPhrase(['causative', 'accusative', 'intransitive'])
 
-    constructions = [new ConstructionOfPhrase([new ConstructionElement('transitive') , 
-                                                new ConstructionElement('accusative'), 
-                                                new ConstructionElement('intransitive')])]
+    constructions = []
+
+    constructor() {
+        super()
+        let turner = new TurnLexemeFromString()
+        let w = turner.turnLexeme('uannzs')[0].word
+        console.log(w.literal)
+
+        let transitive = new ConstructionElement('transitive')
+        transitive.addWord(w)
+        this.constructions.push(new ConstructionOfPhrase([transitive, 
+                                                            new ConstructionElement('accusative'), 
+                                                            new ConstructionElement('intransitive')]))
+    }
 }
 
 class DitransitiveVerbPhrase extends TypeOfConstruction {
     //new ConstructionOfPhrase(['ditransitive', 'dative', 'accusative'])
     constructions = []
 }
+
+
+//------------------------------------------------------------------------------
+//  Rule-Based Tagger
+//------------------------------------------------------------------------------
 
 export class Node {
     word: Word

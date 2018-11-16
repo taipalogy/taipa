@@ -21,7 +21,7 @@ export class Dictionary {
     _keys: string[] = new Array();
     _values: any[] = new Array();
 
-    constructor(init: { key: string; value: any; }[]) {
+    constructor(init: { key: string, value: any }[]) {
 
         for (var x = 0; x < init.length; x++) {
             this[init[x].key] = init[x].value;
