@@ -1,6 +1,7 @@
 
 import { ToneSandhiMorpheme, ToneSandhiSyllable  } from './morpheme'
 import { ToneSandhiInputingLexeme, ToneSandhiWord, DummyLexeme, Word } from './lexeme'
+import { ToneSandhiParsingLexeme } from './rulebasedtagger';
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme Maker
@@ -44,6 +45,27 @@ export class ToneSandhiLexemeMaker {
 
         //        console.log(lexemes);
         //        console.log(lexemes[0].word.literal);
+
+        return lexemes
+    }
+
+    makeParsingLexemes() {
+        let lexemes: Array<ToneSandhiParsingLexeme> = new Array();
+
+        // unpack morphemes and take syllables out from them
+        let syllables: Array<ToneSandhiSyllable> = new Array();
+        for(let key in this.morphemes) {
+            syllables.push(this.morphemes[key].syllable);
+        }
+
+        let tsl = new ToneSandhiParsingLexeme(new ToneSandhiWord(syllables));
+        if(this.morphemes.length > 0) {
+            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
+                tsl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
+            }
+        }
+
+        lexemes.push(tsl);
 
         return lexemes
     }

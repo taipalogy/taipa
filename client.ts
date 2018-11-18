@@ -2,7 +2,7 @@
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiMorphemeMaker } from './morphememaker'
 import { ToneSandhiLexemeMaker } from './lexememaker'
-import { ToneSandhiInputingLexeme, TurnLexemeFromString } from './lexeme'
+import { ToneSandhiInputingLexeme, TurningIntoInputingLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
@@ -56,9 +56,9 @@ export class Client {
         let tokens = str.match(/\w+/g);
 
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
-        let turner = new TurnLexemeFromString()
+        let turner = new TurningIntoInputingLexeme()
         for(let key in tokens) {
-            lexemes.push(turner.turnLexeme(tokens[key])[0])
+            lexemes.push(turner.turnIntoLexeme(tokens[key])[0])
         }
 
         // can lexemes be replaced by a phraseme?

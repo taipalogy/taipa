@@ -1,7 +1,7 @@
 
-import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme, TurnLexemeFromString, InflectionalEnding, FreeInflectionalEnding } from './lexeme'
+import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme, TurningIntoParsingLexeme, InflectionalEnding, FreeInflectionalEnding } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { IDictionary, Dictionary } from './collection';
+import { Allomorph } from './morpheme';
 
 export let FORMS = {
     'VERB': {
@@ -64,7 +64,7 @@ class ConstructionOfClause {
 
 class ParsingLexeme extends Lexeme {}
 
-class ToneSandhiParsingLexeme extends ParsingLexeme {
+export class ToneSandhiParsingLexeme extends ParsingLexeme {
     rulesOfInflection
     word: ToneSandhiWord
     preceded
@@ -82,6 +82,8 @@ class ToneSandhiParsingLexeme extends ParsingLexeme {
         let k = Object.keys(kvps).find(key => id === key )
         this[k] = kvps[k]
     }
+
+    assignTonalEnding(allomorph: Allomorph) {}
 
     get baseForm() { return this.word.literal }
     get sandhiForm() { return '' }
@@ -129,8 +131,8 @@ class ConstructionElement{
         this.id = id
     }
 
-    addWord(w: ToneSandhiWord) {
-        this.lexemes.push(new ToneSandhiParsingLexeme(new ToneSandhiWord(w.syllables)))
+    addLexeme(l: ToneSandhiParsingLexeme) {
+        this.lexemes.push(l)
     }
 
     check(w: ToneSandhiWord) {
@@ -160,12 +162,12 @@ class VerbPhrase extends TypeOfConstruction {
 
     constructor() {
         super()
-        let turner = new TurnLexemeFromString()
-        let w = turner.turnLexeme('uannzs')[0].word
-        console.log(w.literal)
+        let turner = new TurningIntoParsingLexeme()
+        let l = turner.turnIntoLexeme('uannzs')[0]
+        console.log(l.word.literal)
 
         let transitive = new ConstructionElement('transitive')
-        transitive.addWord(w)
+        transitive.addLexeme(l)
         this.constructions.push(new ConstructionOfPhrase([transitive, 
                                                             new ConstructionElement('accusative'), 
                                                             new ConstructionElement('intransitive')]))

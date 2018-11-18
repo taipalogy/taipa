@@ -211,8 +211,8 @@ export class InflectiveWord extends Word {
 export class AgglutinativeWord extends Word {
 }
 
-export class TurnLexemeFromString {
-    turnLexeme(str: string) {
+export class TurningIntoInputingLexeme {
+    turnIntoLexeme(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
         let graphemes = gm.makeGraphemes();
@@ -224,6 +224,24 @@ export class TurnLexemeFromString {
         // Lexeme Maker
         let tslm = new ToneSandhiLexemeMaker(morphemes);
         let lexemes = tslm.makeLexemes();
+
+        return lexemes;
+    }
+}
+
+export class TurningIntoParsingLexeme {
+    turnIntoLexeme(str: string) {
+        // Grapheme Maker
+        let gm = new GraphemeMaker(str);
+        let graphemes = gm.makeGraphemes();
+
+        // Morpheme Maker
+        let tsmm = new ToneSandhiMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeMorphemes();
+
+        // Lexeme Maker
+        let tslm = new ToneSandhiLexemeMaker(morphemes);
+        let lexemes = tslm.makeParsingLexemes();
 
         return lexemes;
     }
