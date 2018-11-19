@@ -27,11 +27,21 @@ export let FORMS = {
         'nominative': '',
         'accusative': '',
         'dative': '',
-        'adverbial': 'adverbialForm',
     },
     'PARTICLE': {
         'continuative': 'continuativeForm'
-    }
+    },
+    'PREPOSITION': {},
+    'EXCLAMATION': {},
+    'DEMONSTRATIVEPRONOUN': {},
+    'PERSONALPRONOUN': {
+        'adverbial': 'adverbialForm',
+    },
+    'DETERMINER': {},
+    'QUANTIFIER': {
+        'continuative': 'sandhiForm',
+        'adverbial': 'adverbialForm',
+    },
 }
 
 //------------------------------------------------------------------------------
@@ -70,7 +80,7 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
     preceded
     followed
     isProceeding
-    partOfSpeech: string
+    partOfSpeech: string = ''
 
     constructor(w: ToneSandhiWord) {
         super()
@@ -78,8 +88,11 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
     }
 
     add(id: string) {
-        let kvps = FORMS.VERB
+        // use this.partOfSpeech to pick up k-v pairs from forms
+        let kvps = Object.keys(FORMS).find(key => this.partOfSpeech === key)
+        // pick up the specific form from the part of speech
         let k = Object.keys(kvps).find(key => id === key )
+        // assign property and property value
         this[k] = kvps[k]
     }
 
@@ -92,32 +105,6 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
         return this[id]
     }
 }
-
-class Verb extends ToneSandhiParsingLexeme {}
-
-class Pronoun extends ToneSandhiParsingLexeme {}
-
-class PersonalPronoun extends Pronoun {
-    get adverbialForm () { return '' }
-}
-
-class DemonstrativePronoun extends Pronoun {}
-
-class Noun extends ToneSandhiParsingLexeme {}
-
-class Unit extends Noun {
-    get sandhiForm() { return '' }
-    get adverbialForm () { return '' }
-}
-
-class Adjective extends ToneSandhiParsingLexeme {}
-
-class Particle extends ToneSandhiParsingLexeme {}
-
-class Preposition extends ToneSandhiParsingLexeme {}
-
-class Exclamation extends ToneSandhiParsingLexeme {}
-
 
 //------------------------------------------------------------------------------
 //  Construction Element
@@ -164,6 +151,7 @@ class VerbPhrase extends TypeOfConstruction {
         super()
         let turner = new TurningIntoParsingLexeme()
         let l = turner.turnIntoLexeme('uannzs')[0]
+        l.partOfSpeech = SYMBOLS.VERB
         console.log(l.word.literal)
 
         let transitive = new ConstructionElement('transitive')
@@ -197,6 +185,7 @@ export class RuleBasedTagger {
     }
 
     match(lexemes: Array<ToneInputingLexeme>) {
+        // take in inputing lexemes and then check them against parsing lexemes
         let w: ToneWord = lexemes[0].word
 
         let cop: ConstructionOfPhrase        
@@ -210,8 +199,8 @@ export class RuleBasedTagger {
             }
         } else if(w instanceof ToneMarkLessWord) {}
 
-        console.log(cop.elements[1].id)
-        console.log(cop.elements[2].id)
+        //console.log(cop.elements[1].id)
+        //console.log(cop.elements[2].id)
         return false;
     }
 }
