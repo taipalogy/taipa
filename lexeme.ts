@@ -1,5 +1,5 @@
 
-import { ToneSandhiSyllable, Affix, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphCyclingRules } from './morpheme';
+import { ToneSandhiSyllable, Affix, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules } from './morpheme';
 import { GraphemeMaker } from './graphememaker';
 import { ToneSandhiMorphemeMaker } from './morphememaker';
 import { ToneSandhiLexemeMaker } from './lexememaker';
@@ -17,17 +17,30 @@ class InflectionalToneMark {
     affix: Affix = null;
 }
 
-export class InflectionalEnding {
-    affix: Affix = null;
+export abstract class InflectionalEnding {
+    abstract affix: Affix = null;
 }
 
 export class FreeInflectionalEnding extends InflectionalEnding {
-    affix: Affix = new Affix();
+    affix = new Affix();
     baseAffixes: Array<Affix> = new Array();
 }
 
-class CheckedInflectionalEnding extends InflectionalEnding {
-    affix: Affix = new Affix();
+export class CheckedInflectionalEnding extends InflectionalEnding {
+    affix = new Affix();
+}
+
+export abstract class TonalEnding {
+    abstract allomorph: Allomorph = null
+}
+
+export class FreeTonalEnding extends TonalEnding {
+    allomorph = new Allomorph()
+    sandhiAllomorphs: Array<Allomorph> = new Array()
+}
+
+export class CheckedTonalEnding extends TonalEnding {
+    allomorph = new Allomorph()
 }
 
 //------------------------------------------------------------------------------
@@ -69,9 +82,9 @@ export class ToneSandhiInputingLexeme extends ToneInputingLexeme {
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {
-        let facrs = new FreeAllomorphCyclingRules();
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
+            let facrs = new FreeAllomorphBaseRules();
             fie.affix.toneMark = allomorph.toneMark;
             for(let key in facrs.rules[allomorph.getLiteral()]) {
                 //console.log(`k is ${key}`)
@@ -173,6 +186,7 @@ export class ToneSandhiWord extends ToneWord {
     popSyllable() {
         // trim the literal
         let tmp = this.literal.substr(0, this.literal.length-this.syllables[this.syllables.length-1].literal.length);
+        // assign the new literal to this.literal
         this.literal = tmp;
         // get rid off the last syllable from array
         this.syllables = this.syllables.slice(0, this.syllables.length-1);
@@ -212,7 +226,7 @@ export class AgglutinativeWord extends Word {
 }
 
 export class TurningIntoInputingLexeme {
-    turnIntoLexeme(str: string) {
+    turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
         let graphemes = gm.makeGraphemes();
@@ -230,7 +244,7 @@ export class TurningIntoInputingLexeme {
 }
 
 export class TurningIntoParsingLexeme {
-    turnIntoLexeme(str: string) {
+    turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
         let graphemes = gm.makeGraphemes();

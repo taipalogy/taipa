@@ -228,12 +228,10 @@ class GrammaticalSuffix {
 }
 
 //------------------------------------------------------------------------------
-//  Free Allomorph Cycling Rules
+//  Free Allomorph Basic Rules
 //------------------------------------------------------------------------------
 
-interface IDictionaryOfRules extends IDictionary {
-    //toString(): string;
-}
+interface IDictionaryOfRules extends IDictionary {}
 
 class DictionaryOfRules extends Dictionary {
     constructor(init: { key: string; value: Array<ToneMark>; }[]) {
@@ -245,7 +243,7 @@ class DictionaryOfRules extends Dictionary {
     }
 }
 
-export class FreeAllomorphCyclingRules {
+export class FreeAllomorphBaseRules {
     readonly rules = new DictionaryOfRules([
         { key: 'ss', value: [new FreeToneMarkY()] },
         { key: 'w', value: [new ToneMarkZS(), new FreeToneMarkX()] },
@@ -258,6 +256,18 @@ export class FreeAllomorphCyclingRules {
         { key: 'y', value: [new ToneMarkW()] },
 
         { key: 'zero', value: [new FreeToneMarkY()] },
+    ]).toLookup();
+}
+
+export class FreeAllomorphSandhiRules {
+    readonly rules = new DictionaryOfRules([
+        { key: 'w', value: [new FreeToneMarkY(), new ZeroToneMark()] },
+        { key: 'zs', value: [new ToneMarkW()] },
+
+        { key: 'x', value: [new ToneMarkZS()] },
+        { key: 'y', value: [new ZeroToneMark()] },
+
+        { key: 'zero', value: [new ToneMarkZS()] },
     ]).toLookup();
 }
 
@@ -279,6 +289,8 @@ export class ToneSandhiMorpheme extends Morpheme {
     }
 
     assignAllomorph() {
+        // assign the matched allomorph for this syllable
+        // don't assign if the checked syllable is already in base form
         let allomorphs = new Allomorphs();
         let aoas = []; // array of allomorphs
 
@@ -300,12 +312,13 @@ export class ToneSandhiMorpheme extends Morpheme {
                     this.allomorph = aoas[i];
                 } else if(aoas[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
                     // if final is equal to tone mark
+                    // this syllable is in base form
                     return;
                 }
                 // when there are no matches, it means this syllable is already in base form
             }
             if(this.allomorph != null) {
-                // if there are allomorph
+                // if there is allomorph
                 return;
             }
         }
@@ -321,6 +334,7 @@ export class ToneSandhiMorpheme extends Morpheme {
         //console.log(aotms)
 
         if(aoas.length == 0) {
+            // tone 1 has no allomorph
             this.allomorph = new ZeroAllomorph();
         } else if(aoas.length) {
             // are there multiple allomorphs? there should be only one.
@@ -335,28 +349,30 @@ export class ToneSandhiMorpheme extends Morpheme {
     }
 
     getBaseForms(): Array<ToneSandhiSyllable> {
-        let facrs = new FreeAllomorphCyclingRules();
+        let facrs = new FreeAllomorphBaseRules();
         // get base forms as strings
         if(this.allomorph != null) {
+            // member variable allomorph is not null
             if(this.allomorph instanceof FreeAllomorph) {
                 if(this.allomorph.hasZeroToneMark()) {
                     // no need to pop letter
-                    // push letter
+                    // push letter to make tone 2
                     // the base tone of the first tone is the second tone
-                    // 1 to 2
+                    // 1 to 2 <----
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                     s.pushLetter(new AlphabeticLetter(facrs.rules['zero'][0].characters));
                     //console.log(this.syllable)
                     return [s];
                 } else {
-                    // pop letter
-                    // push letter
                     // the 7th tone has two baseforms
                     let ret = [];
                     for(let i in facrs.rules[this.allomorph.getLiteral()]) {
+                        // pop letter
+                        // push letter
                         let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                         if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
-                            // 2 to 3. 3 to 7. 7 to 5. 5 to 3.
+                            // when there is allomorph
+                            // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  <----
                             s.popLetter();
                             // there are base tonemarks
                             // includes ss and x, exclude zero suffix
@@ -365,7 +381,8 @@ export class ToneSandhiMorpheme extends Morpheme {
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
                             // exclude ss and x.
-                            // 7 to 1
+                            // 7 to 1 <----
+                            // tone 1 has no allomorph
                             s.popLetter();
                             ret.push(s);
                         }
@@ -376,15 +393,22 @@ export class ToneSandhiMorpheme extends Morpheme {
             } else if(this.allomorph instanceof CheckedAllomorph) {
                 // pop the last letter
                 // no need to push letter
+                // 1 to 4. 3 to 8. 2 to 4. 5 to 8.  <----
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                 s.popLetter();
                 //console.log(s)
                 return [s];
             }
         } else {
+            // member variable allomorph is null
+            // this syllable is already in base form
             return [new ToneSandhiSyllable(this.syllable.letters)];
         }
         return []; // return empty array
+    }
+
+    getSandhiForms() {
+        return []
     }
 }
 

@@ -1,14 +1,14 @@
 
-import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme, TurningIntoParsingLexeme, InflectionalEnding, FreeInflectionalEnding } from './lexeme'
+import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme, TurningIntoParsingLexeme, FreeTonalEnding, CheckedTonalEnding, TonalEnding } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { Allomorph } from './morpheme';
+import { Allomorph, FreeAllomorph, CheckedAllomorph, ToneSandhiMorpheme, FreeAllomorphSandhiRules } from './morpheme';
 
 export let FORMS = {
     'VERB': {
         'intransitive': 'baseForm',
         'transitive': 'sandhiForm',
         'ditransitive': 'sandhiForm',
-        'causitive': 'sandhiForm',
+        'causative': 'sandhiForm',
         'perfective': 'baseForm',
         'attributive': 'sandhiForm',
         'continuative': 'sandhiForm',
@@ -75,12 +75,16 @@ class ConstructionOfClause {
 class ParsingLexeme extends Lexeme {}
 
 export class ToneSandhiParsingLexeme extends ParsingLexeme {
-    rulesOfInflection
+    // properties can be added or deleted
+    tonalEnding: TonalEnding = null
     word: ToneSandhiWord
     preceded
     followed
     isProceeding
     partOfSpeech: string = ''
+    wordForSandhiForms: Array<ToneSandhiWord>
+    wordForAdverbialForm: ToneSandhiWord
+    wordForContinuativeForm: ToneSandhiWord
 
     constructor(w: ToneSandhiWord) {
         super()
@@ -96,13 +100,92 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
         this[k] = kvps[k]
     }
 
-    assignTonalEnding(allomorph: Allomorph) {}
+    assignTonalEnding(allomorph: Allomorph) {
+        if(allomorph instanceof FreeAllomorph) {
+            // replace the tonal ending
+            let fte = new FreeTonalEnding()
+            let fasrs = new FreeAllomorphSandhiRules();
+            fte.allomorph = allomorph
+            for(let key in fasrs.rules[allomorph.getLiteral()]) {
+                //console.log(`k is ${key}`)
+                let a = new Allomorph();
+                a.toneMark = fasrs.rules[allomorph.getLiteral()][key];
+                //console.log(`a.toneMark is ${a.toneMark}`)
+                fte.sandhiAllomorphs.push(a);
+            }
+            this.tonalEnding = fte
+        } else if(allomorph instanceof CheckedAllomorph) {
+            // append the tone mark of the tonal ending
+            let cte = new CheckedTonalEnding()
+            cte.allomorph = allomorph
+            this.tonalEnding = cte
+        }
+    }
 
-    get baseForm() { return this.word.literal }
-    get sandhiForm() { return '' }
+    replaceLastSyllable(morphemes: Array<ToneSandhiMorpheme>) {
+        let word = new ToneSandhiWord(this.word.syllables);
+        word.popSyllable();
+        word.pushSyllable(morphemes[morphemes.length-1].getSandhiForms()[0]);
+        return word;
+    }
+
+    get baseForm() { 
+        // some determiners have only base form
+        return this.word
+    }
+
+    get sandhiForm() { return this.wordForSandhiForms }
+
+    set sandhiForms(morphemes: Array<ToneSandhiMorpheme>) {
+        // some determiners have no sandhi forms
+        if(this.tonalEnding != null) {
+            if(this.tonalEnding instanceof FreeTonalEnding) {
+                if(this.tonalEnding.sandhiAllomorphs.length == 1) {
+                    this.wordForSandhiForms.push(this.replaceLastSyllable(morphemes));
+                } else if(this.tonalEnding.sandhiAllomorphs.length > 1) {
+                    let ret = [];
+                    let arr = morphemes[morphemes.length-1].getSandhiForms();
+                    for(let key in arr) {
+                        let word = new ToneSandhiWord(this.word.syllables);
+                        word.popSyllable();
+                        word.pushSyllable(arr[key]);
+                        ret.push(word);
+                    }
+                    this.wordForSandhiForms = ret;
+                }
+            } else if(this.tonalEnding instanceof CheckedTonalEnding) {
+                this.wordForSandhiForms.push(this.replaceLastSyllable(morphemes));
+            }
+        }
+    }
+
+    // the below 2 forms are for conversion
+    get adverbialForm() {
+        // this form is for quantifiers and personal pronouns
+        return ''
+    }
+
+    get continuativeForm() {
+        // this form is for particles
+        return ''
+    }
 
     toString(id: string) {
         return this[id]
+    }
+}
+
+class Conversion {
+    // different from parsing lexmem. convert between part of speeches.
+    forms: Array<ToneSandhiParsingLexeme> = null
+    as(): ToneSandhiParsingLexeme {
+        return this.forms[0]
+    }
+}
+
+class Quantifier extends Conversion {
+    constructor() {
+        super()
     }
 }
 
@@ -150,7 +233,7 @@ class VerbPhrase extends TypeOfConstruction {
     constructor() {
         super()
         let turner = new TurningIntoParsingLexeme()
-        let l = turner.turnIntoLexeme('uannzs')[0]
+        let l = turner.turnIntoLexemes('uannzs')[0]
         l.partOfSpeech = SYMBOLS.VERB
         console.log(l.word.literal)
 

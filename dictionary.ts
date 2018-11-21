@@ -22,6 +22,7 @@ export let dictionary: IndexedDictionary = {
     baiy: [],
     bax: [],
     beh: ['卜'],
+    binzsnasszaiw: ['明仔 zaiw'],
     buaxqiny: [],
     bueh: [],
     burx: ['無'],

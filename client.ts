@@ -58,7 +58,7 @@ export class Client {
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
         let turner = new TurningIntoInputingLexeme()
         for(let key in tokens) {
-            lexemes.push(turner.turnIntoLexeme(tokens[key])[0])
+            lexemes.push(turner.turnIntoLexemes(tokens[key])[0])
         }
 
         // can lexemes be replaced by a phraseme?
