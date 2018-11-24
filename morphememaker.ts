@@ -1,29 +1,19 @@
 
-import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
-import { ToneSandhiMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns } from './morpheme'
-
+import { AlphabeticGrapheme, AlphabeticLetter, Letter } from './grapheme'
+import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiParsingMorpheme, Syllable } from './morpheme'
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Morpheme Maker
+//  Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiMorphemeMaker {
-    graphemes: Array<AlphabeticGrapheme>;
-    
-    constructor(graphemes: Array<AlphabeticGrapheme>) {
-        this.graphemes = new Array();
-        this.graphemes = graphemes;
-    }
+abstract class MorphemeMaker {
+    abstract graphemes
 
-    makeMorphemes() {
-        //let ss = new Syllables();
-        let morphemes = this.make(this.graphemes);//ss.process(this.graphemes);
-        return morphemes;
-    }
+    abstract create(syllable: Syllable)
 
-    createSyllable(letters: Array<AlphabeticLetter>): ToneSandhiSyllable {
-        return new ToneSandhiSyllable(letters);
-    }
+    abstract createArray() // the return type of this declaration should be left blank
+                            // an abstract type of ToneSandhiInputingMorpheme and 
+                            // ToneSandhiParsingMorpheme will not be passed into ToneSandhiParsingLexemeMaker
 
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
         // get the longest matched syllable pattern
@@ -57,17 +47,22 @@ export class ToneSandhiMorphemeMaker {
         return mp;
     }
 
-    make(graphemes: Array<AlphabeticGrapheme>) {
-
-        let morphemes: Array<ToneSandhiMorpheme> = new Array();
-        //console.log("metadata letter array length %s. ", letters[0].literal);
-        
+    preprocess() {
         // unpack graphemes and get letters from them
         let letters: Array<AlphabeticLetter> = new Array();
-        for(let key in graphemes) {
-            letters.push(graphemes[key].letter);
+        for(let key in this.graphemes) {
+            letters.push(this.graphemes[key].letter);
         }
+        return letters        
+    }
 
+    //abstract make(letters: Array<Letter>)
+    make(letters: Array<AlphabeticLetter>) {
+
+        // a word can be made of multiple syllables
+        let morphemes = this.createArray() //new Array();
+        //console.log("metadata letter array length %s. ", letters[0].literal);
+        
         //console.log(letters);
         let beginOfSyllable: number = 0;
         for(let i = 0; i < letters.length; i++) {
@@ -93,7 +88,7 @@ export class ToneSandhiMorphemeMaker {
                     for(let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    tsm =  new ToneSandhiMorpheme(new ToneSandhiSyllable(msp.letters));
+                    tsm =  this.create(new ToneSandhiSyllable(msp.letters))//new ToneSandhiInputingMorpheme(new ToneSandhiSyllable(msp.letters));
 
                     morphemes.push(tsm);
                 }
@@ -124,4 +119,46 @@ export class ToneSandhiMorphemeMaker {
         return morphemes;
     }
 }
-  
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Morpheme Maker
+//------------------------------------------------------------------------------
+
+export class ToneSandhiMorphemeMaker extends MorphemeMaker {
+    graphemes: Array<AlphabeticGrapheme>;
+    
+    constructor(graphemes: Array<AlphabeticGrapheme>) {
+        super()
+        this.graphemes = new Array();
+        this.graphemes = graphemes;
+    }
+
+    create(syllable: ToneSandhiSyllable) { return new ToneSandhiInputingMorpheme(syllable) }
+
+    createArray() { return new Array<ToneSandhiInputingMorpheme>() }
+
+    makeMorphemes() {
+        let morphemes = this.make(this.preprocess());
+        return morphemes;
+    }
+
+}
+
+export class ToneSandhiParsingMorphemeMaker extends MorphemeMaker {
+    graphemes: Array<AlphabeticGrapheme>;
+    
+    constructor(graphemes: Array<AlphabeticGrapheme>) {
+        super()
+        this.graphemes = new Array();
+        this.graphemes = graphemes;
+    }
+
+    create(syllable: ToneSandhiSyllable) { return new ToneSandhiParsingMorpheme(syllable)}
+
+    createArray() { return new Array<ToneSandhiParsingMorpheme>() }
+
+    makeParsingMorphemes() { 
+        let morphemes = this.make(this.preprocess());
+        return morphemes;
+    }
+}

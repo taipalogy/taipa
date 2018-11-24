@@ -1,8 +1,8 @@
 
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiMorphemeMaker } from './morphememaker'
-import { ToneSandhiLexemeMaker } from './lexememaker'
-import { ToneSandhiInputingLexeme, TurningIntoInputingLexeme } from './lexeme'
+import { ToneSandhiLexemeMaker, TurningIntoInputingLexeme } from './lexememaker'
+import { ToneSandhiInputingLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'

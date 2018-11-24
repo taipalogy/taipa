@@ -2,7 +2,7 @@ import { AlphabeticLetter, Final, ToneMark, Sound, MedialGraphs, NasalGraphs,
         FreeToneMarkGraphs, CheckedToneMarkGraphs, NeutralFinalGraphs, FinalGraphs, InitialNasalGraphs,
         InitialGraphs, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
         FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
-        ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX } from './grapheme'
+        ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX, Letter } from './grapheme'
 import { ZeroToneMark } from './grapheme'
 import { IDictionary, Dictionary } from './collection'
 
@@ -151,36 +151,126 @@ class AllomorphFX extends CheckedAllomorph {
     final = new FinalF()
 }
 
-class Allomorphs {
-    listOfFreeAllomorph: Array<Allomorph>  = new Array();
-    listOfChechedAllomorph: Array<Allomorph>  = new Array();
+class ListOfFreeAllomorphs {
+    protected getSS() { return new AllomorphSS() }
+    protected getW() { return new AllomorphW() }
+    protected getXX() { return new AllomorphXX() }
+    protected getXXX() { return new AllomorphXXX() }
+    protected getZZS() { return new AllomorphZZS() }
+    protected getZS() { return new AllomorphZS() }
+    protected getY() { return new AllomorphY() }
+    protected getX() { return new AllomorphX() }
+}
+
+class ListOfFreeAllomorphsForInputing extends ListOfFreeAllomorphs {
+    get ss() { return this.getSS() }
+    get w() { return this.getW() }
+    get xx() { return this.getXX () }
+    get xxx() { return this.getXXX() }
+    get zzs() { return this.getZZS() }
+    get zs() { return this.getZS() }
+    get y() { return this.getY() }
+    get x() { return this.getX() }
+}
+
+class ListOfFreeAllomorphsForParsing extends ListOfFreeAllomorphs {
+    get w() { return this.getW() }
+    get zs() { return this.getZS() }
+
+    get x() { return this.getX() }
+    get y() { return this.getY() }
+}
+
+class ListOfAllomorphsInSandhiForm {
+    // to specify the allomorphs in sandhi form
+    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
+    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
+
+    lofafi = new ListOfFreeAllomorphsForInputing()
 
     constructor() {
-        this.listOfFreeAllomorph.push(new AllomorphSS());
-        this.listOfFreeAllomorph.push(new AllomorphW());
-        this.listOfFreeAllomorph.push(new AllomorphXX());
-        this.listOfFreeAllomorph.push(new AllomorphXXX());
-        this.listOfFreeAllomorph.push(new AllomorphZZS());
-        this.listOfFreeAllomorph.push(new AllomorphZS());
+        this.listOfFreeAllomorphs.push(this.lofafi.ss)
+        this.listOfFreeAllomorphs.push(this.lofafi.w)
+        this.listOfFreeAllomorphs.push(this.lofafi.xx)
+        this.listOfFreeAllomorphs.push(this.lofafi.xxx)
+        this.listOfFreeAllomorphs.push(this.lofafi.zzs)
+        this.listOfFreeAllomorphs.push(this.lofafi.zs)
 
-        this.listOfFreeAllomorph.push(new AllomorphY());
-        this.listOfFreeAllomorph.push(new AllomorphX());
+        this.listOfFreeAllomorphs.push(this.lofafi.y)
+        this.listOfFreeAllomorphs.push(this.lofafi.x)
 
-        //-- 
+        //<> 
 
-        this.listOfChechedAllomorph.push(new AllomorphPP());
-        this.listOfChechedAllomorph.push(new AllomorphTT());
-        this.listOfChechedAllomorph.push(new AllomorphKK());
-        this.listOfChechedAllomorph.push(new AllomorphHH());
-        this.listOfChechedAllomorph.push(new AllomorphBB());
-        this.listOfChechedAllomorph.push(new AllomorphDD());
-        this.listOfChechedAllomorph.push(new AllomorphGG());
-        this.listOfChechedAllomorph.push(new AllomorphFF());
-        this.listOfChechedAllomorph.push(new AllomorphHY());
-        this.listOfChechedAllomorph.push(new AllomorphBX());
-        this.listOfChechedAllomorph.push(new AllomorphDX());
-        this.listOfChechedAllomorph.push(new AllomorphGX());
-        this.listOfChechedAllomorph.push(new AllomorphFX());
+        this.listOfChechedAllomorphs.push(new AllomorphPP());
+        this.listOfChechedAllomorphs.push(new AllomorphTT());
+        this.listOfChechedAllomorphs.push(new AllomorphKK());
+        this.listOfChechedAllomorphs.push(new AllomorphHH());
+        this.listOfChechedAllomorphs.push(new AllomorphBB());
+        this.listOfChechedAllomorphs.push(new AllomorphDD());
+        this.listOfChechedAllomorphs.push(new AllomorphGG());
+        this.listOfChechedAllomorphs.push(new AllomorphFF());
+        this.listOfChechedAllomorphs.push(new AllomorphHY());
+        this.listOfChechedAllomorphs.push(new AllomorphBX());
+        this.listOfChechedAllomorphs.push(new AllomorphDX());
+        this.listOfChechedAllomorphs.push(new AllomorphGX());
+        this.listOfChechedAllomorphs.push(new AllomorphFX());
+    }
+}
+
+class AllomorphP extends CheckedAllomorph {
+    final = new FinalP()
+}
+
+class AllomorphT extends CheckedAllomorph {
+    final = new FinalT()
+}
+
+class AllomorphK extends CheckedAllomorph {
+    final = new FinalK()
+}
+
+class AllomorphH extends CheckedAllomorph {
+    final = new FinalH()
+}
+
+class AllomorphB extends CheckedAllomorph {
+    final = new FinalB()
+}
+
+class AllomorphD extends CheckedAllomorph {
+    final = new FinalD()
+}
+
+class AllomorphG extends CheckedAllomorph {
+    final = new FinalG()
+}
+
+class AllomorphF extends CheckedAllomorph {
+    final = new FinalF()
+}
+
+class ListOfAllomorphsInBaseForm {
+    // to specify the allomorphs in base form
+    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
+    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
+
+    lofafp = new ListOfFreeAllomorphsForParsing()
+
+    constructor() {
+        this.listOfFreeAllomorphs.push(this.lofafp.w)
+        this.listOfFreeAllomorphs.push(this.lofafp.zs)
+        
+        this.listOfFreeAllomorphs.push(this.lofafp.x)
+        this.listOfFreeAllomorphs.push(this.lofafp.y)
+
+        this.listOfChechedAllomorphs.push(new AllomorphP()); // pp
+        this.listOfChechedAllomorphs.push(new AllomorphT()); // tt
+        this.listOfChechedAllomorphs.push(new AllomorphK()); // kk
+        this.listOfChechedAllomorphs.push(new AllomorphH()); // hh and hy
+        this.listOfChechedAllomorphs.push(new AllomorphB()); // bb
+        this.listOfChechedAllomorphs.push(new AllomorphD()); // dd
+        this.listOfChechedAllomorphs.push(new AllomorphG()); // gg
+        this.listOfChechedAllomorphs.push(new AllomorphF()); // ff
     }
 }
 
@@ -277,7 +367,11 @@ export class FreeAllomorphSandhiRules {
 
 export class Morpheme {}
 
-export class ToneSandhiMorpheme extends Morpheme {
+class TonemarklessMorpheme extends Morpheme {}
+
+export class ToneSandhiMorpheme extends Morpheme {}
+
+export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null; // required to populate stems
 
@@ -291,13 +385,13 @@ export class ToneSandhiMorpheme extends Morpheme {
     assignAllomorph() {
         // assign the matched allomorph for this syllable
         // don't assign if the checked syllable is already in base form
-        let allomorphs = new Allomorphs();
+        let allomorphs = new ListOfAllomorphsInSandhiForm();
         let aoas = []; // array of allomorphs
 
         //console.log(aotms)
-        for(let key in allomorphs.listOfChechedAllomorph) {
-            if(allomorphs.listOfChechedAllomorph[key].isToneMarkEqualTo(this.syllable)) {
-                aoas.push(allomorphs.listOfChechedAllomorph[key]);
+        for(let key in allomorphs.listOfChechedAllomorphs) {
+            if(allomorphs.listOfChechedAllomorphs[key].isToneMarkEqualTo(this.syllable)) {
+                aoas.push(allomorphs.listOfChechedAllomorphs[key]);
                 break;
             }
         }
@@ -325,9 +419,9 @@ export class ToneSandhiMorpheme extends Morpheme {
         //console.log(aotms)
 
         aoas = [];
-        for(let key in allomorphs.listOfFreeAllomorph) {
-            if(allomorphs.listOfFreeAllomorph[key].isToneMarkEqualTo(this.syllable)) {
-                aoas.push(allomorphs.listOfFreeAllomorph[key]);
+        for(let key in allomorphs.listOfFreeAllomorphs) {
+            if(allomorphs.listOfFreeAllomorphs[key].isToneMarkEqualTo(this.syllable)) {
+                aoas.push(allomorphs.listOfFreeAllomorphs[key]);
                 break;
             }
         }
@@ -406,9 +500,19 @@ export class ToneSandhiMorpheme extends Morpheme {
         }
         return []; // return empty array
     }
+}
 
-    getSandhiForms() {
-        return []
+export class ToneSandhiParsingMorpheme extends ToneSandhiMorpheme {
+    syllable: ToneSandhiSyllable;
+    allomorph: Allomorph = null;
+
+    constructor(syllable: ToneSandhiSyllable) {
+        super();
+        this.syllable = syllable;
+    }
+
+    getSandhiForms(): Array<ToneSandhiSyllable>  {
+        return [new ToneSandhiSyllable()]
     }
 }
 

@@ -1,7 +1,8 @@
 
-import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneInputingLexeme, TurningIntoParsingLexeme, FreeTonalEnding, CheckedTonalEnding, TonalEnding } from './lexeme'
+import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, FreeTonalEnding, CheckedTonalEnding, TonalEnding } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { Allomorph, FreeAllomorph, CheckedAllomorph, ToneSandhiMorpheme, FreeAllomorphSandhiRules } from './morpheme';
+import { Allomorph, FreeAllomorph, CheckedAllomorph, ToneSandhiMorpheme, FreeAllomorphSandhiRules, ToneSandhiParsingMorpheme, Morpheme } from './morpheme';
+import { TurningIntoParsingLexeme } from './lexememaker'
 
 export let FORMS = {
     'VERB': {
@@ -63,9 +64,8 @@ class ConstructionOfClause {
 }
 
 //------------------------------------------------------------------------------
-//  Free Desinence Cycling Rules
+//  Parsing Morpheme
 //------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
 //  Parsing Lexeme
@@ -122,7 +122,7 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
         }
     }
 
-    replaceLastSyllable(morphemes: Array<ToneSandhiMorpheme>) {
+    replaceLastSyllable(morphemes: Array<ToneSandhiParsingMorpheme>) {
         let word = new ToneSandhiWord(this.word.syllables);
         word.popSyllable();
         word.pushSyllable(morphemes[morphemes.length-1].getSandhiForms()[0]);
@@ -134,9 +134,15 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
         return this.word
     }
 
+    toString(id: string) {
+        return this[id]
+    }
+}
+
+class SandhiForm extends ToneSandhiParsingLexeme {
     get sandhiForm() { return this.wordForSandhiForms }
 
-    set sandhiForms(morphemes: Array<ToneSandhiMorpheme>) {
+    set sandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) {
         // some determiners have no sandhi forms
         if(this.tonalEnding != null) {
             if(this.tonalEnding instanceof FreeTonalEnding) {
@@ -158,20 +164,20 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
             }
         }
     }
+}
 
+class ContinuativeForm extends ToneSandhiParsingLexeme {
+    get continuativeForm() {
+        // this form is for 'le' particles
+        return ''
+    }
+}
+
+class AdverbialForm extends ToneSandhiParsingLexeme {
     // the below 2 forms are for conversion
     get adverbialForm() {
         // this form is for quantifiers and personal pronouns
         return ''
-    }
-
-    get continuativeForm() {
-        // this form is for particles
-        return ''
-    }
-
-    toString(id: string) {
-        return this[id]
     }
 }
 
@@ -263,11 +269,11 @@ export class Node {
 export class RuleBasedTagger {
     nodes: Array<Node> = new Array();
 
-    constructor(lexemes: Array<ToneInputingLexeme>) {
+    constructor(lexemes: Array<ToneSandhiInputingLexeme>) {
         this.match(lexemes)
     }
 
-    match(lexemes: Array<ToneInputingLexeme>) {
+    match(lexemes: Array<ToneSandhiInputingLexeme>) {
         // take in inputing lexemes and then check them against parsing lexemes
         let w: ToneWord = lexemes[0].word
 

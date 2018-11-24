@@ -1,8 +1,8 @@
 
-import { ToneSandhiSyllable, Affix, ToneSandhiMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules } from './morpheme';
+import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules } from './morpheme';
 import { GraphemeMaker } from './graphememaker';
 import { ToneSandhiMorphemeMaker } from './morphememaker';
-import { ToneSandhiLexemeMaker } from './lexememaker';
+import { ToneSandhiLexemeMaker, ToneSandhiParsingLexemeMaker } from './lexememaker';
 
 
 //------------------------------------------------------------------------------
@@ -56,22 +56,26 @@ export class Lexeme {}
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
-
+/*
 class InputingLexeme extends Lexeme {}
 
 export class ToneInputingLexeme extends InputingLexeme {
-    // this is used in rule-based tagger for both tone-sandhi and 
-    // tone-mark-less lexemes
-    word: ToneWord
-}
 
-class ToneMarkLessLexeme extends ToneInputingLexeme {}
+}
+*/
+class ToneMarkLessLexeme extends Lexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneSandhiInputingLexeme extends ToneInputingLexeme {
+export class ToneSandhiLexeme extends Lexeme {
+    // this is used in rule-based tagger for both tone-sandhi and 
+    // tone-mark-less lexemes
+    word: ToneWord
+}
+
+export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
     word: ToneSandhiWord
     inflectionalEnding: InflectionalEnding = null
     lemmata: Array<ToneSandhiWord>
@@ -101,7 +105,7 @@ export class ToneSandhiInputingLexeme extends ToneInputingLexeme {
         }
     }
 
-    replaceLastSyllable(morphemes: Array<ToneSandhiMorpheme>) {
+    replaceLastSyllable(morphemes: Array<ToneSandhiInputingMorpheme>) {
         let word = new ToneSandhiWord(this.word.syllables);
         word.popSyllable();
         word.pushSyllable(morphemes[morphemes.length-1].getBaseForms()[0]);
@@ -109,7 +113,7 @@ export class ToneSandhiInputingLexeme extends ToneInputingLexeme {
         return word;
     }
 
-    getBaseForms(morphemes: Array<ToneSandhiMorpheme>): Array<ToneSandhiWord> {
+    getBaseForms(morphemes: Array<ToneSandhiInputingMorpheme>): Array<ToneSandhiWord> {
         if(this.inflectionalEnding != null) {
             if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
                 if(this.inflectionalEnding.baseAffixes.length == 1) {
@@ -134,7 +138,7 @@ export class ToneSandhiInputingLexeme extends ToneInputingLexeme {
         return [];
     }
 
-    populateLemmata(morphemes: Array<ToneSandhiMorpheme>) {
+    populateLemmata(morphemes: Array<ToneSandhiInputingMorpheme>) {
         this.lemmata = new Array();
 
         // turn morphemes into lemmas
@@ -223,40 +227,4 @@ export class InflectiveWord extends Word {
 }
 
 export class AgglutinativeWord extends Word {
-}
-
-export class TurningIntoInputingLexeme {
-    turnIntoLexemes(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str);
-        let graphemes = gm.makeGraphemes();
-
-        // Morpheme Maker
-        let tsmm = new ToneSandhiMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeMorphemes();
-
-        // Lexeme Maker
-        let tslm = new ToneSandhiLexemeMaker(morphemes);
-        let lexemes = tslm.makeLexemes();
-
-        return lexemes;
-    }
-}
-
-export class TurningIntoParsingLexeme {
-    turnIntoLexemes(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str);
-        let graphemes = gm.makeGraphemes();
-
-        // Morpheme Maker
-        let tsmm = new ToneSandhiMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeMorphemes();
-
-        // Lexeme Maker
-        let tslm = new ToneSandhiLexemeMaker(morphemes);
-        let lexemes = tslm.makeParsingLexemes();
-
-        return lexemes;
-    }
 }
