@@ -1,14 +1,13 @@
 
-import { GraphemeMaker } from './graphememaker'
-import { ToneSandhiMorphemeMaker } from './morphememaker'
-import { ToneSandhiLexemeMaker, TurningIntoInputingLexeme } from './lexememaker'
+import { TurningIntoInputingLexeme } from './lexememaker'
 import { ToneSandhiInputingLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
-import { RuleBasedTagger } from './rulebasedtagger'
+import { RuleBasedTagger, ToneSandhiParsingLexeme } from './rulebasedtagger'
 
 export class Document {
-    lexemes: Array<ToneSandhiInputingLexeme> = new Array();
+    inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
+    parsingLexemes: Array<ToneSandhiParsingLexeme> = new Array();
     graph: Set<Arc>
 }
 
@@ -26,25 +25,10 @@ export class Client {
         return null;
     }
 
-    turnLexeme(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str);
-        let graphemes = gm.makeGraphemes();
-
-        // Morpheme Maker
-        let tsmm = new ToneSandhiMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeMorphemes();
-
-        // Lexeme Maker
-        let tslm = new ToneSandhiLexemeMaker(morphemes);
-        let lexemes = tslm.makeLexemes();
-
-        return lexemes;
-    }
-    
     processOneToken(str: string) {
         let doc: Document = new Document();
-        doc.lexemes = this.turnLexeme(str.match(/\w+/g)[0]);
+        let turner = new TurningIntoInputingLexeme()
+        doc.inputingLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
         return doc;
     }
 

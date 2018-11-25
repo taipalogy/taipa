@@ -138,10 +138,8 @@ export class ToneSandhiMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<ToneSandhiInputingMorpheme>() }
 
     makeMorphemes() {
-        let morphemes = this.make(this.preprocess());
-        return morphemes;
+        return this.make(this.preprocess());
     }
-
 }
 
 export class ToneSandhiParsingMorphemeMaker extends MorphemeMaker {
@@ -158,7 +156,6 @@ export class ToneSandhiParsingMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<ToneSandhiParsingMorpheme>() }
 
     makeParsingMorphemes() { 
-        let morphemes = this.make(this.preprocess());
-        return morphemes;
+        return this.make(this.preprocess());
     }
 }

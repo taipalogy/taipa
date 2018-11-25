@@ -15,14 +15,14 @@ if(argc.length == 1) {
 
     let clt = new Client();
     let doc = clt.processOneToken(input);
-    for(let i in doc.lexemes) {
-        let wl = clt.lookup(doc.lexemes[i].word.literal);
+    for(let i in doc.inputingLexemes) {
+        let wl = clt.lookup(doc.inputingLexemes[i].word.literal);
         // when the word cna be found in the dictionary
         if(wl != null) {
             console.log(wl)
         }
-        for(let j in doc.lexemes[i].lemmata) {
-            let bfl = clt.lookup(doc.lexemes[i].lemmata[j].literal);
+        for(let j in doc.inputingLexemes[i].lemmata) {
+            let bfl = clt.lookup(doc.inputingLexemes[i].lemmata[j].literal);
             // if the base form of the word can be found in the dictionary
             if(bfl != null) {
                 console.log(bfl)

@@ -1,5 +1,5 @@
 
-import { Word, Lexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, FreeTonalEnding, CheckedTonalEnding, TonalEnding } from './lexeme'
+import { Word, ToneSandhiLexeme, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, FreeTonalEnding, CheckedTonalEnding, TonalEnding } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { Allomorph, FreeAllomorph, CheckedAllomorph, ToneSandhiMorpheme, FreeAllomorphSandhiRules, ToneSandhiParsingMorpheme, Morpheme } from './morpheme';
 import { TurningIntoParsingLexeme } from './lexememaker'
@@ -72,9 +72,7 @@ class ConstructionOfClause {
 //------------------------------------------------------------------------------
 
 
-class ParsingLexeme extends Lexeme {}
-
-export class ToneSandhiParsingLexeme extends ParsingLexeme {
+export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
@@ -93,11 +91,11 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
 
     add(id: string) {
         // use this.partOfSpeech to pick up k-v pairs from forms
-        let kvps = Object.keys(FORMS).find(key => this.partOfSpeech === key)
+        let pos = Object.keys(FORMS).find(key => this.partOfSpeech === key)
         // pick up the specific form from the part of speech
-        let k = Object.keys(kvps).find(key => id === key )
+        let k = Object.keys(FORMS[pos]).find(key => id === key )
         // assign property and property value
-        this[k] = kvps[k]
+        this[id] = FORMS[pos][k]
     }
 
     assignTonalEnding(allomorph: Allomorph) {
@@ -134,13 +132,15 @@ export class ToneSandhiParsingLexeme extends ParsingLexeme {
         return this.word
     }
 
+    get sandhiForm() { return 'uannw' }
+
     toString(id: string) {
-        return this[id]
+        return this[this[id]]
     }
 }
 
 class SandhiForm extends ToneSandhiParsingLexeme {
-    get sandhiForm() { return this.wordForSandhiForms }
+    //get sandhiForm() { return this.wordForSandhiForms }
 
     set sandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) {
         // some determiners have no sandhi forms
@@ -213,6 +213,9 @@ class ConstructionElement{
 
     check(w: ToneSandhiWord) {
         for(let k in this.lexemes) {
+            console.log(this.id)
+            console.log(this.lexemes[k].toString(this.id))
+            console.log(w.literal)
             if(this.lexemes[k].toString(this.id) === w.literal) {
                 return true
             }
@@ -241,6 +244,7 @@ class VerbPhrase extends TypeOfConstruction {
         let turner = new TurningIntoParsingLexeme()
         let l = turner.turnIntoLexemes('uannzs')[0]
         l.partOfSpeech = SYMBOLS.VERB
+        l.add('transitive')
         console.log(l.word.literal)
 
         let transitive = new ConstructionElement('transitive')

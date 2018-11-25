@@ -35,7 +35,7 @@ abstract class LexemeMaker {
 //  Tone Sandhi Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiLexemeMaker extends LexemeMaker {
+export class ToneSandhiInputingLexemeMaker extends LexemeMaker {
     morphemes: Array<ToneSandhiInputingMorpheme>;
 
     constructor(morphemes: Array<ToneSandhiInputingMorpheme>) {
@@ -130,7 +130,7 @@ export class TurningIntoInputingLexeme {
         let morphemes = tsmm.makeMorphemes();
 
         // Lexeme Maker
-        let tslm = new ToneSandhiLexemeMaker(morphemes);
+        let tslm = new ToneSandhiInputingLexemeMaker(morphemes);
         let lexemes = tslm.makeLexemes();
 
         return lexemes;
@@ -146,8 +146,6 @@ export class TurningIntoParsingLexeme {
         // Morpheme Maker
         let tsmm = new ToneSandhiParsingMorphemeMaker(graphemes);
         let morphemes = tsmm.makeParsingMorphemes();
-
-        //console.log(morphemes[0].word.literal)
 
         // Lexeme Maker
         let tslm = new ToneSandhiParsingLexemeMaker(morphemes);

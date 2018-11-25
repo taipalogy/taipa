@@ -1,8 +1,5 @@
 
 import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules } from './morpheme';
-import { GraphemeMaker } from './graphememaker';
-import { ToneSandhiMorphemeMaker } from './morphememaker';
-import { ToneSandhiLexemeMaker, ToneSandhiParsingLexemeMaker } from './lexememaker';
 
 
 //------------------------------------------------------------------------------
