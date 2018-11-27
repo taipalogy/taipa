@@ -17,7 +17,7 @@ if(argc.length == 1) {
     let doc = clt.processOneToken(input);
     for(let i in doc.inputingLexemes) {
         let wl = clt.lookup(doc.inputingLexemes[i].word.literal);
-        // when the word cna be found in the dictionary
+        // when the word can be found in the dictionary
         if(wl != null) {
             console.log(wl)
         }

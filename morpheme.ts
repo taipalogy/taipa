@@ -5,6 +5,7 @@ import { AlphabeticLetter, Final, ToneMark, Sound, MedialGraphs, NasalGraphs,
         ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX, Letter } from './grapheme'
 import { ZeroToneMark } from './grapheme'
 import { IDictionary, Dictionary } from './collection'
+import { lowerLetters } from './graphememaker';
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -17,7 +18,7 @@ class Morph {}
 //------------------------------------------------------------------------------
 
 class PluralMorpheme {}
-class ToneMorpheme {}
+class TonalMorpheme {}
 
 //------------------------------------------------------------------------------
 //  Allomorph
@@ -27,8 +28,8 @@ class ToneMorpheme {}
 export class Allomorph extends Morph {
     toneMark: ToneMark = null;
 
-    isToneMarkEqualTo(syllable: ToneSandhiSyllable) {
-        return this.toneMark.isEqualTo(syllable.letters[syllable.letters.length-1]);
+    isToneMarkEqualTo(letter: AlphabeticLetter) {
+        return this.toneMark.isEqualTo(letter);
     }
 
     hasZeroToneMark() {
@@ -50,7 +51,7 @@ export class CheckedAllomorph extends Allomorph {
     final: Final = null;
 }
 
-class ZeroAllomorph extends FreeAllomorph {
+export class ZeroAllomorph extends FreeAllomorph {
     toneMark = new ZeroToneMark()
 }
 
@@ -58,15 +59,15 @@ class AllomorphSS extends FreeAllomorph {
     toneMark = new ToneMarkSS()
 }
 
-class AllomorphY extends FreeAllomorph {
+export class AllomorphY extends FreeAllomorph {
     toneMark = new FreeToneMarkY()
 }
 
-class AllomorphW extends FreeAllomorph {
+export class AllomorphW extends FreeAllomorph {
     toneMark = new ToneMarkW()
 }
 
-class AllomorphX extends FreeAllomorph {
+export class AllomorphX extends FreeAllomorph {
     toneMark = new FreeToneMarkX()
 }
 
@@ -82,7 +83,7 @@ class AllomorphZZS extends FreeAllomorph {
     toneMark = new ToneMarkZZS()
 }
 
-class AllomorphZS extends FreeAllomorph {
+export class AllomorphZS extends FreeAllomorph {
     toneMark = new ToneMarkZS()
 }
 
@@ -263,14 +264,14 @@ class ListOfAllomorphsInBaseForm {
         this.listOfFreeAllomorphs.push(this.lofafp.x)
         this.listOfFreeAllomorphs.push(this.lofafp.y)
 
-        this.listOfChechedAllomorphs.push(new AllomorphP()); // pp
-        this.listOfChechedAllomorphs.push(new AllomorphT()); // tt
-        this.listOfChechedAllomorphs.push(new AllomorphK()); // kk
-        this.listOfChechedAllomorphs.push(new AllomorphH()); // hh and hy
-        this.listOfChechedAllomorphs.push(new AllomorphB()); // bb
-        this.listOfChechedAllomorphs.push(new AllomorphD()); // dd
-        this.listOfChechedAllomorphs.push(new AllomorphG()); // gg
-        this.listOfChechedAllomorphs.push(new AllomorphF()); // ff
+        this.listOfChechedAllomorphs.push(new AllomorphP()); // -> pp
+        this.listOfChechedAllomorphs.push(new AllomorphT()); // -> tt
+        this.listOfChechedAllomorphs.push(new AllomorphK()); // -> kk
+        this.listOfChechedAllomorphs.push(new AllomorphH()); // -> hh and hy
+        this.listOfChechedAllomorphs.push(new AllomorphB()); // -> bb
+        this.listOfChechedAllomorphs.push(new AllomorphD()); // -> dd
+        this.listOfChechedAllomorphs.push(new AllomorphG()); // -> gg
+        this.listOfChechedAllomorphs.push(new AllomorphF()); // -> ff
     }
 }
 
@@ -318,7 +319,7 @@ class GrammaticalSuffix {
 }
 
 //------------------------------------------------------------------------------
-//  Free Allomorph Basic Rules
+//  Free Allomorph Base Rules
 //------------------------------------------------------------------------------
 
 interface IDictionaryOfRules extends IDictionary {}
@@ -348,10 +349,10 @@ export class FreeAllomorphBaseRules {
         { key: 'zero', value: [new FreeToneMarkY()] },
     ]).toLookup();
 }
-
+/*
 export class FreeAllomorphSandhiRules {
     readonly rules = new DictionaryOfRules([
-        { key: 'w', value: [new FreeToneMarkY(), new ZeroToneMark()] },
+        { key: 'w', value: [new FreeToneMarkY()] },
         { key: 'zs', value: [new ToneMarkW()] },
 
         { key: 'x', value: [new ToneMarkZS()] },
@@ -359,8 +360,12 @@ export class FreeAllomorphSandhiRules {
 
         { key: 'zero', value: [new ToneMarkZS()] },
     ]).toLookup();
+    
+    readonly rulesOfZuan =new DictionaryOfRules([
+        { key: 'x', value: [new ToneMarkW()] },
+    ]).toLookup();
 }
-
+*/
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
@@ -390,7 +395,7 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
 
         //console.log(aotms)
         for(let key in allomorphs.listOfChechedAllomorphs) {
-            if(allomorphs.listOfChechedAllomorphs[key].isToneMarkEqualTo(this.syllable)) {
+            if(allomorphs.listOfChechedAllomorphs[key].isToneMarkEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
                 aoas.push(allomorphs.listOfChechedAllomorphs[key]);
                 break;
             }
@@ -420,7 +425,7 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
 
         aoas = [];
         for(let key in allomorphs.listOfFreeAllomorphs) {
-            if(allomorphs.listOfFreeAllomorphs[key].isToneMarkEqualTo(this.syllable)) {
+            if(allomorphs.listOfFreeAllomorphs[key].isToneMarkEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
                 aoas.push(allomorphs.listOfFreeAllomorphs[key]);
                 break;
             }
@@ -506,13 +511,42 @@ export class ToneSandhiParsingMorpheme extends ToneSandhiMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null;
 
+
     constructor(syllable: ToneSandhiSyllable) {
         super();
         this.syllable = syllable;
     }
 
-    getSandhiForms(): Array<ToneSandhiSyllable>  {
-        return [new ToneSandhiSyllable()]
+    assignAllomorph() {}
+}
+
+export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
+    ruleSetter: {[k: string]: any} = {
+        firstToZS: function() {
+            this.allomorph = new AllomorphZS()
+        },
+        zsToW: function() {
+            this.allomorph = new AllomorphW()
+        },
+        wToY: function() {
+            this.allomorph = new AllomorphY()
+        },
+        yToFirst: function() {
+            this.allomorph = new ZeroAllomorph()
+        },
+        xToZS: function() {
+            this.allomorph = new AllomorphZS()
+            return 'allomorph xToZS set'
+        },
+        xToW: function() {
+            this.allomorph = new AllomorphW()
+        },
+    }
+
+    get rules() { return this.ruleSetter }
+
+    getSandhiForm(): ToneSandhiSyllable  {
+        return new ToneSandhiSyllable()
     }
 }
 

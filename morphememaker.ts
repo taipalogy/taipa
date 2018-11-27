@@ -1,6 +1,6 @@
 
 import { AlphabeticGrapheme, AlphabeticLetter, Letter } from './grapheme'
-import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiParsingMorpheme, Syllable } from './morpheme'
+import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiParsingMorpheme, Syllable, SandhiFormMorpheme } from './morpheme'
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -88,7 +88,7 @@ abstract class MorphemeMaker {
                     for(let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    tsm =  this.create(new ToneSandhiSyllable(msp.letters))//new ToneSandhiInputingMorpheme(new ToneSandhiSyllable(msp.letters));
+                    tsm =  this.create(new ToneSandhiSyllable(msp.letters))
 
                     morphemes.push(tsm);
                 }
@@ -124,7 +124,7 @@ abstract class MorphemeMaker {
 //  Tone Sandhi Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiMorphemeMaker extends MorphemeMaker {
+export class ToneSandhiInputingMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
     constructor(graphemes: Array<AlphabeticGrapheme>) {
@@ -137,7 +137,7 @@ export class ToneSandhiMorphemeMaker extends MorphemeMaker {
 
     createArray() { return new Array<ToneSandhiInputingMorpheme>() }
 
-    makeMorphemes() {
+    makeInputingMorphemes() {
         return this.make(this.preprocess());
     }
 }
@@ -151,11 +151,38 @@ export class ToneSandhiParsingMorphemeMaker extends MorphemeMaker {
         this.graphemes = graphemes;
     }
 
-    create(syllable: ToneSandhiSyllable) { return new ToneSandhiParsingMorpheme(syllable)}
+    create(syllable: ToneSandhiSyllable) { return new ToneSandhiParsingMorpheme(syllable) }
 
     createArray() { return new Array<ToneSandhiParsingMorpheme>() }
 
-    makeParsingMorphemes() { 
+    makeParsingMorphemes() {
         return this.make(this.preprocess());
+    }
+}
+
+export class SandhiFormMorphemeMaker extends ToneSandhiParsingMorphemeMaker {
+    //graphemes: Array<AlphabeticGrapheme>;
+    
+    constructor(graphemes: Array<AlphabeticGrapheme>) {
+        super(graphemes)
+        //this.graphemes = new Array();
+        //this.graphemes = graphemes;
+    }
+
+    createSandhiFormMorpheme(syllable: ToneSandhiSyllable) { return new SandhiFormMorpheme(syllable) }
+
+    //makeMorphemesAndSandhiForm() {
+    makeParsingMorphemes() {
+        // make morphemes and the last of them is a sandhi form
+        return this.postprecess(super.makeParsingMorphemes());
+    }
+
+    postprecess(tspms: Array<ToneSandhiParsingMorpheme>) {
+        // replace the last morpheme with its sandhi form
+        if(tspms.length > 0) {
+            let last = tspms.pop()
+            tspms.push(this.createSandhiFormMorpheme(last.syllable))
+        }
+        return tspms
     }
 }

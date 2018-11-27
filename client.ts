@@ -1,9 +1,9 @@
 
 import { TurningIntoInputingLexeme } from './lexememaker'
-import { ToneSandhiInputingLexeme } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
-import { RuleBasedTagger, ToneSandhiParsingLexeme } from './rulebasedtagger'
+import { RuleBasedTagger } from './rulebasedtagger'
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
