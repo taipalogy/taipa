@@ -68,7 +68,9 @@ class InflectionalToneMark {
 */
 export abstract class InflectionalEnding extends Ending {
     abstract affix: Affix = null;
-    getLiteral() {}
+    getLiteral() {
+        return this.affix.getLiteral()
+    }
 }
 
 export class FreeInflectionalEnding extends InflectionalEnding {
@@ -91,11 +93,10 @@ export class FreeTonalEnding extends TonalEnding {
     allomorph = null
     //sandhiAllomorph: Allomorph = new Allomorph()
 }
-/*
+
 export class CheckedTonalEnding extends TonalEnding {
-    allomorph = new Allomorph()
+    allomorph = null
 }
-*/
 
 class TonalEndingZS extends FreeTonalEnding {
     allomorph = new AllomorphZS()
@@ -171,7 +172,7 @@ export class ToneSandhiLexeme extends Lexeme {
 export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
     word: ToneSandhiWord
     inflectionalEnding: InflectionalEnding = null
-    lemmata: Array<ToneSandhiWord>
+    private lemmata: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
         super();
@@ -179,6 +180,7 @@ export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {
+        // change allomorph to affix
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
             let facrs = new FreeAllomorphBaseRules();
@@ -196,9 +198,14 @@ export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
             cie.affix.toneMark = allomorph.toneMark;
             this.inflectionalEnding = cie;
         }
+        // when there is no inflectinal ending assigned, this word is already in base form
+        // and its last syllable is checked
+        
+        //console.log(allomorph.toneMark)
+        //console.log(this.inflectionalEnding.getLiteral())
     }
 
-    get baseForms() { return this.lemmata }
+    getBaseForms() { return this.lemmata }
     
     private replaceLastSyllable(morphemes: Array<ToneSandhiInputingMorpheme>) {
         let word = new ToneSandhiWord(this.word.syllables);

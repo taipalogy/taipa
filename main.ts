@@ -16,16 +16,20 @@ if(argc.length == 1) {
     let clt = new Client();
     let doc = clt.processOneToken(input);
     for(let i in doc.inputingLexemes) {
-        let wl = clt.lookup(doc.inputingLexemes[i].word.literal);
-        // when the word can be found in the dictionary
-        if(wl != null) {
-            console.log(wl)
+        //console.log(doc.inputingLexemes[i].word.literal)
+        let ilw = clt.lookup(doc.inputingLexemes[i].word.literal);
+        // when the input word can be found in the dictionary
+        if(ilw != null) {
+            console.log(ilw)
         }
-        for(let j in doc.inputingLexemes[i].lemmata) {
-            let bfl = clt.lookup(doc.inputingLexemes[i].lemmata[j].literal);
-            // if the base form of the word can be found in the dictionary
-            if(bfl != null) {
-                console.log(bfl)
+
+        let ls = doc.inputingLexemes[i].getBaseForms()
+        for(let j in ls) {
+            //console.log(doc.inputingLexemes[i].lemmata[j].literal)
+            let ill = clt.lookup(ls[j].literal);
+            // when the base form of the word can be found in the dictionary
+            if(ill != null) {
+                console.log(ill)
             }
         }
     }

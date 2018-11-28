@@ -39,7 +39,7 @@ export class Allomorph extends Morph {
 
     getLiteral() {
         if(this.toneMark.getLiteral().length == 0) { 
-            // return string 'zero' for first tone. member variable characters for graph is still null.
+            // return string 'zero' for first tone. member variable characters of graph is still null.
             return 'zero'; 
         } else return this.toneMark.getLiteral();
     }
@@ -49,6 +49,13 @@ export class FreeAllomorph extends Allomorph {}
 
 export class CheckedAllomorph extends Allomorph {
     final: Final = null;
+
+    getLiteral() {
+        if(this.toneMark != null) {
+            return this.final.getLiteral() + this.toneMark.getLiteral()
+        }
+        return this.final.getLiteral()
+    }
 }
 
 export class ZeroAllomorph extends FreeAllomorph {
@@ -88,68 +95,68 @@ export class AllomorphZS extends FreeAllomorph {
 }
 
 class AllomorphPP extends CheckedAllomorph {
-    toneMark = new ToneMarkP()
     final = new FinalP()
+    toneMark = new ToneMarkP()
 }
 
 class AllomorphTT extends CheckedAllomorph {
-    toneMark = new ToneMarkT()
     final = new FinalT()
+    toneMark = new ToneMarkT()
 }
 
 class AllomorphKK extends CheckedAllomorph {
-    toneMark = new ToneMarkK()
     final = new FinalK()
+    toneMark = new ToneMarkK()
 }
 
 class AllomorphHH extends CheckedAllomorph {
-    toneMark = new ToneMarkH()
     final = new FinalH()
+    toneMark = new ToneMarkH()
 }
 
 class AllomorphHY extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkY()
     final = new FinalH()
+    toneMark = new CheckedToneMarkY()
 }
 
 class AllomorphBB extends CheckedAllomorph {
-    toneMark = new ToneMarkB()
     final = new FinalB()
+    toneMark = new ToneMarkB()
 }
 
 class AllomorphDD extends CheckedAllomorph {
-    toneMark = new ToneMarkD()
     final = new FinalD()
+    toneMark = new ToneMarkD()
 }
 
 class AllomorphGG extends CheckedAllomorph {
-    toneMark = new ToneMarkG()
     final = new FinalG()
+    toneMark = new ToneMarkG()
 }
 
 class AllomorphFF extends CheckedAllomorph {
-    toneMark = new ToneMarkF()
     final = new FinalF()
+    toneMark = new ToneMarkF()
 }
 
 class AllomorphBX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkX()
     final = new FinalB()
+    toneMark = new CheckedToneMarkX()
 }
 
 class AllomorphDX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkX()
     final = new FinalD()
+    toneMark = new CheckedToneMarkX()
 }
 
 class AllomorphGX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkX()
     final = new FinalG()
+    toneMark = new CheckedToneMarkX()
 }
 
 class AllomorphFX extends CheckedAllomorph {
-    toneMark = new CheckedToneMarkX()
     final = new FinalF()
+    toneMark = new CheckedToneMarkX()
 }
 
 class ListOfFreeAllomorphs {
@@ -200,7 +207,16 @@ class ListOfAllomorphsInSandhiForm {
         this.listOfFreeAllomorphs.push(this.lofafi.y)
         this.listOfFreeAllomorphs.push(this.lofafi.x)
 
-        //<> 
+        //<-->
+
+        this.listOfChechedAllomorphs.push(new AllomorphP());
+        this.listOfChechedAllomorphs.push(new AllomorphT());
+        this.listOfChechedAllomorphs.push(new AllomorphK());
+        this.listOfChechedAllomorphs.push(new AllomorphH());
+        this.listOfChechedAllomorphs.push(new AllomorphB());
+        this.listOfChechedAllomorphs.push(new AllomorphD());
+        this.listOfChechedAllomorphs.push(new AllomorphG());
+        this.listOfChechedAllomorphs.push(new AllomorphF());
 
         this.listOfChechedAllomorphs.push(new AllomorphPP());
         this.listOfChechedAllomorphs.push(new AllomorphTT());
@@ -296,13 +312,16 @@ class VowelStem extends Stem {}
 class ConsonantStem extends Stem {}
 
 export class Affix extends Morph {
-    toneMark: ToneMark = null;
+    toneMark: ToneMark = null
+    getLiteral() {
+        return this.toneMark.getLiteral()
+    }
 }
 
 class FreeAffix extends Affix {}
 
 class CheckedAffix extends Affix {
-    final: Final = null;
+    // there is no final for affix
 }
 
 class ZeroAffix extends FreeAffix {
@@ -395,18 +414,24 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
 
         //console.log(aotms)
         for(let key in allomorphs.listOfChechedAllomorphs) {
-            if(allomorphs.listOfChechedAllomorphs[key].isToneMarkEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+            //if(allomorphs.listOfChechedAllomorphs[key].isToneMarkEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+            if(this.syllable.literal.substr(this.syllable.literal.length-allomorphs.listOfChechedAllomorphs[key].getLiteral().length).lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()) != -1) {
+                //console.log(allomorphs.listOfChechedAllomorphs[key].getLiteral())
+                //console.log(this.syllable.literal.lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()))
                 aoas.push(allomorphs.listOfChechedAllomorphs[key]);
-                break;
+                // there's no need to break here, as we want to collect the second match, if any
+                //break;
             }
         }
-        //console.log(aotms)
-
+        //console.log(aoas)
+/*
         if(aoas.length) {
             for(let i = 0; i < aoas.length; i++) {
                 //console.log("aotms[i].final: %s", aotms[i].final.letter.literal);
                 //console.log("letter: %s", this.syllable.letters[this.syllable.letters.length-2].literal)
                 if(aoas[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-2])) {
+                    // there is a tone mark after final
+                    // this syllable is in sandhi form
                     //console.log("hit. i: %d.", i)
                     this.allomorph = aoas[i];
                 } else if(aoas[i].final.isEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
@@ -421,11 +446,41 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
                 return;
             }
         }
-        //console.log(aotms)
+        */
 
+        if(aoas.length) {
+            //console.log('length of aoas %d', aoas.length)
+            if(aoas.length == 2) {
+                if(aoas[0].final.literal === aoas[1].final.literal) {
+                    // discard the base form
+                    if(aoas[1].toneMark != null) {
+                        // the 1st element is in base form
+                        aoas.shift()
+                    } else if(aoas[0].toneMark != null) {
+                        // the 2nd element is in base form
+                        aoas.pop()
+                    }
+                }
+            } else if(aoas.length == 1) {
+                // there should be no more than 2 matches, either 1 match or 2
+                // this checked syllable is already in base form, just return
+                return
+            }
+
+            // there is only one match after processing, we just assign it
+            this.allomorph = aoas.shift();
+
+            // we already have an allomorph assigned, just return
+            return;
+        }
+
+        // after matching with checked allomorphs, we go on matching free allomorphs
         aoas = [];
         for(let key in allomorphs.listOfFreeAllomorphs) {
-            if(allomorphs.listOfFreeAllomorphs[key].isToneMarkEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+            //if(allomorphs.listOfFreeAllomorphs[key].isToneMarkEqualTo(this.syllable.letters[this.syllable.letters.length-1])) {
+            if(this.syllable.literal.lastIndexOf(allomorphs.listOfFreeAllomorphs[key].getLiteral()) != -1) {
+                //console.log(allomorphs.listOfFreeAllomorphs[key].getLiteral())
+                //console.log(this.syllable.literal.lastIndexOf(allomorphs.listOfFreeAllomorphs[key].getLiteral()))
                 aoas.push(allomorphs.listOfFreeAllomorphs[key]);
                 break;
             }
@@ -495,7 +550,7 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
                 // 1 to 4. 3 to 8. 2 to 4. 5 to 8.  <----
                 let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                 s.popLetter();
-                //console.log(s)
+                //console.log(s.literal)
                 return [s];
             }
         } else {

@@ -15,7 +15,7 @@ export class Sound {
     getLiteral() {
         let l: string = '';
         // there is no characters for 1st tone
-        if(this.characters != undefined) {
+        if(this.characters != null) {
             // when it is not 1st tone
             for(let k in this.characters) {
                 l += this.characters[k].character;
@@ -38,13 +38,14 @@ export class Sound {
         }
         return false;
     }
-
+/*
     toString() {
         if(this.characters != null) {
             return this.getLiteral();
         }
         return '';
     }
+    */
 }
 
 export class Initial extends Sound {}
