@@ -1,12 +1,12 @@
 
 import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules,
     ToneSandhiParsingMorpheme, 
-    SandhiFormMorpheme,
     AllomorphZS,
     AllomorphW,
     AllomorphY,
     AllomorphX,
-    ZeroAllomorph} from './morpheme';
+    ZeroAllomorph,
+    SandhiFormMorpheme} from './morpheme';
 
 import { IDictionary, Dictionary } from './collection'
 
@@ -166,7 +166,7 @@ class ToneMarkLessLexeme extends Lexeme {}
 export class ToneSandhiLexeme extends Lexeme {
     // this is used in rule-based tagger for both tone-sandhi and 
     // tone-mark-less lexemes
-    word: ToneWord
+    word: Word
 }
 
 export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
@@ -217,10 +217,6 @@ export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
     private getLemmas(morphemes: Array<ToneSandhiInputingMorpheme>): Array<ToneSandhiWord> {
         if(this.inflectionalEnding != null) {
             if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
-                /*
-                if(this.inflectionalEnding.hasZeroToneMark()) {
-                } else {}
-                */
                 if(this.inflectionalEnding.baseAffixes.length == 1) {
                     return [this.replaceLastSyllable(morphemes)];
                 } else if(this.inflectionalEnding.baseAffixes.length > 1) {
@@ -268,9 +264,9 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
-    preceded
-    followed
-    isProceeding
+    private preceded
+    private followed
+    private isProceeding
     partOfSpeech: string = ''
 
     constructor(w: ToneSandhiWord) {
@@ -287,32 +283,6 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
         this[id] = FORMS[pos][k]
     }
 
-    assignTonalEnding(allomorph: Allomorph) {
-        /*
-        if(allomorph instanceof FreeAllomorph) {
-            // replace the tonal ending
-            let fte = new FreeTonalEnding()
-            let fasrs = new FreeAllomorphSandhiRules();
-            fte.allomorph = allomorph
-            for(let key in fasrs.rules[allomorph.getLiteral()]) {
-                //console.log(`k is ${key}`)
-                let a = new Allomorph();
-                a.toneMark = fasrs.rules[allomorph.getLiteral()][key];
-                //console.log(`a.toneMark is ${a.toneMark}`)
-                fte.sandhiAllomorphs.push(a);
-            }
-            this.tonalEnding = fte
-        } else if(allomorph instanceof CheckedAllomorph) {
-            // append the tone mark of the tonal ending
-            let cte = new CheckedTonalEnding()
-            cte.allomorph = allomorph
-            this.tonalEnding = cte
-        } else if(allomorph == null) {
-
-        }
-        */
-    }
-
     get baseForm() { 
         // some determiners have only base form
         return this.word
@@ -324,67 +294,60 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
 }
 
 export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
-    wordForSandhiForm: ToneSandhiWord
+    wordsForSandhiForm: Array<ToneSandhiWord>
 
-    ruleSetter: {[k: string]: any} = {
-        firstToZS: function() {
-            this.tonalEnding = new TonalEndingZS()
-        },
-        zsToW: function() {
-            this.tonalEnding = new TonalEndingW()
-        },
-        wToY: function() {
-            this.tonalEnding = new TonalEndingY()
-        },
-        yToFirst: function() {
-            this.tonalEnding = new ZeroTonalEnding()
-        },
-        xToZS: function() {
-            this.tonalEnding = new TonalEndingZS()
-            return 'tonal ending xToZS set'
-        },
-        xToW: function() {
-            this.tonalEnding = new TonalEndingW()
-        },
-    }
-
-    get rules() { return this.ruleSetter }
-
-    get sandhiForm() { return this.wordForSandhiForm }
-
-    /*
-    replaceLastSyllable(morphemes: Array<ToneSandhiParsingMorpheme>) {
-        let word = new ToneSandhiWord(this.word.syllables);
-        // if we check against array's last element, it won't work
-        // we have to explicitly get the element check against it individually
-        let last = morphemes[morphemes.length-1]
-        if(last instanceof SandhiFormMorpheme) {
-            word.popSyllable();
-            word.pushSyllable(last.getSandhiForm());
+    assignTonalEnding(allomorph: Allomorph) {
+        if(allomorph instanceof FreeAllomorph) {
+            // replace the tonal ending
+            let fte = new FreeTonalEnding()
+            fte.allomorph = allomorph
+            this.tonalEnding = fte
+        } else if(allomorph instanceof CheckedAllomorph) {
+            // append the tone mark of the tonal ending
+            let cte = new CheckedTonalEnding()
+            cte.allomorph = allomorph
+            this.tonalEnding = cte
         }
-        return word;
     }
 
-    getSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>) {
-        // some determiners have no sandhi forms
+    getSandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) { 
         if(this.tonalEnding != null) {
             if(this.tonalEnding instanceof FreeTonalEnding) {
-                return this.replaceLastSyllable(morphemes);
+                let ret = [];
+                let last = morphemes[morphemes.length-1]
+                if(last instanceof SandhiFormMorpheme) {
+                    let arr = last.getSandhiForms();
+                    for(let key in arr) {
+                        let word = new ToneSandhiWord(this.word.syllables);
+                        word.popSyllable()
+                        word.pushSyllable(arr[key]);
+                        ret.push(word);
+                    }
+                }
+                return ret;
             } else if(this.tonalEnding instanceof CheckedTonalEnding) {
-                return this.replaceLastSyllable(morphemes);
+                let word = new ToneSandhiWord(this.word.syllables);
+                let last = morphemes[morphemes.length-1]
+                if(last instanceof SandhiFormMorpheme) {
+                    word.pushSyllable(last.getSandhiForms()[0]);
+                }
+                return [word];                    
             }
         }
+        return [] 
+    }
+
+    get sandhiForm() { 
+        return this.wordsForSandhiForm[0].literal
     }
 
     populateSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>) {
-        this.wordForSandhiForm = new ToneSandhiWord()
-        this.wordForSandhiForm = this.getSandhiForm(morphemes)
+        this.wordsForSandhiForm = new Array()
+        this.wordsForSandhiForm = this.getSandhiForms(morphemes)
     }
-    */
 }
 
 class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
-    wordForContinuativeForm: ToneSandhiWord
     
     get continuativeForm() {
         // this form is for 'le' particles
@@ -393,7 +356,6 @@ class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
 }
 
 class AdverbialFormLexeme extends ToneSandhiParsingLexeme {
-    wordForAdverbialForm: ToneSandhiWord
 
     // the below 2 forms are for conversion
     get adverbialForm() {
@@ -429,10 +391,6 @@ export class ToneSandhiWord extends ToneWord {
                 this.pushSyllable(syllables[i]);
             }
         }
-    }
-
-    isBaseForm() {
-        // look up in the lexicon to check if this lexeme is in base form
     }
 
     popSyllable() {

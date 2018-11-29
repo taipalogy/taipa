@@ -1,5 +1,5 @@
 
-import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme } from './lexeme'
+import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, SandhiFormLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { TurningIntoParsingLexeme, TurningIntoSandhiForm } from './lexememaker'
 

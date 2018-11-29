@@ -111,17 +111,30 @@ class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
         //this.morphemes = morphemes;
     }
 
+    makeParsingLexemes() {
+        return this.postprocess(this.make(this.preprocess()))
+    }
+
     make(syllables: Array<ToneSandhiSyllable>) {
         return new SandhiFormLexeme(new ToneSandhiWord(syllables));
     }
-/*
+
     postprocess(tspl: SandhiFormLexeme) {
-        let lexemes: Array<ToneSandhiParsingLexeme> = new Array();
+        if(this.morphemes.length > 0) {
+            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
+                // tonal ending needs to be assigned to parsing lexeme
+                tspl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
+            }
+        }
+
+        tspl.populateSandhiForm(this.morphemes);
+
+        let lexemes: Array<SandhiFormLexeme> = new Array();
         lexemes.push(tspl);
 
         return lexemes
     }
-    */
+    
 }
 
 export class DummyLexemeMaker {
@@ -184,7 +197,7 @@ export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
 
         // Morpheme Maker
         let tsmm = new SandhiFormMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeParsingMorphemes();
+        let morphemes = tsmm.makeParsingMorphemes(); // only the last morpheme is in sandhi form
 
         // Lexeme Maker
         let tslm = new SandhiFormLexemeMaker(morphemes);

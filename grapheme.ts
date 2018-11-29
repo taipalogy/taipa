@@ -24,28 +24,6 @@ export class Sound {
 
         return l;
     }
-
-    isEqualTo(letter: AlphabeticLetter) {
-        if(this.getLiteral() === letter.literal) {
-            return true;
-        }
-        return false;
-    }
-
-    isCharacterNull() {
-        if(this.characters == null) {
-            return true;
-        }
-        return false;
-    }
-/*
-    toString() {
-        if(this.characters != null) {
-            return this.getLiteral();
-        }
-        return '';
-    }
-    */
 }
 
 export class Initial extends Sound {}

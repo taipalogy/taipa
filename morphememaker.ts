@@ -169,7 +169,10 @@ export class SandhiFormMorphemeMaker extends ToneSandhiParsingMorphemeMaker {
         //this.graphemes = graphemes;
     }
 
-    createSandhiFormMorpheme(syllable: ToneSandhiSyllable) { return new SandhiFormMorpheme(syllable) }
+    createSandhiFormMorpheme(syllable: ToneSandhiSyllable) { 
+        let s = new SandhiFormMorpheme(syllable)
+        s.assignAllomorph()
+        return s }
 
     //makeMorphemesAndSandhiForm() {
     makeParsingMorphemes() {
