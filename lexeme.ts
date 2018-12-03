@@ -295,6 +295,8 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
 
 export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
     wordsForSandhiForm: Array<ToneSandhiWord>
+    private fromXToSevenOrThree: number = 0 // index 0 for seventh/zs, index 1 for third/w. 
+                                            // 0 is also defulated when it's 1st, 2nd, 3rd, 7th, or checked.
 
     assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
@@ -310,7 +312,7 @@ export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
         }
     }
 
-    getSandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) { 
+    private getSandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) {
         if(this.tonalEnding != null) {
             if(this.tonalEnding instanceof FreeTonalEnding) {
                 let ret = [];
@@ -338,16 +340,26 @@ export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
     }
 
     get sandhiForm() { 
-        return this.wordsForSandhiForm[0].literal
+        return this.wordsForSandhiForm[this.fromXToSevenOrThree].literal
     }
 
     populateSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>) {
         this.wordsForSandhiForm = new Array()
         this.wordsForSandhiForm = this.getSandhiForms(morphemes)
+        if(this.wordsForSandhiForm.length == 2) {
+            // base form is x, sandhi form would be either zs or w
+            // add 2 properties when base form is x
+            this['toSeven'] = function() {
+                this.fromXToSevenOrThree = 0
+            }
+            this['toThree'] = function() {
+                this.fromXToSevenOrThree = 1
+            }
+        }
     }
 }
 
-class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
+export class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
     
     get continuativeForm() {
         // this form is for 'le' particles
@@ -355,14 +367,9 @@ class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
     }
 }
 
-class AdverbialFormLexeme extends ToneSandhiParsingLexeme {
+export class ProceedingForm extends ToneSandhiParsingLexeme {}
 
-    // the below 2 forms are for conversion
-    get adverbialForm() {
-        // this form is for quantifiers and personal pronouns
-        return ''
-    }
-}
+export class TerminalForm extends ToneSandhiParsingLexeme {}
 
 //------------------------------------------------------------------------------
 //  Word

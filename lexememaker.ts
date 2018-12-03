@@ -206,3 +206,9 @@ export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
         return lexemes;
     }
 }
+
+export class TurningIntoProceedingForm extends TurningIntoParsingLexeme {
+    turnIntoLexemes(str: string) {
+        return []
+    }
+}

@@ -1,7 +1,7 @@
 
-import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, SandhiFormLexeme } from './lexeme'
+import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { TurningIntoParsingLexeme, TurningIntoSandhiForm } from './lexememaker'
+import { TurningIntoParsingLexeme, TurningIntoSandhiForm, TurningIntoProceedingForm } from './lexememaker'
 
 
 //------------------------------------------------------------------------------
@@ -82,15 +82,16 @@ class VerbPhrase extends TypeOfConstruction {
 
     constructor() {
         super()
-        //let turner = new TurningIntoParsingLexeme()
         let turner = new TurningIntoSandhiForm()
         let l = turner.turnIntoLexemes('uannzs')[0]
         l.partOfSpeech = SYMBOLS.VERB
         l.add('transitive')
         console.log(l.word.literal)
-
         let transitive = new ConstructionElement('transitive')
         transitive.addLexeme(l)
+
+        let turner2 = new TurningIntoProceedingForm
+        //let turner = new TurningIntoProceedingForm()
         this.constructions.push(new ConstructionOfPhrase([transitive, 
                                                             new ConstructionElement('accusative'), 
                                                             new ConstructionElement('intransitive')]))
