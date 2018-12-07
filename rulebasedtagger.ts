@@ -1,7 +1,8 @@
 
 import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { TurningIntoParsingLexeme, TurningIntoSandhiForm, TurningIntoProceedingForm } from './lexememaker'
+import { TurningIntoParsingLexeme, TurningIntoSandhiForm } from './lexememaker'
+import { Rule, AllomorphZS, AllomorphW, AllomorphY, ZeroAllomorph } from './morpheme';
 
 
 //------------------------------------------------------------------------------
@@ -82,16 +83,20 @@ class VerbPhrase extends TypeOfConstruction {
 
     constructor() {
         super()
-        let turner = new TurningIntoSandhiForm()
+
+        let turner = new TurningIntoSandhiForm(new Rule(new AllomorphZS(), new AllomorphW()))
         let l = turner.turnIntoLexemes('uannzs')[0]
         l.partOfSpeech = SYMBOLS.VERB
         l.add('transitive')
         console.log(l.word.literal)
         let transitive = new ConstructionElement('transitive')
         transitive.addLexeme(l)
+        
+        turner = new TurningIntoSandhiForm(new Rule(new AllomorphY, new ZeroAllomorph()))
+        l = turner.turnIntoLexemes('guay')[0]
+        l.partOfSpeech = SYMBOLS.PRONOUN
+        l.add('proceeding')
 
-        let turner2 = new TurningIntoProceedingForm
-        //let turner = new TurningIntoProceedingForm()
         this.constructions.push(new ConstructionOfPhrase([transitive, 
                                                             new ConstructionElement('accusative'), 
                                                             new ConstructionElement('intransitive')]))

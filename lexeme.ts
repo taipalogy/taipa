@@ -6,9 +6,11 @@ import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, C
     AllomorphY,
     AllomorphX,
     ZeroAllomorph,
-    SandhiFormMorpheme} from './morpheme';
+    SandhiFormMorpheme,
+    Rule} from './morpheme';
 
 import { IDictionary, Dictionary } from './collection'
+
 
 export let FORMS = {
     'VERB': {
@@ -31,9 +33,16 @@ export let FORMS = {
         'terminal': 'adverbialForm'
     },
     'PRONOUN': {
-        'nominative': '',
-        'accusative': '',
-        'dative': '',
+        'base': 'baseForm',
+        'proceeding': 'proceedingForm',
+        'terminalFirst': 'terminalFirstForm',
+        'terminalSeventh': 'terminalSeventhForm', // complement
+        'terminalThird': 'terminalThirdForm', // complement
+
+        'adverbial': 'adverbialForm',
+
+        'indirectObject': 'proceedingForm',
+        'directObject': 'baseForm',
     },
     'PARTICLE': {
         'continuative': 'continuativeForm'
@@ -289,14 +298,12 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     }
 
     toString(id: string) {
-        return this[this[id]]
+        return this[this[id]].literal
     }
 }
 
 export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
-    wordsForSandhiForm: Array<ToneSandhiWord>
-    private fromXToSevenOrThree: number = 0 // index 0 for seventh/zs, index 1 for third/w. 
-                                            // 0 is also defulated when it's 1st, 2nd, 3rd, 7th, or checked.
+    wordForSandhiForm: ToneSandhiWord
 
     assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
@@ -312,64 +319,36 @@ export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
         }
     }
 
-    private getSandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) {
+    private getSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>, r: Rule) {
         if(this.tonalEnding != null) {
+            let word = new ToneSandhiWord(this.word.syllables);
             if(this.tonalEnding instanceof FreeTonalEnding) {
-                let ret = [];
                 let last = morphemes[morphemes.length-1]
                 if(last instanceof SandhiFormMorpheme) {
-                    let arr = last.getSandhiForms();
-                    for(let key in arr) {
-                        let word = new ToneSandhiWord(this.word.syllables);
-                        word.popSyllable()
-                        word.pushSyllable(arr[key]);
-                        ret.push(word);
-                    }
+                    word.popSyllable()
+                    word.pushSyllable(last.getSandhiForm(r));
                 }
-                return ret;
+                return word
             } else if(this.tonalEnding instanceof CheckedTonalEnding) {
-                let word = new ToneSandhiWord(this.word.syllables);
                 let last = morphemes[morphemes.length-1]
                 if(last instanceof SandhiFormMorpheme) {
-                    word.pushSyllable(last.getSandhiForms()[0]);
+                    word.pushSyllable(last.getSandhiForm(r));
                 }
-                return [word];                    
+                return word
             }
         }
-        return [] 
+        return null
     }
 
-    get sandhiForm() { 
-        return this.wordsForSandhiForm[this.fromXToSevenOrThree].literal
+    get sandhiForm() {
+        return this.wordForSandhiForm
     }
 
-    populateSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>) {
-        this.wordsForSandhiForm = new Array()
-        this.wordsForSandhiForm = this.getSandhiForms(morphemes)
-        if(this.wordsForSandhiForm.length == 2) {
-            // base form is x, sandhi form would be either zs or w
-            // add 2 properties when base form is x
-            this['toSeven'] = function() {
-                this.fromXToSevenOrThree = 0
-            }
-            this['toThree'] = function() {
-                this.fromXToSevenOrThree = 1
-            }
-        }
+    populateSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>, r: Rule) {
+        //this.wordForSandhiForm = new ToneSandhiWord()
+        this.wordForSandhiForm = this.getSandhiForm(morphemes, r)
     }
 }
-
-export class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
-    
-    get continuativeForm() {
-        // this form is for 'le' particles
-        return ''
-    }
-}
-
-export class ProceedingForm extends ToneSandhiParsingLexeme {}
-
-export class TerminalForm extends ToneSandhiParsingLexeme {}
 
 //------------------------------------------------------------------------------
 //  Word

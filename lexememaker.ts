@@ -1,5 +1,5 @@
 
-import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiParsingMorpheme, Syllable  } from './morpheme'
+import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiParsingMorpheme, Syllable, Rule  } from './morpheme'
 import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiParsingMorphemeMaker, ToneSandhiInputingMorphemeMaker, SandhiFormMorphemeMaker } from './morphememaker'
@@ -104,11 +104,15 @@ export class ToneSandhiParsingLexemeMaker extends LexemeMaker {
 
 class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
     //morphemes: Array<ToneSandhiParsingMorpheme>;
+    rule: Rule
 
-    constructor(morphemes: Array<ToneSandhiParsingMorpheme>) {
+    constructor(morphemes: Array<ToneSandhiParsingMorpheme>, r?: Rule) {
         super(morphemes)
         //this.morphemes = new Array();
         //this.morphemes = morphemes;
+        if(r != undefined) {
+            this.rule = r
+        }
     }
 
     makeParsingLexemes() {
@@ -127,7 +131,7 @@ class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
             }
         }
 
-        tspl.populateSandhiForm(this.morphemes);
+        tspl.populateSandhiForm(this.morphemes, this.rule)
 
         let lexemes: Array<SandhiFormLexeme> = new Array();
         lexemes.push(tspl);
@@ -190,6 +194,13 @@ export class TurningIntoParsingLexeme {
 }
 
 export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
+    rule: Rule
+
+    constructor (r: Rule) {
+        super()
+        this.rule = r
+    }
+
     turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
@@ -200,15 +211,9 @@ export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
         let morphemes = tsmm.makeParsingMorphemes(); // only the last morpheme is in sandhi form
 
         // Lexeme Maker
-        let tslm = new SandhiFormLexemeMaker(morphemes);
+        let tslm = new SandhiFormLexemeMaker(morphemes, this.rule);
         let lexemes = tslm.makeParsingLexemes();
 
         return lexemes;
-    }
-}
-
-export class TurningIntoProceedingForm extends TurningIntoParsingLexeme {
-    turnIntoLexemes(str: string) {
-        return []
     }
 }

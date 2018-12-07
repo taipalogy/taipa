@@ -6,6 +6,8 @@ import { AlphabeticLetter, Final, ToneMark, Sound, MedialGraphs, NasalGraphs,
 import { ZeroToneMark } from './grapheme'
 import { IDictionary, Dictionary } from './collection'
 import { lowerLetters } from './graphememaker';
+import { basename } from 'path';
+import { RuleBasedTagger } from './rulebasedtagger';
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -370,6 +372,16 @@ export class FreeAllomorphSandhiRules {
     ]).toLookup();
 }
 
+export class Rule {
+    from: Allomorph
+    to: Allomorph
+
+    constructor(from: Allomorph, to: Allomorph) {
+        this.from = from
+        this.to = to
+    }
+}
+
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
@@ -563,56 +575,26 @@ export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
         return
     }
 
-    getSandhiForms(): Array<ToneSandhiSyllable>  {
-        let fasrs = new FreeAllomorphSandhiRules()
-        // get sandhi forms as strings
+    getSandhiForm(r: Rule): ToneSandhiSyllable  {
         if(this.allomorph != null) {
-            // member variable allomorph is not null
+            let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
             if(this.allomorph instanceof FreeAllomorph) {
                 if(this.allomorph instanceof ZeroAllomorph) {
-                    // 1 to 7 ---->
-                    let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(new AlphabeticLetter(fasrs.rules['zero'][0].characters));
-                    return [s]
-                } else if(this.allomorph instanceof AllomorphX) {
-                    // the 5th tone has two sandhi forms
-                    let ret = [];
-                    for(let i in fasrs.rules[this.allomorph.getLiteral()]) {
-                        // pop letter
-                        // push letter
-                        let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                        // when there is allomorph
-                        // 5 to 7. 5 to 3. ---->
-                        s.popLetter();
-                        // there are sandhi tone marks
-                        // includes zs and w
-                        s.pushLetter(new AlphabeticLetter(fasrs.rules[this.allomorph.getLiteral()][i].characters));
-                        ret.push(s);
-                    }
-                    return ret;
+                    s.pushLetter(new AlphabeticLetter(r.to.toneMark.characters))
                 } else if(this.allomorph instanceof AllomorphY) {
-                    // 2 to 1. ---->
-                    let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.popLetter();
-                    return [s];
+                    s.popLetter()
+                    return s
                 } else {
-                    // 7 to 3. 3 to 2. ---->
-                    let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.popLetter();
-                    // there is only one sandhi form
-                    s.pushLetter(new AlphabeticLetter(fasrs.rules[this.allomorph.getLiteral()][0].characters));
-                    return [s];
+                    s.popLetter()
+                    s.pushLetter(new AlphabeticLetter(r.to.toneMark.characters))
+                    return s
                 }
-                console.log('freeallomorph hit')
             } else if(this.allomorph instanceof CheckedAllomorph) {
-                // sandhi form of checked syllable
-                let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                s.pushLetter(new AlphabeticLetter(fasrs.rules[this.allomorph.getLiteral()][0].characters));
-                return [s]
+                s.pushLetter(new AlphabeticLetter(this.allomorph.toneMark.characters))
+                return s
             }
         }
-
-        return []
+        return null
     }
 }
 

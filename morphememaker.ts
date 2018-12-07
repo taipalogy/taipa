@@ -1,6 +1,6 @@
 
 import { AlphabeticGrapheme, AlphabeticLetter, Letter } from './grapheme'
-import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiParsingMorpheme, Syllable, SandhiFormMorpheme } from './morpheme'
+import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiParsingMorpheme, Syllable, SandhiFormMorpheme, Rule } from './morpheme'
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -175,7 +175,6 @@ export class SandhiFormMorphemeMaker extends ToneSandhiParsingMorphemeMaker {
         return s 
     }
 
-    //makeMorphemesAndSandhiForm() {
     makeParsingMorphemes() {
         // make morphemes and the last of them is a sandhi form
         return this.postprecess(super.makeParsingMorphemes());
