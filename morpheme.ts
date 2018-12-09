@@ -362,16 +362,6 @@ export class FreeAllomorphBaseRules {
     ]).toLookup();
 }
 
-export class FreeAllomorphSandhiRules {
-    readonly rules = new DictionaryOfRules([
-        { key: 'w', value: [new FreeToneMarkY()] },
-        { key: 'zs', value: [new ToneMarkW()] },
-
-        { key: 'x', value: [new ToneMarkZS(), new ToneMarkW()] },
-        { key: 'y', value: [new ZeroToneMark()] },
-    ]).toLookup();
-}
-
 export class Rule {
     from: Allomorph
     to: Allomorph

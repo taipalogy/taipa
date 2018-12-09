@@ -23,40 +23,40 @@ export let FORMS = {
         'continuative': 'sandhiForm',
     },
     'ADJECTIVE': {
-        'terminal': 'baseForm',
+        'basic': 'baseForm',
         'attributive': 'sandhiForm',
         'adverbial': 'sandhiForm',
     },
     'NOUN': {
+        'basic': 'baseForm',
         'adverbial': 'sandhiForm',
-        'attributive': 'sandhiForm',
-        'terminal': 'adverbialForm'
     },
-    'PRONOUN': {
-        'base': 'baseForm',
-        'proceeding': 'proceedingForm',
-        'terminalFirst': 'terminalFirstForm',
-        'terminalSeventh': 'terminalSeventhForm', // complement
-        'terminalThird': 'terminalThirdForm', // complement
-
-        'adverbial': 'adverbialForm',
-
-        'indirectObject': 'proceedingForm',
-        'directObject': 'baseForm',
-    },
+    'PRONOUN': {},
     'PARTICLE': {
-        'continuative': 'continuativeForm'
+        'basic': 'baseForm',
+        'continuative': 'sandhiForm', // adverbial
     },
     'PREPOSITION': {},
     'EXCLAMATION': {},
     'DEMONSTRATIVEPRONOUN': {},
     'PERSONALPRONOUN': {
-        'adverbial': 'adverbialForm',
+        'basic': 'baseForm',
+        'proceeding': 'sandhiForm',
+        'terminalFirst': 'sandhiForm',
+        'terminalSeventh': 'sandhiForm', // complement
+        'terminalThird': 'sandhiForm', // complement
+
+        'adverbial': 'sandhiForm',
+
+        'indirectObject': 'sandhiForm', // proceeding
+        'directObject': 'baseForm',
     },
     'DETERMINER': {},
     'QUANTIFIER': {
+        'basic': 'baseForm',
+        'attributive': 'sandhiForm',
         'continuative': 'sandhiForm',
-        'adverbial': 'adverbialForm',
+        'adverbial': 'sandhiForm',
     },
 }
 
@@ -121,35 +121,6 @@ class TonalEndingY extends FreeTonalEnding {
 
 class ZeroTonalEnding extends FreeAllomorph {}
 
-//------------------------------------------------------------------------------
-//  Free Allomorph Base Rules
-//------------------------------------------------------------------------------
-/*
-interface IDictionaryOfRules extends IDictionary {}
-
-class DictionaryOfRules extends Dictionary {
-    constructor(init: { key: string; value: Array<Allomorph>; }[]) {
-        super(init);
-    }
-
-    toLookup(): IDictionaryOfRules {
-        return this;
-    }
-}
-
-export class FreeInflectionalEndingBaseRules {
-    readonly rules = new DictionaryOfRules([
-        { key: 'w', value: [new AllomorphZS(), new AllomorphX()] },
-        { key: 'zs', value: [new AllomorphX(), new ZeroAllomorph()] },
-        { key: 'zzs', value: [] },
-
-        { key: 'x', value: [] },
-        { key: 'y', value: [new AllomorphW()] },
-
-        { key: 'zero', value: [new AllomorphY()] },
-    ]).toLookup();
-}
-*/
 //------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
@@ -273,9 +244,6 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
-    private preceded
-    private followed
-    private isProceeding
     partOfSpeech: string = ''
 
     constructor(w: ToneSandhiWord) {

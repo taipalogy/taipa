@@ -55,9 +55,7 @@ class ConstructionElement{
 
     check(w: ToneSandhiWord) {
         for(let k in this.lexemes) {
-            console.log(this.id)
-            console.log(this.lexemes[k].toString(this.id))
-            console.log(w.literal)
+            console.log(this.lexemes[k].toString(this.id) + ' === ' + w.literal)
             if(this.lexemes[k].toString(this.id) === w.literal) {
                 return true
             }
@@ -84,22 +82,31 @@ class VerbPhrase extends TypeOfConstruction {
     constructor() {
         super()
 
-        let turner = new TurningIntoSandhiForm(new Rule(new AllomorphZS(), new AllomorphW()))
-        let l = turner.turnIntoLexemes('uannzs')[0]
-        l.partOfSpeech = SYMBOLS.VERB
-        l.add('transitive')
-        console.log(l.word.literal)
+        let turner1 = new TurningIntoSandhiForm(new Rule(new AllomorphZS(), new AllomorphW()))
+        let l1 = turner1.turnIntoLexemes('uannzs')[0]
+        l1.partOfSpeech = SYMBOLS.VERB
+        l1.add('transitive')
+        console.log('-' + l1.word.literal)
         let transitive = new ConstructionElement('transitive')
-        transitive.addLexeme(l)
+        transitive.addLexeme(l1)
         
-        turner = new TurningIntoSandhiForm(new Rule(new AllomorphY, new ZeroAllomorph()))
-        l = turner.turnIntoLexemes('guay')[0]
-        l.partOfSpeech = SYMBOLS.PRONOUN
-        l.add('proceeding')
+        let turner2 = new TurningIntoSandhiForm(new Rule(new AllomorphY, new ZeroAllomorph()))
+        let l2 = turner2.turnIntoLexemes('guay')[0]
+        l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
+        l2.add('proceeding')
+        console.log('-' + l2.word.literal)
+        let proceeding = new ConstructionElement('proceeding')
+        proceeding.addLexeme(l2)
 
-        this.constructions.push(new ConstructionOfPhrase([transitive, 
-                                                            new ConstructionElement('accusative'), 
-                                                            new ConstructionElement('intransitive')]))
+        let turner3 = new TurningIntoParsingLexeme()
+        let l3 = turner3.turnIntoLexemes('zurw')[0]
+        l3.partOfSpeech = SYMBOLS.VERB
+        l3.add('intransitive')
+        console.log('-' + l3.word.literal)
+        let intransitive = new ConstructionElement('intransitive')
+        intransitive.addLexeme(l3)
+
+        this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
     }
 }
 
@@ -129,19 +136,22 @@ export class RuleBasedTagger {
         // take in inputing lexemes and then check them against parsing lexemes
         let w: ToneWord = lexemes[0].word
 
-        let cop: ConstructionOfPhrase        
+        let cop: ConstructionOfPhrase
+        let vp = new VerbPhrase()
         if(w instanceof ToneSandhiWord) {
-            let pv = new VerbPhrase();
-            for(let key in pv.constructions) {
-                if(pv.constructions[key].elements[0].check(w)) {
-                    cop = pv.constructions[key]
+            for(let key in vp.constructions) {
+                if(vp.constructions[key].elements[0].check(w)) {
+                    cop = vp.constructions[key]
                     console.log('matched!')
                 }
             }
         } else if(w instanceof ToneMarkLessWord) {}
 
-        //console.log(cop.elements[1].id)
-        //console.log(cop.elements[2].id)
+        if(cop.elements[1].check(lexemes[1].word))
+        { console.log('matched!')}
+        if(cop.elements[2].check(lexemes[2].word))
+        { console.log('matched!')}
+
         return false;
     }
 }
