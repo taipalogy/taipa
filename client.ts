@@ -1,9 +1,10 @@
 
 import { TurningIntoInputingLexeme } from './lexememaker'
-import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, DummyLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
+import { SYMBOLS } from './symbols'
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
@@ -47,24 +48,32 @@ export class Client {
 
         // can lexemes be replaced by a phraseme?
         let tagger = new RuleBasedTagger(lexemes);
-        let nodes = tagger.nodes;
+        let nodes = tagger.lexemes;
 
         for(let key in nodes) {
             c.queue.push(nodes[key])
         }
         
         let guide = new Guide()
-        
-        if(c.stack.length == 0 && c.queue.length > 0) {
+        let root = new DummyLexeme()
+        root.word.literal = 'ROOT'
+        c.stack.push(root)
+
+        if(c.stack.length == 1 && c.queue.length > 0) {
             // initial configuration
             // shift the first lexeme from queue to stack
             guide.transitions.push(new Shift())
         }
 
         while(!c.isTerminalConfiguration()) {
+            
             let t: Transition = guide.getNextTransition();
-            if(t == null) break;
+            if(t == null) break
             c = c.makeTransition(t);
+            if(c.stack[c.stack.length-1] != undefined) {
+                if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.VERB) {
+                }
+            }
         }
 
         let doc = new Document();

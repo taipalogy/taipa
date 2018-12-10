@@ -125,18 +125,17 @@ class ZeroTonalEnding extends FreeAllomorph {}
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme {}
+export class Lexeme {
+    // this is used in rule-based tagger for both tone-sandhi and 
+    // tone-mark-less lexemes
+    word: Word
+    partOfSpeech: string = ''
+}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
-/*
-class InputingLexeme extends Lexeme {}
 
-export class ToneInputingLexeme extends InputingLexeme {
-
-}
-*/
 class ToneMarkLessLexeme extends Lexeme {}
 
 //------------------------------------------------------------------------------
@@ -144,18 +143,20 @@ class ToneMarkLessLexeme extends Lexeme {}
 //------------------------------------------------------------------------------
 
 export class ToneSandhiLexeme extends Lexeme {
-    // this is used in rule-based tagger for both tone-sandhi and 
-    // tone-mark-less lexemes
-    word: Word
+
 }
 
-export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Inputing Lexeme
+//------------------------------------------------------------------------------
+
+export class ToneSandhiInputingLexeme {
     word: ToneSandhiWord
     inflectionalEnding: InflectionalEnding = null
     private lemmata: Array<ToneSandhiWord>
 
     constructor(word: ToneSandhiWord) {
-        super();
         this.word = word;
     }
 
@@ -244,7 +245,7 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
-    partOfSpeech: string = ''
+    //partOfSpeech: string = ''
 
     constructor(w: ToneSandhiWord) {
         super()
@@ -376,7 +377,7 @@ class InflectionalLexeme extends Lexeme {
 //------------------------------------------------------------------------------
 
 export class DummyLexeme extends Lexeme {
-    word: Word
+    word: Word = new Word()
 }
 
 //------------------------------------------------------------------------------

@@ -8,7 +8,7 @@ import { ToneSandhiParsingMorphemeMaker, ToneSandhiInputingMorphemeMaker, Sandhi
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
-abstract class LexemeMaker {
+abstract class SuperLexemeMaker {
     abstract morphemes
 
     preprocess() {
@@ -26,15 +26,21 @@ abstract class LexemeMaker {
     }
 
     abstract make(syllables: Array<Syllable>)
+}
 
+abstract class LexemeMaker extends SuperLexemeMaker{
     abstract postprocess(tsl: ToneSandhiLexeme)
+}
+
+abstract class InputingLexemeMaker extends SuperLexemeMaker {
+    abstract postprocess(tsil: ToneSandhiInputingLexeme)
 }
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiInputingLexemeMaker extends LexemeMaker {
+export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
     morphemes: Array<ToneSandhiInputingMorpheme>;
 
     constructor(morphemes: Array<ToneSandhiInputingMorpheme>) {

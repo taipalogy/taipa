@@ -2,7 +2,7 @@
 
 import { MORPH_RULES } from './morphrules'
 import { SYMBOLS } from './symbols';
-import { Node } from './rulebasedtagger'
+import { Lexeme } from './lexeme';
 
 enum Dependency {
     csubj,
@@ -14,9 +14,9 @@ enum Dependency {
 
 export class Arc {
     dep: Dependency
-    head: Node = null
-    dependent: Node = null
-    constructor(dep: Dependency, head: Node, dependent: Node) {
+    head: Lexeme = null
+    dependent: Lexeme = null
+    constructor(dep: Dependency, head: Lexeme, dependent: Lexeme) {
         this.dep = dep;
         this.head = head;
         this.dependent = dependent
@@ -49,8 +49,8 @@ export class LeftArc extends Transition {
 }
 
 export class Configuration {
-    queue: Array<Node> = new Array()
-    stack: Array<Node> = new Array()
+    queue: Array<Lexeme> = new Array()
+    stack: Array<Lexeme> = new Array()
     graph: Set<Arc> = new Set();
 
     constructor() {}
@@ -84,7 +84,7 @@ export class Guide {
     transitions: Array<Transition>  = new Array()
 
     getNextTransition() {
-        if(this.transitions.length == 0) return null;
+        if(this.transitions.length == 0) return null
         return this.transitions.shift();
     }
 }

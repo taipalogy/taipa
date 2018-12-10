@@ -77,7 +77,7 @@ class VerbPhrase extends TypeOfConstruction {
     //new ConstructionOfPhrase(['serial', 'serial', 'intransitive']),
     //new ConstructionOfPhrase(['causative', 'accusative', 'intransitive'])
 
-    constructions = []
+    constructions: Array<ConstructionOfPhrase> = []
 
     constructor() {
         super()
@@ -119,14 +119,17 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 //------------------------------------------------------------------------------
 //  Rule-Based Tagger
 //------------------------------------------------------------------------------
-
+/*
 export class Node {
-    word: Word
-    tag: SYMBOLS
-}
+    lexeme: ToneSandhiParsingLexeme
 
+    constructor(l: ToneSandhiParsingLexeme) {
+        this.lexeme = l
+    }
+}
+*/
 export class RuleBasedTagger {
-    nodes: Array<Node> = new Array();
+    lexemes: Array<ToneSandhiParsingLexeme> = new Array();
 
     constructor(lexemes: Array<ToneSandhiInputingLexeme>) {
         this.match(lexemes)
@@ -134,6 +137,7 @@ export class RuleBasedTagger {
 
     match(lexemes: Array<ToneSandhiInputingLexeme>) {
         // take in inputing lexemes and then check them against parsing lexemes
+        // store matched parsing lexemes in nodes
         let w: ToneWord = lexemes[0].word
 
         let cop: ConstructionOfPhrase
@@ -152,6 +156,8 @@ export class RuleBasedTagger {
         if(cop.elements[2].check(lexemes[2].word))
         { console.log('matched!')}
 
-        return false;
+        for(let k in lexemes) {
+            this.lexemes.push(vp.constructions[0].elements[k].lexemes[0])
+        }
     }
 }
