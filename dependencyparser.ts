@@ -36,7 +36,7 @@ export class Shift extends Transition {
 
 export class RightArc extends Transition {
     do(c: Configuration) {
-        c.graph.add(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+        c.graph.push(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
         c.stack.pop();
         return c;
     }
@@ -44,6 +44,7 @@ export class RightArc extends Transition {
 
 export class LeftArc extends Transition {
     do(c: Configuration) {
+        c.graph.push(new Arc(Dependency.nsubj, c.stack[c.stack.length-1], c.stack[c.stack.length-2]))
         return c;
     }
 }
@@ -51,7 +52,7 @@ export class LeftArc extends Transition {
 export class Configuration {
     queue: Array<Lexeme> = new Array()
     stack: Array<Lexeme> = new Array()
-    graph: Set<Arc> = new Set();
+    graph: Array<Arc> = new Array();
 
     constructor() {}
 

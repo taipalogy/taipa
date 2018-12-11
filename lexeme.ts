@@ -245,7 +245,7 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
-    //partOfSpeech: string = ''
+    kvp: { key: string , value: string }
 
     constructor(w: ToneSandhiWord) {
         super()
@@ -258,7 +258,7 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
         // pick up the specific form from the part of speech
         let k = Object.keys(FORMS[pos]).find(key => id === key )
         // assign property and property value
-        this[id] = FORMS[pos][k]
+        this.kvp = { key: id, value: FORMS[pos][k] }
     }
 
     get baseForm() { 
@@ -267,7 +267,9 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     }
 
     toString(id: string) {
-        return this[this[id]].literal
+        if(this.kvp.key === id) {
+            return this[this.kvp.value].literal
+        }
     }
 }
 

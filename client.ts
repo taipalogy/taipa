@@ -1,15 +1,18 @@
 
 import { TurningIntoInputingLexeme } from './lexememaker'
-import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, DummyLexeme } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, DummyLexeme, SandhiFormLexeme } from './lexeme'
 import { dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Arc, Shift } from './dependencyparser'
+import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
+
+//const propertyOf = <TObj>(name: keyof TObj) => name;
+//const propertyNamesOf = <TObj>(obj: TObj = null) => (name: keyof TObj) => name;
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
     parsingLexemes: Array<ToneSandhiParsingLexeme> = new Array();
-    graph: Set<Arc>
+    graph: Array<Arc>
 }
 
 export class Client {
@@ -72,6 +75,24 @@ export class Client {
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
                 if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.VERB) {
+                    let l = c.stack[c.stack.length-1]
+                    if(l instanceof SandhiFormLexeme) {
+                        if(l.kvp.key === 'transitive') {
+                            guide.transitions.push(new Shift())
+                        }
+                    } else if(l instanceof ToneSandhiParsingLexeme) {
+                        if(l.kvp.key === 'intransitive') {
+                            guide.transitions.push(new RightArc())
+                            guide.transitions.push(new RightArc())
+                        }
+                    }
+                } if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
+                    let l = c.stack[c.stack.length-1]
+                    if(l instanceof SandhiFormLexeme) {
+                        if(l.kvp.key === 'proceeding') {
+                            guide.transitions.push(new Shift())
+                        }
+                    }
                 }
             }
         }

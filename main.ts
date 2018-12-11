@@ -42,3 +42,6 @@ if(argc.length == 1) {
 
 let clt = new Client();
 let doc = clt.process("uannw gua zurw");
+
+//console.log(doc.graph[0])
+//console.log(doc.graph[1])
