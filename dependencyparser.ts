@@ -6,6 +6,7 @@ import { Lexeme } from './lexeme';
 
 enum Dependency {
     csubj,
+    ccomp,
     dobj,
     nobj,
     nsubj,
@@ -13,11 +14,11 @@ enum Dependency {
 }
 
 export class Arc {
-    dep: Dependency
+    dependency: Dependency
     head: Lexeme = null
     dependent: Lexeme = null
     constructor(dep: Dependency, head: Lexeme, dependent: Lexeme) {
-        this.dep = dep;
+        this.dependency = dep;
         this.head = head;
         this.dependent = dependent
     }
@@ -36,7 +37,7 @@ export class Shift extends Transition {
 
 export class RightArc extends Transition {
     do(c: Configuration) {
-        c.graph.push(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+        c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
         c.stack.pop();
         return c;
     }

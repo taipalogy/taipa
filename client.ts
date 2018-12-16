@@ -1,17 +1,16 @@
 
 import { TurningIntoInputingLexeme } from './lexememaker'
-import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, DummyLexeme, SandhiFormLexeme } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
-
-//const propertyOf = <TObj>(name: keyof TObj) => name;
-//const propertyNamesOf = <TObj>(obj: TObj = null) => (name: keyof TObj) => name;
+import { GraphemeMaker } from './graphememaker'
+import { LexicalRootGenerator } from './version1';
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
-    parsingLexemes: Array<ToneSandhiParsingLexeme> = new Array();
+    parsingLexemes: Array<Lexeme> = new Array();
     graph: Array<Arc>
 }
 
@@ -100,5 +99,19 @@ export class Client {
         let doc = new Document();
         doc.graph = c.getGraph();
         return doc;
+    }
+}
+
+export class ClientOfGenerator {
+    private turnIntoGraphemes(str: string) {
+        // Grapheme Maker
+        let gm = new GraphemeMaker(str);
+        let graphemes = gm.makeGraphemes();
+        return graphemes
+    }
+
+    generate() {
+        let lrg = new LexicalRootGenerator()
+        lrg.generate()
     }
 }

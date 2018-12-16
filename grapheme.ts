@@ -340,3 +340,4 @@ export class MatchedSequence {
     characters: Array<Character> = new Array();
     get matchedLength() { return this.characters.length; }
 }
+
