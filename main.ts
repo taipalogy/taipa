@@ -48,3 +48,6 @@ console.log(doc.graph[1].dependency + ' ' + doc.graph[1].head.word.literal + ' '
 
 //console.log(doc.graph[0])
 //console.log(doc.graph[1])
+
+let cog = new ClientOfGenerator
+cog.generate()

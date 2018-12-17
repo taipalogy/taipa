@@ -10,6 +10,7 @@ import { list_of_lexical_roots } from './lexicalroots1'
 export class Initial extends Sound {}
 export class Medial extends Sound {}
 export class Final extends Sound {}
+export class Nasal extends Sound {}
 export class ToneMark extends Sound {
     isEqualToToneMark(toneMark: ToneMark) {
         if(this.getLiteral() === toneMark.getLiteral()) {
@@ -32,6 +33,10 @@ class MedialO extends Medial {characters = [characters['o']]}
 class MedialU extends Medial {characters = [characters['u']]}
 class MedialUR extends Medial {characters = [characters['u'], characters['r']]}
 
+class MedialM  extends Medial {characters = [characters['m']]}
+class MedialN  extends Medial {characters = [characters['n']]}
+class MedialNG  extends Medial {characters = [characters['n'], characters['g']]}
+
 class InitialC extends Initial {characters = [characters['c']]}
 class InitialJ extends Initial {characters = [characters['j']]}
 class InitialL extends Initial {characters = [characters['l']]}
@@ -40,6 +45,8 @@ class InitialS extends Initial {characters = [characters['s']]}
 class InitialV extends Initial {characters = [characters['v']]}
 class InitialZ extends Initial {characters = [characters['z']]}
 
+class InitialH extends Initial {characters = [characters['h']]}
+
 class InitialP extends Initial {characters = [characters['p']]}
 class InitialT extends Initial {characters = [characters['t']]}
 class InitialK extends Initial {characters = [characters['k']]}
@@ -47,11 +54,9 @@ class InitialB extends Initial {characters = [characters['b']]}
 class InitialD extends Initial {characters = [characters['d']]}
 class InitialG extends Initial {characters = [characters['g']]}
 
-class InitialM {}
-class InitialN {}
-class InitialNG {}
-
-class InitialH extends Initial {characters = [characters['h']]}
+class InitialM extends Initial {characters = [characters['m']]}
+class InitialN extends Initial {characters = [characters['n']]}
+class InitialNG extends Initial {characters = [characters['n'], characters['g']]}
 
 export class ZeroToneMark extends FreeToneMark {characters = null;}
 
@@ -86,10 +91,92 @@ export class FinalD extends Final {characters = [characters['d']]}
 export class FinalG extends Final {characters = [characters['g']]}
 export class FinalF extends Final {characters = [characters['f']]}
 
-class FinalM {}
-class FinalN {}
-class FinalNG {}
-class FinalNN {}
+class FinalM extends Final {characters = [characters['m']]}
+class FinalN extends Final {characters = [characters['n']]}
+class FinalNG extends Final {characters = [characters['n'], characters['g']]}
+
+class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
+
+class SetOfSounds {
+    toString(elements: Array<Sound>) {
+        let str = '';
+        for(let i = 0; i < elements.length; i++) {
+            if(i+1 < elements.length) {
+                for(let k in elements[i].characters) {
+                    str += elements[i].characters[k].character;
+                }
+                str += '|';
+            } else if(i+1 == elements.length) {
+                for(let k in elements[i].characters) {
+                    str += elements[i].characters[k].character;
+                }
+            }
+        }
+        return str;
+    }
+}
+
+export class SetOfMedials extends SetOfSounds {
+    medials: Array<Medial> = new Array()
+    constructor() {
+        super()
+        this.medials.push(new MedialA())
+        this.medials.push(new MedialE())
+        this.medials.push(new MedialI())
+        this.medials.push(new MedialO())
+        this.medials.push(new MedialU())
+        this.medials.push(new MedialUR())
+    }
+
+    toString() {
+        return super.toString(this.medials)
+    }
+}
+
+export class SetOfMaterLectionis extends SetOfSounds {
+    materLectionis: Array<Medial> = new Array()
+    constructor() {
+        super()
+        this.materLectionis.push(new MedialM())
+        this.materLectionis.push(new MedialN())
+        this.materLectionis.push(new MedialNG())
+    }
+
+    toString() {
+        return super.toString(this.materLectionis)
+    }
+}
+
+export class SetOfInitials extends SetOfSounds {
+    initials: Array<Initial> = new Array()
+    constructor() {
+        super()
+        this.initials.push(new InitialP())
+        this.initials.push(new InitialT())
+        this.initials.push(new InitialK())
+        this.initials.push(new InitialB())
+        this.initials.push(new InitialD())
+        this.initials.push(new InitialG())
+
+        this.initials.push(new InitialH())
+
+        this.initials.push(new InitialC())
+        this.initials.push(new InitialJ())
+        this.initials.push(new InitialL())
+        this.initials.push(new InitialQ())
+        this.initials.push(new InitialS())
+        this.initials.push(new InitialV())
+        this.initials.push(new InitialZ())
+
+        this.initials.push(new InitialM())
+        this.initials.push(new InitialN())
+        this.initials.push(new InitialNG())
+    }
+
+    toString() {
+        return super.toString(this.initials)
+    }
+}
 
 //------------------------------------------------------------------------------
 //  Lexical Root using Positional Sound
@@ -192,8 +279,10 @@ class LexicalRootSet {
 
 export class LexicalRootGenerator {
     generate() {
+        let strs: string[] = new Array
         for(let i in list_of_lexical_roots) {
-            console.log(list_of_lexical_roots[i])
+            strs.push(list_of_lexical_roots[i])
         }
+        return strs
     }
 }

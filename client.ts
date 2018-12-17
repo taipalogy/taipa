@@ -6,7 +6,7 @@ import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightAr
 import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
 import { GraphemeMaker } from './graphememaker'
-import { LexicalRootGenerator } from './version1';
+import { LexicalRootGenerator, SetOfMedials, SetOfMaterLectionis, SetOfInitials } from './version1';
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
@@ -110,8 +110,45 @@ export class ClientOfGenerator {
         return graphemes
     }
 
+    private isVowel(str: string) {
+        if(str.search(new RegExp(new SetOfMedials().toString())) == 0) return true
+        if(str.search(new RegExp(new SetOfMaterLectionis().toString())) == 0) return true
+
+        return false
+    }
+
+    private isInitialConsonant(str: string) {
+        if(str.search(new RegExp(new SetOfInitials().toString())) == 0) return true
+
+        return false
+    }
+
     generate() {
         let lrg = new LexicalRootGenerator()
-        lrg.generate()
+        let strs: Array<string> = lrg.generate()
+        for(let i in strs) {
+            let gs = this.turnIntoGraphemes(strs[i])
+            let ls: string[] = []
+            for(let j in gs) {
+                ls.push(gs[j].letter.literal)
+            }
+            
+            let medials: string[] = []
+            if(this.isVowel(ls[0])) {
+                let k = 0
+                while(k < ls.length) {
+                    if(this.isVowel(ls[k])) {
+                        medials.push(ls[k])
+                    }
+                    k++
+                }
+            }
+
+            let initials: string = ''
+            if(this.isInitialConsonant(ls[0])) {
+            }
+
+            console.log(ls)
+        }
     }
 }
