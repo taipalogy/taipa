@@ -101,6 +101,9 @@ export class GraphemeMaker {
 
             //console.log(ls);
             if(ltts.length == 0) {
+                for(let j in characters) {
+                    console.log(characters[j])
+                }
                 console.log("i: %d. characters[i].symbol: %s", i, characters[i].character);
                 console.log("something wrong");
             } else if(ltts.length == 1) {

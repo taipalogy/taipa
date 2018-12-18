@@ -2,6 +2,7 @@
 import { Sound } from './grapheme'
 import { characters } from './character'
 import { list_of_lexical_roots } from './lexicalroots1'
+import { GraphemeMaker } from './graphememaker'
 
 //------------------------------------------------------------------------------
 //  Sound
@@ -178,6 +179,49 @@ export class SetOfInitials extends SetOfSounds {
     }
 }
 
+export class SetOfFreeToneMarks extends SetOfSounds {
+    freeToneMarks: Array<FreeToneMark> = new Array()
+    constructor() {
+        super()
+        this.freeToneMarks.push(new ToneMarkZS())
+        this.freeToneMarks.push(new ToneMarkW())
+        this.freeToneMarks.push(new ToneMarkXX())
+        this.freeToneMarks.push(new ToneMarkXXX())
+        this.freeToneMarks.push(new ToneMarkSS())
+        this.freeToneMarks.push(new ToneMarkZZS())
+
+        this.freeToneMarks.push(new FreeToneMarkX())
+        this.freeToneMarks.push(new FreeToneMarkY())
+    }
+
+    toString() {
+        return super.toString(this.freeToneMarks)
+    }
+}
+
+export class SetOfFinals extends SetOfSounds {
+    finals: Array<Final> = new Array()
+    constructor() {
+        super()
+        this.finals.push(new FinalP())
+        this.finals.push(new FinalT())
+        this.finals.push(new FinalK())
+        this.finals.push(new FinalH())
+        this.finals.push(new FinalB())
+        this.finals.push(new FinalD())
+        this.finals.push(new FinalG())
+        this.finals.push(new FinalF())
+
+        this.finals.push(new FinalM())
+        this.finals.push(new FinalN())
+        this.finals.push(new FinalNG())
+    }
+
+    toString() {
+        return super.toString(this.finals)
+    }
+}
+
 //------------------------------------------------------------------------------
 //  Lexical Root using Positional Sound
 //------------------------------------------------------------------------------
@@ -284,5 +328,134 @@ export class LexicalRootGenerator {
             strs.push(list_of_lexical_roots[i])
         }
         return strs
+    }
+}
+
+export class ClientOfGenerator {
+    private turnIntoGraphemes(str: string) {
+        // Grapheme Maker
+        let gm = new GraphemeMaker(str);
+        let graphemes = gm.makeGraphemes();
+        return graphemes
+    }
+    private analyzeAfterFinals(ls: string[], sounds: string[], index: number): string[] {
+        if(this.isFreeToneMark(ls[index])) {
+            sounds.push(ls[ls.length-1] + '.toneMark')
+        }
+
+        return sounds
+    }
+
+    private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
+        if(this.isFreeToneMark(ls[index])) {
+            sounds.push(ls[ls.length-1] + '.toneMark')
+        } else if(this.isFinal(ls[index])) {
+            let k = index
+            while(k < ls.length) {
+                if(this.isFinal(ls[k])) {
+                    sounds.push(ls[k] + '.final')
+                }
+                k++
+            }
+
+            if(ls.length > sounds.length) {
+                sounds = this.analyzeAfterFinals(ls, sounds, sounds.length)
+            }
+        }
+
+        return sounds
+    }
+
+    private analyzeAfterInitials(ls: string[], sounds: string[], index: number): string[] {
+        if(this.isVowel(ls[index])) {
+            let k = index
+            while(k < ls.length) {
+                if(this.isVowel(ls[k])) {
+                    sounds.push(ls[k] + '.medial')
+                }
+                k++
+            }
+            
+            if(ls.length == sounds.length) {
+                // vowels with no tone marks
+                return sounds
+            }
+
+            if(ls.length > sounds.length) {
+                sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
+            }
+        }
+
+        return sounds
+    }
+
+    private isMaterLectionis(str: string) {
+        if(str.search(new RegExp(new SetOfMaterLectionis().toString())) == 0) return true
+
+        return false
+    }
+
+    private isVowel(str: string) {
+        if(str.search(new RegExp(new SetOfMedials().toString())) == 0) return true
+
+        return false
+    }
+
+    private isInitialConsonant(str: string) {
+        if(str.search(new RegExp(new SetOfInitials().toString())) == 0) return true
+
+        return false
+    }
+
+    private isFreeToneMark(str: string) {
+        if(str.search(new RegExp(new SetOfFreeToneMarks().toString())) == 0) return true
+
+        return false
+    }
+    
+    private isFinal(str: string) {
+        if(str.search(new RegExp(new SetOfFinals().toString())) == 0) return true
+
+        return false
+    }
+
+    generate() {
+        let lrg = new LexicalRootGenerator()
+        let strs: Array<string> = lrg.generate()
+        for(let i in strs) {
+            let gs = this.turnIntoGraphemes(strs[i])
+            let ls: string[] = []
+            for(let j in gs) {
+                ls.push(gs[j].letter.literal)
+            }
+            
+            let sounds: string[] = []
+            
+            if(this.isMaterLectionis(ls[0])) {
+                sounds.push(ls[0] + '.medial')
+                if(ls.length > sounds.length) {
+                    if(this.isFreeToneMark(ls[sounds.length])) {
+                        sounds = this.analyzeAfterFinals(ls, sounds, sounds.length)
+                    } else if(this.isVowel(ls[sounds.length])) {
+                        sounds = this.analyzeAfterInitials(ls, sounds, sounds.length)
+                    }
+                }
+
+                console.log(sounds)
+                continue
+            }
+
+            // analyze vowels, which have null initial consonants
+            // pass 0 as index to indicate it has null initial consonants
+            sounds = this.analyzeAfterInitials(ls, sounds, 0)
+
+            let initials: string = ''
+            if(this.isInitialConsonant(ls[0])) {
+                sounds.push(ls[0] + '.initial')
+                sounds = this.analyzeAfterInitials(ls, sounds, sounds.length)
+            }
+
+            console.log(sounds)
+        }
     }
 }
