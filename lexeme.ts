@@ -1,12 +1,12 @@
 
 import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules,
-    ToneSandhiParsingMorpheme, 
+    ToneSandhiRootMorpheme, 
     AllomorphZS,
     AllomorphW,
     AllomorphY,
     AllomorphX,
     ZeroAllomorph,
-    SandhiFormMorpheme,
+    CombiningFormMorpheme,
     Rule} from './morpheme';
 
 import { IDictionary, Dictionary } from './collection'
@@ -237,11 +237,11 @@ export class ToneSandhiInputingLexeme {
 }
 
 //------------------------------------------------------------------------------
-//  Parsing Lexeme
+//  Inflection Lexeme
 //------------------------------------------------------------------------------
 
 
-export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
+export class ToneSandhiInflectionLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
@@ -273,7 +273,7 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     }
 }
 
-export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
+export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
     wordForSandhiForm: ToneSandhiWord
 
     assignTonalEnding(allomorph: Allomorph) {
@@ -290,20 +290,20 @@ export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
         }
     }
 
-    private getSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>, r: Rule) {
+    private getSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, r: Rule) {
         if(this.tonalEnding != null) {
             let word = new ToneSandhiWord(this.word.syllables);
             if(this.tonalEnding instanceof FreeTonalEnding) {
                 let last = morphemes[morphemes.length-1]
-                if(last instanceof SandhiFormMorpheme) {
+                if(last instanceof CombiningFormMorpheme) {
                     word.popSyllable()
-                    word.pushSyllable(last.getSandhiForm(r));
+                    word.pushSyllable(last.getCombiningForm(r));
                 }
                 return word
             } else if(this.tonalEnding instanceof CheckedTonalEnding) {
                 let last = morphemes[morphemes.length-1]
-                if(last instanceof SandhiFormMorpheme) {
-                    word.pushSyllable(last.getSandhiForm(r));
+                if(last instanceof CombiningFormMorpheme) {
+                    word.pushSyllable(last.getCombiningForm(r));
                 }
                 return word
             }
@@ -315,7 +315,7 @@ export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
         return this.wordForSandhiForm
     }
 
-    populateSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>, r: Rule) {
+    populateSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, r: Rule) {
         //this.wordForSandhiForm = new ToneSandhiWord()
         this.wordForSandhiForm = this.getSandhiForm(morphemes, r)
     }

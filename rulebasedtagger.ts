@@ -1,7 +1,7 @@
 
-import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme } from './lexeme'
+import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { TurningIntoParsingLexeme, TurningIntoSandhiForm } from './lexememaker'
+import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
 import { Rule, AllomorphZS, AllomorphW, AllomorphY, ZeroAllomorph } from './morpheme';
 
 
@@ -25,8 +25,8 @@ class ConstructionOfClause {
 
 class Conversion {
     // different from parsing lexmem. convert between part of speeches.
-    forms: Array<ToneSandhiParsingLexeme> = null
-    as(): ToneSandhiParsingLexeme {
+    forms: Array<ToneSandhiInflectionLexeme> = null
+    as(): ToneSandhiInflectionLexeme {
         return this.forms[0]
     }
 }
@@ -43,13 +43,13 @@ class Quantifier extends Conversion {
 
 class ConstructionElement{
     id: string = ''
-    lexemes: Array<ToneSandhiParsingLexeme> = new Array()
+    lexemes: Array<ToneSandhiInflectionLexeme> = new Array()
 
     constructor(id: string) {
         this.id = id
     }
 
-    addLexeme(l: ToneSandhiParsingLexeme) {
+    addLexeme(l: ToneSandhiInflectionLexeme) {
         this.lexemes.push(l)
     }
 
@@ -98,7 +98,7 @@ class VerbPhrase extends TypeOfConstruction {
         let proceeding = new ConstructionElement('proceeding')
         proceeding.addLexeme(l2)
 
-        let turner3 = new TurningIntoParsingLexeme()
+        let turner3 = new TurningIntoInflectionLexeme()
         let l3 = turner3.turnIntoLexemes('zurw')[0]
         l3.partOfSpeech = SYMBOLS.VERB
         l3.add('intransitive')
@@ -119,17 +119,9 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 //------------------------------------------------------------------------------
 //  Rule-Based Tagger
 //------------------------------------------------------------------------------
-/*
-export class Node {
-    lexeme: ToneSandhiParsingLexeme
 
-    constructor(l: ToneSandhiParsingLexeme) {
-        this.lexeme = l
-    }
-}
-*/
 export class RuleBasedTagger {
-    lexemes: Array<ToneSandhiParsingLexeme> = new Array();
+    lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
 
     constructor(lexemes: Array<ToneSandhiInputingLexeme>) {
         this.match(lexemes)

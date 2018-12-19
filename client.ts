@@ -1,6 +1,6 @@
 
 import { TurningIntoInputingLexeme } from './lexememaker'
-import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
@@ -77,7 +77,7 @@ export class Client {
                         if(l.kvp.key === 'transitive') {
                             guide.transitions.push(new Shift())
                         }
-                    } else if(l instanceof ToneSandhiParsingLexeme) {
+                    } else if(l instanceof ToneSandhiInflectionLexeme) {
                         if(l.kvp.key === 'intransitive') {
                             guide.transitions.push(new RightArc())
                             guide.transitions.push(new RightArc())

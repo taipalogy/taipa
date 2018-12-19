@@ -1,6 +1,7 @@
 
 import { AlphabeticGrapheme, AlphabeticLetter, Letter } from './grapheme'
-import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiParsingMorpheme, Syllable, SandhiFormMorpheme, Rule } from './morpheme'
+import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme, Rule } from './morpheme'
+import { list_of_lexical_roots } from './lexicalroots1';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -13,7 +14,7 @@ abstract class MorphemeMaker {
 
     abstract createArray() // the return type of this declaration should be left blank
                             // an abstract type of ToneSandhiInputingMorpheme and 
-                            // ToneSandhiParsingMorpheme will not be passed into ToneSandhiParsingLexemeMaker
+                            // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
 
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
         // get the longest matched syllable pattern
@@ -72,7 +73,7 @@ abstract class MorphemeMaker {
             let msp: MatchedPattern;
             if(i-beginOfSyllable == 0) {
                 //console.log("i:%d. begin of syllable hit: %d", i, beginOfSyllable);
-                
+
                 //console.log(letters[letters.length-1].literal)
                 msp = this.getMatchedSyllablePattern(letters, i, beginOfSyllable);
 
@@ -81,7 +82,7 @@ abstract class MorphemeMaker {
                 }
                 //console.log("matchedLen: %d", msp.matchedLength);
                 //console.log(msp.pattern);
-                //console.log(msp.letters)
+                console.log(msp.letters)
 
                 let tsm: ToneSandhiMorpheme;
                 if(msp.letters.length > 0) {
@@ -89,6 +90,8 @@ abstract class MorphemeMaker {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
                     tsm =  this.create(new ToneSandhiSyllable(msp.letters))
+
+                    // here we should match the combining form with its root
 
                     morphemes.push(tsm);
                 }
@@ -142,7 +145,7 @@ export class ToneSandhiInputingMorphemeMaker extends MorphemeMaker {
     }
 }
 
-export class ToneSandhiParsingMorphemeMaker extends MorphemeMaker {
+export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
     constructor(graphemes: Array<AlphabeticGrapheme>) {
@@ -151,40 +154,37 @@ export class ToneSandhiParsingMorphemeMaker extends MorphemeMaker {
         this.graphemes = graphemes;
     }
 
-    create(syllable: ToneSandhiSyllable) { return new ToneSandhiParsingMorpheme(syllable) }
+    create(syllable: ToneSandhiSyllable) { return new ToneSandhiRootMorpheme(syllable) }
 
-    createArray() { return new Array<ToneSandhiParsingMorpheme>() }
+    createArray() { return new Array<ToneSandhiRootMorpheme>() }
 
-    makeParsingMorphemes() {
+    makeRootMorphemes() {
         return this.make(this.preprocess());
     }
 }
 
-export class SandhiFormMorphemeMaker extends ToneSandhiParsingMorphemeMaker {
-    //graphemes: Array<AlphabeticGrapheme>;
+export class CombiningFormMorphemeMaker extends ToneSandhiRootMorphemeMaker {
     
     constructor(graphemes: Array<AlphabeticGrapheme>) {
         super(graphemes)
-        //this.graphemes = new Array();
-        //this.graphemes = graphemes;
     }
 
-    createSandhiFormMorpheme(syllable: ToneSandhiSyllable) { 
-        let s = new SandhiFormMorpheme(syllable)
+    createCombiningFormMorpheme(syllable: ToneSandhiSyllable) { 
+        let s = new CombiningFormMorpheme(syllable)
         s.assignAllomorph()
         return s 
     }
 
-    makeParsingMorphemes() {
+    makeCombiningMorphemes() {
         // make morphemes and the last of them is a sandhi form
-        return this.postprecess(super.makeParsingMorphemes());
+        return this.postprecess(super.makeRootMorphemes());
     }
 
-    postprecess(tspms: Array<ToneSandhiParsingMorpheme>) {
+    postprecess(tspms: Array<ToneSandhiRootMorpheme>) {
         // replace the last morpheme with its sandhi form
         if(tspms.length > 0) {
             let last = tspms.pop()
-            tspms.push(this.createSandhiFormMorpheme(last.syllable))
+            tspms.push(this.createCombiningFormMorpheme(last.syllable))
         }
         return tspms
     }

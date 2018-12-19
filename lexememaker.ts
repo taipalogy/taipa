@@ -1,8 +1,8 @@
 
-import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiParsingMorpheme, Syllable, Rule  } from './morpheme'
-import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
+import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable, Rule  } from './morpheme'
+import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
-import { ToneSandhiParsingMorphemeMaker, ToneSandhiInputingMorphemeMaker, SandhiFormMorphemeMaker } from './morphememaker'
+import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -76,43 +76,40 @@ export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
     }
 }
 
-export class ToneSandhiParsingLexemeMaker extends LexemeMaker {
-    morphemes: Array<ToneSandhiParsingMorpheme>;
+export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
+    morphemes: Array<ToneSandhiRootMorpheme>;
 
-    constructor(morphemes: Array<ToneSandhiParsingMorpheme>) {
+    constructor(morphemes: Array<ToneSandhiRootMorpheme>) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;
     }
 
-    makeParsingLexemes() {
+    makeInflectionLexemes() {
         return this.postprocess(this.make(this.preprocess()))
     }
 
     make(syllables: Array<ToneSandhiSyllable>) {
-        return new ToneSandhiParsingLexeme(new ToneSandhiWord(syllables));
+        return new ToneSandhiInflectionLexeme(new ToneSandhiWord(syllables));
     }
 
-    postprocess(tspl: ToneSandhiParsingLexeme) {
+    postprocess(tspl: ToneSandhiInflectionLexeme) {
         if(this.morphemes.length > 0) {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // tonal ending needs to be assigned to parsing lexeme
-                //tspl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
             }
         }
 
-        let lexemes: Array<ToneSandhiParsingLexeme> = new Array();
+        let lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
         lexemes.push(tspl);
 
         return lexemes
     }
 }
 
-class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
-    //morphemes: Array<ToneSandhiParsingMorpheme>;
+class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
     rule: Rule
 
-    constructor(morphemes: Array<ToneSandhiParsingMorpheme>, r?: Rule) {
+    constructor(morphemes: Array<ToneSandhiRootMorpheme>, r?: Rule) {
         super(morphemes)
         //this.morphemes = new Array();
         //this.morphemes = morphemes;
@@ -121,7 +118,7 @@ class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
         }
     }
 
-    makeParsingLexemes() {
+    makeSandhiLexemes() {
         return this.postprocess(this.make(this.preprocess()))
     }
 
@@ -132,7 +129,7 @@ class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
     postprocess(tspl: SandhiFormLexeme) {
         if(this.morphemes.length > 0) {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // tonal ending needs to be assigned to parsing lexeme
+                // tonal ending needs to be assigned to sandhi lexeme
                 tspl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
             }
         }
@@ -181,25 +178,25 @@ export class TurningIntoInputingLexeme {
     }
 }
 
-export class TurningIntoParsingLexeme {
+export class TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
         let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
-        let tsmm = new ToneSandhiParsingMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeParsingMorphemes();
+        let tsmm = new ToneSandhiRootMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeRootMorphemes();
 
         // Lexeme Maker
-        let tslm = new ToneSandhiParsingLexemeMaker(morphemes);
-        let lexemes = tslm.makeParsingLexemes();
+        let tslm = new ToneSandhiInflectionLexemeMaker(morphemes);
+        let lexemes = tslm.makeInflectionLexemes();
 
         return lexemes;
     }
 }
 
-export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
+export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
     rule: Rule
 
     constructor (r: Rule) {
@@ -213,12 +210,12 @@ export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
         let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
-        let tsmm = new SandhiFormMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeParsingMorphemes(); // only the last morpheme is in sandhi form
+        let tsmm = new CombiningFormMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is in combining form
 
         // Lexeme Maker
         let tslm = new SandhiFormLexemeMaker(morphemes, this.rule);
-        let lexemes = tslm.makeParsingLexemes();
+        let lexemes = tslm.makeSandhiLexemes();
 
         return lexemes;
     }

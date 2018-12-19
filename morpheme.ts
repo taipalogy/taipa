@@ -382,12 +382,11 @@ class TonemarklessMorpheme extends Morpheme {}
 
 export class ToneSandhiMorpheme extends Morpheme {}
 
-export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
+export class ToneSandhiInputingMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null; // required to populate stems
 
     constructor(syllable: ToneSandhiSyllable) {
-        super();
         this.syllable = syllable;
         // assign allomorph for each syllable
         this.assignAllomorph();
@@ -530,7 +529,7 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
     }
 }
 
-export class ToneSandhiParsingMorpheme extends ToneSandhiMorpheme {
+export class ToneSandhiRootMorpheme extends ToneSandhiMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null;
 
@@ -543,7 +542,7 @@ export class ToneSandhiParsingMorpheme extends ToneSandhiMorpheme {
     assignAllomorph() {}
 }
 
-export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
+export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
     assignAllomorph() {
         let allomorphs = new ListOfAllomorphsInBaseForm()
         //let fasrs = new FreeAllomorphSandhiRules()
@@ -565,7 +564,7 @@ export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
         return
     }
 
-    getSandhiForm(r: Rule): ToneSandhiSyllable  {
+    getCombiningForm(r: Rule): ToneSandhiSyllable  {
         if(this.allomorph != null) {
             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
             if(this.allomorph instanceof FreeAllomorph) {
@@ -585,12 +584,6 @@ export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
             }
         }
         return null
-    }
-}
-
-export class RootMorpheme extends ToneSandhiMorpheme {
-    // affix
-    populateStem(msp: MatchedPattern) {
     }
 }
 
