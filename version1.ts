@@ -3,6 +3,7 @@ import { Sound } from './grapheme'
 import { characters } from './character'
 import { list_of_lexical_roots } from './lexicalroots1'
 import { GraphemeMaker } from './graphememaker'
+import { tmpdir } from 'os';
 
 //------------------------------------------------------------------------------
 //  Sound
@@ -372,13 +373,17 @@ class PSZero implements PartialPositionalSound {
     static freeToneMark: ZeroToneMark = new ZeroToneMark()
 }
 
+class PSSS implements PartialPositionalSound {
+    static freeToneMark: ToneMarkSS = new ToneMarkSS()
+}
+
 //------------------------------------------------------------------------------
 //  Combining Rule
 //------------------------------------------------------------------------------
 
 const combiningRules: Map<string, any> = new Map()
     .set('zero', { zs: PSZS.freeToneMark })
-    .set('y', { zero: PSZero.freeToneMark })
+    .set('y', { zero: PSZero.freeToneMark, ss: PSSS.freeToneMark })
     .set('w', { y: PSY.freeToneMark })
     .set('x', { zs: PSZS.freeToneMark, w: PSW.freeToneMark })
     .set('zs', { w: PSW.freeToneMark })
@@ -545,6 +550,60 @@ export class ClientOfGenerator {
         return false
     }
 
+    private makeCombiningForms(entry: string[]) {
+        let lastElement = entry[entry.length-1]
+        let tm: string = ''
+        let n = lastElement.lastIndexOf('.')
+        let key = lastElement.slice(0, n)
+        let tos = combiningRules.get(key)
+        let ret: Array<string[]> = new Array
+
+        if(lastElement.lastIndexOf('toneMark') > 0) {
+            let e: string[] = []
+            for(let k in tos) {
+                let isDuplicateFound = false
+                if(tos[k].getLiteral() == 0) continue
+                e = []
+                e = Object.assign([], entry)
+                e.pop()
+                e.push(tos[k].getLiteral() + '.toneMark')
+                //console.log(e + '-')
+                ret.push(e)
+
+            }
+        } else {
+            let e: string[] = []
+            e = Object.assign([], entry)
+            e.push(combiningRules.get('zero').zs.getLiteral() + '.toneMark')
+            //console.log(e + '+')
+            ret.push(e)
+        }
+    
+        return ret
+    }
+
+    private findNew(buffer: Array<string[]>) {
+        let cfs
+        for(let i in buffer) {
+            cfs = this.makeCombiningForms(buffer[i])
+        
+            //console.log(cfs)
+            for(let m in cfs) {
+                for(let n = 0 ; n < buffer.length; n++) {
+                    //console.log('n:%d', n)
+                    //console.log(cfs[m] + '*')
+                    let entry = buffer[n]
+                    if(entry[entry.length-1] === cfs[m][cfs[m].length-1]) {
+                        break
+                    }
+                    if(n == buffer.length-1) {
+                        console.log(cfs[m] + '*')
+                    }
+                }
+            }
+        }
+    }
+
     generate() {
         let lrg = new LexicalRootGenerator()
         let strs: Array<string> = lrg.generate()
@@ -593,33 +652,81 @@ export class ClientOfGenerator {
         }
 
         //console.log(arrayOfSounds)
-        for(let k in arrayOfSounds) {
+        let buffer: Array<string[]> = new Array()
+        let currentStem: string[] = []
+        let nextStem: string[] = []
+        for(let k = 0; k < arrayOfSounds.length; k++) {
             console.log(arrayOfSounds[k])
             let entry = arrayOfSounds[k]
-            let element = entry[entry.length-1]
-            if(element.lastIndexOf('toneMark') > 0) {
-                let n = element.lastIndexOf('.')
-                let i = element.slice(0, n)
-                console.log(combiningRules.get(i))
-            } else if(element.lastIndexOf('final') > 0) {
-                let n = element.lastIndexOf('.')
-                let i = element.slice(0, n)
-                if(this.isStopFinal(element)) {
-                    console.log(combiningRules.get(i))
-                } else if(this.isNasalFinal(element)) {
-                    let n = element.lastIndexOf('.')
-                    let i = element.slice(0, n)    
-                    console.log(combiningRules.get('zero'))
+            let lastElement = entry[entry.length-1]
+
+            if(this.isStopFinal(lastElement)) {
+                if(k == arrayOfSounds.length-1) {
+                    // terminal condition
+                    this.findNew(buffer)
                 }
-            } else if(element.lastIndexOf('medial') > 0) {
-                let n = element.lastIndexOf('.')
-                let i = element.slice(0, n)    
-                console.log(combiningRules.get('zero'))
-            } else if(element.lastIndexOf('nasal') > 0) {
-                let n = element.lastIndexOf('.')
-                let i = element.slice(0, n)    
-                console.log(combiningRules.get('zero'))
+            } else {
+                if(lastElement.lastIndexOf('toneMark') > 0) {
+                    nextStem = entry.slice(0, entry.length-1)
+                } else {
+                    nextStem = entry
+                }
+
+                if(nextStem.length != currentStem.length) {
+                    currentStem = nextStem
+                    this.findNew(buffer)
+                    buffer = []
+                } else {
+                    for(let e in currentStem) {
+                        if(currentStem[e] !== nextStem[e]) {
+                            currentStem = nextStem
+                            this.findNew(buffer)
+                            buffer = []
+                            break
+                        }
+                    }
+                }
+                buffer.push(entry)
             }
+/*
+            if(lastElement.lastIndexOf('toneMark') > 0
+                || lastElement.lastIndexOf('nasal') > 0
+                || lastElement.lastIndexOf('medial') >0
+                || (lastElement.lastIndexOf('final') > 0 && this.isNasalFinal(lastElement))) {
+                buffer.push(arrayOfSounds[k])
+            }
+*/
+/*
+            if(lastElement.lastIndexOf('toneMark') > 0) {
+                let n = lastElement.lastIndexOf('.')
+                let i = lastElement.slice(0, n)
+                let tos = combiningRules.get(i)
+                for(let i in tos) {
+                    console.log(tos[i].getLiteral())
+                }
+            } else if(lastElement.lastIndexOf('final') > 0) {
+                let n = lastElement.lastIndexOf('.')
+                let i = lastElement.slice(0, n)
+                let tos = combiningRules.get(i)
+                if(this.isStopFinal(lastElement)) {
+                    for(let i in tos) {
+                        console.log(tos[i].getLiteral())
+                    }
+                } else if(this.isNasalFinal(lastElement)) {
+                    let n = lastElement.lastIndexOf('.')
+                    let i = lastElement.slice(0, n)
+                    console.log(combiningRules.get('zero').zs.getLiteral())
+                }
+            } else if(lastElement.lastIndexOf('medial') > 0) {
+                let n = lastElement.lastIndexOf('.')
+                let i = lastElement.slice(0, n)    
+                console.log(combiningRules.get('zero').zs.getLiteral())
+            } else if(lastElement.lastIndexOf('nasal') > 0) {
+                let n = lastElement.lastIndexOf('.')
+                let i = lastElement.slice(0, n)    
+                console.log(combiningRules.get('zero').zs.getLiteral())
+            }
+            */
         }
     }
 }
