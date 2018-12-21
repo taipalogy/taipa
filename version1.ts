@@ -1,9 +1,9 @@
 
-import { Sound } from './grapheme'
+import { Sound, Letter } from './grapheme'
 import { characters } from './character'
 import { list_of_lexical_roots } from './lexicalroots1'
 import { GraphemeMaker } from './graphememaker'
-import { tmpdir } from 'os';
+
 
 //------------------------------------------------------------------------------
 //  Sound
@@ -278,38 +278,13 @@ interface PositionalSound {
     final: Final
     freeToneMark: FreeToneMark
     checkedToneMark: CheckedToneMark
-    neutralToneMark: CheckedToneMark
+    //neutralToneMark: CheckedToneMark
 }
 
 type PartialPositionalSound = Partial<PositionalSound>
 
-class PSF implements PartialPositionalSound {
-    static final: Final = new FinalF()
-    static neutralToneMark: CheckedToneMark = new ToneMarkF()
-}
-
-class PSH implements PartialPositionalSound {
-    static initial: Initial = new InitialH()
-    static final: Final = new FinalH()
-    static neutralToneMark: CheckedToneMark = new ToneMarkH()
-}
-
-class PSP implements PartialPositionalSound {
-    static initial: Initial = new InitialP()
-    static final: Final = new FinalP()
-    static checkedToneMark: ToneMark = new ToneMarkP()
-}
-
-class PST implements PartialPositionalSound {
-    static initial: Initial = new InitialT()
-    static final: Final = new FinalT()
-    static checkedToneMark: ToneMark = new ToneMarkT()
-}
-
-class PSK implements PartialPositionalSound {
-    static initial: Initial = new InitialK()
-    static final: Final = new FinalK()
-    static checkedToneMark: ToneMark = new ToneMarkK()
+class PSA implements PartialPositionalSound {
+    static medial: Medial = new MedialA()
 }
 
 class PSB implements PartialPositionalSound {
@@ -318,10 +293,23 @@ class PSB implements PartialPositionalSound {
     static checkedToneMark: ToneMark = new ToneMarkB()
 }
 
+class PSC implements PartialPositionalSound {
+    static initial: Initial = new InitialC()
+}
+
 class PSD implements PartialPositionalSound {
     static initial: Initial = new InitialD()
     static final: Final = new FinalD()
     static checkedToneMark: ToneMark = new ToneMarkD()
+}
+
+class PSE implements PartialPositionalSound {
+    static medial: Medial = new MedialE()
+}
+
+class PSF implements PartialPositionalSound {
+    static final: Final = new FinalF()
+    static checkedToneMark: CheckedToneMark = new ToneMarkF()
 }
 
 class PSG implements PartialPositionalSound {
@@ -330,25 +318,94 @@ class PSG implements PartialPositionalSound {
     static checkedToneMark: ToneMark = new ToneMarkG()
 }
 
-class PSS implements PartialPositionalSound {
-    initial: Initial
-}
-
-class PSM implements PartialPositionalSound {
-    initial: Initial
-    final: Final
-}
-
-class PSNN implements PartialPositionalSound {
-    final: Final
-}
-
-class PSA implements PartialPositionalSound {
-    static medial: Medial = new MedialA()
+class PSH implements PartialPositionalSound {
+    static initial: Initial = new InitialH()
+    static final: Final = new FinalH()
+    static checkedToneMark: CheckedToneMark = new ToneMarkH()
 }
 
 class PSI implements PartialPositionalSound {
-    medial: Medial
+    static medial: Medial = new MedialI()
+}
+
+class PSJ implements PartialPositionalSound {
+    static initial: Initial = new InitialJ()
+}
+
+class PSK implements PartialPositionalSound {
+    static initial: Initial = new InitialK()
+    static final: Final = new FinalK()
+    static checkedToneMark: ToneMark = new ToneMarkK()
+}
+
+class PSL implements PartialPositionalSound {
+    static initial: Initial = new InitialL()
+}
+
+class PSM implements PartialPositionalSound {
+    static initial: Initial = new InitialM()
+    static medial: Medial = new MedialM()
+    static final: Final = new FinalM()
+}
+
+class PSN implements PartialPositionalSound {
+    static initial: Initial = new InitialN()
+    static medial: Medial = new MedialN()
+    static final: Final = new FinalN()
+}
+
+class PSNN implements PartialPositionalSound {
+    static nasal: Nasal = new NasalNN()
+}
+
+class PSNG implements PartialPositionalSound {
+    static initial: Initial = new InitialNG()
+    static medial: Medial = new MedialNG()
+    static final: Final = new FinalNG()
+}
+
+class PSO implements PartialPositionalSound {
+    static medial: Medial = new MedialO()
+}
+
+class PSP implements PartialPositionalSound {
+    static initial: Initial = new InitialP()
+    static final: Final = new FinalP()
+    static checkedToneMark: ToneMark = new ToneMarkP()
+}
+
+class PSQ implements PartialPositionalSound {
+    static initial: Initial = new InitialQ()
+}
+
+class PSS implements PartialPositionalSound {
+    static initial: Initial = new InitialS()
+}
+
+class PSSS implements PartialPositionalSound {
+    static freeToneMark: ToneMarkSS = new ToneMarkSS()
+}
+
+class PST implements PartialPositionalSound {
+    static initial: Initial = new InitialT()
+    static final: Final = new FinalT()
+    static checkedToneMark: ToneMark = new ToneMarkT()
+}
+
+class PSU implements PartialPositionalSound {
+    static medial: Medial = new MedialU()
+}
+
+class PSUR implements PartialPositionalSound {
+    static medial: Medial = new MedialUR()
+}
+
+class PSV implements PartialPositionalSound {
+    static initial: Initial = new InitialV()
+}
+
+class PSW implements PartialPositionalSound {
+    static freeToneMark: ToneMarkW = new ToneMarkW()
 }
 
 class PSX implements PartialPositionalSound {
@@ -361,21 +418,18 @@ class PSY implements PartialPositionalSound {
     static checkedToneMark: CheckedToneMarkY = new CheckedToneMarkY()
 }
 
-class PSZS implements PartialPositionalSound {
-    static freeToneMark: ToneMarkZS = new ToneMarkZS()
+class PSZ implements PartialPositionalSound {
+    static initial: Initial = new InitialZ()
 }
 
-class PSW implements PartialPositionalSound {
-    static freeToneMark: ToneMarkW = new ToneMarkW()
+class PSZS implements PartialPositionalSound {
+    static freeToneMark: ToneMarkZS = new ToneMarkZS()
 }
 
 class PSZero implements PartialPositionalSound {
     static freeToneMark: ZeroToneMark = new ZeroToneMark()
 }
 
-class PSSS implements PartialPositionalSound {
-    static freeToneMark: ToneMarkSS = new ToneMarkSS()
-}
 
 //------------------------------------------------------------------------------
 //  Combining Rule
@@ -390,50 +444,89 @@ const combiningRules: Map<string, any> = new Map()
     .set('p', { p: PSP.checkedToneMark })
     .set('t', { t: PST.checkedToneMark })
     .set('k', { k: PSK.checkedToneMark })
-    .set('h', { h: PSH.neutralToneMark, y: PSY.checkedToneMark })
+    .set('h', { h: PSH.checkedToneMark, y: PSY.checkedToneMark })
     .set('b', { b: PSB.checkedToneMark, x: PSX.checkedToneMark })
     .set('d', { d: PSD.checkedToneMark, x: PSX.checkedToneMark })
     .set('g', { g: PSG.checkedToneMark, x: PSX.checkedToneMark })
-    .set('f', { f: PSF.neutralToneMark, x: PSX.checkedToneMark })
+    .set('f', { f: PSF.checkedToneMark, x: PSX.checkedToneMark })
+
+const letterClass: Map<string, PartialPositionalSound> = new Map()
+    .set('a', PSA)
+    .set('b', PSB)
+    .set('c', PSC)
+    .set('d', PSD)
+    .set('e', PSE)
+    .set('f', PSF)
+    .set('g', PSG)
+    .set('h', PSH)
+    .set('i', PSI)
+    .set('j', PSJ)
+    .set('k', PSK)
+    .set('l', PSL)
+    .set('m', PSM)
+    .set('n', PSN)
+    .set('nn', PSNN)
+    .set('ng', PSNG)
+    .set('o', PSO)
+    .set('p', PSP)
+    .set('q', PSQ)
+    .set('s', PSS)
+    .set('ss', PSSS)
+    .set('t', PST)
+    .set('u', PSU)
+    .set('ur', PSUR)
+    .set('v', PSV)
+    .set('w', PSW)
+    .set('x', PSX)
+    .set('y', PSY)
+    .set('z', PSZ)
+    .set('zs', PSZS)
 
 //------------------------------------------------------------------------------
 //  Lexical Root
 //------------------------------------------------------------------------------
-/*
-class LexicalRoot {
-    sounds: Array<Sound> = null
 
-    constructor(ss: Array<Sound>) {
-        this.sounds = new Array()
-        for(let k in ss) {
-            this.sounds.push(ss[k])
-        }
-    }
-}
-*/
-class SetOfLexicalRoots {
-    set: Array<Sound[]> =  new Array(
+export class ListOfLexicalRoots {
+    list: Array<Sound[]> =  new Array(
+        /*
         [PSA.medial],
         [PSA.medial, PSY.freeToneMark],
         [PSA.medial, PSZS.freeToneMark],
         [PSA.medial, PSH.final],
         [PSA.medial, PSF.final],
+        [PSS.initial, PSU.medial, PSZS.freeToneMark],
+        [PSJ.initial, PSI.medial, PSB.final, PSB.checkedToneMark],
+        [PSH.initial, PSU.medial, PSA.medial, PST.final],
+        */
     )
 
+    setfirstLetter(init: string) {
+        let cog = new ClientOfGenerator
+        let entries: Array<Sound[]> = cog.generate(init)
+        for(let i in entries) {
+            this.list.push(entries[i])
+        }
+    }
+
     toString() {
-        for(let k in this.set) {
-            for(let i in this.set[k]) {
-                console.log(this.set[k][i].getLiteral())
+        for(let k in this.list) {
+            let str: string = ''
+            for(let i in this.list[k]) {
+                str += this.list[k][i].getLiteral()
+                
             }
+            console.log(str)
         }
     }
 }
 
 export class LexicalRootGenerator {
-    generate() {
+    generate(init: string) {
         let strs: string[] = new Array
         for(let i in list_of_lexical_roots) {
-            strs.push(list_of_lexical_roots[i])
+            if(list_of_lexical_roots[i].search(init) == 0) {
+                strs.push(list_of_lexical_roots[i])
+            }
         }
         return strs
     }
@@ -449,7 +542,7 @@ export class ClientOfGenerator {
 
     private analyzeAfterFinalConsonants(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFreeToneMark(ls[index])) {
-            sounds.push(ls[ls.length-1] + '.toneMark')
+            sounds.push(ls[ls.length-1] + '.freeToneMark')
         }
 
         return sounds
@@ -457,7 +550,7 @@ export class ClientOfGenerator {
 
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFreeToneMark(ls[index])) {
-            sounds.push(ls[ls.length-1] + '.toneMark')
+            sounds.push(ls[ls.length-1] + '.freeToneMark')
         } else if(this.isFinalConsonant(ls[index])) {
             let k = index
             while(k < ls.length) {
@@ -552,29 +645,31 @@ export class ClientOfGenerator {
 
     private makeCombiningForms(entry: string[]) {
         let lastElement = entry[entry.length-1]
-        let tm: string = ''
+        //let tm: string = ''
         let n = lastElement.lastIndexOf('.')
         let key = lastElement.slice(0, n)
         let tos = combiningRules.get(key)
         let ret: Array<string[]> = new Array
 
-        if(lastElement.lastIndexOf('toneMark') > 0) {
+        if(lastElement.lastIndexOf('freeToneMark') > 0) {
             let e: string[] = []
             for(let k in tos) {
-                let isDuplicateFound = false
-                if(tos[k].getLiteral() == 0) continue
+                
                 e = []
                 e = Object.assign([], entry)
                 e.pop()
-                e.push(tos[k].getLiteral() + '.toneMark')
+                if(tos[k].getLiteral() != 0) {
+                    // zero-tone-mark for first tone will not be pushed
+                    e.push(tos[k].getLiteral() + '.freeToneMark')
+                }
                 //console.log(e + '-')
+                // first tone is still pushed to return
                 ret.push(e)
-
             }
         } else {
             let e: string[] = []
             e = Object.assign([], entry)
-            e.push(combiningRules.get('zero').zs.getLiteral() + '.toneMark')
+            e.push(combiningRules.get('zero').zs.getLiteral() + '.freeToneMark')
             //console.log(e + '+')
             ret.push(e)
         }
@@ -583,32 +678,49 @@ export class ClientOfGenerator {
     }
 
     private findNew(buffer: Array<string[]>) {
+        // find new tones based on the same stem
         let cfs
         for(let i in buffer) {
             cfs = this.makeCombiningForms(buffer[i])
         
-            //console.log(cfs)
             for(let m in cfs) {
                 for(let n = 0 ; n < buffer.length; n++) {
-                    //console.log('n:%d', n)
-                    //console.log(cfs[m] + '*')
                     let entry = buffer[n]
                     if(entry[entry.length-1] === cfs[m][cfs[m].length-1]) {
                         break
                     }
                     if(n == buffer.length-1) {
-                        console.log(cfs[m] + '*')
+                        // pushed to fill the slot, block following duplicates
+                        // duplicates come from combining rules
+                        buffer.push(cfs[m])
+                        //console.log(cfs[m] + '*')
                     }
                 }
             }
         }
     }
 
-    generate() {
+    private convert(entry: string[]) {
+        // convert strings in an entry to sounds
+        // ex: a.medial -> PSA.medial
+        let ret: Array<Sound> = new Array()
+        for(let i in entry) {
+            let n = entry[i].lastIndexOf('.')
+            let clasName = entry[i].slice(0, n)
+            let position = entry[i].slice(n+1)
+            ret.push(letterClass.get(clasName)[position])
+        }
+        return ret
+    }
+
+    generate(init: string) {
         let lrg = new LexicalRootGenerator()
-        let strs: Array<string> = lrg.generate()
-        let arrayOfSounds: Array<string[]> = new Array()
+        let strs: Array<string> = lrg.generate(init) // retrieve all needed roots beginning with init
+        let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
+        let entries: Array<Sound[]> = new Array() // to be returned
+
         for(let i in strs) {
+            // generates all needed sounds to be processed
             let gs = this.turnIntoGraphemes(strs[i])
             let ls: string[] = []
             for(let j in gs) {
@@ -627,7 +739,6 @@ export class ClientOfGenerator {
                     }
                 }
 
-                //console.log(sounds)
                 arrayOfSounds.push(sounds)
                 continue
             }
@@ -638,49 +749,78 @@ export class ClientOfGenerator {
 
             let initials: string = ''
             if(this.isInitialConsonant(ls[0])) {
+                // analyze initial consonants
                 sounds.push(ls[0] + '.initial')
                 if(this.isVowel(ls[1])) {
+                    // consonants followed by vowels
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
                 } else if(this.isFinalConsonant(ls[1])) {
-                    // CC
+                    // consonants followed by consonants
                     sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
                 }
             }
 
-            //console.log(sounds)
             arrayOfSounds.push(sounds)
         }
 
-        //console.log(arrayOfSounds)
         let buffer: Array<string[]> = new Array()
         let currentStem: string[] = []
         let nextStem: string[] = []
         for(let k = 0; k < arrayOfSounds.length; k++) {
-            console.log(arrayOfSounds[k])
+
+            //console.log(arrayOfSounds[k])
+            entries.push(this.convert(arrayOfSounds[k]))
+
             let entry = arrayOfSounds[k]
             let lastElement = entry[entry.length-1]
 
             if(this.isStopFinal(lastElement)) {
+                let lastElement = entry[entry.length-1]
+                let n = lastElement.lastIndexOf('.')
+                let key = lastElement.slice(0, n)
+                let tos = combiningRules.get(key)
+        
+                let e: string[] = []
+                for(let k in tos) {
+                    e = []
+                    e = Object.assign([], entry)
+                    e.push(tos[k].getLiteral() + '.checkedToneMark')
+
+                    //console.log(e + '$')
+                    entries.push(this.convert(e))
+                }
+    
                 if(k == arrayOfSounds.length-1) {
-                    // terminal condition
+                    // terminal condition of iterator of arrayofSounds
                     this.findNew(buffer)
+                    for(let i in buffer) {
+                        entries.push(this.convert(buffer[i]))
+                    }
                 }
             } else {
-                if(lastElement.lastIndexOf('toneMark') > 0) {
+                if(lastElement.lastIndexOf('freeToneMark') > 0) {
                     nextStem = entry.slice(0, entry.length-1)
                 } else {
                     nextStem = entry
                 }
 
                 if(nextStem.length != currentStem.length) {
+                    // when the stems are not in the same length
                     currentStem = nextStem
                     this.findNew(buffer)
+                    for(let i in buffer) {
+                        entries.push(this.convert(buffer[i]))
+                    }
                     buffer = []
                 } else {
                     for(let e in currentStem) {
                         if(currentStem[e] !== nextStem[e]) {
+                            // when the stems are not the same
                             currentStem = nextStem
                             this.findNew(buffer)
+                            for(let i in buffer) {
+                                entries.push(this.convert(buffer[i]))
+                            }
                             buffer = []
                             break
                         }
@@ -688,45 +828,8 @@ export class ClientOfGenerator {
                 }
                 buffer.push(entry)
             }
-/*
-            if(lastElement.lastIndexOf('toneMark') > 0
-                || lastElement.lastIndexOf('nasal') > 0
-                || lastElement.lastIndexOf('medial') >0
-                || (lastElement.lastIndexOf('final') > 0 && this.isNasalFinal(lastElement))) {
-                buffer.push(arrayOfSounds[k])
-            }
-*/
-/*
-            if(lastElement.lastIndexOf('toneMark') > 0) {
-                let n = lastElement.lastIndexOf('.')
-                let i = lastElement.slice(0, n)
-                let tos = combiningRules.get(i)
-                for(let i in tos) {
-                    console.log(tos[i].getLiteral())
-                }
-            } else if(lastElement.lastIndexOf('final') > 0) {
-                let n = lastElement.lastIndexOf('.')
-                let i = lastElement.slice(0, n)
-                let tos = combiningRules.get(i)
-                if(this.isStopFinal(lastElement)) {
-                    for(let i in tos) {
-                        console.log(tos[i].getLiteral())
-                    }
-                } else if(this.isNasalFinal(lastElement)) {
-                    let n = lastElement.lastIndexOf('.')
-                    let i = lastElement.slice(0, n)
-                    console.log(combiningRules.get('zero').zs.getLiteral())
-                }
-            } else if(lastElement.lastIndexOf('medial') > 0) {
-                let n = lastElement.lastIndexOf('.')
-                let i = lastElement.slice(0, n)    
-                console.log(combiningRules.get('zero').zs.getLiteral())
-            } else if(lastElement.lastIndexOf('nasal') > 0) {
-                let n = lastElement.lastIndexOf('.')
-                let i = lastElement.slice(0, n)    
-                console.log(combiningRules.get('zero').zs.getLiteral())
-            }
-            */
         }
+
+        return entries
     }
 }

@@ -2,6 +2,7 @@
 import { AlphabeticGrapheme, AlphabeticLetter, Letter } from './grapheme'
 import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme, Rule } from './morpheme'
 import { list_of_lexical_roots } from './lexicalroots1';
+import { ListOfLexicalRoots } from './version1';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -15,6 +16,40 @@ abstract class MorphemeMaker {
     abstract createArray() // the return type of this declaration should be left blank
                             // an abstract type of ToneSandhiInputingMorpheme and 
                             // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
+
+    getNewMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
+        // get the longest matched syllable pattern
+        let lolrs = new ListOfLexicalRoots();
+        lolrs.setfirstLetter(letters[beginOfSyllable].literal)
+        let matchedLen = 0;
+        let mp = new MatchedPattern();
+        for(let m in lolrs.list) {
+            let min = Math.min(letters.length-beginOfSyllable, lolrs.list[m].length);
+            if(lolrs.list[m].length == min) {
+                for(let n = 0; n < min; n++) {
+                    if(letters[beginOfSyllable+n].literal.search(new RegExp(lolrs.list[m][n].getLiteral())) == 0) {
+                        //console.log(sp.list[m][n].toString())
+                        if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
+                            matchedLen = min;
+                            // copy the matched letters
+                            for(let q = 0; q < matchedLen; q++) {
+                                mp.letters[q] = letters[beginOfSyllable+q];
+                            }
+                            
+                            mp.patternNew = lolrs.list[m];
+                            //console.log(lolrs.list[m])
+                            //console.log(letters[i+n].literal)
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return mp;
+    }
 
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
         // get the longest matched syllable pattern
@@ -36,7 +71,7 @@ abstract class MorphemeMaker {
                                 mp.letters[q] = letters[i+q];
                             }
                             mp.pattern = sps.list[m];
-                            //console.log(sp.list[m])
+                            //console.log(sps.list[m])
                             //console.log(letters[i+n].literal)
                         }
                     } else {
@@ -76,13 +111,15 @@ abstract class MorphemeMaker {
 
                 //console.log(letters[letters.length-1].literal)
                 msp = this.getMatchedSyllablePattern(letters, i, beginOfSyllable);
+                
+                //msp = this.getNewMatchedSyllablePattern(letters, beginOfSyllable);
 
                 if(msp.matchedLength == 0) {
                     console.log('no matched pattern of sounds found. the pattern needs to be added.')
                 }
                 //console.log("matchedLen: %d", msp.matchedLength);
                 //console.log(msp.pattern);
-                console.log(msp.letters)
+                //console.log(msp.letters)
 
                 let tsm: ToneSandhiMorpheme;
                 if(msp.letters.length > 0) {

@@ -154,7 +154,7 @@ export let lowerLetters: ILetters = {
     'v': new AlphabeticLetter([characters['v']]),
     'z': new AlphabeticLetter([characters['z']]),
 
-    // initials and nasals
+    // initials, medial, and nasal finals
     'm': new AlphabeticLetter([characters['m']]),
     'n': new AlphabeticLetter([characters['n']]),
     'ng': new AlphabeticLetter([characters['n'], characters['g']]),
@@ -176,7 +176,7 @@ export let lowerLetters: ILetters = {
     // free tone mark, neutral tone mark
     'y': new AlphabeticLetter([characters['y']]),
 
-    // initials, checked tone marks, and finals
+    // initials, stop finals, and checked tone marks
     'b': new AlphabeticLetter([characters['b']]),
     'd': new AlphabeticLetter([characters['d']]),
     'g': new AlphabeticLetter([characters['g']]),
@@ -187,7 +187,7 @@ export let lowerLetters: ILetters = {
     // neutral final
     'f': new AlphabeticLetter([characters['f']]),
 
-    // initial and final
+    // initial and neutral final
     'h': new AlphabeticLetter([characters['h']]),
 }
 

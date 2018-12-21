@@ -1,13 +1,11 @@
-import { AlphabeticLetter, Final, ToneMark, Sound, MedialGraphs, NasalGraphs, 
+import { AlphabeticLetter, Final, ToneMark, MedialGraphs, NasalGraphs, 
         FreeToneMarkGraphs, CheckedToneMarkGraphs, NeutralFinalGraphs, FinalGraphs, InitialNasalGraphs,
         InitialGraphs, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
         FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
         ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX, Letter } from './grapheme'
 import { ZeroToneMark } from './grapheme'
 import { IDictionary, Dictionary } from './collection'
-import { lowerLetters } from './graphememaker';
-import { basename } from 'path';
-import { RuleBasedTagger } from './rulebasedtagger';
+import { Sound } from './grapheme'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -660,8 +658,9 @@ export class SyllablePatterns {
 
 export class MatchedPattern {
     letters: Array<AlphabeticLetter> = new Array();
-    pattern: Array<PatternOfSounds> = new Array();
-    get matchedLength() { return this.pattern.length; }
+    pattern: Array<PatternOfSounds> = new Array(); // to be deleted
+    patternNew: Array<Sound> = new Array();
+    get matchedLength() { return this.letters.length; } // length of pattern can be optionally returned
 }
 
 //------------------------------------------------------------------------------
