@@ -1,11 +1,6 @@
 #!/usr/bin/env node
 
-import { Client, Document,  } from './client'
-import { Metadata } from './metadata'
-import { STOP_WORDS } from  './stopwords'
-import { MORPH_RULES } from './morphrules'
-import { TAG_MAP } from './tagmap'
-import { ClientOfGenerator } from './version1'
+import { Client } from './client'
 
 //var metadata = new Metadata();
 

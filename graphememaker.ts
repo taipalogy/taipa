@@ -151,72 +151,72 @@ interface ILetters {
 
 export let lowerLetters: ILetters = {
     // medials
-    'a': new AlphabeticLetter([characters['a']]),
-    'e': new AlphabeticLetter([characters['e']]),
-    'i': new AlphabeticLetter([characters['i']]),
-    'o': new AlphabeticLetter([characters['o']]),
-    'u': new AlphabeticLetter([characters['u']]),
-    'ur': new AlphabeticLetter([characters['u'], characters['r']]),
+    'a': new AlphabeticLetter([characters.get('a')]),
+    'e': new AlphabeticLetter([characters.get('e')]),
+    'i': new AlphabeticLetter([characters.get('i')]),
+    'o': new AlphabeticLetter([characters.get('o')]),
+    'u': new AlphabeticLetter([characters.get('u')]),
+    'ur': new AlphabeticLetter([characters.get('u'), characters.get('r')]),
 
     // initials excludes checked finals and neutral finals
-    'c': new AlphabeticLetter([characters['c']]),
-    'j': new AlphabeticLetter([characters['j']]),
-    'l': new AlphabeticLetter([characters['l']]),
-    'q': new AlphabeticLetter([characters['q']]),
-    's': new AlphabeticLetter([characters['s']]),
-    'v': new AlphabeticLetter([characters['v']]),
-    'z': new AlphabeticLetter([characters['z']]),
+    'c': new AlphabeticLetter([characters.get('c')]),
+    'j': new AlphabeticLetter([characters.get('j')]),
+    'l': new AlphabeticLetter([characters.get('l')]),
+    'q': new AlphabeticLetter([characters.get('q')]),
+    's': new AlphabeticLetter([characters.get('s')]),
+    'v': new AlphabeticLetter([characters.get('v')]),
+    'z': new AlphabeticLetter([characters.get('z')]),
 
     // initials, medial, and nasal finals
-    'm': new AlphabeticLetter([characters['m']]),
-    'n': new AlphabeticLetter([characters['n']]),
-    'ng': new AlphabeticLetter([characters['n'], characters['g']]),
+    'm': new AlphabeticLetter([characters.get('m')]),
+    'n': new AlphabeticLetter([characters.get('n')]),
+    'ng': new AlphabeticLetter([characters.get('n'), characters.get('g')]),
     
     // nasal
-    'nn': new AlphabeticLetter([characters['n'], characters['n']]),
+    'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
 
     // free tone marks
-    'ss': new AlphabeticLetter([characters['s'], characters['s']]),
-    'w': new AlphabeticLetter([characters['w']]),
-    'xx': new AlphabeticLetter([characters['x'], characters['x']]),
-    'xxx': new AlphabeticLetter([characters['x'], characters['x'], characters['x']]),
-    'zs': new AlphabeticLetter([characters['z'], characters['s']]),
-    'zzs': new AlphabeticLetter([characters['z'], characters['z'], characters['s']]),
+    'ss': new AlphabeticLetter([characters.get('s'), characters.get('s')]),
+    'w': new AlphabeticLetter([characters.get('w')]),
+    'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
+    'xxx': new AlphabeticLetter([characters.get('x'), characters.get('x'), characters.get('x')]),
+    'zs': new AlphabeticLetter([characters.get('z'), characters.get('s')]),
+    'zzs': new AlphabeticLetter([characters.get('z'), characters.get('z'), characters.get('s')]),
 
     // free tone mark, checked tone mark
-    'x': new AlphabeticLetter([characters['x']]),
+    'x': new AlphabeticLetter([characters.get('x')]),
 
     // free tone mark, neutral tone mark
-    'y': new AlphabeticLetter([characters['y']]),
+    'y': new AlphabeticLetter([characters.get('y')]),
 
     // initials, stop finals, and checked tone marks
-    'b': new AlphabeticLetter([characters['b']]),
-    'd': new AlphabeticLetter([characters['d']]),
-    'g': new AlphabeticLetter([characters['g']]),
-    'k': new AlphabeticLetter([characters['k']]),
-    'p': new AlphabeticLetter([characters['p']]),
-    't': new AlphabeticLetter([characters['t']]),
+    'b': new AlphabeticLetter([characters.get('b')]),
+    'd': new AlphabeticLetter([characters.get('d')]),
+    'g': new AlphabeticLetter([characters.get('g')]),
+    'k': new AlphabeticLetter([characters.get('k')]),
+    'p': new AlphabeticLetter([characters.get('p')]),
+    't': new AlphabeticLetter([characters.get('t')]),
     
     // neutral final
-    'f': new AlphabeticLetter([characters['f']]),
+    'f': new AlphabeticLetter([characters.get('f')]),
 
     // initial and neutral final
-    'h': new AlphabeticLetter([characters['h']]),
+    'h': new AlphabeticLetter([characters.get('h')]),
 }
 
 let ziangLetters: ILetters = {
     // medial
-    'ee': new AlphabeticLetter([characters['e'], characters['e']]),
-    'or': new AlphabeticLetter([characters['o'], characters['r']]),
+    'ee': new AlphabeticLetter([characters.get('e'), characters.get('e')]),
+    'or': new AlphabeticLetter([characters.get('o'), characters.get('r')]),
 }
 
 let zuanxLetters: ILetters = {
     // medial
-    'er': new AlphabeticLetter([characters['e'], characters['r']]),
-    'ir': new AlphabeticLetter([characters['i'], characters['r']]),
+    'er': new AlphabeticLetter([characters.get('e'), characters.get('r')]),
+    'ir': new AlphabeticLetter([characters.get('i'), characters.get('r')]),
 }
 
 let consonantLetters: ILetters = {
     // voiced d
-    'dr': new AlphabeticLetter([characters['d'], characters['r']]),
+    'dr': new AlphabeticLetter([characters.get('d'), characters.get('r')]),
 }

@@ -28,76 +28,76 @@ export class CheckedToneMark extends ToneMark {}
 class StopFinal extends Final {}
 class NasalFinal extends Final {}
 
-class MedialA extends Medial {characters = [characters['a']]}
-class MedialE extends Medial {characters = [characters['e']]}
-class MedialI extends Medial {characters = [characters['i']]}
-class MedialO extends Medial {characters = [characters['o']]}
-class MedialU extends Medial {characters = [characters['u']]}
-class MedialUR extends Medial {characters = [characters['u'], characters['r']]}
+class MedialA extends Medial {characters = [characters.get('a')]}
+class MedialE extends Medial {characters = [characters.get('e')]}
+class MedialI extends Medial {characters = [characters.get('i')]}
+class MedialO extends Medial {characters = [characters.get('o')]}
+class MedialU extends Medial {characters = [characters.get('u')]}
+class MedialUR extends Medial {characters = [characters.get('u'), characters.get('r')]}
 
-class MedialM  extends Medial {characters = [characters['m']]}
-class MedialN  extends Medial {characters = [characters['n']]}
-class MedialNG  extends Medial {characters = [characters['n'], characters['g']]}
+class MedialM  extends Medial {characters = [characters.get('m')]}
+class MedialN  extends Medial {characters = [characters.get('n')]}
+class MedialNG  extends Medial {characters = [characters.get('n'), characters.get('g')]}
 
-class InitialC extends Initial {characters = [characters['c']]}
-class InitialJ extends Initial {characters = [characters['j']]}
-class InitialL extends Initial {characters = [characters['l']]}
-class InitialQ extends Initial {characters = [characters['q']]}
-class InitialS extends Initial {characters = [characters['s']]}
-class InitialV extends Initial {characters = [characters['v']]}
-class InitialZ extends Initial {characters = [characters['z']]}
+class InitialC extends Initial {characters = [characters.get('c')]}
+class InitialJ extends Initial {characters = [characters.get('j')]}
+class InitialL extends Initial {characters = [characters.get('l')]}
+class InitialQ extends Initial {characters = [characters.get('q')]}
+class InitialS extends Initial {characters = [characters.get('s')]}
+class InitialV extends Initial {characters = [characters.get('v')]}
+class InitialZ extends Initial {characters = [characters.get('z')]}
 
-class InitialH extends Initial {characters = [characters['h']]}
+class InitialH extends Initial {characters = [characters.get('h')]}
 
-class InitialP extends Initial {characters = [characters['p']]}
-class InitialT extends Initial {characters = [characters['t']]}
-class InitialK extends Initial {characters = [characters['k']]}
-class InitialB extends Initial {characters = [characters['b']]}
-class InitialD extends Initial {characters = [characters['d']]}
-class InitialG extends Initial {characters = [characters['g']]}
+class InitialP extends Initial {characters = [characters.get('p')]}
+class InitialT extends Initial {characters = [characters.get('t')]}
+class InitialK extends Initial {characters = [characters.get('k')]}
+class InitialB extends Initial {characters = [characters.get('b')]}
+class InitialD extends Initial {characters = [characters.get('d')]}
+class InitialG extends Initial {characters = [characters.get('g')]}
 
-class InitialM extends Initial {characters = [characters['m']]}
-class InitialN extends Initial {characters = [characters['n']]}
-class InitialNG extends Initial {characters = [characters['n'], characters['g']]}
+class InitialM extends Initial {characters = [characters.get('m')]}
+class InitialN extends Initial {characters = [characters.get('n')]}
+class InitialNG extends Initial {characters = [characters.get('n'), characters.get('g')]}
 
 export class ZeroToneMark extends FreeToneMark {characters = null;}
 
-export class ToneMarkZS extends FreeToneMark {characters = [characters['z'], characters['s']]}
-export class ToneMarkW extends FreeToneMark {characters = [characters['w']]}
-export class ToneMarkSS extends FreeToneMark {characters = [characters['s'], characters['s']]}
-export class ToneMarkXX extends FreeToneMark {characters = [characters['x'], characters['x']]}
-export class ToneMarkXXX extends FreeToneMark {characters = [characters['x'], characters['x'], characters['x']]}
-export class ToneMarkZZS extends FreeToneMark {characters = [characters['z'], characters['z'], characters['s']]}
+export class ToneMarkZS extends FreeToneMark {characters = [characters.get('z'), characters.get('s')]}
+export class ToneMarkW extends FreeToneMark {characters = [characters.get('w')]}
+export class ToneMarkSS extends FreeToneMark {characters = [characters.get('s'), characters.get('s')]}
+export class ToneMarkXX extends FreeToneMark {characters = [characters.get('x'), characters.get('x')]}
+export class ToneMarkXXX extends FreeToneMark {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
+export class ToneMarkZZS extends FreeToneMark {characters = [characters.get('z'), characters.get('z'), characters.get('s')]}
 
-export class FreeToneMarkX extends FreeToneMark {characters = [characters['x']]}
-export class FreeToneMarkY extends FreeToneMark {characters = [characters['y']]}
+export class FreeToneMarkX extends FreeToneMark {characters = [characters.get('x')]}
+export class FreeToneMarkY extends FreeToneMark {characters = [characters.get('y')]}
 
-export class ToneMarkP extends CheckedToneMark {characters = [characters['p']]}
-export class ToneMarkT extends CheckedToneMark {characters = [characters['t']]}
-export class ToneMarkK extends CheckedToneMark {characters = [characters['k']]}
-export class ToneMarkH extends CheckedToneMark {characters = [characters['h']]}
-export class ToneMarkB extends CheckedToneMark {characters = [characters['b']]}
-export class ToneMarkD extends CheckedToneMark {characters = [characters['d']]}
-export class ToneMarkG extends CheckedToneMark {characters = [characters['g']]}
-export class ToneMarkF extends CheckedToneMark {characters = [characters['f']]}
+export class ToneMarkP extends CheckedToneMark {characters = [characters.get('p')]}
+export class ToneMarkT extends CheckedToneMark {characters = [characters.get('t')]}
+export class ToneMarkK extends CheckedToneMark {characters = [characters.get('k')]}
+export class ToneMarkH extends CheckedToneMark {characters = [characters.get('h')]}
+export class ToneMarkB extends CheckedToneMark {characters = [characters.get('b')]}
+export class ToneMarkD extends CheckedToneMark {characters = [characters.get('d')]}
+export class ToneMarkG extends CheckedToneMark {characters = [characters.get('g')]}
+export class ToneMarkF extends CheckedToneMark {characters = [characters.get('f')]}
 
-export class CheckedToneMarkX extends CheckedToneMark {characters = [characters['x']]}
-export class CheckedToneMarkY extends CheckedToneMark {characters = [characters['y']]}
+export class CheckedToneMarkX extends CheckedToneMark {characters = [characters.get('x')]}
+export class CheckedToneMarkY extends CheckedToneMark {characters = [characters.get('y')]}
 
-export class FinalP extends Final {characters = [characters['p']]}
-export class FinalT extends Final {characters = [characters['t']]}
-export class FinalK extends Final {characters = [characters['k']]}
-export class FinalH extends Final {characters = [characters['h']]}
-export class FinalB extends Final {characters = [characters['b']]}
-export class FinalD extends Final {characters = [characters['d']]}
-export class FinalG extends Final {characters = [characters['g']]}
-export class FinalF extends Final {characters = [characters['f']]}
+export class FinalP extends Final {characters = [characters.get('p')]}
+export class FinalT extends Final {characters = [characters.get('t')]}
+export class FinalK extends Final {characters = [characters.get('k')]}
+export class FinalH extends Final {characters = [characters.get('h')]}
+export class FinalB extends Final {characters = [characters.get('b')]}
+export class FinalD extends Final {characters = [characters.get('d')]}
+export class FinalG extends Final {characters = [characters.get('g')]}
+export class FinalF extends Final {characters = [characters.get('f')]}
 
-class FinalM extends Final {characters = [characters['m']]}
-class FinalN extends Final {characters = [characters['n']]}
-class FinalNG extends Final {characters = [characters['n'], characters['g']]}
+class FinalM extends Final {characters = [characters.get('m')]}
+class FinalN extends Final {characters = [characters.get('n')]}
+class FinalNG extends Final {characters = [characters.get('n'), characters.get('g')]}
 
-class NasalNN extends Nasal {characters = [characters['n'], characters['n']]}
+class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
 class SetOfSounds {
     toString(elements: Array<Sound>) {

@@ -1,6 +1,6 @@
 
 
-import { Character, characters } from './character';
+import { Character } from './character';
 
 //------------------------------------------------------------------------------
 //  Sound

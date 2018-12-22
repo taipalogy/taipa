@@ -1,5 +1,5 @@
 
-import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules,
+import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, freeAllomorphBaseRules,
     ToneSandhiRootMorpheme, 
     AllomorphZS,
     AllomorphW,
@@ -9,7 +9,6 @@ import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, C
     CombiningFormMorpheme,
     } from './morpheme';
 
-import { IDictionary, Dictionary } from './collection'
 import { ToneMark } from './version1';
 
 
@@ -165,12 +164,11 @@ export class ToneSandhiInputingLexeme {
         // change allomorph to affix
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
-            let facrs = new FreeAllomorphBaseRules();
             fie.affix.toneMark = allomorph.toneMark;
-            for(let key in facrs.rules[allomorph.getLiteral()]) {
+            for(let key in freeAllomorphBaseRules.get(allomorph.getLiteral())) {
                 //console.log(`k is ${key}`)
                 let a = new Affix();
-                a.toneMark = facrs.rules[allomorph.getLiteral()][key];
+                a.toneMark = freeAllomorphBaseRules.get(allomorph.getLiteral())[key];
                 //console.log(`a.toneMark is ${a.toneMark}`)
                 fie.baseAffixes.push(a);
             }

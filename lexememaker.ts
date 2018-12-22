@@ -212,7 +212,7 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
 
         // Morpheme Maker
         let tsmm = new CombiningFormMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is in combining form
+        let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is used
 
         // Lexeme Maker
         let tslm = new SandhiFormLexemeMaker(morphemes, this.toneMark);

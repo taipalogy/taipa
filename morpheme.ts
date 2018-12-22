@@ -2,7 +2,6 @@ import { AlphabeticLetter } from './grapheme'
 import { ZeroToneMark, Final, ToneMark, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
     FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
     ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX } from './version1'
-import { IDictionary, Dictionary } from './collection'
 import { Sound } from './grapheme'
 
 //------------------------------------------------------------------------------
@@ -330,33 +329,16 @@ class GrammaticalSuffix {
 //  Free Allomorph Base Rules
 //------------------------------------------------------------------------------
 
-interface IDictionaryOfRules extends IDictionary {}
-
-class DictionaryOfRules extends Dictionary {
-    constructor(init: { key: string; value: Array<ToneMark>; }[]) {
-        super(init);
-    }
-
-    toLookup(): IDictionaryOfRules {
-        return this;
-    }
-}
-
-export class FreeAllomorphBaseRules {
-    readonly rules = new DictionaryOfRules([
-        { key: 'ss', value: [new FreeToneMarkY()] },
-        { key: 'w', value: [new ToneMarkZS(), new FreeToneMarkX()] },
-        { key: 'xx', value: [new ToneMarkZS(), new ToneMarkSS, new FreeToneMarkX()] },
-        { key: 'xxx', value: [new ToneMarkZS(), new ToneMarkSS(), new FreeToneMarkX()] },
-        { key: 'zs', value: [new FreeToneMarkX(), new ToneMarkSS(), new ZeroToneMark()] },
-        { key: 'zzs', value: [] },
-
-        { key: 'x', value: [] },
-        { key: 'y', value: [new ToneMarkW()] },
-
-        { key: 'zero', value: [new FreeToneMarkY()] },
-    ]).toLookup();
-}
+export const freeAllomorphBaseRules: Map<string, ToneMark[]> = new Map()
+    .set('ss', [new FreeToneMarkY()])
+    .set('w', [new ToneMarkZS(), new FreeToneMarkX()])
+    .set('xx', [new ToneMarkZS(), new ToneMarkSS, new FreeToneMarkX()])
+    .set('xxx', [new ToneMarkZS(), new ToneMarkSS(), new FreeToneMarkX()])
+    .set('zs', [new FreeToneMarkX(), new ToneMarkSS(), new ZeroToneMark()])
+    .set('zzs', [])
+    .set('x', [])
+    .set('y', [new ToneMarkW()])
+    .set('zero', [new FreeToneMarkY()])
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -453,7 +435,7 @@ export class ToneSandhiInputingMorpheme {
     }
 
     getBaseForms(): Array<ToneSandhiSyllable> {
-        let facrs = new FreeAllomorphBaseRules();
+        //let facrs = new FreeAllomorphBaseRules();
         // get base forms as strings
         if(this.allomorph != null) {
             // member variable allomorph is not null
@@ -465,24 +447,24 @@ export class ToneSandhiInputingMorpheme {
                     // the base tone of the first tone is the second tone
                     // 1 to 2 ---->
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(new AlphabeticLetter(facrs.rules['zero'][0].characters));
+                    s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get('zero')[0].characters));
                     //console.log(this.syllable)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
                     let ret = [];
-                    for(let i in facrs.rules[this.allomorph.getLiteral()]) {
+                    for(let i in freeAllomorphBaseRules.get(this.allomorph.getLiteral())) {
                         // pop letter
                         // push letter
                         let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                         //if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
-                        if(!(facrs.rules[this.allomorph.getLiteral()][i] instanceof ZeroAllomorph)) {
+                        if(!(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
                             s.popLetter();
                             // there are base tone marks
                             // includes ss and x, exclude zero allomorph
-                            s.pushLetter(new AlphabeticLetter(facrs.rules[this.allomorph.getLiteral()][i].characters));
+                            s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i].characters));
                             ret.push(s);
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
