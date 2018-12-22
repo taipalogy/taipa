@@ -7,7 +7,7 @@ import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, C
     AllomorphX,
     ZeroAllomorph,
     CombiningFormMorpheme,
-    Rule} from './morpheme';
+    } from './morpheme';
 
 import { IDictionary, Dictionary } from './collection'
 import { ToneMark } from './version1';

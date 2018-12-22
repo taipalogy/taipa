@@ -2,7 +2,6 @@
 import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
-import { Rule, AllomorphZS, AllomorphW, AllomorphY, ZeroAllomorph } from './morpheme';
 import { combiningRules } from './version1'
 
 //------------------------------------------------------------------------------

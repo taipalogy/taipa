@@ -1,5 +1,5 @@
 
-import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable, Rule  } from './morpheme'
+import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable } from './morpheme'
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'

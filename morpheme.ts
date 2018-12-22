@@ -358,16 +358,6 @@ export class FreeAllomorphBaseRules {
     ]).toLookup();
 }
 
-export class Rule {
-    from: Allomorph
-    to: Allomorph
-
-    constructor(from: Allomorph, to: Allomorph) {
-        this.from = from
-        this.to = to
-    }
-}
-
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------

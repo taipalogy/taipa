@@ -16,7 +16,7 @@ abstract class MorphemeMaker {
                             // an abstract type of ToneSandhiInputingMorpheme and 
                             // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
 
-    getNewMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
+    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
         // get the longest matched syllable pattern
         let lolrs = new ListOfLexicalRoots();
         lolrs.setfirstLetter(letters[beginOfSyllable].literal)
@@ -78,7 +78,7 @@ abstract class MorphemeMaker {
 
                 //console.log(letters[letters.length-1].literal)
                 
-                msp = this.getNewMatchedSyllablePattern(letters, beginOfSyllable);
+                msp = this.getMatchedSyllablePattern(letters, beginOfSyllable);
 
                 if(msp.matchedLength == 0) {
                     console.log('no matched pattern of sounds found. the pattern needs to be added.')
