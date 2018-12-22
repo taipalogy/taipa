@@ -1,5 +1,5 @@
 
-import { Sound, Letter } from './grapheme'
+import { Sound } from './grapheme'
 import { characters } from './character'
 import { list_of_lexical_roots } from './lexicalroots1'
 import { GraphemeMaker } from './graphememaker'
@@ -435,7 +435,7 @@ class PSZero implements PartialPositionalSound {
 //  Combining Rule
 //------------------------------------------------------------------------------
 
-const combiningRules: Map<string, any> = new Map()
+export const combiningRules: Map<string, any> = new Map()
     .set('zero', { zs: PSZS.freeToneMark })
     .set('y', { zero: PSZero.freeToneMark, ss: PSSS.freeToneMark })
     .set('w', { y: PSY.freeToneMark })
@@ -487,18 +487,7 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
 //------------------------------------------------------------------------------
 
 export class ListOfLexicalRoots {
-    list: Array<Sound[]> =  new Array(
-        /*
-        [PSA.medial],
-        [PSA.medial, PSY.freeToneMark],
-        [PSA.medial, PSZS.freeToneMark],
-        [PSA.medial, PSH.final],
-        [PSA.medial, PSF.final],
-        [PSS.initial, PSU.medial, PSZS.freeToneMark],
-        [PSJ.initial, PSI.medial, PSB.final, PSB.checkedToneMark],
-        [PSH.initial, PSU.medial, PSA.medial, PST.final],
-        */
-    )
+    list: Array<Sound[]> =  new Array()
 
     setfirstLetter(init: string) {
         let cog = new ClientOfGenerator
@@ -528,6 +517,7 @@ export class LexicalRootGenerator {
                 strs.push(list_of_lexical_roots[i])
             }
         }
+        //for(let i in strs) console.log(strs[i])
         return strs
     }
 }
@@ -541,6 +531,7 @@ export class ClientOfGenerator {
     }
 
     private analyzeAfterFinalConsonants(ls: string[], sounds: string[], index: number): string[] {
+        // base form of checked tone do not have a tone mark
         if(this.isFreeToneMark(ls[index])) {
             sounds.push(ls[ls.length-1] + '.freeToneMark')
         }
@@ -551,15 +542,16 @@ export class ClientOfGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFreeToneMark(ls[index])) {
             sounds.push(ls[ls.length-1] + '.freeToneMark')
+        } else if(this.isNasal(ls[index])) {
+            sounds.push(ls[index] + '.nasal')
+            if(ls.length > sounds.length) {
+                sounds = this.analyzeAfterFinalConsonants(ls, sounds, sounds.length)
+            }
         } else if(this.isFinalConsonant(ls[index])) {
             let k = index
             while(k < ls.length) {
                 if(this.isFinalConsonant(ls[k])) {
-                    if(this.isNasal(ls[k])) {
-                        sounds.push(ls[k] + '.nasal')
-                    } else {
-                        sounds.push(ls[k] + '.final')
-                    }
+                    sounds.push(ls[k] + '.final')
                 }
                 k++
             }
@@ -567,7 +559,8 @@ export class ClientOfGenerator {
             if(ls.length > sounds.length) {
                 sounds = this.analyzeAfterFinalConsonants(ls, sounds, sounds.length)
             }
-        }
+            
+        } 
 
         return sounds
     }
@@ -729,7 +722,8 @@ export class ClientOfGenerator {
             
             let sounds: string[] = []
             
-            if(this.isMaterLectionis(ls[0])) {
+            if((this.isMaterLectionis(ls[0]) && ls.length == 1) 
+                || (ls.length == 2 && this.isMaterLectionis(ls[0]) && this.isFreeToneMark(ls[1]))) {
                 sounds.push(ls[0] + '.medial')
                 if(ls.length > sounds.length) {
                     if(this.isFreeToneMark(ls[sounds.length])) {
@@ -755,7 +749,8 @@ export class ClientOfGenerator {
                     // consonants followed by vowels
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
                 } else if(this.isFinalConsonant(ls[1])) {
-                    // consonants followed by consonants
+                    // consonants followed by consonants. CC
+                    // there should be a vowel -ir-
                     sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
                 }
             }

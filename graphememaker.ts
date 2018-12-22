@@ -34,26 +34,39 @@ export class GraphemeMaker {
         return graphemes;
     }
 
-    getMatchedSequence(characters: Array<Character>, i: number, beginOfLetter: number) {
+    getMatchedSequence(characters: Array<Character>, beginOfLetter: number) {
         let ms = new MatchedSequence();
         let matchedLen = 0;
-        for(let m in this.list) {
-            let min = Math.min(characters.length-beginOfLetter, this.list[m].literal.length);
+        for(let j in this.list) {
+            let min = Math.min(characters.length-beginOfLetter, this.list[j].literal.length);
             //console.log("min: %d", min)
-            if(this.list[m].literal.length == min) {
-                for(let n = 0; n < min; n++) {
-                    //console.log("i: %d. n: %d.", i, n)
-                    //console.log(letters)
-                    if(characters[i+n].character.search(this.list[m].literal[n]) == 0) {
-                        if(n+1 == min && min > matchedLen) {
+            if(this.list[j].literal.length == min) {
+                for(let k = 0; k < min; k++) {
+                    //console.log("i: %d. k: %d.", i, k)
+                    if(characters[beginOfLetter+k].character.search(this.list[j].literal[k]) == 0) {
+                        if(k == 0 && characters[0].character === 'n') {
+                            if(this.list[j].literal === 'nn') {
+                                // at the beginning of a letter, we should always prefer 'n' to 'nn'
+                                // 'nn' is not able to begin a syllable
+                                // 'ng' has higher associativity than 'nn' when in 'nng'
+                                
+                                matchedLen = 1;
+                                // copy the matched letter
+                                ms.characters[0] = new Character('n')
+                                //console.log(this.list[j].literal + '-')
+                                break
+                            }
+                        }
+
+                        if(k+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
                             matchedLen = min;
                             // copy the matched letters
                             for(let q = 0; q < matchedLen; q++) {
-                                ms.characters[q] = characters[i+q];
+                                ms.characters[q] = characters[beginOfLetter+q];
                             }
-                            //console.log(this.list[m])
+                            //console.log(this.list[j].literal + '+')
                             //console.log(characters[i+n].symbol)
                             //console.log(new RegExp(sp.list[m][n]))
                             //console.log(matchedLen)    
@@ -80,7 +93,7 @@ export class GraphemeMaker {
             //console.log("metadata letter array looping.");
             
             if(i-beginOfLetter == 0) {
-                let ms = this.getMatchedSequence(characters, i, beginOfLetter);
+                let ms = this.getMatchedSequence(characters, beginOfLetter);
                 //console.log("matchedLen: %d", ms.matchedLength);
                 //console.log(ms.characters)
 
@@ -111,11 +124,11 @@ export class GraphemeMaker {
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
                 if(i+1-beginOfLetter == ltts[0].characters.length) {
                     // when index i plus one equals the length of the matched syllable
-                    let tmp = ltts.shift();
-                    beginOfLetter +=  tmp.characters.length;
-                    letters.push(tmp);
+                    let l = ltts.shift();
+                    beginOfLetter +=  l.characters.length;
+                    letters.push(l);
                     // pack letters into sounds
-                    let gr = new AlphabeticGrapheme(tmp);
+                    let gr = new AlphabeticGrapheme(l);
                     graphemes.push(gr);
                 }
 

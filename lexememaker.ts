@@ -3,6 +3,7 @@ import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme,
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
+import { ToneMark } from './version1';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -107,14 +108,14 @@ export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
 }
 
 class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
-    rule: Rule
+    toneMark: ToneMark
 
-    constructor(morphemes: Array<ToneSandhiRootMorpheme>, r?: Rule) {
+    constructor(morphemes: Array<ToneSandhiRootMorpheme>, tm?: ToneMark) {
         super(morphemes)
         //this.morphemes = new Array();
         //this.morphemes = morphemes;
-        if(r != undefined) {
-            this.rule = r
+        if(tm != undefined) {
+            this.toneMark = tm
         }
     }
 
@@ -134,7 +135,7 @@ class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
             }
         }
 
-        tspl.populateSandhiForm(this.morphemes, this.rule)
+        tspl.populateSandhiForm(this.morphemes, this.toneMark)
 
         let lexemes: Array<SandhiFormLexeme> = new Array();
         lexemes.push(tspl);
@@ -197,11 +198,11 @@ export class TurningIntoInflectionLexeme {
 }
 
 export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
-    rule: Rule
+    toneMark: ToneMark
 
-    constructor (r: Rule) {
+    constructor (tm: ToneMark) {
         super()
-        this.rule = r
+        this.toneMark = tm
     }
 
     turnIntoLexemes(str: string) {
@@ -214,7 +215,7 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
         let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is in combining form
 
         // Lexeme Maker
-        let tslm = new SandhiFormLexemeMaker(morphemes, this.rule);
+        let tslm = new SandhiFormLexemeMaker(morphemes, this.toneMark);
         let lexemes = tslm.makeSandhiLexemes();
 
         return lexemes;

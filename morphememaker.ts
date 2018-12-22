@@ -1,7 +1,6 @@
 
-import { AlphabeticGrapheme, AlphabeticLetter, Letter } from './grapheme'
-import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, SyllablePatterns, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme, Rule } from './morpheme'
-import { list_of_lexical_roots } from './lexicalroots1';
+import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
+import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
 import { ListOfLexicalRoots } from './version1';
 
 //------------------------------------------------------------------------------
@@ -51,38 +50,6 @@ abstract class MorphemeMaker {
         return mp;
     }
 
-    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, i: number, beginOfSyllable: number) {
-        // get the longest matched syllable pattern
-        let sps = new SyllablePatterns();
-        let matchedLen = 0;
-        let mp = new MatchedPattern();
-        for(let m in sps.list) {
-            let min = Math.min(letters.length-beginOfSyllable, sps.list[m].length);
-            if(sps.list[m].length == min) {
-                for(let n = 0; n < min; n++) {
-                    if(letters[i+n].literal.search(new RegExp(sps.list[m][n].toString())) == 0) {
-                        //console.log(sp.list[m][n].toString())
-                        if(n+1 == min && min > matchedLen) {
-                            // to make sure it is longer than previous patterns
-                            // last letter matched for the pattern
-                            matchedLen = min;
-                            // copy the matched letters
-                            for(let q = 0; q < matchedLen; q++) {
-                                mp.letters[q] = letters[i+q];
-                            }
-                            mp.pattern = sps.list[m];
-                            //console.log(sps.list[m])
-                            //console.log(letters[i+n].literal)
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-        return mp;
-    }
-
     preprocess() {
         // unpack graphemes and get letters from them
         let letters: Array<AlphabeticLetter> = new Array();
@@ -110,9 +77,8 @@ abstract class MorphemeMaker {
                 //console.log("i:%d. begin of syllable hit: %d", i, beginOfSyllable);
 
                 //console.log(letters[letters.length-1].literal)
-                msp = this.getMatchedSyllablePattern(letters, i, beginOfSyllable);
                 
-                //msp = this.getNewMatchedSyllablePattern(letters, beginOfSyllable);
+                msp = this.getNewMatchedSyllablePattern(letters, beginOfSyllable);
 
                 if(msp.matchedLength == 0) {
                     console.log('no matched pattern of sounds found. the pattern needs to be added.')

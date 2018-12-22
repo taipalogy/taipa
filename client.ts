@@ -16,11 +16,10 @@ export class Client {
     lookup(k: string) {
         for(let key in dictionary) {
             if(key == k) {
-            var value = dictionary[key];
+                var value = dictionary[key];
             }
             if(value != null) {
-            //console.log(value[0]);
-            return value[0];
+                return value[0];
             }
         }
         return null;
@@ -34,8 +33,6 @@ export class Client {
     }
 
     process(str: string): Document {
-
-        console.log(str)
         let dp = new DependencyParser();
         let c: Configuration = dp.getInitialConfiguration();
         let tokens = str.match(/\w+/g);

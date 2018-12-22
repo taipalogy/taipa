@@ -1,9 +1,7 @@
-import { AlphabeticLetter, Final, ToneMark, MedialGraphs, NasalGraphs, 
-        FreeToneMarkGraphs, CheckedToneMarkGraphs, NeutralFinalGraphs, FinalGraphs, InitialNasalGraphs,
-        InitialGraphs, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
-        FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
-        ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX, Letter } from './grapheme'
-import { ZeroToneMark } from './grapheme'
+import { AlphabeticLetter } from './grapheme'
+import { ZeroToneMark, Final, ToneMark, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
+    FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
+    ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX } from './version1'
 import { IDictionary, Dictionary } from './collection'
 import { Sound } from './grapheme'
 
@@ -562,18 +560,18 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
         return
     }
 
-    getCombiningForm(r: Rule): ToneSandhiSyllable  {
+    getCombiningForm(tm: ToneMark): ToneSandhiSyllable  {
         if(this.allomorph != null) {
             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
             if(this.allomorph instanceof FreeAllomorph) {
                 if(this.allomorph instanceof ZeroAllomorph) {
-                    s.pushLetter(new AlphabeticLetter(r.to.toneMark.characters))
+                    s.pushLetter(new AlphabeticLetter(tm.characters))
                 } else if(this.allomorph instanceof AllomorphY) {
                     s.popLetter()
                     return s
                 } else {
                     s.popLetter()
-                    s.pushLetter(new AlphabeticLetter(r.to.toneMark.characters))
+                    s.pushLetter(new AlphabeticLetter(tm.characters))
                     return s
                 }
             } else if(this.allomorph instanceof CheckedAllomorph) {
@@ -589,76 +587,8 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
 //  Syllable Patterns
 //------------------------------------------------------------------------------
 
-class PatternOfSounds {
-    list: Array<Sound>
-
-    toString() {
-        let str = '';
-        for(let i = 0; i < this.list.length; i++) {
-            if(i+1 < this.list.length) {
-                str += this.list[i].toString();
-                str += '|';
-            } else if(i+1 == this.list.length) {
-                str += this.list[i].toString();
-            }
-        }
-        return str;
-    }
-}
-
-export class SyllablePatterns {
-    list = new Array();
-
-    constructor() {
-        // one letter
-        this.list.push([new MedialGraphs()]);
-        this.list.push([new InitialNasalGraphs()]);
-
-        // two letters
-        this.list.push([new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new FinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs()]);
-        this.list.push([new InitialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialNasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialNasalGraphs(), new NasalGraphs()]);
-
-        // three letters
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new FinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialNasalGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
-        this.list.push([new InitialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
-
-        // four letters
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
-
-        // five letters
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-
-        // lueifx, lurifx
-    }
-}
-
 export class MatchedPattern {
     letters: Array<AlphabeticLetter> = new Array();
-    pattern: Array<PatternOfSounds> = new Array(); // to be deleted
     patternNew: Array<Sound> = new Array();
     get matchedLength() { return this.letters.length; } // length of pattern can be optionally returned
 }
@@ -666,7 +596,6 @@ export class MatchedPattern {
 //------------------------------------------------------------------------------
 //  Syllable
 //------------------------------------------------------------------------------
-
 
 export class Syllable {
     literal: string = '';

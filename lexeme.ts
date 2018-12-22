@@ -10,6 +10,7 @@ import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, C
     Rule} from './morpheme';
 
 import { IDictionary, Dictionary } from './collection'
+import { ToneMark } from './version1';
 
 
 export let FORMS = {
@@ -290,20 +291,20 @@ export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
         }
     }
 
-    private getSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, r: Rule) {
+    private getSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: ToneMark) {
         if(this.tonalEnding != null) {
             let word = new ToneSandhiWord(this.word.syllables);
             if(this.tonalEnding instanceof FreeTonalEnding) {
                 let last = morphemes[morphemes.length-1]
                 if(last instanceof CombiningFormMorpheme) {
                     word.popSyllable()
-                    word.pushSyllable(last.getCombiningForm(r));
+                    word.pushSyllable(last.getCombiningForm(tm));
                 }
                 return word
             } else if(this.tonalEnding instanceof CheckedTonalEnding) {
                 let last = morphemes[morphemes.length-1]
                 if(last instanceof CombiningFormMorpheme) {
-                    word.pushSyllable(last.getCombiningForm(r));
+                    word.pushSyllable(last.getCombiningForm(tm));
                 }
                 return word
             }
@@ -315,9 +316,8 @@ export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
         return this.wordForSandhiForm
     }
 
-    populateSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, r: Rule) {
-        //this.wordForSandhiForm = new ToneSandhiWord()
-        this.wordForSandhiForm = this.getSandhiForm(morphemes, r)
+    populateSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: ToneMark) {
+        this.wordForSandhiForm = this.getSandhiForm(morphemes, tm)
     }
 }
 
