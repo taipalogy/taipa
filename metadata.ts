@@ -1,5 +1,5 @@
 
-import { lowerLetters } from './graphememaker'
+import { lowerLetters } from './grapheme'
 import { characters } from './character'
 import { list_of_lexical_roots } from './lexicalroots1'
 

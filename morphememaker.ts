@@ -19,15 +19,14 @@ abstract class MorphemeMaker {
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
         // get the longest matched syllable pattern
         let lolrs = new ListOfLexicalRoots();
-        lolrs.setfirstLetter(letters[beginOfSyllable].literal)
+        lolrs.setFirstLetter(letters[beginOfSyllable].literal)
         let matchedLen = 0;
         let mp = new MatchedPattern();
         for(let m in lolrs.list) {
             let min = Math.min(letters.length-beginOfSyllable, lolrs.list[m].length);
             if(lolrs.list[m].length == min) {
                 for(let n = 0; n < min; n++) {
-                    if(letters[beginOfSyllable+n].literal.search(new RegExp(lolrs.list[m][n].getLiteral())) == 0) {
-                        //console.log(sp.list[m][n].toString())
+                    if(letters[beginOfSyllable+n].literal === lolrs.list[m][n].getLiteral()) {
                         if(n+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
@@ -37,9 +36,9 @@ abstract class MorphemeMaker {
                                 mp.letters[q] = letters[beginOfSyllable+q];
                             }
                             
-                            mp.patternNew = lolrs.list[m];
+                            mp.pattern = lolrs.list[m];
                             //console.log(lolrs.list[m])
-                            //console.log(letters[i+n].literal)
+                            //console.log(mp.letters)
                         }
                     } else {
                         break;
@@ -81,7 +80,7 @@ abstract class MorphemeMaker {
                 msp = this.getMatchedSyllablePattern(letters, beginOfSyllable);
 
                 if(msp.matchedLength == 0) {
-                    console.log('no matched pattern of sounds found. the pattern needs to be added.')
+                    console.warn('no matched pattern of sounds found. the pattern needs to be added.')
                 }
                 //console.log("matchedLen: %d", msp.matchedLength);
                 //console.log(msp.pattern);
@@ -94,6 +93,11 @@ abstract class MorphemeMaker {
                     }
                     tsm =  this.create(new ToneSandhiSyllable(msp.letters))
 
+                    if(tsm instanceof ToneSandhiInputingMorpheme) {
+                        // should sounds be blended with morphemes
+                        tsm.sounds = msp.pattern
+                    }
+                    
                     // here we should match the combining form with its root
 
                     morphemes.push(tsm);
@@ -112,6 +116,7 @@ abstract class MorphemeMaker {
                 //console.log("nothing matched");
             } else if(morphemes.length >= 1) {
                 //beginOfSyllable += msp.letters.length;
+
                 if(msp.matchedLength > 0) {
                     //console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);
                     i += beginOfSyllable-i-1;

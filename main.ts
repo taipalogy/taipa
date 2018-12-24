@@ -12,22 +12,37 @@ if(argc.length == 1) {
     let clt = new Client();
     let doc = clt.processOneToken(input);
     for(let i in doc.inputingLexemes) {
-        //console.log(doc.inputingLexemes[i].word.literal)
+        console.info(doc.inputingLexemes[i].word.literal)
+
+        // should sounds be blended with morphemes?
+        for(let j in doc.inputingMorphemes) {
+            for(let k in doc.inputingMorphemes[j]) {
+                let s = doc.inputingMorphemes[j][k]
+                console.info(s.getLiteral() + ' - ' + s.name)
+            }
+        }
+
         let ilw = clt.lookup(doc.inputingLexemes[i].word.literal);
         // when the input word can be found in the dictionary
         if(ilw != null) {
-            console.log(ilw)
+            let l = doc.inputingLexemes[i].word.literal
+            let e = doc.inputingLexemes[i].getInflectionalEnding()
+            console.info(l.substr(0, l.length-e.length) + ' - ' + 'inflectional stem')
+            if(e.length > 0) console.info(e + ' - ' + 'inflectional ending')
+
+            console.info(ilw)
         }
 
         let ls = doc.inputingLexemes[i].getBaseForms()
+
         for(let j in ls) {
-            //console.log(doc.inputingLexemes[i].lemmata[j].literal)
             let ill = clt.lookup(ls[j].literal);
             // when the base form of the word can be found in the dictionary
             if(ill != null) {
                 console.log(ill)
             }
         }
+
     }
 
     process.exit(1);

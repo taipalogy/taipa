@@ -4,7 +4,7 @@ import { MORPH_RULES } from './morphrules'
 import { SYMBOLS } from './symbols';
 import { Lexeme } from './lexeme';
 
-enum Dependency {
+export enum Dependency {
     csubj,
     ccomp,
     dobj,
@@ -37,7 +37,6 @@ export class Shift extends Transition {
 
 export class RightArc extends Transition {
     do(c: Configuration) {
-        c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
         c.stack.pop();
         return c;
     }
@@ -45,7 +44,6 @@ export class RightArc extends Transition {
 
 export class LeftArc extends Transition {
     do(c: Configuration) {
-        c.graph.push(new Arc(Dependency.nsubj, c.stack[c.stack.length-1], c.stack[c.stack.length-2]))
         return c;
     }
 }

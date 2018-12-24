@@ -2,13 +2,15 @@
 import { TurningIntoInputingLexeme } from './lexememaker'
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc } from './dependencyparser'
+import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
+import { Sound } from './grapheme';
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
     parsingLexemes: Array<Lexeme> = new Array();
+    inputingMorphemes: Array<Sound[]> = new Array()
     graph: Array<Arc>
 }
 
@@ -29,6 +31,10 @@ export class Client {
         let doc: Document = new Document();
         let turner = new TurningIntoInputingLexeme()
         doc.inputingLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
+
+        // should array of Sounds be an member of inputing lexeme?
+        doc.inputingMorphemes = doc.inputingLexemes[0].arrayOfSounds 
+
         return doc;
     }
 
@@ -77,7 +83,9 @@ export class Client {
                     } else if(l instanceof ToneSandhiInflectionLexeme) {
                         if(l.kvp.key === 'intransitive') {
                             guide.transitions.push(new RightArc())
+                            c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                             guide.transitions.push(new RightArc())
+                            
                         }
                     }
                 } if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
@@ -85,6 +93,7 @@ export class Client {
                     if(l instanceof SandhiFormLexeme) {
                         if(l.kvp.key === 'proceeding') {
                             guide.transitions.push(new Shift())
+                            c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                         }
                     }
                 }

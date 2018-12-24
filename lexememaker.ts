@@ -1,5 +1,5 @@
 
-import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable } from './morpheme'
+import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable, Morpheme } from './morpheme'
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
@@ -16,7 +16,7 @@ abstract class SuperLexemeMaker {
         // extract syllables from morphemes. concatenate syllables into a word.
         // wrap the word in a lexeme. use morephemes to populate lemmata of a lexeme.
         // assign inflectinal affix to a lexeme.
-        // push the lexeme into an array of lexeme.
+        // push the lexeme into an array of lexemes.
         // unpack morphemes and take syllables out from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
         for(let key in this.morphemes) {
@@ -63,14 +63,20 @@ export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
                 // inflectional ending needs to be assigned to inputing lexeme
                 tsil.assignInflectionalEnding(this.morphemes[this.morphemes.length-1].allomorph);
-                //console.log("pos got assigned inflectional affix")
             }
         }
 
         // lemmata needs to be populated for inputing lexeme
         tsil.populateLemmata(this.morphemes);
 
+
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
+
+        for(let k in this.morphemes) {
+            // should sounds be blended with morphemes
+            tsil.arrayOfSounds.push(this.morphemes[k].sounds)
+        }
+        
         lexemes.push(tsil);
 
         return lexemes

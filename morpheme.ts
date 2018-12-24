@@ -353,9 +353,11 @@ export class ToneSandhiMorpheme extends Morpheme {}
 export class ToneSandhiInputingMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null; // required to populate stems
+    sounds: Array<Sound> // should sounds be blended with morphemes
 
     constructor(syllable: ToneSandhiSyllable) {
         this.syllable = syllable;
+        this.sounds = new Array() // should sounds be blended with morphemes
         // assign allomorph for each syllable
         this.assignAllomorph();
     }
@@ -561,7 +563,7 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
 
 export class MatchedPattern {
     letters: Array<AlphabeticLetter> = new Array();
-    patternNew: Array<Sound> = new Array();
+    pattern: Array<Sound> = new Array();
     get matchedLength() { return this.letters.length; } // length of pattern can be optionally returned
 }
 

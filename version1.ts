@@ -9,11 +9,12 @@ import { GraphemeMaker } from './graphememaker'
 //  Sound
 //------------------------------------------------------------------------------
 
-export class Initial extends Sound {}
-export class Medial extends Sound {}
-export class Final extends Sound {}
-export class Nasal extends Sound {}
+export class Initial extends Sound {name = 'initial'}
+export class Medial extends Sound {name = 'medial'}
+export class Final extends Sound {name = 'final'}
+export class Nasal extends Sound {name = 'nasal'}
 export class ToneMark extends Sound {
+    name = 'tone mark'
     isEqualToToneMark(toneMark: ToneMark) {
         if(this.getLiteral() === toneMark.getLiteral()) {
             return true;
@@ -22,11 +23,15 @@ export class ToneMark extends Sound {
     }
 }
 
-export class FreeToneMark extends ToneMark {}
-export class CheckedToneMark extends ToneMark {}
+export class FreeToneMark extends ToneMark {
+    name = 'free tone mark'
+}
+export class CheckedToneMark extends ToneMark {
+    name = 'checked tone mark'
+}
 
-class StopFinal extends Final {}
-class NasalFinal extends Final {}
+class StopFinal extends Final {name = 'stop final'}
+class NasalFinal extends Final {name = 'nasal final'}
 
 class MedialA extends Medial {characters = [characters.get('a')]}
 class MedialE extends Medial {characters = [characters.get('e')]}
@@ -84,18 +89,18 @@ export class ToneMarkF extends CheckedToneMark {characters = [characters.get('f'
 export class CheckedToneMarkX extends CheckedToneMark {characters = [characters.get('x')]}
 export class CheckedToneMarkY extends CheckedToneMark {characters = [characters.get('y')]}
 
-export class FinalP extends Final {characters = [characters.get('p')]}
-export class FinalT extends Final {characters = [characters.get('t')]}
-export class FinalK extends Final {characters = [characters.get('k')]}
-export class FinalH extends Final {characters = [characters.get('h')]}
-export class FinalB extends Final {characters = [characters.get('b')]}
-export class FinalD extends Final {characters = [characters.get('d')]}
-export class FinalG extends Final {characters = [characters.get('g')]}
-export class FinalF extends Final {characters = [characters.get('f')]}
+export class FinalP extends StopFinal {characters = [characters.get('p')]}
+export class FinalT extends StopFinal {characters = [characters.get('t')]}
+export class FinalK extends StopFinal {characters = [characters.get('k')]}
+export class FinalH extends StopFinal {characters = [characters.get('h')]}
+export class FinalB extends StopFinal {characters = [characters.get('b')]}
+export class FinalD extends StopFinal {characters = [characters.get('d')]}
+export class FinalG extends StopFinal {characters = [characters.get('g')]}
+export class FinalF extends StopFinal {characters = [characters.get('f')]}
 
-class FinalM extends Final {characters = [characters.get('m')]}
-class FinalN extends Final {characters = [characters.get('n')]}
-class FinalNG extends Final {characters = [characters.get('n'), characters.get('g')]}
+class FinalM extends NasalFinal {characters = [characters.get('m')]}
+class FinalN extends NasalFinal {characters = [characters.get('n')]}
+class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
 
 class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
@@ -489,7 +494,7 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
 export class ListOfLexicalRoots {
     list: Array<Sound[]> =  new Array()
 
-    setfirstLetter(init: string) {
+    setFirstLetter(init: string) {
         let cog = new ClientOfGenerator
         let entries: Array<Sound[]> = cog.generate(init)
         for(let i in entries) {

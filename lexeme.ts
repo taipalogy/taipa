@@ -10,6 +10,7 @@ import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, C
     } from './morpheme';
 
 import { ToneMark } from './version1';
+import { Sound } from './grapheme';
 
 
 export let FORMS = {
@@ -153,11 +154,13 @@ export class ToneSandhiLexeme extends Lexeme {
 
 export class ToneSandhiInputingLexeme {
     word: ToneSandhiWord
-    inflectionalEnding: InflectionalEnding = null
+    private inflectionalEnding: InflectionalEnding = null
     private lemmata: Array<ToneSandhiWord>
+    arrayOfSounds: Array<Sound[]> // should sounds be blended with lexemes
 
     constructor(word: ToneSandhiWord) {
         this.word = word;
+        this.arrayOfSounds = new Array() // should sounds be blended with lexemes
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {
@@ -185,7 +188,16 @@ export class ToneSandhiInputingLexeme {
         //console.log(this.inflectionalEnding.getLiteral())
     }
 
-    getBaseForms() { return this.lemmata }
+    getInflectionalEnding() {
+        if(this.inflectionalEnding == null) return ''
+        return this.inflectionalEnding.getLiteral()
+    }
+
+    getBaseForms() {
+        // this must be called after populateLemmata is called
+        if(this.lemmata == null) return []
+        return this.lemmata 
+    }
     
     private replaceLastSyllable(morphemes: Array<ToneSandhiInputingMorpheme>) {
         let word = new ToneSandhiWord(this.word.syllables);
@@ -273,7 +285,7 @@ export class ToneSandhiInflectionLexeme extends ToneSandhiLexeme {
 }
 
 export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
-    wordForSandhiForm: ToneSandhiWord
+    private wordForSandhiForm: ToneSandhiWord
 
     assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
