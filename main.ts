@@ -12,23 +12,33 @@ if(argc.length == 1) {
     let clt = new Client();
     let doc = clt.processOneToken(input);
     for(let i in doc.inputingLexemes) {
-        console.info(doc.inputingLexemes[i].word.literal)
+        let l = doc.inputingLexemes[i].word.literal
+        let en = doc.inputingLexemes[i].getInflectionalEnding()
+        console.info(l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem')
+        let filler: string = ''
+        for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) { 
+            filler += ' '
+        }
+        if(en.length > 0) console.info(filler + en+ ' - ' + 'inflectional ending')
 
         // should sounds be blended with morphemes?
         for(let j in doc.inputingMorphemes) {
+            let syl = ''
+            let sous = []
             for(let k in doc.inputingMorphemes[j]) {
-                let s = doc.inputingMorphemes[j][k]
-                console.info(s.getLiteral() + ' - ' + s.name)
+                let sou = doc.inputingMorphemes[j][k]
+                sous.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
+                syl += sou.getLiteral()
+            }
+            console.info('-' + syl)
+            for(let k in sous) {
+                console.info(sous[k])
             }
         }
 
         let ilw = clt.lookup(doc.inputingLexemes[i].word.literal);
         // when the input word can be found in the dictionary
         if(ilw != null) {
-            let l = doc.inputingLexemes[i].word.literal
-            let e = doc.inputingLexemes[i].getInflectionalEnding()
-            console.info(l.substr(0, l.length-e.length) + ' - ' + 'inflectional stem')
-            if(e.length > 0) console.info(e + ' - ' + 'inflectional ending')
 
             console.info(ilw)
         }

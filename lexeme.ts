@@ -182,10 +182,10 @@ export class ToneSandhiInputingLexeme {
             this.inflectionalEnding = cie;
         }
         // when there is no inflectinal ending assigned, this word is already in base form
-        // and its last syllable is checked
+        // and its last syllable is checked tone
         
-        //console.log(allomorph.toneMark)
-        //console.log(this.inflectionalEnding.getLiteral())
+        //console.debug(allomorph.toneMark)
+        //console.debug(this.inflectionalEnding.getLiteral())
     }
 
     getInflectionalEnding() {

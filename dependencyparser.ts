@@ -5,12 +5,12 @@ import { SYMBOLS } from './symbols';
 import { Lexeme } from './lexeme';
 
 export enum Dependency {
-    csubj,
-    ccomp,
-    dobj,
-    nobj,
-    nsubj,
-    root,
+    csubj = 'csubj',
+    ccomp = 'ccomp',
+    dobj = 'dobj',
+    nobj = 'nobj',
+    nsubj = 'nsubj',
+    root = 'root',
 }
 
 export class Arc {

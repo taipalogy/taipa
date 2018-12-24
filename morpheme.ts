@@ -371,16 +371,16 @@ export class ToneSandhiInputingMorpheme {
         //console.log(aotms)
         for(let key in allomorphs.listOfChechedAllomorphs) {
             if(this.syllable.literal.substr(this.syllable.literal.length-allomorphs.listOfChechedAllomorphs[key].getLiteral().length).lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()) != -1) {
-                //console.log(allomorphs.listOfChechedAllomorphs[key].getLiteral())
-                //console.log(this.syllable.literal.lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()))
+                //console.debug(allomorphs.listOfChechedAllomorphs[key].getLiteral())
+                //console.debug(this.syllable.literal.lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()))
                 aoas.push(allomorphs.listOfChechedAllomorphs[key]);
                 // there's no need to break here, as we want to collect the second match, if any
             }
         }
         //console.log(aoas)
 
-        if(aoas.length) {
-            //console.log('length of aoas %d', aoas.length)
+        if(aoas.length > 0) {
+            //console.debug('length of aoas: %d', aoas.length)
             if(aoas.length == 2) {
                 let first = aoas[0]
                 let second = aoas[1]
@@ -396,11 +396,13 @@ export class ToneSandhiInputingMorpheme {
                         }
                     }
                 }
-            } else if(aoas.length == 1) {
-                // there should be no more than 2 matches, either 1 match or 2
-                // this checked syllable is already in base form, just return
+            }else if(aoas.length == 1 && aoas[0].toneMark == null){
+                // just return for stop finals without tone mark
                 return
-            }
+            } else if(aoas.length == 1 && aoas[0].toneMark.isEqualToToneMark(new AllomorphHY().toneMark)) {
+                // there should be no more than 2 matches, either 1 match or 2
+                // just fall through for the case of 'hy'
+            } 
 
             // there is only one match after processing, we just assign it
             this.allomorph = aoas.shift();
@@ -429,6 +431,8 @@ export class ToneSandhiInputingMorpheme {
             for(let i = 0; i < aoas.length; i++) {
                 if(aoas[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
                     // this syllable is already in base form
+                    // in order to display this inflectional ending, we have to assign
+                    this.allomorph = aoas[i]
                 } else {
                     this.allomorph = aoas[i];
                 }
