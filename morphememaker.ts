@@ -58,30 +58,25 @@ abstract class MorphemeMaker {
         return letters        
     }
 
-    //abstract make(letters: Array<Letter>)
     make(letters: Array<AlphabeticLetter>) {
 
         // a word can be made of multiple syllables
         let morphemes = this.createArray() //new Array();
-        //console.log("metadata letter array length %s. ", letters[0].literal);
         
         //console.log(letters);
         let beginOfSyllable: number = 0;
         for(let i = 0; i < letters.length; i++) {
-            //console.log("examining letter: %s. length of letters: %d. i: %d. beginOfSyllable: %d", letters[i].literal, letters.length, i, beginOfSyllable);
-            //console.log("metadata letter array looping.");
+            //console.debug("examining letter: %s. length of letters: %d. i: %d. beginOfSyllable: %d", letters[i].literal, letters.length, i, beginOfSyllable);
             
             let msp: MatchedPattern;
             if(i-beginOfSyllable == 0) {
-                //console.log("i:%d. begin of syllable hit: %d", i, beginOfSyllable);
-
-                //console.log(letters[letters.length-1].literal)
                 
                 msp = this.getMatchedSyllablePattern(letters, beginOfSyllable);
 
                 if(msp.matchedLength == 0) {
-                    console.warn('no matched pattern of sounds found. the pattern needs to be added.')
+                    console.warn('no matched roots found. the root needs to be added?')
                 }
+
                 //console.log("matchedLen: %d", msp.matchedLength);
                 //console.log(msp.pattern);
                 //console.log(msp.letters)
@@ -103,30 +98,20 @@ abstract class MorphemeMaker {
                     morphemes.push(tsm);
                 }
 
-                //console.log(morphemes);
-                //console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
                 beginOfSyllable += msp.matchedLength;
-                //console.log("beginOfSyllable: %d. msp.matchedLength: %d", beginOfSyllable, msp.matchedLength);
             }
-
-            //console.log(morphemes);
-            //console.log(syllables[p].literal)
             
             if(morphemes.length == 0) {
-                //console.log("nothing matched");
+                console.info("nothing matched");
             } else if(morphemes.length >= 1) {
-                //beginOfSyllable += msp.letters.length;
+
+                if(msp == null) break
 
                 if(msp.matchedLength > 0) {
-                    //console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);
                     i += beginOfSyllable-i-1;
-                    //console.log("i: %d. beginOfSyllable: %d", i, beginOfSyllable);    
                 }
             }
         }
-
-        //console.log(morphemes);
-        //console.log("length of affixes: %d", affixes.length);
         return morphemes;
     }
 }

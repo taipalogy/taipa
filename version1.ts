@@ -273,6 +273,18 @@ export class SetOfNasalFinals extends SetOfSounds {
     }
 }
 
+
+export class SetOfNeutralFinals extends SetOfSounds {
+    neutralFinals: Array<Final> = new Array()
+    constructor() {
+        super()
+        this.neutralFinals.push(new FinalH())
+    }
+
+    toString() {
+        return super.toString(this.neutralFinals)
+    }
+}
 //------------------------------------------------------------------------------
 //  Lexical Root using Positional Sound
 //------------------------------------------------------------------------------
@@ -522,7 +534,7 @@ export class LexicalRootGenerator {
                 strs.push(list_of_lexical_roots[i])
             }
         }
-        //for(let i in strs) console.log(strs[i])
+        //for(let i in strs) console.info(strs[i])
         return strs
     }
 }
@@ -539,6 +551,8 @@ export class ClientOfGenerator {
         // base form of checked tone do not have a tone mark
         if(this.isFreeToneMark(ls[index])) {
             sounds.push(ls[ls.length-1] + '.freeToneMark')
+        } else if(this.isNeutralFinal(ls[index])) {
+            sounds.push(ls[ls.length-1] + '.final')
         }
 
         return sounds
@@ -634,13 +648,18 @@ export class ClientOfGenerator {
         
         return false
     }
-
+/*
     private isNasalFinal(str: string) {
         if(str.search(new RegExp(new SetOfNasalFinals().toString())) == 0) return true
         
         return false
     }
-
+*/
+    private isNeutralFinal(str: string) {
+        if(str.search(new RegExp(new SetOfNeutralFinals().toString())) == 0) return true
+        
+        return false
+    }
     private makeCombiningForms(entry: string[]) {
         let lastElement = entry[entry.length-1]
         //let tm: string = ''
