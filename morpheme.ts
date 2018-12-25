@@ -1,11 +1,8 @@
-import { AlphabeticLetter, Final, ToneMark, Sound, MedialGraphs, NasalGraphs, 
-        FreeToneMarkGraphs, CheckedToneMarkGraphs, NeutralFinalGraphs, FinalGraphs, InitialNasalGraphs,
-        InitialGraphs, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
-        FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
-        ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX, Letter } from './grapheme'
-import { ZeroToneMark } from './grapheme'
-import { IDictionary, Dictionary } from './collection'
-import { lowerLetters } from './graphememaker';
+import { AlphabeticLetter } from './grapheme'
+import { ZeroToneMark, Final, ToneMark, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
+    FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
+    ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX } from './version1'
+import { Sound } from './grapheme'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -332,43 +329,16 @@ class GrammaticalSuffix {
 //  Free Allomorph Base Rules
 //------------------------------------------------------------------------------
 
-interface IDictionaryOfRules extends IDictionary {}
-
-class DictionaryOfRules extends Dictionary {
-    constructor(init: { key: string; value: Array<ToneMark>; }[]) {
-        super(init);
-    }
-
-    toLookup(): IDictionaryOfRules {
-        return this;
-    }
-}
-
-export class FreeAllomorphBaseRules {
-    readonly rules = new DictionaryOfRules([
-        { key: 'ss', value: [new FreeToneMarkY()] },
-        { key: 'w', value: [new ToneMarkZS(), new FreeToneMarkX()] },
-        { key: 'xx', value: [new ToneMarkZS(), new ToneMarkSS, new FreeToneMarkX()] },
-        { key: 'xxx', value: [new ToneMarkZS(), new ToneMarkSS(), new FreeToneMarkX()] },
-        { key: 'zs', value: [new FreeToneMarkX(), new ToneMarkSS(), new ZeroToneMark()] },
-        { key: 'zzs', value: [] },
-
-        { key: 'x', value: [] },
-        { key: 'y', value: [new ToneMarkW()] },
-
-        { key: 'zero', value: [new FreeToneMarkY()] },
-    ]).toLookup();
-}
-
-export class FreeAllomorphSandhiRules {
-    readonly rules = new DictionaryOfRules([
-        { key: 'w', value: [new FreeToneMarkY()] },
-        { key: 'zs', value: [new ToneMarkW()] },
-
-        { key: 'x', value: [new ToneMarkZS(), new ToneMarkW()] },
-        { key: 'y', value: [new ZeroToneMark()] },
-    ]).toLookup();
-}
+export const freeAllomorphBaseRules: Map<string, ToneMark[]> = new Map()
+    .set('ss', [new FreeToneMarkY()])
+    .set('w', [new ToneMarkZS(), new FreeToneMarkX()])
+    .set('xx', [new ToneMarkZS(), new ToneMarkSS, new FreeToneMarkX()])
+    .set('xxx', [new ToneMarkZS(), new ToneMarkSS(), new FreeToneMarkX()])
+    .set('zs', [new FreeToneMarkX(), new ToneMarkSS(), new ZeroToneMark()])
+    .set('zzs', [])
+    .set('x', [])
+    .set('y', [new ToneMarkW()])
+    .set('zero', [new FreeToneMarkY()])
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -380,13 +350,14 @@ class TonemarklessMorpheme extends Morpheme {}
 
 export class ToneSandhiMorpheme extends Morpheme {}
 
-export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
+export class ToneSandhiInputingMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null; // required to populate stems
+    sounds: Array<Sound> // should sounds be blended with morphemes
 
     constructor(syllable: ToneSandhiSyllable) {
-        super();
         this.syllable = syllable;
+        this.sounds = new Array() // should sounds be blended with morphemes
         // assign allomorph for each syllable
         this.assignAllomorph();
     }
@@ -400,16 +371,16 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
         //console.log(aotms)
         for(let key in allomorphs.listOfChechedAllomorphs) {
             if(this.syllable.literal.substr(this.syllable.literal.length-allomorphs.listOfChechedAllomorphs[key].getLiteral().length).lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()) != -1) {
-                //console.log(allomorphs.listOfChechedAllomorphs[key].getLiteral())
-                //console.log(this.syllable.literal.lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()))
+                //console.debug(allomorphs.listOfChechedAllomorphs[key].getLiteral())
+                //console.debug(this.syllable.literal.lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()))
                 aoas.push(allomorphs.listOfChechedAllomorphs[key]);
                 // there's no need to break here, as we want to collect the second match, if any
             }
         }
         //console.log(aoas)
 
-        if(aoas.length) {
-            //console.log('length of aoas %d', aoas.length)
+        if(aoas.length > 0) {
+            //console.debug('length of aoas: %d', aoas.length)
             if(aoas.length == 2) {
                 let first = aoas[0]
                 let second = aoas[1]
@@ -425,11 +396,13 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
                         }
                     }
                 }
-            } else if(aoas.length == 1) {
-                // there should be no more than 2 matches, either 1 match or 2
-                // this checked syllable is already in base form, just return
+            }else if(aoas.length == 1 && aoas[0].toneMark == null){
+                // just return for stop finals without tone mark
                 return
-            }
+            } else if(aoas.length == 1 && aoas[0].toneMark.isEqualToToneMark(new AllomorphHY().toneMark)) {
+                // there should be no more than 2 matches, either 1 match or 2
+                // just fall through for the case of 'hy'
+            } 
 
             // there is only one match after processing, we just assign it
             this.allomorph = aoas.shift();
@@ -458,6 +431,8 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
             for(let i = 0; i < aoas.length; i++) {
                 if(aoas[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
                     // this syllable is already in base form
+                    // in order to display this inflectional ending, we have to assign
+                    this.allomorph = aoas[i]
                 } else {
                     this.allomorph = aoas[i];
                 }
@@ -466,7 +441,7 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
     }
 
     getBaseForms(): Array<ToneSandhiSyllable> {
-        let facrs = new FreeAllomorphBaseRules();
+        //let facrs = new FreeAllomorphBaseRules();
         // get base forms as strings
         if(this.allomorph != null) {
             // member variable allomorph is not null
@@ -478,24 +453,24 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
                     // the base tone of the first tone is the second tone
                     // 1 to 2 ---->
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(new AlphabeticLetter(facrs.rules['zero'][0].characters));
+                    s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get('zero')[0].characters));
                     //console.log(this.syllable)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
                     let ret = [];
-                    for(let i in facrs.rules[this.allomorph.getLiteral()]) {
+                    for(let i in freeAllomorphBaseRules.get(this.allomorph.getLiteral())) {
                         // pop letter
                         // push letter
                         let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                         //if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
-                        if(!(facrs.rules[this.allomorph.getLiteral()][i] instanceof ZeroAllomorph)) {
+                        if(!(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
                             s.popLetter();
                             // there are base tone marks
                             // includes ss and x, exclude zero allomorph
-                            s.pushLetter(new AlphabeticLetter(facrs.rules[this.allomorph.getLiteral()][i].characters));
+                            s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i].characters));
                             ret.push(s);
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
@@ -528,7 +503,7 @@ export class ToneSandhiInputingMorpheme extends ToneSandhiMorpheme {
     }
 }
 
-export class ToneSandhiParsingMorpheme extends ToneSandhiMorpheme {
+export class ToneSandhiRootMorpheme extends ToneSandhiMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null;
 
@@ -541,7 +516,7 @@ export class ToneSandhiParsingMorpheme extends ToneSandhiMorpheme {
     assignAllomorph() {}
 }
 
-export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
+export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
     assignAllomorph() {
         let allomorphs = new ListOfAllomorphsInBaseForm()
         //let fasrs = new FreeAllomorphSandhiRules()
@@ -563,62 +538,26 @@ export class SandhiFormMorpheme extends ToneSandhiParsingMorpheme {
         return
     }
 
-    getSandhiForms(): Array<ToneSandhiSyllable>  {
-        let fasrs = new FreeAllomorphSandhiRules()
-        // get sandhi forms as strings
+    getCombiningForm(tm: ToneMark): ToneSandhiSyllable  {
         if(this.allomorph != null) {
-            // member variable allomorph is not null
+            let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
             if(this.allomorph instanceof FreeAllomorph) {
                 if(this.allomorph instanceof ZeroAllomorph) {
-                    // 1 to 7 ---->
-                    let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(new AlphabeticLetter(fasrs.rules['zero'][0].characters));
-                    return [s]
-                } else if(this.allomorph instanceof AllomorphX) {
-                    // the 5th tone has two sandhi forms
-                    let ret = [];
-                    for(let i in fasrs.rules[this.allomorph.getLiteral()]) {
-                        // pop letter
-                        // push letter
-                        let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                        // when there is allomorph
-                        // 5 to 7. 5 to 3. ---->
-                        s.popLetter();
-                        // there are sandhi tone marks
-                        // includes zs and w
-                        s.pushLetter(new AlphabeticLetter(fasrs.rules[this.allomorph.getLiteral()][i].characters));
-                        ret.push(s);
-                    }
-                    return ret;
+                    s.pushLetter(new AlphabeticLetter(tm.characters))
                 } else if(this.allomorph instanceof AllomorphY) {
-                    // 2 to 1. ---->
-                    let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.popLetter();
-                    return [s];
+                    s.popLetter()
+                    return s
                 } else {
-                    // 7 to 3. 3 to 2. ---->
-                    let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.popLetter();
-                    // there is only one sandhi form
-                    s.pushLetter(new AlphabeticLetter(fasrs.rules[this.allomorph.getLiteral()][0].characters));
-                    return [s];
+                    s.popLetter()
+                    s.pushLetter(new AlphabeticLetter(tm.characters))
+                    return s
                 }
-                console.log('freeallomorph hit')
             } else if(this.allomorph instanceof CheckedAllomorph) {
-                // sandhi form of checked syllable
-                let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                s.pushLetter(new AlphabeticLetter(fasrs.rules[this.allomorph.getLiteral()][0].characters));
-                return [s]
+                s.pushLetter(new AlphabeticLetter(this.allomorph.toneMark.characters))
+                return s
             }
         }
-
-        return []
-    }
-}
-
-export class RootMorpheme extends ToneSandhiMorpheme {
-    // affix
-    populateStem(msp: MatchedPattern) {
+        return null
     }
 }
 
@@ -626,83 +565,15 @@ export class RootMorpheme extends ToneSandhiMorpheme {
 //  Syllable Patterns
 //------------------------------------------------------------------------------
 
-class PatternOfSounds {
-    list: Array<Sound>
-
-    toString() {
-        let str = '';
-        for(let i = 0; i < this.list.length; i++) {
-            if(i+1 < this.list.length) {
-                str += this.list[i].toString();
-                str += '|';
-            } else if(i+1 == this.list.length) {
-                str += this.list[i].toString();
-            }
-        }
-        return str;
-    }
-}
-
-export class SyllablePatterns {
-    list = new Array();
-
-    constructor() {
-        // one letter
-        this.list.push([new MedialGraphs()]);
-        this.list.push([new InitialNasalGraphs()]);
-
-        // two letters
-        this.list.push([new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new FinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs()]);
-        this.list.push([new InitialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialNasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialNasalGraphs(), new NasalGraphs()]);
-
-        // three letters
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new FinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialNasalGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
-        this.list.push([new InitialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
-
-        // four letters
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new MedialGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
-
-        // five letters
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new NeutralFinalGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new NasalGraphs(), new FreeToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new FinalGraphs(), new CheckedToneMarkGraphs()]);
-        this.list.push([new InitialGraphs(), new MedialGraphs(), new MedialGraphs(), new MedialGraphs(), new FreeToneMarkGraphs()]);
-
-        // lueifx, lurifx
-    }
-}
-
 export class MatchedPattern {
     letters: Array<AlphabeticLetter> = new Array();
-    pattern: Array<PatternOfSounds> = new Array();
-    get matchedLength() { return this.pattern.length; }
+    pattern: Array<Sound> = new Array();
+    get matchedLength() { return this.letters.length; } // length of pattern can be optionally returned
 }
 
 //------------------------------------------------------------------------------
 //  Syllable
 //------------------------------------------------------------------------------
-
 
 export class Syllable {
     literal: string = '';

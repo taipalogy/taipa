@@ -1,8 +1,8 @@
 
-import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, SandhiFormLexeme } from './lexeme'
+import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { TurningIntoParsingLexeme, TurningIntoSandhiForm } from './lexememaker'
-
+import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
+import { combiningRules } from './version1'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
@@ -24,8 +24,8 @@ class ConstructionOfClause {
 
 class Conversion {
     // different from parsing lexmem. convert between part of speeches.
-    forms: Array<ToneSandhiParsingLexeme> = null
-    as(): ToneSandhiParsingLexeme {
+    forms: Array<ToneSandhiInflectionLexeme> = null
+    as(): ToneSandhiInflectionLexeme {
         return this.forms[0]
     }
 }
@@ -42,21 +42,18 @@ class Quantifier extends Conversion {
 
 class ConstructionElement{
     id: string = ''
-    lexemes: Array<ToneSandhiParsingLexeme> = new Array()
+    lexemes: Array<ToneSandhiInflectionLexeme> = new Array()
 
     constructor(id: string) {
         this.id = id
     }
 
-    addLexeme(l: ToneSandhiParsingLexeme) {
+    addLexeme(l: ToneSandhiInflectionLexeme) {
         this.lexemes.push(l)
     }
 
     check(w: ToneSandhiWord) {
         for(let k in this.lexemes) {
-            console.log(this.id)
-            console.log(this.lexemes[k].toString(this.id))
-            console.log(w.literal)
             if(this.lexemes[k].toString(this.id) === w.literal) {
                 return true
             }
@@ -78,22 +75,33 @@ class VerbPhrase extends TypeOfConstruction {
     //new ConstructionOfPhrase(['serial', 'serial', 'intransitive']),
     //new ConstructionOfPhrase(['causative', 'accusative', 'intransitive'])
 
-    constructions = []
+    constructions: Array<ConstructionOfPhrase> = []
 
     constructor() {
         super()
-        //let turner = new TurningIntoParsingLexeme()
-        let turner = new TurningIntoSandhiForm()
-        let l = turner.turnIntoLexemes('uannzs')[0]
-        l.partOfSpeech = SYMBOLS.VERB
-        l.add('transitive')
-        console.log(l.word.literal)
 
+        let turner1 = new TurningIntoSandhiForm(combiningRules.get('zs')['w'])
+        let l1 = turner1.turnIntoLexemes('uannzs')[0]
+        l1.partOfSpeech = SYMBOLS.VERB
+        l1.add('transitive')
         let transitive = new ConstructionElement('transitive')
-        transitive.addLexeme(l)
-        this.constructions.push(new ConstructionOfPhrase([transitive, 
-                                                            new ConstructionElement('accusative'), 
-                                                            new ConstructionElement('intransitive')]))
+        transitive.addLexeme(l1)
+        
+        let turner2 = new TurningIntoSandhiForm(combiningRules.get('y')['zero'])
+        let l2 = turner2.turnIntoLexemes('guay')[0]
+        l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
+        l2.add('proceeding')
+        let proceeding = new ConstructionElement('proceeding')
+        proceeding.addLexeme(l2)
+
+        let turner3 = new TurningIntoInflectionLexeme()
+        let l3 = turner3.turnIntoLexemes('zurw')[0]
+        l3.partOfSpeech = SYMBOLS.VERB
+        l3.add('intransitive')
+        let intransitive = new ConstructionElement('intransitive')
+        intransitive.addLexeme(l3)
+
+        this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
     }
 }
 
@@ -107,13 +115,8 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 //  Rule-Based Tagger
 //------------------------------------------------------------------------------
 
-export class Node {
-    word: Word
-    tag: SYMBOLS
-}
-
 export class RuleBasedTagger {
-    nodes: Array<Node> = new Array();
+    lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
 
     constructor(lexemes: Array<ToneSandhiInputingLexeme>) {
         this.match(lexemes)
@@ -121,21 +124,26 @@ export class RuleBasedTagger {
 
     match(lexemes: Array<ToneSandhiInputingLexeme>) {
         // take in inputing lexemes and then check them against parsing lexemes
+        // store matched parsing lexemes in nodes
         let w: ToneWord = lexemes[0].word
 
-        let cop: ConstructionOfPhrase        
+        let cop: ConstructionOfPhrase
+        let vp = new VerbPhrase()
         if(w instanceof ToneSandhiWord) {
-            let pv = new VerbPhrase();
-            for(let key in pv.constructions) {
-                if(pv.constructions[key].elements[0].check(w)) {
-                    cop = pv.constructions[key]
-                    console.log('matched!')
+            for(let key in vp.constructions) {
+                if(vp.constructions[key].elements[0].check(w)) {
+                    cop = vp.constructions[key]
                 }
             }
         } else if(w instanceof ToneMarkLessWord) {}
 
-        //console.log(cop.elements[1].id)
-        //console.log(cop.elements[2].id)
-        return false;
+        if(cop.elements[1].check(lexemes[1].word))
+        { }
+        if(cop.elements[2].check(lexemes[2].word))
+        { }
+
+        for(let k in lexemes) {
+            this.lexemes.push(vp.constructions[0].elements[k].lexemes[0])
+        }
     }
 }

@@ -1,24 +1,4 @@
 
-import { IDictionary, Dictionary } from './collection'
-
-interface ICharacterDictionary extends IDictionary {
-    values(): Character[];
-}
-
-class CharacterDictionary extends Dictionary {
-    constructor(init: { key: string; value: any; }[]) {
-        super(init);
-    }
-
-    values(): Character[] {
-        return this._values;
-    }
-
-    toLookup(): ICharacterDictionary {
-        return this;
-    }
-}
-
 //------------------------------------------------------------------------------
 //  Character
 //------------------------------------------------------------------------------
@@ -35,31 +15,30 @@ export class Character {
 //  CharacterCase
 //------------------------------------------------------------------------------
 
-export let characters = new CharacterDictionary([
-    { key: 'a', value: new Character('a') },
-    { key: 'b', value: new Character('b') },
-    { key: 'c', value: new Character('c') },
-    { key: 'd', value: new Character('d') },
-    { key: 'e', value: new Character('e') },
-    { key: 'f', value: new Character('f') },
-    { key: 'g', value: new Character('g') },
-    { key: 'h', value: new Character('h') },
-    { key: 'i', value: new Character('i') },
-    { key: 'j', value: new Character('j') },
-    { key: 'k', value: new Character('k') },
-    { key: 'l', value: new Character('l') },
-    { key: 'm', value: new Character('m') },
-    { key: 'n', value: new Character('n') },
-    { key: 'o', value: new Character('o') },
-    { key: 'p', value: new Character('p') },
-    { key: 'q', value: new Character('q') },
-    { key: 'r', value: new Character('r') },
-    { key: 's', value: new Character('s') },
-    { key: 't', value: new Character('t') },
-    { key: 'u', value: new Character('u') },
-    { key: 'v', value: new Character('v') },
-    { key: 'w', value: new Character('w') },
-    { key: 'x', value: new Character('x') },
-    { key: 'y', value: new Character('y') },
-    { key: 'z', value: new Character('z') },
-]).toLookup();
+export const characters: Map<string, Character> = new Map()
+    .set('a', new Character('a'))
+    .set('b', new Character('b'))
+    .set('c', new Character('c'))
+    .set('d', new Character('d'))
+    .set('e', new Character('e'))
+    .set('f', new Character('f'))
+    .set('g', new Character('g'))
+    .set('h', new Character('h'))
+    .set('i', new Character('i'))
+    .set('j', new Character('j'))
+    .set('k', new Character('k'))
+    .set('l', new Character('l'))
+    .set('m', new Character('m'))
+    .set('n', new Character('n'))
+    .set('o', new Character('o'))
+    .set('p', new Character('p'))
+    .set('q', new Character('q'))
+    .set('r', new Character('r'))
+    .set('s', new Character('s'))
+    .set('t', new Character('t'))
+    .set('u', new Character('u'))
+    .set('v', new Character('v'))
+    .set('w', new Character('w'))
+    .set('x', new Character('x'))
+    .set('y', new Character('y'))
+    .set('z', new Character('z'))

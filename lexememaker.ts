@@ -1,21 +1,22 @@
 
-import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiParsingMorpheme, Syllable  } from './morpheme'
-import { ToneSandhiInputingLexeme, ToneSandhiParsingLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
+import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable, Morpheme } from './morpheme'
+import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
-import { ToneSandhiParsingMorphemeMaker, ToneSandhiInputingMorphemeMaker, SandhiFormMorphemeMaker } from './morphememaker'
+import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
+import { ToneMark } from './version1';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
-abstract class LexemeMaker {
+abstract class SuperLexemeMaker {
     abstract morphemes
 
     preprocess() {
         // extract syllables from morphemes. concatenate syllables into a word.
         // wrap the word in a lexeme. use morephemes to populate lemmata of a lexeme.
         // assign inflectinal affix to a lexeme.
-        // push the lexeme into an array of lexeme.
+        // push the lexeme into an array of lexemes.
         // unpack morphemes and take syllables out from them
         let syllables: Array<ToneSandhiSyllable> = new Array();
         for(let key in this.morphemes) {
@@ -26,15 +27,21 @@ abstract class LexemeMaker {
     }
 
     abstract make(syllables: Array<Syllable>)
+}
 
+abstract class LexemeMaker extends SuperLexemeMaker{
     abstract postprocess(tsl: ToneSandhiLexeme)
+}
+
+abstract class InputingLexemeMaker extends SuperLexemeMaker {
+    abstract postprocess(tsil: ToneSandhiInputingLexeme)
 }
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiInputingLexemeMaker extends LexemeMaker {
+export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
     morphemes: Array<ToneSandhiInputingMorpheme>;
 
     constructor(morphemes: Array<ToneSandhiInputingMorpheme>) {
@@ -56,62 +63,69 @@ export class ToneSandhiInputingLexemeMaker extends LexemeMaker {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
                 // inflectional ending needs to be assigned to inputing lexeme
                 tsil.assignInflectionalEnding(this.morphemes[this.morphemes.length-1].allomorph);
-                //console.log("pos got assigned inflectional affix")
             }
         }
 
         // lemmata needs to be populated for inputing lexeme
         tsil.populateLemmata(this.morphemes);
 
+
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
+
+        for(let k in this.morphemes) {
+            // should sounds be blended with morphemes
+            tsil.arrayOfSounds.push(this.morphemes[k].sounds)
+        }
+        
         lexemes.push(tsil);
 
         return lexemes
     }
 }
 
-export class ToneSandhiParsingLexemeMaker extends LexemeMaker {
-    morphemes: Array<ToneSandhiParsingMorpheme>;
+export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
+    morphemes: Array<ToneSandhiRootMorpheme>;
 
-    constructor(morphemes: Array<ToneSandhiParsingMorpheme>) {
+    constructor(morphemes: Array<ToneSandhiRootMorpheme>) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;
     }
 
-    makeParsingLexemes() {
+    makeInflectionLexemes() {
         return this.postprocess(this.make(this.preprocess()))
     }
 
     make(syllables: Array<ToneSandhiSyllable>) {
-        return new ToneSandhiParsingLexeme(new ToneSandhiWord(syllables));
+        return new ToneSandhiInflectionLexeme(new ToneSandhiWord(syllables));
     }
 
-    postprocess(tspl: ToneSandhiParsingLexeme) {
+    postprocess(tspl: ToneSandhiInflectionLexeme) {
         if(this.morphemes.length > 0) {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // tonal ending needs to be assigned to parsing lexeme
-                //tspl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
             }
         }
 
-        let lexemes: Array<ToneSandhiParsingLexeme> = new Array();
+        let lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
         lexemes.push(tspl);
 
         return lexemes
     }
 }
 
-class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
-    //morphemes: Array<ToneSandhiParsingMorpheme>;
+class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
+    toneMark: ToneMark
 
-    constructor(morphemes: Array<ToneSandhiParsingMorpheme>) {
+    constructor(morphemes: Array<ToneSandhiRootMorpheme>, tm?: ToneMark) {
         super(morphemes)
         //this.morphemes = new Array();
         //this.morphemes = morphemes;
+        if(tm != undefined) {
+            this.toneMark = tm
+        }
     }
 
-    makeParsingLexemes() {
+    makeSandhiLexemes() {
         return this.postprocess(this.make(this.preprocess()))
     }
 
@@ -122,12 +136,12 @@ class SandhiFormLexemeMaker extends ToneSandhiParsingLexemeMaker {
     postprocess(tspl: SandhiFormLexeme) {
         if(this.morphemes.length > 0) {
             if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // tonal ending needs to be assigned to parsing lexeme
+                // tonal ending needs to be assigned to sandhi lexeme
                 tspl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
             }
         }
 
-        tspl.populateSandhiForm(this.morphemes);
+        tspl.populateSandhiForm(this.morphemes, this.toneMark)
 
         let lexemes: Array<SandhiFormLexeme> = new Array();
         lexemes.push(tspl);
@@ -171,37 +185,44 @@ export class TurningIntoInputingLexeme {
     }
 }
 
-export class TurningIntoParsingLexeme {
+export class TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
         let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
-        let tsmm = new ToneSandhiParsingMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeParsingMorphemes();
+        let tsmm = new ToneSandhiRootMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeRootMorphemes();
 
         // Lexeme Maker
-        let tslm = new ToneSandhiParsingLexemeMaker(morphemes);
-        let lexemes = tslm.makeParsingLexemes();
+        let tslm = new ToneSandhiInflectionLexemeMaker(morphemes);
+        let lexemes = tslm.makeInflectionLexemes();
 
         return lexemes;
     }
 }
 
-export class TurningIntoSandhiForm extends TurningIntoParsingLexeme {
+export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
+    toneMark: ToneMark
+
+    constructor (tm: ToneMark) {
+        super()
+        this.toneMark = tm
+    }
+
     turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str);
         let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
-        let tsmm = new SandhiFormMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeParsingMorphemes(); // only the last morpheme is in sandhi form
+        let tsmm = new CombiningFormMorphemeMaker(graphemes);
+        let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is used
 
         // Lexeme Maker
-        let tslm = new SandhiFormLexemeMaker(morphemes);
-        let lexemes = tslm.makeParsingLexemes();
+        let tslm = new SandhiFormLexemeMaker(morphemes, this.toneMark);
+        let lexemes = tslm.makeSandhiLexemes();
 
         return lexemes;
     }

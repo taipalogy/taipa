@@ -2,22 +2,23 @@
 
 import { MORPH_RULES } from './morphrules'
 import { SYMBOLS } from './symbols';
-import { Node } from './rulebasedtagger'
+import { Lexeme } from './lexeme';
 
-enum Dependency {
-    csubj,
-    dobj,
-    nobj,
-    nsubj,
-    root,
+export enum Dependency {
+    csubj = 'csubj',
+    ccomp = 'ccomp',
+    dobj = 'dobj',
+    nobj = 'nobj',
+    nsubj = 'nsubj',
+    root = 'root',
 }
 
 export class Arc {
-    dep: Dependency
-    head: Node = null
-    dependent: Node = null
-    constructor(dep: Dependency, head: Node, dependent: Node) {
-        this.dep = dep;
+    dependency: Dependency
+    head: Lexeme = null
+    dependent: Lexeme = null
+    constructor(dep: Dependency, head: Lexeme, dependent: Lexeme) {
+        this.dependency = dep;
         this.head = head;
         this.dependent = dependent
     }
@@ -36,7 +37,6 @@ export class Shift extends Transition {
 
 export class RightArc extends Transition {
     do(c: Configuration) {
-        c.graph.add(new Arc(Dependency.dobj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
         c.stack.pop();
         return c;
     }
@@ -49,9 +49,9 @@ export class LeftArc extends Transition {
 }
 
 export class Configuration {
-    queue: Array<Node> = new Array()
-    stack: Array<Node> = new Array()
-    graph: Set<Arc> = new Set();
+    queue: Array<Lexeme> = new Array()
+    stack: Array<Lexeme> = new Array()
+    graph: Array<Arc> = new Array();
 
     constructor() {}
 
@@ -84,7 +84,7 @@ export class Guide {
     transitions: Array<Transition>  = new Array()
 
     getNextTransition() {
-        if(this.transitions.length == 0) return null;
+        if(this.transitions.length == 0) return null
         return this.transitions.shift();
     }
 }

@@ -1,14 +1,17 @@
 
-import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, FreeAllomorphBaseRules,
-    ToneSandhiParsingMorpheme, 
+import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, freeAllomorphBaseRules,
+    ToneSandhiRootMorpheme, 
     AllomorphZS,
     AllomorphW,
     AllomorphY,
     AllomorphX,
     ZeroAllomorph,
-    SandhiFormMorpheme} from './morpheme';
+    CombiningFormMorpheme,
+    } from './morpheme';
 
-import { IDictionary, Dictionary } from './collection'
+import { ToneMark } from './version1';
+import { Sound } from './grapheme';
+
 
 export let FORMS = {
     'VERB': {
@@ -21,33 +24,40 @@ export let FORMS = {
         'continuative': 'sandhiForm',
     },
     'ADJECTIVE': {
-        'terminal': 'baseForm',
+        'basic': 'baseForm',
         'attributive': 'sandhiForm',
         'adverbial': 'sandhiForm',
     },
     'NOUN': {
+        'basic': 'baseForm',
         'adverbial': 'sandhiForm',
-        'attributive': 'sandhiForm',
-        'terminal': 'adverbialForm'
     },
-    'PRONOUN': {
-        'nominative': '',
-        'accusative': '',
-        'dative': '',
-    },
+    'PRONOUN': {},
     'PARTICLE': {
-        'continuative': 'continuativeForm'
+        'basic': 'baseForm',
+        'continuative': 'sandhiForm', // adverbial
     },
     'PREPOSITION': {},
     'EXCLAMATION': {},
     'DEMONSTRATIVEPRONOUN': {},
     'PERSONALPRONOUN': {
-        'adverbial': 'adverbialForm',
+        'basic': 'baseForm',
+        'proceeding': 'sandhiForm',
+        'terminalFirst': 'sandhiForm',
+        'terminalSeventh': 'sandhiForm', // complement
+        'terminalThird': 'sandhiForm', // complement
+
+        'adverbial': 'sandhiForm',
+
+        'indirectObject': 'sandhiForm', // proceeding
+        'directObject': 'baseForm',
     },
     'DETERMINER': {},
     'QUANTIFIER': {
+        'basic': 'baseForm',
+        'attributive': 'sandhiForm',
         'continuative': 'sandhiForm',
-        'adverbial': 'adverbialForm',
+        'adverbial': 'sandhiForm',
     },
 }
 
@@ -113,50 +123,20 @@ class TonalEndingY extends FreeTonalEnding {
 class ZeroTonalEnding extends FreeAllomorph {}
 
 //------------------------------------------------------------------------------
-//  Free Allomorph Base Rules
-//------------------------------------------------------------------------------
-/*
-interface IDictionaryOfRules extends IDictionary {}
-
-class DictionaryOfRules extends Dictionary {
-    constructor(init: { key: string; value: Array<Allomorph>; }[]) {
-        super(init);
-    }
-
-    toLookup(): IDictionaryOfRules {
-        return this;
-    }
-}
-
-export class FreeInflectionalEndingBaseRules {
-    readonly rules = new DictionaryOfRules([
-        { key: 'w', value: [new AllomorphZS(), new AllomorphX()] },
-        { key: 'zs', value: [new AllomorphX(), new ZeroAllomorph()] },
-        { key: 'zzs', value: [] },
-
-        { key: 'x', value: [] },
-        { key: 'y', value: [new AllomorphW()] },
-
-        { key: 'zero', value: [new AllomorphY()] },
-    ]).toLookup();
-}
-*/
-//------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme {}
+export class Lexeme {
+    // this is used in rule-based tagger for both tone-sandhi and 
+    // tone-mark-less lexemes
+    word: Word
+    partOfSpeech: string = ''
+}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
-/*
-class InputingLexeme extends Lexeme {}
 
-export class ToneInputingLexeme extends InputingLexeme {
-
-}
-*/
 class ToneMarkLessLexeme extends Lexeme {}
 
 //------------------------------------------------------------------------------
@@ -164,31 +144,34 @@ class ToneMarkLessLexeme extends Lexeme {}
 //------------------------------------------------------------------------------
 
 export class ToneSandhiLexeme extends Lexeme {
-    // this is used in rule-based tagger for both tone-sandhi and 
-    // tone-mark-less lexemes
-    word: Word
+
 }
 
-export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Inputing Lexeme
+//------------------------------------------------------------------------------
+
+export class ToneSandhiInputingLexeme {
     word: ToneSandhiWord
-    inflectionalEnding: InflectionalEnding = null
+    private inflectionalEnding: InflectionalEnding = null
     private lemmata: Array<ToneSandhiWord>
+    arrayOfSounds: Array<Sound[]> // should sounds be blended with lexemes
 
     constructor(word: ToneSandhiWord) {
-        super();
         this.word = word;
+        this.arrayOfSounds = new Array() // should sounds be blended with lexemes
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {
         // change allomorph to affix
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
-            let facrs = new FreeAllomorphBaseRules();
             fie.affix.toneMark = allomorph.toneMark;
-            for(let key in facrs.rules[allomorph.getLiteral()]) {
+            for(let key in freeAllomorphBaseRules.get(allomorph.getLiteral())) {
                 //console.log(`k is ${key}`)
                 let a = new Affix();
-                a.toneMark = facrs.rules[allomorph.getLiteral()][key];
+                a.toneMark = freeAllomorphBaseRules.get(allomorph.getLiteral())[key];
                 //console.log(`a.toneMark is ${a.toneMark}`)
                 fie.baseAffixes.push(a);
             }
@@ -199,13 +182,22 @@ export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
             this.inflectionalEnding = cie;
         }
         // when there is no inflectinal ending assigned, this word is already in base form
-        // and its last syllable is checked
+        // and its last syllable is checked tone
         
-        //console.log(allomorph.toneMark)
-        //console.log(this.inflectionalEnding.getLiteral())
+        //console.debug(allomorph.toneMark)
+        //console.debug(this.inflectionalEnding.getLiteral())
     }
 
-    getBaseForms() { return this.lemmata }
+    getInflectionalEnding() {
+        if(this.inflectionalEnding == null) return ''
+        return this.inflectionalEnding.getLiteral()
+    }
+
+    getBaseForms() {
+        // this must be called after populateLemmata is called
+        if(this.lemmata == null) return []
+        return this.lemmata 
+    }
     
     private replaceLastSyllable(morphemes: Array<ToneSandhiInputingMorpheme>) {
         let word = new ToneSandhiWord(this.word.syllables);
@@ -256,18 +248,15 @@ export class ToneSandhiInputingLexeme extends ToneSandhiLexeme {
 }
 
 //------------------------------------------------------------------------------
-//  Parsing Lexeme
+//  Inflection Lexeme
 //------------------------------------------------------------------------------
 
 
-export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
+export class ToneSandhiInflectionLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: ToneSandhiWord
-    private preceded
-    private followed
-    private isProceeding
-    partOfSpeech: string = ''
+    kvp: { key: string , value: string }
 
     constructor(w: ToneSandhiWord) {
         super()
@@ -280,7 +269,7 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
         // pick up the specific form from the part of speech
         let k = Object.keys(FORMS[pos]).find(key => id === key )
         // assign property and property value
-        this[id] = FORMS[pos][k]
+        this.kvp = { key: id, value: FORMS[pos][k] }
     }
 
     get baseForm() { 
@@ -289,12 +278,14 @@ export class ToneSandhiParsingLexeme extends ToneSandhiLexeme {
     }
 
     toString(id: string) {
-        return this[this[id]]
+        if(this.kvp.key === id) {
+            return this[this.kvp.value].literal
+        }
     }
 }
 
-export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
-    wordsForSandhiForm: Array<ToneSandhiWord>
+export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
+    private wordForSandhiForm: ToneSandhiWord
 
     assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
@@ -310,57 +301,33 @@ export class SandhiFormLexeme extends ToneSandhiParsingLexeme {
         }
     }
 
-    getSandhiForms(morphemes: Array<ToneSandhiParsingMorpheme>) { 
+    private getSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: ToneMark) {
         if(this.tonalEnding != null) {
+            let word = new ToneSandhiWord(this.word.syllables);
             if(this.tonalEnding instanceof FreeTonalEnding) {
-                let ret = [];
                 let last = morphemes[morphemes.length-1]
-                if(last instanceof SandhiFormMorpheme) {
-                    let arr = last.getSandhiForms();
-                    for(let key in arr) {
-                        let word = new ToneSandhiWord(this.word.syllables);
-                        word.popSyllable()
-                        word.pushSyllable(arr[key]);
-                        ret.push(word);
-                    }
+                if(last instanceof CombiningFormMorpheme) {
+                    word.popSyllable()
+                    word.pushSyllable(last.getCombiningForm(tm));
                 }
-                return ret;
+                return word
             } else if(this.tonalEnding instanceof CheckedTonalEnding) {
-                let word = new ToneSandhiWord(this.word.syllables);
                 let last = morphemes[morphemes.length-1]
-                if(last instanceof SandhiFormMorpheme) {
-                    word.pushSyllable(last.getSandhiForms()[0]);
+                if(last instanceof CombiningFormMorpheme) {
+                    word.pushSyllable(last.getCombiningForm(tm));
                 }
-                return [word];                    
+                return word
             }
         }
-        return [] 
+        return null
     }
 
-    get sandhiForm() { 
-        return this.wordsForSandhiForm[0].literal
+    get sandhiForm() {
+        return this.wordForSandhiForm
     }
 
-    populateSandhiForm(morphemes: Array<ToneSandhiParsingMorpheme>) {
-        this.wordsForSandhiForm = new Array()
-        this.wordsForSandhiForm = this.getSandhiForms(morphemes)
-    }
-}
-
-class ContinuativeFormLexeme extends ToneSandhiParsingLexeme {
-    
-    get continuativeForm() {
-        // this form is for 'le' particles
-        return ''
-    }
-}
-
-class AdverbialFormLexeme extends ToneSandhiParsingLexeme {
-
-    // the below 2 forms are for conversion
-    get adverbialForm() {
-        // this form is for quantifiers and personal pronouns
-        return ''
+    populateSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: ToneMark) {
+        this.wordForSandhiForm = this.getSandhiForm(morphemes, tm)
     }
 }
 
@@ -422,7 +389,7 @@ class InflectionalLexeme extends Lexeme {
 //------------------------------------------------------------------------------
 
 export class DummyLexeme extends Lexeme {
-    word: Word
+    word: Word = new Word()
 }
 
 //------------------------------------------------------------------------------
