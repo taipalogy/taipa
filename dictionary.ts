@@ -8,7 +8,6 @@ interface IndexedDictionary {
 export let dictionary: IndexedDictionary = {
     a: ['阿', '鴉'],
     ay: ['仔'],
-    aw: [],
     azs: ['阿'],
     ang: ['尫'],
     angx: ['紅'],

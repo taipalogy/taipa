@@ -648,18 +648,13 @@ export class ClientOfGenerator {
         
         return false
     }
-/*
-    private isNasalFinal(str: string) {
-        if(str.search(new RegExp(new SetOfNasalFinals().toString())) == 0) return true
-        
-        return false
-    }
-*/
+
     private isNeutralFinal(str: string) {
         if(str.search(new RegExp(new SetOfNeutralFinals().toString())) == 0) return true
         
         return false
     }
+    
     private makeCombiningForms(entry: string[]) {
         let lastElement = entry[entry.length-1]
         //let tm: string = ''
