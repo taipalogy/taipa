@@ -26,3 +26,11 @@ denpendency parsing:
 morphological analyzer + input method:
 
 `node main.js suzsjibbhuat`
+
+## Input Method
+
+See dictionary.ts for more sample inputs. Use `Client.processOneToken` to analyze a word
+
+## Dependency Parser
+
+Use `Client.process` method to parse a sentence

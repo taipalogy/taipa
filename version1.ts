@@ -30,7 +30,7 @@ export class CheckedToneMark extends ToneMark {
     name = 'checked tone mark'
 }
 
-class StopFinal extends Final {name = 'stop final'}
+export class StopFinal extends Final {name = 'stop final'}
 class NasalFinal extends Final {name = 'nasal final'}
 
 class MedialA extends Medial {characters = [characters.get('a')]}
@@ -104,7 +104,7 @@ class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.
 
 class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
-class SetOfSounds {
+export class SetOfSounds {
     toString(elements: Array<Sound>) {
         let str = '';
         for(let i = 0; i < elements.length; i++) {
