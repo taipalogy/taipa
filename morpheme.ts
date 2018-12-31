@@ -1,8 +1,8 @@
 import { AlphabeticLetter } from './grapheme'
-import { ZeroToneMark, Final, ToneMark, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
+import { ZeroToneMark, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
     FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
     ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX } from './version1'
-import { Sound } from './grapheme'
+import { Sound, ToneMark, Final } from './system'
 
 //------------------------------------------------------------------------------
 //  Morph

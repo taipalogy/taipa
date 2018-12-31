@@ -3,7 +3,7 @@ import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme,
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
-import { ToneMark } from './version1';
+import { ToneMark } from './system';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker

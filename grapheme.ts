@@ -3,31 +3,6 @@
 import { Character, characters } from './character';
 
 //------------------------------------------------------------------------------
-//  Sound
-//------------------------------------------------------------------------------
-
-export class Sound {
-    name: string
-    // an array of character objects. can be used to make a word object.
-    characters: Array<Character> = null
-
-    // we still need a method for combinning characters from each character objects.
-    // this is different from an array of character objects. it is a string.
-    getLiteral() {
-        let l: string = '';
-        // there is no characters for 1st tone
-        if(this.characters != null) {
-            // when it is not 1st tone
-            for(let k in this.characters) {
-                l += this.characters[k].character;
-            }
-        }
-
-        return l;
-    }
-}
-
-//------------------------------------------------------------------------------
 //  Grapheme
 //------------------------------------------------------------------------------
 

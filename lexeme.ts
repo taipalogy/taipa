@@ -9,8 +9,7 @@ import { ToneSandhiSyllable, Affix, ToneSandhiInputingMorpheme, FreeAllomorph, C
     CombiningFormMorpheme,
     } from './morpheme';
 
-import { ToneMark } from './version1';
-import { Sound } from './grapheme';
+import { Sound, ToneMark } from './system';
 
 
 export let FORMS = {

@@ -1,5 +1,8 @@
 
-import { Sound } from './grapheme'
+import { Sound, Medial, Initial, FreeToneMark, CheckedToneMark, StopFinal, NasalFinal, Nasal, Final, ToneMark,
+    SetOfSounds,
+    PartialPositionalSound
+    } from './system'
 import { characters } from './character'
 import { list_of_lexical_roots } from './lexicalroots1'
 import { GraphemeMaker } from './graphememaker'
@@ -9,30 +12,6 @@ import { GraphemeMaker } from './graphememaker'
 //  Sound
 //------------------------------------------------------------------------------
 
-export class Initial extends Sound {name = 'initial'}
-export class Medial extends Sound {name = 'medial'}
-export class Final extends Sound {name = 'final'}
-export class Nasal extends Sound {name = 'nasal'}
-export class ToneMark extends Sound {
-    name = 'tone mark'
-    isEqualToToneMark(toneMark: ToneMark) {
-        if(this.getLiteral() === toneMark.getLiteral()) {
-            return true;
-        }
-        return false;
-    }
-}
-
-export class FreeToneMark extends ToneMark {
-    name = 'free tone mark'
-}
-export class CheckedToneMark extends ToneMark {
-    name = 'checked tone mark'
-}
-
-export class StopFinal extends Final {name = 'stop final'}
-class NasalFinal extends Final {name = 'nasal final'}
-
 class MedialA extends Medial {characters = [characters.get('a')]}
 class MedialE extends Medial {characters = [characters.get('e')]}
 class MedialI extends Medial {characters = [characters.get('i')]}
@@ -40,9 +19,9 @@ class MedialO extends Medial {characters = [characters.get('o')]}
 class MedialU extends Medial {characters = [characters.get('u')]}
 class MedialUR extends Medial {characters = [characters.get('u'), characters.get('r')]}
 
-class MedialM  extends Medial {characters = [characters.get('m')]}
-class MedialN  extends Medial {characters = [characters.get('n')]}
-class MedialNG  extends Medial {characters = [characters.get('n'), characters.get('g')]}
+class MaterLectionisM  extends Medial {characters = [characters.get('m')]}
+class MaterLectionisN  extends Medial {characters = [characters.get('n')]}
+class MaterLectionisNG  extends Medial {characters = [characters.get('n'), characters.get('g')]}
 
 class InitialC extends Initial {characters = [characters.get('c')]}
 class InitialJ extends Initial {characters = [characters.get('j')]}
@@ -104,22 +83,42 @@ class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.
 
 class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
-export class SetOfSounds {
-    toString(elements: Array<Sound>) {
-        let str = '';
-        for(let i = 0; i < elements.length; i++) {
-            if(i+1 < elements.length) {
-                for(let k in elements[i].characters) {
-                    str += elements[i].characters[k].character;
-                }
-                str += '|';
-            } else if(i+1 == elements.length) {
-                for(let k in elements[i].characters) {
-                    str += elements[i].characters[k].character;
-                }
-            }
-        }
-        return str;
+export class SetOfNasals extends SetOfSounds {
+    nasals: Array<Nasal> = new Array()
+    constructor() {
+        super()
+        this.nasals.push(new NasalNN())
+    }
+
+    toString() {
+        return super.toString(this.nasals)
+    }
+}
+
+export class SetOfNasalFinals extends SetOfSounds {
+    nasalFinals: Array<Final> = new Array()
+    constructor() {
+        super()
+        this.nasalFinals.push(new FinalM())
+        this.nasalFinals.push(new FinalN())
+        this.nasalFinals.push(new FinalNG())
+    }
+
+    toString() {
+        return super.toString(this.nasalFinals)
+    }
+}
+
+
+export class SetOfNeutralFinals extends SetOfSounds {
+    neutralFinals: Array<Final> = new Array()
+    constructor() {
+        super()
+        this.neutralFinals.push(new FinalH())
+    }
+
+    toString() {
+        return super.toString(this.neutralFinals)
     }
 }
 
@@ -144,9 +143,9 @@ export class SetOfMaterLectionis extends SetOfSounds {
     materLectionis: Array<Medial> = new Array()
     constructor() {
         super()
-        this.materLectionis.push(new MedialM())
-        this.materLectionis.push(new MedialN())
-        this.materLectionis.push(new MedialNG())
+        this.materLectionis.push(new MaterLectionisM())
+        this.materLectionis.push(new MaterLectionisN())
+        this.materLectionis.push(new MaterLectionisNG())
     }
 
     toString() {
@@ -228,18 +227,6 @@ export class SetOfFinals extends SetOfSounds {
     }
 }
 
-export class SetOfNasals extends SetOfSounds {
-    nasals: Array<Nasal> = new Array()
-    constructor() {
-        super()
-        this.nasals.push(new NasalNN())
-    }
-
-    toString() {
-        return super.toString(this.nasals)
-    }
-}
-
 export class SetOfStopFinals extends SetOfSounds {
     stopFinals: Array<Final> = new Array()
     constructor() {
@@ -259,46 +246,9 @@ export class SetOfStopFinals extends SetOfSounds {
     }
 }
 
-export class SetOfNasalFinals extends SetOfSounds {
-    nasalFinals: Array<Final> = new Array()
-    constructor() {
-        super()
-        this.nasalFinals.push(new FinalM())
-        this.nasalFinals.push(new FinalN())
-        this.nasalFinals.push(new FinalNG())
-    }
-
-    toString() {
-        return super.toString(this.nasalFinals)
-    }
-}
-
-
-export class SetOfNeutralFinals extends SetOfSounds {
-    neutralFinals: Array<Final> = new Array()
-    constructor() {
-        super()
-        this.neutralFinals.push(new FinalH())
-    }
-
-    toString() {
-        return super.toString(this.neutralFinals)
-    }
-}
 //------------------------------------------------------------------------------
-//  Lexical Root using Positional Sound
+//  Positional Sound for Lexical Root
 //------------------------------------------------------------------------------
-
-interface PositionalSound {
-    initial: Initial
-    medial: Medial
-    final: Final
-    freeToneMark: FreeToneMark
-    checkedToneMark: CheckedToneMark
-    //neutralToneMark: CheckedToneMark
-}
-
-type PartialPositionalSound = Partial<PositionalSound>
 
 class PSA implements PartialPositionalSound {
     static medial: Medial = new MedialA()
@@ -361,13 +311,13 @@ class PSL implements PartialPositionalSound {
 
 class PSM implements PartialPositionalSound {
     static initial: Initial = new InitialM()
-    static medial: Medial = new MedialM()
+    static medial: Medial = new MaterLectionisM()
     static final: Final = new FinalM()
 }
 
 class PSN implements PartialPositionalSound {
     static initial: Initial = new InitialN()
-    static medial: Medial = new MedialN()
+    static medial: Medial = new MaterLectionisN()
     static final: Final = new FinalN()
 }
 
@@ -377,7 +327,7 @@ class PSNN implements PartialPositionalSound {
 
 class PSNG implements PartialPositionalSound {
     static initial: Initial = new InitialNG()
-    static medial: Medial = new MedialNG()
+    static medial: Medial = new MaterLectionisNG()
     static final: Final = new FinalNG()
 }
 
@@ -430,6 +380,14 @@ class PSX implements PartialPositionalSound {
     static checkedToneMark: CheckedToneMarkX = new CheckedToneMarkX()
 }
 
+class PSXX implements PartialPositionalSound {
+    static freeToneMark: ToneMarkXX = new ToneMarkXX()
+}
+
+class PSXXX implements PartialPositionalSound {
+    static freeToneMark: ToneMarkXX = new ToneMarkXXX()
+}
+
 class PSY implements PartialPositionalSound {
     static freeToneMark: FreeToneMarkY = new FreeToneMarkY()
     static checkedToneMark: CheckedToneMarkY = new CheckedToneMarkY()
@@ -441,6 +399,10 @@ class PSZ implements PartialPositionalSound {
 
 class PSZS implements PartialPositionalSound {
     static freeToneMark: ToneMarkZS = new ToneMarkZS()
+}
+
+class PSZZS implements PartialPositionalSound {
+    static freeToneMark: ToneMarkZZS = new ToneMarkZZS()
 }
 
 class PSZero implements PartialPositionalSound {
@@ -495,9 +457,12 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('v', PSV)
     .set('w', PSW)
     .set('x', PSX)
+    .set('xx', PSXX)
+    .set('xxx', PSXXX)
     .set('y', PSY)
     .set('z', PSZ)
     .set('zs', PSZS)
+    .set('zzs', PSZZS)
 
 //------------------------------------------------------------------------------
 //  Lexical Root
@@ -506,31 +471,30 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
 export class ListOfLexicalRoots {
     list: Array<Sound[]> =  new Array()
 
-    setFirstLetter(init: string) {
+    setFirstLetter(beginning: string) {
         let cog = new ClientOfGenerator
-        let entries: Array<Sound[]> = cog.generate(init)
+        let entries: Array<Sound[]> = cog.generate(beginning)
         for(let i in entries) {
             this.list.push(entries[i])
         }
     }
 
     toString() {
+        let str: string = ''
         for(let k in this.list) {
-            let str: string = ''
             for(let i in this.list[k]) {
                 str += this.list[k][i].getLiteral()
-                
             }
-            console.log(str)
         }
+        return str
     }
 }
 
 export class LexicalRootGenerator {
-    generate(init: string) {
+    generate(beginning: string) {
         let strs: string[] = new Array
         for(let i in list_of_lexical_roots) {
-            if(list_of_lexical_roots[i].search(init) == 0) {
+            if(list_of_lexical_roots[i].search(beginning) == 0) {
                 strs.push(list_of_lexical_roots[i])
             }
         }
@@ -547,11 +511,12 @@ export class ClientOfGenerator {
         return graphemes
     }
 
-    private analyzeAfterFinalConsonants(ls: string[], sounds: string[], index: number): string[] {
+    private analyzeAfterNasalFinalsOrNasalSound(ls: string[], sounds: string[], index: number): string[] {
         // base form of checked tone do not have a tone mark
         if(this.isFreeToneMark(ls[index])) {
             sounds.push(ls[ls.length-1] + '.freeToneMark')
         } else if(this.isNeutralFinal(ls[index])) {
+            // when a nasal final m, n, or ng is followed by a neutral final h
             sounds.push(ls[ls.length-1] + '.final')
         }
 
@@ -564,7 +529,7 @@ export class ClientOfGenerator {
         } else if(this.isNasal(ls[index])) {
             sounds.push(ls[index] + '.nasal')
             if(ls.length > sounds.length) {
-                sounds = this.analyzeAfterFinalConsonants(ls, sounds, sounds.length)
+                sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
             }
         } else if(this.isFinalConsonant(ls[index])) {
             let k = index
@@ -576,7 +541,7 @@ export class ClientOfGenerator {
             }
 
             if(ls.length > sounds.length) {
-                sounds = this.analyzeAfterFinalConsonants(ls, sounds, sounds.length)
+                sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
             }
             
         } 
@@ -725,9 +690,9 @@ export class ClientOfGenerator {
         return ret
     }
 
-    generate(init: string) {
+    generate(beginning: string) {
         let lrg = new LexicalRootGenerator()
-        let strs: Array<string> = lrg.generate(init) // retrieve all needed roots beginning with init
+        let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with init
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
         let entries: Array<Sound[]> = new Array() // to be returned
 
@@ -743,13 +708,18 @@ export class ClientOfGenerator {
             
             if((this.isMaterLectionis(ls[0]) && ls.length == 1) 
                 || (ls.length == 2 && this.isMaterLectionis(ls[0]) && this.isFreeToneMark(ls[1]))) {
+                
                 sounds.push(ls[0] + '.medial')
                 if(ls.length > sounds.length) {
-                    if(this.isFreeToneMark(ls[sounds.length])) {
-                        sounds = this.analyzeAfterFinalConsonants(ls, sounds, sounds.length)
-                    } else if(this.isVowel(ls[sounds.length])) {
+                    if(this.isFreeToneMark(ls[1])) {
+                        sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
+                    }
+                    /* 
+                    else if(this.isVowel(ls[1])) {
+                        console.log('hit')
                         sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
                     }
+                    */
                 }
 
                 arrayOfSounds.push(sounds)
@@ -760,7 +730,7 @@ export class ClientOfGenerator {
             // pass 0 as index to indicate it has null initial consonants
             sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
 
-            let initials: string = ''
+            //let initials: string = ''
             if(this.isInitialConsonant(ls[0])) {
                 // analyze initial consonants
                 sounds.push(ls[0] + '.initial')

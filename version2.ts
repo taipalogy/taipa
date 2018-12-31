@@ -1,7 +1,45 @@
 
-import { Sound } from './grapheme'
+import { Sound } from './system'
 import { characters } from './character'
-import { FreeToneMark, CheckedToneMark, StopFinal, SetOfSounds, Final } from './version1'
+import { FreeToneMark, CheckedToneMark, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
+    PartialPositionalSound, } from './system'
+
+
+//------------------------------------------------------------------------------
+//  Sound
+//------------------------------------------------------------------------------
+
+class MedialA extends Medial {characters = [characters.get('a')]}
+class MedialE extends Medial {characters = [characters.get('e')]}
+class MedialI extends Medial {characters = [characters.get('i')]}
+class MedialO extends Medial {characters = [characters.get('o')]}
+class MedialU extends Medial {characters = [characters.get('u')]}
+class MedialUR extends Medial {characters = [characters.get('u'), characters.get('r')]}
+
+class MaterLectionisM  extends Medial {characters = [characters.get('m')]}
+class MaterLectionisN  extends Medial {characters = [characters.get('n')]}
+class MaterLectionisNG  extends Medial {characters = [characters.get('n'), characters.get('g')]}
+
+class InitialC extends Initial {characters = [characters.get('c')]}
+class InitialJ extends Initial {characters = [characters.get('j')]}
+class InitialL extends Initial {characters = [characters.get('l')]}
+class InitialQ extends Initial {characters = [characters.get('q')]}
+class InitialS extends Initial {characters = [characters.get('s')]}
+class InitialV extends Initial {characters = [characters.get('v')]}
+class InitialZ extends Initial {characters = [characters.get('z')]}
+
+class InitialH extends Initial {characters = [characters.get('h')]}
+
+class InitialP extends Initial {characters = [characters.get('p')]}
+class InitialT extends Initial {characters = [characters.get('t')]}
+class InitialK extends Initial {characters = [characters.get('k')]}
+class InitialB extends Initial {characters = [characters.get('b')]}
+class InitialD extends Initial {characters = [characters.get('d')]}
+class InitialG extends Initial {characters = [characters.get('g')]}
+
+class InitialM extends Initial {characters = [characters.get('m')]}
+class InitialN extends Initial {characters = [characters.get('n')]}
+class InitialNG extends Initial {characters = [characters.get('n'), characters.get('g')]}
 
 export class ZeroToneMark extends FreeToneMark {characters = null;}
 
@@ -38,6 +76,111 @@ export class FinalDD extends StopFinal {characters = [characters.get('d'), chara
 export class FinalGG extends StopFinal {characters = [characters.get('g'), characters.get('g')]}
 export class FinalLL extends StopFinal {characters = [characters.get('l'), characters.get('l')]}
 
+class FinalM extends NasalFinal {characters = [characters.get('m')]}
+class FinalN extends NasalFinal {characters = [characters.get('n')]}
+class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
+
+class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
+
+export class SetOfNasals extends SetOfSounds {
+    nasals: Array<Nasal> = new Array()
+    constructor() {
+        super()
+        this.nasals.push(new NasalNN())
+    }
+
+    toString() {
+        return super.toString(this.nasals)
+    }
+}
+
+export class SetOfNasalFinals extends SetOfSounds {
+    nasalFinals: Array<Final> = new Array()
+    constructor() {
+        super()
+        this.nasalFinals.push(new FinalM())
+        this.nasalFinals.push(new FinalN())
+        this.nasalFinals.push(new FinalNG())
+    }
+
+    toString() {
+        return super.toString(this.nasalFinals)
+    }
+}
+
+export class SetOfNeutralFinals extends SetOfSounds {
+    neutralFinals: Array<Final> = new Array()
+    constructor() {
+        super()
+        this.neutralFinals.push(new FinalH())
+    }
+
+    toString() {
+        return super.toString(this.neutralFinals)
+    }
+}
+
+export class SetOfMedials extends SetOfSounds {
+    medials: Array<Medial> = new Array()
+    constructor() {
+        super()
+        this.medials.push(new MedialA())
+        this.medials.push(new MedialE())
+        this.medials.push(new MedialI())
+        this.medials.push(new MedialO())
+        this.medials.push(new MedialU())
+        this.medials.push(new MedialUR())
+    }
+
+    toString() {
+        return super.toString(this.medials)
+    }
+}
+
+export class SetOfMaterLectionis extends SetOfSounds {
+    materLectionis: Array<Medial> = new Array()
+    constructor() {
+        super()
+        this.materLectionis.push(new MaterLectionisM())
+        this.materLectionis.push(new MaterLectionisN())
+        this.materLectionis.push(new MaterLectionisNG())
+    }
+
+    toString() {
+        return super.toString(this.materLectionis)
+    }
+}
+
+export class SetOfInitials extends SetOfSounds {
+    initials: Array<Initial> = new Array()
+    constructor() {
+        super()
+        this.initials.push(new InitialP())
+        this.initials.push(new InitialT())
+        this.initials.push(new InitialK())
+        this.initials.push(new InitialB())
+        this.initials.push(new InitialD())
+        this.initials.push(new InitialG())
+
+        this.initials.push(new InitialH())
+
+        this.initials.push(new InitialC())
+        this.initials.push(new InitialJ())
+        this.initials.push(new InitialL())
+        this.initials.push(new InitialQ())
+        this.initials.push(new InitialS())
+        this.initials.push(new InitialV())
+        this.initials.push(new InitialZ())
+
+        this.initials.push(new InitialM())
+        this.initials.push(new InitialN())
+        this.initials.push(new InitialNG())
+    }
+
+    toString() {
+        return super.toString(this.initials)
+    }
+}
 
 export class SetOfFreeToneMarks extends SetOfSounds {
     freeToneMarks: Array<FreeToneMark> = new Array()
@@ -80,9 +223,9 @@ export class SetOfFinals extends SetOfSounds {
         this.finals.push(new FinalGG())
         this.finals.push(new FinalLL())
 
-        //this.finals.push(new FinalM())
-        //this.finals.push(new FinalN())
-        //this.finals.push(new FinalNG())
+        this.finals.push(new FinalM())
+        this.finals.push(new FinalN())
+        this.finals.push(new FinalNG())
     }
 
     toString() {
@@ -115,4 +258,12 @@ export class SetOfStopFinals extends SetOfSounds {
     toString() {
         return super.toString(this.stopFinals)
     }
+}
+
+//------------------------------------------------------------------------------
+//  Positional Sound for Lexical Root
+//------------------------------------------------------------------------------
+
+class PSA implements PartialPositionalSound {
+    static medial: Medial = new MedialA()
 }
