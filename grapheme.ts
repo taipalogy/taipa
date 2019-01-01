@@ -92,7 +92,7 @@ export let lowerLetters: ILetters = {
     // nasal
     'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
 
-    // free tone marks
+    // free tonals
     'ss': new AlphabeticLetter([characters.get('s'), characters.get('s')]),
     'w': new AlphabeticLetter([characters.get('w')]),
     'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
@@ -100,13 +100,13 @@ export let lowerLetters: ILetters = {
     'zs': new AlphabeticLetter([characters.get('z'), characters.get('s')]),
     'zzs': new AlphabeticLetter([characters.get('z'), characters.get('z'), characters.get('s')]),
 
-    // free tone mark, checked tone mark
+    // free tonal, checked tonal
     'x': new AlphabeticLetter([characters.get('x')]),
 
-    // free tone mark, neutral tone mark
+    // free tonal, neutral tonal
     'y': new AlphabeticLetter([characters.get('y')]),
 
-    // initials, stop finals, and checked tone marks
+    // initials, stop finals, and checked tonals
     'b': new AlphabeticLetter([characters.get('b')]),
     'd': new AlphabeticLetter([characters.get('d')]),
     'g': new AlphabeticLetter([characters.get('g')]),

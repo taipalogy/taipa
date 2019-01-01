@@ -1,7 +1,7 @@
 
 import { Sound } from './system'
 import { characters } from './character'
-import { FreeToneMark, CheckedToneMark, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
+import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
     PartialPositionalSound, } from './system'
 
 
@@ -41,23 +41,23 @@ class InitialM extends Initial {characters = [characters.get('m')]}
 class InitialN extends Initial {characters = [characters.get('n')]}
 class InitialNG extends Initial {characters = [characters.get('n'), characters.get('g')]}
 
-export class ZeroToneMark extends FreeToneMark {characters = null;}
+export class ZeroTonal extends FreeTonal {characters = null;}
 
-export class ToneMarkFR extends FreeToneMark {characters = [characters.get('f'), characters.get('r')]}
-export class ToneMarkW extends FreeToneMark {characters = [characters.get('w')]}
-export class ToneMarkFF extends FreeToneMark {characters = [characters.get('f'), characters.get('f')]}
-export class ToneMarkXX extends FreeToneMark {characters = [characters.get('x'), characters.get('x')]}
-export class ToneMarkXXX extends FreeToneMark {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
-export class ToneMarkZS extends FreeToneMark {characters = [characters.get('z'), characters.get('s')]}
+export class TonalFR extends FreeTonal {characters = [characters.get('f'), characters.get('r')]}
+export class TonalW extends FreeTonal {characters = [characters.get('w')]}
+export class TonalFF extends FreeTonal {characters = [characters.get('f'), characters.get('f')]}
+export class TonalXX extends FreeTonal {characters = [characters.get('x'), characters.get('x')]}
+export class TonalXXX extends FreeTonal {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
+export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 
-export class FreeToneMarkX extends FreeToneMark {characters = [characters.get('x')]}
-export class FreeToneMarkY extends FreeToneMark {characters = [characters.get('y')]}
+export class FreeTonalX extends FreeTonal {characters = [characters.get('x')]}
+export class FreeTonalY extends FreeTonal {characters = [characters.get('y')]}
 
-export class CheckedToneMarkW extends CheckedToneMark {characters = [characters.get('w')]}
-export class ToneMarkF extends CheckedToneMark {characters = [characters.get('f')]}
+export class CheckedTonalW extends CheckedTonal {characters = [characters.get('w')]}
+export class TonalF extends CheckedTonal {characters = [characters.get('f')]}
 
-export class CheckedToneMarkX extends CheckedToneMark {characters = [characters.get('x')]}
-export class CheckedToneMarkY extends CheckedToneMark {characters = [characters.get('y')]}
+export class CheckedTonalX extends CheckedTonal {characters = [characters.get('x')]}
+export class CheckedTonalY extends CheckedTonal {characters = [characters.get('y')]}
 
 export class FinalP extends StopFinal {characters = [characters.get('p')]}
 export class FinalT extends StopFinal {characters = [characters.get('t')]}
@@ -182,23 +182,23 @@ export class SetOfInitials extends SetOfSounds {
     }
 }
 
-export class SetOfFreeToneMarks extends SetOfSounds {
-    freeToneMarks: Array<FreeToneMark> = new Array()
+export class SetOfFreeTonals extends SetOfSounds {
+    freeTonals: Array<FreeTonal> = new Array()
     constructor() {
         super()
-        this.freeToneMarks.push(new ToneMarkFR())
-        this.freeToneMarks.push(new ToneMarkW())
-        this.freeToneMarks.push(new ToneMarkXX())
-        this.freeToneMarks.push(new ToneMarkXXX())
-        this.freeToneMarks.push(new ToneMarkFF())
-        this.freeToneMarks.push(new ToneMarkZS())
+        this.freeTonals.push(new TonalFR())
+        this.freeTonals.push(new TonalW())
+        this.freeTonals.push(new TonalXX())
+        this.freeTonals.push(new TonalXXX())
+        this.freeTonals.push(new TonalFF())
+        this.freeTonals.push(new TonalZS())
 
-        this.freeToneMarks.push(new FreeToneMarkX())
-        this.freeToneMarks.push(new FreeToneMarkY())
+        this.freeTonals.push(new FreeTonalX())
+        this.freeTonals.push(new FreeTonalY())
     }
 
     toString() {
-        return super.toString(this.freeToneMarks)
+        return super.toString(this.freeTonals)
     }
 }
 
@@ -266,4 +266,177 @@ export class SetOfStopFinals extends SetOfSounds {
 
 class PSA implements PartialPositionalSound {
     static medial: Medial = new MedialA()
+}
+
+class PSB implements PartialPositionalSound {
+    static initial: Initial = new InitialB()
+    static final: Final = new FinalB()
+}
+
+class PSBB implements PartialPositionalSound {
+    static final: Final = new FinalBB()
+}
+
+class PSC implements PartialPositionalSound {
+    static initial: Initial = new InitialC()
+}
+
+class PSD implements PartialPositionalSound {
+    static initial: Initial = new InitialD()
+    static final: Final = new FinalD()
+}
+
+class PSDD implements PartialPositionalSound {
+    static final: Final = new FinalDD()
+}
+
+class PSE implements PartialPositionalSound {
+    static medial: Medial = new MedialE()
+}
+
+class PSF implements PartialPositionalSound {
+    static checkedTonal: CheckedTonal = new TonalF()
+}
+
+class PSFF implements PartialPositionalSound {
+    static freeTonal: TonalFF = new TonalFF()
+}
+
+class PSG implements PartialPositionalSound {
+    static initial: Initial = new InitialG()
+    static final: Final = new FinalG()
+}
+
+class PSGG implements PartialPositionalSound {
+    static final: Final = new FinalGG()
+}
+
+class PSH implements PartialPositionalSound {
+    static initial: Initial = new InitialH()
+    static final: Final = new FinalH()
+}
+
+class PSHH implements PartialPositionalSound {
+    static final: Final = new FinalHH()
+}
+
+class PSI implements PartialPositionalSound {
+    static medial: Medial = new MedialI()
+}
+
+class PSJ implements PartialPositionalSound {
+    static initial: Initial = new InitialJ()
+}
+
+class PSK implements PartialPositionalSound {
+    static initial: Initial = new InitialK()
+    static final: Final = new FinalK()
+}
+
+class PSKK implements PartialPositionalSound {
+    static final: Final = new FinalKK()
+}
+
+class PSL implements PartialPositionalSound {
+    static initial: Initial = new InitialL()
+    static final: Final = new FinalL()
+}
+
+class PSLL implements PartialPositionalSound {
+    static final: Final = new FinalLL()
+}
+
+class PSM implements PartialPositionalSound {
+    static initial: Initial = new InitialM()
+    static medial: Medial = new MaterLectionisM()
+    static final: Final = new FinalM()
+}
+
+class PSN implements PartialPositionalSound {
+    static initial: Initial = new InitialN()
+    static medial: Medial = new MaterLectionisN()
+    static final: Final = new FinalN()
+}
+
+class PSNN implements PartialPositionalSound {
+    static nasal: Nasal = new NasalNN()
+}
+
+class PSNG implements PartialPositionalSound {
+    static initial: Initial = new InitialNG()
+    static medial: Medial = new MaterLectionisNG()
+    static final: Final = new FinalNG()
+}
+
+class PSO implements PartialPositionalSound {
+    static medial: Medial = new MedialO()
+}
+
+class PSP implements PartialPositionalSound {
+    static initial: Initial = new InitialP()
+    static final: Final = new FinalP()
+}
+
+class PSQ implements PartialPositionalSound {
+    static initial: Initial = new InitialQ()
+}
+
+class PSS implements PartialPositionalSound {
+    static initial: Initial = new InitialS()
+}
+
+class PST implements PartialPositionalSound {
+    static initial: Initial = new InitialT()
+    static final: Final = new FinalT()
+}
+
+class PSTT implements PartialPositionalSound {
+    static final: Final = new FinalTT()
+}
+
+class PSU implements PartialPositionalSound {
+    static medial: Medial = new MedialU()
+}
+
+class PSUR implements PartialPositionalSound {
+    static medial: Medial = new MedialUR()
+}
+
+class PSV implements PartialPositionalSound {
+    static initial: Initial = new InitialV()
+}
+
+class PSW implements PartialPositionalSound {
+    static freeTonal: TonalW = new TonalW()
+    static checkTonal: CheckedTonal = new CheckedTonalW()
+}
+
+class PSX implements PartialPositionalSound {
+    static freeTonal: FreeTonalX = new FreeTonalX()
+    static checkedTonal: CheckedTonalX = new CheckedTonalX()
+}
+
+class PSXX implements PartialPositionalSound {
+    static freeTonal: TonalXX = new TonalXX()
+}
+
+class PSXXX implements PartialPositionalSound {
+    static freeTonal: TonalXX = new TonalXXX()
+}
+
+class PSY implements PartialPositionalSound {
+    static freeTonal: FreeTonalY = new FreeTonalY()
+    static checkedTonal: CheckedTonalY = new CheckedTonalY()
+}
+
+class PSZ implements PartialPositionalSound {
+    static initial: Initial = new InitialZ()
+}
+
+class PSZS implements PartialPositionalSound {
+    static freeTonal: TonalZS = new TonalZS()
+}
+
+class PSZero implements PartialPositionalSound {
+    static freeTonal: ZeroTonal = new ZeroTonal()
 }

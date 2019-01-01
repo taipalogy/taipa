@@ -1,8 +1,8 @@
 import { AlphabeticLetter } from './grapheme'
-import { ZeroToneMark, ToneMarkSS, FreeToneMarkY, ToneMarkW, FreeToneMarkX, ToneMarkXX, ToneMarkXXX, ToneMarkZZS, ToneMarkZS, 
-    FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, ToneMarkP, ToneMarkT, ToneMarkK, ToneMarkH, CheckedToneMarkY, 
-    ToneMarkB, ToneMarkD, ToneMarkG, ToneMarkF, CheckedToneMarkX } from './version1'
-import { Sound, ToneMark, Final } from './system'
+import { ZeroTonal, TonalSS, FreeTonalY, TonalW, FreeTonalX, TonalXX, TonalXXX, TonalZZS, TonalZS, 
+    FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, TonalP, TonalT, TonalK, TonalH, CheckedTonalY, 
+    TonalB, TonalD, TonalG, TonalF, CheckedTonalX } from './version1'
+import { Sound, Tonal, Final } from './system'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -23,13 +23,13 @@ class TonalMorpheme {}
 
 
 export class Allomorph extends Morph {
-    toneMark: ToneMark = null;
+    tonal: Tonal = null;
 
     getLiteral() {
-        if(this.toneMark.getLiteral().length == 0) { 
+        if(this.tonal.getLiteral().length == 0) { 
             // return string 'zero' for first tone. member variable characters of graph is still null.
             return 'zero'; 
-        } else return this.toneMark.getLiteral();
+        } else return this.tonal.getLiteral();
     }
 }
 
@@ -39,112 +39,112 @@ export class CheckedAllomorph extends Allomorph {
     final: Final = null;
 
     getLiteral() {
-        if(this.toneMark != null) {
-            return this.final.getLiteral() + this.toneMark.getLiteral()
+        if(this.tonal != null) {
+            return this.final.getLiteral() + this.tonal.getLiteral()
         }
         return this.final.getLiteral()
     }
 }
 
 export class ZeroAllomorph extends FreeAllomorph {
-    toneMark = new ZeroToneMark()
+    tonal = new ZeroTonal()
 }
 
 class AllomorphSS extends FreeAllomorph {
-    toneMark = new ToneMarkSS()
+    tonal = new TonalSS()
 }
 
 export class AllomorphY extends FreeAllomorph {
-    toneMark = new FreeToneMarkY()
+    tonal = new FreeTonalY()
 }
 
 export class AllomorphW extends FreeAllomorph {
-    toneMark = new ToneMarkW()
+    tonal = new TonalW()
 }
 
 export class AllomorphX extends FreeAllomorph {
-    toneMark = new FreeToneMarkX()
+    tonal = new FreeTonalX()
 }
 
 class AllomorphXX extends FreeAllomorph {
-    toneMark = new ToneMarkXX()
+    tonal = new TonalXX()
 }
 
 class AllomorphXXX extends FreeAllomorph {
-    toneMark = new ToneMarkXXX()
+    tonal = new TonalXXX()
 }
 
 class AllomorphZZS extends FreeAllomorph {
-    toneMark = new ToneMarkZZS()
+    tonal = new TonalZZS()
 }
 
 export class AllomorphZS extends FreeAllomorph {
-    toneMark = new ToneMarkZS()
+    tonal = new TonalZS()
 }
 
 class AllomorphPP extends CheckedAllomorph {
     final = new FinalP()
-    toneMark = new ToneMarkP()
+    tonal = new TonalP()
 }
 
 class AllomorphTT extends CheckedAllomorph {
     final = new FinalT()
-    toneMark = new ToneMarkT()
+    tonal = new TonalT()
 }
 
 class AllomorphKK extends CheckedAllomorph {
     final = new FinalK()
-    toneMark = new ToneMarkK()
+    tonal = new TonalK()
 }
 
 class AllomorphHH extends CheckedAllomorph {
     final = new FinalH()
-    toneMark = new ToneMarkH()
+    tonal = new TonalH()
 }
 
 class AllomorphHY extends CheckedAllomorph {
     final = new FinalH()
-    toneMark = new CheckedToneMarkY()
+    tonal = new CheckedTonalY()
 }
 
 class AllomorphBB extends CheckedAllomorph {
     final = new FinalB()
-    toneMark = new ToneMarkB()
+    tonal = new TonalB()
 }
 
 class AllomorphDD extends CheckedAllomorph {
     final = new FinalD()
-    toneMark = new ToneMarkD()
+    tonal = new TonalD()
 }
 
 class AllomorphGG extends CheckedAllomorph {
     final = new FinalG()
-    toneMark = new ToneMarkG()
+    tonal = new TonalG()
 }
 
 class AllomorphFF extends CheckedAllomorph {
     final = new FinalF()
-    toneMark = new ToneMarkF()
+    tonal = new TonalF()
 }
 
 class AllomorphBX extends CheckedAllomorph {
     final = new FinalB()
-    toneMark = new CheckedToneMarkX()
+    tonal = new CheckedTonalX()
 }
 
 class AllomorphDX extends CheckedAllomorph {
     final = new FinalD()
-    toneMark = new CheckedToneMarkX()
+    tonal = new CheckedTonalX()
 }
 
 class AllomorphGX extends CheckedAllomorph {
     final = new FinalG()
-    toneMark = new CheckedToneMarkX()
+    tonal = new CheckedTonalX()
 }
 
 class AllomorphFX extends CheckedAllomorph {
     final = new FinalF()
-    toneMark = new CheckedToneMarkX()
+    tonal = new CheckedTonalX()
 }
 
 class ListOfFreeAllomorphs {
@@ -284,42 +284,37 @@ class ListOfAllomorphsInBaseForm {
 //------------------------------------------------------------------------------
 
 class LexicalRoot {
-    stem: Stem
-    affix: Affix
+    stem: LexicalStem
+    affix: TonalAffix
 }
 
-export class Stem {
-    //stem of free tone
-    //stem of checked tone
-    //stem of neutral tone
+export class LexicalStem {
     sounds: Array<Sound>;
-    // abstract factory
 }
 
-class VowelStem extends Stem {}
-class ConsonantStem extends Stem {}
+class VowelStem extends LexicalStem {}
+class ConsonantStem extends LexicalStem {}
 
-export class Affix extends Morph {
-    toneMark: ToneMark = null
+export class TonalAffix extends Morph {
+    tonal: Tonal = null
     getLiteral() {
-        return this.toneMark.getLiteral()
+        return this.tonal.getLiteral()
     }
 }
 
-class FreeAffix extends Affix {}
+class FreeAffix extends TonalAffix {}
 
-class CheckedAffix extends Affix {
+class CheckedAffix extends TonalAffix {
     // there is no final for affix
 }
 
 class ZeroAffix extends FreeAffix {
-    toneMark = new ZeroToneMark()
+    tonal = new ZeroTonal()
 }
 
-class Interfix extends Affix {}
-class Suffix extends Affix {}
-
-class DerivationalAffix {}
+class DerivationalAffix {
+    // lexical ending
+}
 
 class GrammaticalSuffix {
     // desinence
@@ -329,16 +324,16 @@ class GrammaticalSuffix {
 //  Free Allomorph Base Rules
 //------------------------------------------------------------------------------
 
-export const freeAllomorphBaseRules: Map<string, ToneMark[]> = new Map()
-    .set('ss', [new FreeToneMarkY()])
-    .set('w', [new ToneMarkZS(), new FreeToneMarkX()])
-    .set('xx', [new ToneMarkZS(), new ToneMarkSS, new FreeToneMarkX()])
-    .set('xxx', [new ToneMarkZS(), new ToneMarkSS(), new FreeToneMarkX()])
-    .set('zs', [new FreeToneMarkX(), new ToneMarkSS(), new ZeroToneMark()])
+export const freeAllomorphBaseRules: Map<string, Tonal[]> = new Map()
+    .set('ss', [new FreeTonalY()])
+    .set('w', [new TonalZS(), new FreeTonalX()])
+    .set('xx', [new TonalZS(), new TonalSS, new FreeTonalX()])
+    .set('xxx', [new TonalZS(), new TonalSS(), new FreeTonalX()])
+    .set('zs', [new FreeTonalX(), new TonalSS(), new ZeroTonal()])
     .set('zzs', [])
     .set('x', [])
-    .set('y', [new ToneMarkW()])
-    .set('zero', [new FreeToneMarkY()])
+    .set('y', [new TonalW()])
+    .set('zero', [new FreeTonalY()])
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
@@ -387,19 +382,19 @@ export class ToneSandhiInputingMorpheme {
                 if(first instanceof CheckedAllomorph && second instanceof CheckedAllomorph) {
                     if(first.final.getLiteral() === second.final.getLiteral()) {
                         // discard the base form
-                        if(aoas[1].toneMark != null) {
+                        if(aoas[1].tonal != null) {
                             // the 1st element is in base form
                             aoas.shift()
-                        } else if(aoas[0].toneMark != null) {
+                        } else if(aoas[0].tonal != null) {
                             // the 2nd element is in base form
                             aoas.pop()
                         }
                     }
                 }
-            }else if(aoas.length == 1 && aoas[0].toneMark == null){
-                // just return for stop finals without tone mark
+            }else if(aoas.length == 1 && aoas[0].tonal == null){
+                // just return for stop finals without tonal
                 return
-            } else if(aoas.length == 1 && aoas[0].toneMark.isEqualToToneMark(new AllomorphHY().toneMark)) {
+            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
                 // there should be no more than 2 matches, either 1 match or 2
                 // just fall through for the case of 'hy'
             } 
@@ -429,7 +424,7 @@ export class ToneSandhiInputingMorpheme {
         } else if(aoas.length) {
             // are there multiple allomorphs? there should be only one.
             for(let i = 0; i < aoas.length; i++) {
-                if(aoas[i].toneMark.isEqualToToneMark(new AllomorphX().toneMark)) {
+                if(aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
                     // this syllable is already in base form
                     // in order to display this inflectional ending, we have to assign
                     this.allomorph = aoas[i]
@@ -446,7 +441,7 @@ export class ToneSandhiInputingMorpheme {
         if(this.allomorph != null) {
             // member variable allomorph is not null
             if(this.allomorph instanceof FreeAllomorph) {
-                //if(this.allomorph.hasZeroToneMark()) {
+                //if(this.allomorph.hasZeroTonal()) {
                 if(this.allomorph instanceof ZeroAllomorph) {
                     // no need to pop letter
                     // push letter to make tone 2
@@ -468,7 +463,7 @@ export class ToneSandhiInputingMorpheme {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
                             s.popLetter();
-                            // there are base tone marks
+                            // there are base tonals
                             // includes ss and x, exclude zero allomorph
                             s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i].characters));
                             ret.push(s);
@@ -538,7 +533,7 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
         return
     }
 
-    getCombiningForm(tm: ToneMark): ToneSandhiSyllable  {
+    getCombiningForm(tm: Tonal): ToneSandhiSyllable  {
         if(this.allomorph != null) {
             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
             if(this.allomorph instanceof FreeAllomorph) {
@@ -553,7 +548,7 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
                     return s
                 }
             } else if(this.allomorph instanceof CheckedAllomorph) {
-                s.pushLetter(new AlphabeticLetter(this.allomorph.toneMark.characters))
+                s.pushLetter(new AlphabeticLetter(this.allomorph.tonal.characters))
                 return s
             }
         }

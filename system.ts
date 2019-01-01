@@ -30,21 +30,21 @@ export class Initial extends Sound {name = 'initial'}
 export class Medial extends Sound {name = 'medial'}
 export class Final extends Sound {name = 'final'}
 export class Nasal extends Sound {name = 'nasal'}
-export class ToneMark extends Sound {
-    name = 'tone mark'
-    isEqualToToneMark(toneMark: ToneMark) {
-        if(this.getLiteral() === toneMark.getLiteral()) {
+export class Tonal extends Sound {
+    name = 'tonal'
+    isEqualToTonal(tonal: Tonal) {
+        if(this.getLiteral() === tonal.getLiteral()) {
             return true;
         }
         return false;
     }
 }
 
-export class FreeToneMark extends ToneMark {
-    name = 'free tone mark'
+export class FreeTonal extends Tonal {
+    name = 'free tonal'
 }
-export class CheckedToneMark extends ToneMark {
-    name = 'checked tone mark'
+export class CheckedTonal extends Tonal {
+    name = 'checked tonal'
 }
 
 export class StopFinal extends Final {name = 'stop final'}
@@ -74,14 +74,13 @@ export class SetOfSounds {
 //  Positional Sound for Lexical Root
 //------------------------------------------------------------------------------
 
-
 interface PositionalSound {
     initial: Initial
     medial: Medial
     final: Final
-    freeToneMark: FreeToneMark
-    checkedToneMark: CheckedToneMark
-    //neutralToneMark: CheckedToneMark
+    freeTonal: FreeTonal
+    checkedTonal: CheckedTonal
+    //neutralTonal: CheckedTonal
 }
 
 export type PartialPositionalSound = Partial<PositionalSound>

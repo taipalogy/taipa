@@ -1,5 +1,5 @@
 
-import { Word, ToneSandhiWord, ToneWord, ToneMarkLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
+import { Word, ToneSandhiWord, ToneWord, TonalLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
 import { combiningRules } from './version1'
@@ -135,7 +135,7 @@ export class RuleBasedTagger {
                     cop = vp.constructions[key]
                 }
             }
-        } else if(w instanceof ToneMarkLessWord) {}
+        } else if(w instanceof TonalLessWord) {}
 
         if(cop.elements[1].check(lexemes[1].word))
         { }
