@@ -1,11 +1,12 @@
 
-import { Sound, Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,
+import { Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,
     SetOfSounds,
-    PartialPositionalSound
+    PartialPositionalSound,
+    Allomorph,
+    FreeAllomorph,
+    CheckedAllomorph,
     } from './system'
 import { characters } from './character'
-import { list_of_lexical_roots } from './lexicalroots1'
-import { GraphemeMaker } from './graphememaker'
 
 
 //------------------------------------------------------------------------------
@@ -429,7 +430,7 @@ export const combiningRules: Map<string, any> = new Map()
     .set('g', { g: PSG.checkedTonal, x: PSX.checkedTonal })
     .set('f', { f: PSF.checkedTonal, x: PSX.checkedTonal })
 
-const letterClass: Map<string, PartialPositionalSound> = new Map()
+export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('a', PSA)
     .set('b', PSB)
     .set('c', PSC)
@@ -464,356 +465,255 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('zs', PSZS)
     .set('zzs', PSZZS)
 
+
 //------------------------------------------------------------------------------
-//  Lexical Root
+//  Allomorph
 //------------------------------------------------------------------------------
 
-export class ListOfLexicalRoots {
-    list: Array<Sound[]> =  new Array()
+export class ZeroAllomorph extends FreeAllomorph {
+    tonal = new ZeroTonal()
+}
 
-    setFirstLetter(beginning: string) {
-        let cog = new ClientOfGenerator
-        let entries: Array<Sound[]> = cog.generate(beginning)
-        for(let i in entries) {
-            this.list.push(entries[i])
-        }
-    }
+class AllomorphSS extends FreeAllomorph {
+    tonal = new TonalSS()
+}
 
-    toString() {
-        let str: string = ''
-        for(let k in this.list) {
-            for(let i in this.list[k]) {
-                str += this.list[k][i].getLiteral()
-            }
-        }
-        return str
+export class AllomorphY extends FreeAllomorph {
+    tonal = new FreeTonalY()
+}
+
+export class AllomorphW extends FreeAllomorph {
+    tonal = new TonalW()
+}
+
+export class AllomorphX extends FreeAllomorph {
+    tonal = new FreeTonalX()
+}
+
+class AllomorphXX extends FreeAllomorph {
+    tonal = new TonalXX()
+}
+
+class AllomorphXXX extends FreeAllomorph {
+    tonal = new TonalXXX()
+}
+
+class AllomorphZZS extends FreeAllomorph {
+    tonal = new TonalZZS()
+}
+
+export class AllomorphZS extends FreeAllomorph {
+    tonal = new TonalZS()
+}
+
+class AllomorphPP extends CheckedAllomorph {
+    final = new FinalP()
+    tonal = new TonalP()
+}
+
+class AllomorphTT extends CheckedAllomorph {
+    final = new FinalT()
+    tonal = new TonalT()
+}
+
+class AllomorphKK extends CheckedAllomorph {
+    final = new FinalK()
+    tonal = new TonalK()
+}
+
+class AllomorphHH extends CheckedAllomorph {
+    final = new FinalH()
+    tonal = new TonalH()
+}
+
+export class AllomorphHY extends CheckedAllomorph {
+    final = new FinalH()
+    tonal = new CheckedTonalY()
+}
+
+class AllomorphBB extends CheckedAllomorph {
+    final = new FinalB()
+    tonal = new TonalB()
+}
+
+class AllomorphDD extends CheckedAllomorph {
+    final = new FinalD()
+    tonal = new TonalD()
+}
+
+class AllomorphGG extends CheckedAllomorph {
+    final = new FinalG()
+    tonal = new TonalG()
+}
+
+class AllomorphFF extends CheckedAllomorph {
+    final = new FinalF()
+    tonal = new TonalF()
+}
+
+class AllomorphBX extends CheckedAllomorph {
+    final = new FinalB()
+    tonal = new CheckedTonalX()
+}
+
+class AllomorphDX extends CheckedAllomorph {
+    final = new FinalD()
+    tonal = new CheckedTonalX()
+}
+
+class AllomorphGX extends CheckedAllomorph {
+    final = new FinalG()
+    tonal = new CheckedTonalX()
+}
+
+class AllomorphFX extends CheckedAllomorph {
+    final = new FinalF()
+    tonal = new CheckedTonalX()
+}
+
+class ListOfFreeAllomorphs {
+    protected getSS() { return new AllomorphSS() }
+    protected getW() { return new AllomorphW() }
+    protected getXX() { return new AllomorphXX() }
+    protected getXXX() { return new AllomorphXXX() }
+    protected getZZS() { return new AllomorphZZS() }
+    protected getZS() { return new AllomorphZS() }
+    protected getY() { return new AllomorphY() }
+    protected getX() { return new AllomorphX() }
+}
+
+class ListOfFreeAllomorphsForInputing extends ListOfFreeAllomorphs {
+    get ss() { return this.getSS() }
+    get w() { return this.getW() }
+    get xx() { return this.getXX () }
+    get xxx() { return this.getXXX() }
+    get zzs() { return this.getZZS() }
+    get zs() { return this.getZS() }
+    get y() { return this.getY() }
+    get x() { return this.getX() }
+}
+
+class ListOfFreeAllomorphsForParsing extends ListOfFreeAllomorphs {
+    get w() { return this.getW() }
+    get zs() { return this.getZS() }
+
+    get x() { return this.getX() }
+    get y() { return this.getY() }
+}
+
+export class ListOfAllomorphsForInputing {
+    // to specify the allomorphs in sandhi form
+    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
+    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
+
+    private lofafi = new ListOfFreeAllomorphsForInputing()
+
+    constructor() {
+        this.listOfFreeAllomorphs.push(this.lofafi.ss)
+        this.listOfFreeAllomorphs.push(this.lofafi.w)
+        this.listOfFreeAllomorphs.push(this.lofafi.xx)
+        this.listOfFreeAllomorphs.push(this.lofafi.xxx)
+        this.listOfFreeAllomorphs.push(this.lofafi.zzs)
+        this.listOfFreeAllomorphs.push(this.lofafi.zs)
+
+        this.listOfFreeAllomorphs.push(this.lofafi.y)
+        this.listOfFreeAllomorphs.push(this.lofafi.x)
+
+        //<-->
+
+        this.listOfChechedAllomorphs.push(new AllomorphP());
+        this.listOfChechedAllomorphs.push(new AllomorphT());
+        this.listOfChechedAllomorphs.push(new AllomorphK());
+        this.listOfChechedAllomorphs.push(new AllomorphH());
+        this.listOfChechedAllomorphs.push(new AllomorphB());
+        this.listOfChechedAllomorphs.push(new AllomorphD());
+        this.listOfChechedAllomorphs.push(new AllomorphG());
+        this.listOfChechedAllomorphs.push(new AllomorphF());
+
+        this.listOfChechedAllomorphs.push(new AllomorphPP());
+        this.listOfChechedAllomorphs.push(new AllomorphTT());
+        this.listOfChechedAllomorphs.push(new AllomorphKK());
+        this.listOfChechedAllomorphs.push(new AllomorphHH());
+        this.listOfChechedAllomorphs.push(new AllomorphBB());
+        this.listOfChechedAllomorphs.push(new AllomorphDD());
+        this.listOfChechedAllomorphs.push(new AllomorphGG());
+        this.listOfChechedAllomorphs.push(new AllomorphFF());
+        this.listOfChechedAllomorphs.push(new AllomorphHY());
+        this.listOfChechedAllomorphs.push(new AllomorphBX());
+        this.listOfChechedAllomorphs.push(new AllomorphDX());
+        this.listOfChechedAllomorphs.push(new AllomorphGX());
+        this.listOfChechedAllomorphs.push(new AllomorphFX());
     }
 }
 
-export class LexicalRootGenerator {
-    generate(beginning: string) {
-        let strs: string[] = new Array
-        for(let i in list_of_lexical_roots) {
-            if(list_of_lexical_roots[i].search(beginning) == 0) {
-                strs.push(list_of_lexical_roots[i])
-            }
-        }
-        //for(let i in strs) console.info(strs[i])
-        return strs
+class AllomorphP extends CheckedAllomorph {
+    final = new FinalP()
+}
+
+class AllomorphT extends CheckedAllomorph {
+    final = new FinalT()
+}
+
+class AllomorphK extends CheckedAllomorph {
+    final = new FinalK()
+}
+
+class AllomorphH extends CheckedAllomorph {
+    final = new FinalH()
+}
+
+class AllomorphB extends CheckedAllomorph {
+    final = new FinalB()
+}
+
+class AllomorphD extends CheckedAllomorph {
+    final = new FinalD()
+}
+
+class AllomorphG extends CheckedAllomorph {
+    final = new FinalG()
+}
+
+class AllomorphF extends CheckedAllomorph {
+    final = new FinalF()
+}
+
+export class ListOfAllomorphsInBaseForm {
+    // to specify the allomorphs in base form
+    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
+    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
+
+    private lofafp = new ListOfFreeAllomorphsForParsing()
+
+    constructor() {
+        this.listOfFreeAllomorphs.push(this.lofafp.w)
+        this.listOfFreeAllomorphs.push(this.lofafp.zs)
+        
+        this.listOfFreeAllomorphs.push(this.lofafp.x)
+        this.listOfFreeAllomorphs.push(this.lofafp.y)
+
+        this.listOfChechedAllomorphs.push(new AllomorphP()); // -> pp
+        this.listOfChechedAllomorphs.push(new AllomorphT()); // -> tt
+        this.listOfChechedAllomorphs.push(new AllomorphK()); // -> kk
+        this.listOfChechedAllomorphs.push(new AllomorphH()); // -> hh and hy
+        this.listOfChechedAllomorphs.push(new AllomorphB()); // -> bb
+        this.listOfChechedAllomorphs.push(new AllomorphD()); // -> dd
+        this.listOfChechedAllomorphs.push(new AllomorphG()); // -> gg
+        this.listOfChechedAllomorphs.push(new AllomorphF()); // -> ff
     }
 }
 
-export class ClientOfGenerator {
-    private turnIntoGraphemes(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str);
-        let graphemes = gm.makeGraphemes();
-        return graphemes
-    }
+//------------------------------------------------------------------------------
+//  Free Allomorph Base Rules
+//------------------------------------------------------------------------------
 
-    private analyzeAfterNasalFinalsOrNasalSound(ls: string[], sounds: string[], index: number): string[] {
-        // base form of checked tone do not have a tonal
-        if(this.isFreeTonal(ls[index])) {
-            sounds.push(ls[ls.length-1] + '.freeTonal')
-        } else if(this.isNeutralFinal(ls[index])) {
-            // when a nasal final m, n, or ng is followed by a neutral final h
-            sounds.push(ls[ls.length-1] + '.final')
-        }
-
-        return sounds
-    }
-
-    private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
-        if(this.isFreeTonal(ls[index])) {
-            sounds.push(ls[ls.length-1] + '.freeTonal')
-        } else if(this.isNasal(ls[index])) {
-            sounds.push(ls[index] + '.nasal')
-            if(ls.length > sounds.length) {
-                sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
-            }
-        } else if(this.isFinalConsonant(ls[index])) {
-            let k = index
-            while(k < ls.length) {
-                if(this.isFinalConsonant(ls[k])) {
-                    sounds.push(ls[k] + '.final')
-                }
-                k++
-            }
-
-            if(ls.length > sounds.length) {
-                sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
-            }
-            
-        } 
-
-        return sounds
-    }
-
-    private analyzeAfterInitialConsonants(ls: string[], sounds: string[], index: number): string[] {
-        if(this.isVowel(ls[index])) {
-            let k = index
-            while(k < ls.length) {
-                if(this.isVowel(ls[k])) {
-                    sounds.push(ls[k] + '.medial')
-                }
-                k++
-            }
-            
-            if(ls.length == sounds.length) {
-                // vowels with no tonals
-                return sounds
-            }
-
-            if(ls.length > sounds.length) {
-                sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
-            }
-        }
-
-        return sounds
-    }
-
-    private isMaterLectionis(str: string) {
-        if(str.search(new RegExp(new SetOfMaterLectionis().toString())) == 0) return true
-
-        return false
-    }
-
-    private isVowel(str: string) {
-        if(str.search(new RegExp(new SetOfMedials().toString())) == 0) return true
-
-        return false
-    }
-
-    private isInitialConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfInitials().toString())) == 0) return true
-
-        return false
-    }
-
-    private isFreeTonal(str: string) {
-        if(str.search(new RegExp(new SetOfFreeTonals().toString())) == 0) return true
-
-        return false
-    }
-    
-    private isFinalConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfFinals().toString())) == 0) return true
-
-        return false
-    }
-
-    private isNasal(str: string) {
-        if(str.search(new RegExp(new SetOfNasals().toString())) == 0) return true
-        
-        return false
-    }
-
-    private isStopFinal(str: string) {
-        if(str.search(new RegExp(new SetOfStopFinals().toString())) == 0) return true
-        
-        return false
-    }
-
-    private isNeutralFinal(str: string) {
-        if(str.search(new RegExp(new SetOfNeutralFinals().toString())) == 0) return true
-        
-        return false
-    }
-    
-    private makeCombiningForms(entry: string[]) {
-        let lastElement = entry[entry.length-1]
-        //let tm: string = ''
-        let n = lastElement.lastIndexOf('.')
-        let key = lastElement.slice(0, n)
-        let tos = combiningRules.get(key)
-        let ret: Array<string[]> = new Array
-
-        if(lastElement.lastIndexOf('freeTonal') > 0) {
-            let e: string[] = []
-            for(let k in tos) {
-                
-                e = []
-                e = Object.assign([], entry)
-                e.pop()
-                if(tos[k].getLiteral() != 0) {
-                    // zero-tone-mark for first tone will not be pushed
-                    e.push(tos[k].getLiteral() + '.freeTonal')
-                }
-                //console.log(e + '-')
-                // first tone is still pushed to return
-                ret.push(e)
-            }
-        } else {
-            let e: string[] = []
-            e = Object.assign([], entry)
-            e.push(combiningRules.get('zero').zs.getLiteral() + '.freeTonal')
-            //console.log(e + '+')
-            ret.push(e)
-        }
-    
-        return ret
-    }
-
-    private findNew(buffer: Array<string[]>) {
-        // find new tones based on the same stem
-        let cfs
-        for(let i in buffer) {
-            cfs = this.makeCombiningForms(buffer[i])
-        
-            for(let m in cfs) {
-                for(let n = 0 ; n < buffer.length; n++) {
-                    let entry = buffer[n]
-                    if(entry[entry.length-1] === cfs[m][cfs[m].length-1]) {
-                        break
-                    }
-                    if(n == buffer.length-1) {
-                        // pushed to fill the slot, block following duplicates
-                        // duplicates come from combining rules
-                        buffer.push(cfs[m])
-                        //console.log(cfs[m] + '*')
-                    }
-                }
-            }
-        }
-    }
-
-    private convert(entry: string[]) {
-        // convert strings in an entry to sounds
-        // ex: a.medial -> PSA.medial
-        let ret: Array<Sound> = new Array()
-        for(let i in entry) {
-            let n = entry[i].lastIndexOf('.')
-            let clasName = entry[i].slice(0, n)
-            let position = entry[i].slice(n+1)
-            ret.push(letterClass.get(clasName)[position])
-        }
-        return ret
-    }
-
-    generate(beginning: string) {
-        let lrg = new LexicalRootGenerator()
-        let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with init
-        let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let entries: Array<Sound[]> = new Array() // to be returned
-
-        for(let i in strs) {
-            // generates all needed sounds to be processed
-            let gs = this.turnIntoGraphemes(strs[i])
-            let ls: string[] = []
-            for(let j in gs) {
-                ls.push(gs[j].letter.literal)
-            }
-            
-            let sounds: string[] = []
-            
-            if((this.isMaterLectionis(ls[0]) && ls.length == 1) 
-                || (ls.length == 2 && this.isMaterLectionis(ls[0]) && this.isFreeTonal(ls[1]))) {
-                
-                sounds.push(ls[0] + '.medial')
-                if(ls.length > sounds.length) {
-                    if(this.isFreeTonal(ls[1])) {
-                        sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
-                    }
-                    /* 
-                    else if(this.isVowel(ls[1])) {
-                        console.log('hit')
-                        sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
-                    }
-                    */
-                }
-
-                arrayOfSounds.push(sounds)
-                continue
-            }
-
-            // analyze vowels, which have null initial consonants
-            // pass 0 as index to indicate it has null initial consonants
-            sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
-
-            //let initials: string = ''
-            if(this.isInitialConsonant(ls[0])) {
-                // analyze initial consonants
-                sounds.push(ls[0] + '.initial')
-                if(this.isVowel(ls[1])) {
-                    // consonants followed by vowels
-                    sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
-                } else if(this.isFinalConsonant(ls[1])) {
-                    // consonants followed by consonants. CC
-                    // there should be a vowel -ir-
-                    sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
-                }
-            }
-
-            arrayOfSounds.push(sounds)
-        }
-
-        let buffer: Array<string[]> = new Array()
-        let currentStem: string[] = []
-        let nextStem: string[] = []
-        for(let k = 0; k < arrayOfSounds.length; k++) {
-
-            //console.log(arrayOfSounds[k])
-            entries.push(this.convert(arrayOfSounds[k]))
-
-            let entry = arrayOfSounds[k]
-            let lastElement = entry[entry.length-1]
-
-            if(this.isStopFinal(lastElement)) {
-                let lastElement = entry[entry.length-1]
-                let n = lastElement.lastIndexOf('.')
-                let key = lastElement.slice(0, n)
-                let tos = combiningRules.get(key)
-        
-                let e: string[] = []
-                for(let k in tos) {
-                    e = []
-                    e = Object.assign([], entry)
-                    e.push(tos[k].getLiteral() + '.checkedTonal')
-
-                    //console.log(e + '$')
-                    entries.push(this.convert(e))
-                }
-    
-                if(k == arrayOfSounds.length-1) {
-                    // terminal condition of iterator of arrayofSounds
-                    this.findNew(buffer)
-                    for(let i in buffer) {
-                        entries.push(this.convert(buffer[i]))
-                    }
-                }
-            } else {
-                if(lastElement.lastIndexOf('freeTonal') > 0) {
-                    nextStem = entry.slice(0, entry.length-1)
-                } else {
-                    nextStem = entry
-                }
-
-                if(nextStem.length != currentStem.length) {
-                    // when the stems are not in the same length
-                    currentStem = nextStem
-                    this.findNew(buffer)
-                    for(let i in buffer) {
-                        entries.push(this.convert(buffer[i]))
-                    }
-                    buffer = []
-                } else {
-                    for(let e in currentStem) {
-                        if(currentStem[e] !== nextStem[e]) {
-                            // when the stems are not the same
-                            currentStem = nextStem
-                            this.findNew(buffer)
-                            for(let i in buffer) {
-                                entries.push(this.convert(buffer[i]))
-                            }
-                            buffer = []
-                            break
-                        }
-                    }
-                }
-                buffer.push(entry)
-            }
-        }
-
-        return entries
-    }
-}
+export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
+    .set('ss', [new FreeTonalY()])
+    .set('w', [new TonalZS(), new FreeTonalX()])
+    .set('xx', [new TonalZS(), new TonalSS, new FreeTonalX()])
+    .set('xxx', [new TonalZS(), new TonalSS(), new FreeTonalX()])
+    .set('zs', [new FreeTonalX(), new TonalSS(), new ZeroTonal()])
+    .set('zzs', [])
+    .set('x', [])
+    .set('y', [new TonalW()])
+    .set('zero', [new FreeTonalY()])

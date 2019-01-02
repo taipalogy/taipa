@@ -1,8 +1,11 @@
 
-import { Sound } from './system'
+
 import { characters } from './character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    PartialPositionalSound, } from './system'
+    PartialPositionalSound,
+    FreeAllomorph,
+    CheckedAllomorph,
+    } from './system'
 
 
 //------------------------------------------------------------------------------
@@ -302,6 +305,10 @@ class PSFF implements PartialPositionalSound {
     static freeTonal: TonalFF = new TonalFF()
 }
 
+class PSFR implements PartialPositionalSound {
+    static freeTonal: TonalFR = new TonalFR()
+}
+
 class PSG implements PartialPositionalSound {
     static initial: Initial = new InitialG()
     static final: Final = new FinalG()
@@ -377,6 +384,10 @@ class PSP implements PartialPositionalSound {
     static final: Final = new FinalP()
 }
 
+class PSPP implements PartialPositionalSound {
+    static final: Final = new FinalPP()
+}
+
 class PSQ implements PartialPositionalSound {
     static initial: Initial = new InitialQ()
 }
@@ -408,7 +419,7 @@ class PSV implements PartialPositionalSound {
 
 class PSW implements PartialPositionalSound {
     static freeTonal: TonalW = new TonalW()
-    static checkTonal: CheckedTonal = new CheckedTonalW()
+    static checkedTonal: CheckedTonal = new CheckedTonalW()
 }
 
 class PSX implements PartialPositionalSound {
@@ -439,4 +450,177 @@ class PSZS implements PartialPositionalSound {
 
 class PSZero implements PartialPositionalSound {
     static freeTonal: ZeroTonal = new ZeroTonal()
+}
+
+//------------------------------------------------------------------------------
+//  Combining Rule
+//------------------------------------------------------------------------------
+
+export const combiningRules: Map<string, any> = new Map()
+    .set('zero', { zs: PSZS.freeTonal })
+    .set('y', { zero: PSZero.freeTonal, ff: PSFF.freeTonal })
+    .set('w', { y: PSY.freeTonal })
+    .set('x', { zs: PSFR.freeTonal, w: PSW.freeTonal })
+    .set('fr', { w: PSW.freeTonal })
+    .set('p', { f: PSF.checkedTonal })
+    .set('t', { f: PSF.checkedTonal })
+    .set('k', { f: PSF.checkedTonal })
+    .set('h', { f: PSF.checkedTonal, y: PSY.checkedTonal })
+    .set('pp', { w: PSW.checkedTonal, x: PSX.checkedTonal})
+    .set('tt', { w: PSW.checkedTonal, x: PSX.checkedTonal})
+    .set('kk', { w: PSW.checkedTonal, x: PSX.checkedTonal})
+    .set('hh', { w: PSW.checkedTonal, x: PSX.checkedTonal})
+
+export const letterClass: Map<string, PartialPositionalSound> = new Map()
+    .set('a', PSA)
+    .set('b', PSB)
+    .set('c', PSC)
+    .set('d', PSD)
+    .set('e', PSE)
+    .set('f', PSF)
+    .set('ff', PSFF)
+    .set('fr', PSFR)
+    .set('g', PSG)
+    .set('h', PSH)
+    .set('i', PSI)
+    .set('j', PSJ)
+    .set('k', PSK)
+    .set('kk', PSKK)
+    .set('l', PSL)
+    .set('m', PSM)
+    .set('n', PSN)
+    .set('nn', PSNN)
+    .set('ng', PSNG)
+    .set('o', PSO)
+    .set('p', PSP)
+    .set('pp', PSPP)
+    .set('q', PSQ)
+    .set('s', PSS)
+    .set('t', PST)
+    .set('tt', PSTT)
+    .set('u', PSU)
+    .set('ur', PSUR)
+    .set('v', PSV)
+    .set('w', PSW)
+    .set('x', PSX)
+    .set('xx', PSXX)
+    .set('xxx', PSXXX)
+    .set('y', PSY)
+    .set('z', PSZ)
+    .set('zs', PSZS)
+
+
+//------------------------------------------------------------------------------
+//  Allomorph
+//------------------------------------------------------------------------------
+
+export class ZeroAllomorph extends FreeAllomorph {
+    tonal = new ZeroTonal()
+}
+
+class AllomorphFF extends FreeAllomorph {
+    tonal = new TonalFF()
+}
+
+class AllomorphFR extends FreeAllomorph {
+    tonal = new TonalFR()
+}
+
+export class AllomorphY extends FreeAllomorph {
+    tonal = new FreeTonalY()
+}
+
+export class AllomorphW extends FreeAllomorph {
+    tonal = new TonalW()
+}
+
+export class AllomorphX extends FreeAllomorph {
+    tonal = new FreeTonalX()
+}
+
+class AllomorphXX extends FreeAllomorph {
+    tonal = new TonalXX()
+}
+
+class AllomorphXXX extends FreeAllomorph {
+    tonal = new TonalXXX()
+}
+
+class AllomorphZS extends FreeAllomorph {
+    tonal = new TonalZS()
+}
+
+class AllomorphPPW extends CheckedAllomorph {
+    final = new FinalPP()
+    tonal = new TonalW()
+}
+
+class AllomorphTTW extends CheckedAllomorph {
+    final = new FinalTT()
+    tonal = new TonalW()
+}
+
+class AllomorphKKW extends CheckedAllomorph {
+    final = new FinalKK()
+    tonal = new TonalW()
+}
+
+class AllomorphHHW extends CheckedAllomorph {
+    final = new FinalHH()
+    tonal = new TonalW()
+}
+
+export class AllomorphHY extends CheckedAllomorph {
+    final = new FinalH()
+    tonal = new CheckedTonalY()
+}
+
+class AllomorphPPX extends CheckedAllomorph {
+    final = new FinalPP()
+    tonal = new CheckedTonalX()
+}
+
+class AllomorphTTX extends CheckedAllomorph {
+    final = new FinalTT()
+    tonal = new CheckedTonalX()
+}
+
+class AllomorphKKX extends CheckedAllomorph {
+    final = new FinalKK()
+    tonal = new CheckedTonalX()
+}
+
+class AllomorphHHX extends CheckedAllomorph {
+    final = new FinalHH()
+    tonal = new CheckedTonalX()
+}
+
+class ListOfFreeAllomorphs {
+    protected getFF() { return new AllomorphFF() }
+    protected getW() { return new AllomorphW() }
+    protected getXX() { return new AllomorphXX() }
+    protected getXXX() { return new AllomorphXXX() }
+    protected getFR() { return new AllomorphFR() }
+    protected getZS() { return new AllomorphZS() }
+    protected getY() { return new AllomorphY() }
+    protected getX() { return new AllomorphX() }
+}
+
+class ListOfFreeAllomorphsForInputing extends ListOfFreeAllomorphs {
+    get ff() { return this.getFF() }
+    get w() { return this.getW() }
+    get xx() { return this.getXX () }
+    get xxx() { return this.getXXX() }
+    get fr() { return this.getFR() }
+    get zs() { return this.getZS() }
+    get y() { return this.getY() }
+    get x() { return this.getX() }
+}
+
+class ListOfFreeAllomorphsForParsing extends ListOfFreeAllomorphs {
+    get w() { return this.getW() }
+    get fr() { return this.getFR() }
+
+    get x() { return this.getX() }
+    get y() { return this.getY() }
 }

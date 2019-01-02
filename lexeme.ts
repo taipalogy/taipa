@@ -1,13 +1,9 @@
 
-import { ToneSandhiSyllable, TonalAffix, ToneSandhiInputingMorpheme, FreeAllomorph, CheckedAllomorph, Allomorph, freeAllomorphBaseRules,
-    ToneSandhiRootMorpheme, 
-    AllomorphZS,
-    AllomorphW,
-    AllomorphY,
-    AllomorphX,
-    ZeroAllomorph,
+import { ToneSandhiSyllable, TonalAffix, ToneSandhiInputingMorpheme, ToneSandhiRootMorpheme, 
     CombiningFormMorpheme,
     } from './morpheme';
+import { FreeAllomorph, CheckedAllomorph, Allomorph, } from './system'
+import { freeAllomorphUncombiningRules } from './version1'
 
 import { Sound, Tonal } from './system';
 
@@ -102,20 +98,6 @@ export class CheckedTonalEnding extends TonalEnding {
     allomorph = null
 }
 
-class TonalEndingZS extends FreeTonalEnding {
-    allomorph = new AllomorphZS()
-}
-
-class TonalEndingW extends FreeTonalEnding {
-    allomorph = new AllomorphW()
-}
-
-class TonalEndingY extends FreeTonalEnding {
-    allomorph = new AllomorphY()
-}
-
-class ZeroTonalEnding extends FreeTonalEnding {}
-
 //------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
@@ -162,9 +144,9 @@ export class ToneSandhiInputingLexeme {
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
             fie.affix.tonal = allomorph.tonal;
-            for(let key in freeAllomorphBaseRules.get(allomorph.getLiteral())) {
+            for(let key in freeAllomorphUncombiningRules.get(allomorph.getLiteral())) {
                 let a = new TonalAffix();
-                a.tonal = freeAllomorphBaseRules.get(allomorph.getLiteral())[key];
+                a.tonal = freeAllomorphUncombiningRules.get(allomorph.getLiteral())[key];
                 fie.baseAffixes.push(a);
             }
             this.inflectionalEnding = fie;

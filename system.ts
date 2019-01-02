@@ -84,3 +84,37 @@ interface PositionalSound {
 }
 
 export type PartialPositionalSound = Partial<PositionalSound>
+
+//------------------------------------------------------------------------------
+//  Morph
+//------------------------------------------------------------------------------
+
+export class Morph {}
+
+//------------------------------------------------------------------------------
+//  Allomorph
+//------------------------------------------------------------------------------
+
+export class Allomorph extends Morph {
+    tonal: Tonal = null;
+
+    getLiteral() {
+        if(this.tonal.getLiteral().length == 0) { 
+            // return string 'zero' for first tone. member variable characters of graph is still null.
+            return 'zero'; 
+        } else return this.tonal.getLiteral();
+    }
+}
+
+export class FreeAllomorph extends Allomorph {}
+
+export class CheckedAllomorph extends Allomorph {
+    final: Final = null;
+
+    getLiteral() {
+        if(this.tonal != null) {
+            return this.final.getLiteral() + this.tonal.getLiteral()
+        }
+        return this.final.getLiteral()
+    }
+}

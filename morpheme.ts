@@ -1,14 +1,16 @@
+
 import { AlphabeticLetter } from './grapheme'
-import { ZeroTonal, TonalSS, FreeTonalY, TonalW, FreeTonalX, TonalXX, TonalXXX, TonalZZS, TonalZS, 
-    FinalP, FinalT, FinalK, FinalH, FinalB, FinalD, FinalG, FinalF, TonalP, TonalT, TonalK, TonalH, CheckedTonalY, 
-    TonalB, TonalD, TonalG, TonalF, CheckedTonalX } from './version1'
-import { Sound, Tonal, Final } from './system'
-
-//------------------------------------------------------------------------------
-//  Morph
-//------------------------------------------------------------------------------
-
-class Morph {}
+import { Sound, Tonal, Morph, Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
+import {
+    ListOfAllomorphsInBaseForm,
+    ListOfAllomorphsForInputing,
+    freeAllomorphUncombiningRules,
+    AllomorphHY,
+    ZeroAllomorph,
+    AllomorphX,
+    AllomorphY,
+    ZeroTonal,
+    } from './version1'
 
 //------------------------------------------------------------------------------
 //  Tone Morpheme
@@ -16,268 +18,6 @@ class Morph {}
 
 class PluralMorpheme {}
 class TonalMorpheme {}
-
-//------------------------------------------------------------------------------
-//  Allomorph
-//------------------------------------------------------------------------------
-
-
-export class Allomorph extends Morph {
-    tonal: Tonal = null;
-
-    getLiteral() {
-        if(this.tonal.getLiteral().length == 0) { 
-            // return string 'zero' for first tone. member variable characters of graph is still null.
-            return 'zero'; 
-        } else return this.tonal.getLiteral();
-    }
-}
-
-export class FreeAllomorph extends Allomorph {}
-
-export class CheckedAllomorph extends Allomorph {
-    final: Final = null;
-
-    getLiteral() {
-        if(this.tonal != null) {
-            return this.final.getLiteral() + this.tonal.getLiteral()
-        }
-        return this.final.getLiteral()
-    }
-}
-
-export class ZeroAllomorph extends FreeAllomorph {
-    tonal = new ZeroTonal()
-}
-
-class AllomorphSS extends FreeAllomorph {
-    tonal = new TonalSS()
-}
-
-export class AllomorphY extends FreeAllomorph {
-    tonal = new FreeTonalY()
-}
-
-export class AllomorphW extends FreeAllomorph {
-    tonal = new TonalW()
-}
-
-export class AllomorphX extends FreeAllomorph {
-    tonal = new FreeTonalX()
-}
-
-class AllomorphXX extends FreeAllomorph {
-    tonal = new TonalXX()
-}
-
-class AllomorphXXX extends FreeAllomorph {
-    tonal = new TonalXXX()
-}
-
-class AllomorphZZS extends FreeAllomorph {
-    tonal = new TonalZZS()
-}
-
-export class AllomorphZS extends FreeAllomorph {
-    tonal = new TonalZS()
-}
-
-class AllomorphPP extends CheckedAllomorph {
-    final = new FinalP()
-    tonal = new TonalP()
-}
-
-class AllomorphTT extends CheckedAllomorph {
-    final = new FinalT()
-    tonal = new TonalT()
-}
-
-class AllomorphKK extends CheckedAllomorph {
-    final = new FinalK()
-    tonal = new TonalK()
-}
-
-class AllomorphHH extends CheckedAllomorph {
-    final = new FinalH()
-    tonal = new TonalH()
-}
-
-class AllomorphHY extends CheckedAllomorph {
-    final = new FinalH()
-    tonal = new CheckedTonalY()
-}
-
-class AllomorphBB extends CheckedAllomorph {
-    final = new FinalB()
-    tonal = new TonalB()
-}
-
-class AllomorphDD extends CheckedAllomorph {
-    final = new FinalD()
-    tonal = new TonalD()
-}
-
-class AllomorphGG extends CheckedAllomorph {
-    final = new FinalG()
-    tonal = new TonalG()
-}
-
-class AllomorphFF extends CheckedAllomorph {
-    final = new FinalF()
-    tonal = new TonalF()
-}
-
-class AllomorphBX extends CheckedAllomorph {
-    final = new FinalB()
-    tonal = new CheckedTonalX()
-}
-
-class AllomorphDX extends CheckedAllomorph {
-    final = new FinalD()
-    tonal = new CheckedTonalX()
-}
-
-class AllomorphGX extends CheckedAllomorph {
-    final = new FinalG()
-    tonal = new CheckedTonalX()
-}
-
-class AllomorphFX extends CheckedAllomorph {
-    final = new FinalF()
-    tonal = new CheckedTonalX()
-}
-
-class ListOfFreeAllomorphs {
-    protected getSS() { return new AllomorphSS() }
-    protected getW() { return new AllomorphW() }
-    protected getXX() { return new AllomorphXX() }
-    protected getXXX() { return new AllomorphXXX() }
-    protected getZZS() { return new AllomorphZZS() }
-    protected getZS() { return new AllomorphZS() }
-    protected getY() { return new AllomorphY() }
-    protected getX() { return new AllomorphX() }
-}
-
-class ListOfFreeAllomorphsForInputing extends ListOfFreeAllomorphs {
-    get ss() { return this.getSS() }
-    get w() { return this.getW() }
-    get xx() { return this.getXX () }
-    get xxx() { return this.getXXX() }
-    get zzs() { return this.getZZS() }
-    get zs() { return this.getZS() }
-    get y() { return this.getY() }
-    get x() { return this.getX() }
-}
-
-class ListOfFreeAllomorphsForParsing extends ListOfFreeAllomorphs {
-    get w() { return this.getW() }
-    get zs() { return this.getZS() }
-
-    get x() { return this.getX() }
-    get y() { return this.getY() }
-}
-
-class ListOfAllomorphsInSandhiForm {
-    // to specify the allomorphs in sandhi form
-    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
-    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
-
-    private lofafi = new ListOfFreeAllomorphsForInputing()
-
-    constructor() {
-        this.listOfFreeAllomorphs.push(this.lofafi.ss)
-        this.listOfFreeAllomorphs.push(this.lofafi.w)
-        this.listOfFreeAllomorphs.push(this.lofafi.xx)
-        this.listOfFreeAllomorphs.push(this.lofafi.xxx)
-        this.listOfFreeAllomorphs.push(this.lofafi.zzs)
-        this.listOfFreeAllomorphs.push(this.lofafi.zs)
-
-        this.listOfFreeAllomorphs.push(this.lofafi.y)
-        this.listOfFreeAllomorphs.push(this.lofafi.x)
-
-        //<-->
-
-        this.listOfChechedAllomorphs.push(new AllomorphP());
-        this.listOfChechedAllomorphs.push(new AllomorphT());
-        this.listOfChechedAllomorphs.push(new AllomorphK());
-        this.listOfChechedAllomorphs.push(new AllomorphH());
-        this.listOfChechedAllomorphs.push(new AllomorphB());
-        this.listOfChechedAllomorphs.push(new AllomorphD());
-        this.listOfChechedAllomorphs.push(new AllomorphG());
-        this.listOfChechedAllomorphs.push(new AllomorphF());
-
-        this.listOfChechedAllomorphs.push(new AllomorphPP());
-        this.listOfChechedAllomorphs.push(new AllomorphTT());
-        this.listOfChechedAllomorphs.push(new AllomorphKK());
-        this.listOfChechedAllomorphs.push(new AllomorphHH());
-        this.listOfChechedAllomorphs.push(new AllomorphBB());
-        this.listOfChechedAllomorphs.push(new AllomorphDD());
-        this.listOfChechedAllomorphs.push(new AllomorphGG());
-        this.listOfChechedAllomorphs.push(new AllomorphFF());
-        this.listOfChechedAllomorphs.push(new AllomorphHY());
-        this.listOfChechedAllomorphs.push(new AllomorphBX());
-        this.listOfChechedAllomorphs.push(new AllomorphDX());
-        this.listOfChechedAllomorphs.push(new AllomorphGX());
-        this.listOfChechedAllomorphs.push(new AllomorphFX());
-    }
-}
-
-class AllomorphP extends CheckedAllomorph {
-    final = new FinalP()
-}
-
-class AllomorphT extends CheckedAllomorph {
-    final = new FinalT()
-}
-
-class AllomorphK extends CheckedAllomorph {
-    final = new FinalK()
-}
-
-class AllomorphH extends CheckedAllomorph {
-    final = new FinalH()
-}
-
-class AllomorphB extends CheckedAllomorph {
-    final = new FinalB()
-}
-
-class AllomorphD extends CheckedAllomorph {
-    final = new FinalD()
-}
-
-class AllomorphG extends CheckedAllomorph {
-    final = new FinalG()
-}
-
-class AllomorphF extends CheckedAllomorph {
-    final = new FinalF()
-}
-
-class ListOfAllomorphsInBaseForm {
-    // to specify the allomorphs in base form
-    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
-    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
-
-    private lofafp = new ListOfFreeAllomorphsForParsing()
-
-    constructor() {
-        this.listOfFreeAllomorphs.push(this.lofafp.w)
-        this.listOfFreeAllomorphs.push(this.lofafp.zs)
-        
-        this.listOfFreeAllomorphs.push(this.lofafp.x)
-        this.listOfFreeAllomorphs.push(this.lofafp.y)
-
-        this.listOfChechedAllomorphs.push(new AllomorphP()); // -> pp
-        this.listOfChechedAllomorphs.push(new AllomorphT()); // -> tt
-        this.listOfChechedAllomorphs.push(new AllomorphK()); // -> kk
-        this.listOfChechedAllomorphs.push(new AllomorphH()); // -> hh and hy
-        this.listOfChechedAllomorphs.push(new AllomorphB()); // -> bb
-        this.listOfChechedAllomorphs.push(new AllomorphD()); // -> dd
-        this.listOfChechedAllomorphs.push(new AllomorphG()); // -> gg
-        this.listOfChechedAllomorphs.push(new AllomorphF()); // -> ff
-    }
-}
 
 //------------------------------------------------------------------------------
 //  Root
@@ -321,21 +61,6 @@ class GrammaticalSuffix {
 }
 
 //------------------------------------------------------------------------------
-//  Free Allomorph Base Rules
-//------------------------------------------------------------------------------
-
-export const freeAllomorphBaseRules: Map<string, Tonal[]> = new Map()
-    .set('ss', [new FreeTonalY()])
-    .set('w', [new TonalZS(), new FreeTonalX()])
-    .set('xx', [new TonalZS(), new TonalSS, new FreeTonalX()])
-    .set('xxx', [new TonalZS(), new TonalSS(), new FreeTonalX()])
-    .set('zs', [new FreeTonalX(), new TonalSS(), new ZeroTonal()])
-    .set('zzs', [])
-    .set('x', [])
-    .set('y', [new TonalW()])
-    .set('zero', [new FreeTonalY()])
-
-//------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
 
@@ -360,7 +85,7 @@ export class ToneSandhiInputingMorpheme {
     assignAllomorph() {
         // assign the matched allomorph for this syllable
         // don't assign if the checked syllable is already in base form
-        let allomorphs = new ListOfAllomorphsInSandhiForm();
+        let allomorphs = new ListOfAllomorphsForInputing();
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
         //console.log(aotms)
@@ -436,36 +161,34 @@ export class ToneSandhiInputingMorpheme {
     }
 
     getBaseForms(): Array<ToneSandhiSyllable> {
-        //let facrs = new FreeAllomorphBaseRules();
         // get base forms as strings
         if(this.allomorph != null) {
             // member variable allomorph is not null
             if(this.allomorph instanceof FreeAllomorph) {
-                //if(this.allomorph.hasZeroTonal()) {
                 if(this.allomorph instanceof ZeroAllomorph) {
                     // no need to pop letter
                     // push letter to make tone 2
                     // the base tone of the first tone is the second tone
                     // 1 to 2 ---->
                     let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
-                    s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get('zero')[0].characters));
+                    s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
                     //console.log(this.syllable)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
                     let ret = [];
-                    for(let i in freeAllomorphBaseRules.get(this.allomorph.getLiteral())) {
+                    for(let i in freeAllomorphUncombiningRules.get(this.allomorph.getLiteral())) {
                         // pop letter
                         // push letter
                         let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
                         //if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
-                        if(!(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
+                        if(!(freeAllomorphUncombiningRules.get(this.allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
                             s.popLetter();
                             // there are base tonals
                             // includes ss and x, exclude zero allomorph
-                            s.pushLetter(new AlphabeticLetter(freeAllomorphBaseRules.get(this.allomorph.getLiteral())[i].characters));
+                            s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get(this.allomorph.getLiteral())[i].characters));
                             ret.push(s);
                         } else {
                             // include zero suffix. the base tone of the seventh tone.

@@ -1,7 +1,7 @@
 
 import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
 import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
-import { ListOfLexicalRoots } from './version1';
+import { ListOfLexicalRoots } from './lexicalroot';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
