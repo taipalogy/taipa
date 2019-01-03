@@ -2,8 +2,10 @@
 import { AlphabeticLetter } from './grapheme'
 import { Sound, Tonal, Morph, Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
 import {
-    ListOfAllomorphsInBaseForm,
-    ListOfAllomorphsForInputing,
+    listOfFreeAllomorphs,
+    listOfCheckedAllomorphs,
+    listOfUncombinedFreeAllomorphs,
+    listOfUncombinedCheckedAllomorphs,
     freeAllomorphUncombiningRules,
     AllomorphHY,
     ZeroAllomorph,
@@ -85,19 +87,25 @@ export class ToneSandhiInputingMorpheme {
     assignAllomorph() {
         // assign the matched allomorph for this syllable
         // don't assign if the checked syllable is already in base form
-        let allomorphs = new ListOfAllomorphsForInputing();
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
-        //console.log(aotms)
-        for(let key in allomorphs.listOfChechedAllomorphs) {
-            if(this.syllable.literal.substr(this.syllable.literal.length-allomorphs.listOfChechedAllomorphs[key].getLiteral().length).lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()) != -1) {
-                //console.debug(allomorphs.listOfChechedAllomorphs[key].getLiteral())
-                //console.debug(this.syllable.literal.lastIndexOf(allomorphs.listOfChechedAllomorphs[key].getLiteral()))
-                aoas.push(allomorphs.listOfChechedAllomorphs[key]);
-                // there's no need to break here, as we want to collect the second match, if any
+        let keys = Array.from(listOfCheckedAllomorphs.keys())
+        for(let k = 0; k < keys.length; k++) {
+            let am = listOfCheckedAllomorphs.get(keys[k])
+            if(am instanceof CheckedAllomorph) {
+                if(am.tonal != null) {
+                    if(am.tonal.getLiteral() === this.syllable.lastLetter.literal
+                        && am.final.getLiteral() === this.syllable.lastSecondLetter.literal) {
+                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
+                        // there's no need to break here, as we want to collect the second match, if any
+                    }
+                } else {
+                    if(am.final.getLiteral() === this.syllable.lastLetter.literal) {
+                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
+                    }
+                }
             }
         }
-        //console.log(aoas)
 
         if(aoas.length > 0) {
             //console.debug('length of aoas: %d', aoas.length)
@@ -133,15 +141,9 @@ export class ToneSandhiInputingMorpheme {
 
         // after matching with checked allomorphs, we go on matching free allomorphs
         aoas = [];
-        for(let key in allomorphs.listOfFreeAllomorphs) {
-            if(this.syllable.literal.lastIndexOf(allomorphs.listOfFreeAllomorphs[key].getLiteral()) != -1) {
-                //console.log(allomorphs.listOfFreeAllomorphs[key].getLiteral())
-                //console.log(this.syllable.literal.lastIndexOf(allomorphs.listOfFreeAllomorphs[key].getLiteral()))
-                aoas.push(allomorphs.listOfFreeAllomorphs[key]);
-                break;
-            }
+        if(listOfFreeAllomorphs.has(this.syllable.lastLetter.literal)) {
+            aoas.push(listOfFreeAllomorphs.get(this.syllable.lastLetter.literal));
         }
-        //console.log(aotms)
 
         if(aoas.length == 0) {
             // tone 1 has no allomorph
@@ -236,20 +238,14 @@ export class ToneSandhiRootMorpheme extends ToneSandhiMorpheme {
 
 export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
     assignAllomorph() {
-        let allomorphs = new ListOfAllomorphsInBaseForm()
-        //let fasrs = new FreeAllomorphSandhiRules()
-        for(let k in allomorphs.listOfChechedAllomorphs) {
-            if(this.syllable.literal.substr(this.syllable.literal.length-allomorphs.listOfChechedAllomorphs[k].getLiteral().length).lastIndexOf(allomorphs.listOfChechedAllomorphs[k].getLiteral()) != -1) {
-                this.allomorph = allomorphs.listOfChechedAllomorphs[k]
-                return
-            }
+        if(listOfUncombinedCheckedAllomorphs.has(this.syllable.lastLetter.literal)) {
+            this.allomorph = listOfUncombinedCheckedAllomorphs.get(this.syllable.lastLetter.literal)
+            return
         }
 
-        for(let k in allomorphs.listOfFreeAllomorphs) {
-            if(this.syllable.literal.lastIndexOf(allomorphs.listOfFreeAllomorphs[k].getLiteral()) != -1) {
-                this.allomorph = allomorphs.listOfFreeAllomorphs[k]
-                return
-            }
+        if(listOfUncombinedFreeAllomorphs.has(this.syllable.lastLetter.literal)) {
+            this.allomorph = listOfUncombinedFreeAllomorphs.get(this.syllable.lastLetter.literal)
+            return
         }
 
         this.allomorph = new ZeroAllomorph()
@@ -329,6 +325,12 @@ export class ToneSandhiSyllable extends Syllable {
     }
 
     get lastLetter() {
-        return this.letters[this.letters.length-1]
+        if(this.letters.length >= 1) return this.letters[this.letters.length-1]
+        return null
+    }
+
+    get lastSecondLetter() {
+        if(this.letters.length >= 2) return this.letters[this.letters.length-2]
+        return null
     }
 }

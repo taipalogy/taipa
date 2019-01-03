@@ -571,80 +571,15 @@ class AllomorphFX extends CheckedAllomorph {
     tonal = new CheckedTonalX()
 }
 
-class ListOfFreeAllomorphs {
-    protected getSS() { return new AllomorphSS() }
-    protected getW() { return new AllomorphW() }
-    protected getXX() { return new AllomorphXX() }
-    protected getXXX() { return new AllomorphXXX() }
-    protected getZZS() { return new AllomorphZZS() }
-    protected getZS() { return new AllomorphZS() }
-    protected getY() { return new AllomorphY() }
-    protected getX() { return new AllomorphX() }
-}
-
-class ListOfFreeAllomorphsForInputing extends ListOfFreeAllomorphs {
-    get ss() { return this.getSS() }
-    get w() { return this.getW() }
-    get xx() { return this.getXX () }
-    get xxx() { return this.getXXX() }
-    get zzs() { return this.getZZS() }
-    get zs() { return this.getZS() }
-    get y() { return this.getY() }
-    get x() { return this.getX() }
-}
-
-class ListOfFreeAllomorphsForParsing extends ListOfFreeAllomorphs {
-    get w() { return this.getW() }
-    get zs() { return this.getZS() }
-
-    get x() { return this.getX() }
-    get y() { return this.getY() }
-}
-
-export class ListOfAllomorphsForInputing {
-    // to specify the allomorphs in sandhi form
-    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
-    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
-
-    private lofafi = new ListOfFreeAllomorphsForInputing()
-
-    constructor() {
-        this.listOfFreeAllomorphs.push(this.lofafi.ss)
-        this.listOfFreeAllomorphs.push(this.lofafi.w)
-        this.listOfFreeAllomorphs.push(this.lofafi.xx)
-        this.listOfFreeAllomorphs.push(this.lofafi.xxx)
-        this.listOfFreeAllomorphs.push(this.lofafi.zzs)
-        this.listOfFreeAllomorphs.push(this.lofafi.zs)
-
-        this.listOfFreeAllomorphs.push(this.lofafi.y)
-        this.listOfFreeAllomorphs.push(this.lofafi.x)
-
-        //<-->
-
-        this.listOfChechedAllomorphs.push(new AllomorphP());
-        this.listOfChechedAllomorphs.push(new AllomorphT());
-        this.listOfChechedAllomorphs.push(new AllomorphK());
-        this.listOfChechedAllomorphs.push(new AllomorphH());
-        this.listOfChechedAllomorphs.push(new AllomorphB());
-        this.listOfChechedAllomorphs.push(new AllomorphD());
-        this.listOfChechedAllomorphs.push(new AllomorphG());
-        this.listOfChechedAllomorphs.push(new AllomorphF());
-
-        this.listOfChechedAllomorphs.push(new AllomorphPP());
-        this.listOfChechedAllomorphs.push(new AllomorphTT());
-        this.listOfChechedAllomorphs.push(new AllomorphKK());
-        this.listOfChechedAllomorphs.push(new AllomorphHH());
-        this.listOfChechedAllomorphs.push(new AllomorphBB());
-        this.listOfChechedAllomorphs.push(new AllomorphDD());
-        this.listOfChechedAllomorphs.push(new AllomorphGG());
-        this.listOfChechedAllomorphs.push(new AllomorphFF());
-        this.listOfChechedAllomorphs.push(new AllomorphHY());
-        this.listOfChechedAllomorphs.push(new AllomorphBX());
-        this.listOfChechedAllomorphs.push(new AllomorphDX());
-        this.listOfChechedAllomorphs.push(new AllomorphGX());
-        this.listOfChechedAllomorphs.push(new AllomorphFX());
-    }
-}
+export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
+    .set('ss', new AllomorphSS())
+    .set('w', new AllomorphW())
+    .set('xx', new AllomorphXX())
+    .set('xxx', new AllomorphXXX())
+    .set('zzs', new AllomorphZZS())
+    .set('zs', new AllomorphZS())
+    .set('y', new AllomorphY())
+    .set('x', new AllomorphX())
 
 class AllomorphP extends CheckedAllomorph {
     final = new FinalP()
@@ -678,30 +613,44 @@ class AllomorphF extends CheckedAllomorph {
     final = new FinalF()
 }
 
-export class ListOfAllomorphsInBaseForm {
-    // to specify the allomorphs in base form
-    listOfFreeAllomorphs: Array<Allomorph>  = new Array();
-    listOfChechedAllomorphs: Array<Allomorph>  = new Array();
+export const listOfCheckedAllomorphs: Map<string, Allomorph> = new Map()
+    .set('p', new AllomorphP())
+    .set('t', new AllomorphT())
+    .set('k', new AllomorphK())
+    .set('h', new AllomorphH())
+    .set('b', new AllomorphB())
+    .set('d', new AllomorphD())
+    .set('g', new AllomorphG())
+    .set('f', new AllomorphF())
+    .set('pp', new AllomorphPP())
+    .set('tt', new AllomorphTT())
+    .set('kk', new AllomorphKK())
+    .set('hh', new AllomorphHH())
+    .set('bb', new AllomorphBB())
+    .set('dd', new AllomorphDD())
+    .set('gg', new AllomorphGG())
+    .set('ff', new AllomorphFF())
+    .set('hy', new AllomorphHY())
+    .set('bx', new AllomorphBX())
+    .set('dx', new AllomorphDX())
+    .set('gx', new AllomorphGX())
+    .set('fx', new AllomorphFX())
 
-    private lofafp = new ListOfFreeAllomorphsForParsing()
+export const listOfUncombinedFreeAllomorphs: Map<string, Allomorph> = new Map()
+    .set('w', listOfFreeAllomorphs.get('w'))
+    .set('zs', listOfFreeAllomorphs.get('zs'))
+    .set('x', listOfFreeAllomorphs.get('x'))
+    .set('y', listOfFreeAllomorphs.get('y'))
 
-    constructor() {
-        this.listOfFreeAllomorphs.push(this.lofafp.w)
-        this.listOfFreeAllomorphs.push(this.lofafp.zs)
-        
-        this.listOfFreeAllomorphs.push(this.lofafp.x)
-        this.listOfFreeAllomorphs.push(this.lofafp.y)
-
-        this.listOfChechedAllomorphs.push(new AllomorphP()); // -> pp
-        this.listOfChechedAllomorphs.push(new AllomorphT()); // -> tt
-        this.listOfChechedAllomorphs.push(new AllomorphK()); // -> kk
-        this.listOfChechedAllomorphs.push(new AllomorphH()); // -> hh and hy
-        this.listOfChechedAllomorphs.push(new AllomorphB()); // -> bb
-        this.listOfChechedAllomorphs.push(new AllomorphD()); // -> dd
-        this.listOfChechedAllomorphs.push(new AllomorphG()); // -> gg
-        this.listOfChechedAllomorphs.push(new AllomorphF()); // -> ff
-    }
-}
+export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map()
+    .set('p', new AllomorphP())
+    .set('t', new AllomorphT())
+    .set('k', new AllomorphK())
+    .set('h', new AllomorphH())
+    .set('b', new AllomorphB())
+    .set('d', new AllomorphD())
+    .set('g', new AllomorphG())
+    .set('f', new AllomorphF())
 
 //------------------------------------------------------------------------------
 //  Free Allomorph Base Rules
