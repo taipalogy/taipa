@@ -252,18 +252,18 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
         return
     }
 
-    getCombiningForm(tm: Tonal): ToneSandhiSyllable  {
+    getCombiningForm(t: Tonal): ToneSandhiSyllable  {
         if(this.allomorph != null) {
             let s: ToneSandhiSyllable = new ToneSandhiSyllable(this.syllable.letters);
             if(this.allomorph instanceof FreeAllomorph) {
                 if(this.allomorph instanceof ZeroAllomorph) {
-                    s.pushLetter(new AlphabeticLetter(tm.characters))
+                    s.pushLetter(new AlphabeticLetter(t.characters))
                 } else if(this.allomorph instanceof AllomorphY) {
                     s.popLetter()
                     return s
                 } else {
                     s.popLetter()
-                    s.pushLetter(new AlphabeticLetter(tm.characters))
+                    s.pushLetter(new AlphabeticLetter(t.characters))
                     return s
                 }
             } else if(this.allomorph instanceof CheckedAllomorph) {

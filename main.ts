@@ -62,7 +62,9 @@ if(argc.length == 1) {
 }
 
 let clt = new Client();
-let doc = clt.process("uannw gua zurw"); // root csubj ccomp
+let s = "uannw gua zurw"
+let doc = clt.process("uannw gua zurw");
 
-console.log(doc.graph[0].head.word.literal + ' ' + doc.graph[0].dependency + ' ' + doc.graph[0].dependent.word.literal)
-console.log(doc.graph[1].head.word.literal + ' ' + doc.graph[1].dependency + ' ' + doc.graph[1].dependent.word.literal)
+console.log(s)
+console.log(doc.graph[0].dependency + ' (' + doc.graph[0].head.word.literal + ', ' + doc.graph[0].dependent.word.literal + ')')
+console.log(doc.graph[1].dependency + ' (' + doc.graph[1].head.word.literal + ', ' + doc.graph[1].dependent.word.literal + ')')

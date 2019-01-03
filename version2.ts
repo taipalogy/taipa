@@ -5,6 +5,8 @@ import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial
     PartialPositionalSound,
     FreeAllomorph,
     CheckedAllomorph,
+    Allomorph,
+    Tonal,
     } from './system'
 
 
@@ -46,12 +48,12 @@ class InitialNG extends Initial {characters = [characters.get('n'), characters.g
 
 export class ZeroTonal extends FreeTonal {characters = null;}
 
-export class TonalFR extends FreeTonal {characters = [characters.get('f'), characters.get('r')]}
+export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 export class TonalW extends FreeTonal {characters = [characters.get('w')]}
-export class TonalFF extends FreeTonal {characters = [characters.get('f'), characters.get('f')]}
+export class TonalSF extends FreeTonal {characters = [characters.get('s'), characters.get('f')]}
 export class TonalXX extends FreeTonal {characters = [characters.get('x'), characters.get('x')]}
 export class TonalXXX extends FreeTonal {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
-export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
+export class TonalZZS extends FreeTonal {characters = [characters.get('z'), characters.get('z'), characters.get('s')]}
 
 export class FreeTonalX extends FreeTonal {characters = [characters.get('x')]}
 export class FreeTonalY extends FreeTonal {characters = [characters.get('y')]}
@@ -189,12 +191,12 @@ export class SetOfFreeTonals extends SetOfSounds {
     freeTonals: Array<FreeTonal> = new Array()
     constructor() {
         super()
-        this.freeTonals.push(new TonalFR())
+        this.freeTonals.push(new TonalZS())
         this.freeTonals.push(new TonalW())
         this.freeTonals.push(new TonalXX())
         this.freeTonals.push(new TonalXXX())
-        this.freeTonals.push(new TonalFF())
-        this.freeTonals.push(new TonalZS())
+        this.freeTonals.push(new TonalSF())
+        this.freeTonals.push(new TonalZZS())
 
         this.freeTonals.push(new FreeTonalX())
         this.freeTonals.push(new FreeTonalY())
@@ -221,10 +223,6 @@ export class SetOfFinals extends SetOfSounds {
         this.finals.push(new FinalTT())
         this.finals.push(new FinalKK())
         this.finals.push(new FinalHH())
-        this.finals.push(new FinalBB())
-        this.finals.push(new FinalDD())
-        this.finals.push(new FinalGG())
-        this.finals.push(new FinalLL())
 
         this.finals.push(new FinalM())
         this.finals.push(new FinalN())
@@ -252,10 +250,6 @@ export class SetOfStopFinals extends SetOfSounds {
         this.stopFinals.push(new FinalTT())
         this.stopFinals.push(new FinalKK())
         this.stopFinals.push(new FinalHH())
-        this.stopFinals.push(new FinalBB())
-        this.stopFinals.push(new FinalDD())
-        this.stopFinals.push(new FinalGG())
-        this.stopFinals.push(new FinalLL())
     }
 
     toString() {
@@ -276,10 +270,6 @@ class PSB implements PartialPositionalSound {
     static final: Final = new FinalB()
 }
 
-class PSBB implements PartialPositionalSound {
-    static final: Final = new FinalBB()
-}
-
 class PSC implements PartialPositionalSound {
     static initial: Initial = new InitialC()
 }
@@ -287,10 +277,6 @@ class PSC implements PartialPositionalSound {
 class PSD implements PartialPositionalSound {
     static initial: Initial = new InitialD()
     static final: Final = new FinalD()
-}
-
-class PSDD implements PartialPositionalSound {
-    static final: Final = new FinalDD()
 }
 
 class PSE implements PartialPositionalSound {
@@ -301,21 +287,17 @@ class PSF implements PartialPositionalSound {
     static checkedTonal: CheckedTonal = new TonalF()
 }
 
-class PSFF implements PartialPositionalSound {
-    static freeTonal: TonalFF = new TonalFF()
+class PSSF implements PartialPositionalSound {
+    static freeTonal: TonalSF = new TonalSF()
 }
 
-class PSFR implements PartialPositionalSound {
-    static freeTonal: TonalFR = new TonalFR()
+class PSZS implements PartialPositionalSound {
+    static freeTonal: TonalZS = new TonalZS()
 }
 
 class PSG implements PartialPositionalSound {
     static initial: Initial = new InitialG()
     static final: Final = new FinalG()
-}
-
-class PSGG implements PartialPositionalSound {
-    static final: Final = new FinalGG()
 }
 
 class PSH implements PartialPositionalSound {
@@ -347,10 +329,6 @@ class PSKK implements PartialPositionalSound {
 class PSL implements PartialPositionalSound {
     static initial: Initial = new InitialL()
     static final: Final = new FinalL()
-}
-
-class PSLL implements PartialPositionalSound {
-    static final: Final = new FinalLL()
 }
 
 class PSM implements PartialPositionalSound {
@@ -444,8 +422,8 @@ class PSZ implements PartialPositionalSound {
     static initial: Initial = new InitialZ()
 }
 
-class PSZS implements PartialPositionalSound {
-    static freeTonal: TonalZS = new TonalZS()
+class PSZZS implements PartialPositionalSound {
+    static freeTonal: TonalZS = new TonalZZS()
 }
 
 class PSZero implements PartialPositionalSound {
@@ -458,10 +436,10 @@ class PSZero implements PartialPositionalSound {
 
 export const combiningRules: Map<string, any> = new Map()
     .set('zero', { zs: PSZS.freeTonal })
-    .set('y', { zero: PSZero.freeTonal, ff: PSFF.freeTonal })
+    .set('y', { zero: PSZero.freeTonal, sf: PSSF.freeTonal })
     .set('w', { y: PSY.freeTonal })
-    .set('x', { zs: PSFR.freeTonal, w: PSW.freeTonal })
-    .set('fr', { w: PSW.freeTonal })
+    .set('x', { zs: PSZS.freeTonal, w: PSW.freeTonal })
+    .set('zs', { w: PSW.freeTonal })
     .set('p', { f: PSF.checkedTonal })
     .set('t', { f: PSF.checkedTonal })
     .set('k', { f: PSF.checkedTonal })
@@ -478,8 +456,8 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('d', PSD)
     .set('e', PSE)
     .set('f', PSF)
-    .set('ff', PSFF)
-    .set('fr', PSFR)
+    .set('sf', PSSF)
+    .set('zs', PSZS)
     .set('g', PSG)
     .set('h', PSH)
     .set('i', PSI)
@@ -518,12 +496,12 @@ export class ZeroAllomorph extends FreeAllomorph {
     tonal = new ZeroTonal()
 }
 
-class AllomorphFF extends FreeAllomorph {
-    tonal = new TonalFF()
+class AllomorphSF extends FreeAllomorph {
+    tonal = new TonalSF()
 }
 
-class AllomorphFR extends FreeAllomorph {
-    tonal = new TonalFR()
+class AllomorphZS extends FreeAllomorph {
+    tonal = new TonalZS()
 }
 
 export class AllomorphY extends FreeAllomorph {
@@ -546,8 +524,76 @@ class AllomorphXXX extends FreeAllomorph {
     tonal = new TonalXXX()
 }
 
-class AllomorphZS extends FreeAllomorph {
-    tonal = new TonalZS()
+class AllomorphZZS extends FreeAllomorph {
+    tonal = new TonalZZS()
+}
+
+export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
+    .set('sf', new AllomorphSF())
+    .set('w', new AllomorphW())
+    .set('xx', new AllomorphXX())
+    .set('xxx', new AllomorphXXX())
+    .set('zs', new AllomorphZS())
+    .set('zzs', new AllomorphZZS())
+    .set('y', new AllomorphY())
+    .set('x', new AllomorphX())
+
+
+class AllomorphP extends CheckedAllomorph {
+    final = new FinalP()
+}
+
+class AllomorphT extends CheckedAllomorph {
+    final = new FinalT()
+}
+
+class AllomorphK extends CheckedAllomorph {
+    final = new FinalK()
+}
+
+class AllomorphH extends CheckedAllomorph {
+    final = new FinalH()
+}
+
+class AllomorphPP extends CheckedAllomorph {
+    final = new FinalPP()
+}
+
+class AllomorphTT extends CheckedAllomorph {
+    final = new FinalTT()
+}
+
+class AllomorphKK extends CheckedAllomorph {
+    final = new FinalKK()
+}
+
+class AllomorphHH extends CheckedAllomorph {
+    final = new FinalHH()
+}
+
+class AllomorphPF extends CheckedAllomorph {
+    final = new FinalP()
+    tonal = new TonalF()
+}
+
+class AllomorphTF extends CheckedAllomorph {
+    final = new FinalT()
+    tonal = new TonalF()
+}
+
+class AllomorphKF extends CheckedAllomorph {
+    final = new FinalK()
+    tonal = new TonalF()
+}
+
+class AllomorphHF extends CheckedAllomorph {
+    final = new FinalH()
+    tonal = new TonalF()
+}
+
+export class AllomorphHY extends CheckedAllomorph {
+    final = new FinalH()
+    tonal = new CheckedTonalY()
 }
 
 class AllomorphPPW extends CheckedAllomorph {
@@ -570,11 +616,6 @@ class AllomorphHHW extends CheckedAllomorph {
     tonal = new TonalW()
 }
 
-export class AllomorphHY extends CheckedAllomorph {
-    final = new FinalH()
-    tonal = new CheckedTonalY()
-}
-
 class AllomorphPPX extends CheckedAllomorph {
     final = new FinalPP()
     tonal = new CheckedTonalX()
@@ -595,32 +636,68 @@ class AllomorphHHX extends CheckedAllomorph {
     tonal = new CheckedTonalX()
 }
 
-class ListOfFreeAllomorphs {
-    protected getFF() { return new AllomorphFF() }
-    protected getW() { return new AllomorphW() }
-    protected getXX() { return new AllomorphXX() }
-    protected getXXX() { return new AllomorphXXX() }
-    protected getFR() { return new AllomorphFR() }
-    protected getZS() { return new AllomorphZS() }
-    protected getY() { return new AllomorphY() }
-    protected getX() { return new AllomorphX() }
+export const listOfCheckedAllomorphs: Map<string, Allomorph> = new Map()
+    .set(PSP.final.getLiteral(), new AllomorphP())
+    .set(PST.final.getLiteral(), new AllomorphT())
+    .set(PSK.final.getLiteral(), new AllomorphK())
+    .set(PSH.final.getLiteral(), new AllomorphH())
+    .set(PSPP.final.getLiteral(), new AllomorphPP())
+    .set(PSTT.final.getLiteral(), new AllomorphTT())
+    .set(PSKK.final.getLiteral(), new AllomorphKK())
+    .set(PSHH.final.getLiteral(), new AllomorphHH())
+    .set(PSP.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphPF())
+    .set(PST.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphTF())
+    .set(PSK.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphKF())
+    .set(PSH.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphHF())
+    .set(PSPP.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphPPW())
+    .set(PSTT.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphTTW())
+    .set(PSKK.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphKKW())
+    .set(PSHH.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphHHW())
+    .set(PSH.final.getLiteral() + PSY.checkedTonal.getLiteral(), new AllomorphHY())
+    .set(PSPP.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphPPX())
+    .set(PSTT.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphTTX())
+    .set(PSKK.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphKKX())
+    .set(PSHH.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphHHX())
+
+export const listOfUncombinedFreeAllomorphs: Map<string, Allomorph> = new Map()
+    .set(PSW.freeTonal.getLiteral(), new AllomorphW())
+    .set(PSZS.freeTonal.getLiteral(), new AllomorphZS())
+    .set(PSX.freeTonal.getLiteral(), new AllomorphX())
+    .set(PSY.freeTonal.getLiteral(), new AllomorphY())
+
+export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map()
+    .set(PSP.final.getLiteral(), new AllomorphP())
+    .set(PST.final.getLiteral(), new AllomorphT())
+    .set(PSK.final.getLiteral(), new AllomorphK())
+    .set(PSH.final.getLiteral(), new AllomorphH())
+    .set(PSPP.final.getLiteral(), new AllomorphPP())
+    .set(PSTT.final.getLiteral(), new AllomorphTT())
+    .set(PSKK.final.getLiteral(), new AllomorphKK())
+    .set(PSHH.final.getLiteral(), new AllomorphHH())
+
+export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
+    .set(PSSF.freeTonal.getLiteral(), [new FreeTonalY()])
+    .set(PSW.freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
+    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSF, new FreeTonalX()])
+    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSF(), new FreeTonalX()])
+    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalSF(), new ZeroTonal()])
+    .set(PSZZS.freeTonal.getLiteral(), [])
+    .set(PSX.freeTonal.getLiteral(), [])
+    .set(PSY.freeTonal.getLiteral(), [new TonalW()])
+    .set('zero', [new FreeTonalY()])
+
+class PSBB implements PartialPositionalSound {
+    static final: Final = new FinalBB()
 }
 
-class ListOfFreeAllomorphsForInputing extends ListOfFreeAllomorphs {
-    get ff() { return this.getFF() }
-    get w() { return this.getW() }
-    get xx() { return this.getXX () }
-    get xxx() { return this.getXXX() }
-    get fr() { return this.getFR() }
-    get zs() { return this.getZS() }
-    get y() { return this.getY() }
-    get x() { return this.getX() }
+class PSDD implements PartialPositionalSound {
+    static final: Final = new FinalDD()
 }
 
-class ListOfFreeAllomorphsForParsing extends ListOfFreeAllomorphs {
-    get w() { return this.getW() }
-    get fr() { return this.getFR() }
+class PSGG implements PartialPositionalSound {
+    static final: Final = new FinalGG()
+}
 
-    get x() { return this.getX() }
-    get y() { return this.getY() }
+class PSLL implements PartialPositionalSound {
+    static final: Final = new FinalLL()
 }

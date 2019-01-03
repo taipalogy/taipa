@@ -506,6 +506,48 @@ export class AllomorphZS extends FreeAllomorph {
     tonal = new TonalZS()
 }
 
+export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
+    .set('ss', new AllomorphSS())
+    .set('w', new AllomorphW())
+    .set('xx', new AllomorphXX())
+    .set('xxx', new AllomorphXXX())
+    .set('zzs', new AllomorphZZS())
+    .set('zs', new AllomorphZS())
+    .set('y', new AllomorphY())
+    .set('x', new AllomorphX())
+
+class AllomorphP extends CheckedAllomorph {
+    final = new FinalP()
+}
+
+class AllomorphT extends CheckedAllomorph {
+    final = new FinalT()
+}
+
+class AllomorphK extends CheckedAllomorph {
+    final = new FinalK()
+}
+
+class AllomorphH extends CheckedAllomorph {
+    final = new FinalH()
+}
+
+class AllomorphB extends CheckedAllomorph {
+    final = new FinalB()
+}
+
+class AllomorphD extends CheckedAllomorph {
+    final = new FinalD()
+}
+
+class AllomorphG extends CheckedAllomorph {
+    final = new FinalG()
+}
+
+class AllomorphF extends CheckedAllomorph {
+    final = new FinalF()
+}
+
 class AllomorphPP extends CheckedAllomorph {
     final = new FinalP()
     tonal = new TonalP()
@@ -571,98 +613,53 @@ class AllomorphFX extends CheckedAllomorph {
     tonal = new CheckedTonalX()
 }
 
-export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set('ss', new AllomorphSS())
-    .set('w', new AllomorphW())
-    .set('xx', new AllomorphXX())
-    .set('xxx', new AllomorphXXX())
-    .set('zzs', new AllomorphZZS())
-    .set('zs', new AllomorphZS())
-    .set('y', new AllomorphY())
-    .set('x', new AllomorphX())
-
-class AllomorphP extends CheckedAllomorph {
-    final = new FinalP()
-}
-
-class AllomorphT extends CheckedAllomorph {
-    final = new FinalT()
-}
-
-class AllomorphK extends CheckedAllomorph {
-    final = new FinalK()
-}
-
-class AllomorphH extends CheckedAllomorph {
-    final = new FinalH()
-}
-
-class AllomorphB extends CheckedAllomorph {
-    final = new FinalB()
-}
-
-class AllomorphD extends CheckedAllomorph {
-    final = new FinalD()
-}
-
-class AllomorphG extends CheckedAllomorph {
-    final = new FinalG()
-}
-
-class AllomorphF extends CheckedAllomorph {
-    final = new FinalF()
-}
-
 export const listOfCheckedAllomorphs: Map<string, Allomorph> = new Map()
-    .set('p', new AllomorphP())
-    .set('t', new AllomorphT())
-    .set('k', new AllomorphK())
-    .set('h', new AllomorphH())
-    .set('b', new AllomorphB())
-    .set('d', new AllomorphD())
-    .set('g', new AllomorphG())
-    .set('f', new AllomorphF())
-    .set('pp', new AllomorphPP())
-    .set('tt', new AllomorphTT())
-    .set('kk', new AllomorphKK())
-    .set('hh', new AllomorphHH())
-    .set('bb', new AllomorphBB())
-    .set('dd', new AllomorphDD())
-    .set('gg', new AllomorphGG())
-    .set('ff', new AllomorphFF())
-    .set('hy', new AllomorphHY())
-    .set('bx', new AllomorphBX())
-    .set('dx', new AllomorphDX())
-    .set('gx', new AllomorphGX())
-    .set('fx', new AllomorphFX())
+    .set(PSP.final.getLiteral(), new AllomorphP())
+    .set(PST.final.getLiteral(), new AllomorphT())
+    .set(PSK.final.getLiteral(), new AllomorphK())
+    .set(PSH.final.getLiteral(), new AllomorphH())
+    .set(PSB.final.getLiteral(), new AllomorphB())
+    .set(PSD.final.getLiteral(), new AllomorphD())
+    .set(PSG.final.getLiteral(), new AllomorphG())
+    .set(PSF.final.getLiteral(), new AllomorphF())
+    .set(PSP.final.getLiteral() + PSP.checkedTonal.getLiteral(), new AllomorphPP())
+    .set(PST.final.getLiteral() + PST.checkedTonal.getLiteral(), new AllomorphTT())
+    .set(PSK.final.getLiteral() + PSK.checkedTonal.getLiteral(), new AllomorphKK())
+    .set(PSH.final.getLiteral() + PSH.checkedTonal.getLiteral(), new AllomorphHH())
+    .set(PSB.final.getLiteral() + PSB.checkedTonal.getLiteral(), new AllomorphBB())
+    .set(PSD.final.getLiteral() + PSD.checkedTonal.getLiteral(), new AllomorphDD())
+    .set(PSG.final.getLiteral() + PSG.checkedTonal.getLiteral(), new AllomorphGG())
+    .set(PSF.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphFF())
+    .set(PSH.final.getLiteral() + PSY.checkedTonal.getLiteral(), new AllomorphHY())
+    .set(PSB.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphBX())
+    .set(PSD.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphDX())
+    .set(PSG.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphGX())
+    .set(PSF.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphFX())
 
 export const listOfUncombinedFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set('w', listOfFreeAllomorphs.get('w'))
-    .set('zs', listOfFreeAllomorphs.get('zs'))
-    .set('x', listOfFreeAllomorphs.get('x'))
-    .set('y', listOfFreeAllomorphs.get('y'))
+    .set(PSW.freeTonal.getLiteral(), new AllomorphW())
+    .set(PSZS.freeTonal.getLiteral(), new AllomorphZS())
+    .set(PSX.freeTonal.getLiteral(), new AllomorphX())
+    .set(PSY.freeTonal.getLiteral(), new AllomorphY())
 
 export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map()
-    .set('p', new AllomorphP())
-    .set('t', new AllomorphT())
-    .set('k', new AllomorphK())
-    .set('h', new AllomorphH())
-    .set('b', new AllomorphB())
-    .set('d', new AllomorphD())
-    .set('g', new AllomorphG())
-    .set('f', new AllomorphF())
-
-//------------------------------------------------------------------------------
-//  Free Allomorph Base Rules
-//------------------------------------------------------------------------------
+    .set(PSP.final.getLiteral(), new AllomorphP())
+    .set(PST.final.getLiteral(), new AllomorphT())
+    .set(PSK.final.getLiteral(), new AllomorphK())
+    .set(PSH.final.getLiteral(), new AllomorphH())
+    .set(PSB.final.getLiteral(), new AllomorphB())
+    .set(PSD.final.getLiteral(), new AllomorphD())
+    .set(PSG.final.getLiteral(), new AllomorphG())
+    .set(PSF.final.getLiteral(), new AllomorphF())
 
 export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
-    .set('ss', [new FreeTonalY()])
-    .set('w', [new TonalZS(), new FreeTonalX()])
-    .set('xx', [new TonalZS(), new TonalSS, new FreeTonalX()])
-    .set('xxx', [new TonalZS(), new TonalSS(), new FreeTonalX()])
-    .set('zs', [new FreeTonalX(), new TonalSS(), new ZeroTonal()])
-    .set('zzs', [])
-    .set('x', [])
-    .set('y', [new TonalW()])
+    .set(PSSS.freeTonal.getLiteral(), [new FreeTonalY()])
+    .set(PSW.freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
+    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSS, new FreeTonalX()])
+    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSS(), new FreeTonalX()])
+    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalSS(), new ZeroTonal()])
+    .set(PSZZS.freeTonal.getLiteral(), [])
+    .set(PSX.freeTonal.getLiteral(), [])
+    .set(PSY.freeTonal.getLiteral(), [new TonalW()])
     .set('zero', [new FreeTonalY()])
+
