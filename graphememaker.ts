@@ -3,7 +3,7 @@
 
 import { Character, characters } from './character';
 import { AlphabeticLetter, AlphabeticGrapheme, MatchedSequence } from './grapheme';
-import { lowerLetters } from './grapheme'
+import { lowerLetters } from './version1'
 
 //------------------------------------------------------------------------------
 //  Grapheme Maker
@@ -34,7 +34,7 @@ export class GraphemeMaker {
         return graphemes;
     }
 
-    getNewMatchedSequence(characters: Array<Character>, beginOfLetter: number, candidates: Array<AlphabeticLetter>) {
+    getMatchedSequence(characters: Array<Character>, beginOfLetter: number, candidates: Array<AlphabeticLetter>) {
         let ms = new MatchedSequence();
         let matchedLen = 0;
 
@@ -96,7 +96,7 @@ export class GraphemeMaker {
                 
                 //console.log(candidates)
 
-                let ms = this.getNewMatchedSequence(characters, beginOfLetter, candidates)
+                let ms = this.getMatchedSequence(characters, beginOfLetter, candidates)
 
                 if(ms.matchedLength > 0) {
                     for(let key in candidates) {

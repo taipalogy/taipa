@@ -8,7 +8,95 @@ import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial
     Allomorph,
     Tonal,
     } from './system'
+import { AlphabeticLetter } from './grapheme'
 
+//------------------------------------------------------------------------------
+//  Alphabet
+//------------------------------------------------------------------------------
+
+interface ILetters {
+    readonly [index: string]: AlphabeticLetter
+}
+
+export let lowerLetters: ILetters = {
+    // medials
+    'a': new AlphabeticLetter([characters.get('a')]),
+    'e': new AlphabeticLetter([characters.get('e')]),
+    'i': new AlphabeticLetter([characters.get('i')]),
+    'o': new AlphabeticLetter([characters.get('o')]),
+    'u': new AlphabeticLetter([characters.get('u')]),
+    'ur': new AlphabeticLetter([characters.get('u'), characters.get('r')]),
+
+    // initials excludes checked finals and neutral finals
+    'c': new AlphabeticLetter([characters.get('c')]),
+    'j': new AlphabeticLetter([characters.get('j')]),
+    'q': new AlphabeticLetter([characters.get('q')]),
+    's': new AlphabeticLetter([characters.get('s')]),
+    'v': new AlphabeticLetter([characters.get('v')]),
+    'z': new AlphabeticLetter([characters.get('z')]),
+
+    // initials, medial, and nasal finals
+    'm': new AlphabeticLetter([characters.get('m')]),
+    'n': new AlphabeticLetter([characters.get('n')]),
+    'ng': new AlphabeticLetter([characters.get('n'), characters.get('g')]),
+    
+    // nasal
+    'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
+
+    // free tonals
+    'sf': new AlphabeticLetter([characters.get('s'), characters.get('f')]),
+    'w': new AlphabeticLetter([characters.get('w')]),
+    'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
+    'xxx': new AlphabeticLetter([characters.get('x'), characters.get('x'), characters.get('x')]),
+    'zs': new AlphabeticLetter([characters.get('z'), characters.get('s')]),
+    'zzs': new AlphabeticLetter([characters.get('z'), characters.get('z'), characters.get('s')]),
+
+    // free tonal, checked tonal
+    'x': new AlphabeticLetter([characters.get('x')]),
+
+    // free tonal, neutral tonal
+    'y': new AlphabeticLetter([characters.get('y')]),
+
+    // initials, stop finals
+    'b': new AlphabeticLetter([characters.get('b')]),
+    'd': new AlphabeticLetter([characters.get('d')]),
+    'g': new AlphabeticLetter([characters.get('g')]),
+    'l': new AlphabeticLetter([characters.get('l')]),
+
+    // initials and stop finals
+    'k': new AlphabeticLetter([characters.get('k')]),
+    'p': new AlphabeticLetter([characters.get('p')]),
+    't': new AlphabeticLetter([characters.get('t')]),
+
+    // stop finals
+    'kk': new AlphabeticLetter([characters.get('k'), characters.get('k')]),
+    'pp': new AlphabeticLetter([characters.get('p'), characters.get('p')]),
+    'tt': new AlphabeticLetter([characters.get('t'), characters.get('t')]),
+    'hh': new AlphabeticLetter([characters.get('h'), characters.get('h')]),
+    
+    // checked tonal
+    'f': new AlphabeticLetter([characters.get('f')]),
+
+    // initia and neutral final
+    'h': new AlphabeticLetter([characters.get('h')]),
+}
+
+let ziangLetters: ILetters = {
+    // medial
+    'ee': new AlphabeticLetter([characters.get('e'), characters.get('e')]),
+    'or': new AlphabeticLetter([characters.get('o'), characters.get('r')]),
+}
+
+let zuanxLetters: ILetters = {
+    // medial
+    'er': new AlphabeticLetter([characters.get('e'), characters.get('r')]),
+    'ir': new AlphabeticLetter([characters.get('i'), characters.get('r')]),
+}
+
+let consonantLetters: ILetters = {
+    // voiced d
+    'dr': new AlphabeticLetter([characters.get('d'), characters.get('r')]),
+}
 
 //------------------------------------------------------------------------------
 //  Sound
@@ -68,18 +156,22 @@ export class FinalP extends StopFinal {characters = [characters.get('p')]}
 export class FinalT extends StopFinal {characters = [characters.get('t')]}
 export class FinalK extends StopFinal {characters = [characters.get('k')]}
 export class FinalH extends StopFinal {characters = [characters.get('h')]}
+/*
 export class FinalB extends StopFinal {characters = [characters.get('b')]}
 export class FinalD extends StopFinal {characters = [characters.get('d')]}
 export class FinalG extends StopFinal {characters = [characters.get('g')]}
 export class FinalL extends StopFinal {characters = [characters.get('l')]}
+*/
 export class FinalPP extends StopFinal {characters = [characters.get('p'), characters.get('p')]}
 export class FinalTT extends StopFinal {characters = [characters.get('t'), characters.get('t')]}
 export class FinalKK extends StopFinal {characters = [characters.get('k'), characters.get('k')]}
 export class FinalHH extends StopFinal {characters = [characters.get('h'), characters.get('h')]}
+/*
 export class FinalBB extends StopFinal {characters = [characters.get('b'), characters.get('b')]}
 export class FinalDD extends StopFinal {characters = [characters.get('d'), characters.get('d')]}
 export class FinalGG extends StopFinal {characters = [characters.get('g'), characters.get('g')]}
 export class FinalLL extends StopFinal {characters = [characters.get('l'), characters.get('l')]}
+*/
 
 class FinalM extends NasalFinal {characters = [characters.get('m')]}
 class FinalN extends NasalFinal {characters = [characters.get('n')]}
@@ -215,10 +307,6 @@ export class SetOfFinals extends SetOfSounds {
         this.finals.push(new FinalT())
         this.finals.push(new FinalK())
         this.finals.push(new FinalH())
-        this.finals.push(new FinalB())
-        this.finals.push(new FinalD())
-        this.finals.push(new FinalG())
-        this.finals.push(new FinalL())
         this.finals.push(new FinalPP())
         this.finals.push(new FinalTT())
         this.finals.push(new FinalKK())
@@ -242,10 +330,6 @@ export class SetOfStopFinals extends SetOfSounds {
         this.stopFinals.push(new FinalT())
         this.stopFinals.push(new FinalK())
         this.stopFinals.push(new FinalH())
-        this.stopFinals.push(new FinalB())
-        this.stopFinals.push(new FinalD())
-        this.stopFinals.push(new FinalG())
-        this.stopFinals.push(new FinalL())
         this.stopFinals.push(new FinalPP())
         this.stopFinals.push(new FinalTT())
         this.stopFinals.push(new FinalKK())
@@ -267,7 +351,7 @@ class PSA implements PartialPositionalSound {
 
 class PSB implements PartialPositionalSound {
     static initial: Initial = new InitialB()
-    static final: Final = new FinalB()
+    //static final: Final = new FinalB()
 }
 
 class PSC implements PartialPositionalSound {
@@ -276,7 +360,7 @@ class PSC implements PartialPositionalSound {
 
 class PSD implements PartialPositionalSound {
     static initial: Initial = new InitialD()
-    static final: Final = new FinalD()
+    //static final: Final = new FinalD()
 }
 
 class PSE implements PartialPositionalSound {
@@ -297,7 +381,7 @@ class PSZS implements PartialPositionalSound {
 
 class PSG implements PartialPositionalSound {
     static initial: Initial = new InitialG()
-    static final: Final = new FinalG()
+    //static final: Final = new FinalG()
 }
 
 class PSH implements PartialPositionalSound {
@@ -328,7 +412,7 @@ class PSKK implements PartialPositionalSound {
 
 class PSL implements PartialPositionalSound {
     static initial: Initial = new InitialL()
-    static final: Final = new FinalL()
+    //static final: Final = new FinalL()
 }
 
 class PSM implements PartialPositionalSound {
@@ -456,10 +540,9 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('d', PSD)
     .set('e', PSE)
     .set('f', PSF)
-    .set('sf', PSSF)
-    .set('zs', PSZS)
     .set('g', PSG)
     .set('h', PSH)
+    .set('hh', PSHH)
     .set('i', PSI)
     .set('j', PSJ)
     .set('k', PSK)
@@ -474,6 +557,7 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('pp', PSPP)
     .set('q', PSQ)
     .set('s', PSS)
+    .set('sf', PSSF)
     .set('t', PST)
     .set('tt', PSTT)
     .set('u', PSU)
@@ -486,6 +570,7 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('y', PSY)
     .set('z', PSZ)
     .set('zs', PSZS)
+    .set('zzs', PSZZS)
 
 
 //------------------------------------------------------------------------------
@@ -685,19 +770,3 @@ export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
     .set(PSX.freeTonal.getLiteral(), [])
     .set(PSY.freeTonal.getLiteral(), [new TonalW()])
     .set('zero', [new FreeTonalY()])
-
-class PSBB implements PartialPositionalSound {
-    static final: Final = new FinalBB()
-}
-
-class PSDD implements PartialPositionalSound {
-    static final: Final = new FinalDD()
-}
-
-class PSGG implements PartialPositionalSound {
-    static final: Final = new FinalGG()
-}
-
-class PSLL implements PartialPositionalSound {
-    static final: Final = new FinalLL()
-}

@@ -16,12 +16,12 @@ export let FORMS = {
         'causative': 'sandhiForm',
         'perfective': 'baseForm',
         'attributive': 'sandhiForm',
-        'continuative': 'sandhiForm',
+        'continuative': 'sandhiForm', // adverbial
     },
     'ADJECTIVE': {
         'basic': 'baseForm',
         'attributive': 'sandhiForm',
-        'adverbial': 'sandhiForm',
+        'adverbial': 'sandhiForm', // ay
     },
     'NOUN': {
         'basic': 'baseForm',

@@ -35,6 +35,7 @@ export class ListOfLexicalRoots {
         for(let k in this.list) {
             for(let i in this.list[k]) {
                 str += this.list[k][i].getLiteral()
+                str += ', '
             }
         }
         return str
@@ -236,6 +237,7 @@ export class ClientOfGenerator {
             let n = entry[i].lastIndexOf('.')
             let clasName = entry[i].slice(0, n)
             let position = entry[i].slice(n+1)
+            //console.debug(entry + ' ' + clasName + ' ' + position)
             ret.push(letterClass.get(clasName)[position])
         }
         return ret
@@ -256,7 +258,7 @@ export class ClientOfGenerator {
             }
             
             let sounds: string[] = []
-            
+
             if((this.isMaterLectionis(ls[0]) && ls.length == 1) 
                 || (ls.length == 2 && this.isMaterLectionis(ls[0]) && this.isFreeTonal(ls[1]))) {
                 
