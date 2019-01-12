@@ -25,7 +25,7 @@ denpendency parsing:
 
 morphological analyzer + input method:
 
-`node main.js suzsjibbhuat`
+`node main.js suzsjippwhoat`
 
 ## Input Method
 

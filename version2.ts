@@ -44,7 +44,7 @@ export let lowerLetters: ILetters = {
     'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
 
     // free tonals
-    'cf': new AlphabeticLetter([characters.get('c'), characters.get('f')]),
+    'cs': new AlphabeticLetter([characters.get('c'), characters.get('s')]),
     'w': new AlphabeticLetter([characters.get('w')]),
     'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
     'xxx': new AlphabeticLetter([characters.get('x'), characters.get('x'), characters.get('x')]),
@@ -138,7 +138,7 @@ export class ZeroTonal extends FreeTonal {characters = null;}
 
 export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 export class TonalW extends FreeTonal {characters = [characters.get('w')]}
-export class TonalCF extends FreeTonal {characters = [characters.get('c'), characters.get('f')]}
+export class TonalCS extends FreeTonal {characters = [characters.get('c'), characters.get('s')]}
 export class TonalXX extends FreeTonal {characters = [characters.get('x'), characters.get('x')]}
 export class TonalXXX extends FreeTonal {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
 export class TonalZZS extends FreeTonal {characters = [characters.get('z'), characters.get('z'), characters.get('s')]}
@@ -287,7 +287,7 @@ export class SetOfFreeTonals extends SetOfSounds {
         this.freeTonals.push(new TonalW())
         this.freeTonals.push(new TonalXX())
         this.freeTonals.push(new TonalXXX())
-        this.freeTonals.push(new TonalCF())
+        this.freeTonals.push(new TonalCS())
         this.freeTonals.push(new TonalZZS())
 
         this.freeTonals.push(new FreeTonalX())
@@ -371,8 +371,8 @@ class PSF implements PartialPositionalSound {
     static checkedTonal: CheckedTonal = new TonalF()
 }
 
-class PSCF implements PartialPositionalSound {
-    static freeTonal: TonalCF = new TonalCF()
+class PSCS implements PartialPositionalSound {
+    static freeTonal: TonalCS = new TonalCS()
 }
 
 class PSZS implements PartialPositionalSound {
@@ -520,7 +520,7 @@ class PSZero implements PartialPositionalSound {
 
 export const combiningRules: Map<string, any> = new Map()
     .set('zero', { zs: PSZS.freeTonal })
-    .set('y', { zero: PSZero.freeTonal, cf: PSCF.freeTonal })
+    .set('y', { zero: PSZero.freeTonal, cs: PSCS.freeTonal })
     .set('w', { y: PSY.freeTonal })
     .set('x', { zs: PSZS.freeTonal, w: PSW.freeTonal })
     .set('zs', { w: PSW.freeTonal })
@@ -559,7 +559,7 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('pp', PSPP)
     .set('q', PSQ)
     .set('s', PSS)
-    .set('cf', PSCF)
+    .set('cs', PSCS)
     .set('t', PST)
     .set('tt', PSTT)
     .set('u', PSU)
@@ -583,8 +583,8 @@ export class ZeroAllomorph extends FreeAllomorph {
     tonal = new ZeroTonal()
 }
 
-class AllomorphCF extends FreeAllomorph {
-    tonal = new TonalCF()
+class AllomorphCS extends FreeAllomorph {
+    tonal = new TonalCS()
 }
 
 class AllomorphZS extends FreeAllomorph {
@@ -616,7 +616,7 @@ class AllomorphZZS extends FreeAllomorph {
 }
 
 export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set('cf', new AllomorphCF())
+    .set('cs', new AllomorphCS())
     .set('w', new AllomorphW())
     .set('xx', new AllomorphXX())
     .set('xxx', new AllomorphXXX())
@@ -763,11 +763,11 @@ export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map
     .set(PSHH.final.getLiteral(), new AllomorphHH())
 
 export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
-    .set(PSCF.freeTonal.getLiteral(), [new FreeTonalY()])
+    .set(PSCS.freeTonal.getLiteral(), [new FreeTonalY()])
     .set(PSW.freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
-    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCF, new FreeTonalX()])
-    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCF(), new FreeTonalX()])
-    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalCF(), new ZeroTonal()])
+    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCS, new FreeTonalX()])
+    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCS(), new FreeTonalX()])
+    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalCS(), new ZeroTonal()])
     .set(PSZZS.freeTonal.getLiteral(), [])
     .set(PSX.freeTonal.getLiteral(), [])
     .set(PSY.freeTonal.getLiteral(), [new TonalW()])
