@@ -44,7 +44,7 @@ export let lowerLetters: ILetters = {
     'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
 
     // free tonals
-    'sf': new AlphabeticLetter([characters.get('s'), characters.get('f')]),
+    'cf': new AlphabeticLetter([characters.get('c'), characters.get('f')]),
     'w': new AlphabeticLetter([characters.get('w')]),
     'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
     'xxx': new AlphabeticLetter([characters.get('x'), characters.get('x'), characters.get('x')]),
@@ -95,7 +95,7 @@ let zuanxLetters: ILetters = {
 
 let consonantLetters: ILetters = {
     // voiced d
-    'dr': new AlphabeticLetter([characters.get('d'), characters.get('r')]),
+    'dl': new AlphabeticLetter([characters.get('d'), characters.get('l')]),
 }
 
 //------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ export class ZeroTonal extends FreeTonal {characters = null;}
 
 export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 export class TonalW extends FreeTonal {characters = [characters.get('w')]}
-export class TonalSF extends FreeTonal {characters = [characters.get('s'), characters.get('f')]}
+export class TonalCF extends FreeTonal {characters = [characters.get('c'), characters.get('f')]}
 export class TonalXX extends FreeTonal {characters = [characters.get('x'), characters.get('x')]}
 export class TonalXXX extends FreeTonal {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
 export class TonalZZS extends FreeTonal {characters = [characters.get('z'), characters.get('z'), characters.get('s')]}
@@ -287,7 +287,7 @@ export class SetOfFreeTonals extends SetOfSounds {
         this.freeTonals.push(new TonalW())
         this.freeTonals.push(new TonalXX())
         this.freeTonals.push(new TonalXXX())
-        this.freeTonals.push(new TonalSF())
+        this.freeTonals.push(new TonalCF())
         this.freeTonals.push(new TonalZZS())
 
         this.freeTonals.push(new FreeTonalX())
@@ -371,8 +371,8 @@ class PSF implements PartialPositionalSound {
     static checkedTonal: CheckedTonal = new TonalF()
 }
 
-class PSSF implements PartialPositionalSound {
-    static freeTonal: TonalSF = new TonalSF()
+class PSCF implements PartialPositionalSound {
+    static freeTonal: TonalCF = new TonalCF()
 }
 
 class PSZS implements PartialPositionalSound {
@@ -507,7 +507,7 @@ class PSZ implements PartialPositionalSound {
 }
 
 class PSZZS implements PartialPositionalSound {
-    static freeTonal: TonalZS = new TonalZZS()
+    static freeTonal: TonalZZS = new TonalZZS()
 }
 
 class PSZero implements PartialPositionalSound {
@@ -520,7 +520,7 @@ class PSZero implements PartialPositionalSound {
 
 export const combiningRules: Map<string, any> = new Map()
     .set('zero', { zs: PSZS.freeTonal })
-    .set('y', { zero: PSZero.freeTonal, sf: PSSF.freeTonal })
+    .set('y', { zero: PSZero.freeTonal, cf: PSCF.freeTonal })
     .set('w', { y: PSY.freeTonal })
     .set('x', { zs: PSZS.freeTonal, w: PSW.freeTonal })
     .set('zs', { w: PSW.freeTonal })
@@ -533,6 +533,8 @@ export const combiningRules: Map<string, any> = new Map()
     .set('kk', { w: PSW.checkedTonal, x: PSX.checkedTonal})
     .set('hh', { w: PSW.checkedTonal, x: PSX.checkedTonal})
 
+
+// need to verify the size of the map
 export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('a', PSA)
     .set('b', PSB)
@@ -557,7 +559,7 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('pp', PSPP)
     .set('q', PSQ)
     .set('s', PSS)
-    .set('sf', PSSF)
+    .set('cf', PSCF)
     .set('t', PST)
     .set('tt', PSTT)
     .set('u', PSU)
@@ -581,8 +583,8 @@ export class ZeroAllomorph extends FreeAllomorph {
     tonal = new ZeroTonal()
 }
 
-class AllomorphSF extends FreeAllomorph {
-    tonal = new TonalSF()
+class AllomorphCF extends FreeAllomorph {
+    tonal = new TonalCF()
 }
 
 class AllomorphZS extends FreeAllomorph {
@@ -614,7 +616,7 @@ class AllomorphZZS extends FreeAllomorph {
 }
 
 export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set('sf', new AllomorphSF())
+    .set('cf', new AllomorphCF())
     .set('w', new AllomorphW())
     .set('xx', new AllomorphXX())
     .set('xxx', new AllomorphXXX())
@@ -761,11 +763,11 @@ export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map
     .set(PSHH.final.getLiteral(), new AllomorphHH())
 
 export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
-    .set(PSSF.freeTonal.getLiteral(), [new FreeTonalY()])
+    .set(PSCF.freeTonal.getLiteral(), [new FreeTonalY()])
     .set(PSW.freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
-    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSF, new FreeTonalX()])
-    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSF(), new FreeTonalX()])
-    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalSF(), new ZeroTonal()])
+    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCF, new FreeTonalX()])
+    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCF(), new FreeTonalX()])
+    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalCF(), new ZeroTonal()])
     .set(PSZZS.freeTonal.getLiteral(), [])
     .set(PSX.freeTonal.getLiteral(), [])
     .set(PSY.freeTonal.getLiteral(), [new TonalW()])

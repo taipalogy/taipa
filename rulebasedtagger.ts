@@ -2,7 +2,7 @@
 import { Word, ToneSandhiWord, ToneWord, TonalLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
-import { combiningRules } from './version1'
+import { combiningRules } from './version2'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase

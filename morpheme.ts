@@ -12,7 +12,7 @@ import {
     AllomorphX,
     AllomorphY,
     ZeroTonal,
-    } from './version1'
+    } from './version2'
 
 //------------------------------------------------------------------------------
 //  Tone Morpheme

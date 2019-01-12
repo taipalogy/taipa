@@ -2,7 +2,7 @@
 import { Sound } from './system'
 import { GraphemeMaker } from './graphememaker'
 
-import { list_of_lexical_roots } from './lexicalroots1'
+import { list_of_lexical_roots } from './lexicalroots2'
 import { SetOfMaterLectionis,
     SetOfMedials,
     SetOfInitials,
@@ -13,7 +13,7 @@ import { SetOfMaterLectionis,
     SetOfStopFinals,
     combiningRules,
     letterClass,
-    } from './version1'
+    } from './version2'
 
 //------------------------------------------------------------------------------
 //  Lexical Root
@@ -174,10 +174,9 @@ export class ClientOfGenerator {
     
     private makeCombiningForms(entry: string[]) {
         let lastElement = entry[entry.length-1]
-        //let tm: string = ''
         let n = lastElement.lastIndexOf('.')
         let key = lastElement.slice(0, n)
-        let tos = combiningRules.get(key)
+        let tos = combiningRules.get(key) // plural to
         let ret: Array<string[]> = new Array
 
         if(lastElement.lastIndexOf('freeTonal') > 0) {
@@ -198,7 +197,9 @@ export class ClientOfGenerator {
         } else {
             let e: string[] = []
             e = Object.assign([], entry)
-            e.push(combiningRules.get('zero').zs.getLiteral() + '.freeTonal')
+            let to = combiningRules.get('zero')
+            //console.debug(Object.keys(to))
+            e.push(combiningRules.get('zero')[Object.keys(to)[0]].getLiteral() + '.freeTonal')
             //console.log(e + '+')
             ret.push(e)
         }

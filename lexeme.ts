@@ -3,7 +3,7 @@ import { ToneSandhiSyllable, TonalAffix, ToneSandhiInputingMorpheme, ToneSandhiR
     CombiningFormMorpheme,
     } from './morpheme';
 import { FreeAllomorph, CheckedAllomorph, Allomorph, } from './system'
-import { freeAllomorphUncombiningRules } from './version1'
+import { freeAllomorphUncombiningRules } from './version2'
 
 import { Sound, Tonal } from './system';
 

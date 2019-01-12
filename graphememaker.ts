@@ -3,7 +3,7 @@
 
 import { Character, characters } from './character';
 import { AlphabeticLetter, AlphabeticGrapheme, MatchedSequence } from './grapheme';
-import { lowerLetters } from './version1'
+import { lowerLetters } from './version2'
 
 //------------------------------------------------------------------------------
 //  Grapheme Maker
