@@ -9,7 +9,7 @@ import { SetOfMaterLectionis,
     SetOfFreeTonals,
     SetOfFinals,
     SetOfNeutralFinals,
-    SetOfNasals,
+    SetOfNasalizations,
     SetOfStopFinals,
     combiningRules,
     letterClass,
@@ -78,8 +78,8 @@ export class ClientOfGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFreeTonal(ls[index])) {
             sounds.push(ls[ls.length-1] + '.freeTonal')
-        } else if(this.isNasal(ls[index])) {
-            sounds.push(ls[index] + '.nasal')
+        } else if(this.isNasalization(ls[index])) {
+            sounds.push(ls[index] + '.nasalization')
             if(ls.length > sounds.length) {
                 sounds = this.analyzeAfterNasalFinalsOrNasalSound(ls, sounds, sounds.length)
             }
@@ -154,8 +154,8 @@ export class ClientOfGenerator {
         return false
     }
 
-    private isNasal(str: string) {
-        if(str.search(new RegExp(new SetOfNasals().toString())) == 0) return true
+    private isNasalization(str: string) {
+        if(str.search(new RegExp(new SetOfNasalizations().toString())) == 0) return true
         
         return false
     }
@@ -300,7 +300,7 @@ export class ClientOfGenerator {
         let nextStem: string[] = []
         for(let k = 0; k < arrayOfSounds.length; k++) {
 
-            //console.log(arrayOfSounds[k])
+            //console.debug(arrayOfSounds[k])
             entries.push(this.convert(arrayOfSounds[k]))
 
             let entry = arrayOfSounds[k]
@@ -358,6 +358,7 @@ export class ClientOfGenerator {
                         }
                     }
                 }
+
                 buffer.push(entry)
             }
         }

@@ -29,7 +29,7 @@ export class Sound {
 export class Initial extends Sound {name = 'initial'}
 export class Medial extends Sound {name = 'medial'}
 export class Final extends Sound {name = 'final'}
-export class Nasal extends Sound {name = 'nasal'}
+export class Nasal extends Sound {name = 'nasalization'}
 export class Tonal extends Sound {
     name = 'tonal'
     isEqualToTonal(tonal: Tonal) {

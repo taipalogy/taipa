@@ -14,12 +14,14 @@ if(argc.length == 1) {
     for(let i in doc.inputingLexemes) {
         let l = doc.inputingLexemes[i].word.literal
         let en = doc.inputingLexemes[i].getInflectionalEnding()
-        console.info(l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem')
+        if(l.length-en.length != 0) {
+            console.info(l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem')
+        }
         let filler: string = ''
         for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) { 
             filler += ' '
         }
-        if(en.length > 0) console.info(filler + en+ ' - ' + 'inflectional ending')
+        if(en.length > 0) console.info(filler + en + ' - ' + 'inflectional ending')
 
         // should sounds be blended with morphemes?
         for(let j in doc.inputingMorphemes) {

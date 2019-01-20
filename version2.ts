@@ -40,7 +40,7 @@ export let lowerLetters: ILetters = {
     'n': new AlphabeticLetter([characters.get('n')]),
     'ng': new AlphabeticLetter([characters.get('n'), characters.get('g')]),
     
-    // nasal
+    // nasalization
     'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
 
     // free tonals
@@ -177,13 +177,13 @@ class FinalM extends NasalFinal {characters = [characters.get('m')]}
 class FinalN extends NasalFinal {characters = [characters.get('n')]}
 class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
 
-class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
+class NasalizationNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
-export class SetOfNasals extends SetOfSounds {
+export class SetOfNasalizations extends SetOfSounds {
     nasals: Array<Nasal> = new Array()
     constructor() {
         super()
-        this.nasals.push(new NasalNN())
+        this.nasals.push(new NasalizationNN())
     }
 
     toString() {
@@ -428,7 +428,7 @@ class PSN implements PartialPositionalSound {
 }
 
 class PSNN implements PartialPositionalSound {
-    static nasal: Nasal = new NasalNN()
+    static nasalization: Nasal = new NasalizationNN()
 }
 
 class PSNG implements PartialPositionalSound {
