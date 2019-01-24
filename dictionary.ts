@@ -32,7 +32,6 @@ export let dictionary: IndexedDictionary = {
     daizsoanx: ['台灣', '臺灣'],
     daizsoanzsoezs: ['台灣話'],
     damwvurhhxoay: ['淡薄仔'],
-    damwvurhhxoa: ['淡薄仔'],
     dienwnauy: ['電腦'],
     diurhh: ['着'],
     dngy: ['返'],
