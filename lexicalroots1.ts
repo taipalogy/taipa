@@ -1,14 +1,4 @@
 
-
-let list_of_rime_of_ziang_accent = [
-    'ee', 'eeh', 'eef', 'eng', 'ek', 'eg', 'ionn', 'ionnh', 'ionnf', 
-]
-
-let list_of_rime_of_zuanx_accent = [
-    'er', 'erh', 'erf', 'ere', 'ereh', 'eref', 'eru', 'ir', 'irh', 'irf', 'irinn', 'irm', 'irn', 'irng', 'irp', 'irt', 'ird', 'irk',
-    'irg',
-]
-
 let list_of_ziang_syllables = []
 
 let list_of_zuanx_syllables = [

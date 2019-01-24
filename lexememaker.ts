@@ -3,7 +3,7 @@ import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme,
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
-import { ToneMark } from './version1';
+import { Tonal } from './system';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -114,14 +114,14 @@ export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
 }
 
 class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
-    toneMark: ToneMark
+    tonal: Tonal
 
-    constructor(morphemes: Array<ToneSandhiRootMorpheme>, tm?: ToneMark) {
+    constructor(morphemes: Array<ToneSandhiRootMorpheme>, tm?: Tonal) {
         super(morphemes)
         //this.morphemes = new Array();
         //this.morphemes = morphemes;
         if(tm != undefined) {
-            this.toneMark = tm
+            this.tonal = tm
         }
     }
 
@@ -141,7 +141,7 @@ class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
             }
         }
 
-        tspl.populateSandhiForm(this.morphemes, this.toneMark)
+        tspl.populateSandhiForm(this.morphemes, this.tonal)
 
         let lexemes: Array<SandhiFormLexeme> = new Array();
         lexemes.push(tspl);
@@ -204,11 +204,11 @@ export class TurningIntoInflectionLexeme {
 }
 
 export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
-    toneMark: ToneMark
+    tonal: Tonal
 
-    constructor (tm: ToneMark) {
+    constructor (tm: Tonal) {
         super()
-        this.toneMark = tm
+        this.tonal = tm
     }
 
     turnIntoLexemes(str: string) {
@@ -221,7 +221,7 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
         let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is used
 
         // Lexeme Maker
-        let tslm = new SandhiFormLexemeMaker(morphemes, this.toneMark);
+        let tslm = new SandhiFormLexemeMaker(morphemes, this.tonal);
         let lexemes = tslm.makeSandhiLexemes();
 
         return lexemes;

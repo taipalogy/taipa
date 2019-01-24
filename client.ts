@@ -5,7 +5,7 @@ import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
-import { Sound } from './grapheme';
+import { Sound } from './system';
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
