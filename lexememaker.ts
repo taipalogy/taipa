@@ -73,7 +73,6 @@ export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
 
         for(let k in this.morphemes) {
-            // should sounds be blended with morphemes
             tsil.arrayOfSounds.push(this.morphemes[k].sounds)
         }
         

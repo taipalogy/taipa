@@ -132,11 +132,11 @@ export class ToneSandhiInputingLexeme {
     word: ToneSandhiWord
     private inflectionalEnding: InflectionalEnding = null
     private lemmata: Array<ToneSandhiWord>
-    arrayOfSounds: Array<Sound[]> // should sounds be blended with lexemes
+    arrayOfSounds: Array<Sound[]>
 
     constructor(word: ToneSandhiWord) {
         this.word = word;
-        this.arrayOfSounds = new Array() // should sounds be blended with lexemes
+        this.arrayOfSounds = new Array()
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {

@@ -1,8 +1,10 @@
 
 let list_of_new_syllables = [
+    'mnghh',
+
     'n',
 
-    'mnghh',
+    'sm',
 ]
 
 let list_of_ziang_syllables = []

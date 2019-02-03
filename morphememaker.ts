@@ -89,7 +89,6 @@ abstract class MorphemeMaker {
                     tsm =  this.create(new ToneSandhiSyllable(msp.letters))
 
                     if(tsm instanceof ToneSandhiInputingMorpheme) {
-                        // should sounds be blended with morphemes
                         tsm.sounds = msp.pattern
                     }
                     

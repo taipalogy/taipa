@@ -75,11 +75,11 @@ export class ToneSandhiMorpheme extends Morpheme {}
 export class ToneSandhiInputingMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null; // required to populate stems
-    sounds: Array<Sound> // should sounds be blended with morphemes
+    sounds: Array<Sound>
 
     constructor(syllable: ToneSandhiSyllable) {
         this.syllable = syllable;
-        this.sounds = new Array() // should sounds be blended with morphemes
+        this.sounds = new Array()
         // assign allomorph for each syllable
         this.assignAllomorph();
     }

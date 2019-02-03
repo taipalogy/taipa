@@ -11,51 +11,52 @@ if(argc.length == 1) {
 
     let clt = new Client();
     let doc = clt.processOneToken(input);
+    let output = ''
     for(let i in doc.inputingLexemes) {
         let l = doc.inputingLexemes[i].word.literal
         let en = doc.inputingLexemes[i].getInflectionalEnding()
         if(l.length-en.length != 0) {
-            console.info(l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem')
+            output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
         }
         let filler: string = ''
         for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) { 
             filler += ' '
         }
-        if(en.length > 0) console.info(filler + en + ' - ' + 'inflectional ending')
+        if(en.length > 0) output += '\n' + filler + en + ' - ' + 'inflectional ending'
 
-        // should sounds be blended with morphemes?
         for(let j in doc.inputingMorphemes) {
-            let syl = ''
-            let sous = []
+            let syll = ''
+            let saunz = []
             for(let k in doc.inputingMorphemes[j]) {
                 let sou = doc.inputingMorphemes[j][k]
-                sous.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
-                syl += sou.getLiteral()
+                saunz.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
+                syll += sou.getLiteral()
             }
-            console.info('-' + syl)
-            for(let k in sous) {
-                console.info(sous[k])
+            output += '\n' + '- ' + syll
+            for(let k in saunz) {
+                output += '\n' + saunz[k]
             }
         }
 
-        let ilw = clt.lookup(doc.inputingLexemes[i].word.literal);
+        let ipw = clt.lookup(doc.inputingLexemes[i].word.literal);
         // when the input word can be found in the dictionary
-        if(ilw != null) {
-
-            console.info(ilw)
+        if(ipw != null) {
+            output += '\n' + ipw
         }
 
         let ls = doc.inputingLexemes[i].getBaseForms()
 
         for(let j in ls) {
-            let ill = clt.lookup(ls[j].literal);
+            let bsw = clt.lookup(ls[j].literal);
             // when the base form of the word can be found in the dictionary
-            if(ill != null) {
-                console.log(ill)
+            if(bsw != null) {
+                output += '\n' + bsw
             }
         }
 
     }
+
+    console.info(output)
 
     process.exit(1);
 } else if(argc.length > 1) {
