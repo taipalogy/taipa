@@ -1,5 +1,5 @@
 
-import { ToneSandhiInputingLexeme, ToneSandhiWord } from "./lexeme";
+import { ToneSandhiInputingLexeme, TonalWord } from "./lexeme";
 import { ToneSandhiPhraseme, ToneSandhiPhrase, ToneGroup } from "./phraseme";
 
 
@@ -19,7 +19,7 @@ export class ToneSandhiPhrasemeMaker {
         let phrasemes: Array<ToneSandhiPhraseme> = new Array();
 
         // unpack lexemes and take words out from them
-        let words: Array<ToneSandhiWord> = new Array();
+        let words: Array<TonalWord> = new Array();
         for(let key in this.lexemes) {
             words.push(this.lexemes[key].word);
         }

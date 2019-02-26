@@ -1,6 +1,6 @@
 
 import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable, Morpheme } from './morpheme'
-import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, ToneSandhiWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
+import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, TonalWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
 import { Tonal } from './system';
@@ -55,7 +55,7 @@ export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
     }
 
     make(syllables: Array<ToneSandhiSyllable>) {
-        return new ToneSandhiInputingLexeme(new ToneSandhiWord(syllables));
+        return new ToneSandhiInputingLexeme(new TonalWord(syllables));
     }
 
     postprocess(tsil: ToneSandhiInputingLexeme) {
@@ -96,7 +96,7 @@ export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
     }
 
     make(syllables: Array<ToneSandhiSyllable>) {
-        return new ToneSandhiInflectionLexeme(new ToneSandhiWord(syllables));
+        return new ToneSandhiInflectionLexeme(new TonalWord(syllables));
     }
 
     postprocess(tspl: ToneSandhiInflectionLexeme) {
@@ -129,7 +129,7 @@ class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
     }
 
     make(syllables: Array<ToneSandhiSyllable>) {
-        return new SandhiFormLexeme(new ToneSandhiWord(syllables));
+        return new SandhiFormLexeme(new TonalWord(syllables));
     }
 
     postprocess(tspl: SandhiFormLexeme) {

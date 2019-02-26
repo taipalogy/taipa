@@ -129,12 +129,12 @@ export class ToneSandhiLexeme extends Lexeme {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiInputingLexeme {
-    word: ToneSandhiWord
+    word: TonalWord
     private inflectionalEnding: InflectionalEnding = null
-    private lemmata: Array<ToneSandhiWord>
+    private lemmata: Array<TonalWord>
     arrayOfSounds: Array<Sound[]>
 
-    constructor(word: ToneSandhiWord) {
+    constructor(word: TonalWord) {
         this.word = word;
         this.arrayOfSounds = new Array()
     }
@@ -174,13 +174,13 @@ export class ToneSandhiInputingLexeme {
     }
     
     private replaceLastSyllable(morphemes: Array<ToneSandhiInputingMorpheme>) {
-        let word = new ToneSandhiWord(this.word.syllables);
+        let word = new TonalWord(this.word.syllables);
         word.popSyllable();
         word.pushSyllable(morphemes[morphemes.length-1].getBaseForms()[0]);
         return word;
     }
 
-    private getLemmas(morphemes: Array<ToneSandhiInputingMorpheme>): Array<ToneSandhiWord> {
+    private getLemmas(morphemes: Array<ToneSandhiInputingMorpheme>): Array<TonalWord> {
         if(this.inflectionalEnding != null) {
             if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
                 if(this.inflectionalEnding.baseAffixes.length == 1) {
@@ -190,7 +190,7 @@ export class ToneSandhiInputingLexeme {
                     let arr = morphemes[morphemes.length-1].getBaseForms();
                     //console.log(arr)
                     for(let key in arr) {
-                        let word = new ToneSandhiWord(this.word.syllables);
+                        let word = new TonalWord(this.word.syllables);
                         word.popSyllable();
                         word.pushSyllable(arr[key]);
                         ret.push(word);
@@ -229,10 +229,10 @@ export class ToneSandhiInputingLexeme {
 export class ToneSandhiInflectionLexeme extends ToneSandhiLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
-    word: ToneSandhiWord
+    word: TonalWord
     kvp: { key: string , value: string }
 
-    constructor(w: ToneSandhiWord) {
+    constructor(w: TonalWord) {
         super()
         this.word = w
     }
@@ -259,7 +259,7 @@ export class ToneSandhiInflectionLexeme extends ToneSandhiLexeme {
 }
 
 export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
-    private wordForSandhiForm: ToneSandhiWord
+    private wordForSandhiForm: TonalWord
 
     assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
@@ -277,7 +277,7 @@ export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
 
     private getSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: Tonal) {
         if(this.tonalEnding != null) {
-            let word = new ToneSandhiWord(this.word.syllables);
+            let word = new TonalWord(this.word.syllables);
             if(this.tonalEnding instanceof FreeTonalEnding) {
                 let last = morphemes[morphemes.length-1]
                 if(last instanceof CombiningFormMorpheme) {
@@ -313,14 +313,13 @@ export class Word {
     literal: string = '';
 }
 
-export class ToneWord extends Word {}
-export class TonalLessWord extends ToneWord {}
+export class TonallessWord extends Word {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Word
 //------------------------------------------------------------------------------
 
-export class ToneSandhiWord extends ToneWord {
+export class TonalWord extends Word {
     syllables: Array<ToneSandhiSyllable>;
 
     constructor(syllables?: Array<ToneSandhiSyllable>) {

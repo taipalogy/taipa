@@ -1,5 +1,5 @@
 
-import { Word, ToneSandhiWord, ToneWord, TonalLessWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
+import { TonalWord, ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
 import { combiningRules } from './version2'
@@ -52,7 +52,7 @@ class ConstructionElement{
         this.lexemes.push(l)
     }
 
-    check(w: ToneSandhiWord) {
+    check(w: TonalWord) {
         for(let k in this.lexemes) {
             if(this.lexemes[k].toString(this.id) === w.literal) {
                 return true
@@ -125,17 +125,17 @@ export class RuleBasedTagger {
     match(lexemes: Array<ToneSandhiInputingLexeme>) {
         // take in inputing lexemes and then check them against parsing lexemes
         // store matched parsing lexemes in nodes
-        let w: ToneWord = lexemes[0].word
+        let w: TonalWord = lexemes[0].word
 
         let cop: ConstructionOfPhrase
         let vp = new VerbPhrase()
-        if(w instanceof ToneSandhiWord) {
+        //if(w instanceof ToneSandhiWord) {
             for(let key in vp.constructions) {
                 if(vp.constructions[key].elements[0].check(w)) {
                     cop = vp.constructions[key]
                 }
             }
-        } else if(w instanceof TonalLessWord) {}
+        //} else if(w instanceof TonallessWord) {}
 
         if(cop.elements[1].check(lexemes[1].word))
         { }

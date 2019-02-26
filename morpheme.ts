@@ -68,7 +68,7 @@ class GrammaticalSuffix {
 
 export class Morpheme {}
 
-class TonemarklessMorpheme extends Morpheme {}
+class TonallessMorpheme extends Morpheme {}
 
 export class ToneSandhiMorpheme extends Morpheme {}
 

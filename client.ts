@@ -83,7 +83,7 @@ export class Client {
         let turner = new TurningIntoInputingLexeme()
         doc.inputingLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
 
-        // should array of Sounds be an member of inputing lexeme?
+        // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
         doc.inputingMorphemes = doc.inputingLexemes[0].arrayOfSounds 
 
         return doc;

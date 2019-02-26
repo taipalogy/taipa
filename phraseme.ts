@@ -1,5 +1,5 @@
 
-import { ToneSandhiWord, InflectionalEnding } from "./lexeme"
+import { TonalWord, InflectionalEnding } from "./lexeme"
 
 //------------------------------------------------------------------------------
 //  Tone Group
@@ -42,9 +42,9 @@ class Phrase {
 }
 
 export class ToneSandhiPhrase extends Phrase {
-    words: Array<ToneSandhiWord>
+    words: Array<TonalWord>
 
-    constructor(words?: Array<ToneSandhiWord>) {
+    constructor(words?: Array<TonalWord>) {
         super()
         this.words = new Array();
         if(words != undefined) {
@@ -63,7 +63,7 @@ export class ToneSandhiPhrase extends Phrase {
         this.words = this.words.slice(0, this.words.length-1);
     }
 
-    pushWord(w: ToneSandhiWord) {
+    pushWord(w: TonalWord) {
         // push the word
         this.words.push(w);
         // concatenate a white space and the new word
