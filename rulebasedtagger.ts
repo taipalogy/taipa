@@ -81,14 +81,14 @@ class VerbPhrase extends TypeOfConstruction {
         super()
 
         let turner1 = new TurningIntoSandhiForm(combiningRules.get('zs')['w'])
-        let l1 = turner1.turnIntoLexemes('uannzs')[0]
+        let l1 = turner1.turnIntoLexemes('oannzs')[0]
         l1.partOfSpeech = SYMBOLS.VERB
         l1.add('transitive')
         let transitive = new ConstructionElement('transitive')
         transitive.addLexeme(l1)
         
         let turner2 = new TurningIntoSandhiForm(combiningRules.get('y')['zero'])
-        let l2 = turner2.turnIntoLexemes('guay')[0]
+        let l2 = turner2.turnIntoLexemes('goay')[0]
         l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
         l2.add('proceeding')
         let proceeding = new ConstructionElement('proceeding')

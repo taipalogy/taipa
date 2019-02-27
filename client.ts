@@ -7,11 +7,22 @@ import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
 import { Sound } from './system';
 
+import { Analyzer, AnalyzerLoader } from './analyzer'
+import { Tonalless } from './tonalless/init'
+import { Kana } from './kana/init';
+import { Hangul } from './hangul/init'
+
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
     parsingLexemes: Array<Lexeme> = new Array();
     inputingMorphemes: Array<Sound[]> = new Array()
     graph: Array<Arc>
+}
+
+export let analyzer_classes = {
+    tonalless: Tonalless,
+    kana: Kana,
+    hangul: Hangul,
 }
 
 export class Client {

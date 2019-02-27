@@ -7,7 +7,7 @@ import { ListOfLexicalRoots } from './lexicalroot';
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
-abstract class MorphemeMaker {
+export abstract class MorphemeMaker {
     abstract graphemes
 
     abstract create(syllable: Syllable)

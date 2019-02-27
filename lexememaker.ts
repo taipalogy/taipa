@@ -33,7 +33,7 @@ abstract class LexemeMaker extends SuperLexemeMaker{
     abstract postprocess(tsl: ToneSandhiLexeme)
 }
 
-abstract class InputingLexemeMaker extends SuperLexemeMaker {
+export abstract class InputingLexemeMaker extends SuperLexemeMaker {
     abstract postprocess(tsil: ToneSandhiInputingLexeme)
 }
 
