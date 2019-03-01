@@ -3,7 +3,7 @@
 
 import { Character, characters } from './character';
 import { AlphabeticLetter, AlphabeticGrapheme, MatchedSequence } from './grapheme';
-import { lowerLetters } from './version2'
+import { ILetters } from './system';
 
 //------------------------------------------------------------------------------
 //  Grapheme Maker
@@ -13,7 +13,7 @@ export class GraphemeMaker {
     characters: Array<Character>;
     list: Array<AlphabeticLetter>;
 
-    constructor(l: string) {
+    constructor(l: string, lowerLetters: ILetters) {
         this.characters = new Array();
         let len = l.length;
         for(var i = 0; i < len; i++) {

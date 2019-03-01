@@ -1,5 +1,3 @@
-
-
 import { characters } from './character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
     PartialPositionalSound,
@@ -7,18 +5,19 @@ import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial
     CheckedAllomorph,
     Allomorph,
     Tonal,
+    ILetters
     } from './system'
 import { AlphabeticLetter } from './grapheme'
 
 //------------------------------------------------------------------------------
 //  Alphabet
 //------------------------------------------------------------------------------
-
+/*
 interface ILetters {
     readonly [index: string]: AlphabeticLetter
 }
-
-export let lowerLetters: ILetters = {
+*/
+export let lowerLettersOfTonal: ILetters = {
     // medials
     'a': new AlphabeticLetter([characters.get('a')]),
     'e': new AlphabeticLetter([characters.get('e')]),

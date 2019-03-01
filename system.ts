@@ -1,5 +1,6 @@
 
 import { Character } from './character';
+import { AlphabeticLetter } from './grapheme'
 
 //------------------------------------------------------------------------------
 //  Sound
@@ -117,4 +118,21 @@ export class CheckedAllomorph extends Allomorph {
         }
         return this.final.getLiteral()
     }
+}
+
+//------------------------------------------------------------------------------
+//  Syllabary
+//------------------------------------------------------------------------------
+
+export abstract class Syllabary {
+    list: Array<Sound[]>
+    abstract setFirstLetter(beginning: string)
+}
+
+//------------------------------------------------------------------------------
+//  Alphabet
+//------------------------------------------------------------------------------
+
+export interface ILetters {
+    readonly [index: string]: AlphabeticLetter
 }

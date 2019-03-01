@@ -1,5 +1,5 @@
 
-import { TurningIntoInputingLexeme } from './lexememaker'
+import { TonalTurner } from './lexememaker'
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
@@ -7,7 +7,7 @@ import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
 import { Sound } from './system';
 
-import { Analyzer, AnalyzerLoader } from './analyzer'
+import { Analyzer, AnalyzerLoader, Tonal } from './analyzer'
 import { Tonalless } from './tonalless/init'
 import { Kana } from './kana/init';
 import { Hangul } from './hangul/init'
@@ -91,7 +91,7 @@ export class Client {
 
     processOneToken(str: string) {
         let doc: Document = new Document();
-        let turner = new TurningIntoInputingLexeme()
+        let turner = new TonalTurner()
         doc.inputingLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
 
         // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
@@ -106,7 +106,7 @@ export class Client {
         let tokens = str.match(/\w+/g);
 
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
-        let turner = new TurningIntoInputingLexeme()
+        let turner = new TonalTurner()
         for(let key in tokens) {
             lexemes.push(turner.turnIntoLexemes(tokens[key])[0])
         }

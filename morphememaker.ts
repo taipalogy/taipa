@@ -2,6 +2,7 @@
 import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
 import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
 import { ListOfLexicalRoots } from './lexicalroot';
+import { Syllabary } from './system';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -16,17 +17,16 @@ export abstract class MorphemeMaker {
                             // an abstract type of ToneSandhiInputingMorpheme and 
                             // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
 
-    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
+    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
         // get the longest matched syllable pattern
-        let lolrs = new ListOfLexicalRoots();
-        lolrs.setFirstLetter(letters[beginOfSyllable].literal)
+        syllabary.setFirstLetter(letters[beginOfSyllable].literal)
         let matchedLen = 0;
         let mp = new MatchedPattern();
-        for(let m in lolrs.list) {
-            let min = Math.min(letters.length-beginOfSyllable, lolrs.list[m].length);
-            if(lolrs.list[m].length == min) {
+        for(let m in syllabary.list) {
+            let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
+            if(syllabary.list[m].length == min) {
                 for(let n = 0; n < min; n++) {
-                    if(letters[beginOfSyllable+n].literal === lolrs.list[m][n].getLiteral()) {
+                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
                         if(n+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
@@ -36,8 +36,8 @@ export abstract class MorphemeMaker {
                                 mp.letters[q] = letters[beginOfSyllable+q];
                             }
                             
-                            mp.pattern = lolrs.list[m];
-                            //console.log(lolrs.list[m])
+                            mp.pattern = syllabary.list[m];
+                            //console.log(syllabary.list[m])
                             //console.log(mp.letters)
                         }
                     } else {
@@ -58,7 +58,7 @@ export abstract class MorphemeMaker {
         return letters        
     }
 
-    make(letters: Array<AlphabeticLetter>) {
+    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary) {
 
         // a word can be made of multiple syllables
         let morphemes = this.createArray() //new Array();
@@ -71,7 +71,7 @@ export abstract class MorphemeMaker {
             let msp: MatchedPattern;
             if(i-beginOfSyllable == 0) {
                 
-                msp = this.getMatchedSyllablePattern(letters, beginOfSyllable);
+                msp = this.getMatchedSyllablePattern(letters, beginOfSyllable, syllabary);
 
                 if(msp.matchedLength == 0) {
                     console.warn('no matched roots found. the root needs to be added?')
@@ -122,10 +122,10 @@ export abstract class MorphemeMaker {
 export class ToneSandhiInputingMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
-    constructor(graphemes: Array<AlphabeticGrapheme>) {
+    constructor(gs: Array<AlphabeticGrapheme>) {
         super()
         this.graphemes = new Array();
-        this.graphemes = graphemes;
+        this.graphemes = gs;
     }
 
     create(syllable: ToneSandhiSyllable) { return new ToneSandhiInputingMorpheme(syllable) }
@@ -133,7 +133,7 @@ export class ToneSandhiInputingMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<ToneSandhiInputingMorpheme>() }
 
     makeInputingMorphemes() {
-        return this.make(this.preprocess());
+        return this.make(this.preprocess(), new ListOfLexicalRoots());
     }
 }
 
@@ -151,7 +151,7 @@ export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<ToneSandhiRootMorpheme>() }
 
     makeRootMorphemes() {
-        return this.make(this.preprocess());
+        return this.make(this.preprocess(), new ListOfLexicalRoots());
     }
 }
 

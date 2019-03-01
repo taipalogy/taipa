@@ -4,6 +4,7 @@ import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, TonalWord, DummyL
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
 import { Tonal } from './system';
+import { lowerLettersOfTonal } from './version2';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -159,35 +160,39 @@ export class DummyLexemeMaker {
     }
 }
 
-class InflectiveLexemeMaker {}
-class AgglutinativeLexemeMaker {}
-
 //------------------------------------------------------------------------------
 //  Lexeme Turner
 //------------------------------------------------------------------------------
 
-export class TurningIntoInputingLexeme {
-    turnIntoLexemes(str: string) {
+export class TonalTurner {
+    turnIntoGraphemes(str: string) {
         // Grapheme Maker
-        let gm = new GraphemeMaker(str);
-        let graphemes = gm.makeGraphemes();
+        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
+        return gm.makeGraphemes();
+    }
+
+    turnIntoMorphemes(str: string) {
+        let graphemes = this.turnIntoGraphemes(str)
 
         // Morpheme Maker
-        let tsmm = new ToneSandhiInputingMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeInputingMorphemes();
+        let tsimm = new ToneSandhiInputingMorphemeMaker(graphemes);
+        return tsimm.makeInputingMorphemes();
+    }
+
+    turnIntoLexemes(str: string) {
+
+        let morphemes = this.turnIntoMorphemes(str)
 
         // Lexeme Maker
-        let tslm = new ToneSandhiInputingLexemeMaker(morphemes);
-        let lexemes = tslm.makeInputingLexemes();
-
-        return lexemes;
+        let tsilm = new ToneSandhiInputingLexemeMaker(morphemes);
+        return tsilm.makeInputingLexemes();
     }
 }
 
 export class TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {
         // Grapheme Maker
-        let gm = new GraphemeMaker(str);
+        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
@@ -212,7 +217,7 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
 
     turnIntoLexemes(str: string) {
         // Grapheme Maker
-        let gm = new GraphemeMaker(str);
+        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         let graphemes = gm.makeGraphemes();
 
         // Morpheme Maker
