@@ -95,7 +95,7 @@ export class Client {
         doc.inputingLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
 
         // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
-        doc.inputingMorphemes = doc.inputingLexemes[0].arrayOfSounds 
+        doc.inputingMorphemes = turner.arrayOfSounds//doc.inputingLexemes[0].arrayOfSounds 
 
         return doc;
     }

@@ -291,13 +291,10 @@ export class MatchedPattern {
 
 export class Syllable {
     literal: string = '';
-}
 
-export class ToneSandhiSyllable extends Syllable {
     letters: Array<AlphabeticLetter>;
 
     constructor(letters?: Array<AlphabeticLetter>) {
-        super();
         this.letters = new Array();
         if(letters != undefined) {
             let len = letters.length;
@@ -307,21 +304,10 @@ export class ToneSandhiSyllable extends Syllable {
         }
     }
 
-    isBaseForm() {
-        // look up in the lexicon to check if this syllable is in base form
-    }
-
     pushLetter(l: AlphabeticLetter) {
         this.letters.push(l);
         this.literal += l.literal;
         //console.log("%s", l.literal);
-    }
-
-    popLetter() {
-        let tmp = this.literal.substr(0, this.literal.length-this.letters[this.letters.length-1].literal.length);
-        this.literal = '';
-        this.literal = tmp;
-        this.letters = this.letters.slice(0, this.letters.length-1);
     }
 
     get lastLetter() {
@@ -332,5 +318,14 @@ export class ToneSandhiSyllable extends Syllable {
     get lastSecondLetter() {
         if(this.letters.length >= 2) return this.letters[this.letters.length-2]
         return null
+    }
+}
+
+export class ToneSandhiSyllable extends Syllable {
+    popLetter() {
+        let tmp = this.literal.substr(0, this.literal.length-this.letters[this.letters.length-1].literal.length);
+        this.literal = '';
+        this.literal = tmp;
+        this.letters = this.letters.slice(0, this.letters.length-1);
     }
 }

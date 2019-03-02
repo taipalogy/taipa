@@ -132,11 +132,9 @@ export class ToneSandhiInputingLexeme {
     word: TonalWord
     private inflectionalEnding: InflectionalEnding = null
     private lemmata: Array<TonalWord>
-    arrayOfSounds: Array<Sound[]>
 
     constructor(word: TonalWord) {
         this.word = word;
-        this.arrayOfSounds = new Array()
     }
 
     assignInflectionalEnding(allomorph: Allomorph) {

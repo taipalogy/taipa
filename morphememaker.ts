@@ -86,7 +86,7 @@ export abstract class MorphemeMaker {
                     for(let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    tsm =  this.create(new ToneSandhiSyllable(msp.letters))
+                    tsm =  this.create(new Syllable(msp.letters))
 
                     if(tsm instanceof ToneSandhiInputingMorpheme) {
                         tsm.sounds = msp.pattern

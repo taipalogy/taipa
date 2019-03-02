@@ -3,8 +3,9 @@ import { ToneSandhiInputingMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme,
 import { ToneSandhiInputingLexeme, ToneSandhiInflectionLexeme, TonalWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, ToneSandhiInputingMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
-import { Tonal } from './system';
+import { Tonal, Sound } from './system';
 import { lowerLettersOfTonal } from './version2';
+import { AlphabeticGrapheme } from './grapheme';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -70,13 +71,8 @@ export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
         // lemmata needs to be populated for inputing lexeme
         tsil.populateLemmata(this.morphemes);
 
-
         let lexemes: Array<ToneSandhiInputingLexeme> = new Array();
 
-        for(let k in this.morphemes) {
-            tsil.arrayOfSounds.push(this.morphemes[k].sounds)
-        }
-        
         lexemes.push(tsil);
 
         return lexemes
@@ -165,20 +161,33 @@ export class DummyLexemeMaker {
 //------------------------------------------------------------------------------
 
 export class TonalTurner {
+    arrayOfSounds: Array<Sound[]> = new Array()
+
     turnIntoGraphemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
     }
 
-    turnIntoMorphemes(str: string) {
-        let graphemes = this.turnIntoGraphemes(str)
+    turnIntoMorphemes(str: string);
+    turnIntoMorphemes(gs: Array<AlphabeticGrapheme>)
+    turnIntoMorphemes(x) {
+        let graphemes
+        if(typeof x == "object") {
+            graphemes = x
+        } else if(typeof x == 'string') {
+             graphemes = this.turnIntoGraphemes(x)
+        }
 
         // Morpheme Maker
         let tsimm = new ToneSandhiInputingMorphemeMaker(graphemes);
-        return tsimm.makeInputingMorphemes();
+        let ms = tsimm.makeInputingMorphemes();
+        for(let k in ms) {
+            this.arrayOfSounds.push(ms[k].sounds)
+        }
+        return ms
     }
-
+    
     turnIntoLexemes(str: string) {
 
         let morphemes = this.turnIntoMorphemes(str)

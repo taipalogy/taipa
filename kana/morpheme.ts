@@ -1,7 +1,6 @@
-import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
+import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, ToneSandhiSyllable } from '../morpheme'
 import { MorphemeMaker } from '../morphememaker'
-import { ListOfLexicalRoots } from '../lexicalroot';
 import { RomanizedKana } from './kana'
 
 //------------------------------------------------------------------------------
@@ -13,9 +12,9 @@ import { RomanizedKana } from './kana'
 //------------------------------------------------------------------------------
 
 export class KanaInputingMorpheme {
-    syllable: ToneSandhiSyllable;
+    syllable: Syllable;
 
-    constructor(syllable: ToneSandhiSyllable) {
+    constructor(syllable: Syllable) {
         this.syllable = syllable;
     }
 }
@@ -33,7 +32,7 @@ export class KanaInputingMorphemeMaker extends MorphemeMaker {
         this.graphemes = gs;
     }
 
-    create(syllable: ToneSandhiSyllable) { return new KanaInputingMorpheme(syllable) }
+    create(syllable: Syllable) { return new KanaInputingMorpheme(syllable) }
 
     createArray() { return new Array<KanaInputingMorpheme>() }
 
