@@ -1,5 +1,5 @@
 import { Syllabary, Sound, SetOfSounds, ILetters } from '../system'
-import { KanaTurner } from './lexeme';
+import { KanaTurner } from './turner';
 import { characters } from '../character'
 import { AlphabeticLetter } from '../grapheme'
 
