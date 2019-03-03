@@ -11,7 +11,7 @@ import { AlphabeticGrapheme } from './grapheme';
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
-abstract class SuperLexemeMaker {
+abstract class LexemeMaker {
     abstract morphemes
 
     preprocess() {
@@ -31,11 +31,11 @@ abstract class SuperLexemeMaker {
     abstract make(syllables: Array<Syllable>)
 }
 
-abstract class LexemeMaker extends SuperLexemeMaker{
+abstract class InflectiveLexemeMaker extends LexemeMaker {
     abstract postprocess(tsl: ToneSandhiLexeme)
 }
 
-export abstract class InputingLexemeMaker extends SuperLexemeMaker {
+export abstract class InputingLexemeMaker extends LexemeMaker {
     abstract postprocess(tsil: ToneSandhiInputingLexeme)
 }
 
@@ -79,7 +79,7 @@ export class ToneSandhiInputingLexemeMaker extends InputingLexemeMaker {
     }
 }
 
-export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
+export class TonalInflectionLexemeMaker extends InflectiveLexemeMaker {
     morphemes: Array<ToneSandhiRootMorpheme>;
 
     constructor(morphemes: Array<ToneSandhiRootMorpheme>) {
@@ -109,7 +109,7 @@ export class ToneSandhiInflectionLexemeMaker extends LexemeMaker {
     }
 }
 
-class SandhiFormLexemeMaker extends ToneSandhiInflectionLexemeMaker {
+class TonalInflectedLexemeMaker extends TonalInflectionLexemeMaker {
     tonal: Tonal
 
     constructor(morphemes: Array<ToneSandhiRootMorpheme>, tm?: Tonal) {
@@ -161,7 +161,7 @@ export class DummyLexemeMaker {
 //------------------------------------------------------------------------------
 
 export class TonalTurner {
-    arrayOfSounds: Array<Sound[]> = new Array()
+    arraysOfSounds: Array<Sound[]> = new Array()
 
     turnIntoGraphemes(str: string) {
         // Grapheme Maker
@@ -181,11 +181,9 @@ export class TonalTurner {
 
         // Morpheme Maker
         let tsimm = new ToneSandhiInputingMorphemeMaker(graphemes);
-        let ms = tsimm.makeInputingMorphemes();
-        for(let k in ms) {
-            this.arrayOfSounds.push(ms[k].sounds)
-        }
-        return ms
+        let obj = tsimm.makeInputingMorphemes();
+        this.arraysOfSounds = obj.arraysOfSounds
+        return obj.morphemes
     }
     
     turnIntoLexemes(str: string) {
@@ -206,10 +204,10 @@ export class TurningIntoInflectionLexeme {
 
         // Morpheme Maker
         let tsmm = new ToneSandhiRootMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeRootMorphemes();
+        let obj = tsmm.makeRootMorphemes();
 
         // Lexeme Maker
-        let tslm = new ToneSandhiInflectionLexemeMaker(morphemes);
+        let tslm = new TonalInflectionLexemeMaker(obj.morphemes);
         let lexemes = tslm.makeInflectionLexemes();
 
         return lexemes;
@@ -234,7 +232,7 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
         let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is used
 
         // Lexeme Maker
-        let tslm = new SandhiFormLexemeMaker(morphemes, this.tonal);
+        let tslm = new TonalInflectedLexemeMaker(morphemes, this.tonal);
         let lexemes = tslm.makeSandhiLexemes();
 
         return lexemes;

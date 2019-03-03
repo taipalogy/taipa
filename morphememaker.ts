@@ -1,8 +1,8 @@
 
 import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
-import { ToneSandhiMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
+import { InputingMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
 import { ListOfLexicalRoots } from './lexicalroot';
-import { Syllabary } from './system';
+import { Syllabary, Sound } from './system';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -61,7 +61,8 @@ export abstract class MorphemeMaker {
     make(letters: Array<AlphabeticLetter>, syllabary: Syllabary) {
 
         // a word can be made of multiple syllables
-        let morphemes = this.createArray() //new Array();
+        let morphemes = this.createArray()
+        let arraysOfSounds: Array<Sound[]> = new Array()
         
         //console.log(letters);
         let beginOfSyllable: number = 0;
@@ -81,17 +82,19 @@ export abstract class MorphemeMaker {
                 //console.log(msp.pattern);
                 //console.log(msp.letters)
 
-                let tsm: ToneSandhiMorpheme;
+                let tsm: InputingMorpheme;
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
                     tsm =  this.create(new Syllable(msp.letters))
 
+                    arraysOfSounds.push(msp.pattern)
+/*
                     if(tsm instanceof ToneSandhiInputingMorpheme) {
                         tsm.sounds = msp.pattern
                     }
-                    
+                    */
                     // here we should match the combining form with its root
 
                     morphemes.push(tsm);
@@ -111,7 +114,7 @@ export abstract class MorphemeMaker {
                 }
             }
         }
-        return morphemes;
+        return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes }
     }
 }
 
@@ -169,7 +172,7 @@ export class CombiningFormMorphemeMaker extends ToneSandhiRootMorphemeMaker {
 
     makeCombiningMorphemes() {
         // make morphemes and the last of them is a sandhi form
-        return this.postprecess(super.makeRootMorphemes());
+        return this.postprecess(super.makeRootMorphemes().morphemes);
     }
 
     postprecess(tspms: Array<ToneSandhiRootMorpheme>) {

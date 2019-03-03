@@ -11,6 +11,7 @@ import { Analyzer, AnalyzerLoader, Tonal } from './analyzer'
 import { Tonalless } from './tonalless/init'
 import { Kana } from './kana/init';
 import { Hangul } from './hangul/init'
+import { KanaTurner } from './kana/turner';
 
 export class Document {
     inputingLexemes: Array<ToneSandhiInputingLexeme> = new Array();
@@ -95,7 +96,7 @@ export class Client {
         doc.inputingLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
 
         // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
-        doc.inputingMorphemes = turner.arrayOfSounds//doc.inputingLexemes[0].arrayOfSounds 
+        doc.inputingMorphemes = turner.arraysOfSounds
 
         return doc;
     }
