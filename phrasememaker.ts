@@ -1,5 +1,5 @@
 
-import { ToneSandhiInputingLexeme, TonalWord } from "./lexeme";
+import { TonalLemmaLexeme, TonalWord } from "./lexeme";
 import { ToneSandhiPhraseme, ToneSandhiPhrase, ToneGroup } from "./phraseme";
 
 
@@ -8,9 +8,9 @@ import { ToneSandhiPhraseme, ToneSandhiPhrase, ToneGroup } from "./phraseme";
 //------------------------------------------------------------------------------
 
 export class ToneSandhiPhrasemeMaker {
-    lexemes: Array<ToneSandhiInputingLexeme>;
+    lexemes: Array<TonalLemmaLexeme>;
 
-    constructor(lexemes: Array<ToneSandhiInputingLexeme>) {
+    constructor(lexemes: Array<TonalLemmaLexeme>) {
         this.lexemes = new Array();
         this.lexemes = lexemes;
     }

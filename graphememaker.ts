@@ -106,13 +106,11 @@ export class GraphemeMaker {
                         }
                     }
                 }
-            } else {
-
             }
 
             if(letters.length == 0) {
                 for(let j in characters) {
-                    console.log(characters[j])
+                    console.debug(characters[j])
                 }
                 console.debug("i: %d. characters[i].symbol: %s", i, characters[i].character);
                 console.error("something wrong. length of letters is zero");

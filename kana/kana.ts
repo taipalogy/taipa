@@ -21,10 +21,8 @@ class RomanizedKanaGenerator {
         for(let i in list_of_romanized_kana) {
             if(list_of_romanized_kana[i].search(beginning) == 0) {
                 strs.push(list_of_romanized_kana[i])
-                // consonant germination
-                strs.push(list_of_romanized_kana[i] + 'k')
-                strs.push(list_of_romanized_kana[i] + 'p')
-                strs.push(list_of_romanized_kana[i] + 't')
+                // double vowels. repeat the vowel.
+                strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i][list_of_romanized_kana.length-1])
             }
         }
         //for(let i in strs) console.info(strs[i])
@@ -150,6 +148,8 @@ export let lowerLettersOfKana: ILetters = {
 
     // consonants
     'k': new AlphabeticLetter([characters.get('k')]),
+    'p': new AlphabeticLetter([characters.get('p')]),
+    't': new AlphabeticLetter([characters.get('t')]),
 }
 
 //------------------------------------------------------------------------------
@@ -161,6 +161,7 @@ class Vowel extends Sound {name = 'vowel'}
 class FinalConsonant extends Sound {name = 'finalConsonant'}
 
 class InitialConsonantK extends InitialConsonant {characters = [characters.get('k')]}
+class InitialConsonantP extends InitialConsonant {characters = [characters.get('p')]}
 class InitialConsonantS extends InitialConsonant {characters = [characters.get('s')]}
 class InitialConsonantT extends InitialConsonant {characters = [characters.get('t')]}
 
@@ -178,6 +179,7 @@ class SetOfInitialConsonants extends SetOfSounds {
     constructor() {
         super()
         this.initialConsonants.push(new InitialConsonantK())
+        this.initialConsonants.push(new InitialConsonantP())
         this.initialConsonants.push(new InitialConsonantS())
         this.initialConsonants.push(new InitialConsonantT())
     }
@@ -253,6 +255,8 @@ class PSO implements PartialPositionalSound {
     static vowel: Vowel = new VowelO()
 }
 
+let p = { initialConsonant: new InitialConsonantP() }
+
 class PSU implements PartialPositionalSound {
     static vowel: Vowel = new VowelU()
 }
@@ -268,6 +272,7 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('i', PSI)
     .set('k', PSK)
     .set('o', PSO)
+    .set('p', p)
     .set('u', PSU)
 
 //------------------------------------------------------------------------------
@@ -277,4 +282,5 @@ const letterClass: Map<string, PartialPositionalSound> = new Map()
 let list_of_romanized_kana = [
     'a', 'i', 'u', 'e', 'o',
     'ka', 'ki', 'ku', 'ke', 'ko',
+    'pa',
 ]

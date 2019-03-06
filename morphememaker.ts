@@ -1,6 +1,6 @@
 
 import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
-import { InputingMorpheme, ToneSandhiInputingMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
+import { CombinedMorpheme, TonalCombinedMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
 import { ListOfLexicalRoots } from './lexicalroot';
 import { Syllabary, Sound } from './system';
 
@@ -14,7 +14,7 @@ export abstract class MorphemeMaker {
     abstract create(syllable: Syllable)
 
     abstract createArray() // the return type of this declaration should be left blank
-                            // an abstract type of ToneSandhiInputingMorpheme and 
+                            // an abstract type of TonalCombinedMorpheme and 
                             // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
 
     getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
@@ -75,14 +75,14 @@ export abstract class MorphemeMaker {
                 msp = this.getMatchedSyllablePattern(letters, beginOfSyllable, syllabary);
 
                 if(msp.matchedLength == 0) {
-                    console.warn('no matched roots found. the root needs to be added?')
+                    console.warn('no matched syllables found. the syllable needs to be added?')
                 }
 
                 //console.log("matchedLen: %d", msp.matchedLength);
                 //console.log(msp.pattern);
                 //console.log(msp.letters)
 
-                let tsm: InputingMorpheme;
+                let tsm: CombinedMorpheme;
                 if(msp.letters.length > 0) {
                     for(let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
@@ -90,11 +90,7 @@ export abstract class MorphemeMaker {
                     tsm =  this.create(new Syllable(msp.letters))
 
                     arraysOfSounds.push(msp.pattern)
-/*
-                    if(tsm instanceof ToneSandhiInputingMorpheme) {
-                        tsm.sounds = msp.pattern
-                    }
-                    */
+
                     // here we should match the combining form with its root
 
                     morphemes.push(tsm);
@@ -122,7 +118,7 @@ export abstract class MorphemeMaker {
 //  Tone Sandhi Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiInputingMorphemeMaker extends MorphemeMaker {
+export class TonalCombinedMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
     constructor(gs: Array<AlphabeticGrapheme>) {
@@ -131,11 +127,11 @@ export class ToneSandhiInputingMorphemeMaker extends MorphemeMaker {
         this.graphemes = gs;
     }
 
-    create(syllable: ToneSandhiSyllable) { return new ToneSandhiInputingMorpheme(syllable) }
+    create(syllable: ToneSandhiSyllable) { return new TonalCombinedMorpheme(syllable) }
 
-    createArray() { return new Array<ToneSandhiInputingMorpheme>() }
+    createArray() { return new Array<TonalCombinedMorpheme>() }
 
-    makeInputingMorphemes() {
+    makeCombinedMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots());
     }
 }

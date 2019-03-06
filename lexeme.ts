@@ -1,5 +1,5 @@
 
-import { ToneSandhiSyllable, TonalAffix, ToneSandhiInputingMorpheme, ToneSandhiRootMorpheme, 
+import { ToneSandhiSyllable, TonalAffix, TonalCombinedMorpheme, ToneSandhiRootMorpheme, 
     CombiningFormMorpheme,
     } from './morpheme';
 import { FreeAllomorph, CheckedAllomorph, Allomorph, } from './system'
@@ -125,10 +125,10 @@ export class ToneSandhiLexeme extends Lexeme {
 
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Inputing Lexeme
+//  Tonal Lemma Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneSandhiInputingLexeme {
+export class TonalLemmaLexeme {
     word: TonalWord
     private inflectionalEnding: InflectionalEnding = null
     private lemmata: Array<TonalWord>
@@ -171,14 +171,14 @@ export class ToneSandhiInputingLexeme {
         return this.lemmata 
     }
     
-    private replaceLastSyllable(morphemes: Array<ToneSandhiInputingMorpheme>) {
+    private replaceLastSyllable(morphemes: Array<TonalCombinedMorpheme>) {
         let word = new TonalWord(this.word.syllables);
         word.popSyllable();
         word.pushSyllable(morphemes[morphemes.length-1].getBaseForms()[0]);
         return word;
     }
 
-    private getLemmas(morphemes: Array<ToneSandhiInputingMorpheme>): Array<TonalWord> {
+    private getLemmas(morphemes: Array<TonalCombinedMorpheme>): Array<TonalWord> {
         if(this.inflectionalEnding != null) {
             if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
                 if(this.inflectionalEnding.baseAffixes.length == 1) {
@@ -203,7 +203,7 @@ export class ToneSandhiInputingLexeme {
         return [];
     }
 
-    populateLemmata(morphemes: Array<ToneSandhiInputingMorpheme>) {
+    populateLemmata(morphemes: Array<TonalCombinedMorpheme>) {
         this.lemmata = new Array();
 
         // turn morphemes into lemmas

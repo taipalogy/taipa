@@ -72,17 +72,15 @@ class TonallessMorpheme extends Morpheme {}
 
 export class RootMorpheme extends Morpheme {}
 
-export class InputingMorpheme extends Morpheme {}
+export class CombinedMorpheme extends Morpheme {}
 
-export class ToneSandhiInputingMorpheme extends InputingMorpheme {
+export class TonalCombinedMorpheme extends CombinedMorpheme {
     syllable: ToneSandhiSyllable;
     allomorph: Allomorph = null; // required to populate stems
-    //sounds: Array<Sound>
 
     constructor(syllable: ToneSandhiSyllable) {
         super()
         this.syllable = syllable;
-        //this.sounds = new Array()
         // assign allomorph for each syllable
         this.assignAllomorph();
     }
