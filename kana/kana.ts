@@ -22,7 +22,7 @@ class RomanizedKanaGenerator {
             if(list_of_romanized_kana[i].search(beginning) == 0) {
                 strs.push(list_of_romanized_kana[i])
                 // double vowels. repeat the vowel.
-                strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i][list_of_romanized_kana.length-1])
+                strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
             }
         }
         //for(let i in strs) console.info(strs[i])
@@ -223,6 +223,7 @@ class SetOfFinalConsonants extends SetOfSounds {
 //------------------------------------------------------------------------------
 
 interface PositionalSound {
+    name: string
     initialConsonant: InitialConsonant
     vowel: Vowel
     finalConsonant: FinalConsonant
@@ -255,7 +256,9 @@ class PSO implements PartialPositionalSound {
     static vowel: Vowel = new VowelO()
 }
 
-let p = { initialConsonant: new InitialConsonantP() }
+class ps_P implements PartialPositionalSound {
+    static initialConsonant: InitialConsonant = new InitialConsonantP()
+}
 
 class PSU implements PartialPositionalSound {
     static vowel: Vowel = new VowelU()
@@ -266,13 +269,13 @@ class PSU implements PartialPositionalSound {
 //------------------------------------------------------------------------------
 
 // need to verify the size of the map
-const letterClass: Map<string, PartialPositionalSound> = new Map()
+export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('a', PSA)
     .set('e', PSE)
     .set('i', PSI)
     .set('k', PSK)
     .set('o', PSO)
-    .set('p', p)
+    .set('p', ps_P)
     .set('u', PSU)
 
 //------------------------------------------------------------------------------
