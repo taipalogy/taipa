@@ -1,9 +1,10 @@
 import { Analyzer } from '../analyzer'
 import { KanaTurner } from './turner';
 import { letterClass, lowerLettersOfKana } from './kana'
+import { Turner } from '../system'
 
 export class Kana extends Analyzer {
-    turner = new KanaTurner()
+    turner: Turner = new KanaTurner()
 
     constructor() {
         super()

@@ -20,12 +20,6 @@ export class Document {
     graph: Array<Arc>
 }
 
-export let analyzer_classes = {
-    tonalless: Tonalless,
-    kana: Kana,
-    hangul: Hangul,
-}
-
 export class Client {
     output(input: string) {
         let clt = new Client();
@@ -91,6 +85,10 @@ export class Client {
     }
 
     processOneToken(str: string) {
+        //let al = new AnalyzerLoader()
+        //al.load(Kana)
+        //console.log(al.analyzers[0].turner.turnIntoMorphemes(str))
+
         let doc: Document = new Document();
         let turner = new TonalTurner()
         doc.lemmaLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])

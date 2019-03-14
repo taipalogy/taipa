@@ -1,6 +1,6 @@
 
 import { AlphabeticLetter } from './grapheme'
-import { Sound, Tonal, Morph, Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
+import { Sound, Tonal, Morph, Final, Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
 import {
     listOfFreeAllomorphs,
     listOfCheckedAllomorphs,
@@ -13,6 +13,7 @@ import {
     AllomorphY,
     ZeroTonal,
     } from './version2'
+
 
 //------------------------------------------------------------------------------
 //  Tone Morpheme

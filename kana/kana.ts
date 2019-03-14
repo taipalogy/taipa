@@ -80,9 +80,14 @@ class ClientOfGenerator {
         return false
     }
 
+    private isSemivowel(str: string) {
+        if(str.search(new RegExp(new SetOfSemivowels().toString())) == 0) return true
+
+        return false
+    }
     private convert(entry: string[]) {
         // convert strings in an entry to sounds
-        // ex: a.medial -> PSA.medial
+        // ex: a.medial -> ps_A.medial
         let ret: Array<Sound> = new Array()
         for(let i in entry) {
             let n = entry[i].lastIndexOf('.')
@@ -134,6 +139,7 @@ class ClientOfGenerator {
         return entries
     }
 }
+
 //------------------------------------------------------------------------------
 //  Alphabet
 //------------------------------------------------------------------------------
@@ -147,41 +153,98 @@ export let lowerLettersOfKana: ILetters = {
     'u': new AlphabeticLetter([characters.get('u')]),
 
     // consonants
+    'b': new AlphabeticLetter([characters.get('b')]),
+    'c': new AlphabeticLetter([characters.get('c')]),
+    'd': new AlphabeticLetter([characters.get('d')]),
+    'dl': new AlphabeticLetter([characters.get('d'), characters.get('l')]),
+    'f': new AlphabeticLetter([characters.get('f')]),
+    'g': new AlphabeticLetter([characters.get('g')]),
+    'h': new AlphabeticLetter([characters.get('h')]),
+    'j': new AlphabeticLetter([characters.get('j')]),
     'k': new AlphabeticLetter([characters.get('k')]),
+    'l': new AlphabeticLetter([characters.get('l')]),
+    'm': new AlphabeticLetter([characters.get('m')]),
+    'q': new AlphabeticLetter([characters.get('q')]),
+    's': new AlphabeticLetter([characters.get('s')]),
+    'v': new AlphabeticLetter([characters.get('v')]),
+    'z': new AlphabeticLetter([characters.get('z')]),
     'p': new AlphabeticLetter([characters.get('p')]),
     't': new AlphabeticLetter([characters.get('t')]),
+
+    // semivowels
+    'w': new AlphabeticLetter([characters.get('w')]),
+    'y': new AlphabeticLetter([characters.get('y')]),
+
+    'n': new AlphabeticLetter([characters.get('n')]),
 }
 
 //------------------------------------------------------------------------------
 //  Sound
 //------------------------------------------------------------------------------
 
+class GerminatedConsonant extends Sound {name = 'germinatedConsonant'}
 class InitialConsonant extends Sound {name = 'initialConsonant'}
+class Semivowel extends Sound {name = 'semivowel'}
 class Vowel extends Sound {name = 'vowel'}
 class FinalConsonant extends Sound {name = 'finalConsonant'}
 
+class InitialConsonantB extends InitialConsonant {characters = [characters.get('b')]}
+class InitialConsonantC extends InitialConsonant {characters = [characters.get('c')]}
+class InitialConsonantD extends InitialConsonant {characters = [characters.get('d')]}
+class InitialConsonantDL extends InitialConsonant {characters = [characters.get('d'), characters.get('l')]}
+class InitialConsonantF extends InitialConsonant {characters = [characters.get('f')]}
+class InitialConsonantG extends InitialConsonant {characters = [characters.get('g')]}
+class InitialConsonantH extends InitialConsonant {characters = [characters.get('h')]}
+class InitialConsonantJ extends InitialConsonant {characters = [characters.get('j')]}
 class InitialConsonantK extends InitialConsonant {characters = [characters.get('k')]}
+class InitialConsonantL extends InitialConsonant {characters = [characters.get('l')]}
+class InitialConsonantM extends InitialConsonant {characters = [characters.get('m')]}
+class InitialConsonantN extends InitialConsonant {characters = [characters.get('n')]}
 class InitialConsonantP extends InitialConsonant {characters = [characters.get('p')]}
+class InitialConsonantQ extends InitialConsonant {characters = [characters.get('q')]}
 class InitialConsonantS extends InitialConsonant {characters = [characters.get('s')]}
 class InitialConsonantT extends InitialConsonant {characters = [characters.get('t')]}
+class InitialConsonantV extends InitialConsonant {characters = [characters.get('v')]}
+class InitialConsonantZ extends InitialConsonant {characters = [characters.get('z')]}
+
+class SemivowelW extends Semivowel {characters = [characters.get('w')]}
+class SemivowelY extends Semivowel {characters = [characters.get('y')]}
 
 class VowelA extends Vowel {characters = [characters.get('a')]}
-class VowelI extends Vowel {characters = [characters.get('i')]}
-class VowelU extends Vowel {characters = [characters.get('u')]}
 class VowelE extends Vowel {characters = [characters.get('e')]}
+class VowelI extends Vowel {characters = [characters.get('i')]}
 class VowelO extends Vowel {characters = [characters.get('o')]}
+class VowelU extends Vowel {characters = [characters.get('u')]}
 
-class FinalConsonantK extends FinalConsonant {characters = [characters.get('k')]}
 class FinalConsonantN extends FinalConsonant {characters = [characters.get('n')]}
+
+class GerminatedConsonantK extends FinalConsonant {characters = [characters.get('k')]}
+class GerminatedConsonantC extends FinalConsonant {characters = [characters.get('c')]}
+class GerminatedConsonantP extends FinalConsonant {characters = [characters.get('p')]}
+class GerminatedConsonantT extends FinalConsonant {characters = [characters.get('t')]}
 
 class SetOfInitialConsonants extends SetOfSounds {
     initialConsonants: Array<InitialConsonant> = new Array()
     constructor() {
         super()
+        this.initialConsonants.push(new InitialConsonantB())
+        this.initialConsonants.push(new InitialConsonantC())
+        this.initialConsonants.push(new InitialConsonantD())
+        this.initialConsonants.push(new InitialConsonantDL())
+        this.initialConsonants.push(new InitialConsonantF())
+        this.initialConsonants.push(new InitialConsonantG())
+        this.initialConsonants.push(new InitialConsonantH())
+        this.initialConsonants.push(new InitialConsonantJ())
         this.initialConsonants.push(new InitialConsonantK())
+        this.initialConsonants.push(new InitialConsonantL())
+        this.initialConsonants.push(new InitialConsonantM())
+        this.initialConsonants.push(new InitialConsonantN())
         this.initialConsonants.push(new InitialConsonantP())
+        this.initialConsonants.push(new InitialConsonantQ())
         this.initialConsonants.push(new InitialConsonantS())
         this.initialConsonants.push(new InitialConsonantT())
+        this.initialConsonants.push(new InitialConsonantV())
+        this.initialConsonants.push(new InitialConsonantZ())
     }
 
     toString() {
@@ -209,7 +272,6 @@ class SetOfFinalConsonants extends SetOfSounds {
     finalConsonants: Array<FinalConsonant> = new Array()
     constructor() {
         super()
-        this.finalConsonants.push(new FinalConsonantK())
         this.finalConsonants.push(new FinalConsonantN())
     }
 
@@ -218,50 +280,151 @@ class SetOfFinalConsonants extends SetOfSounds {
     }
 }
 
+class SetOfGerminatedConsonants extends SetOfSounds {
+    theGerminated: Array<FinalConsonant> = new Array()
+    constructor() {
+        super()
+        this.theGerminated.push(new GerminatedConsonantC())
+        this.theGerminated.push(new GerminatedConsonantK())
+        this.theGerminated.push(new GerminatedConsonantP())
+        this.theGerminated.push(new GerminatedConsonantT())
+    }
+
+    toString() {
+        return super.toString(this.theGerminated)
+    }
+}
+
+class SetOfSemivowels extends SetOfSounds {
+    semivowels: Array<Semivowel> = new Array()
+    constructor() {
+        super()
+        this.semivowels.push(new SemivowelW())
+        this.semivowels.push(new SemivowelY())        
+    }
+
+    toString() {
+        return super.toString(this.semivowels)
+    }
+}
+
 //------------------------------------------------------------------------------
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
 
-interface PositionalSound {
+interface ISound {
     name: string
+    germinatedConsonant: GerminatedConsonant
     initialConsonant: InitialConsonant
     vowel: Vowel
     finalConsonant: FinalConsonant
 }
 
-type PartialPositionalSound = Partial<PositionalSound>
+type PartialISound = Partial<ISound>
 
 //------------------------------------------------------------------------------
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
 
-class PSA implements PartialPositionalSound {
+class ps_A implements PartialISound {
     static vowel: Vowel = new VowelA()
 }
 
-class PSE implements PartialPositionalSound {
+class ps_B implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantB()
+}
+
+class ps_C implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantC()
+}
+
+class ps_D implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantD()
+}
+
+class ps_DL implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantDL()
+}
+
+class ps_E implements PartialISound {
     static vowel: Vowel = new VowelE()
 }
 
-class PSI implements PartialPositionalSound {
+class ps_F implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantF()
+}
+
+class ps_G implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantG()
+}
+
+class ps_H implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantH()
+}
+
+class ps_I implements PartialISound {
     static vowel: Vowel = new VowelI()
 }
 
-class PSK implements PartialPositionalSound {
-    static initialConsonant: InitialConsonant = new InitialConsonantK()
-    static finalConsonant: FinalConsonant = new FinalConsonantK()
+class ps_J implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantJ()
 }
 
-class PSO implements PartialPositionalSound {
+class ps_K implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantK()
+}
+
+class ps_L implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantL()
+}
+
+class ps_M implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantM()
+}
+
+class ps_N implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantN()
+    static finalConsonant: FinalConsonant = new FinalConsonantN()
+}
+
+class ps_O implements PartialISound {
     static vowel: Vowel = new VowelO()
 }
 
-class ps_P implements PartialPositionalSound {
+class ps_P implements PartialISound {
     static initialConsonant: InitialConsonant = new InitialConsonantP()
 }
 
-class PSU implements PartialPositionalSound {
+class ps_Q implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantQ()
+}
+
+class ps_S implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantS()
+}
+
+class ps_T implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantT()
+}
+
+class ps_U implements PartialISound {
     static vowel: Vowel = new VowelU()
+}
+
+class ps_V implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantV()
+}
+
+class ps_W implements PartialISound {
+    static initialConsonant: InitialConsonant = new SemivowelW()
+}
+
+class ps_Y implements PartialISound {
+    static initialConsonant: InitialConsonant = new SemivowelY()
+}
+
+class ps_Z implements PartialISound {
+    static initialConsonant: InitialConsonant = new InitialConsonantZ()
 }
 
 //------------------------------------------------------------------------------
@@ -269,14 +432,32 @@ class PSU implements PartialPositionalSound {
 //------------------------------------------------------------------------------
 
 // need to verify the size of the map
-export const letterClass: Map<string, PartialPositionalSound> = new Map()
-    .set('a', PSA)
-    .set('e', PSE)
-    .set('i', PSI)
-    .set('k', PSK)
-    .set('o', PSO)
+export const letterClass: Map<string, PartialISound> = new Map()
+    .set('a', ps_A)
+    .set('b', ps_B)
+    .set('c', ps_C)
+    .set('d', ps_D)
+    .set('dl', ps_DL)
+    .set('e', ps_E)
+    .set('f', ps_F)
+    .set('g', ps_G)
+    .set('h', ps_H)
+    .set('i', ps_I)
+    .set('j', ps_J)
+    .set('k', ps_K)
+    .set('l', ps_L)
+    .set('m', ps_M)
+    .set('n', ps_N)
+    .set('o', ps_O)
     .set('p', ps_P)
-    .set('u', PSU)
+    .set('q', ps_Q)
+    .set('s', ps_S)
+    .set('t', ps_T)
+    .set('u', ps_U)
+    .set('v', ps_V)
+    .set('w', ps_W)
+    .set('y', ps_Y)
+    .set('z', ps_Z)
 
 //------------------------------------------------------------------------------
 //  Romanized Kana
@@ -285,5 +466,32 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
 let list_of_romanized_kana = [
     'a', 'i', 'u', 'e', 'o',
     'ka', 'ki', 'ku', 'ke', 'ko',
-    'pa',
+    'qa', 'qi', 'qu', 'qe', 'qo',
+    'sa', 'si', 'su', 'se', 'so',
+    'ta', 'ci', 'zu', 'te', 'to',
+    'da', 'de', 'do',
+    'na', 'ni', 'nu', 'ne', 'no',
+    'ha', 'hi', 'fu', 'he', 'ho', 
+    'ma', 'mi', 'mu', 'me', 'mo',
+    'ya', 'yu', 'yo',
+    'la', 'li', 'lu', 'le', 'lo',
+    'wa', 'wi', 'we', 'wo',
+    'ga', 'gi', 'gu', 'ge', 'go',
+    'ja', 'ji', 'ju', 'je', 'jo',
+    'dla', 'ji', 'ju', 'dle', 'dlo',
+    'ba', 'bi', 'bu', 'be', 'bo',
+    'pa', 'pi', 'pu', 'pe', 'po',
+    'va', 'vi', 'vu', 've', 'vo',
+    'qya', 'qyu', 'qyo',
+    'sya', 'syu', 'syo',
+    'cya', 'cyu', 'cyo',
+    'nya', 'nyu', 'nyo',
+    'hya', 'hyu', 'hyo',
+    'mya', 'myu', 'myo',
+    'lya', 'lyu', 'lyo',
+    'gya', 'gyu', 'gyo',
+    'jya', 'jyu', 'jyo',
+    'bya', 'byu', 'byo',
+    'pya', 'pyu', 'pyo',
+    'vya', 'vyu', 'vyo',
 ]

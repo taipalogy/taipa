@@ -70,22 +70,6 @@ export class SetOfSounds {
     }
 }
 
-
-//------------------------------------------------------------------------------
-//  Positional Sound for Lexical Root
-//------------------------------------------------------------------------------
-
-interface PositionalSound {
-    initial: Initial
-    medial: Medial
-    final: Final
-    freeTonal: FreeTonal
-    checkedTonal: CheckedTonal
-    //neutralTonal: CheckedTonal
-}
-
-export type PartialPositionalSound = Partial<PositionalSound>
-
 //------------------------------------------------------------------------------
 //  Morph
 //------------------------------------------------------------------------------
@@ -135,4 +119,12 @@ export abstract class Syllabary {
 
 export interface ILetters {
     readonly [index: string]: AlphabeticLetter
+}
+
+//------------------------------------------------------------------------------
+//  Turner
+//------------------------------------------------------------------------------
+
+export abstract class Turner {
+    abstract turnIntoMorphemes(str: string)
 }

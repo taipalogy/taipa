@@ -2,7 +2,7 @@ import { TonalCombinedMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syll
 import { TonalLemmaLexeme, ToneSandhiInflectionLexeme, TonalWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, TonalCombinedMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
-import { Tonal, Sound } from './system';
+import { Tonal, Sound, Turner } from './system';
 import { lowerLettersOfTonal } from './version2';
 import { AlphabeticGrapheme } from './grapheme';
 
@@ -159,7 +159,7 @@ export class DummyLexemeMaker {
 //  Lexeme Turner
 //------------------------------------------------------------------------------
 
-export class TonalTurner {
+export class TonalTurner extends Turner {
     arraysOfSounds: Array<Sound[]> = new Array()
 
     turnIntoGraphemes(str: string) {

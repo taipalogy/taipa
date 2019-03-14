@@ -1,8 +1,13 @@
 # Parser
 
-* Input Method
-* Dependency Parser
-* Morphological Analyzer
+This parser consists of the following functions:
+
+* lemmatizaer
+* stemmer
+* morphological analyzer
+* graphemic analyzer
+* input method
+* dependency parser
 
 ## Building
 

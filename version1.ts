@@ -1,11 +1,6 @@
-
-import { Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,
-    SetOfSounds,
-    PartialPositionalSound,
-    Allomorph,
-    FreeAllomorph,
-    CheckedAllomorph,
-    } from './system'
+import { Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,SetOfSounds } from './system'
+import { Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
+import { PartialISound } from './version2'
 import { characters } from './character'
 import { AlphabeticLetter } from './grapheme'
 
@@ -331,162 +326,162 @@ export class SetOfStopFinals extends SetOfSounds {
 //  Positional Sound for Lexical Root
 //------------------------------------------------------------------------------
 
-class PSA implements PartialPositionalSound {
+class PSA implements PartialISound {
     static medial: Medial = new MedialA()
 }
 
-class PSB implements PartialPositionalSound {
+class PSB implements PartialISound {
     static initial: Initial = new InitialB()
     static final: Final = new FinalB()
     static checkedTonal: Tonal = new TonalB()
 }
 
-class PSC implements PartialPositionalSound {
+class PSC implements PartialISound {
     static initial: Initial = new InitialC()
 }
 
-class PSD implements PartialPositionalSound {
+class PSD implements PartialISound {
     static initial: Initial = new InitialD()
     static final: Final = new FinalD()
     static checkedTonal: Tonal = new TonalD()
 }
 
-class PSE implements PartialPositionalSound {
+class PSE implements PartialISound {
     static medial: Medial = new MedialE()
 }
 
-class PSF implements PartialPositionalSound {
+class PSF implements PartialISound {
     static final: Final = new FinalF()
     static checkedTonal: CheckedTonal = new TonalF()
 }
 
-class PSG implements PartialPositionalSound {
+class PSG implements PartialISound {
     static initial: Initial = new InitialG()
     static final: Final = new FinalG()
     static checkedTonal: Tonal = new TonalG()
 }
 
-class PSH implements PartialPositionalSound {
+class PSH implements PartialISound {
     static initial: Initial = new InitialH()
     static final: Final = new FinalH()
     static checkedTonal: CheckedTonal = new TonalH()
 }
 
-class PSI implements PartialPositionalSound {
+class PSI implements PartialISound {
     static medial: Medial = new MedialI()
 }
 
-class PSJ implements PartialPositionalSound {
+class PSJ implements PartialISound {
     static initial: Initial = new InitialJ()
 }
 
-class PSK implements PartialPositionalSound {
+class PSK implements PartialISound {
     static initial: Initial = new InitialK()
     static final: Final = new FinalK()
     static checkedTonal: Tonal = new TonalK()
 }
 
-class PSL implements PartialPositionalSound {
+class PSL implements PartialISound {
     static initial: Initial = new InitialL()
 }
 
-class PSM implements PartialPositionalSound {
+class PSM implements PartialISound {
     static initial: Initial = new InitialM()
     static medial: Medial = new MaterLectionisM()
     static final: Final = new FinalM()
 }
 
-class PSN implements PartialPositionalSound {
+class PSN implements PartialISound {
     static initial: Initial = new InitialN()
     static medial: Medial = new MaterLectionisN()
     static final: Final = new FinalN()
 }
 
-class PSNN implements PartialPositionalSound {
+class PSNN implements PartialISound {
     static nasal: Nasal = new NasalNN()
 }
 
-class PSNG implements PartialPositionalSound {
+class PSNG implements PartialISound {
     static initial: Initial = new InitialNG()
     static medial: Medial = new MaterLectionisNG()
     static final: Final = new FinalNG()
 }
 
-class PSO implements PartialPositionalSound {
+class PSO implements PartialISound {
     static medial: Medial = new MedialO()
 }
 
-class PSP implements PartialPositionalSound {
+class PSP implements PartialISound {
     static initial: Initial = new InitialP()
     static final: Final = new FinalP()
     static checkedTonal: Tonal = new TonalP()
 }
 
-class PSQ implements PartialPositionalSound {
+class PSQ implements PartialISound {
     static initial: Initial = new InitialQ()
 }
 
-class PSS implements PartialPositionalSound {
+class PSS implements PartialISound {
     static initial: Initial = new InitialS()
 }
 
-class PSSS implements PartialPositionalSound {
+class PSSS implements PartialISound {
     static freeTonal: TonalSS = new TonalSS()
 }
 
-class PST implements PartialPositionalSound {
+class PST implements PartialISound {
     static initial: Initial = new InitialT()
     static final: Final = new FinalT()
     static checkedTonal: Tonal = new TonalT()
 }
 
-class PSU implements PartialPositionalSound {
+class PSU implements PartialISound {
     static medial: Medial = new MedialU()
 }
 
-class PSUR implements PartialPositionalSound {
+class PSUR implements PartialISound {
     static medial: Medial = new MedialUR()
 }
 
-class PSV implements PartialPositionalSound {
+class PSV implements PartialISound {
     static initial: Initial = new InitialV()
 }
 
-class PSW implements PartialPositionalSound {
+class PSW implements PartialISound {
     static freeTonal: TonalW = new TonalW()
 }
 
-class PSX implements PartialPositionalSound {
+class PSX implements PartialISound {
     static freeTonal: FreeTonalX = new FreeTonalX()
     static checkedTonal: CheckedTonalX = new CheckedTonalX()
 }
 
-class PSXX implements PartialPositionalSound {
+class PSXX implements PartialISound {
     static freeTonal: TonalXX = new TonalXX()
 }
 
-class PSXXX implements PartialPositionalSound {
+class PSXXX implements PartialISound {
     static freeTonal: TonalXX = new TonalXXX()
 }
 
-class PSY implements PartialPositionalSound {
+class PSY implements PartialISound {
     static freeTonal: FreeTonalY = new FreeTonalY()
     static checkedTonal: CheckedTonalY = new CheckedTonalY()
 }
 
-class PSZ implements PartialPositionalSound {
+class PSZ implements PartialISound {
     static initial: Initial = new InitialZ()
 }
 
-class PSZS implements PartialPositionalSound {
+class PSZS implements PartialISound {
     static freeTonal: TonalZS = new TonalZS()
 }
 
-class PSZZS implements PartialPositionalSound {
+class PSZZS implements PartialISound {
     static freeTonal: TonalZZS = new TonalZZS()
 }
 
-class PSZero implements PartialPositionalSound {
+class PSZero implements PartialISound {
     static freeTonal: ZeroTonal = new ZeroTonal()
 }
 
@@ -510,7 +505,7 @@ export const combiningRules: Map<string, any> = new Map()
     .set('g', { g: PSG.checkedTonal, x: PSX.checkedTonal })
     .set('f', { f: PSF.checkedTonal, x: PSX.checkedTonal })
 
-export const letterClass: Map<string, PartialPositionalSound> = new Map()
+export const letterClass: Map<string, PartialISound> = new Map()
     .set('a', PSA)
     .set('b', PSB)
     .set('c', PSC)
