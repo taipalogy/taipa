@@ -23,6 +23,8 @@ class RomanizedKanaGenerator {
                 strs.push(list_of_romanized_kana[i])
                 // double vowels. repeat the vowel.
                 strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
+                // consonant germination
+                strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
             }
         }
         //for(let i in strs) console.info(strs[i])
@@ -45,17 +47,18 @@ class ClientOfGenerator {
     }
 
     private analyzeAfterInitialConsonants(ls: string[], sounds: string[], index: number): string[] {
-        if(this.isVowel(ls[index])) {
+        if(this.isSemivowel(ls[index])) {
+            sounds.push(ls[index] + '.semivowel')
+            if(this.isVowel(ls[index+1])) {
+                sounds.push(ls[index+1] + '.vowel')
+            }
+        } else if(this.isVowel(ls[index])) {
             let k = index
             while(k < ls.length) {
                 if(this.isVowel(ls[k])) {
                     sounds.push(ls[k] + '.vowel')
                 }
                 k++
-            }
-
-            if(ls.length > sounds.length) {
-                sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
             }
         }
 
@@ -85,6 +88,13 @@ class ClientOfGenerator {
 
         return false
     }
+
+    private isGerminatedConsonant(str: string) {
+        if(str.search(new RegExp(new SetOfGerminatedConsonants().toString())) == 0) return true
+
+        return false
+    }
+
     private convert(entry: string[]) {
         // convert strings in an entry to sounds
         // ex: a.medial -> ps_A.medial
@@ -116,14 +126,18 @@ class ClientOfGenerator {
 
             let sounds: string[] = []
 
-            // analyze vowels, which have null initial consonants
-            // pass 0 as index to indicate it has null initial consonants
+            // analyze vowels which have no leading consonants
+            // pass 0 as index to indicate it has no leading consonants
             sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
 
-            if(this.isInitialConsonant(ls[0])) {
+            if(this.isGerminatedConsonant(ls[0]) && ls.length > 1 && this.isInitialConsonant(ls[1])) {
+                sounds.push(ls[0] + '.germinatedConsonant')
+                sounds.push(ls[1] + '.initialConsonant')
+                if(ls.length > 2) sounds = this.analyzeAfterInitialConsonants(ls, sounds, 2)
+            } else if(this.isInitialConsonant(ls[0])) {
                 // analyze initial consonants
                 sounds.push(ls[0] + '.initialConsonant')
-                if(this.isVowel(ls[1])) {
+                if(this.isVowel(ls[1]) || this.isSemivowel(ls[1])) {
                     // consonants followed by vowels
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
                 }
@@ -218,10 +232,10 @@ class VowelU extends Vowel {characters = [characters.get('u')]}
 
 class FinalConsonantN extends FinalConsonant {characters = [characters.get('n')]}
 
-class GerminatedConsonantK extends FinalConsonant {characters = [characters.get('k')]}
-class GerminatedConsonantC extends FinalConsonant {characters = [characters.get('c')]}
-class GerminatedConsonantP extends FinalConsonant {characters = [characters.get('p')]}
-class GerminatedConsonantT extends FinalConsonant {characters = [characters.get('t')]}
+class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
+class GerminatedConsonantC extends GerminatedConsonant {characters = [characters.get('c')]}
+class GerminatedConsonantP extends GerminatedConsonant {characters = [characters.get('p')]}
+class GerminatedConsonantT extends GerminatedConsonant {characters = [characters.get('t')]}
 
 class SetOfInitialConsonants extends SetOfSounds {
     initialConsonants: Array<InitialConsonant> = new Array()
@@ -281,7 +295,7 @@ class SetOfFinalConsonants extends SetOfSounds {
 }
 
 class SetOfGerminatedConsonants extends SetOfSounds {
-    theGerminated: Array<FinalConsonant> = new Array()
+    theGerminated: Array<GerminatedConsonant> = new Array()
     constructor() {
         super()
         this.theGerminated.push(new GerminatedConsonantC())
@@ -316,6 +330,7 @@ interface ISound {
     name: string
     germinatedConsonant: GerminatedConsonant
     initialConsonant: InitialConsonant
+    semivowel: Semivowel
     vowel: Vowel
     finalConsonant: FinalConsonant
 }
@@ -371,6 +386,7 @@ class ps_J implements PartialISound {
 }
 
 class ps_K implements PartialISound {
+    static germinatedConsonant: GerminatedConsonant = new GerminatedConsonantK()
     static initialConsonant: InitialConsonant = new InitialConsonantK()
 }
 
@@ -416,11 +432,11 @@ class ps_V implements PartialISound {
 }
 
 class ps_W implements PartialISound {
-    static initialConsonant: InitialConsonant = new SemivowelW()
+    static semivowel: Semivowel = new SemivowelW()
 }
 
 class ps_Y implements PartialISound {
-    static initialConsonant: InitialConsonant = new SemivowelY()
+    static semivowel: Semivowel = new SemivowelY()
 }
 
 class ps_Z implements PartialISound {
@@ -482,6 +498,7 @@ let list_of_romanized_kana = [
     'ba', 'bi', 'bu', 'be', 'bo',
     'pa', 'pi', 'pu', 'pe', 'po',
     'va', 'vi', 'vu', 've', 'vo',
+    'kya', 'kyu', 'kyo',
     'qya', 'qyu', 'qyo',
     'sya', 'syu', 'syo',
     'cya', 'cyu', 'cyo',
