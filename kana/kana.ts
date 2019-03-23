@@ -33,6 +33,7 @@ class RomanizedKanaGenerator {
 }
 
 class ClientOfGenerator {
+    /*
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFinalConsonant(ls[index])) {
             let k = index
@@ -45,7 +46,7 @@ class ClientOfGenerator {
         } 
         return sounds
     }
-
+*/
     private analyzeAfterInitialConsonants(ls: string[], sounds: string[], index: number): string[] {
         if(this.isSemivowel(ls[index])) {
             sounds.push(ls[index] + '.semivowel')
@@ -77,12 +78,6 @@ class ClientOfGenerator {
         return false
     }
 
-    private isFinalConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfFinalConsonants().toString())) == 0) return true
-
-        return false
-    }
-
     private isSemivowel(str: string) {
         if(str.search(new RegExp(new SetOfSemivowels().toString())) == 0) return true
 
@@ -97,7 +92,7 @@ class ClientOfGenerator {
 
     private convert(entry: string[]) {
         // convert strings in an entry to sounds
-        // ex: a.medial -> ps_A.medial
+        // ex: a.medial -> PSA.medial
         let ret: Array<Sound> = new Array()
         for(let i in entry) {
             let n = entry[i].lastIndexOf('.')
@@ -282,18 +277,6 @@ class SetOfVowels extends SetOfSounds {
     }
 }
 
-class SetOfFinalConsonants extends SetOfSounds {
-    finalConsonants: Array<FinalConsonant> = new Array()
-    constructor() {
-        super()
-        this.finalConsonants.push(new FinalConsonantN())
-    }
-
-    toString() {
-        return super.toString(this.finalConsonants)
-    }
-}
-
 class SetOfGerminatedConsonants extends SetOfSounds {
     theGerminated: Array<GerminatedConsonant> = new Array()
     constructor() {
@@ -332,7 +315,7 @@ interface ISound {
     initialConsonant: InitialConsonant
     semivowel: Semivowel
     vowel: Vowel
-    finalConsonant: FinalConsonant
+    //finalConsonant: FinalConsonant
 }
 
 type PartialISound = Partial<ISound>
@@ -341,174 +324,290 @@ type PartialISound = Partial<ISound>
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
 
-class ps_A implements PartialISound {
-    static vowel: Vowel = new VowelA()
+class PSA implements PartialISound {
+    name = 'a'
+    vowel: Vowel = new VowelA()
 }
 
-class ps_B implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantB()
+class PSB implements PartialISound {
+    name = 'b'
+    initialConsonant: InitialConsonant = new InitialConsonantB()
 }
 
-class ps_C implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantC()
+class PSC implements PartialISound {
+    name = 'c'
+    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantC()
+    initialConsonant: InitialConsonant = new InitialConsonantC()
 }
 
-class ps_D implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantD()
+class PSD implements PartialISound {
+    name = 'd'
+    initialConsonant: InitialConsonant = new InitialConsonantD()
 }
 
-class ps_DL implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantDL()
+class PSDL implements PartialISound {
+    name = 'dl'
+    initialConsonant: InitialConsonant = new InitialConsonantDL()
 }
 
-class ps_E implements PartialISound {
-    static vowel: Vowel = new VowelE()
+class PSE implements PartialISound {
+    name = 'e'
+    vowel: Vowel = new VowelE()
 }
 
-class ps_F implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantF()
+class PSF implements PartialISound {
+    name = 'f'
+    initialConsonant: InitialConsonant = new InitialConsonantF()
 }
 
-class ps_G implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantG()
+class PSG implements PartialISound {
+    name = 'g'
+    initialConsonant: InitialConsonant = new InitialConsonantG()
 }
 
-class ps_H implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantH()
+class PSH implements PartialISound {
+    name = 'h'
+    initialConsonant: InitialConsonant = new InitialConsonantH()
 }
 
-class ps_I implements PartialISound {
-    static vowel: Vowel = new VowelI()
+class PSI implements PartialISound {
+    name = 'i'
+    vowel: Vowel = new VowelI()
 }
 
-class ps_J implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantJ()
+class PSJ implements PartialISound {
+    name = 'j'
+    initialConsonant: InitialConsonant = new InitialConsonantJ()
 }
 
-class ps_K implements PartialISound {
-    static germinatedConsonant: GerminatedConsonant = new GerminatedConsonantK()
-    static initialConsonant: InitialConsonant = new InitialConsonantK()
+class PSK implements PartialISound {
+    name = 'k'
+    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantK()
+    initialConsonant: InitialConsonant = new InitialConsonantK()
 }
 
-class ps_L implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantL()
+class PSL implements PartialISound {
+    name = 'l'
+    initialConsonant: InitialConsonant = new InitialConsonantL()
 }
 
-class ps_M implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantM()
+class PSM implements PartialISound {
+    name = 'm'
+    initialConsonant: InitialConsonant = new InitialConsonantM()
 }
 
-class ps_N implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantN()
-    static finalConsonant: FinalConsonant = new FinalConsonantN()
+class PSN implements PartialISound {
+    name = 'n'
+    initialConsonant: InitialConsonant = new InitialConsonantN()
 }
 
-class ps_O implements PartialISound {
-    static vowel: Vowel = new VowelO()
+class PSO implements PartialISound {
+    name = 'o'
+    vowel: Vowel = new VowelO()
 }
 
-class ps_P implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantP()
+class PSP implements PartialISound {
+    name = 'p'
+    initialConsonant: InitialConsonant = new InitialConsonantP()
 }
 
-class ps_Q implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantQ()
+class PSQ implements PartialISound {
+    name = 'q'
+    initialConsonant: InitialConsonant = new InitialConsonantQ()
 }
 
-class ps_S implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantS()
+class PSS implements PartialISound {
+    name = 's'
+    initialConsonant: InitialConsonant = new InitialConsonantS()
 }
 
-class ps_T implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantT()
+class PST implements PartialISound {
+    name = 't'
+    initialConsonant: InitialConsonant = new InitialConsonantT()
 }
 
-class ps_U implements PartialISound {
-    static vowel: Vowel = new VowelU()
+class PSU implements PartialISound {
+    name = 'u'
+    vowel: Vowel = new VowelU()
 }
 
-class ps_V implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantV()
+class PSV implements PartialISound {
+    name = 'v'
+    initialConsonant: InitialConsonant = new InitialConsonantV()
 }
 
-class ps_W implements PartialISound {
-    static semivowel: Semivowel = new SemivowelW()
+class PSW implements PartialISound {
+    name = 'w'
+    semivowel: Semivowel = new SemivowelW()
 }
 
-class ps_Y implements PartialISound {
-    static semivowel: Semivowel = new SemivowelY()
+class PSY implements PartialISound {
+    name = 'y'
+    semivowel: Semivowel = new SemivowelY()
 }
 
-class ps_Z implements PartialISound {
-    static initialConsonant: InitialConsonant = new InitialConsonantZ()
+class PSZ implements PartialISound {
+    name = 'z'
+    initialConsonant: InitialConsonant = new InitialConsonantZ()
 }
 
 //------------------------------------------------------------------------------
 //  Letter Class
 //------------------------------------------------------------------------------
 
-// need to verify the size of the map
 export const letterClass: Map<string, PartialISound> = new Map()
-    .set('a', ps_A)
-    .set('b', ps_B)
-    .set('c', ps_C)
-    .set('d', ps_D)
-    .set('dl', ps_DL)
-    .set('e', ps_E)
-    .set('f', ps_F)
-    .set('g', ps_G)
-    .set('h', ps_H)
-    .set('i', ps_I)
-    .set('j', ps_J)
-    .set('k', ps_K)
-    .set('l', ps_L)
-    .set('m', ps_M)
-    .set('n', ps_N)
-    .set('o', ps_O)
-    .set('p', ps_P)
-    .set('q', ps_Q)
-    .set('s', ps_S)
-    .set('t', ps_T)
-    .set('u', ps_U)
-    .set('v', ps_V)
-    .set('w', ps_W)
-    .set('y', ps_Y)
-    .set('z', ps_Z)
+    .set('a', new PSA())
+    .set('b', new PSB())
+    .set('c', new PSC())
+    .set('d', new PSD())
+    .set('dl', new PSDL())
+    .set('e', new PSE())
+    .set('f', new PSF())
+    .set('g', new PSG())
+    .set('h', new PSH())
+    .set('i', new PSI())
+    .set('j', new PSJ())
+    .set('k', new PSK())
+    .set('l', new PSL())
+    .set('m', new PSM())
+    .set('n', new PSN())
+    .set('o', new PSO())
+    .set('p', new PSP())
+    .set('q', new PSQ())
+    .set('s', new PSS())
+    .set('t', new PST())
+    .set('u', new PSU())
+    .set('v', new PSV())
+    .set('w', new PSW())
+    .set('y', new PSY())
+    .set('z', new PSZ())
 
 //------------------------------------------------------------------------------
 //  Romanized Kana
 //------------------------------------------------------------------------------
 
-let list_of_romanized_kana = [
-    'a', 'i', 'u', 'e', 'o',
-    'ka', 'ki', 'ku', 'ke', 'ko',
-    'qa', 'qi', 'qu', 'qe', 'qo',
-    'sa', 'si', 'su', 'se', 'so',
-    'ta', 'ci', 'zu', 'te', 'to',
-    'da', 'de', 'do',
-    'na', 'ni', 'nu', 'ne', 'no',
-    'ha', 'hi', 'fu', 'he', 'ho', 
-    'ma', 'mi', 'mu', 'me', 'mo',
-    'ya', 'yu', 'yo',
-    'la', 'li', 'lu', 'le', 'lo',
-    'wa', 'wi', 'we', 'wo',
-    'ga', 'gi', 'gu', 'ge', 'go',
-    'ja', 'ji', 'ju', 'je', 'jo',
-    'dla', 'ji', 'ju', 'dle', 'dlo',
-    'ba', 'bi', 'bu', 'be', 'bo',
-    'pa', 'pi', 'pu', 'pe', 'po',
-    'va', 'vi', 'vu', 've', 'vo',
-    'kya', 'kyu', 'kyo',
-    'qya', 'qyu', 'qyo',
-    'sya', 'syu', 'syo',
-    'cya', 'cyu', 'cyo',
-    'nya', 'nyu', 'nyo',
-    'hya', 'hyu', 'hyo',
-    'mya', 'myu', 'myo',
-    'lya', 'lyu', 'lyo',
-    'gya', 'gyu', 'gyo',
-    'jya', 'jyu', 'jyo',
-    'bya', 'byu', 'byo',
-    'pya', 'pyu', 'pyo',
-    'vya', 'vyu', 'vyo',
-]
+export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
+    .set('a', ['あ', 'ア', 'ぁ', 'ァ'])
+    .set('i', [])
+    .set('u', [])
+    .set('e', [])
+    .set('o', [])
+    .set('ka', [])
+    .set('ki', [])
+    .set('ku', [])
+    .set('ke', [])
+    .set('ko', [])
+    .set('qa', [])
+    .set('qi', [])
+    .set('qu', [])
+    .set('qe', [])
+    .set('qo', [])
+    .set('sa', [])
+    .set('si', [])
+    .set('su', [])
+    .set('se', [])
+    .set('so', [])
+    .set('ta', [])
+    .set('ci', [])
+    .set('zu', [])
+    .set('te', [])
+    .set('to', [])
+    .set('da', [])
+    .set('de', [])
+    .set('do', [])
+    .set('na', [])
+    .set('ni', [])
+    .set('nu', [])
+    .set('ne', [])
+    .set('no', [])
+    .set('ha', [])
+    .set('hi', [])
+    .set('hu', [])
+    .set('he', [])
+    .set('ho', [])
+    .set('ma', [])
+    .set('mi', [])
+    .set('mu', [])
+    .set('me', [])
+    .set('mo', [])
+    .set('ya', [])
+    .set('yu', [])
+    .set('yo', [])
+    .set('la', [])
+    .set('li', [])
+    .set('lu', [])
+    .set('le', [])
+    .set('lo', [])
+    .set('wa', [])
+    .set('wi', [])
+    .set('we', [])
+    .set('wo', [])
+    .set('ga', [])
+    .set('gi', [])
+    .set('gu', [])
+    .set('ge', [])
+    .set('go', [])
+    .set('ja', [])
+    .set('ji', [])
+    .set('ju', [])
+    .set('je', [])
+    .set('jo', [])
+    .set('dla', [])
+    .set('dle', [])
+    .set('dlo', [])
+    .set('ba', [])
+    .set('bi', [])
+    .set('bu', [])
+    .set('be', [])
+    .set('bo', [])
+    .set('pa', [])
+    .set('pi', [])
+    .set('pu', [])
+    .set('pe', [])
+    .set('po', [])
+    .set('va', [])
+    .set('vi', [])
+    .set('vu', [])
+    .set('ve', [])
+    .set('vo', [])
+    .set('kya', [])
+    .set('kyu', [])
+    .set('kyo', [])
+    .set('qya', [])
+    .set('qyu', [])
+    .set('qyo', [])
+    .set('sya', [])
+    .set('syu', [])
+    .set('syo', [])
+    .set('cya', [])
+    .set('cyu', [])
+    .set('cyo', [])
+    .set('nya', [])
+    .set('nyu', [])
+    .set('nyo', [])
+    .set('hya', [])
+    .set('hyu', [])
+    .set('hyo', [])
+    .set('mya', [])
+    .set('myu', [])
+    .set('myo', [])
+    .set('lya', [])
+    .set('lyu', [])
+    .set('lyo', [])
+    .set('gya', [])
+    .set('gyu', [])
+    .set('gyo', [])
+    .set('jya', [])
+    .set('jyu', [])
+    .set('jyo', [])
+    .set('bya', [])
+    .set('byu', [])
+    .set('byo', [])
+    .set('pya', [])
+    .set('pyu', [])
+    .set('pyo', [])
+    .set('vya', [])
+    .set('vyu', [])
+    .set('vyo', [])
+
+let list_of_romanized_kana = Array.from(HiraganaAndKatakana.keys())

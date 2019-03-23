@@ -11,6 +11,7 @@ import { AlphabeticLetter } from './grapheme'
 //------------------------------------------------------------------------------
 
 interface ISound {
+    name: string
     initial: Initial
     medial: Medial
     final: Final
@@ -353,172 +354,210 @@ export class SetOfStopFinals extends SetOfSounds {
 //------------------------------------------------------------------------------
 
 class PSA implements PartialISound {
-    static medial: Medial = new MedialA()
+    name = 'a'
+    medial: Medial = new MedialA()
 }
 
 class PSB implements PartialISound {
-    static initial: Initial = new InitialB()
+    name = 'b'
+    initial: Initial = new InitialB()
     //static final: Final = new FinalB()
 }
 
 class PSC implements PartialISound {
-    static initial: Initial = new InitialC()
+    name = 'c'
+    initial: Initial = new InitialC()
 }
 
 class PSD implements PartialISound {
-    static initial: Initial = new InitialD()
+    name = 'd'
+    initial: Initial = new InitialD()
     //static final: Final = new FinalD()
 }
 
 class PSE implements PartialISound {
-    static medial: Medial = new MedialE()
+    name = 'e'
+    medial: Medial = new MedialE()
 }
 
 class PSF implements PartialISound {
-    static checkedTonal: CheckedTonal = new TonalF()
+    name = 'f'
+    checkedTonal: CheckedTonal = new TonalF()
 }
 
 class PSCS implements PartialISound {
-    static freeTonal: TonalCS = new TonalCS()
+    name = 'cs'
+    freeTonal: TonalCS = new TonalCS()
 }
 
 class PSZS implements PartialISound {
-    static freeTonal: TonalZS = new TonalZS()
+    name = 'zs'
+    freeTonal: TonalZS = new TonalZS()
 }
 
 class PSG implements PartialISound {
-    static initial: Initial = new InitialG()
+    name = 'g'
+    initial: Initial = new InitialG()
     //static final: Final = new FinalG()
 }
 
 class PSH implements PartialISound {
-    static initial: Initial = new InitialH()
-    static final: Final = new FinalH()
+    name = 'h'
+    initial: Initial = new InitialH()
+    final: Final = new FinalH()
 }
 
 class PSHH implements PartialISound {
-    static final: Final = new FinalHH()
+    name = 'hh'
+    final: Final = new FinalHH()
 }
 
 class PSI implements PartialISound {
-    static medial: Medial = new MedialI()
+    name = 'i'
+    medial: Medial = new MedialI()
 }
 
 class PSJ implements PartialISound {
-    static initial: Initial = new InitialJ()
+    name = 'j'
+    initial: Initial = new InitialJ()
 }
 
 class PSK implements PartialISound {
-    static initial: Initial = new InitialK()
-    static final: Final = new FinalK()
+    name = 'k'
+    initial: Initial = new InitialK()
+    final: Final = new FinalK()
 }
 
 class PSKK implements PartialISound {
-    static final: Final = new FinalKK()
+    name = 'kk'
+    final: Final = new FinalKK()
 }
 
 class PSL implements PartialISound {
-    static initial: Initial = new InitialL()
+    name = 'l'
+    initial: Initial = new InitialL()
     //static final: Final = new FinalL()
 }
 
 class PSM implements PartialISound {
-    static initial: Initial = new InitialM()
-    static medial: Medial = new MaterLectionisM()
-    static final: Final = new FinalM()
+    name = 'm'
+    initial: Initial = new InitialM()
+    medial: Medial = new MaterLectionisM()
+    final: Final = new FinalM()
 }
 
 class PSN implements PartialISound {
-    static initial: Initial = new InitialN()
-    static medial: Medial = new MaterLectionisN()
-    static final: Final = new FinalN()
+    name = 'n'
+    initial: Initial = new InitialN()
+    medial: Medial = new MaterLectionisN()
+    final: Final = new FinalN()
 }
 
 class PSNN implements PartialISound {
-    static nasalization: Nasal = new NasalizationNN()
+    name = 'nn'
+    nasalization: Nasal = new NasalizationNN()
 }
 
 class PSNG implements PartialISound {
-    static initial: Initial = new InitialNG()
-    static medial: Medial = new MaterLectionisNG()
-    static final: Final = new FinalNG()
+    name = 'ng'
+    initial: Initial = new InitialNG()
+    medial: Medial = new MaterLectionisNG()
+    final: Final = new FinalNG()
 }
 
 class PSO implements PartialISound {
-    static medial: Medial = new MedialO()
+    name = 'o'
+    medial: Medial = new MedialO()
 }
 
 class PSP implements PartialISound {
-    static initial: Initial = new InitialP()
-    static final: Final = new FinalP()
+    name = 'p'
+    initial: Initial = new InitialP()
+    final: Final = new FinalP()
 }
 
 class PSPP implements PartialISound {
-    static final: Final = new FinalPP()
+    name = 'pp'
+    final: Final = new FinalPP()
 }
 
 class PSQ implements PartialISound {
-    static initial: Initial = new InitialQ()
+    name = 'q'
+    initial: Initial = new InitialQ()
 }
 
 class PSS implements PartialISound {
-    static initial: Initial = new InitialS()
+    name = 's'
+    initial: Initial = new InitialS()
 }
 
 class PST implements PartialISound {
-    static initial: Initial = new InitialT()
-    static final: Final = new FinalT()
+    name = 't'
+    initial: Initial = new InitialT()
+    final: Final = new FinalT()
 }
 
 class PSTT implements PartialISound {
-    static final: Final = new FinalTT()
+    name = 'tt'
+    final: Final = new FinalTT()
 }
 
 class PSU implements PartialISound {
-    static medial: Medial = new MedialU()
+    name = 'u'
+    medial: Medial = new MedialU()
 }
 
 class PSUR implements PartialISound {
-    static medial: Medial = new MedialUR()
+    name = 'ur'
+    medial: Medial = new MedialUR()
 }
 
 class PSV implements PartialISound {
-    static initial: Initial = new InitialV()
+    name = 'v'
+    initial: Initial = new InitialV()
 }
 
 class PSW implements PartialISound {
-    static freeTonal: TonalW = new TonalW()
-    static checkedTonal: CheckedTonal = new CheckedTonalW()
+    name = 'w'
+    freeTonal: TonalW = new TonalW()
+    checkedTonal: CheckedTonal = new CheckedTonalW()
 }
 
 class PSX implements PartialISound {
-    static freeTonal: FreeTonalX = new FreeTonalX()
-    static checkedTonal: CheckedTonalX = new CheckedTonalX()
+    name = 'x'
+    freeTonal: FreeTonalX = new FreeTonalX()
+    checkedTonal: CheckedTonalX = new CheckedTonalX()
 }
 
 class PSXX implements PartialISound {
-    static freeTonal: TonalXX = new TonalXX()
+    name = 'xx'
+    freeTonal: TonalXX = new TonalXX()
 }
 
 class PSXXX implements PartialISound {
-    static freeTonal: TonalXX = new TonalXXX()
+    name = 'xxx'
+    freeTonal: TonalXX = new TonalXXX()
 }
 
 class PSY implements PartialISound {
-    static freeTonal: FreeTonalY = new FreeTonalY()
-    static checkedTonal: CheckedTonalY = new CheckedTonalY()
+    name = 'y'
+    freeTonal: FreeTonalY = new FreeTonalY()
+    checkedTonal: CheckedTonalY = new CheckedTonalY()
 }
 
 class PSZ implements PartialISound {
-    static initial: Initial = new InitialZ()
+    name = 'z'
+    initial: Initial = new InitialZ()
 }
 
 class PSZZS implements PartialISound {
-    static freeTonal: TonalZZS = new TonalZZS()
+    name = 'zzs'
+    freeTonal: TonalZZS = new TonalZZS()
 }
 
 class PSZero implements PartialISound {
-    static freeTonal: ZeroTonal = new ZeroTonal()
+    name = 'zero'
+    freeTonal: ZeroTonal = new ZeroTonal()
 }
 
 //------------------------------------------------------------------------------
@@ -526,60 +565,60 @@ class PSZero implements PartialISound {
 //------------------------------------------------------------------------------
 
 export const combiningRules: Map<string, any> = new Map()
-    .set('zero', { zs: PSZS.freeTonal })
-    .set('y', { zero: PSZero.freeTonal, cs: PSCS.freeTonal })
-    .set('w', { y: PSY.freeTonal })
-    .set('x', { zs: PSZS.freeTonal, w: PSW.freeTonal })
-    .set('zs', { w: PSW.freeTonal })
-    .set('p', { f: PSF.checkedTonal })
-    .set('t', { f: PSF.checkedTonal })
-    .set('k', { f: PSF.checkedTonal })
-    .set('h', { f: PSF.checkedTonal, y: PSY.checkedTonal })
-    .set('pp', { w: PSW.checkedTonal, x: PSX.checkedTonal})
-    .set('tt', { w: PSW.checkedTonal, x: PSX.checkedTonal})
-    .set('kk', { w: PSW.checkedTonal, x: PSX.checkedTonal})
-    .set('hh', { w: PSW.checkedTonal, x: PSX.checkedTonal})
+    .set('zero', { zs: new PSZS().freeTonal })
+    .set('y', { zero: new PSZero().freeTonal, cs: new PSCS().freeTonal })
+    .set('w', { y: new PSY().freeTonal })
+    .set('x', { zs: new PSZS().freeTonal, w: new PSW().freeTonal })
+    .set('zs', { w: new PSW().freeTonal })
+    .set('p', { f: new PSF().checkedTonal })
+    .set('t', { f: new PSF().checkedTonal })
+    .set('k', { f: new PSF().checkedTonal })
+    .set('h', { f: new PSF().checkedTonal, y: new PSY().checkedTonal })
+    .set('pp', { w: new PSW().checkedTonal, x: new PSX().checkedTonal})
+    .set('tt', { w: new PSW().checkedTonal, x: new PSX().checkedTonal})
+    .set('kk', { w: new PSW().checkedTonal, x: new PSX().checkedTonal})
+    .set('hh', { w: new PSW().checkedTonal, x: new PSX().checkedTonal})
 
 
 // need to verify the size of the map
 export const letterClass: Map<string, PartialISound> = new Map()
-    .set('a', PSA)
-    .set('b', PSB)
-    .set('c', PSC)
-    .set('d', PSD)
-    .set('e', PSE)
-    .set('f', PSF)
-    .set('g', PSG)
-    .set('h', PSH)
-    .set('hh', PSHH)
-    .set('i', PSI)
-    .set('j', PSJ)
-    .set('k', PSK)
-    .set('kk', PSKK)
-    .set('l', PSL)
-    .set('m', PSM)
-    .set('n', PSN)
-    .set('nn', PSNN)
-    .set('ng', PSNG)
-    .set('o', PSO)
-    .set('p', PSP)
-    .set('pp', PSPP)
-    .set('q', PSQ)
-    .set('s', PSS)
-    .set('cs', PSCS)
-    .set('t', PST)
-    .set('tt', PSTT)
-    .set('u', PSU)
-    .set('ur', PSUR)
-    .set('v', PSV)
-    .set('w', PSW)
-    .set('x', PSX)
-    .set('xx', PSXX)
-    .set('xxx', PSXXX)
-    .set('y', PSY)
-    .set('z', PSZ)
-    .set('zs', PSZS)
-    .set('zzs', PSZZS)
+    .set('a', new PSA())
+    .set('b', new PSB())
+    .set('c', new PSC())
+    .set('d', new PSD())
+    .set('e', new PSE())
+    .set('f', new PSF())
+    .set('g', new PSG())
+    .set('h', new PSH())
+    .set('hh', new PSHH())
+    .set('i', new PSI())
+    .set('j', new PSJ())
+    .set('k', new PSK())
+    .set('kk', new PSKK())
+    .set('l', new PSL())
+    .set('m', new PSM())
+    .set('n', new PSN())
+    .set('nn', new PSNN())
+    .set('ng', new PSNG())
+    .set('o', new PSO())
+    .set('p', new PSP())
+    .set('pp', new PSPP())
+    .set('q', new PSQ())
+    .set('s', new PSS())
+    .set('cs', new PSCS())
+    .set('t', new PST())
+    .set('tt', new PSTT())
+    .set('u', new PSU())
+    .set('ur', new PSUR())
+    .set('v', new PSV())
+    .set('w', new PSW())
+    .set('x', new PSX())
+    .set('xx', new PSXX())
+    .set('xxx', new PSXXX())
+    .set('y', new PSY())
+    .set('z', new PSZ())
+    .set('zs', new PSZS())
+    .set('zzs', new PSZZS())
 
 
 //------------------------------------------------------------------------------
@@ -731,51 +770,51 @@ class AllomorphHHX extends CheckedAllomorph {
 }
 
 export const listOfCheckedAllomorphs: Map<string, Allomorph> = new Map()
-    .set(PSP.final.getLiteral(), new AllomorphP())
-    .set(PST.final.getLiteral(), new AllomorphT())
-    .set(PSK.final.getLiteral(), new AllomorphK())
-    .set(PSH.final.getLiteral(), new AllomorphH())
-    .set(PSPP.final.getLiteral(), new AllomorphPP())
-    .set(PSTT.final.getLiteral(), new AllomorphTT())
-    .set(PSKK.final.getLiteral(), new AllomorphKK())
-    .set(PSHH.final.getLiteral(), new AllomorphHH())
-    .set(PSP.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphPF())
-    .set(PST.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphTF())
-    .set(PSK.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphKF())
-    .set(PSH.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphHF())
-    .set(PSPP.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphPPW())
-    .set(PSTT.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphTTW())
-    .set(PSKK.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphKKW())
-    .set(PSHH.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphHHW())
-    .set(PSH.final.getLiteral() + PSY.checkedTonal.getLiteral(), new AllomorphHY())
-    .set(PSPP.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphPPX())
-    .set(PSTT.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphTTX())
-    .set(PSKK.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphKKX())
-    .set(PSHH.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphHHX())
+    .set(new PSP().final.getLiteral(), new AllomorphP())
+    .set(new PST().final.getLiteral(), new AllomorphT())
+    .set(new PSK().final.getLiteral(), new AllomorphK())
+    .set(new PSH().final.getLiteral(), new AllomorphH())
+    .set(new PSPP().final.getLiteral(), new AllomorphPP())
+    .set(new PSTT().final.getLiteral(), new AllomorphTT())
+    .set(new PSKK().final.getLiteral(), new AllomorphKK())
+    .set(new PSHH().final.getLiteral(), new AllomorphHH())
+    .set(new PSP().final.getLiteral() + new PSF().checkedTonal.getLiteral(), new AllomorphPF())
+    .set(new PST().final.getLiteral() + new PSF().checkedTonal.getLiteral(), new AllomorphTF())
+    .set(new PSK().final.getLiteral() + new PSF().checkedTonal.getLiteral(), new AllomorphKF())
+    .set(new PSH().final.getLiteral() + new PSF().checkedTonal.getLiteral(), new AllomorphHF())
+    .set(new PSPP().final.getLiteral() + new PSW().checkedTonal.getLiteral(), new AllomorphPPW())
+    .set(new PSTT().final.getLiteral() + new PSW().checkedTonal.getLiteral(), new AllomorphTTW())
+    .set(new PSKK().final.getLiteral() + new PSW().checkedTonal.getLiteral(), new AllomorphKKW())
+    .set(new PSHH().final.getLiteral() + new PSW().checkedTonal.getLiteral(), new AllomorphHHW())
+    .set(new PSH().final.getLiteral() + new PSY().checkedTonal.getLiteral(), new AllomorphHY())
+    .set(new PSPP().final.getLiteral() + new PSX().checkedTonal.getLiteral(), new AllomorphPPX())
+    .set(new PSTT().final.getLiteral() + new PSX().checkedTonal.getLiteral(), new AllomorphTTX())
+    .set(new PSKK().final.getLiteral() + new PSX().checkedTonal.getLiteral(), new AllomorphKKX())
+    .set(new PSHH().final.getLiteral() + new PSX().checkedTonal.getLiteral(), new AllomorphHHX())
 
 export const listOfUncombinedFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set(PSW.freeTonal.getLiteral(), new AllomorphW())
-    .set(PSZS.freeTonal.getLiteral(), new AllomorphZS())
-    .set(PSX.freeTonal.getLiteral(), new AllomorphX())
-    .set(PSY.freeTonal.getLiteral(), new AllomorphY())
+    .set(new PSW().freeTonal.getLiteral(), new AllomorphW())
+    .set(new PSZS().freeTonal.getLiteral(), new AllomorphZS())
+    .set(new PSX().freeTonal.getLiteral(), new AllomorphX())
+    .set(new PSY().freeTonal.getLiteral(), new AllomorphY())
 
 export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map()
-    .set(PSP.final.getLiteral(), new AllomorphP())
-    .set(PST.final.getLiteral(), new AllomorphT())
-    .set(PSK.final.getLiteral(), new AllomorphK())
-    .set(PSH.final.getLiteral(), new AllomorphH())
-    .set(PSPP.final.getLiteral(), new AllomorphPP())
-    .set(PSTT.final.getLiteral(), new AllomorphTT())
-    .set(PSKK.final.getLiteral(), new AllomorphKK())
-    .set(PSHH.final.getLiteral(), new AllomorphHH())
+    .set(new PSP().final.getLiteral(), new AllomorphP())
+    .set(new PST().final.getLiteral(), new AllomorphT())
+    .set(new PSK().final.getLiteral(), new AllomorphK())
+    .set(new PSH().final.getLiteral(), new AllomorphH())
+    .set(new PSPP().final.getLiteral(), new AllomorphPP())
+    .set(new PSTT().final.getLiteral(), new AllomorphTT())
+    .set(new PSKK().final.getLiteral(), new AllomorphKK())
+    .set(new PSHH().final.getLiteral(), new AllomorphHH())
 
 export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
-    .set(PSCS.freeTonal.getLiteral(), [new FreeTonalY()])
-    .set(PSW.freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
-    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCS, new FreeTonalX()])
-    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCS(), new FreeTonalX()])
-    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalCS(), new ZeroTonal()])
-    .set(PSZZS.freeTonal.getLiteral(), [])
-    .set(PSX.freeTonal.getLiteral(), [])
-    .set(PSY.freeTonal.getLiteral(), [new TonalW()])
+    .set(new PSCS().freeTonal.getLiteral(), [new FreeTonalY()])
+    .set(new PSW().freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
+    .set(new PSXX().freeTonal.getLiteral(), [new TonalZS(), new TonalCS, new FreeTonalX()])
+    .set(new PSXXX().freeTonal.getLiteral(), [new TonalZS(), new TonalCS(), new FreeTonalX()])
+    .set(new PSZS().freeTonal.getLiteral(), [new FreeTonalX(), new TonalCS(), new ZeroTonal()])
+    .set(new PSZZS().freeTonal.getLiteral(), [])
+    .set(new PSX().freeTonal.getLiteral(), [])
+    .set(new PSY().freeTonal.getLiteral(), [new TonalW()])
     .set('zero', [new FreeTonalY()])
