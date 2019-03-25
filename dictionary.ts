@@ -37,6 +37,7 @@ export let dictionary: IndexedDictionary = {
     dienwnauy: ['電腦'],
     diurhh: ['着'],
     dngy: ['返'],
+    durhh: ['灱'],
     ex: ['个'],
     ewka: ['下脚'],
     giax: ['夯'],

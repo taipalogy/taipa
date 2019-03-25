@@ -26,22 +26,24 @@ export abstract class MorphemeMaker {
             let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
             if(syllabary.list[m].length == min) {
                 for(let n = 0; n < min; n++) {
-                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
-                        if(n+1 == min && min > matchedLen) {
-                            // to make sure it is longer than previous patterns
-                            // last letter matched for the pattern
-                            matchedLen = min;
-                            // copy the matched letters
-                            for(let q = 0; q < matchedLen; q++) {
-                                mp.letters[q] = letters[beginOfSyllable+q];
+                    if(syllabary.list[m][n] != undefined) {
+                        if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+                            if(n+1 == min && min > matchedLen) {
+                                // to make sure it is longer than previous patterns
+                                // last letter matched for the pattern
+                                matchedLen = min;
+                                // copy the matched letters
+                                for(let q = 0; q < matchedLen; q++) {
+                                    mp.letters[q] = letters[beginOfSyllable+q];
+                                }
+                                
+                                mp.pattern = syllabary.list[m];
+                                //console.log(syllabary.list[m])
+                                //console.log(mp.letters)
                             }
-                            
-                            mp.pattern = syllabary.list[m];
-                            //console.log(syllabary.list[m])
-                            //console.log(mp.letters)
-                        }
-                    } else {
-                        break;
+                        } else {
+                            break;
+                        }    
                     }
                 }
             }

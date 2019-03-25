@@ -33,20 +33,6 @@ class RomanizedKanaGenerator {
 }
 
 class ClientOfGenerator {
-    /*
-    private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
-        if(this.isFinalConsonant(ls[index])) {
-            let k = index
-            while(k < ls.length) {
-                if(this.isFinalConsonant(ls[k])) {
-                    sounds.push(ls[k] + '.finalConsonant')
-                }
-                k++
-            }            
-        } 
-        return sounds
-    }
-*/
     private analyzeAfterInitialConsonants(ls: string[], sounds: string[], index: number): string[] {
         if(this.isSemivowel(ls[index])) {
             sounds.push(ls[index] + '.semivowel')
@@ -99,7 +85,11 @@ class ClientOfGenerator {
             let clasName = entry[i].slice(0, n)
             let position = entry[i].slice(n+1)
             //console.debug(entry + ' ' + clasName + ' ' + position)
-            ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
+            let o = new Object()
+            o = Object.assign({}, letterClass.get(clasName))
+            if(o.hasOwnProperty(position)) {
+                ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
+            }
         }
         return ret
     }
