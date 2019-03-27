@@ -1,9 +1,8 @@
-
-
-
 import { Character, characters } from './character';
 import { AlphabeticLetter, AlphabeticGrapheme, MatchedSequence } from './grapheme';
 import { ILetters } from './system';
+import { Result, NoSuccess, Success } from './result';
+import { Debug } from './debug'
 
 //------------------------------------------------------------------------------
 //  Grapheme Maker
@@ -78,8 +77,10 @@ export class GraphemeMaker {
         return ms
     }
 
-    make(characters: Array<Character>): Array<AlphabeticGrapheme> {
+    make(characters: Array<Character>) {
         let graphemes: Array<AlphabeticGrapheme> = new Array();
+        let result: Result
+        let debug: Debug = new Debug()
         //console.log("metadata letter array length %d. ", letters.length);
         //console.log(characters);
         let beginOfLetter: number = 0;
@@ -110,10 +111,11 @@ export class GraphemeMaker {
 
             if(letters.length == 0) {
                 for(let j in characters) {
-                    console.debug(characters[j])
+                    debug.messages.push(`${characters[j].character}`)
                 }
-                console.debug("i: %d. characters[i].symbol: %s", i, characters[i].character);
-                console.error("something wrong. length of letters is zero");
+                debug.messages.push(`i: ${i}. characters[i].character: ${characters[i].character}`)
+                result = new NoSuccess()
+                result.messages.push('length of letters is zero')
             } else if(letters.length == 1) {
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d. ls[0]:", i, ls[0].characters.length, ls[0])
                 //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
@@ -125,11 +127,11 @@ export class GraphemeMaker {
                     let gr = new AlphabeticGrapheme(l);
                     graphemes.push(gr);
                 }
-
+                result = new Success()
             }
         }
         //console.log("metadata letter array length %d", letters.length);
-        return graphemes;
+        return { 'graphemes': graphemes, 'result': result, 'debug': debug };
     }
 }
 

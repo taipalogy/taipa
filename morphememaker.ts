@@ -1,8 +1,8 @@
-
 import { AlphabeticGrapheme, AlphabeticLetter } from './grapheme'
 import { CombinedMorpheme, TonalCombinedMorpheme, ToneSandhiSyllable, MatchedPattern, ToneSandhiRootMorpheme, Syllable, CombiningFormMorpheme } from './morpheme'
 import { ListOfLexicalRoots } from './lexicalroot';
 import { Syllabary, Sound } from './system';
+import { Result, NoSuccess, Success } from './result';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -61,10 +61,10 @@ export abstract class MorphemeMaker {
     }
 
     make(letters: Array<AlphabeticLetter>, syllabary: Syllabary) {
-
         // a word can be made of multiple syllables
         let morphemes = this.createArray()
         let arraysOfSounds: Array<Sound[]> = new Array()
+        let result: Result = new NoSuccess()
         
         //console.log(letters);
         let beginOfSyllable: number = 0;
@@ -77,7 +77,7 @@ export abstract class MorphemeMaker {
                 msp = this.getMatchedSyllablePattern(letters, beginOfSyllable, syllabary);
 
                 if(msp.matchedLength == 0) {
-                    console.warn('no matched syllables found. the syllable needs to be added?')
+                    result.messages.push('no matched syllables found. the syllable might need to be added')
                 }
 
                 //console.log("matchedLen: %d", msp.matchedLength);
@@ -102,17 +102,18 @@ export abstract class MorphemeMaker {
             }
             
             if(morphemes.length == 0) {
-                console.info("nothing matched");
+                result.messages.push('nothing matched')
             } else if(morphemes.length >= 1) {
-
                 if(msp == null) break
 
                 if(msp.matchedLength > 0) {
                     i += beginOfSyllable-i-1;
                 }
+
             }
         }
-        return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes }
+        if(result.messages.length == 0) result = new Success()
+        return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes, 'result': result }
     }
 }
 

@@ -245,10 +245,10 @@ class ClientOfGenerator {
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let gs = turner.turnIntoGraphemes(strs[i])
+            let output = turner.turnIntoGraphemes(strs[i])
             let ls: string[] = []
-            for(let j in gs) {
-                ls.push(gs[j].letter.literal)
+            for(let j in output.graphemes) {
+                ls.push(output.graphemes[j].letter.literal)
             }
             
             let sounds: string[] = []

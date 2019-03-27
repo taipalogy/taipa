@@ -15,7 +15,8 @@ export class KanaTurner extends Turner {
     }
 
     turnIntoMorphemes(str: string) {
-        let graphemes = this.turnIntoGraphemes(str)
+        let output = this.turnIntoGraphemes(str)
+        let graphemes = output.graphemes
 
         // Morpheme Maker
         let kimm = new KanaInputingMorphemeMaker(graphemes);

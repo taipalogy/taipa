@@ -172,10 +172,12 @@ export class TonalTurner extends Turner {
     turnIntoMorphemes(gs: Array<AlphabeticGrapheme>)
     turnIntoMorphemes(x) {
         let graphemes
+        let output
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             graphemes = this.turnIntoGraphemes(x)
+             output = this.turnIntoGraphemes(x)
+             graphemes = output.graphemes
         }
 
         // Morpheme Maker
@@ -198,7 +200,8 @@ export class TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        let graphemes = gm.makeGraphemes();
+        let output = gm.makeGraphemes();
+        let graphemes = output.graphemes
 
         // Morpheme Maker
         let tsmm = new ToneSandhiRootMorphemeMaker(graphemes);
@@ -223,7 +226,8 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        let graphemes = gm.makeGraphemes();
+        let output = gm.makeGraphemes();
+        let graphemes = output.graphemes
 
         // Morpheme Maker
         let tsmm = new CombiningFormMorphemeMaker(graphemes);
