@@ -10,7 +10,6 @@ if(argc.length == 1) {
     const input = argc[0];
 
     let cli = new Client()
-
     console.info(cli.output(input))
 
     process.exit(1);

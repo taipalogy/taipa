@@ -81,6 +81,7 @@ export let dictionary: IndexedDictionary = {
     zaucszeng: ['走真'],
     zengzssinx: ['精神'],
     zimcsmay: ['今仔'],
+    zngcsmay: ['今仔'],
     zoannzs: ['濺'],
     zoezs: ['多'],
     zunzs: ['拵'],
