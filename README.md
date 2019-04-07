@@ -4,7 +4,7 @@ This parser consists of the following functions:
 
 * lemmatizaer
 * stemmer
-* morphological analyzer
+* morpheme-based morphological analyzer
 * graphemic analyzer
 * input method
 * dependency parser

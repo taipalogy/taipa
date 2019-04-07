@@ -85,9 +85,12 @@ export class Client {
     }
 
     processOneToken(str: string) {
-        //let al = new AnalyzerLoader()
-        //al.load(Kana)
-        //console.log(al.analyzers[0].turner.turnIntoMorphemes(str))
+        let al = new AnalyzerLoader()
+        al.load(Kana)
+        let obj = al.analyzers[0].turner.getMorphologicalAnalyzingResults(str)
+        if(obj.result.successful == true) {
+            console.log('>true')
+        }
 
         let doc: Document = new Document();
         let turner = new TonalTurner()

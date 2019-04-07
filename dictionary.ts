@@ -66,7 +66,7 @@ export let dictionary: IndexedDictionary = {
     pincssux: ['品詞'],
     qaucszanycah: ['九層 cah'],
     qianny: ['子'],
-    qinzsnacsjitt: ['今仔日'],
+    qinzsnacsjitt: ['今仔日', '今日'],
     qurzssa: ['高砂'],
     sia: ['賒'],
     siay: ['寫'],

@@ -186,7 +186,9 @@ export class TonalTurner extends Turner {
         this.arraysOfSounds = obj.arraysOfSounds
         return obj.morphemes
     }
-    
+
+    getMorphologicalAnalyzingResults() {}
+
     turnIntoLexemes(str: string) {
         let morphemes = this.turnIntoMorphemes(str)
 
