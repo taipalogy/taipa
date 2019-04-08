@@ -3,44 +3,39 @@ import { KanaInputingMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
 import { Turner } from '../system'
 import { AlphabeticGrapheme } from '../grapheme'
+import { NoSuccess } from '../result';
 
 //------------------------------------------------------------------------------
 //  Kana Turner
 //------------------------------------------------------------------------------
 
 export class KanaTurner extends Turner {
-    turnIntoGraphemes(str: string) {
+    getDataOfGraphemicAnalysis(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfKana);
         return gm.makeGraphemes();
     }
 
-    turnIntoMorphemes(str: string) {
-        let output = this.turnIntoGraphemes(str)
-        let graphemes = output.graphemes
-
-        // Morpheme Maker
-        let kimm = new KanaInputingMorphemeMaker(graphemes);
-        return kimm.makeInputingMorphemes();
-    }
-
-    test() {}
-
-    getMorphologicalAnalyzingResults(str: string)
-    getMorphologicalAnalyzingResults(gs: Array<AlphabeticGrapheme>)
-    getMorphologicalAnalyzingResults(x) {
+    getDataOfMorphologicalAnalysis(str: string)
+    getDataOfMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>)
+    getDataOfMorphologicalAnalysis(x) {
         let graphemes
-        let output
+        let g_data
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             output = this.turnIntoGraphemes(x)
-             graphemes = output.graphemes
+             g_data = this.getDataOfGraphemicAnalysis(x)
+             if(g_data instanceof NoSuccess) {
+                return g_data
+            }
+            graphemes = g_data.graphemes
         }
 
         // Morpheme Maker
         let kimm = new KanaInputingMorphemeMaker(graphemes);
-        let results = kimm.makeInputingMorphemes();
-        return results
+        let m_results = kimm.makeInputingMorphemes();
+        return m_results
     }
+
+    getDataOfLexcalAnalysis() {}
 }

@@ -5,6 +5,7 @@ import { ToneSandhiRootMorphemeMaker, TonalCombinedMorphemeMaker, CombiningFormM
 import { Tonal, Sound, Turner } from './system';
 import { lowerLettersOfTonal } from './version2';
 import { AlphabeticGrapheme } from './grapheme';
+import { NoSuccess, Success } from './result';
 
 //------------------------------------------------------------------------------
 //  Lexeme Maker
@@ -162,35 +163,40 @@ export class DummyLexemeMaker {
 export class TonalTurner extends Turner {
     arraysOfSounds: Array<Sound[]> = new Array()
 
-    turnIntoGraphemes(str: string) {
+    getDataOfGraphemicAnalysis(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
     }
 
-    turnIntoMorphemes(str: string);
-    turnIntoMorphemes(gs: Array<AlphabeticGrapheme>)
-    turnIntoMorphemes(x) {
+    getDataOfMorphologicalAnalysis(str: string)
+    getDataOfMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>)
+    getDataOfMorphologicalAnalysis(x) {
         let graphemes
-        let output
+        let g_data
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             output = this.turnIntoGraphemes(x)
-             graphemes = output.graphemes
+             g_data = this.getDataOfGraphemicAnalysis(x)
+             if(g_data.result instanceof NoSuccess) {
+                 return g_data
+             }
+             graphemes = g_data.graphemes
         }
 
         // Morpheme Maker
         let tsimm = new TonalCombinedMorphemeMaker(graphemes);
-        let obj = tsimm.makeCombinedMorphemes();
-        this.arraysOfSounds = obj.arraysOfSounds
-        return obj.morphemes
+        let m_data = tsimm.makeCombinedMorphemes();
+        this.arraysOfSounds = m_data.arraysOfSounds
+        return m_data
     }
 
-    getMorphologicalAnalyzingResults() {}
-
-    turnIntoLexemes(str: string) {
-        let morphemes = this.turnIntoMorphemes(str)
+    getDataOfLexicalAnalysis(str: string) {
+        let m_data = this.getDataOfMorphologicalAnalysis(str)
+        let morphemes
+        if(m_data.result instanceof Success) {
+            morphemes = m_data.morphemes
+        }
 
         // Lexeme Maker
         let tsilm = new TonalLemmaLexemeMaker(morphemes);

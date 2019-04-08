@@ -87,14 +87,14 @@ export class Client {
     processOneToken(str: string) {
         let al = new AnalyzerLoader()
         al.load(Kana)
-        let obj = al.analyzers[0].turner.getMorphologicalAnalyzingResults(str)
+        let obj = al.analyzers[0].turner.getDataOfMorphologicalAnalysis(str)
         if(obj.result.successful == true) {
             console.log('>true')
         }
 
         let doc: Document = new Document();
         let turner = new TonalTurner()
-        doc.lemmaLexemes = turner.turnIntoLexemes(str.match(/\w+/g)[0])
+        doc.lemmaLexemes = turner.getDataOfLexicalAnalysis(str.match(/\w+/g)[0])
 
         // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
         doc.combinedMorphemes = turner.arraysOfSounds
@@ -110,7 +110,7 @@ export class Client {
         let lexemes: Array<TonalLemmaLexeme> = new Array();
         let turner = new TonalTurner()
         for(let key in tokens) {
-            lexemes.push(turner.turnIntoLexemes(tokens[key])[0])
+            lexemes.push(turner.getDataOfLexicalAnalysis(tokens[key])[0])
         }
 
         // can lexemes be replaced by a phraseme?

@@ -126,6 +126,5 @@ export interface ILetters {
 //------------------------------------------------------------------------------
 
 export abstract class Turner {
-    abstract turnIntoMorphemes(str: string)
-    abstract getMorphologicalAnalyzingResults(x)
+    abstract getDataOfMorphologicalAnalysis(x)
 }
