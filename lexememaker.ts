@@ -1,5 +1,5 @@
 import { TonalCombinedMorpheme, ToneSandhiSyllable, ToneSandhiRootMorpheme, Syllable, Morpheme } from './morpheme'
-import { TonalLemmaLexeme, ToneSandhiInflectionLexeme, TonalWord, DummyLexeme, Word, ToneSandhiLexeme, SandhiFormLexeme } from './lexeme'
+import { TonalLemmaLexeme, ToneSandhiInflectionLexeme, TonalWord, DummyLexeme, Word, TonalLexeme, SandhiFormLexeme } from './lexeme'
 import { GraphemeMaker } from './graphememaker'
 import { ToneSandhiRootMorphemeMaker, TonalCombinedMorphemeMaker, CombiningFormMorphemeMaker } from './morphememaker'
 import { Tonal, Sound, Turner } from './system';
@@ -32,7 +32,7 @@ abstract class LexemeMaker {
 }
 
 abstract class InflectiveLexemeMaker extends LexemeMaker {
-    abstract postprocess(tsl: ToneSandhiLexeme)
+    abstract postprocess(tsl: TonalLexeme)
 }
 
 export abstract class LemmaLexemeMaker extends LexemeMaker {

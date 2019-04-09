@@ -12,6 +12,7 @@ import { Tonalless } from './tonalless/init'
 import { Kana } from './kana/init';
 import { Hangul } from './hangul/init'
 import { KanaTurner } from './kana/turner';
+import { HiraganaAndKatakana } from './kana/kana';
 
 export class Document {
     lemmaLexemes: Array<TonalLemmaLexeme> = new Array();
@@ -87,10 +88,19 @@ export class Client {
     processOneToken(str: string) {
         let al = new AnalyzerLoader()
         al.load(Kana)
-        let obj = al.analyzers[0].turner.getDataOfMorphologicalAnalysis(str)
-        if(obj.result.successful == true) {
-            console.log('>true')
+        let objM = al.analyzers[0].turner.getDataOfMorphologicalAnalysis(str)
+        let kanas = ''
+        if(objM.result.successful == true) {
+            let len = objM.morphemes.length
+            for(let e of objM.morphemes) {
+                let ks = HiraganaAndKatakana.get(e.syllable.literal)
+                if(ks != undefined && ks[0] != undefined) {
+                    // the kana may be absent due to various reasons, so we check against ks[0]
+                    kanas += ks[0]
+                }
+            }
         }
+        console.log('>' + kanas)
 
         let doc: Document = new Document();
         let turner = new TonalTurner()

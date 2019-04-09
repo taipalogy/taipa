@@ -1,9 +1,9 @@
 import { GraphemeMaker } from '../graphememaker'
-import { KanaInputingMorphemeMaker } from './morpheme'
+import { KanaLemmaMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
 import { Turner } from '../system'
 import { AlphabeticGrapheme } from '../grapheme'
-import { NoSuccess } from '../result';
+import { NoSuccess, Success } from '../result';
 
 //------------------------------------------------------------------------------
 //  Kana Turner
@@ -32,10 +32,10 @@ export class KanaTurner extends Turner {
         }
 
         // Morpheme Maker
-        let kimm = new KanaInputingMorphemeMaker(graphemes);
+        let kimm = new KanaLemmaMorphemeMaker(graphemes);
         let m_results = kimm.makeInputingMorphemes();
         return m_results
     }
 
-    getDataOfLexcalAnalysis() {}
+    getDataOfLexicalAnalysis(str: string) {}
 }

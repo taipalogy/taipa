@@ -7,11 +7,13 @@ import { RomanizedKana } from './kana'
 //  Kana Syllable
 //------------------------------------------------------------------------------
 
+export class KanaSyllable  extends Syllable {}
+
 //------------------------------------------------------------------------------
 //  Kana Inputing Morpheme
 //------------------------------------------------------------------------------
 
-export class KanaInputingMorpheme {
+export class KanaLemmaMorpheme {
     syllable: Syllable;
 
     constructor(syllable: Syllable) {
@@ -23,7 +25,7 @@ export class KanaInputingMorpheme {
 //  Kana Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class KanaInputingMorphemeMaker extends MorphemeMaker {
+export class KanaLemmaMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
     constructor(gs: Array<AlphabeticGrapheme>) {
@@ -32,9 +34,9 @@ export class KanaInputingMorphemeMaker extends MorphemeMaker {
         this.graphemes = gs;
     }
 
-    create(syllable: Syllable) { return new KanaInputingMorpheme(syllable) }
+    create(syllable: Syllable) { return new KanaLemmaMorpheme(syllable) }
 
-    createArray() { return new Array<KanaInputingMorpheme>() }
+    createArray() { return new Array<KanaLemmaMorpheme>() }
 
     makeInputingMorphemes() {
         return this.make(this.preprocess(), new RomanizedKana());

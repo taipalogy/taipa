@@ -1,6 +1,7 @@
 
 import { ToneSandhiSyllable, TonalAffix, TonalCombinedMorpheme, ToneSandhiRootMorpheme, 
     CombiningFormMorpheme,
+    Syllable,
     } from './morpheme';
 import { FreeAllomorph, CheckedAllomorph, Allomorph, } from './system'
 import { freeAllomorphUncombiningRules } from './version2'
@@ -113,16 +114,13 @@ export class Lexeme {
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-class TonalLessLexeme extends Lexeme {}
+class TonallessLexeme extends Lexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneSandhiLexeme extends Lexeme {
-
-}
-
+export class TonalLexeme extends Lexeme {}
 
 //------------------------------------------------------------------------------
 //  Tonal Lemma Lexeme
@@ -224,7 +222,7 @@ export class TonalLemmaLexeme {
 //------------------------------------------------------------------------------
 
 
-export class ToneSandhiInflectionLexeme extends ToneSandhiLexeme {
+export class ToneSandhiInflectionLexeme extends TonalLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
     word: TonalWord
@@ -309,25 +307,7 @@ export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
 
 export class Word {
     literal: string = '';
-}
-
-//------------------------------------------------------------------------------
-//  Tone Sandhi Word
-//------------------------------------------------------------------------------
-
-export class TonalWord extends Word {
-    syllables: Array<ToneSandhiSyllable>;
-
-    constructor(syllables?: Array<ToneSandhiSyllable>) {
-        super();
-        this.syllables = new Array();
-        if(syllables != undefined) {
-            let len = syllables.length;
-            for(var i = 0; i < len; i++) {
-                this.pushSyllable(syllables[i]);
-            }
-        }
-    }
+    syllables: Array<Syllable>
 
     popSyllable() {
         // trim the literal
@@ -338,10 +318,28 @@ export class TonalWord extends Word {
         this.syllables = this.syllables.slice(0, this.syllables.length-1);
     }
 
-    pushSyllable(tss: ToneSandhiSyllable) {
+    pushSyllable(tss: Syllable) {
         this.syllables.push(tss);
         // concatenate the new syllable
         this.literal += tss.literal;
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Word
+//------------------------------------------------------------------------------
+
+export class TonalWord extends Word {
+    syllables: Array<ToneSandhiSyllable>;
+    constructor(syllables?: Array<ToneSandhiSyllable>) {
+        super();
+        this.syllables = new Array<ToneSandhiSyllable>();
+        if(syllables != undefined) {
+            let len = syllables.length;
+            for(var i = 0; i < len; i++) {
+                this.pushSyllable(syllables[i]);
+            }
+        }
     }
 }
 

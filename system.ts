@@ -126,5 +126,6 @@ export interface ILetters {
 //------------------------------------------------------------------------------
 
 export abstract class Turner {
-    abstract getDataOfMorphologicalAnalysis(x)
+    abstract getDataOfMorphologicalAnalysis(x: any)
+    abstract getDataOfLexicalAnalysis(str: string)
 }
