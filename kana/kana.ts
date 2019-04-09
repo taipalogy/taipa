@@ -1,5 +1,5 @@
 import { Syllabary, Sound, SetOfSounds, ILetters } from '../system'
-import { KanaTurner } from './turner';
+import { KanaAnalyser } from './analyser';
 import { characters } from '../character'
 import { AlphabeticLetter } from '../grapheme'
 
@@ -98,7 +98,7 @@ class ClientOfGenerator {
         let rkg = new RomanizedKanaGenerator()
         let strs: Array<string> = rkg.generate(beginning) // retrieve all needed syllables beginning with begginning
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let turner = new KanaTurner()
+        let turner = new KanaAnalyser()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {

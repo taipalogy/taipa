@@ -1,5 +1,5 @@
 
-import { TonalTurner } from './lexememaker'
+import { TonalAnalyser } from './lexememaker'
 import { TonalLemmaLexeme, ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
@@ -7,11 +7,8 @@ import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
 import { Sound } from './system';
 
-import { Analyzer, AnalyzerLoader, Tonal } from './analyzer'
-import { Tonalless } from './tonalless/init'
+import { AnalyzerLoader } from './analyser'
 import { Kana } from './kana/init';
-import { Hangul } from './hangul/init'
-import { KanaTurner } from './kana/turner';
 import { HiraganaAndKatakana } from './kana/kana';
 
 export class Document {
@@ -88,7 +85,7 @@ export class Client {
     processOneToken(str: string) {
         let al = new AnalyzerLoader()
         al.load(Kana)
-        let objM = al.analyzers[0].turner.getDataOfMorphologicalAnalysis(str)
+        let objM = al.analyzers[0].analyser.getDataOfMorphologicalAnalysis(str)
         let kanas = ''
         if(objM.result.successful == true) {
             let len = objM.morphemes.length
@@ -103,7 +100,7 @@ export class Client {
         console.log('>' + kanas)
 
         let doc: Document = new Document();
-        let turner = new TonalTurner()
+        let turner = new TonalAnalyser()
         doc.lemmaLexemes = turner.getDataOfLexicalAnalysis(str.match(/\w+/g)[0])
 
         // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
@@ -118,7 +115,7 @@ export class Client {
         let tokens = str.match(/\w+/g);
 
         let lexemes: Array<TonalLemmaLexeme> = new Array();
-        let turner = new TonalTurner()
+        let turner = new TonalAnalyser()
         for(let key in tokens) {
             lexemes.push(turner.getDataOfLexicalAnalysis(tokens[key])[0])
         }

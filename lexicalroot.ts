@@ -14,7 +14,7 @@ import { SetOfMaterLectionis,
     combiningRules,
     letterClass,
     } from './version2'
-import { TonalTurner } from './lexememaker';
+import { TonalAnalyser } from './lexememaker';
 
 //------------------------------------------------------------------------------
 //  Lexical Root
@@ -240,7 +240,7 @@ class ClientOfGenerator {
         let lrg = new LexicalRootGenerator()
         let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with beggining
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let turner = new TonalTurner()
+        let turner = new TonalAnalyser()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {

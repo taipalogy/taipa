@@ -1,4 +1,4 @@
-import { Turner } from "./system";
+import { Analyser } from "./system";
 
 type Class = { new(...args: any[]): any; };
 
@@ -7,7 +7,7 @@ function createInstance<A extends Analyzer>(c: new () => A): A {
 }
 
 export class Analyzer {
-    turner: Turner
+    analyser: Analyser
 }
 
 export class Tonal extends Analyzer {}

@@ -1,7 +1,7 @@
 import { GraphemeMaker } from '../graphememaker'
 import { KanaLemmaMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
-import { Turner } from '../system'
+import { Analyser } from '../system'
 import { AlphabeticGrapheme } from '../grapheme'
 import { NoSuccess, Success } from '../result';
 
@@ -9,7 +9,7 @@ import { NoSuccess, Success } from '../result';
 //  Kana Turner
 //------------------------------------------------------------------------------
 
-export class KanaTurner extends Turner {
+export class KanaAnalyser extends Analyser {
     getDataOfGraphemicAnalysis(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfKana);
