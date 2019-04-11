@@ -92,7 +92,7 @@ export class Client {
             for(let e of objM.morphemes) {
                 let ks = HiraganaAndKatakana.get(e.syllable.literal)
                 if(ks != undefined && ks[0] != undefined) {
-                    // the kana may be absent due to various reasons, so we check against ks[0]
+                    // in case the kana is absent, we check against ks[0]
                     kanas += ks[0]
                 }
             }

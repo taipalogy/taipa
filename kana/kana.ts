@@ -25,6 +25,8 @@ class RomanizedKanaGenerator {
                 strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
                 // consonant germination
                 strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
+                // sokuon
+                strs.push(list_of_romanized_kana[i] + 'k')
             }
         }
         //for(let i in strs) console.info(strs[i])
@@ -33,19 +35,38 @@ class RomanizedKanaGenerator {
 }
 
 class ClientOfGenerator {
+    private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
+        if(this.isFinalConsonant(ls[index])) {
+            sounds.push(ls[index] + '.finalConsonant')
+        }
+        return sounds
+    }
+
     private analyzeAfterInitialConsonants(ls: string[], sounds: string[], index: number): string[] {
-        if(this.isSemivowel(ls[index])) {
+        let sbool = this.isSemivowel(ls[index])
+        let vbool = this.isVowel(ls[index])
+        if(sbool) {
             sounds.push(ls[index] + '.semivowel')
             if(this.isVowel(ls[index+1])) {
                 sounds.push(ls[index+1] + '.vowel')
             }
-        } else if(this.isVowel(ls[index])) {
+        } else if(vbool) {
             let k = index
             while(k < ls.length) {
                 if(this.isVowel(ls[k])) {
                     sounds.push(ls[k] + '.vowel')
                 }
                 k++
+            }
+        }
+
+        if(sbool || vbool) {
+            if(ls.length > sounds.length) {                
+                if(ls.length > sounds.length+1 && this.isGerminatedConsonant(ls[sounds.length]) && this.isInitialConsonant(ls[sounds.length+1])) {
+                    sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
+                } else if(ls.length == sounds.length+1 && this.isGerminatedConsonant(ls[sounds.length])) {
+                    sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
+                }
             }
         }
 
@@ -58,20 +79,26 @@ class ClientOfGenerator {
         return false
     }
 
-    private isVowel(str: string) {
-        if(str.search(new RegExp(new SetOfVowels().toString())) == 0) return true
-
-        return false
-    }
-
     private isSemivowel(str: string) {
         if(str.search(new RegExp(new SetOfSemivowels().toString())) == 0) return true
 
         return false
     }
 
+    private isVowel(str: string) {
+        if(str.search(new RegExp(new SetOfVowels().toString())) == 0) return true
+
+        return false
+    }
+
     private isGerminatedConsonant(str: string) {
         if(str.search(new RegExp(new SetOfGerminatedConsonants().toString())) == 0) return true
+
+        return false
+    }
+
+    private isFinalConsonant(str: string) {
+        if(str.search(new RegExp(new SetOfFinalConsonants().toString())) == 0) return true
 
         return false
     }
@@ -115,17 +142,17 @@ class ClientOfGenerator {
             // pass 0 as index to indicate it has no leading consonants
             sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
 
-            if(this.isGerminatedConsonant(ls[0]) && ls.length > 1 && this.isInitialConsonant(ls[1])) {
-                sounds.push(ls[0] + '.germinatedConsonant')
-                sounds.push(ls[1] + '.initialConsonant')
-                if(ls.length > 2) sounds = this.analyzeAfterInitialConsonants(ls, sounds, 2)
-            } else if(this.isInitialConsonant(ls[0])) {
+            if(this.isInitialConsonant(ls[0]) && ls.length > 1) {
                 // analyze initial consonants
                 sounds.push(ls[0] + '.initialConsonant')
                 if(this.isVowel(ls[1]) || this.isSemivowel(ls[1])) {
                     // consonants followed by vowels
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
                 }
+            } else if(this.isGerminatedConsonant(ls[0]) && ls.length > 1 && this.isInitialConsonant(ls[1])) {
+                sounds.push(ls[0] + '.germinatedConsonant')
+                sounds.push(ls[1] + '.initialConsonant')
+                if(ls.length > 2) sounds = this.analyzeAfterInitialConsonants(ls, sounds, 2)
             }
 
             arrayOfSounds.push(sounds)
@@ -215,7 +242,12 @@ class VowelI extends Vowel {characters = [characters.get('i')]}
 class VowelO extends Vowel {characters = [characters.get('o')]}
 class VowelU extends Vowel {characters = [characters.get('u')]}
 
+class FinalConsonantK extends FinalConsonant {characters = [characters.get('k')]}
+class FinalConsonantH extends FinalConsonant {characters = [characters.get('h')]}
 class FinalConsonantN extends FinalConsonant {characters = [characters.get('n')]}
+class FinalConsonantP extends FinalConsonant {characters = [characters.get('p')]}
+class FinalConsonantS extends FinalConsonant {characters = [characters.get('s')]}
+class FinalConsonantT extends FinalConsonant {characters = [characters.get('t')]}
 
 class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
 class GerminatedConsonantC extends GerminatedConsonant {characters = [characters.get('c')]}
@@ -295,6 +327,21 @@ class SetOfSemivowels extends SetOfSounds {
     }
 }
 
+class SetOfFinalConsonants extends SetOfSounds {
+    finalConsonants: Array<FinalConsonant> = new Array()
+    constructor() {
+        super()
+        this.finalConsonants.push(new FinalConsonantK())
+        this.finalConsonants.push(new FinalConsonantP())
+        this.finalConsonants.push(new FinalConsonantS())
+        this.finalConsonants.push(new FinalConsonantT())
+    }
+
+    toString() {
+        return super.toString(this.finalConsonants)
+    }
+}
+
 //------------------------------------------------------------------------------
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
@@ -305,7 +352,7 @@ interface ISound {
     initialConsonant: InitialConsonant
     semivowel: Semivowel
     vowel: Vowel
-    //finalConsonant: FinalConsonant
+    finalConsonant: FinalConsonant
 }
 
 type PartialISound = Partial<ISound>
@@ -374,6 +421,7 @@ class PSK implements PartialISound {
     name = 'k'
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantK()
     initialConsonant: InitialConsonant = new InitialConsonantK()
+    finalConsonant: FinalConsonant = new FinalConsonantK()
 }
 
 class PSL implements PartialISound {
@@ -477,16 +525,16 @@ export const letterClass: Map<string, PartialISound> = new Map()
 //------------------------------------------------------------------------------
 
 export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
-    .set('a', ['あ', 'ア', 'ぁ', 'ァ'])
-    .set('i', [])
-    .set('u', [])
-    .set('e', [])
-    .set('o', [])
-    .set('ka', ['か'])
-    .set('ki', [])
-    .set('ku', [])
-    .set('ke', [])
-    .set('ko', [])
+    .set('a', ['あ', 'ア'])
+    .set('i', ['い', 'イ'])
+    .set('u', ['う', 'ウ'])
+    .set('e', ['え', 'エ'])
+    .set('o', ['お', 'オ'])
+    .set('ka', ['か', 'カ'])
+    .set('ki', ['き', 'キ'])
+    .set('ku', ['く', 'ク'])
+    .set('ke', ['け', 'ケ'])
+    .set('ko', ['こ', 'コ'])
     .set('qa', [])
     .set('qi', [])
     .set('qu', [])
@@ -532,11 +580,11 @@ export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
     .set('wi', [])
     .set('we', [])
     .set('wo', [])
-    .set('ga', [])
-    .set('gi', [])
-    .set('gu', [])
-    .set('ge', [])
-    .set('go', [])
+    .set('ga', ['が', 'ガ'])
+    .set('gi', ['ぎ', 'ギ'])
+    .set('gu', ['ぐ', 'グ'])
+    .set('ge', ['げ', 'ゲ'])
+    .set('go', ['ご', 'ゴ'])
     .set('ja', [])
     .set('ji', [])
     .set('ju', [])
@@ -557,12 +605,12 @@ export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
     .set('po', [])
     .set('va', [])
     .set('vi', [])
-    .set('vu', [])
+    .set('vu', ['ゔ', 'ヴ'])
     .set('ve', [])
     .set('vo', [])
-    .set('kya', [])
-    .set('kyu', [])
-    .set('kyo', [])
+    .set('kya', ['きゃ', 'キャ'])
+    .set('kyu', ['きゅ', 'キュ'])
+    .set('kyo', ['きょ', 'キョ'])
     .set('qya', [])
     .set('qyu', [])
     .set('qyo', [])
@@ -584,9 +632,9 @@ export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
     .set('lya', [])
     .set('lyu', [])
     .set('lyo', [])
-    .set('gya', [])
-    .set('gyu', [])
-    .set('gyo', [])
+    .set('gya', ['ぎゃ', 'ギャ'])
+    .set('gyu', ['ぎゅ', 'ギュ'])
+    .set('gyo', ['ぎょ', 'ギョ'])
     .set('jya', [])
     .set('jyu', [])
     .set('jyo', [])

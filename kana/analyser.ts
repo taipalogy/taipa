@@ -33,8 +33,7 @@ export class KanaAnalyser extends Analyser {
 
         // Morpheme Maker
         let kimm = new KanaLemmaMorphemeMaker(graphemes);
-        let m_results = kimm.makeInputingMorphemes();
-        return m_results
+        return kimm.makeInputingMorphemes();
     }
 
     getDataOfLexicalAnalysis(str: string) {}
