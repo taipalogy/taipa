@@ -2,6 +2,8 @@ import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, ToneSandhiSyllable } from '../morpheme'
 import { MorphemeMaker } from '../morphememaker'
 import { RomanizedKana } from './kana'
+import { Syllabary } from '../system'
+import { AlphabeticLetter } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Kana Syllable
@@ -19,6 +21,10 @@ export class KanaLemmaMorpheme {
     constructor(syllable: Syllable) {
         this.syllable = syllable;
     }
+}
+
+function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
+    return null
 }
 
 //------------------------------------------------------------------------------
@@ -39,6 +45,6 @@ export class KanaLemmaMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<KanaLemmaMorpheme>() }
 
     makeInputingMorphemes() {
-        return this.make(this.preprocess(), new RomanizedKana());
+        return this.make(this.preprocess(), new RomanizedKana(), syllabifyKana);
     }
 }

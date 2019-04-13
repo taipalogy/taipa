@@ -196,8 +196,9 @@ export class TonalAnalyser extends Analyser {
         let morphemes
         if(m_data.result instanceof Success) {
             morphemes = m_data.morphemes
-        }
+        } else morphemes = []
 
+        //console.info(morphemes)
         // Lexeme Maker
         let tsilm = new TonalLemmaLexemeMaker(morphemes);
         return tsilm.makeTonalLemmaLexemes();

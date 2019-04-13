@@ -61,12 +61,8 @@ class ClientOfGenerator {
         }
 
         if(sbool || vbool) {
-            if(ls.length > sounds.length) {                
-                if(ls.length > sounds.length+1 && this.isGerminatedConsonant(ls[sounds.length]) && this.isInitialConsonant(ls[sounds.length+1])) {
-                    sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
-                } else if(ls.length == sounds.length+1 && this.isGerminatedConsonant(ls[sounds.length])) {
-                    sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
-                }
+            if(ls.length > sounds.length) {
+                sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
             }
         }
 
@@ -142,17 +138,18 @@ class ClientOfGenerator {
             // pass 0 as index to indicate it has no leading consonants
             sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
 
-            if(this.isInitialConsonant(ls[0]) && ls.length > 1) {
-                // analyze initial consonants
-                sounds.push(ls[0] + '.initialConsonant')
+            if((this.isInitialConsonant(ls[0]) || this.isGerminatedConsonant(ls[0])) && ls.length > 1) {
+                
                 if(this.isVowel(ls[1]) || this.isSemivowel(ls[1])) {
+                    // analyze initial consonants
+                    sounds.push(ls[0] + '.initialConsonant')
                     // consonants followed by vowels
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
+                } else if(this.isInitialConsonant(ls[1])) {
+                    sounds.push(ls[0] + '.germinatedConsonant')
+                    sounds.push(ls[1] + '.initialConsonant')
+                    if(ls.length > 2) sounds = this.analyzeAfterInitialConsonants(ls, sounds, 2)
                 }
-            } else if(this.isGerminatedConsonant(ls[0]) && ls.length > 1 && this.isInitialConsonant(ls[1])) {
-                sounds.push(ls[0] + '.germinatedConsonant')
-                sounds.push(ls[1] + '.initialConsonant')
-                if(ls.length > 2) sounds = this.analyzeAfterInitialConsonants(ls, sounds, 2)
             }
 
             arrayOfSounds.push(sounds)

@@ -17,40 +17,6 @@ export abstract class MorphemeMaker {
                             // an abstract type of TonalCombinedMorpheme and 
                             // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
 
-    getMatchedSyllablePattern(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
-        // get the longest matched syllable pattern
-        syllabary.setFirstLetter(letters[beginOfSyllable].literal)
-        let matchedLen = 0;
-        let mp = new MatchedPattern();
-        for(let m in syllabary.list) {
-            let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
-            if(syllabary.list[m].length == min) {
-                for(let n = 0; n < min; n++) {
-                    if(syllabary.list[m][n] != undefined) {
-                        if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
-                            if(n+1 == min && min > matchedLen) {
-                                // to make sure it is longer than previous patterns
-                                // last letter matched for the pattern
-                                matchedLen = min;
-                                // copy the matched letters
-                                for(let q = 0; q < matchedLen; q++) {
-                                    mp.letters[q] = letters[beginOfSyllable+q];
-                                }
-                                
-                                mp.pattern = syllabary.list[m];
-                                //console.log(syllabary.list[m])
-                                //console.log(mp.letters)
-                            }
-                        } else {
-                            break;
-                        }    
-                    }
-                }
-            }
-        }
-        return mp;
-    }
-
     preprocess() {
         // unpack graphemes and get letters from them
         let letters: Array<AlphabeticLetter> = new Array();
@@ -60,7 +26,7 @@ export abstract class MorphemeMaker {
         return letters        
     }
 
-    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary) {
+    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
         // a word can be made of multiple syllables
         let morphemes = this.createArray()
         let arraysOfSounds: Array<Sound[]> = new Array()
@@ -74,7 +40,7 @@ export abstract class MorphemeMaker {
             let msp: MatchedPattern;
             if(i-beginOfSyllable == 0) {
                 
-                msp = this.getMatchedSyllablePattern(letters, beginOfSyllable, syllabary);
+                msp = syllabify(letters, beginOfSyllable, syllabary)
 
                 if(msp.matchedLength == 0) {
                     result.messages.push('no matched syllables found. the syllable might need to be added')
@@ -117,6 +83,40 @@ export abstract class MorphemeMaker {
     }
 }
 
+function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
+    // get the longest matched syllable pattern
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    let matchedLen = 0;
+    let mp = new MatchedPattern();
+    for(let m in syllabary.list) {
+        let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
+        if(syllabary.list[m].length == min) {
+            for(let n = 0; n < min; n++) {
+                if(syllabary.list[m][n] != undefined) {
+                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+                        if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
+                            matchedLen = min;
+                            // copy the matched letters
+                            for(let q = 0; q < matchedLen; q++) {
+                                mp.letters[q] = letters[beginOfSyllable+q];
+                            }
+                            
+                            mp.pattern = syllabary.list[m];
+                            //console.log(syllabary.list[m])
+                            //console.log(mp.letters)
+                        }
+                    } else {
+                        break;
+                    }    
+                }
+            }
+        }
+    }
+    return mp;
+}
+
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme Maker
 //------------------------------------------------------------------------------
@@ -135,7 +135,7 @@ export class TonalCombinedMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<TonalCombinedMorpheme>() }
 
     makeCombinedMorphemes() {
-        return this.make(this.preprocess(), new ListOfLexicalRoots());
+        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
     }
 }
 
@@ -153,7 +153,7 @@ export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<ToneSandhiRootMorpheme>() }
 
     makeRootMorphemes() {
-        return this.make(this.preprocess(), new ListOfLexicalRoots());
+        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
     }
 }
 
