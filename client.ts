@@ -83,7 +83,7 @@ export class Client {
     }
 
     processOneToken(str: string) {
-        /*
+/*
         let al = new AnalyzerLoader()
         al.load(Kana)
         let objM = al.analyzers[0].analyser.getDataOfMorphologicalAnalysis(str)

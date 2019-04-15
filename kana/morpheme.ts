@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme } from '../grapheme'
-import { Syllable, ToneSandhiSyllable } from '../morpheme'
+import { Syllable, MatchedPattern } from '../morpheme'
 import { MorphemeMaker } from '../morphememaker'
-import { RomanizedKana } from './kana'
+import { RomanizedKana, SetOfInitialConsonants, SetOfFinalConsonants, SetOfVowels } from './kana'
 import { Syllabary } from '../system'
 import { AlphabeticLetter } from '../grapheme'
 
@@ -24,7 +24,51 @@ export class KanaLemmaMorpheme {
 }
 
 function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
-    return null
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    let arraysOfLetters: Array<AlphabeticLetter[]> = new Array()
+
+    for(let m in syllabary.list) {
+        let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
+        if(syllabary.list[m].length == min) {
+            for(let n = 0; n < min; n++) {
+                if(syllabary.list[m][n] != undefined) {
+                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+                        //console.log(syllabary.list[m])
+                        if(n+1 == min) {
+                            // copy the matched letters
+                            let arr: AlphabeticLetter[] = new Array
+                            for(let q = 0; q < min; q++) {
+                                arr[q] = letters[beginOfSyllable+q];
+                            }
+                            arraysOfLetters.push(arr)
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    let maxLen = 0
+    for(let i in arraysOfLetters) {
+        if(arraysOfLetters[i].length > maxLen) {
+            maxLen = arraysOfLetters[i].length
+        } 
+    }
+
+    //console.log(arraysOfLetters)
+
+    let mp = new MatchedPattern();
+    // look ahead for 1 letter
+    if(letters.length-beginOfSyllable >= maxLen+1) {
+        if(letters[maxLen].literal.search(new RegExp(new SetOfInitialConsonants().toString())) == 0) {
+        } else {
+        }
+    }
+
+    console.log(mp.letters)
+    return mp
 }
 
 //------------------------------------------------------------------------------

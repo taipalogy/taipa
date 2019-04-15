@@ -4,8 +4,9 @@ import { characters } from '../character'
 import { AlphabeticLetter } from '../grapheme'
 
 export class RomanizedKana extends Syllabary {
-    list: Array<Sound[]> = new Array()
+    list: Array<Sound[]>
     setFirstLetter(beginning: string) {
+        this.list = new Array()
         let cog = new ClientOfGenerator()
         let entries: Array<Sound[]> = cog.generate(beginning)
         for(let i in entries) {
@@ -22,9 +23,9 @@ class RomanizedKanaGenerator {
             if(list_of_romanized_kana[i].search(beginning) == 0) {
                 strs.push(list_of_romanized_kana[i])
                 // double vowels. repeat the vowel.
-                strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
+                //strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
                 // consonant germination
-                strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
+                //strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
                 // sokuon
                 strs.push(list_of_romanized_kana[i] + 'k')
             }
@@ -251,7 +252,7 @@ class GerminatedConsonantC extends GerminatedConsonant {characters = [characters
 class GerminatedConsonantP extends GerminatedConsonant {characters = [characters.get('p')]}
 class GerminatedConsonantT extends GerminatedConsonant {characters = [characters.get('t')]}
 
-class SetOfInitialConsonants extends SetOfSounds {
+export class SetOfInitialConsonants extends SetOfSounds {
     initialConsonants: Array<InitialConsonant> = new Array()
     constructor() {
         super()
@@ -280,7 +281,7 @@ class SetOfInitialConsonants extends SetOfSounds {
     }
 }
 
-class SetOfVowels extends SetOfSounds {
+export class SetOfVowels extends SetOfSounds {
     vowels: Array<Vowel> = new Array()
     constructor() {
         super()
@@ -324,7 +325,7 @@ class SetOfSemivowels extends SetOfSounds {
     }
 }
 
-class SetOfFinalConsonants extends SetOfSounds {
+export class SetOfFinalConsonants extends SetOfSounds {
     finalConsonants: Array<FinalConsonant> = new Array()
     constructor() {
         super()

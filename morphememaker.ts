@@ -103,6 +103,7 @@ function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: numbe
                                 mp.letters[q] = letters[beginOfSyllable+q];
                             }
                             
+                            // copy the pattern of sounds
                             mp.pattern = syllabary.list[m];
                             //console.log(syllabary.list[m])
                             //console.log(mp.letters)
