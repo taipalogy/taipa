@@ -50,24 +50,70 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         }
     }
 
-    let maxLen = 0
-    for(let i in arraysOfLetters) {
-        if(arraysOfLetters[i].length > maxLen) {
-            maxLen = arraysOfLetters[i].length
-        } 
+    let mp = new MatchedPattern();
+    if(arraysOfLetters.length == 1) {
+        // only one matched
+        // copy the matched letters
+        for(let q = 0; q < arraysOfLetters[0].length; q++) {
+            mp.letters[q] = letters[beginOfSyllable+q];
+        }
+        //console.log('only one matched')
+        return mp
     }
 
-    //console.log(arraysOfLetters)
-
-    let mp = new MatchedPattern();
-    // look ahead for 1 letter
-    if(letters.length-beginOfSyllable >= maxLen+1) {
-        if(letters[maxLen].literal.search(new RegExp(new SetOfInitialConsonants().toString())) == 0) {
+    if(arraysOfLetters.length > 1) {
+        //console.log(arraysOfLetters[0])
+        //console.log(arraysOfLetters[1])
+        let longerEntry: number = -1 // length of the longest matched entry
+        let shorterEntry: number = -1
+    
+        if(arraysOfLetters[0].length > arraysOfLetters[1].length) {
+            longerEntry = 0
+            shorterEntry = 1
         } else {
+            longerEntry = 1
+            shorterEntry = 0
+        }
+        
+        if(letters.length-beginOfSyllable == arraysOfLetters[longerEntry].length) {
+            // return the shorter one
+            for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
+                mp.letters[q] = letters[beginOfSyllable+q];
+            }
+
+            //console.log('match the shorter')
+            return mp
+        }
+
+        // look ahead for 1 letter
+        if(letters.length-beginOfSyllable == arraysOfLetters[longerEntry].length+1) {
+            if(letters[beginOfSyllable+arraysOfLetters[longerEntry].length].literal.search(new RegExp(new SetOfInitialConsonants().toString())) == 0) {
+                // consonant-ending
+                // return the longer one
+                for(let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
+                    mp.letters[q] = letters[beginOfSyllable+q];
+                }
+                //console.log('initial-ending matched')
+            } else {
+                // vowel ending
+                // return the shorter one
+                for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
+                    mp.letters[q] = letters[beginOfSyllable+q];
+                }
+                //console.log('vowel-ending matched')
+            }
+            //console.log('look ahead for 1 letter')
+            return mp
+        }
+
+        // look ahead for 2 letters
+        if(letters.length-beginOfSyllable > arraysOfLetters[longerEntry].length+1) {
+            // return the longer one
+            for(let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
+                mp.letters[q] = letters[beginOfSyllable+q];
+            }           
         }
     }
-
-    console.log(mp.letters)
     return mp
 }
 

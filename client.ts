@@ -83,11 +83,11 @@ export class Client {
     }
 
     processOneToken(str: string) {
-/*
+
         let al = new AnalyzerLoader()
         al.load(Kana)
         let objM = al.analyzers[0].analyser.getDataOfMorphologicalAnalysis(str)
-        console.log(objM.morphemes)
+        //console.log(objM.morphemes)
         let kanas = ''
         if(objM.result.successful == true) {
             let len = objM.morphemes.length
@@ -100,7 +100,7 @@ export class Client {
             }
         }
         console.log('>' + kanas)
-*/
+
         let doc: Document = new Document();
         let turner = new TonalAnalyser()
         doc.lemmaLexemes = turner.getDataOfLexicalAnalysis(str.match(/\w+/g)[0])
