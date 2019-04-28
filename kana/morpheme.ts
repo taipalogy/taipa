@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, MatchedPattern } from '../morpheme'
 import { MorphemeMaker } from '../morphememaker'
-import { RomanizedKana, SetOfInitialConsonants, SetOfFinalConsonants, SetOfVowels } from './kana'
+import { RomanizedKana, SetOfInitialConsonants } from './kana'
 import { Syllabary } from '../system'
 import { AlphabeticLetter } from '../grapheme'
 
@@ -33,7 +33,6 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
             for(let n = 0; n < min; n++) {
                 if(syllabary.list[m][n] != undefined) {
                     if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
-                        //console.log(syllabary.list[m])
                         if(n+1 == min) {
                             // copy the matched letters
                             let arr: AlphabeticLetter[] = new Array

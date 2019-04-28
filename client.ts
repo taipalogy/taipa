@@ -7,7 +7,7 @@ import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
 import { Sound } from './system';
 
-import { AnalyzerLoader } from './analyser'
+import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
 import { HiraganaAndKatakana } from './kana/kana';
 
@@ -86,8 +86,9 @@ export class Client {
 
         let al = new AnalyzerLoader()
         al.load(Kana)
-        let objM = al.analyzers[0].analyser.getDataOfMorphologicalAnalysis(str)
+        let objM = al.aws[0].analyzer.getDataOfMorphologicalAnalysis(str)
         //console.log(objM.morphemes)
+        //al.aws[0].getBlocks(objM.morphemes)
         let kanas = ''
         if(objM.result.successful == true) {
             let len = objM.morphemes.length

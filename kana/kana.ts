@@ -1,5 +1,5 @@
 import { Syllabary, Sound, SetOfSounds, ILetters } from '../system'
-import { KanaAnalyser } from './analyser';
+import { KanaAnalyzer } from './analyzer';
 import { characters } from '../character'
 import { AlphabeticLetter } from '../grapheme'
 
@@ -23,9 +23,9 @@ class RomanizedKanaGenerator {
             if(list_of_romanized_kana[i].search(beginning) == 0) {
                 strs.push(list_of_romanized_kana[i])
                 // double vowels. repeat the vowel.
-                //strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
+                strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
                 // consonant germination
-                //strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
+                strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
                 // sokuon
                 strs.push(list_of_romanized_kana[i] + 'k')
             }
@@ -33,6 +33,14 @@ class RomanizedKanaGenerator {
         //for(let i in strs) console.info(strs[i])
         return strs
     }
+}
+
+function isSokuon(str: string) {
+    return false
+}
+
+function getKanas(str: string) {
+    if(isSokuon(str)) {}
 }
 
 class ClientOfGenerator {
@@ -95,7 +103,8 @@ class ClientOfGenerator {
     }
 
     private isFinalConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfFinalConsonants().toString())) == 0) return true
+        //if(str.search(new RegExp(new SetOfFinalConsonants().toString())) == 0) return true
+        if(new SetOfFinalConsonants().beginWith(str) == true) return true
 
         return false
     }
@@ -122,7 +131,7 @@ class ClientOfGenerator {
         let rkg = new RomanizedKanaGenerator()
         let strs: Array<string> = rkg.generate(beginning) // retrieve all needed syllables beginning with begginning
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let turner = new KanaAnalyser()
+        let turner = new KanaAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {
@@ -250,6 +259,7 @@ class FinalConsonantT extends FinalConsonant {characters = [characters.get('t')]
 class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
 class GerminatedConsonantC extends GerminatedConsonant {characters = [characters.get('c')]}
 class GerminatedConsonantP extends GerminatedConsonant {characters = [characters.get('p')]}
+class GerminatedConsonantS extends GerminatedConsonant {characters = [characters.get('s')]}
 class GerminatedConsonantT extends GerminatedConsonant {characters = [characters.get('t')]}
 
 export class SetOfInitialConsonants extends SetOfSounds {
@@ -304,6 +314,7 @@ class SetOfGerminatedConsonants extends SetOfSounds {
         this.theGerminated.push(new GerminatedConsonantC())
         this.theGerminated.push(new GerminatedConsonantK())
         this.theGerminated.push(new GerminatedConsonantP())
+        this.theGerminated.push(new GerminatedConsonantS())
         this.theGerminated.push(new GerminatedConsonantT())
     }
 
@@ -333,6 +344,11 @@ export class SetOfFinalConsonants extends SetOfSounds {
         this.finalConsonants.push(new FinalConsonantP())
         this.finalConsonants.push(new FinalConsonantS())
         this.finalConsonants.push(new FinalConsonantT())
+    }
+
+    beginWith(str: string) { 
+        if(str.search(new RegExp(this.toString())) == 0) return true
+        return false
     }
 
     toString() {
@@ -453,8 +469,9 @@ class PSQ implements PartialISound {
 }
 
 class PSS implements PartialISound {
-    name = 's'
-    initialConsonant: InitialConsonant = new InitialConsonantS()
+    name = 's';
+    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantS();
+    initialConsonant: InitialConsonant = new InitialConsonantS();
 }
 
 class PST implements PartialISound {

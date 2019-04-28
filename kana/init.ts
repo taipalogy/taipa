@@ -1,15 +1,16 @@
-import { Analyzer } from '../analyser'
-import { KanaAnalyser } from './analyser';
+import { AnalyzerWrapper } from '../analyzer'
+import { KanaAnalyzer } from './analyzer';
 import { letterClass, lowerLettersOfKana } from './kana'
-import { Analyser } from '../system'
+import { SetOfFinalConsonants } from './kana'
+import { KanaLemmaMorpheme } from './morpheme'
 
-export class Kana extends Analyzer {
-    analyser: Analyser = new KanaAnalyser()
+export class Kana extends AnalyzerWrapper {
 
     constructor() {
         super()
         this.checkSize()
         this.findDuplicates()
+        super.analyzer = new KanaAnalyzer()
     }
 
     checkSize() {
@@ -41,5 +42,13 @@ export class Kana extends Analyzer {
             console.log('number of duplicates found: %d', duplicates.length)
             console.log(duplicates)
         }
+    }
+
+    getBlocks(ms: KanaLemmaMorpheme[]) {
+        
+        if(new SetOfFinalConsonants().beginWith(ms[0].syllable.literal[ms[0].syllable.literal.length-1]) == true) {
+            console.log('っ')
+        }
+        return ''
     }
 }
