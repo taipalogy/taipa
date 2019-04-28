@@ -87,20 +87,9 @@ export class Client {
         let al = new AnalyzerLoader()
         al.load(Kana)
         let objM = al.aws[0].analyzer.getDataOfMorphologicalAnalysis(str)
-        //console.log(objM.morphemes)
-        //al.aws[0].getBlocks(objM.morphemes)
-        let kanas = ''
         if(objM.result.successful == true) {
-            let len = objM.morphemes.length
-            for(let e of objM.morphemes) {
-                let ks = HiraganaAndKatakana.get(e.syllable.literal)
-                if(ks != undefined && ks[0] != undefined) {
-                    // in case the kana is absent, we check against ks[0]
-                    kanas += ks[0]
-                }
-            }
-        }
-        console.log('>' + kanas)
+            al.aws[0].getBlocks(objM.morphemes)
+        } else al.aws[0].getBlocks(objM.morphemes)
 
         let doc: Document = new Document();
         let turner = new TonalAnalyser()

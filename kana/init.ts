@@ -3,6 +3,7 @@ import { KanaAnalyzer } from './analyzer';
 import { letterClass, lowerLettersOfKana } from './kana'
 import { SetOfFinalConsonants } from './kana'
 import { KanaLemmaMorpheme } from './morpheme'
+import { HiraganaAndKatakana } from './kana'
 
 export class Kana extends AnalyzerWrapper {
 
@@ -45,10 +46,26 @@ export class Kana extends AnalyzerWrapper {
     }
 
     getBlocks(ms: KanaLemmaMorpheme[]) {
-        
-        if(new SetOfFinalConsonants().beginWith(ms[0].syllable.literal[ms[0].syllable.literal.length-1]) == true) {
-            console.log('っ')
+        //console.log(ms)
+
+        let kanas = ''
+
+        let len = ms.length
+        for(let e of ms) {
+            let ks = HiraganaAndKatakana.get(e.syllable.literal)
+            if(ks != undefined && ks[0] != undefined) {
+                // in case the kana is absent, we check against ks[0]
+                kanas += ks[0]
+            } else if(new SetOfFinalConsonants().beginWith(ms[0].syllable.literal[ms[0].syllable.literal.length-1]) == true) {
+                ks = HiraganaAndKatakana.get(ms[0].syllable.literal.substring(0, ms[0].syllable.literal.length-1))
+                if(ks != undefined && ks[0] != undefined) {
+                    kanas += ks[0]
+                }
+                kanas += 'っ'
+            }
         }
+        console.log('>' + kanas)
+        
         return ''
     }
 }
