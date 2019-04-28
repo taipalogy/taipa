@@ -1,4 +1,4 @@
-import { GraphemeMaker } from '../graphememaker'
+import { GraphemeMaker } from '../grapheme'
 import { KanaLemmaMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
 import { Analyzer } from '../system'

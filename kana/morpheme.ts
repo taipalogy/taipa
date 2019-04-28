@@ -1,6 +1,6 @@
 import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, MatchedPattern } from '../morpheme'
-import { MorphemeMaker } from '../morphememaker'
+import { MorphemeMaker } from '../morpheme'
 import { RomanizedKana, SetOfInitialConsonants } from './kana'
 import { Syllabary } from '../system'
 import { AlphabeticLetter } from '../grapheme'

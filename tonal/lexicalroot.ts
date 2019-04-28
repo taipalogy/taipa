@@ -1,20 +1,9 @@
 
-import { Sound, Syllabary } from './system'
-import { GraphemeMaker } from './graphememaker'
-
+import { Sound, Syllabary } from '../system'
 import { list_of_lexical_roots } from './lexicalroots2'
-import { SetOfMaterLectionis,
-    SetOfMedials,
-    SetOfInitials,
-    SetOfFreeTonals,
-    SetOfFinals,
-    SetOfNeutralFinals,
-    SetOfNasalizations,
-    SetOfStopFinals,
-    combiningRules,
-    letterClass,
-    } from './version2'
-import { TonalAnalyser } from './lexememaker';
+import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
+    SetOfNasalizations, SetOfStopFinals, combiningRules, letterClass } from './version2'
+import { TonalAnalyser } from '../lexeme';
 
 //------------------------------------------------------------------------------
 //  Lexical Root

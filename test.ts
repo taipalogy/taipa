@@ -1,7 +1,7 @@
 import { Client } from './client'
-import { lowerLettersOfTonal } from './version2'
+import { lowerLettersOfTonal } from './tonal/version2'
 import { characters } from './character'
-import { list_of_lexical_roots } from './lexicalroots2'
+import { list_of_lexical_roots } from './tonal/lexicalroots2'
 
 const NUMBER_OF_CHARACTERS: number = 26;
 const NUMBER_OF_LETTERS: number = 37;

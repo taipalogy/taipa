@@ -1,10 +1,10 @@
-import { characters } from './character'
+import { characters } from '../character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
     Tonal,
     ILetters
-    } from './system'
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from './system'
-import { AlphabeticLetter } from './grapheme'
+    } from '../system'
+import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../system'
+import { AlphabeticLetter } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  ISound for Lexical Root

@@ -1,8 +1,8 @@
-import { Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,SetOfSounds } from './system'
-import { Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
+import { Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,SetOfSounds } from '../system'
+import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../system'
 import { PartialISound } from './version2'
-import { characters } from './character'
-import { AlphabeticLetter } from './grapheme'
+import { characters } from '../character'
+import { AlphabeticLetter } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Alphabet

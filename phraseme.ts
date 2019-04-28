@@ -1,5 +1,6 @@
 
 import { TonalWord, InflectionalEnding } from "./lexeme"
+import { TonalLemmaLexeme } from "./lexeme";
 
 //------------------------------------------------------------------------------
 //  Tone Group
@@ -71,5 +72,39 @@ export class ToneSandhiPhrase extends Phrase {
             this.literal += ' ';
         }
         this.literal += w.literal;
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Phraseme Maker
+//------------------------------------------------------------------------------
+
+export class ToneSandhiPhrasemeMaker {
+    lexemes: Array<TonalLemmaLexeme>;
+
+    constructor(lexemes: Array<TonalLemmaLexeme>) {
+        this.lexemes = new Array();
+        this.lexemes = lexemes;
+    }
+
+    makePhrasemes() {
+        let phrasemes: Array<ToneSandhiPhraseme> = new Array();
+
+        // unpack lexemes and take words out from them
+        let words: Array<TonalWord> = new Array();
+        for(let key in this.lexemes) {
+            words.push(this.lexemes[key].word);
+        }
+        
+        let tsp = new ToneSandhiPhraseme(new ToneSandhiPhrase(words));
+        if(this.lexemes.length > 0) {
+            let tg = new ToneGroup();
+            for(let k in this.lexemes) {
+            }
+        }
+
+        phrasemes.push(tsp);
+
+        return phrasemes
     }
 }

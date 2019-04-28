@@ -1,5 +1,5 @@
 
-import { TonalAnalyser } from './lexememaker'
+import { TonalAnalyser } from './lexeme'
 import { TonalLemmaLexeme, ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'

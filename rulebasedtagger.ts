@@ -1,8 +1,8 @@
 
 import { TonalWord, TonalLemmaLexeme, ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexememaker'
-import { combiningRules } from './version2'
+import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexeme'
+import { combiningRules } from './tonal/version2'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
