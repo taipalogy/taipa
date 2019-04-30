@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, MatchedPattern } from '../morpheme'
 import { MorphemeMaker } from '../morpheme'
-import { RomanizedKana, SetOfInitialConsonants } from './kana'
+import { RomanizedKana, SetOfInitialConsonants, SetOfVowels } from './kana'
 import { Syllabary } from '../system'
 import { AlphabeticLetter } from '../grapheme'
 
@@ -15,7 +15,7 @@ export class KanaSyllable extends Syllable {}
 //  Kana Inputing Morpheme
 //------------------------------------------------------------------------------
 
-export class KanaLemmaMorpheme {
+export class KanaInputingMorpheme {
     syllable: KanaSyllable;
 
     constructor(syllable: KanaSyllable) {
@@ -60,13 +60,10 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         for(let q = 0; q < arraysOfLetters[0].length; q++) {
             mp.letters[q] = letters[beginOfSyllable+q];
         }
-        //console.log('only one matched')
         return mp
     }
 
     if(arraysOfLetters.length > 1) {
-        //console.log(arraysOfLetters[0])
-        //console.log(arraysOfLetters[1])
         let longerEntry: number = -1 // length of the longest matched entry
         let shorterEntry: number = -1
     
@@ -83,8 +80,6 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
             for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
                 mp.letters[q] = letters[beginOfSyllable+q];
             }
-
-            //console.log('match the shorter')
             return mp
         }
 
@@ -96,27 +91,32 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
                 for(let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable+q];
                 }
-                //console.log('initial-ending matched')
             } else {
                 // vowel ending
                 // return the shorter one
                 for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable+q];
                 }
-                //console.log('vowel-ending matched')
             }
-            //console.log('look ahead for 1 letter')
             return mp
         }
 
         // look ahead for 2 letters
         if(letters.length-beginOfSyllable > arraysOfLetters[longerEntry].length+1) {
+            if(new SetOfVowels().beginWith(letters[beginOfSyllable+arraysOfLetters[longerEntry].length].literal) == true) {
+                // return the shorter one
+                for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
+                    mp.letters[q] = letters[beginOfSyllable+q];
+                }
+                return mp
+            }
             // return the longer one
             for(let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
                 mp.letters[q] = letters[beginOfSyllable+q];
-            }           
+            }
         }
     }
+
     return mp
 }
 
@@ -124,7 +124,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 //  Kana Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class KanaLemmaMorphemeMaker extends MorphemeMaker {
+export class KanaInputingMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
     constructor(gs: Array<AlphabeticGrapheme>) {
@@ -133,9 +133,9 @@ export class KanaLemmaMorphemeMaker extends MorphemeMaker {
         this.graphemes = gs;
     }
 
-    create(syllable: Syllable) { return new KanaLemmaMorpheme(syllable) }
+    create(syllable: Syllable) { return new KanaInputingMorpheme(syllable) }
 
-    createArray() { return new Array<KanaLemmaMorpheme>() }
+    createArray() { return new Array<KanaInputingMorpheme>() }
 
     makeInputingMorphemes() {
         return this.make(this.preprocess(), new RomanizedKana(), syllabifyKana);

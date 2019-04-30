@@ -2,7 +2,7 @@ import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
 import { letterClass, lowerLettersOfKana } from './kana'
 import { SetOfFinalConsonants } from './kana'
-import { KanaLemmaMorpheme } from './morpheme'
+import { KanaInputingMorpheme } from './morpheme'
 import { HiraganaAndKatakana } from './kana'
 
 export class Kana extends AnalyzerWrapper {
@@ -45,7 +45,7 @@ export class Kana extends AnalyzerWrapper {
         }
     }
 
-    getBlocks(ms: KanaLemmaMorpheme[]) {
+    getBlocks(ms: KanaInputingMorpheme[]) {
         //console.log(ms)
 
         let kanas = ''

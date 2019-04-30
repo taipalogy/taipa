@@ -302,6 +302,11 @@ export class SetOfVowels extends SetOfSounds {
         this.vowels.push(new VowelO())
     }
 
+    beginWith(str: string) { 
+        if(str.search(new RegExp(this.toString())) == 0) return true
+        return false
+    }
+
     toString() {
         return super.toString(this.vowels)
     }

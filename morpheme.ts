@@ -1,11 +1,11 @@
 import { AlphabeticLetter } from './grapheme'
 import { Sound, Tonal, Morph, Syllabary, Final, Allomorph, CheckedAllomorph, FreeAllomorph } from './system'
 import { listOfUncombinedFreeAllomorphs, listOfUncombinedCheckedAllomorphs, ZeroAllomorph,
-     AllomorphY, ZeroTonal, syllabifyTonal } from './tonal/version2'
+     AllomorphY, ZeroTonal } from './tonal/version2'
 import { AlphabeticGrapheme } from './grapheme'
 import { ListOfLexicalRoots } from './tonal/lexicalroot';
 import { Result, NoSuccess, Success } from './result';
-import { TonalSyllable, TonalInputingMorpheme } from './tonal/morpheme'
+import { TonalSyllable, TonalInputingMorpheme, syllabifyTonal } from './tonal/morpheme'
 
 //------------------------------------------------------------------------------
 //  Tone Morpheme

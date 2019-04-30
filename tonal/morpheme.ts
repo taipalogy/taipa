@@ -1,9 +1,48 @@
-import { Syllable, Morpheme, MorphemeMaker } from '../morpheme'
-import { CheckedAllomorph, FreeAllomorph, Allomorph } from '../system'
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern } from '../morpheme'
+import { CheckedAllomorph, FreeAllomorph, Allomorph, Syllabary } from '../system'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
-    ZeroAllomorph, AllomorphHY, AllomorphX, syllabifyTonal } from './version2'
+    ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
 import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
+
+//------------------------------------------------------------------------------
+//  syllabifyTonal
+//------------------------------------------------------------------------------
+
+export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
+    // get the longest matched syllable pattern
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    let matchedLen = 0;
+    let mp = new MatchedPattern();
+    for(let m in syllabary.list) {
+        let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
+        if(syllabary.list[m].length == min) {
+            for(let n = 0; n < min; n++) {
+                if(syllabary.list[m][n] != undefined) {
+                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+                        if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
+                            matchedLen = min;
+                            // copy the matched letters
+                            for(let q = 0; q < matchedLen; q++) {
+                                mp.letters[q] = letters[beginOfSyllable+q];
+                            }
+                            
+                            // copy the pattern of sounds
+                            mp.pattern = syllabary.list[m];
+                            //console.log(syllabary.list[m])
+                            //console.log(mp.letters)
+                        }
+                    } else {
+                        break;
+                    }    
+                }
+            }
+        }
+    }
+    return mp;
+}
 
 //------------------------------------------------------------------------------
 //  Tonal Syllable
