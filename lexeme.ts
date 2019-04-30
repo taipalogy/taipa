@@ -1,14 +1,12 @@
-import { ToneSandhiSyllable, TonalAffix, TonalCombinedMorpheme, ToneSandhiRootMorpheme, 
+import { TonalAffix, ToneSandhiRootMorpheme,
     CombiningFormMorpheme, Syllable } from './morpheme';
-import { FreeAllomorph, CheckedAllomorph, Allomorph, } from './system'
-import { freeAllomorphUncombiningRules } from './tonal/version2'
 import { GraphemeMaker } from './grapheme'
-import { ToneSandhiRootMorphemeMaker, TonalCombinedMorphemeMaker, CombiningFormMorphemeMaker } from './morpheme'
-import { Tonal, Sound, Analyzer } from './system';
+import { ToneSandhiRootMorphemeMaker, CombiningFormMorphemeMaker } from './morpheme'
+import { Tonal, Allomorph, FreeAllomorph, CheckedAllomorph } from './system';
 import { lowerLettersOfTonal } from './tonal/version2';
-import { AlphabeticGrapheme } from './grapheme';
-import { NoSuccess, Success } from './result';
 
+import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
+import { TonalSyllable } from './tonal/morpheme';
 
 export let FORMS = {
     'VERB': {
@@ -63,7 +61,7 @@ export let FORMS = {
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-//  Inflectional Ending and Inflectional Tone Mark
+//  Inflectional Ending
 //------------------------------------------------------------------------------
 
 class Ending {}
@@ -124,104 +122,8 @@ class TonallessLexeme extends Lexeme {}
 export class TonalLexeme extends Lexeme {}
 
 //------------------------------------------------------------------------------
-//  Tonal Lemma Lexeme
-//------------------------------------------------------------------------------
-
-export class TonalLemmaLexeme {
-    word: TonalWord
-    private inflectionalEnding: InflectionalEnding = null
-    private lemmata: Array<TonalWord>
-
-    constructor(word: TonalWord) {
-        this.word = word;
-    }
-
-    assignInflectionalEnding(allomorph: Allomorph) {
-        // change allomorph to affix
-        if(allomorph instanceof FreeAllomorph) {
-            let fie = new FreeInflectionalEnding();
-            fie.affix.tonal = allomorph.tonal;
-            for(let key in freeAllomorphUncombiningRules.get(allomorph.getLiteral())) {
-                let a = new TonalAffix();
-                a.tonal = freeAllomorphUncombiningRules.get(allomorph.getLiteral())[key];
-                fie.baseAffixes.push(a);
-            }
-            this.inflectionalEnding = fie;
-        } else if(allomorph instanceof CheckedAllomorph) {
-            let cie = new CheckedInflectionalEnding();
-            cie.affix.tonal = allomorph.tonal;
-            this.inflectionalEnding = cie;
-        }
-        // when there is no inflectinal ending assigned, this word is already in base form
-        // and its last syllable is checked tone
-        
-        //console.debug(allomorph.tonal)
-        //console.debug(this.inflectionalEnding.getLiteral())
-    }
-
-    getInflectionalEnding() {
-        if(this.inflectionalEnding == null) return ''
-        return this.inflectionalEnding.getLiteral()
-    }
-
-    getBaseForms() {
-        // this must be called after populateLemmata is called
-        if(this.lemmata == null) return []
-        return this.lemmata 
-    }
-    
-    private replaceLastSyllable(morphemes: Array<TonalCombinedMorpheme>) {
-        let word = new TonalWord(this.word.syllables);
-        word.popSyllable();
-        word.pushSyllable(morphemes[morphemes.length-1].getBaseForms()[0]);
-        return word;
-    }
-
-    private getLemmas(morphemes: Array<TonalCombinedMorpheme>): Array<TonalWord> {
-        if(this.inflectionalEnding != null) {
-            if(this.inflectionalEnding instanceof FreeInflectionalEnding) {
-                if(this.inflectionalEnding.baseAffixes.length == 1) {
-                    return [this.replaceLastSyllable(morphemes)];
-                } else if(this.inflectionalEnding.baseAffixes.length > 1) {
-                    let ret = [];
-                    let arr = morphemes[morphemes.length-1].getBaseForms();
-                    //console.log(arr)
-                    for(let key in arr) {
-                        let word = new TonalWord(this.word.syllables);
-                        word.popSyllable();
-                        word.pushSyllable(arr[key]);
-                        ret.push(word);
-                    }
-                    return ret;
-                }
-            } else if(this.inflectionalEnding instanceof CheckedInflectionalEnding) {
-                return [this.replaceLastSyllable(morphemes)];
-            }
-        }
-
-        return [];
-    }
-
-    populateLemmata(morphemes: Array<TonalCombinedMorpheme>) {
-        this.lemmata = new Array();
-
-        // turn morphemes into lemmas
-        let lms = this.getLemmas(morphemes);
-        //console.log(tmp.length)
-        if(lms.length > 0) {
-            for(let key in lms) {
-                //console.log(bfs[key].literal)
-                this.lemmata.push(lms[key]);
-            }
-        }
-
-    }
-}
-
-//------------------------------------------------------------------------------
 //  Inflection Lexeme
 //------------------------------------------------------------------------------
-
 
 export class ToneSandhiInflectionLexeme extends TonalLexeme {
     // properties can be added or deleted
@@ -327,24 +229,6 @@ export class Word {
 }
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Word
-//------------------------------------------------------------------------------
-
-export class TonalWord extends Word {
-    syllables: Array<ToneSandhiSyllable>;
-    constructor(syllables?: Array<ToneSandhiSyllable>) {
-        super();
-        this.syllables = new Array<ToneSandhiSyllable>();
-        if(syllables != undefined) {
-            let len = syllables.length;
-            for(var i = 0; i < len; i++) {
-                this.pushSyllable(syllables[i]);
-            }
-        }
-    }
-}
-
-//------------------------------------------------------------------------------
 //  Inflectional Lexeme
 //------------------------------------------------------------------------------
 
@@ -374,7 +258,7 @@ export class AgglutinativeWord extends Word {
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
-abstract class LexemeMaker {
+export abstract class LexemeMaker {
     abstract morphemes
 
     preprocess() {
@@ -383,7 +267,7 @@ abstract class LexemeMaker {
         // assign inflectinal affix to a lexeme.
         // push the lexeme into an array of lexemes.
         // unpack morphemes and take syllables out from them
-        let syllables: Array<ToneSandhiSyllable> = new Array();
+        let syllables: Array<TonalSyllable> = new Array();
         for(let key in this.morphemes) {
             syllables.push(this.morphemes[key].syllable);
         }
@@ -398,49 +282,13 @@ abstract class InflectiveLexemeMaker extends LexemeMaker {
     abstract postprocess(tsl: TonalLexeme)
 }
 
-export abstract class LemmaLexemeMaker extends LexemeMaker {
-    abstract postprocess(tsil: TonalLemmaLexeme)
+export abstract class InputingLexemeMaker extends LexemeMaker {
+    abstract postprocess(tsil: TonalInputingLexeme)
 }
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme Maker
 //------------------------------------------------------------------------------
-
-export class TonalLemmaLexemeMaker extends LemmaLexemeMaker {
-    morphemes: Array<TonalCombinedMorpheme>;
-
-    constructor(morphemes: Array<TonalCombinedMorpheme>) {
-        super()
-        this.morphemes = new Array();
-        this.morphemes = morphemes;
-    }
-
-    makeTonalLemmaLexemes() {
-        return this.postprocess(this.make(this.preprocess()))
-    }
-
-    make(syllables: Array<ToneSandhiSyllable>) {
-        return new TonalLemmaLexeme(new TonalWord(syllables));
-    }
-
-    postprocess(tsil: TonalLemmaLexeme) {
-        if(this.morphemes.length > 0) {
-            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // inflectional ending needs to be assigned to combined lexeme
-                tsil.assignInflectionalEnding(this.morphemes[this.morphemes.length-1].allomorph);
-            }
-        }
-
-        // lemmata needs to be populated for combined lexeme
-        tsil.populateLemmata(this.morphemes);
-
-        let lexemes: Array<TonalLemmaLexeme> = new Array();
-
-        lexemes.push(tsil);
-
-        return lexemes
-    }
-}
 
 export class TonalInflectionLexemeMaker extends InflectiveLexemeMaker {
     morphemes: Array<ToneSandhiRootMorpheme>;
@@ -455,7 +303,7 @@ export class TonalInflectionLexemeMaker extends InflectiveLexemeMaker {
         return this.postprocess(this.make(this.preprocess()))
     }
 
-    make(syllables: Array<ToneSandhiSyllable>) {
+    make(syllables: Array<TonalSyllable>) {
         return new ToneSandhiInflectionLexeme(new TonalWord(syllables));
     }
 
@@ -488,7 +336,7 @@ class TonalInflectedLexemeMaker extends TonalInflectionLexemeMaker {
         return this.postprocess(this.make(this.preprocess()))
     }
 
-    make(syllables: Array<ToneSandhiSyllable>) {
+    make(syllables: Array<TonalSyllable>) {
         return new SandhiFormLexeme(new TonalWord(syllables));
     }
 
@@ -522,51 +370,6 @@ export class DummyLexemeMaker {
 //------------------------------------------------------------------------------
 //  Lexeme Turner
 //------------------------------------------------------------------------------
-
-export class TonalAnalyser extends Analyzer {
-    arraysOfSounds: Array<Sound[]> = new Array()
-
-    getDataOfGraphemicAnalysis(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        return gm.makeGraphemes();
-    }
-
-    getDataOfMorphologicalAnalysis(str: string)
-    getDataOfMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>)
-    getDataOfMorphologicalAnalysis(x) {
-        let graphemes
-        let g_data
-        if(typeof x == "object") {
-            graphemes = x
-        } else if(typeof x == 'string') {
-             g_data = this.getDataOfGraphemicAnalysis(x)
-             if(g_data.result instanceof NoSuccess) {
-                 return g_data
-             }
-             graphemes = g_data.graphemes
-        }
-
-        // Morpheme Maker
-        let tsimm = new TonalCombinedMorphemeMaker(graphemes);
-        let m_data = tsimm.makeCombinedMorphemes();
-        this.arraysOfSounds = m_data.arraysOfSounds
-        return m_data
-    }
-
-    getDataOfLexicalAnalysis(str: string) {
-        let m_data = this.getDataOfMorphologicalAnalysis(str)
-        let morphemes
-        if(m_data.result instanceof Success) {
-            morphemes = m_data.morphemes
-        } else morphemes = []
-
-        //console.info(morphemes)
-        // Lexeme Maker
-        let tsilm = new TonalLemmaLexemeMaker(morphemes);
-        return tsilm.makeTonalLemmaLexemes();
-    }
-}
 
 export class TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {

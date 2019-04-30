@@ -1,6 +1,3 @@
-import  { Analyzer } from '../analyzer'
-import { Word } from '../lexeme'
+import  { AnalyzerWrapper } from '../analyzer'
 
-export class Tonalless extends Analyzer {}
-
-export class TonallessWord extends Word {}
+export class Tonalless extends AnalyzerWrapper {}

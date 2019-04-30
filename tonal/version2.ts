@@ -4,7 +4,52 @@ import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial
     ILetters
     } from '../system'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../system'
-import { AlphabeticLetter } from '../grapheme'
+import { Syllabary } from '../system'
+import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
+import { MatchedPattern, MorphemeMaker, ToneSandhiRootMorpheme,
+    CombiningFormMorpheme, 
+    Morpheme, Syllable } from '../morpheme'
+import { ListOfLexicalRoots } from './lexicalroot'
+
+
+//------------------------------------------------------------------------------
+//  syllabifyTonal
+//------------------------------------------------------------------------------
+
+export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
+    // get the longest matched syllable pattern
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    let matchedLen = 0;
+    let mp = new MatchedPattern();
+    for(let m in syllabary.list) {
+        let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
+        if(syllabary.list[m].length == min) {
+            for(let n = 0; n < min; n++) {
+                if(syllabary.list[m][n] != undefined) {
+                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+                        if(n+1 == min && min > matchedLen) {
+                            // to make sure it is longer than previous patterns
+                            // last letter matched for the pattern
+                            matchedLen = min;
+                            // copy the matched letters
+                            for(let q = 0; q < matchedLen; q++) {
+                                mp.letters[q] = letters[beginOfSyllable+q];
+                            }
+                            
+                            // copy the pattern of sounds
+                            mp.pattern = syllabary.list[m];
+                            //console.log(syllabary.list[m])
+                            //console.log(mp.letters)
+                        }
+                    } else {
+                        break;
+                    }    
+                }
+            }
+        }
+    }
+    return mp;
+}
 
 //------------------------------------------------------------------------------
 //  ISound for Lexical Root

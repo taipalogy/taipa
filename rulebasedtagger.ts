@@ -1,8 +1,9 @@
 
-import { TonalWord, TonalLemmaLexeme, ToneSandhiInflectionLexeme } from './lexeme'
+import { ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
 import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexeme'
 import { combiningRules } from './tonal/version2'
+import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
@@ -118,11 +119,11 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 export class RuleBasedTagger {
     lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
 
-    constructor(lexemes: Array<TonalLemmaLexeme>) {
+    constructor(lexemes: Array<TonalInputingLexeme>) {
         this.match(lexemes)
     }
 
-    match(lexemes: Array<TonalLemmaLexeme>) {
+    match(lexemes: Array<TonalInputingLexeme>) {
         // take in lemma lexemes and then check them against parsing lexemes
         // store matched parsing lexemes in nodes
         let w: TonalWord = lexemes[0].word

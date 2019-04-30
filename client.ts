@@ -1,6 +1,6 @@
 
-import { TonalAnalyser } from './lexeme'
-import { TonalLemmaLexeme, ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
+import { TonalAnalyzer, TonalInputingLexeme } from './tonal/lexeme'
+import { ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
@@ -9,10 +9,9 @@ import { Sound } from './system';
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
-import { HiraganaAndKatakana } from './kana/kana';
 
 export class Document {
-    lemmaLexemes: Array<TonalLemmaLexeme> = new Array();
+    lemmaLexemes: Array<TonalInputingLexeme> = new Array();
     parsingLexemes: Array<Lexeme> = new Array();
     combinedMorphemes: Array<Sound[]> = new Array()
     graph: Array<Arc>
@@ -92,7 +91,7 @@ export class Client {
         } else al.aws[0].getBlocks(objM.morphemes)
 
         let doc: Document = new Document();
-        let turner = new TonalAnalyser()
+        let turner = new TonalAnalyzer()
         doc.lemmaLexemes = turner.getDataOfLexicalAnalysis(str.match(/\w+/g)[0])
 
         // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
@@ -106,8 +105,8 @@ export class Client {
         let c: Configuration = dp.getInitialConfiguration();
         let tokens = str.match(/\w+/g);
 
-        let lexemes: Array<TonalLemmaLexeme> = new Array();
-        let turner = new TonalAnalyser()
+        let lexemes: Array<TonalInputingLexeme> = new Array();
+        let turner = new TonalAnalyzer()
         for(let key in tokens) {
             lexemes.push(turner.getDataOfLexicalAnalysis(tokens[key])[0])
         }

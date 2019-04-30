@@ -1,3 +1,3 @@
-import { Analyzer } from '../analyzer'
+import { AnalyzerWrapper } from '../analyzer'
 
-export class Hangul extends Analyzer {}
+export class Hangul extends AnalyzerWrapper {}

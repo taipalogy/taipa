@@ -9,19 +9,23 @@ import { AlphabeticLetter } from '../grapheme'
 //  Kana Syllable
 //------------------------------------------------------------------------------
 
-export class KanaSyllable  extends Syllable {}
+export class KanaSyllable extends Syllable {}
 
 //------------------------------------------------------------------------------
 //  Kana Inputing Morpheme
 //------------------------------------------------------------------------------
 
 export class KanaLemmaMorpheme {
-    syllable: Syllable;
+    syllable: KanaSyllable;
 
-    constructor(syllable: Syllable) {
+    constructor(syllable: KanaSyllable) {
         this.syllable = syllable;
     }
 }
+
+//------------------------------------------------------------------------------
+//  syllabifyKana
+//------------------------------------------------------------------------------
 
 function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
     syllabary.setFirstLetter(letters[beginOfSyllable].literal)

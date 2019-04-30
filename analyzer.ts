@@ -12,8 +12,6 @@ export class AnalyzerWrapper {
     getBlocks(ms: Morpheme[]) {}
 }
 
-export class Tonal extends AnalyzerWrapper {}
-
 export class AnalyzerLoader {
     aws: Array<AnalyzerWrapper> = new Array()
     load(klas: Class) {

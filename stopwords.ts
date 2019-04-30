@@ -5,7 +5,7 @@ a
 
 e
 
-kahh
+kahf
 
 langx
 
@@ -13,5 +13,5 @@ qaw qazs
 
 siw
 
-gua guaw guay guazs
+goa goaw goay goazs
 `.match(/\w+/g);
