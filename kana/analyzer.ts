@@ -1,7 +1,8 @@
 import { GraphemeMaker } from '../grapheme'
 import { KanaInputingMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
-import { Analyzer } from '../system'
+//import { Analyzer } from '../system'
+import { Analyzer } from '../analyzer'
 import { AlphabeticGrapheme } from '../grapheme'
 import { NoSuccess, Success } from '../result';
 

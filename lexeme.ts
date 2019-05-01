@@ -1,9 +1,10 @@
-import { TonalAffix, ToneSandhiRootMorpheme,
-    CombiningFormMorpheme, Syllable } from './morpheme';
+import { Syllable } from './morpheme';
 import { GraphemeMaker } from './grapheme'
-import { ToneSandhiRootMorphemeMaker, CombiningFormMorphemeMaker } from './morpheme'
-import { Tonal, Allomorph, FreeAllomorph, CheckedAllomorph } from './system';
+//import { ToneSandhiRootMorphemeMaker, CombiningFormMorphemeMaker } from './morpheme'
+//import { ToneSandhiRootMorpheme, CombiningFormMorpheme } from './morpheme'
+import { Tonal } from './grapheme'
 import { lowerLettersOfTonal } from './tonal/version2';
+//import { Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
 
 import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
 import { TonalSyllable } from './tonal/morpheme';
@@ -60,43 +61,6 @@ export let FORMS = {
 //  Internal Sandhi Rule
 //------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
-//  Inflectional Ending
-//------------------------------------------------------------------------------
-
-class Ending {}
-
-export abstract class InflectionalEnding extends Ending {
-    abstract affix: TonalAffix = null;
-    getLiteral() {
-        return this.affix.getLiteral()
-    }
-}
-
-export class FreeInflectionalEnding extends InflectionalEnding {
-    affix = new TonalAffix();
-    baseAffixes: Array<TonalAffix> = new Array();
-}
-
-export class CheckedInflectionalEnding extends InflectionalEnding {
-    affix = new TonalAffix();
-}
-
-export abstract class TonalEnding extends Ending {
-    abstract allomorph: Allomorph = null
-    getLiteral() {
-        return this.allomorph.getLiteral()
-    }
-}
-
-export class FreeTonalEnding extends TonalEnding {
-    allomorph = null
-    //sandhiAllomorph: Allomorph = new Allomorph()
-}
-
-export class CheckedTonalEnding extends TonalEnding {
-    allomorph = null
-}
 
 //------------------------------------------------------------------------------
 //  Lexeme
@@ -124,7 +88,7 @@ export class TonalLexeme extends Lexeme {}
 //------------------------------------------------------------------------------
 //  Inflection Lexeme
 //------------------------------------------------------------------------------
-
+/*
 export class ToneSandhiInflectionLexeme extends TonalLexeme {
     // properties can be added or deleted
     tonalEnding: TonalEnding = null
@@ -203,7 +167,7 @@ export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
         this.wordForSandhiForm = this.getSandhiForm(morphemes, tm)
     }
 }
-
+*/
 //------------------------------------------------------------------------------
 //  Word
 //------------------------------------------------------------------------------
@@ -289,7 +253,7 @@ export abstract class InputingLexemeMaker extends LexemeMaker {
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme Maker
 //------------------------------------------------------------------------------
-
+/*
 export class TonalInflectionLexemeMaker extends InflectiveLexemeMaker {
     morphemes: Array<ToneSandhiRootMorpheme>;
 
@@ -357,7 +321,7 @@ class TonalInflectedLexemeMaker extends TonalInflectionLexemeMaker {
     }
     
 }
-
+*/
 export class DummyLexemeMaker {
     makeLexeme(str: string) {
         let l = new DummyLexeme();
@@ -370,7 +334,7 @@ export class DummyLexemeMaker {
 //------------------------------------------------------------------------------
 //  Lexeme Turner
 //------------------------------------------------------------------------------
-
+/*
 export class TurningIntoInflectionLexeme {
     turnIntoLexemes(str: string) {
         // Grapheme Maker
@@ -415,3 +379,4 @@ export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
         return lexemes;
     }
 }
+*/

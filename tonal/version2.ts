@@ -1,15 +1,57 @@
 import { characters } from '../character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    Tonal,
-    ILetters
-    } from '../system'
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../system'
-import { Syllabary } from '../system'
-import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
-import { MatchedPattern, MorphemeMaker, ToneSandhiRootMorpheme,
-    CombiningFormMorpheme, 
-    Morpheme, Syllable } from '../morpheme'
-import { ListOfLexicalRoots } from './lexicalroot'
+    Tonal, AlphabeticLetter, ILetters } from '../grapheme'
+
+//------------------------------------------------------------------------------
+//  Morph
+//------------------------------------------------------------------------------
+
+export class Morph {}
+
+//------------------------------------------------------------------------------
+//  Allomorph
+//------------------------------------------------------------------------------
+
+export class Allomorph extends Morph {
+    tonal: Tonal = null;
+
+    getLiteral() {
+        if(this.tonal.getLiteral().length == 0) { 
+            // return string 'zero' for first tone. member variable characters of graph is still null.
+            return 'zero'; 
+        } else return this.tonal.getLiteral();
+    }
+}
+
+export class FreeAllomorph extends Allomorph {}
+
+export class CheckedAllomorph extends Allomorph {
+    final: Final = null;
+
+    getLiteral() {
+        if(this.tonal != null) {
+            return this.final.getLiteral() + this.tonal.getLiteral()
+        }
+        return this.final.getLiteral()
+    }
+}
+
+export class TonalAffix extends Morph {
+    tonal: Tonal = null
+    getLiteral() {
+        return this.tonal.getLiteral()
+    }
+}
+
+class FreeAffix extends TonalAffix {}
+
+class CheckedAffix extends TonalAffix {
+    // there is no final for affix
+}
+
+class ZeroAffix extends FreeAffix {
+    tonal = new ZeroTonal()
+}
 
 //------------------------------------------------------------------------------
 //  ISound for Lexical Root

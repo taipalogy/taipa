@@ -2,7 +2,7 @@ import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, MatchedPattern } from '../morpheme'
 import { MorphemeMaker } from '../morpheme'
 import { RomanizedKana, SetOfInitialConsonants, SetOfVowels } from './kana'
-import { Syllabary } from '../system'
+import { Syllabary } from '../morpheme'
 import { AlphabeticLetter } from '../grapheme'
 
 //------------------------------------------------------------------------------

@@ -1,11 +1,12 @@
 
 import { TonalAnalyzer, TonalInputingLexeme } from './tonal/lexeme'
-import { ToneSandhiInflectionLexeme, DummyLexeme, SandhiFormLexeme, Lexeme } from './lexeme'
+import { DummyLexeme, Lexeme } from './lexeme'
+//import { ToneSandhiInflectionLexeme, SandhiFormLexeme } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
 import { RuleBasedTagger } from './rulebasedtagger'
 import { SYMBOLS } from './symbols'
-import { Sound } from './system';
+import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
@@ -104,7 +105,7 @@ export class Client {
         let dp = new DependencyParser();
         let c: Configuration = dp.getInitialConfiguration();
         let tokens = str.match(/\w+/g);
-
+/*
         let lexemes: Array<TonalInputingLexeme> = new Array();
         let turner = new TonalAnalyzer()
         for(let key in tokens) {
@@ -129,7 +130,8 @@ export class Client {
             // shift the first lexeme from queue to stack
             guide.transitions.push(new Shift())
         }
-
+*/
+/*
         while(!c.isTerminalConfiguration()) {
             
             let t: Transition = guide.getNextTransition();
@@ -161,7 +163,7 @@ export class Client {
                 }
             }
         }
-
+*/
         let doc = new Document();
         doc.graph = c.getGraph();
         return doc;

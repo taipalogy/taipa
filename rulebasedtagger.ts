@@ -1,7 +1,7 @@
 
-import { ToneSandhiInflectionLexeme } from './lexeme'
+//import { ToneSandhiInflectionLexeme } from './lexeme'
 import { SYMBOLS } from './symbols'
-import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexeme'
+//import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexeme'
 import { combiningRules } from './tonal/version2'
 import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
 
@@ -25,10 +25,12 @@ class ConstructionOfClause {
 
 class Conversion {
     // different from parsing lexmem. convert between part of speeches.
+    /*
     forms: Array<ToneSandhiInflectionLexeme> = null
     as(): ToneSandhiInflectionLexeme {
         return this.forms[0]
     }
+    */
 }
 
 class Quantifier extends Conversion {
@@ -43,12 +45,12 @@ class Quantifier extends Conversion {
 
 class ConstructionElement{
     id: string = ''
-    lexemes: Array<ToneSandhiInflectionLexeme> = new Array()
+    //lexemes: Array<ToneSandhiInflectionLexeme> = new Array()
 
     constructor(id: string) {
         this.id = id
     }
-
+/*
     addLexeme(l: ToneSandhiInflectionLexeme) {
         this.lexemes.push(l)
     }
@@ -61,6 +63,7 @@ class ConstructionElement{
         }
         return false
     }
+*/
 }
 
 //------------------------------------------------------------------------------
@@ -80,7 +83,7 @@ class VerbPhrase extends TypeOfConstruction {
 
     constructor() {
         super()
-
+/*
         let turner1 = new TurningIntoSandhiForm(combiningRules.get('zs')['w'])
         let l1 = turner1.turnIntoLexemes('oannzs')[0]
         l1.partOfSpeech = SYMBOLS.VERB
@@ -103,6 +106,7 @@ class VerbPhrase extends TypeOfConstruction {
         intransitive.addLexeme(l3)
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
+        */
     }
 }
 
@@ -117,6 +121,7 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 //------------------------------------------------------------------------------
 
 export class RuleBasedTagger {
+    /*
     lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
 
     constructor(lexemes: Array<TonalInputingLexeme>) {
@@ -147,4 +152,5 @@ export class RuleBasedTagger {
             this.lexemes.push(vp.constructions[0].elements[k].lexemes[0])
         }
     }
+    */
 }

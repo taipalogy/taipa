@@ -1,16 +1,52 @@
 import { TonalInputingMorphemeMaker, TonalSyllable, TonalInputingMorpheme} from './morpheme'
-import { LexemeMaker } from '../lexeme'
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
-import { Analyzer, Sound } from '../system'
+import { Sound } from '../grapheme'
+import { Analyzer } from '../analyzer'
 import { lowerLettersOfTonal } from './version2';
 import { NoSuccess, Success } from '../result'
 
-//import { TonalLemmaLexeme } from '../lexeme'
-import { Word, FreeInflectionalEnding, CheckedInflectionalEnding, InflectionalEnding, 
-    InputingLexemeMaker } from '../lexeme'
+import { Word, InputingLexemeMaker } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../system'
-import { TonalAffix } from '../morpheme'
+import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
+import { TonalAffix } from './version2'
+
+//------------------------------------------------------------------------------
+//  Inflectional Ending
+//------------------------------------------------------------------------------
+
+class Ending {}
+
+export abstract class InflectionalEnding extends Ending {
+    abstract affix: TonalAffix = null;
+    getLiteral() {
+        return this.affix.getLiteral()
+    }
+}
+
+export class FreeInflectionalEnding extends InflectionalEnding {
+    affix = new TonalAffix();
+    baseAffixes: Array<TonalAffix> = new Array();
+}
+
+export class CheckedInflectionalEnding extends InflectionalEnding {
+    affix = new TonalAffix();
+}
+
+export abstract class TonalSymbolEnding extends Ending {
+    abstract allomorph: Allomorph = null
+    getLiteral() {
+        return this.allomorph.getLiteral()
+    }
+}
+
+export class FreeTonalEnding extends TonalSymbolEnding {
+    allomorph = null
+    //sandhiAllomorph: Allomorph = new Allomorph()
+}
+
+export class CheckedTonalEnding extends TonalSymbolEnding {
+    allomorph = null
+}
 
 //------------------------------------------------------------------------------
 //  Tonal Word

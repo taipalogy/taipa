@@ -1,9 +1,9 @@
-
-import { Sound, Syllabary } from '../system'
+import { Sound } from '../grapheme'
 import { list_of_lexical_roots } from './lexicalroots2'
 import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
     SetOfNasalizations, SetOfStopFinals, combiningRules, letterClass } from './version2'
 import { TonalAnalyzer } from './lexeme';
+import { Syllabary } from '../morpheme'
 
 //------------------------------------------------------------------------------
 //  Lexical Root

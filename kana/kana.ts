@@ -1,7 +1,8 @@
-import { Syllabary, Sound, SetOfSounds, ILetters } from '../system'
+import { Sound, SetOfSounds } from '../grapheme'
 import { KanaAnalyzer } from './analyzer';
 import { characters } from '../character'
-import { AlphabeticLetter } from '../grapheme'
+import { AlphabeticLetter, ILetters } from '../grapheme'
+import { Syllabary } from '../morpheme'
 
 export class RomanizedKana extends Syllabary {
     list: Array<Sound[]>

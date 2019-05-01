@@ -1,10 +1,18 @@
-import { Analyzer } from "./system";
 import { Morpheme } from './morpheme'
 
 type Class = { new(...args: any[]): any; };
 
 function createInstance<A extends AnalyzerWrapper>(c: new () => A): A {
     return new c();
+}
+
+//------------------------------------------------------------------------------
+//  Analyzer
+//------------------------------------------------------------------------------
+
+export abstract class Analyzer {
+    abstract getDataOfMorphologicalAnalysis(x: any)
+    abstract getDataOfLexicalAnalysis(str: string)
 }
 
 export class AnalyzerWrapper {

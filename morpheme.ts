@@ -1,11 +1,21 @@
 import { AlphabeticLetter } from './grapheme'
-import { Sound, Tonal, Morph, Syllabary, Final, Allomorph, CheckedAllomorph, FreeAllomorph } from './system'
+//import { Allomorph, FreeAllomorph, CheckedAllomorph, Morph } from './system'
 import { listOfUncombinedFreeAllomorphs, listOfUncombinedCheckedAllomorphs, ZeroAllomorph,
      AllomorphY, ZeroTonal } from './tonal/version2'
 import { AlphabeticGrapheme } from './grapheme'
+import { Sound, Tonal, Final } from './grapheme'
 import { ListOfLexicalRoots } from './tonal/lexicalroot';
 import { Result, NoSuccess, Success } from './result';
 import { TonalSyllable, TonalInputingMorpheme, syllabifyTonal } from './tonal/morpheme'
+
+//------------------------------------------------------------------------------
+//  Syllabary
+//------------------------------------------------------------------------------
+
+export abstract class Syllabary {
+    list: Array<Sound[]>
+    abstract setFirstLetter(beginning: string)
+}
 
 //------------------------------------------------------------------------------
 //  Tone Morpheme
@@ -17,35 +27,18 @@ class TonalMorpheme {}
 //------------------------------------------------------------------------------
 //  Root
 //------------------------------------------------------------------------------
-
+/*
 class LexicalRoot {
     stem: LexicalStem
     affix: TonalAffix
 }
-
+*/
 export class LexicalStem {
     sounds: Array<Sound>;
 }
 
 class VowelStem extends LexicalStem {}
 class ConsonantStem extends LexicalStem {}
-
-export class TonalAffix extends Morph {
-    tonal: Tonal = null
-    getLiteral() {
-        return this.tonal.getLiteral()
-    }
-}
-
-class FreeAffix extends TonalAffix {}
-
-class CheckedAffix extends TonalAffix {
-    // there is no final for affix
-}
-
-class ZeroAffix extends FreeAffix {
-    tonal = new ZeroTonal()
-}
 
 class DerivationalAffix {
     // lexical ending
@@ -64,7 +57,7 @@ export class Morpheme {}
 class TonallessMorpheme extends Morpheme {}
 
 export class RootMorpheme extends Morpheme {}
-
+/*
 export class ToneSandhiRootMorpheme extends RootMorpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null;
@@ -116,7 +109,7 @@ export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
         return null
     }
 }
-
+*/
 //------------------------------------------------------------------------------
 //  Syllable Patterns
 //------------------------------------------------------------------------------
@@ -245,7 +238,7 @@ export abstract class MorphemeMaker {
 //------------------------------------------------------------------------------
 //  Tone Sandhi Morpheme Maker
 //------------------------------------------------------------------------------
-
+/*
 export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
@@ -290,3 +283,4 @@ export class CombiningFormMorphemeMaker extends ToneSandhiRootMorphemeMaker {
         return tspms
     }
 }
+*/

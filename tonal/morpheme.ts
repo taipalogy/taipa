@@ -1,9 +1,11 @@
 import { Syllable, Morpheme, MorphemeMaker, MatchedPattern } from '../morpheme'
-import { CheckedAllomorph, FreeAllomorph, Allomorph, Syllabary } from '../system'
+import { Syllabary } from '../morpheme'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
 import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
+import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
+import { Tonal, Final } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  syllabifyTonal

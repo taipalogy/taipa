@@ -1,5 +1,5 @@
 
-import { InflectionalEnding } from "./lexeme"
+import { InflectionalEnding } from "./tonal/lexeme"
 import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
 
 //------------------------------------------------------------------------------
