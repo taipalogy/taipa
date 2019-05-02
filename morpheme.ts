@@ -57,59 +57,7 @@ export class Morpheme {}
 class TonallessMorpheme extends Morpheme {}
 
 export class RootMorpheme extends Morpheme {}
-/*
-export class ToneSandhiRootMorpheme extends RootMorpheme {
-    syllable: TonalSyllable;
-    allomorph: Allomorph = null;
 
-
-    constructor(syllable: TonalSyllable) {
-        super();
-        this.syllable = syllable;
-    }
-
-    assignAllomorph() {}
-}
-
-export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
-    assignAllomorph() {
-        if(listOfUncombinedCheckedAllomorphs.has(this.syllable.lastLetter.literal)) {
-            this.allomorph = listOfUncombinedCheckedAllomorphs.get(this.syllable.lastLetter.literal)
-            return
-        }
-
-        if(listOfUncombinedFreeAllomorphs.has(this.syllable.lastLetter.literal)) {
-            this.allomorph = listOfUncombinedFreeAllomorphs.get(this.syllable.lastLetter.literal)
-            return
-        }
-
-        this.allomorph = new ZeroAllomorph()
-        return
-    }
-
-    getCombiningForm(t: Tonal): TonalSyllable  {
-        if(this.allomorph != null) {
-            let s: TonalSyllable = new TonalSyllable(this.syllable.letters);
-            if(this.allomorph instanceof FreeAllomorph) {
-                if(this.allomorph instanceof ZeroAllomorph) {
-                    s.pushLetter(new AlphabeticLetter(t.characters))
-                } else if(this.allomorph instanceof AllomorphY) {
-                    s.popLetter()
-                    return s
-                } else {
-                    s.popLetter()
-                    s.pushLetter(new AlphabeticLetter(t.characters))
-                    return s
-                }
-            } else if(this.allomorph instanceof CheckedAllomorph) {
-                s.pushLetter(new AlphabeticLetter(this.allomorph.tonal.characters))
-                return s
-            }
-        }
-        return null
-    }
-}
-*/
 //------------------------------------------------------------------------------
 //  Syllable Patterns
 //------------------------------------------------------------------------------
@@ -234,53 +182,3 @@ export abstract class MorphemeMaker {
         return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes, 'result': result }
     }
 }
-
-//------------------------------------------------------------------------------
-//  Tone Sandhi Morpheme Maker
-//------------------------------------------------------------------------------
-/*
-export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
-    graphemes: Array<AlphabeticGrapheme>;
-    
-    constructor(graphemes: Array<AlphabeticGrapheme>) {
-        super()
-        this.graphemes = new Array();
-        this.graphemes = graphemes;
-    }
-
-    create(syllable: TonalSyllable) { return new TonalInputingMorpheme(syllable) }
-
-    createArray() { return new Array<TonalInputingMorpheme>() }
-
-    makeRootMorphemes() {
-        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
-    }
-}
-
-export class CombiningFormMorphemeMaker extends ToneSandhiRootMorphemeMaker {
-    
-    constructor(graphemes: Array<AlphabeticGrapheme>) {
-        super(graphemes)
-    }
-
-    createCombiningFormMorpheme(syllable: TonalSyllable) { 
-        let s = new CombiningFormMorpheme(syllable)
-        s.assignAllomorph()
-        return s 
-    }
-
-    makeCombiningMorphemes() {
-        // make morphemes and the last of them is a sandhi form
-        return this.postprecess(super.makeRootMorphemes().morphemes);
-    }
-
-    postprecess(tspms: Array<ToneSandhiRootMorpheme>) {
-        // replace the last morpheme with its sandhi form
-        if(tspms.length > 0) {
-            let last = tspms.pop()
-            tspms.push(this.createCombiningFormMorpheme(last.syllable))
-        }
-        return tspms
-    }
-}
-*/
