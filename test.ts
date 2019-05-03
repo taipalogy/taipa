@@ -13,7 +13,7 @@ console.log(`matched number of roots: ${list_of_lexical_roots.length === NUMBER_
 
 let cli = new Client()
 console.info(cli.output('suzsjippwhoat'))
-console.info(cli.output('zaucszeng'))
+console.info(cli.output('chaucscheng'))
 console.info(cli.output('tengzssek'))
 console.info(cli.output('dienwnauy'))
 console.info(cli.output('sengx'))

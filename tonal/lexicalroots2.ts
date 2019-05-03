@@ -1,5 +1,7 @@
 
 let list_of_new_syllables = [
+    'hoang',
+
     'jirx', 'jex', 'jek', 'jeng', 'jerx',
 
     'mnghh',
@@ -7,12 +9,6 @@ let list_of_new_syllables = [
     'n',
 
     'sm',
-]
-
-let list_of_ziang_syllables = []
-
-let list_of_zoanx_syllables = [
-    'hoang',
 ]
 
 export let list_of_lexical_roots = [
@@ -36,6 +32,20 @@ export let list_of_lexical_roots = [
     'cngh', 'cnghh', 'cur', 'cury', 'curw', 'curh', 'cok', 'cokk', 'cong', 'congy', 'congw', 'congx', 'co', 'coy', 'cow', 'cu', 'cuy',
     'cuw', 'cuzs', 'coaw', 'coazs', 'coah', 'coahh', 'coan', 'coan', 'coanw', 'coanx', 'coangw', 'coann', 'coannw', 'coe', 'coey',
     'coex',   'coezs', 'cuh', 'cuhh', 'cui', 'cuiy', 'cuiw', 'cun', 'cuny', 'cunw', 'cunx', 'cunzs', 'cut',
+
+    'cha', 'chay', 'chaw', 'chah', 'chahh', 'chai', 'chaiy', 'chaiw', 'chaix', 'chaizs', 'chainny', 'chak', 'chakk', 'cham', 'chamy', 'chamw',
+    'chamzs', 'chan', 'chany', 'chanw', 'chanx', 'chanzs', 'chang', 'changy', 'changw', 'changx', 'channy', 'channzs', 'chapp', 'chat', 'chatt',
+    'chau', 'chauy', 'chauw', 'chaux', 'chauzs', 'che', 'chey', 'chew', 'chex', 'chezs', 'cheh', 'chehh', 'chenn', 'chenny', 'chennw', 'chennzs',
+    'chi', 'chiy', 'chiw', 'chix', 'chizs', 'chia', 'chiay', 'chiaw', 'chiazs', 'chiah', 'chiahh', 'chiam', 'chiamw', 'chiamx', 'chiamzs', 'chien',
+    'chieny', 'chienw', 'chienx', 'chienzs', 'chiang', 'chiangy', 'chiangw', 'chiann', 'chianny', 'chiannw', 'chiannx', 'chiannzs', 'chiap',
+    'chiapp', 'chiet', 'chiett', 'chiau', 'chiauy', 'chiauw', 'chiaux', 'chih', 'chihh', 'chek', 'chekk', 'chim', 'chimy', 'chimw', 'chimx', 'chin',
+    'chiny', 'chinw', 'chinx', 'chinzs', 'cheng', 'chengy', 'chengw', 'chengx', 'chengzs', 'chinn', 'chinny', 'chinnw', 'chinnx', 'chinnzs',
+    'chiur', 'chiury', 'chiurw', 'chiurh', 'chiurhh', 'chiok', 'chiong', 'chiongy', 'chiongw', 'chiongx', 'chiongzs', 'chip', 'chipp', 'chit',
+    'chitt', 'chiu', 'chiuy', 'chiuw', 'chiuzs', 'chiunn', 'chiunny', 'chiunnw', 'chiunnzs', 'chng', 'chngy', 'chngw', 'chngx', 'chngzs', 'chur',
+    'chury', 'churw', 'churx', 'churzs', 'churh', 'chok', 'chokk', 'chong', 'chongy', 'chongw', 'chongx', 'chongzs', 'cho', 'choy', 'chozs', 'chu',
+    'chuy', 'chuw', 'chux', 'chuxzs', 'choay', 'choax', 'choazs', 'choah', 'choahh', 'choainnzs', 'choan', 'choany', 'choanw', 'choanx', 'choanzs',
+    'choann', 'choanny', 'choannw', 'choannx', 'choannzs', 'chutt', 'choew', 'choezs', 'chuh', 'chui', 'chuiy', 'chuiw', 'chuix', 'chuizs', 'chun',
+    'chuny', 'chunw', 'chunx', 'chunzs', 'chut', 'chutt', 
 
     'da', 'day', 'daw', 'dah', 'dahh', 'dai', 'daiy', 'daiw', 'daix', 'diazs', 'dainn', 'dianny', 'dak', 'dakk', 'dam', 'damy',
     'damw', 'damx', 'damzs', 'dan', 'dany', 'danw', 'danx', 'danzs', 'dang', 'dangy', 'dangw', 'dangx', 'dangzs', 'dann', 'danny',
@@ -178,19 +188,4 @@ export let list_of_lexical_roots = [
     'vongy', 'vongw', 'vongx', 'vongzs', 'vo', 'voy', 'vow', 'vox', 'vozs', 'vu', 'vuw', 'vux', 'vuzs', 'voaw', 'voah', 'voahh',
     'voan', 'voanw', 'voanx', 'voanzs', 'voann', 'voanny', 'voannw', 'voannx', 'voannzs', 'voat', 'voatt', 'voe', 'voey', 'voew',
     'voex', 'poezs', 'poeh', 'poehh', 'vuh', 'vui', 'vuix', 'vuizs', 'vun', 'vuny', 'vunw', 'vunx', 'vunzs', 'vut', 'vutt',
-
-    'za', 'zay', 'zaw', 'zah', 'zahh', 'zai', 'zaiy', 'zaiw', 'zaix', 'zaizs', 'zainny', 'zak', 'zakk', 'zam', 'zamy', 'zamw',
-    'zamzs', 'zan', 'zany', 'zanw', 'zanx', 'zanzs', 'zang', 'zangy', 'zangw', 'zangx', 'zanny', 'zannzs', 'zapp', 'zat', 'zatt',
-    'zau', 'zauy', 'zauw', 'zaux', 'zauzs', 'ze', 'zey', 'zew', 'zex', 'zezs', 'zeh', 'zehh', 'zenn', 'zenny', 'zennw', 'zennzs',
-    'zi', 'ziy', 'ziw', 'zix', 'zizs', 'zia', 'ziay', 'ziaw', 'ziazs', 'ziah', 'ziahh', 'ziam', 'ziamw', 'ziamx', 'ziamzs', 'zien',
-    'zieny', 'zienw', 'zienx', 'zienzs', 'ziang', 'ziangy', 'ziangw', 'ziann', 'zianny', 'ziannw', 'ziannx', 'ziannzs', 'ziap',
-    'ziapp', 'ziet', 'ziett', 'ziau', 'ziauy', 'ziauw', 'ziaux', 'zih', 'zihh', 'zek', 'zekk', 'zim', 'zimy', 'zimw', 'zimx', 'zin',
-    'ziny', 'zinw', 'zinx', 'zinzs', 'zeng', 'zengy', 'zengw', 'zengx', 'zengzs', 'zinn', 'zinny', 'zinnw', 'zinnx', 'zinnzs',
-    'ziur', 'ziury', 'ziurw', 'ziurh', 'ziurhh', 'ziok', 'ziong', 'ziongy', 'ziongw', 'ziongx', 'ziongzs', 'zip', 'zipp', 'zit',
-    'zitt', 'ziu', 'ziuy', 'ziuw', 'ziuzs', 'ziunn', 'ziunny', 'ziunnw', 'ziunnzs', 'zng', 'zngy', 'zngw', 'zngx', 'zngzs', 'zur',
-    'zury', 'zurw', 'zurx', 'zurzs', 'zurh', 'zok', 'zokk', 'zong', 'zongy', 'zongw', 'zongx', 'zongzs', 'zo', 'zoy', 'zozs', 'zu',
-    'zuy', 'zuw', 'zux', 'zuxzs', 'zoay', 'zoax', 'zoazs', 'zoah', 'zoahh', 'zoainnzs', 'zoan', 'zoany', 'zoanw', 'zoanx', 'zoanzs',
-    'zoann', 'zoanny', 'zoannw', 'zoannx', 'zoannzs', 'zutt', 'zoew', 'zoezs', 'zuh', 'zui', 'zuiy', 'zuiw', 'zuix', 'zuizs', 'zun',
-    'zuny', 'zunw', 'zunx', 'zunzs', 'zut', 'zutt', 
-
 ]

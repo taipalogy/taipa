@@ -84,11 +84,11 @@ export let lowerLettersOfTonal: ILetters = {
 
     // initials excludes checked finals and neutral finals
     'c': new AlphabeticLetter([characters.get('c')]),
+    'ch': new AlphabeticLetter([characters.get('c'), characters.get('h')]),
     'j': new AlphabeticLetter([characters.get('j')]),
     'q': new AlphabeticLetter([characters.get('q')]),
     's': new AlphabeticLetter([characters.get('s')]),
     'v': new AlphabeticLetter([characters.get('v')]),
-    'z': new AlphabeticLetter([characters.get('z')]),
 
     // initials, medial, and nasal finals
     'm': new AlphabeticLetter([characters.get('m')]),
@@ -136,14 +136,10 @@ export let lowerLettersOfTonal: ILetters = {
     'h': new AlphabeticLetter([characters.get('h')]),
 }
 
-let ziangLetters: ILetters = {
+let vowelLetters: ILetters = {
     // medial
     'ee': new AlphabeticLetter([characters.get('e'), characters.get('e')]),
     'or': new AlphabeticLetter([characters.get('o'), characters.get('r')]),
-}
-
-let zuanxLetters: ILetters = {
-    // medial
     'er': new AlphabeticLetter([characters.get('e'), characters.get('r')]),
     'ir': new AlphabeticLetter([characters.get('i'), characters.get('r')]),
 }
@@ -169,12 +165,12 @@ class MaterLectionisN  extends Medial {characters = [characters.get('n')]}
 class MaterLectionisNG  extends Medial {characters = [characters.get('n'), characters.get('g')]}
 
 class InitialC extends Initial {characters = [characters.get('c')]}
+class InitialCH extends Initial {characters = [characters.get('c'), characters.get('h')]}
 class InitialJ extends Initial {characters = [characters.get('j')]}
 class InitialL extends Initial {characters = [characters.get('l')]}
 class InitialQ extends Initial {characters = [characters.get('q')]}
 class InitialS extends Initial {characters = [characters.get('s')]}
 class InitialV extends Initial {characters = [characters.get('v')]}
-class InitialZ extends Initial {characters = [characters.get('z')]}
 
 class InitialH extends Initial {characters = [characters.get('h')]}
 
@@ -317,12 +313,12 @@ export class SetOfInitials extends SetOfSounds {
         this.initials.push(new InitialH())
 
         this.initials.push(new InitialC())
+        this.initials.push(new InitialCH())
         this.initials.push(new InitialJ())
         this.initials.push(new InitialL())
         this.initials.push(new InitialQ())
         this.initials.push(new InitialS())
         this.initials.push(new InitialV())
-        this.initials.push(new InitialZ())
 
         this.initials.push(new InitialM())
         this.initials.push(new InitialN())
@@ -414,6 +410,11 @@ class PSB implements PartialISound {
 class PSC implements PartialISound {
     name = 'c'
     initial: Initial = new InitialC()
+}
+
+class PSCH implements PartialISound {
+    name = 'ch'
+    initial: Initial = new InitialCH()
 }
 
 class PSD implements PartialISound {
@@ -592,11 +593,6 @@ class PSY implements PartialISound {
     checkedTonal: CheckedTonalY = new CheckedTonalY()
 }
 
-class PSZ implements PartialISound {
-    name = 'z'
-    initial: Initial = new InitialZ()
-}
-
 class PSZZS implements PartialISound {
     name = 'zzs'
     freeTonal: TonalZZS = new TonalZZS()
@@ -632,6 +628,7 @@ export const letterClass: Map<string, PartialISound> = new Map()
     .set('a', new PSA())
     .set('b', new PSB())
     .set('c', new PSC())
+    .set('ch', new PSCH())
     .set('d', new PSD())
     .set('e', new PSE())
     .set('f', new PSF())
@@ -663,7 +660,6 @@ export const letterClass: Map<string, PartialISound> = new Map()
     .set('xx', new PSXX())
     .set('xxx', new PSXXX())
     .set('y', new PSY())
-    .set('z', new PSZ())
     .set('zs', new PSZS())
     .set('zzs', new PSZZS())
 

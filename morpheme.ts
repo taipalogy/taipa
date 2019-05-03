@@ -1,12 +1,6 @@
-import { AlphabeticLetter } from './grapheme'
-//import { Allomorph, FreeAllomorph, CheckedAllomorph, Morph } from './system'
-import { listOfUncombinedFreeAllomorphs, listOfUncombinedCheckedAllomorphs, ZeroAllomorph,
-     AllomorphY, ZeroTonal } from './tonal/version2'
-import { AlphabeticGrapheme } from './grapheme'
-import { Sound, Tonal, Final } from './grapheme'
-import { ListOfLexicalRoots } from './tonal/lexicalroot';
+import { AlphabeticLetter, Sound } from './grapheme'
 import { Result, NoSuccess, Success } from './result';
-import { TonalSyllable, TonalInputingMorpheme, syllabifyTonal } from './tonal/morpheme'
+import { TonalAffix } from './tonal/version2'
 
 //------------------------------------------------------------------------------
 //  Syllabary
@@ -27,12 +21,12 @@ class TonalMorpheme {}
 //------------------------------------------------------------------------------
 //  Root
 //------------------------------------------------------------------------------
-/*
+
 class LexicalRoot {
     stem: LexicalStem
     affix: TonalAffix
 }
-*/
+
 export class LexicalStem {
     sounds: Array<Sound>;
 }

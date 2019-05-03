@@ -1,12 +1,5 @@
 import { Syllable } from './morpheme';
-import { GraphemeMaker } from './grapheme'
-//import { ToneSandhiRootMorphemeMaker, CombiningFormMorphemeMaker } from './morpheme'
-//import { ToneSandhiRootMorpheme, CombiningFormMorpheme } from './morpheme'
-import { Tonal } from './grapheme'
-import { lowerLettersOfTonal } from './tonal/version2';
-//import { Allomorph, FreeAllomorph, CheckedAllomorph } from './system'
-
-import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
+import { TonalInputingLexeme } from './tonal/lexeme'
 import { TonalSyllable } from './tonal/morpheme';
 
 //------------------------------------------------------------------------------
