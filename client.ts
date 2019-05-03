@@ -1,11 +1,9 @@
-
 import { TonalAnalyzer, TonalInputingLexeme } from './tonal/lexeme'
 import { DummyLexeme, Lexeme } from './lexeme'
-//import { ToneSandhiInflectionLexeme, SandhiFormLexeme } from './lexeme'
 import { dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser'
-import { RuleBasedTagger, SandhiFormLexeme, ToneSandhiInflectionLexeme } from './rulebasedtagger/rulebasedtagger'
-import { SYMBOLS } from './symbols'
+import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
+import { RuleBasedTagger, SandhiFormLexeme, ToneSandhiInflectionLexeme } from './dependencyparser/rulebasedtagger'
+import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'

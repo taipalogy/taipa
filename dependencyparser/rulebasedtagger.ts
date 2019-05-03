@@ -1,6 +1,6 @@
 
 //import { ToneSandhiInflectionLexeme } from './lexeme'
-import { SYMBOLS } from '../symbols'
+import { SYMBOLS } from './symbols'
 //import { TurningIntoInflectionLexeme, TurningIntoSandhiForm } from './lexeme'
 import { combiningRules } from '../tonal/version2'
 import { TonalWord, TonalInputingLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'

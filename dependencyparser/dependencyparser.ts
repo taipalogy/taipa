@@ -2,7 +2,7 @@
 
 import { MORPH_RULES } from './morphrules'
 import { SYMBOLS } from './symbols';
-import { Lexeme } from './lexeme';
+import { Lexeme } from '../lexeme';
 
 export enum Dependency {
     aux_caus = 'aux:caus',
