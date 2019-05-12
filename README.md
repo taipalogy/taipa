@@ -2,7 +2,7 @@
 
 This parser consists of the following functions:
 
-* lemmatizaer
+* lemmatizer
 * stemmer
 * morpheme-based morphological analyzer
 * graphemic analyzer
@@ -32,9 +32,15 @@ morphological analyzer + input method:
 
 `node main.js suzsjippwhoat`
 
+## Running the test
+
+run the test to see examples of word-parsing
+
+`node test.js`
+
 ## Input Method
 
-See dictionary.ts for more sample inputs. Use `Client.processOneToken` to analyze a word
+See dictionary.ts for more sample inputs. Use `Client.processOneToken` to process a word
 
 ## Dependency Parser
 

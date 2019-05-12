@@ -12,9 +12,14 @@ console.log(`matched number of letters: ${Object.keys(lowerLettersOfTonal).lengt
 console.log(`matched number of roots: ${list_of_lexical_roots.length === NUMBER_OF_ROOTS}`);
 
 let cli = new Client()
-console.info(cli.output('suzsjippwhoat'))
+console.info(cli.output('suzsjippwhoatf'))
+console.info(cli.output('kakfsittw'))
+console.info(cli.output('tengzssekf'))
+console.info(cli.output('piauzspietf'))
+console.info(cli.output('dittwchiapf'))
+console.info(cli.output('sekfhappw'))
+console.info(cli.output('qeysiokkw'))
 console.info(cli.output('chaucscheng'))
-console.info(cli.output('tengzssek'))
 console.info(cli.output('dienwnauy'))
 console.info(cli.output('sengx'))
 console.info(cli.output('a'))

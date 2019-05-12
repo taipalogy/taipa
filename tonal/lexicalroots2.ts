@@ -4,6 +4,8 @@ let list_of_new_syllables = [
 
     'jirx', 'jex', 'jek', 'jeng', 'jerx',
 
+    'lirey',
+
     'mnghh',
 
     'n',
