@@ -1,5 +1,6 @@
 
-import { ToneSandhiWord, InflectionalEnding } from "./lexeme"
+import { InflectionalEnding } from "./tonal/lexeme"
+import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
 
 //------------------------------------------------------------------------------
 //  Tone Group
@@ -42,9 +43,9 @@ class Phrase {
 }
 
 export class ToneSandhiPhrase extends Phrase {
-    words: Array<ToneSandhiWord>
+    words: Array<TonalWord>
 
-    constructor(words?: Array<ToneSandhiWord>) {
+    constructor(words?: Array<TonalWord>) {
         super()
         this.words = new Array();
         if(words != undefined) {
@@ -63,7 +64,7 @@ export class ToneSandhiPhrase extends Phrase {
         this.words = this.words.slice(0, this.words.length-1);
     }
 
-    pushWord(w: ToneSandhiWord) {
+    pushWord(w: TonalWord) {
         // push the word
         this.words.push(w);
         // concatenate a white space and the new word
@@ -71,5 +72,39 @@ export class ToneSandhiPhrase extends Phrase {
             this.literal += ' ';
         }
         this.literal += w.literal;
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Tone Sandhi Phraseme Maker
+//------------------------------------------------------------------------------
+
+export class ToneSandhiPhrasemeMaker {
+    lexemes: Array<TonalInputingLexeme>;
+
+    constructor(lexemes: Array<TonalInputingLexeme>) {
+        this.lexemes = new Array();
+        this.lexemes = lexemes;
+    }
+
+    makePhrasemes() {
+        let phrasemes: Array<ToneSandhiPhraseme> = new Array();
+
+        // unpack lexemes and take words out from them
+        let words: Array<TonalWord> = new Array();
+        for(let key in this.lexemes) {
+            words.push(this.lexemes[key].word);
+        }
+        
+        let tsp = new ToneSandhiPhraseme(new ToneSandhiPhrase(words));
+        if(this.lexemes.length > 0) {
+            let tg = new ToneGroup();
+            for(let k in this.lexemes) {
+            }
+        }
+
+        phrasemes.push(tsp);
+
+        return phrasemes
     }
 }

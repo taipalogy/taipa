@@ -1,14 +1,8 @@
-
-
-import { characters } from './character'
-import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    PartialPositionalSound,
-    FreeAllomorph,
-    CheckedAllomorph,
-    Allomorph,
-    Tonal,
-    } from './system'
-import { AlphabeticLetter } from './grapheme'
+import { Medial, Initial, FreeTonal, CheckedTonal, StopFinal, NasalFinal, Nasal, Final, Tonal,SetOfSounds } from '../system'
+import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../system'
+import { PartialISound } from './version2'
+import { characters } from '../character'
+import { AlphabeticLetter } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Alphabet
@@ -30,6 +24,7 @@ export let lowerLetters: ILetters = {
     // initials excludes checked finals and neutral finals
     'c': new AlphabeticLetter([characters.get('c')]),
     'j': new AlphabeticLetter([characters.get('j')]),
+    'l': new AlphabeticLetter([characters.get('l')]),
     'q': new AlphabeticLetter([characters.get('q')]),
     's': new AlphabeticLetter([characters.get('s')]),
     'v': new AlphabeticLetter([characters.get('v')]),
@@ -40,11 +35,11 @@ export let lowerLetters: ILetters = {
     'n': new AlphabeticLetter([characters.get('n')]),
     'ng': new AlphabeticLetter([characters.get('n'), characters.get('g')]),
     
-    // nasalization
+    // nasal
     'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
 
     // free tonals
-    'cs': new AlphabeticLetter([characters.get('c'), characters.get('s')]),
+    'ss': new AlphabeticLetter([characters.get('s'), characters.get('s')]),
     'w': new AlphabeticLetter([characters.get('w')]),
     'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
     'xxx': new AlphabeticLetter([characters.get('x'), characters.get('x'), characters.get('x')]),
@@ -57,27 +52,18 @@ export let lowerLetters: ILetters = {
     // free tonal, neutral tonal
     'y': new AlphabeticLetter([characters.get('y')]),
 
-    // initials, stop finals
+    // initials, stop finals, and checked tonals
     'b': new AlphabeticLetter([characters.get('b')]),
     'd': new AlphabeticLetter([characters.get('d')]),
     'g': new AlphabeticLetter([characters.get('g')]),
-    'l': new AlphabeticLetter([characters.get('l')]),
-
-    // initials and stop finals
     'k': new AlphabeticLetter([characters.get('k')]),
     'p': new AlphabeticLetter([characters.get('p')]),
     't': new AlphabeticLetter([characters.get('t')]),
-
-    // stop finals
-    'kk': new AlphabeticLetter([characters.get('k'), characters.get('k')]),
-    'pp': new AlphabeticLetter([characters.get('p'), characters.get('p')]),
-    'tt': new AlphabeticLetter([characters.get('t'), characters.get('t')]),
-    'hh': new AlphabeticLetter([characters.get('h'), characters.get('h')]),
     
-    // checked tonal
+    // neutral final
     'f': new AlphabeticLetter([characters.get('f')]),
 
-    // initia and neutral final
+    // initial and neutral final
     'h': new AlphabeticLetter([characters.get('h')]),
 }
 
@@ -95,7 +81,7 @@ let zuanxLetters: ILetters = {
 
 let consonantLetters: ILetters = {
     // voiced d
-    'dl': new AlphabeticLetter([characters.get('d'), characters.get('l')]),
+    'dr': new AlphabeticLetter([characters.get('d'), characters.get('r')]),
 }
 
 //------------------------------------------------------------------------------
@@ -138,7 +124,7 @@ export class ZeroTonal extends FreeTonal {characters = null;}
 
 export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 export class TonalW extends FreeTonal {characters = [characters.get('w')]}
-export class TonalCS extends FreeTonal {characters = [characters.get('c'), characters.get('s')]}
+export class TonalSS extends FreeTonal {characters = [characters.get('s'), characters.get('s')]}
 export class TonalXX extends FreeTonal {characters = [characters.get('x'), characters.get('x')]}
 export class TonalXXX extends FreeTonal {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
 export class TonalZZS extends FreeTonal {characters = [characters.get('z'), characters.get('z'), characters.get('s')]}
@@ -146,7 +132,13 @@ export class TonalZZS extends FreeTonal {characters = [characters.get('z'), char
 export class FreeTonalX extends FreeTonal {characters = [characters.get('x')]}
 export class FreeTonalY extends FreeTonal {characters = [characters.get('y')]}
 
-export class CheckedTonalW extends CheckedTonal {characters = [characters.get('w')]}
+export class TonalP extends CheckedTonal {characters = [characters.get('p')]}
+export class TonalT extends CheckedTonal {characters = [characters.get('t')]}
+export class TonalK extends CheckedTonal {characters = [characters.get('k')]}
+export class TonalH extends CheckedTonal {characters = [characters.get('h')]}
+export class TonalB extends CheckedTonal {characters = [characters.get('b')]}
+export class TonalD extends CheckedTonal {characters = [characters.get('d')]}
+export class TonalG extends CheckedTonal {characters = [characters.get('g')]}
 export class TonalF extends CheckedTonal {characters = [characters.get('f')]}
 
 export class CheckedTonalX extends CheckedTonal {characters = [characters.get('x')]}
@@ -156,34 +148,22 @@ export class FinalP extends StopFinal {characters = [characters.get('p')]}
 export class FinalT extends StopFinal {characters = [characters.get('t')]}
 export class FinalK extends StopFinal {characters = [characters.get('k')]}
 export class FinalH extends StopFinal {characters = [characters.get('h')]}
-/*
 export class FinalB extends StopFinal {characters = [characters.get('b')]}
 export class FinalD extends StopFinal {characters = [characters.get('d')]}
 export class FinalG extends StopFinal {characters = [characters.get('g')]}
-export class FinalL extends StopFinal {characters = [characters.get('l')]}
-*/
-export class FinalPP extends StopFinal {characters = [characters.get('p'), characters.get('p')]}
-export class FinalTT extends StopFinal {characters = [characters.get('t'), characters.get('t')]}
-export class FinalKK extends StopFinal {characters = [characters.get('k'), characters.get('k')]}
-export class FinalHH extends StopFinal {characters = [characters.get('h'), characters.get('h')]}
-/*
-export class FinalBB extends StopFinal {characters = [characters.get('b'), characters.get('b')]}
-export class FinalDD extends StopFinal {characters = [characters.get('d'), characters.get('d')]}
-export class FinalGG extends StopFinal {characters = [characters.get('g'), characters.get('g')]}
-export class FinalLL extends StopFinal {characters = [characters.get('l'), characters.get('l')]}
-*/
+export class FinalF extends StopFinal {characters = [characters.get('f')]}
 
 class FinalM extends NasalFinal {characters = [characters.get('m')]}
 class FinalN extends NasalFinal {characters = [characters.get('n')]}
 class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
 
-class NasalizationNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
+class NasalNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
-export class SetOfNasalizations extends SetOfSounds {
+export class SetOfNasals extends SetOfSounds {
     nasals: Array<Nasal> = new Array()
     constructor() {
         super()
-        this.nasals.push(new NasalizationNN())
+        this.nasals.push(new NasalNN())
     }
 
     toString() {
@@ -204,6 +184,7 @@ export class SetOfNasalFinals extends SetOfSounds {
         return super.toString(this.nasalFinals)
     }
 }
+
 
 export class SetOfNeutralFinals extends SetOfSounds {
     neutralFinals: Array<Final> = new Array()
@@ -287,7 +268,7 @@ export class SetOfFreeTonals extends SetOfSounds {
         this.freeTonals.push(new TonalW())
         this.freeTonals.push(new TonalXX())
         this.freeTonals.push(new TonalXXX())
-        this.freeTonals.push(new TonalCS())
+        this.freeTonals.push(new TonalSS())
         this.freeTonals.push(new TonalZZS())
 
         this.freeTonals.push(new FreeTonalX())
@@ -307,10 +288,10 @@ export class SetOfFinals extends SetOfSounds {
         this.finals.push(new FinalT())
         this.finals.push(new FinalK())
         this.finals.push(new FinalH())
-        this.finals.push(new FinalPP())
-        this.finals.push(new FinalTT())
-        this.finals.push(new FinalKK())
-        this.finals.push(new FinalHH())
+        this.finals.push(new FinalB())
+        this.finals.push(new FinalD())
+        this.finals.push(new FinalG())
+        this.finals.push(new FinalF())
 
         this.finals.push(new FinalM())
         this.finals.push(new FinalN())
@@ -330,10 +311,10 @@ export class SetOfStopFinals extends SetOfSounds {
         this.stopFinals.push(new FinalT())
         this.stopFinals.push(new FinalK())
         this.stopFinals.push(new FinalH())
-        this.stopFinals.push(new FinalPP())
-        this.stopFinals.push(new FinalTT())
-        this.stopFinals.push(new FinalKK())
-        this.stopFinals.push(new FinalHH())
+        this.stopFinals.push(new FinalB())
+        this.stopFinals.push(new FinalD())
+        this.stopFinals.push(new FinalG())
+        this.stopFinals.push(new FinalF())
     }
 
     toString() {
@@ -345,174 +326,165 @@ export class SetOfStopFinals extends SetOfSounds {
 //  Positional Sound for Lexical Root
 //------------------------------------------------------------------------------
 
-class PSA implements PartialPositionalSound {
+class PSA implements PartialISound {
     static medial: Medial = new MedialA()
 }
 
-class PSB implements PartialPositionalSound {
+class PSB implements PartialISound {
     static initial: Initial = new InitialB()
-    //static final: Final = new FinalB()
+    static final: Final = new FinalB()
+    static checkedTonal: Tonal = new TonalB()
 }
 
-class PSC implements PartialPositionalSound {
+class PSC implements PartialISound {
     static initial: Initial = new InitialC()
 }
 
-class PSD implements PartialPositionalSound {
+class PSD implements PartialISound {
     static initial: Initial = new InitialD()
-    //static final: Final = new FinalD()
+    static final: Final = new FinalD()
+    static checkedTonal: Tonal = new TonalD()
 }
 
-class PSE implements PartialPositionalSound {
+class PSE implements PartialISound {
     static medial: Medial = new MedialE()
 }
 
-class PSF implements PartialPositionalSound {
+class PSF implements PartialISound {
+    static final: Final = new FinalF()
     static checkedTonal: CheckedTonal = new TonalF()
 }
 
-class PSCS implements PartialPositionalSound {
-    static freeTonal: TonalCS = new TonalCS()
-}
-
-class PSZS implements PartialPositionalSound {
-    static freeTonal: TonalZS = new TonalZS()
-}
-
-class PSG implements PartialPositionalSound {
+class PSG implements PartialISound {
     static initial: Initial = new InitialG()
-    //static final: Final = new FinalG()
+    static final: Final = new FinalG()
+    static checkedTonal: Tonal = new TonalG()
 }
 
-class PSH implements PartialPositionalSound {
+class PSH implements PartialISound {
     static initial: Initial = new InitialH()
     static final: Final = new FinalH()
+    static checkedTonal: CheckedTonal = new TonalH()
 }
 
-class PSHH implements PartialPositionalSound {
-    static final: Final = new FinalHH()
-}
-
-class PSI implements PartialPositionalSound {
+class PSI implements PartialISound {
     static medial: Medial = new MedialI()
 }
 
-class PSJ implements PartialPositionalSound {
+class PSJ implements PartialISound {
     static initial: Initial = new InitialJ()
 }
 
-class PSK implements PartialPositionalSound {
+class PSK implements PartialISound {
     static initial: Initial = new InitialK()
     static final: Final = new FinalK()
+    static checkedTonal: Tonal = new TonalK()
 }
 
-class PSKK implements PartialPositionalSound {
-    static final: Final = new FinalKK()
-}
-
-class PSL implements PartialPositionalSound {
+class PSL implements PartialISound {
     static initial: Initial = new InitialL()
-    //static final: Final = new FinalL()
 }
 
-class PSM implements PartialPositionalSound {
+class PSM implements PartialISound {
     static initial: Initial = new InitialM()
     static medial: Medial = new MaterLectionisM()
     static final: Final = new FinalM()
 }
 
-class PSN implements PartialPositionalSound {
+class PSN implements PartialISound {
     static initial: Initial = new InitialN()
     static medial: Medial = new MaterLectionisN()
     static final: Final = new FinalN()
 }
 
-class PSNN implements PartialPositionalSound {
-    static nasalization: Nasal = new NasalizationNN()
+class PSNN implements PartialISound {
+    static nasal: Nasal = new NasalNN()
 }
 
-class PSNG implements PartialPositionalSound {
+class PSNG implements PartialISound {
     static initial: Initial = new InitialNG()
     static medial: Medial = new MaterLectionisNG()
     static final: Final = new FinalNG()
 }
 
-class PSO implements PartialPositionalSound {
+class PSO implements PartialISound {
     static medial: Medial = new MedialO()
 }
 
-class PSP implements PartialPositionalSound {
+class PSP implements PartialISound {
     static initial: Initial = new InitialP()
     static final: Final = new FinalP()
+    static checkedTonal: Tonal = new TonalP()
 }
 
-class PSPP implements PartialPositionalSound {
-    static final: Final = new FinalPP()
-}
-
-class PSQ implements PartialPositionalSound {
+class PSQ implements PartialISound {
     static initial: Initial = new InitialQ()
 }
 
-class PSS implements PartialPositionalSound {
+class PSS implements PartialISound {
     static initial: Initial = new InitialS()
 }
 
-class PST implements PartialPositionalSound {
+class PSSS implements PartialISound {
+    static freeTonal: TonalSS = new TonalSS()
+}
+
+class PST implements PartialISound {
     static initial: Initial = new InitialT()
     static final: Final = new FinalT()
+    static checkedTonal: Tonal = new TonalT()
 }
 
-class PSTT implements PartialPositionalSound {
-    static final: Final = new FinalTT()
-}
-
-class PSU implements PartialPositionalSound {
+class PSU implements PartialISound {
     static medial: Medial = new MedialU()
 }
 
-class PSUR implements PartialPositionalSound {
+class PSUR implements PartialISound {
     static medial: Medial = new MedialUR()
 }
 
-class PSV implements PartialPositionalSound {
+class PSV implements PartialISound {
     static initial: Initial = new InitialV()
 }
 
-class PSW implements PartialPositionalSound {
+class PSW implements PartialISound {
     static freeTonal: TonalW = new TonalW()
-    static checkedTonal: CheckedTonal = new CheckedTonalW()
 }
 
-class PSX implements PartialPositionalSound {
+class PSX implements PartialISound {
     static freeTonal: FreeTonalX = new FreeTonalX()
     static checkedTonal: CheckedTonalX = new CheckedTonalX()
 }
 
-class PSXX implements PartialPositionalSound {
+class PSXX implements PartialISound {
     static freeTonal: TonalXX = new TonalXX()
 }
 
-class PSXXX implements PartialPositionalSound {
+class PSXXX implements PartialISound {
     static freeTonal: TonalXX = new TonalXXX()
 }
 
-class PSY implements PartialPositionalSound {
+class PSY implements PartialISound {
     static freeTonal: FreeTonalY = new FreeTonalY()
     static checkedTonal: CheckedTonalY = new CheckedTonalY()
 }
 
-class PSZ implements PartialPositionalSound {
+class PSZ implements PartialISound {
     static initial: Initial = new InitialZ()
 }
 
-class PSZZS implements PartialPositionalSound {
+class PSZS implements PartialISound {
+    static freeTonal: TonalZS = new TonalZS()
+}
+
+class PSZZS implements PartialISound {
     static freeTonal: TonalZZS = new TonalZZS()
 }
 
-class PSZero implements PartialPositionalSound {
+class PSZero implements PartialISound {
     static freeTonal: ZeroTonal = new ZeroTonal()
 }
+
 
 //------------------------------------------------------------------------------
 //  Combining Rule
@@ -520,22 +492,20 @@ class PSZero implements PartialPositionalSound {
 
 export const combiningRules: Map<string, any> = new Map()
     .set('zero', { zs: PSZS.freeTonal })
-    .set('y', { zero: PSZero.freeTonal, cs: PSCS.freeTonal })
+    .set('y', { zero: PSZero.freeTonal, ss: PSSS.freeTonal })
     .set('w', { y: PSY.freeTonal })
     .set('x', { zs: PSZS.freeTonal, w: PSW.freeTonal })
     .set('zs', { w: PSW.freeTonal })
-    .set('p', { f: PSF.checkedTonal })
-    .set('t', { f: PSF.checkedTonal })
-    .set('k', { f: PSF.checkedTonal })
-    .set('h', { f: PSF.checkedTonal, y: PSY.checkedTonal })
-    .set('pp', { w: PSW.checkedTonal, x: PSX.checkedTonal})
-    .set('tt', { w: PSW.checkedTonal, x: PSX.checkedTonal})
-    .set('kk', { w: PSW.checkedTonal, x: PSX.checkedTonal})
-    .set('hh', { w: PSW.checkedTonal, x: PSX.checkedTonal})
+    .set('p', { p: PSP.checkedTonal })
+    .set('t', { t: PST.checkedTonal })
+    .set('k', { k: PSK.checkedTonal })
+    .set('h', { h: PSH.checkedTonal, y: PSY.checkedTonal })
+    .set('b', { b: PSB.checkedTonal, x: PSX.checkedTonal })
+    .set('d', { d: PSD.checkedTonal, x: PSX.checkedTonal })
+    .set('g', { g: PSG.checkedTonal, x: PSX.checkedTonal })
+    .set('f', { f: PSF.checkedTonal, x: PSX.checkedTonal })
 
-
-// need to verify the size of the map
-export const letterClass: Map<string, PartialPositionalSound> = new Map()
+export const letterClass: Map<string, PartialISound> = new Map()
     .set('a', PSA)
     .set('b', PSB)
     .set('c', PSC)
@@ -544,11 +514,9 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('f', PSF)
     .set('g', PSG)
     .set('h', PSH)
-    .set('hh', PSHH)
     .set('i', PSI)
     .set('j', PSJ)
     .set('k', PSK)
-    .set('kk', PSKK)
     .set('l', PSL)
     .set('m', PSM)
     .set('n', PSN)
@@ -556,12 +524,10 @@ export const letterClass: Map<string, PartialPositionalSound> = new Map()
     .set('ng', PSNG)
     .set('o', PSO)
     .set('p', PSP)
-    .set('pp', PSPP)
     .set('q', PSQ)
     .set('s', PSS)
-    .set('cs', PSCS)
+    .set('ss', PSSS)
     .set('t', PST)
-    .set('tt', PSTT)
     .set('u', PSU)
     .set('ur', PSUR)
     .set('v', PSV)
@@ -583,12 +549,8 @@ export class ZeroAllomorph extends FreeAllomorph {
     tonal = new ZeroTonal()
 }
 
-class AllomorphCS extends FreeAllomorph {
-    tonal = new TonalCS()
-}
-
-class AllomorphZS extends FreeAllomorph {
-    tonal = new TonalZS()
+class AllomorphSS extends FreeAllomorph {
+    tonal = new TonalSS()
 }
 
 export class AllomorphY extends FreeAllomorph {
@@ -615,16 +577,19 @@ class AllomorphZZS extends FreeAllomorph {
     tonal = new TonalZZS()
 }
 
+export class AllomorphZS extends FreeAllomorph {
+    tonal = new TonalZS()
+}
+
 export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set('cs', new AllomorphCS())
+    .set('ss', new AllomorphSS())
     .set('w', new AllomorphW())
     .set('xx', new AllomorphXX())
     .set('xxx', new AllomorphXXX())
-    .set('zs', new AllomorphZS())
     .set('zzs', new AllomorphZZS())
+    .set('zs', new AllomorphZS())
     .set('y', new AllomorphY())
     .set('x', new AllomorphX())
-
 
 class AllomorphP extends CheckedAllomorph {
     final = new FinalP()
@@ -642,40 +607,40 @@ class AllomorphH extends CheckedAllomorph {
     final = new FinalH()
 }
 
+class AllomorphB extends CheckedAllomorph {
+    final = new FinalB()
+}
+
+class AllomorphD extends CheckedAllomorph {
+    final = new FinalD()
+}
+
+class AllomorphG extends CheckedAllomorph {
+    final = new FinalG()
+}
+
+class AllomorphF extends CheckedAllomorph {
+    final = new FinalF()
+}
+
 class AllomorphPP extends CheckedAllomorph {
-    final = new FinalPP()
+    final = new FinalP()
+    tonal = new TonalP()
 }
 
 class AllomorphTT extends CheckedAllomorph {
-    final = new FinalTT()
+    final = new FinalT()
+    tonal = new TonalT()
 }
 
 class AllomorphKK extends CheckedAllomorph {
-    final = new FinalKK()
+    final = new FinalK()
+    tonal = new TonalK()
 }
 
 class AllomorphHH extends CheckedAllomorph {
-    final = new FinalHH()
-}
-
-class AllomorphPF extends CheckedAllomorph {
-    final = new FinalP()
-    tonal = new TonalF()
-}
-
-class AllomorphTF extends CheckedAllomorph {
-    final = new FinalT()
-    tonal = new TonalF()
-}
-
-class AllomorphKF extends CheckedAllomorph {
-    final = new FinalK()
-    tonal = new TonalF()
-}
-
-class AllomorphHF extends CheckedAllomorph {
     final = new FinalH()
-    tonal = new TonalF()
+    tonal = new TonalH()
 }
 
 export class AllomorphHY extends CheckedAllomorph {
@@ -683,43 +648,43 @@ export class AllomorphHY extends CheckedAllomorph {
     tonal = new CheckedTonalY()
 }
 
-class AllomorphPPW extends CheckedAllomorph {
-    final = new FinalPP()
-    tonal = new TonalW()
+class AllomorphBB extends CheckedAllomorph {
+    final = new FinalB()
+    tonal = new TonalB()
 }
 
-class AllomorphTTW extends CheckedAllomorph {
-    final = new FinalTT()
-    tonal = new TonalW()
+class AllomorphDD extends CheckedAllomorph {
+    final = new FinalD()
+    tonal = new TonalD()
 }
 
-class AllomorphKKW extends CheckedAllomorph {
-    final = new FinalKK()
-    tonal = new TonalW()
+class AllomorphGG extends CheckedAllomorph {
+    final = new FinalG()
+    tonal = new TonalG()
 }
 
-class AllomorphHHW extends CheckedAllomorph {
-    final = new FinalHH()
-    tonal = new TonalW()
+class AllomorphFF extends CheckedAllomorph {
+    final = new FinalF()
+    tonal = new TonalF()
 }
 
-class AllomorphPPX extends CheckedAllomorph {
-    final = new FinalPP()
+class AllomorphBX extends CheckedAllomorph {
+    final = new FinalB()
     tonal = new CheckedTonalX()
 }
 
-class AllomorphTTX extends CheckedAllomorph {
-    final = new FinalTT()
+class AllomorphDX extends CheckedAllomorph {
+    final = new FinalD()
     tonal = new CheckedTonalX()
 }
 
-class AllomorphKKX extends CheckedAllomorph {
-    final = new FinalKK()
+class AllomorphGX extends CheckedAllomorph {
+    final = new FinalG()
     tonal = new CheckedTonalX()
 }
 
-class AllomorphHHX extends CheckedAllomorph {
-    final = new FinalHH()
+class AllomorphFX extends CheckedAllomorph {
+    final = new FinalF()
     tonal = new CheckedTonalX()
 }
 
@@ -728,23 +693,23 @@ export const listOfCheckedAllomorphs: Map<string, Allomorph> = new Map()
     .set(PST.final.getLiteral(), new AllomorphT())
     .set(PSK.final.getLiteral(), new AllomorphK())
     .set(PSH.final.getLiteral(), new AllomorphH())
-    .set(PSPP.final.getLiteral(), new AllomorphPP())
-    .set(PSTT.final.getLiteral(), new AllomorphTT())
-    .set(PSKK.final.getLiteral(), new AllomorphKK())
-    .set(PSHH.final.getLiteral(), new AllomorphHH())
-    .set(PSP.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphPF())
-    .set(PST.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphTF())
-    .set(PSK.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphKF())
-    .set(PSH.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphHF())
-    .set(PSPP.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphPPW())
-    .set(PSTT.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphTTW())
-    .set(PSKK.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphKKW())
-    .set(PSHH.final.getLiteral() + PSW.checkedTonal.getLiteral(), new AllomorphHHW())
+    .set(PSB.final.getLiteral(), new AllomorphB())
+    .set(PSD.final.getLiteral(), new AllomorphD())
+    .set(PSG.final.getLiteral(), new AllomorphG())
+    .set(PSF.final.getLiteral(), new AllomorphF())
+    .set(PSP.final.getLiteral() + PSP.checkedTonal.getLiteral(), new AllomorphPP())
+    .set(PST.final.getLiteral() + PST.checkedTonal.getLiteral(), new AllomorphTT())
+    .set(PSK.final.getLiteral() + PSK.checkedTonal.getLiteral(), new AllomorphKK())
+    .set(PSH.final.getLiteral() + PSH.checkedTonal.getLiteral(), new AllomorphHH())
+    .set(PSB.final.getLiteral() + PSB.checkedTonal.getLiteral(), new AllomorphBB())
+    .set(PSD.final.getLiteral() + PSD.checkedTonal.getLiteral(), new AllomorphDD())
+    .set(PSG.final.getLiteral() + PSG.checkedTonal.getLiteral(), new AllomorphGG())
+    .set(PSF.final.getLiteral() + PSF.checkedTonal.getLiteral(), new AllomorphFF())
     .set(PSH.final.getLiteral() + PSY.checkedTonal.getLiteral(), new AllomorphHY())
-    .set(PSPP.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphPPX())
-    .set(PSTT.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphTTX())
-    .set(PSKK.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphKKX())
-    .set(PSHH.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphHHX())
+    .set(PSB.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphBX())
+    .set(PSD.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphDX())
+    .set(PSG.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphGX())
+    .set(PSF.final.getLiteral() + PSX.checkedTonal.getLiteral(), new AllomorphFX())
 
 export const listOfUncombinedFreeAllomorphs: Map<string, Allomorph> = new Map()
     .set(PSW.freeTonal.getLiteral(), new AllomorphW())
@@ -757,18 +722,19 @@ export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map
     .set(PST.final.getLiteral(), new AllomorphT())
     .set(PSK.final.getLiteral(), new AllomorphK())
     .set(PSH.final.getLiteral(), new AllomorphH())
-    .set(PSPP.final.getLiteral(), new AllomorphPP())
-    .set(PSTT.final.getLiteral(), new AllomorphTT())
-    .set(PSKK.final.getLiteral(), new AllomorphKK())
-    .set(PSHH.final.getLiteral(), new AllomorphHH())
+    .set(PSB.final.getLiteral(), new AllomorphB())
+    .set(PSD.final.getLiteral(), new AllomorphD())
+    .set(PSG.final.getLiteral(), new AllomorphG())
+    .set(PSF.final.getLiteral(), new AllomorphF())
 
 export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
-    .set(PSCS.freeTonal.getLiteral(), [new FreeTonalY()])
+    .set(PSSS.freeTonal.getLiteral(), [new FreeTonalY()])
     .set(PSW.freeTonal.getLiteral(), [new TonalZS(), new FreeTonalX()])
-    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCS, new FreeTonalX()])
-    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalCS(), new FreeTonalX()])
-    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalCS(), new ZeroTonal()])
+    .set(PSXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSS, new FreeTonalX()])
+    .set(PSXXX.freeTonal.getLiteral(), [new TonalZS(), new TonalSS(), new FreeTonalX()])
+    .set(PSZS.freeTonal.getLiteral(), [new FreeTonalX(), new TonalSS(), new ZeroTonal()])
     .set(PSZZS.freeTonal.getLiteral(), [])
     .set(PSX.freeTonal.getLiteral(), [])
     .set(PSY.freeTonal.getLiteral(), [new TonalW()])
     .set('zero', [new FreeTonalY()])
+

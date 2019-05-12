@@ -1,29 +1,19 @@
-
-import { Sound } from './system'
-import { GraphemeMaker } from './graphememaker'
-
+import { Sound } from '../grapheme'
 import { list_of_lexical_roots } from './lexicalroots2'
-import { SetOfMaterLectionis,
-    SetOfMedials,
-    SetOfInitials,
-    SetOfFreeTonals,
-    SetOfFinals,
-    SetOfNeutralFinals,
-    SetOfNasalizations,
-    SetOfStopFinals,
-    combiningRules,
-    letterClass,
-    } from './version2'
+import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
+    SetOfNasalizations, SetOfStopFinals, combiningRules, letterClass } from './version2'
+import { TonalAnalyzer } from './lexeme';
+import { Syllabary } from '../morpheme'
 
 //------------------------------------------------------------------------------
 //  Lexical Root
 //------------------------------------------------------------------------------
 
-export class ListOfLexicalRoots {
+export class ListOfLexicalRoots extends Syllabary {
     list: Array<Sound[]> =  new Array()
 
     setFirstLetter(beginning: string) {
-        let cog = new ClientOfGenerator
+        let cog = new ClientOfGenerator()
         let entries: Array<Sound[]> = cog.generate(beginning)
         for(let i in entries) {
             this.list.push(entries[i])
@@ -42,7 +32,7 @@ export class ListOfLexicalRoots {
     }
 }
 
-export class LexicalRootGenerator {
+class LexicalRootGenerator {
     generate(beginning: string) {
         let strs: string[] = new Array
         for(let i in list_of_lexical_roots) {
@@ -55,14 +45,7 @@ export class LexicalRootGenerator {
     }
 }
 
-export class ClientOfGenerator {
-    private turnIntoGraphemes(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str);
-        let graphemes = gm.makeGraphemes();
-        return graphemes
-    }
-
+class ClientOfGenerator {
     private analyzeAfterNasalFinalsOrNasalSound(ls: string[], sounds: string[], index: number): string[] {
         // base form of checked tone do not have a tonal
         if(this.isFreeTonal(ls[index])) {
@@ -190,7 +173,7 @@ export class ClientOfGenerator {
                     // zero-tone-mark for first tone will not be pushed
                     e.push(tos[k].getLiteral() + '.freeTonal')
                 }
-                //console.log(e + '-')
+
                 // first tone is still pushed to return
                 ret.push(e)
             }
@@ -200,7 +183,6 @@ export class ClientOfGenerator {
             let to = combiningRules.get('zero')
             //console.debug(Object.keys(to))
             e.push(combiningRules.get('zero')[Object.keys(to)[0]].getLiteral() + '.freeTonal')
-            //console.log(e + '+')
             ret.push(e)
         }
     
@@ -223,7 +205,6 @@ export class ClientOfGenerator {
                         // pushed to fill the slot, block following duplicates
                         // duplicates come from combining rules
                         buffer.push(cfs[m])
-                        //console.log(cfs[m] + '*')
                     }
                 }
             }
@@ -239,23 +220,24 @@ export class ClientOfGenerator {
             let clasName = entry[i].slice(0, n)
             let position = entry[i].slice(n+1)
             //console.debug(entry + ' ' + clasName + ' ' + position)
-            ret.push(letterClass.get(clasName)[position])
+            ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
         }
         return ret
     }
 
     generate(beginning: string) {
         let lrg = new LexicalRootGenerator()
-        let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with init
+        let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with beggining
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
+        let turner = new TonalAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let gs = this.turnIntoGraphemes(strs[i])
+            let output = turner.getDataOfGraphemicAnalysis(strs[i])
             let ls: string[] = []
-            for(let j in gs) {
-                ls.push(gs[j].letter.literal)
+            for(let j in output.graphemes) {
+                ls.push(output.graphemes[j].letter.literal)
             }
             
             let sounds: string[] = []
@@ -278,7 +260,6 @@ export class ClientOfGenerator {
             // pass 0 as index to indicate it has null initial consonants
             sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
 
-            //let initials: string = ''
             if(this.isInitialConsonant(ls[0])) {
                 // analyze initial consonants
                 sounds.push(ls[0] + '.initial')
@@ -287,7 +268,6 @@ export class ClientOfGenerator {
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
                 } else if(this.isFinalConsonant(ls[1])) {
                     // consonants followed by consonants. CC
-                    // there should be a vowel -ir-
                     sounds = this.analyzeAfterVowels(ls, sounds, sounds.length)
                 }
             }
@@ -318,7 +298,6 @@ export class ClientOfGenerator {
                     e = Object.assign([], entry)
                     e.push(tos[k].getLiteral() + '.checkedTonal')
 
-                    //console.log(e + '$')
                     entries.push(this.convert(e))
                 }
     
