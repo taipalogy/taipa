@@ -1,11 +1,82 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern } from '../morpheme'
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, SyllableMetaplasm } from '../morpheme'
 import { Syllabary } from '../morpheme'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
 import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
-import { Tonal, Final } from '../grapheme'
+
+//------------------------------------------------------------------------------
+//  Tonal Metaplasm
+//------------------------------------------------------------------------------
+
+class TonalSyllableMetaplasm extends SyllableMetaplasm {
+    apply(syllable: TonalSyllable, allomorph: Allomorph) {}
+}
+
+export class TonalUncombinedForms extends TonalSyllableMetaplasm {
+
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+        // get base forms as strings
+        if(allomorph != null) {
+            // member variable allomorph is not null
+            if(allomorph instanceof FreeAllomorph) {
+                if(allomorph instanceof ZeroAllomorph) {
+                    // no need to pop letter
+                    // push letter to make tone 2
+                    // the base tone of the first tone is the second tone
+                    // 1 to 2 ---->
+                    let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                    s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
+                    //console.log(this.syllable)
+                    return [s];
+                } else {
+                    // the 7th tone has two baseforms
+                    let ret = [];
+                    for(let i in freeAllomorphUncombiningRules.get(allomorph.getLiteral())) {
+                        // pop letter
+                        // push letter
+                        let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                        //if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
+                        if(!(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
+                            // when there is allomorph
+                            // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
+                            s.popLetter();
+                            // there are base tonals
+                            // includes ss and x, exclude zero allomorph
+                            s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i].characters));
+                            ret.push(s);
+                        } else {
+                            // include zero suffix. the base tone of the seventh tone.
+                            // exclude ss and x.
+                            // 7 to 1 ---->
+                            // tone 1 has no allomorph
+                            s.popLetter();
+                            ret.push(s);
+                        }
+                    }
+                    //console.log(ret)
+                    return ret;
+                }
+            } else if(allomorph instanceof CheckedAllomorph) {
+                // pop the last letter
+                // no need to push letter
+                // 1 to 4. 3 to 8. 2 to 4. 5 to 8.  ---->
+                let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                s.popLetter();
+                //console.log(s.literal)
+                return [s];
+            }
+        } else {
+            // member variable allomorph is null
+            // this syllable is already in base form
+            // is this block redundant
+            return [new TonalSyllable(syllable.letters)];
+        }
+        return []; // return empty array
+    }
+
+}
 
 //------------------------------------------------------------------------------
 //  syllabifyTonal
@@ -60,12 +131,13 @@ export class TonalSyllable extends Syllable {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Inputing Morpheme
+//  Tonal Morpheme
 //------------------------------------------------------------------------------
 
-export class TonalInputingMorpheme extends Morpheme {
+export class TonalMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
+    metaplasm: TonalSyllableMetaplasm
 
     constructor(syllable: TonalSyllable) {
         super()
@@ -114,7 +186,7 @@ export class TonalInputingMorpheme extends Morpheme {
                         }
                     }
                 }
-            }else if(aoas.length == 1 && aoas[0].tonal == null){
+            } else if(aoas.length == 1 && aoas[0].tonal == null){
                 // just return for stop finals without tonal
                 return
             } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
@@ -152,64 +224,8 @@ export class TonalInputingMorpheme extends Morpheme {
         }
     }
 
-    getBaseForms(): Array<TonalSyllable> {
-        // get base forms as strings
-        if(this.allomorph != null) {
-            // member variable allomorph is not null
-            if(this.allomorph instanceof FreeAllomorph) {
-                if(this.allomorph instanceof ZeroAllomorph) {
-                    // no need to pop letter
-                    // push letter to make tone 2
-                    // the base tone of the first tone is the second tone
-                    // 1 to 2 ---->
-                    let s: TonalSyllable = new TonalSyllable(this.syllable.letters);
-                    s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
-                    //console.log(this.syllable)
-                    return [s];
-                } else {
-                    // the 7th tone has two baseforms
-                    let ret = [];
-                    for(let i in freeAllomorphUncombiningRules.get(this.allomorph.getLiteral())) {
-                        // pop letter
-                        // push letter
-                        let s: TonalSyllable = new TonalSyllable(this.syllable.letters);
-                        //if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
-                        if(!(freeAllomorphUncombiningRules.get(this.allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
-                            // when there is allomorph
-                            // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
-                            s.popLetter();
-                            // there are base tonals
-                            // includes ss and x, exclude zero allomorph
-                            s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get(this.allomorph.getLiteral())[i].characters));
-                            ret.push(s);
-                        } else {
-                            // include zero suffix. the base tone of the seventh tone.
-                            // exclude ss and x.
-                            // 7 to 1 ---->
-                            // tone 1 has no allomorph
-                            s.popLetter();
-                            ret.push(s);
-                        }
-                    }
-                    //console.log(ret)
-                    return ret;
-                }
-            } else if(this.allomorph instanceof CheckedAllomorph) {
-                // pop the last letter
-                // no need to push letter
-                // 1 to 4. 3 to 8. 2 to 4. 5 to 8.  ---->
-                let s: TonalSyllable = new TonalSyllable(this.syllable.letters);
-                s.popLetter();
-                //console.log(s.literal)
-                return [s];
-            }
-        } else {
-            // member variable allomorph is null
-            // this syllable is already in base form
-            // is this block redundant
-            return [new TonalSyllable(this.syllable.letters)];
-        }
-        return []; // return empty array
+    apply(tm: TonalSyllableMetaplasm): any {
+        return tm.apply(this.syllable, this.allomorph)
     }
 }
 
@@ -217,7 +233,7 @@ export class TonalInputingMorpheme extends Morpheme {
 //  Tonal Inputing Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class TonalInputingMorphemeMaker extends MorphemeMaker {
+export class TonalMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     
     constructor(gs: Array<AlphabeticGrapheme>) {
@@ -226,9 +242,9 @@ export class TonalInputingMorphemeMaker extends MorphemeMaker {
         this.graphemes = gs;
     }
 
-    create(syllable: TonalSyllable) { return new TonalInputingMorpheme(syllable) }
+    create(syllable: TonalSyllable) { return new TonalMorpheme(syllable) }
 
-    createArray() { return new Array<TonalInputingMorpheme>() }
+    createArray() { return new Array<TonalMorpheme>() }
 
     makeCombinedMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);

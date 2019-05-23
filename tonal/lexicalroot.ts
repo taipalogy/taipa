@@ -2,7 +2,7 @@ import { Sound } from '../grapheme'
 import { list_of_lexical_roots } from './lexicalroots2'
 import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
     SetOfNasalizations, SetOfStopFinals, combiningRules, letterClass } from './version2'
-import { TonalAnalyzer } from './lexeme';
+import { TonalAnalyzer } from './analyzer'
 import { Syllabary } from '../morpheme'
 
 //------------------------------------------------------------------------------
@@ -234,7 +234,7 @@ class ClientOfGenerator {
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let output = turner.getDataOfGraphemicAnalysis(strs[i])
+            let output = turner.getGraphemicAnalysisResults(strs[i])
             let ls: string[] = []
             for(let j in output.graphemes) {
                 ls.push(output.graphemes[j].letter.literal)

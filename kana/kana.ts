@@ -137,7 +137,7 @@ class ClientOfGenerator {
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let output = turner.getDataOfGraphemicAnalysis(strs[i])
+            let output = turner.getGraphemicAnalysisResults(strs[i])
             let ls: string[] = []
             for(let j in output.graphemes) {
                 ls.push(output.graphemes[j].letter.literal)

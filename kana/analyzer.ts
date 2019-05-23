@@ -1,7 +1,6 @@
 import { GraphemeMaker } from '../grapheme'
 import { KanaInputingMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
-//import { Analyzer } from '../system'
 import { Analyzer } from '../analyzer'
 import { AlphabeticGrapheme } from '../grapheme'
 import { NoSuccess, Success } from '../result';
@@ -11,21 +10,21 @@ import { NoSuccess, Success } from '../result';
 //------------------------------------------------------------------------------
 
 export class KanaAnalyzer extends Analyzer {
-    getDataOfGraphemicAnalysis(str: string) {
+    getGraphemicAnalysisResults(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfKana);
         return gm.makeGraphemes();
     }
 
-    getDataOfMorphologicalAnalysis(str: string)
-    getDataOfMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>)
-    getDataOfMorphologicalAnalysis(x) {
+    getMorphologicalAnalysisResults(str: string)
+    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>)
+    getMorphologicalAnalysisResults(x) {
         let graphemes
         let g_data
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             g_data = this.getDataOfGraphemicAnalysis(x)
+             g_data = this.getGraphemicAnalysisResults(x)
              if(g_data instanceof NoSuccess) {
                 return g_data
             }
@@ -37,5 +36,5 @@ export class KanaAnalyzer extends Analyzer {
         return kimm.makeInputingMorphemes();
     }
 
-    getDataOfLexicalAnalysis(str: string) {}
+    getLexicalAnalysisResults(str: string) {}
 }

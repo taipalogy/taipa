@@ -1,7 +1,7 @@
 import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
 import { TonalWord, TonalLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'
-import { TonalSyllable, TonalInputingMorpheme, syllabifyTonal } from '../tonal/morpheme'
+import { TonalSyllable, TonalMorpheme, syllabifyTonal } from '../tonal/morpheme'
 import { RootMorpheme, MorphemeMaker } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
@@ -126,9 +126,9 @@ export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
         this.graphemes = graphemes;
     }
 
-    create(syllable: TonalSyllable) { return new TonalInputingMorpheme(syllable) }
+    create(syllable: TonalSyllable) { return new TonalMorpheme(syllable) }
 
-    createArray() { return new Array<TonalInputingMorpheme>() }
+    createArray() { return new Array<TonalMorpheme>() }
 
     makeRootMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);

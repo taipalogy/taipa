@@ -1,4 +1,4 @@
-import { TonalAnalyzer, TonalLexeme, InflectionalEnding } from './tonal/lexeme'
+import { TonalLexeme } from './tonal/lexeme'
 import { DummyLexeme, Lexeme, Word } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
@@ -8,9 +8,10 @@ import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
+import { TonalAnalyzer } from './tonal/analyzer'
 
 export class Document {
-    lemmaLexemes: Array<TonalLexeme> = new Array();
+    lexemes: Array<TonalLexeme> = new Array();
     forms: Array<Word> = new Array();
     inflectionalEnding: string
     parsingLexemes: Array<Lexeme> = new Array();
@@ -23,9 +24,9 @@ export class Client {
         let clt = new Client();
         let doc = clt.processOneToken(input);
         let output = ''
-        for(let i in doc.lemmaLexemes) {
-            let l = doc.lemmaLexemes[i].word.literal
-            let en = doc.inflectionalEnding//doc.lemmaLexemes[i].getInflectionalEnding()
+        for(let i in doc.lexemes) {
+            let l = doc.lexemes[i].word.literal
+            let en = doc.inflectionalEnding
             if(l.length-en.length != 0) {
                 output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
             }
@@ -49,13 +50,13 @@ export class Client {
                 }
             }
     
-            let ipw = clt.lookup(doc.lemmaLexemes[i].word.literal);
+            let ipw = clt.lookup(doc.lexemes[i].word.literal);
             // when the input word can be found in the dictionary
             if(ipw != null) {
                 output += '\n' + ipw
             }
     
-            let ls = doc.forms//doc.lemmaLexemes[i].getBaseForms()
+            let ls = doc.forms
     
             for(let j in ls) {
                 let bsw = clt.lookup(ls[j].literal);
@@ -88,7 +89,7 @@ export class Client {
 
         // kana
         al.load(Kana)
-        let m_results = al.aws[0].analyzer.getDataOfMorphologicalAnalysis(str)
+        let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
         if(m_results.result.successful == true) {
             al.aws[0].getBlocks(m_results.morphemes)
         } else al.aws[0].getBlocks(m_results.morphemes)
@@ -96,8 +97,8 @@ export class Client {
         // tonal
         let doc: Document = new Document();
         let turner = new TonalAnalyzer()
-        let l_results = turner.getDataOfLexicalAnalysis(str.match(/\w+/g)[0])
-        doc.lemmaLexemes = l_results.lexemes
+        let l_results = turner.getLexicalAnalysisResults(str.match(/\w+/g)[0])
+        doc.lexemes = l_results.lexemes
         doc.forms = l_results.lemmata
         doc.inflectionalEnding = l_results.inflectionalEnding
 
@@ -115,7 +116,7 @@ export class Client {
         let lexemes: Array<TonalLexeme> = new Array();
         let turner = new TonalAnalyzer()
         for(let key in tokens) {
-            lexemes.push(turner.getDataOfLexicalAnalysis(tokens[key]).lexemes[0])
+            lexemes.push(turner.getLexicalAnalysisResults(tokens[key]).lexemes[0])
         }
 
         // can lexemes be replaced by a phraseme?

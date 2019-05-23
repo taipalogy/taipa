@@ -1,5 +1,5 @@
-import { Syllable } from './morpheme';
-import { TonalSyllable, TonalInputingMorpheme } from './tonal/morpheme';
+import { Syllable, Morpheme } from './morpheme';
+import { TonalSyllable, TonalMorpheme } from './tonal/morpheme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -7,7 +7,7 @@ import { TonalSyllable, TonalInputingMorpheme } from './tonal/morpheme';
 
 export abstract class Metaplasm {
     // strategy pattern
-    abstract apply(word: Word, morphemes: Array<TonalInputingMorpheme>)
+    abstract apply(word: Word, morphemes: Array<Morpheme>)
 }
 
 //------------------------------------------------------------------------------
