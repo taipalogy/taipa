@@ -19,8 +19,8 @@ if(argc.length == 1) {
 }
 
 let clt = new Client();
-let s = "oannw goa zurw"
-let doc = clt.process("oannw goa zurw");
+let s = "oannw goa churw"
+let doc = clt.process(s);
 
 console.log(s)
 console.log(doc.graph[0].dependency + ' (' + doc.graph[0].head.word.literal + ', ' + doc.graph[0].dependent.word.literal + ')')

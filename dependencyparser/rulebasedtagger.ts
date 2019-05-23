@@ -1,13 +1,13 @@
 import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
-import { TonalWord, TonalInputingLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'
+import { TonalWord, TonalLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'
 import { TonalSyllable, TonalInputingMorpheme, syllabifyTonal } from '../tonal/morpheme'
 import { RootMorpheme, MorphemeMaker } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, Tonal, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import { TonalLexeme, InflectiveLexemeMaker } from '../lexeme'
+import { Lexeme, InflectiveLexemeMaker } from '../lexeme'
 
 export let FORMS = {
     'VERB': {
@@ -166,7 +166,7 @@ export class CombiningFormMorphemeMaker extends ToneSandhiRootMorphemeMaker {
 //  Inflection Lexeme
 //------------------------------------------------------------------------------
 
-export class ToneSandhiInflectionLexeme extends TonalLexeme {
+export class ToneSandhiInflectionLexeme extends Lexeme {
     // properties can be added or deleted
     tonalEnding: TonalSymbolEnding = null
     word: TonalWord
@@ -460,7 +460,7 @@ class VerbPhrase extends TypeOfConstruction {
         proceeding.addLexeme(l2)
 
         let turner3 = new TurningIntoInflectionLexeme()
-        let l3 = turner3.turnIntoLexemes('zurw')[0]
+        let l3 = turner3.turnIntoLexemes('churw')[0]
         l3.partOfSpeech = SYMBOLS.VERB
         l3.add('intransitive')
         let intransitive = new ConstructionElement('intransitive')
@@ -485,11 +485,11 @@ export class RuleBasedTagger {
 
     lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
 
-    constructor(lexemes: Array<TonalInputingLexeme>) {
+    constructor(lexemes: Array<TonalLexeme>) {
         this.match(lexemes)
     }
 
-    match(lexemes: Array<TonalInputingLexeme>) {
+    match(lexemes: Array<TonalLexeme>) {
         // take in lemma lexemes and then check them against parsing lexemes
         // store matched parsing lexemes in nodes
         let w: TonalWord = lexemes[0].word

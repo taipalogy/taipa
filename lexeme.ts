@@ -1,19 +1,20 @@
 import { Syllable } from './morpheme';
-import { TonalInputingLexeme } from './tonal/lexeme'
-import { TonalSyllable } from './tonal/morpheme';
+import { TonalSyllable, TonalInputingMorpheme } from './tonal/morpheme';
 
 //------------------------------------------------------------------------------
-//  Internal Sandhi Rule
+//  Metaplasm
 //------------------------------------------------------------------------------
 
+export abstract class Metaplasm {
+    // strategy pattern
+    abstract apply(word: Word, morphemes: Array<TonalInputingMorpheme>)
+}
 
 //------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
 
 export class Lexeme {
-    // this is used in rule-based tagger for both tone-sandhi and 
-    // tone-mark-less lexemes
     word: Word
     partOfSpeech: string = ''
 }
@@ -22,13 +23,7 @@ export class Lexeme {
 //  Tone Sandhi Lexeme
 //------------------------------------------------------------------------------
 
-class TonallessLexeme extends Lexeme {}
-
-//------------------------------------------------------------------------------
-//  Tone Sandhi Lexeme
-//------------------------------------------------------------------------------
-
-export class TonalLexeme extends Lexeme {}
+class TonalInflectiveLexeme {} // to be deleted
 
 //------------------------------------------------------------------------------
 //  Word
@@ -52,14 +47,6 @@ export class Word {
         // concatenate the new syllable
         this.literal += tss.literal;
     }
-}
-
-//------------------------------------------------------------------------------
-//  Inflectional Lexeme
-//------------------------------------------------------------------------------
-
-class InflectionalLexeme extends Lexeme {
-    word: InflectiveWord
 }
 
 //------------------------------------------------------------------------------
@@ -105,11 +92,7 @@ export abstract class LexemeMaker {
 }
 
 export abstract class InflectiveLexemeMaker extends LexemeMaker {
-    abstract postprocess(tsl: TonalLexeme)
-}
-
-export abstract class InputingLexemeMaker extends LexemeMaker {
-    abstract postprocess(tsil: TonalInputingLexeme)
+    // to be deleted
 }
 
 export class DummyLexemeMaker {
