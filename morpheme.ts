@@ -56,10 +56,6 @@ class GrammaticalSuffix {
 
 export class Morpheme {}
 
-class TonallessMorpheme extends Morpheme {}
-
-export class RootMorpheme extends Morpheme {}
-
 //------------------------------------------------------------------------------
 //  Syllable Patterns
 //------------------------------------------------------------------------------

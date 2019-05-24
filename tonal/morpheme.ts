@@ -2,21 +2,103 @@ import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, SyllableMetaplasm } 
 import { Syllabary } from '../morpheme'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
-import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
+import { AlphabeticLetter, AlphabeticGrapheme, Tonal } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
-import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
+import { CheckedAllomorph, FreeAllomorph, Allomorph, listOfUncombinedCheckedAllomorphs,
+    listOfUncombinedFreeAllomorphs, AllomorphY } from './version2'
 
 //------------------------------------------------------------------------------
-//  Tonal Metaplasm
+//  Tonal Syllable Metaplasm
 //------------------------------------------------------------------------------
 
-class TonalSyllableMetaplasm extends SyllableMetaplasm {
+export class TonalSyllableMetaplasm extends SyllableMetaplasm {
+    assignAllomorph(syllable: TonalSyllable): Allomorph { return null }
     apply(syllable: TonalSyllable, allomorph: Allomorph) {}
 }
 
-export class TonalUncombinedForms extends TonalSyllableMetaplasm {
+export class TonalUncombiningForms extends TonalSyllableMetaplasm {
+    assignAllomorph(syllable: TonalSyllable): Allomorph {
+        let allomorph: Allomorph
+        // assign the matched allomorph for this syllable
+        // don't assign if the checked syllable is already in base form
+        let aoas: Array<Allomorph> = []; // array of allomorphs
+
+        let keys = Array.from(listOfCheckedAllomorphs.keys())
+        for(let k = 0; k < keys.length; k++) {
+            let am = listOfCheckedAllomorphs.get(keys[k])
+            if(am instanceof CheckedAllomorph) {
+                if(am.tonal != null) {
+                    if(am.tonal.getLiteral() === syllable.lastLetter.literal
+                        && am.final.getLiteral() === syllable.lastSecondLetter.literal) {
+                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
+                        // there's no need to break here, as we want to collect the second match, if any
+                    }
+                } else {
+                    if(am.final.getLiteral() === syllable.lastLetter.literal) {
+                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
+                    }
+                }
+            }
+        }
+
+        if(aoas.length > 0) {
+            //console.debug('length of aoas: %d', aoas.length)
+            if(aoas.length == 2) {
+                let first = aoas[0]
+                let second = aoas[1]
+                if(first instanceof CheckedAllomorph && second instanceof CheckedAllomorph) {
+                    if(first.final.getLiteral() === second.final.getLiteral()) {
+                        // discard the base form
+                        if(aoas[1].tonal != null) {
+                            // the 1st element is in base form
+                            aoas.shift()
+                        } else if(aoas[0].tonal != null) {
+                            // the 2nd element is in base form
+                            aoas.pop()
+                        }
+                    }
+                }
+            } else if(aoas.length == 1 && aoas[0].tonal == null){
+                // just return for stop finals without tonal
+                return
+            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
+                // there should be no more than 2 matches, either 1 match or 2
+                // just fall through for the case of 'hy'
+            } 
+
+            // there is only one match after processing, we just assign it
+            allomorph = aoas.shift();
+
+            // we already have an allomorph assigned, just return
+            return allomorph;
+        }
+
+        // after matching with checked allomorphs, we go on matching free allomorphs
+        aoas = [];
+        if(listOfFreeAllomorphs.has(syllable.lastLetter.literal)) {
+            aoas.push(listOfFreeAllomorphs.get(syllable.lastLetter.literal));
+        }
+
+        if(aoas.length == 0) {
+            // tone 1 has no allomorph
+            allomorph = new ZeroAllomorph();
+        } else if(aoas.length) {
+            // are there multiple allomorphs? there should be only one.
+            for(let i = 0; i < aoas.length; i++) {
+                if(aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
+                    // this syllable is already in base form
+                    // in order to display this inflectional ending, we have to assign
+                    allomorph = aoas[i]
+                } else {
+                    allomorph = aoas[i];
+                }
+            }
+        }
+        return allomorph
+    }
 
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+
         // get base forms as strings
         if(allomorph != null) {
             // member variable allomorph is not null
@@ -139,114 +221,41 @@ export class TonalMorpheme extends Morpheme {
     allomorph: Allomorph = null; // required to populate stems
     metaplasm: TonalSyllableMetaplasm
 
-    constructor(syllable: TonalSyllable) {
+    constructor(syllable: TonalSyllable, tsm: TonalSyllableMetaplasm) {
         super()
         this.syllable = syllable;
+        this.metaplasm = tsm
+
         // assign allomorph for each syllable
-        this.assignAllomorph();
+        this.allomorph = this.metaplasm.assignAllomorph(this.syllable)
+    }
+    
+    apply(): any {
+        return this.metaplasm.apply(this.syllable, this.allomorph)
     }
 
-    assignAllomorph() {
-        // assign the matched allomorph for this syllable
-        // don't assign if the checked syllable is already in base form
-        let aoas: Array<Allomorph> = []; // array of allomorphs
-
-        let keys = Array.from(listOfCheckedAllomorphs.keys())
-        for(let k = 0; k < keys.length; k++) {
-            let am = listOfCheckedAllomorphs.get(keys[k])
-            if(am instanceof CheckedAllomorph) {
-                if(am.tonal != null) {
-                    if(am.tonal.getLiteral() === this.syllable.lastLetter.literal
-                        && am.final.getLiteral() === this.syllable.lastSecondLetter.literal) {
-                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
-                        // there's no need to break here, as we want to collect the second match, if any
-                    }
-                } else {
-                    if(am.final.getLiteral() === this.syllable.lastLetter.literal) {
-                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
-                    }
-                }
-            }
-        }
-
-        if(aoas.length > 0) {
-            //console.debug('length of aoas: %d', aoas.length)
-            if(aoas.length == 2) {
-                let first = aoas[0]
-                let second = aoas[1]
-                if(first instanceof CheckedAllomorph && second instanceof CheckedAllomorph) {
-                    if(first.final.getLiteral() === second.final.getLiteral()) {
-                        // discard the base form
-                        if(aoas[1].tonal != null) {
-                            // the 1st element is in base form
-                            aoas.shift()
-                        } else if(aoas[0].tonal != null) {
-                            // the 2nd element is in base form
-                            aoas.pop()
-                        }
-                    }
-                }
-            } else if(aoas.length == 1 && aoas[0].tonal == null){
-                // just return for stop finals without tonal
-                return
-            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
-                // there should be no more than 2 matches, either 1 match or 2
-                // just fall through for the case of 'hy'
-            } 
-
-            // there is only one match after processing, we just assign it
-            this.allomorph = aoas.shift();
-
-            // we already have an allomorph assigned, just return
-            return;
-        }
-
-        // after matching with checked allomorphs, we go on matching free allomorphs
-        aoas = [];
-        if(listOfFreeAllomorphs.has(this.syllable.lastLetter.literal)) {
-            aoas.push(listOfFreeAllomorphs.get(this.syllable.lastLetter.literal));
-        }
-
-        if(aoas.length == 0) {
-            // tone 1 has no allomorph
-            this.allomorph = new ZeroAllomorph();
-        } else if(aoas.length) {
-            // are there multiple allomorphs? there should be only one.
-            for(let i = 0; i < aoas.length; i++) {
-                if(aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
-                    // this syllable is already in base form
-                    // in order to display this inflectional ending, we have to assign
-                    this.allomorph = aoas[i]
-                } else {
-                    this.allomorph = aoas[i];
-                }
-            }
-        }
-    }
-
-    apply(tm: TonalSyllableMetaplasm): any {
-        return tm.apply(this.syllable, this.allomorph)
-    }
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Inputing Morpheme Maker
+//  Tonal Lemmatization Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class TonalMorphemeMaker extends MorphemeMaker {
+export class TonalLemmatizationMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
+    metaplasm: TonalSyllableMetaplasm
     
-    constructor(gs: Array<AlphabeticGrapheme>) {
+    constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalSyllableMetaplasm) {
         super()
         this.graphemes = new Array();
         this.graphemes = gs;
+        this.metaplasm = tsm
     }
 
-    create(syllable: TonalSyllable) { return new TonalMorpheme(syllable) }
+    create(syllable: TonalSyllable) { return new TonalMorpheme(syllable, this.metaplasm) }
 
     createArray() { return new Array<TonalMorpheme>() }
 
-    makeCombinedMorphemes() {
+    makeMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
     }
 }

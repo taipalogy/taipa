@@ -1,15 +1,15 @@
 import { Analyzer } from '../analyzer'
-import { TonalLexemeMaker } from './lexeme'
+import { TonalLemmatizationLexemeMaker } from './lexeme'
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { lowerLettersOfTonal } from './version2';
 import { NoSuccess, Success } from '../result'
-import { TonalMorphemeMaker } from './morpheme'
+import { TonalLemmatizationMorphemeMaker, TonalUncombiningForms } from './morpheme'
 
 //------------------------------------------------------------------------------
 //  Tonal Analyzer
 //------------------------------------------------------------------------------
 
-export class TonalAnalyzer extends Analyzer {
+export class TonalLemmatizationAnalyzer extends Analyzer {
     getGraphemicAnalysisResults(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
@@ -32,8 +32,8 @@ export class TonalAnalyzer extends Analyzer {
         }
 
         // Morpheme Maker
-        let timm = new TonalMorphemeMaker(graphemes);
-        return timm.makeCombinedMorphemes(); 
+        let tmm = new TonalLemmatizationMorphemeMaker(graphemes, new TonalUncombiningForms());
+        return tmm.makeMorphemes(); 
     }
 
     getLexicalAnalysisResults(str: string) {
@@ -44,8 +44,8 @@ export class TonalAnalyzer extends Analyzer {
         } else morphemes = []
 
         // Lexeme Maker
-        let tlm = new TonalLexemeMaker(morphemes);
-        let l_results = tlm.makeTonalLexemes()
+        let tlm = new TonalLemmatizationLexemeMaker(morphemes);
+        let l_results = tlm.makeLexemes()
         return { lexemes: l_results.lexemes, lemmata: l_results.lemmata, inflectionalEnding: l_results.inflectionalEnding, arraysOfSounds: m_results.arraysOfSounds }
     }
 }

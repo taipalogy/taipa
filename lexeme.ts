@@ -1,5 +1,6 @@
 import { Syllable, Morpheme } from './morpheme';
 import { TonalSyllable, TonalMorpheme } from './tonal/morpheme';
+import { TonalWord } from './tonal/lexeme'
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -16,7 +17,7 @@ export abstract class Metaplasm {
 
 export class Lexeme {
     word: Word
-    partOfSpeech: string = ''
+    partOfSpeech: string = '' // to be deleted
 }
 
 //------------------------------------------------------------------------------

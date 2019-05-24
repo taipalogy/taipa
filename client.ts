@@ -1,4 +1,4 @@
-import { TonalLexeme } from './tonal/lexeme'
+import { TonalLexeme, TonalLemmatization } from './tonal/lexeme'
 import { DummyLexeme, Lexeme, Word } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
@@ -8,7 +8,7 @@ import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
-import { TonalAnalyzer } from './tonal/analyzer'
+import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 
 export class Document {
     lexemes: Array<TonalLexeme> = new Array();
@@ -96,7 +96,7 @@ export class Client {
 
         // tonal
         let doc: Document = new Document();
-        let turner = new TonalAnalyzer()
+        let turner = new TonalLemmatizationAnalyzer()
         let l_results = turner.getLexicalAnalysisResults(str.match(/\w+/g)[0])
         doc.lexemes = l_results.lexemes
         doc.forms = l_results.lemmata
@@ -114,7 +114,7 @@ export class Client {
         let tokens = str.match(/\w+/g);
 
         let lexemes: Array<TonalLexeme> = new Array();
-        let turner = new TonalAnalyzer()
+        let turner = new TonalLemmatizationAnalyzer()
         for(let key in tokens) {
             lexemes.push(turner.getLexicalAnalysisResults(tokens[key]).lexemes[0])
         }
