@@ -213,10 +213,10 @@ export class TonalSyllable extends Syllable {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Morpheme
+//  Tonal Lemmatization Morpheme
 //------------------------------------------------------------------------------
 
-export class TonalMorpheme extends Morpheme {
+export class TonalLemmatizationMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
     metaplasm: TonalSyllableMetaplasm
@@ -251,9 +251,9 @@ export class TonalLemmatizationMorphemeMaker extends MorphemeMaker {
         this.metaplasm = tsm
     }
 
-    create(syllable: TonalSyllable) { return new TonalMorpheme(syllable, this.metaplasm) }
+    create(syllable: TonalSyllable) { return new TonalLemmatizationMorpheme(syllable, this.metaplasm) }
 
-    createArray() { return new Array<TonalMorpheme>() }
+    createArray() { return new Array<TonalLemmatizationMorpheme>() }
 
     makeMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);

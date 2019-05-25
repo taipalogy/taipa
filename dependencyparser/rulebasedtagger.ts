@@ -2,8 +2,8 @@ import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
 import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalMetaplasm,
      } from '../tonal/lexeme'
-import { TonalSyllable, TonalMorpheme, syllabifyTonal, TonalSyllableMetaplasm } from '../tonal/morpheme'
-import { MorphemeMaker } from '../morpheme'
+import { TonalSyllable, syllabifyTonal, TonalSyllableMetaplasm } from '../tonal/morpheme'
+import { MorphemeMaker, Morpheme } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, Tonal, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
@@ -127,10 +127,10 @@ class TonalParticleInflexion extends TonalMetaplasm {}
 
 class TonalInflexion extends TonalMetaplasm {
     word: TonalWord
-    morphemes: Array<TonalMorpheme>
+    morphemes: Array<TonalInflexionMorpheme>
     tonalEnding: TonalSymbolEnding = null
 
-    apply(word: TonalWord, morphemes: Array<TonalMorpheme>) {
+    apply(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
         this.word = word
         this.morphemes = morphemes
         if(morphemes.length > 0) {
@@ -178,6 +178,26 @@ class TonalInflexion extends TonalMetaplasm {
 //  Tonal Inflexion Morpheme
 //------------------------------------------------------------------------------
 
+export class TonalInflexionMorpheme extends Morpheme {
+    syllable: TonalSyllable;
+    allomorph: Allomorph = null; // required to populate stems
+    metaplasm: TonalSyllableMetaplasm
+
+    constructor(syllable: TonalSyllable, tsm: TonalSyllableMetaplasm) {
+        super()
+        this.syllable = syllable;
+        this.metaplasm = tsm
+
+        // assign allomorph for each syllable
+        this.allomorph = this.metaplasm.assignAllomorph(this.syllable)
+    }
+    
+    apply(): any {
+        return this.metaplasm.apply(this.syllable, this.allomorph)
+    }
+
+}
+
 //------------------------------------------------------------------------------
 //  Tonal Inflexion Morpheme Maker
 //------------------------------------------------------------------------------
@@ -193,9 +213,9 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
         this.metaplasm = tsm
     }
 
-    create(syllable: TonalSyllable) { return new TonalMorpheme(syllable, this.metaplasm) }
+    create(syllable: TonalSyllable) { return new TonalInflexionMorpheme(syllable, this.metaplasm) }
 
-    createArray() { return new Array<TonalMorpheme>() }
+    createArray() { return new Array<TonalInflexionMorpheme>() }
 
     makeMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
@@ -215,7 +235,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
         this.word = word;
     }
 
-    apply(ms: Array<TonalMorpheme>, tm: TonalMetaplasm): any {
+    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalMetaplasm): any {
         return tm.apply(this.word, ms)
     }
 }
@@ -225,9 +245,9 @@ export class TonalInflexionLexeme extends InflexionLexeme {
 //------------------------------------------------------------------------------
 
 export class TonalInflexionLexemeMaker extends InflectiveLexemeMaker {
-    morphemes: Array<TonalMorpheme>;
+    morphemes: Array<TonalInflexionMorpheme>;
 
-    constructor(morphemes: Array<TonalMorpheme>) {
+    constructor(morphemes: Array<TonalInflexionMorpheme>) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;

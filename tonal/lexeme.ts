@@ -1,4 +1,4 @@
-import { TonalSyllable, TonalMorpheme, TonalUncombiningForms } from './morpheme'
+import { TonalSyllable, TonalLemmatizationMorpheme, TonalUncombiningForms } from './morpheme'
 import { Word, LexemeMaker, Lexeme, Metaplasm, LemmatizationLexeme } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
@@ -9,7 +9,7 @@ import { TonalAffix } from './version2'
 //------------------------------------------------------------------------------
 
 export class TonalMetaplasm extends Metaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalMorpheme>) {}
+    apply(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>) {}
 }
 
 class TonalAdverbLemmatization extends TonalMetaplasm {}
@@ -17,10 +17,10 @@ class TonalPronounLemmatization extends TonalMetaplasm {}
 class TonalParticleLemmatization extends TonalMetaplasm {}
 export class TonalLemmatization extends TonalMetaplasm {
     word: TonalWord
-    morphemes: Array<TonalMorpheme>
+    morphemes: Array<TonalLemmatizationMorpheme>
     inflectionalEnding: InflectionalEnding = null
 
-    apply(word: TonalWord, morphemes: Array<TonalMorpheme>): { lemmata: Array<TonalWord>, inflectionalEnding: string } {
+    apply(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>): { lemmata: Array<TonalWord>, inflectionalEnding: string } {
         this.word = word
         this.morphemes = morphemes
         //let ie: InflectionalEnding = null
@@ -187,7 +187,7 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
         this.word = word;
     }
 
-    apply(ms: Array<TonalMorpheme>, tm: TonalMetaplasm): any {
+    apply(ms: Array<TonalLemmatizationMorpheme>, tm: TonalMetaplasm): any {
         return tm.apply(this.word, ms)
     }
 }
@@ -197,9 +197,9 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
 //------------------------------------------------------------------------------
 
 export class TonalLemmatizationLexemeMaker extends LexemeMaker {
-    morphemes: Array<TonalMorpheme>;
+    morphemes: Array<TonalLemmatizationMorpheme>;
 
-    constructor(morphemes: Array<TonalMorpheme>, ) {
+    constructor(morphemes: Array<TonalLemmatizationMorpheme>, ) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;
