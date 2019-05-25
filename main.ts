@@ -23,5 +23,7 @@ let s = "oannw goa churw"
 let doc = clt.process(s);
 
 console.log(s)
-console.log(doc.graph[0].dependency + ' (' + doc.graph[0].head.word.literal + ', ' + doc.graph[0].dependent.word.literal + ')')
-console.log(doc.graph[1].dependency + ' (' + doc.graph[1].head.word.literal + ', ' + doc.graph[1].dependent.word.literal + ')')
+if(doc.graph.length > 0) {
+    console.log(doc.graph[0].dependency + ' (' + doc.graph[0].head.word.literal + ', ' + doc.graph[0].dependent.word.literal + ')')
+    console.log(doc.graph[1].dependency + ' (' + doc.graph[1].head.word.literal + ', ' + doc.graph[1].dependent.word.literal + ')')
+}

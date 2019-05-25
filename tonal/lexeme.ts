@@ -1,5 +1,5 @@
 import { TonalSyllable, TonalMorpheme, TonalUncombiningForms } from './morpheme'
-import { Word, LexemeMaker, Lexeme, Metaplasm } from '../lexeme'
+import { Word, LexemeMaker, Lexeme, Metaplasm, LemmatizationLexeme } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
@@ -12,9 +12,9 @@ export class TonalMetaplasm extends Metaplasm {
     apply(word: TonalWord, morphemes: Array<TonalMorpheme>) {}
 }
 
-class TonalAdverbLemmatizing extends TonalMetaplasm {}
-class TonalPronounLemmatizing extends TonalMetaplasm {}
-class TonalParticleLemmatizing extends TonalMetaplasm {}
+class TonalAdverbLemmatization extends TonalMetaplasm {}
+class TonalPronounLemmatization extends TonalMetaplasm {}
+class TonalParticleLemmatization extends TonalMetaplasm {}
 export class TonalLemmatization extends TonalMetaplasm {
     word: TonalWord
     morphemes: Array<TonalMorpheme>
@@ -177,8 +177,10 @@ export class TonalWord extends Word {
 //  Tonal Lexeme
 //------------------------------------------------------------------------------
 
-export class TonalLexeme extends Lexeme {
+export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     word: TonalWord
+    lemmata: Array<TonalWord>
+    inflectionalEnding: InflectionalEnding
 
     constructor(word: TonalWord) {
         super()
@@ -208,13 +210,13 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     }
 
     make(syllables: Array<TonalSyllable>) {
-        return new TonalLexeme(new TonalWord(syllables));
+        return new TonalLemmatizationLexeme(new TonalWord(syllables));
     }
 
-    postprocess(tl: TonalLexeme) {
+    postprocess(tl: TonalLemmatizationLexeme) {
         let applied = tl.apply(this.morphemes, new TonalLemmatization())
 
-        let lexemes: Array<TonalLexeme> = new Array();
+        let lexemes: Array<TonalLemmatizationLexeme> = new Array();
 
         lexemes.push(tl);
 

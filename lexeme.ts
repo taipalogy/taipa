@@ -17,8 +17,14 @@ export abstract class Metaplasm {
 
 export class Lexeme {
     word: Word
-    partOfSpeech: string = '' // to be deleted
 }
+
+export class InflexionLexeme {
+    word: Word = new Word()
+    partOfSpeech: string = ''
+}
+
+export class LemmatizationLexeme {}
 
 //------------------------------------------------------------------------------
 //  Tone Sandhi Lexeme
