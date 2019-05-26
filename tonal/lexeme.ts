@@ -12,6 +12,10 @@ export class TonalMetaplasm extends Metaplasm {
     apply(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>) {}
 }
 
+export class ZeroMetaplasm extends Metaplasm {
+    apply() {}
+}
+
 class TonalAdverbLemmatization extends TonalMetaplasm {}
 class TonalPronounLemmatization extends TonalMetaplasm {}
 class TonalParticleLemmatization extends TonalMetaplasm {}
@@ -34,12 +38,12 @@ export class TonalLemmatization extends TonalMetaplasm {
         return { inflectionalEnding: this.getInflectionalEnding(), lemmata: this.getLemmata(this.populateLemmata()) }
     }
 
-    getInflectionalEnding() {
+    private getInflectionalEnding() {
         if(this.inflectionalEnding == null) return ''
         return this.inflectionalEnding.getLiteral()
     }
 
-    getLemmata(lemmas: Array<TonalWord>) {
+    private getLemmata(lemmas: Array<TonalWord>) {
         // this must be called after populateLemmata is called
         if(lemmas == null) return []
         return lemmas
@@ -181,6 +185,7 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     word: TonalWord
     lemmata: Array<TonalWord>
     inflectionalEnding: InflectionalEnding
+    metaplasm
 
     constructor(word: TonalWord) {
         super()

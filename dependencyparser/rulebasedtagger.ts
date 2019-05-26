@@ -8,7 +8,7 @@ import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllom
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, Tonal, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import {  InflectiveLexemeMaker, InflexionLexeme } from '../lexeme'
+import { InflexionLexeme, LexemeMaker } from '../lexeme'
 
 export let FORMS = {
     'VERB': {
@@ -124,7 +124,6 @@ export class TonalCombiningForms extends TonalSyllableMetaplasm {
 class TonalCaseDeclension extends TonalMetaplasm {}
 class TonalAdverbInflexion extends TonalMetaplasm {}
 class TonalParticleInflexion extends TonalMetaplasm {}
-
 class TonalInflexion extends TonalMetaplasm {
     word: TonalWord
     morphemes: Array<TonalInflexionMorpheme>
@@ -229,6 +228,7 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
 export class TonalInflexionLexeme extends InflexionLexeme {
     word: TonalWord
     wordForms: Array<TonalWord>
+    metaplasm
 
     constructor(word: TonalWord) {
         super()
@@ -244,7 +244,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
 //  Tonal Inflexion Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class TonalInflexionLexemeMaker extends InflectiveLexemeMaker {
+export class TonalInflexionLexemeMaker extends LexemeMaker {
     morphemes: Array<TonalInflexionMorpheme>;
 
     constructor(morphemes: Array<TonalInflexionMorpheme>) {
@@ -327,9 +327,9 @@ class ConstructionElement{
     check(w: TonalWord) {
         for(let k in this.lexemes) {
             //if(this.lexemes[k].toString(this.id) === w.literal) {
-            if(this.lexemes[k].toString() === w.literal) {
+            //if(this.lexemes[k].toString() === w.literal) {
                 return true
-            }
+            //}
         }
         return false
     }
@@ -353,19 +353,23 @@ class VerbPhrase extends TypeOfConstruction {
 
         let analyzer = new TonalInflextionAnalyzer()
         let results1 = analyzer.makeLexemes('oannzs')
-        //console.log(results1.lexemes)
-        //console.log(results1.inflectedForms)
         let results2 = analyzer.makeLexemes('goay')
         let results3 = analyzer.makeLexemes('churw')
 
         let transitive = new ConstructionElement('transitive')
-        transitive.addLexeme(results1.lexemes[0])
+        let l1 = results1.lexemes[0]
+        l1.partOfSpeech = SYMBOLS.VERB
+        transitive.addLexeme(l1)
         
         let proceeding = new ConstructionElement('proceeding')
-        transitive.addLexeme(results2.lexemes[0])
+        let l2 = results2.lexemes[0]
+        l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
+        proceeding.addLexeme(l2)
 
         let intransitive = new ConstructionElement('intransitive')
-        transitive.addLexeme(results3.lexemes[0])
+        let l3 = results3.lexemes[0]
+        l3.partOfSpeech = SYMBOLS.VERB
+        intransitive.addLexeme(l3)
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
@@ -396,11 +400,13 @@ export class RuleBasedTagger {
 
         let cop: ConstructionOfPhrase
         let vp = new VerbPhrase()
-        for(let key in vp.constructions) {
-            if(vp.constructions[key].elements[0].check(w)) {
-                cop = vp.constructions[key]
+        //if(w instanceof TonalWord) {
+            for(let key in vp.constructions) {
+                if(vp.constructions[key].elements[0].check(w)) {
+                    cop = vp.constructions[key]
+                }
             }
-        }
+        //} else if(w instanceof TonallessWord) {}
 
         for(let k in lexemes) {
             this.lexemes.push(vp.constructions[0].elements[k].lexemes[0])

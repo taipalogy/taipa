@@ -2,7 +2,7 @@ import { TonalLemmatizationLexeme, TonalLemmatization } from './tonal/lexeme'
 import { InflexionLexeme, Lexeme, Word } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger, TonalInflexionLexeme } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
@@ -126,7 +126,7 @@ export class Client {
         for(let key in nodes) {
             c.queue.push(nodes[key])
         }
-        
+
         let guide = new Guide()
         let root = new InflexionLexeme()
         root.word.literal = 'ROOT'
@@ -138,34 +138,24 @@ export class Client {
             guide.transitions.push(new Shift())
         }
 
-
         while(!c.isTerminalConfiguration()) {
-            
             let t: Transition = guide.getNextTransition();
             if(t == null) break
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
                 if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.VERB) {
                     let l = c.stack[c.stack.length-1]
-                    //if(l instanceof SandhiFormLexeme) {
-                        //if(l.kvp.key === 'transitive') {
+                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
                             guide.transitions.push(new Shift())
-                        //}
-                    //} else if(l instanceof ToneSandhiInflectionLexeme) {
-                        //if(l.kvp.key === 'intransitive') {
+                    } else {
                             guide.transitions.push(new RightArc())
                             c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                             guide.transitions.push(new RightArc())
-                        //}
-                    //}
+                    }
                 } if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
                     let l = c.stack[c.stack.length-1]
-                    //if(l instanceof SandhiFormLexeme) {
-                        //if(l.kvp.key === 'proceeding') {
                             guide.transitions.push(new Shift())
                             c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
-                        //}
-                    //}
                 }
             }
         }

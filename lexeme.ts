@@ -1,5 +1,6 @@
 import { Syllable, Morpheme } from './morpheme';
 import { TonalSyllable } from './tonal/morpheme';
+import { TonalMetaplasm } from './tonal/lexeme';
 
 
 //------------------------------------------------------------------------------
@@ -19,18 +20,19 @@ export class Lexeme {
     word: Word
 }
 
-export class InflexionLexeme {
-    word: Word = new Word()
+export class InflexionLexeme extends Lexeme {
+    word: Word = new Word
     partOfSpeech: string = ''
+    metaplasm: TonalMetaplasm
 }
 
-export class LemmatizationLexeme {}
+export class LemmatizationLexeme extends Lexeme {
+    metaplasm: TonalMetaplasm
+}
 
-//------------------------------------------------------------------------------
-//  Tone Sandhi Lexeme
-//------------------------------------------------------------------------------
-
-class TonalInflectiveLexeme {} // to be deleted
+export class DummyLexeme extends InflexionLexeme {
+    word: Word = new Word()
+}
 
 //------------------------------------------------------------------------------
 //  Word
@@ -57,24 +59,6 @@ export class Word {
 }
 
 //------------------------------------------------------------------------------
-//  Dummy Lexeme
-//------------------------------------------------------------------------------
-
-export class DummyLexeme extends Lexeme {
-    word: Word = new Word()
-}
-
-//------------------------------------------------------------------------------
-//  Inflectional Word
-//------------------------------------------------------------------------------
-
-export class InflectiveWord extends Word {
-}
-
-export class AgglutinativeWord extends Word {
-}
-
-//------------------------------------------------------------------------------
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
@@ -96,10 +80,6 @@ export abstract class LexemeMaker {
     }
 
     abstract make(syllables: Array<Syllable>)
-}
-
-export abstract class InflectiveLexemeMaker extends LexemeMaker {
-    // to be deleted
 }
 
 export class DummyLexemeMaker {
