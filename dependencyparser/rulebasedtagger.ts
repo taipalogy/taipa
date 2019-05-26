@@ -238,6 +238,14 @@ export class TonalInflexionLexeme extends InflexionLexeme {
     apply(ms: Array<TonalInflexionMorpheme>, tm: TonalMetaplasm): any {
         return tm.apply(this.word, ms)
     }
+
+    /*
+    toString(id: string) {
+        if(this.kvp.key === id) {
+            return this[this.kvp.value].literal
+        }
+    }
+    */
 }
 
 //------------------------------------------------------------------------------
@@ -312,29 +320,30 @@ class ConstructionOfPhrase {
 //  Construction Element
 //------------------------------------------------------------------------------
 
-class ConstructionElement{
-    id: string = ''
-    lexemes: Array<TonalInflexionLexeme> = new Array()
+class ConstructionElement {
+    lexeme
 
-    constructor(id: string) {
-        this.id = id
-    }
-
-    addLexeme(l: TonalInflexionLexeme) {
-        this.lexemes.push(l)
+    constructor(l: TonalInflexionLexeme) {
+        this.lexeme = l
     }
 
     check(w: TonalWord) {
-        for(let k in this.lexemes) {
+        //for(let k in this.lexemes) {
             //if(this.lexemes[k].toString(this.id) === w.literal) {
             //if(this.lexemes[k].toString() === w.literal) {
-                return true
+                //return true
             //}
-        }
+        //}
         return false
     }
 
 }
+
+class Transitive extends ConstructionElement {}
+
+class Proceeding extends ConstructionElement {}
+
+class Intransitive extends ConstructionElement {}
 
 //------------------------------------------------------------------------------
 //  Type of Construction
@@ -356,20 +365,17 @@ class VerbPhrase extends TypeOfConstruction {
         let results2 = analyzer.makeLexemes('goay')
         let results3 = analyzer.makeLexemes('churw')
 
-        let transitive = new ConstructionElement('transitive')
         let l1 = results1.lexemes[0]
         l1.partOfSpeech = SYMBOLS.VERB
-        transitive.addLexeme(l1)
+        let transitive = new Transitive(l1)
         
-        let proceeding = new ConstructionElement('proceeding')
         let l2 = results2.lexemes[0]
         l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
-        proceeding.addLexeme(l2)
+        let proceeding = new Proceeding(l2)
 
-        let intransitive = new ConstructionElement('intransitive')
         let l3 = results3.lexemes[0]
         l3.partOfSpeech = SYMBOLS.VERB
-        intransitive.addLexeme(l3)
+        let intransitive = new Intransitive(l3)
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
@@ -379,7 +385,6 @@ class VerbPhrase extends TypeOfConstruction {
 class DitransitiveVerbPhrase extends TypeOfConstruction {
     constructions = []
 }
-
 
 //------------------------------------------------------------------------------
 //  Rule-Based Tagger
@@ -408,8 +413,11 @@ export class RuleBasedTagger {
             }
         //} else if(w instanceof TonallessWord) {}
 
+        //if(cop.elements[1].check(lexemes[1].word)) {}
+        //if(cop.elements[2].check(lexemes[2].word)) {}
+
         for(let k in lexemes) {
-            this.lexemes.push(vp.constructions[0].elements[k].lexemes[0])
+            this.lexemes.push(vp.constructions[0].elements[k].lexeme)
         }
     }
 }
