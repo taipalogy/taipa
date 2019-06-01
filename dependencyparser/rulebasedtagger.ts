@@ -1,6 +1,6 @@
 import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
-import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalMetaplasm,
+import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalWordMetaplasm,
      } from '../tonal/lexeme'
 import { TonalSyllable, syllabifyTonal, TonalSyllableMetaplasm } from '../tonal/morpheme'
 import { MorphemeMaker, Morpheme } from '../morpheme'
@@ -121,10 +121,13 @@ export class TonalCombiningForms extends TonalSyllableMetaplasm {
 //  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-class TonalCaseDeclension extends TonalMetaplasm {}
-class TonalAdverbInflexion extends TonalMetaplasm {}
-class TonalParticleInflexion extends TonalMetaplasm {}
-class TonalInflexion extends TonalMetaplasm {
+class TonalCaseDeclension extends TonalWordMetaplasm {}
+class TonalAdverbInflexion extends TonalWordMetaplasm {}
+class TonalParticleInflexion extends TonalWordMetaplasm {}
+class TonalZeroInflexion extends TonalWordMetaplasm {
+    // examples: author and authoring. che qahf he
+}
+class TonalInflexion extends TonalWordMetaplasm {
     word: TonalWord
     morphemes: Array<TonalInflexionMorpheme>
     tonalEnding: TonalSymbolEnding = null
@@ -235,7 +238,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
         this.word = word;
     }
 
-    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalMetaplasm): any {
+    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalWordMetaplasm): any {
         return tm.apply(this.word, ms)
     }
 

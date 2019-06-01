@@ -1,16 +1,13 @@
 import { Syllable, Morpheme } from './morpheme';
 import { TonalSyllable } from './tonal/morpheme';
-import { TonalMetaplasm } from './tonal/lexeme';
+import { TonalWordMetaplasm } from './tonal/lexeme';
 
 
 //------------------------------------------------------------------------------
 //  Metaplasm
 //------------------------------------------------------------------------------
 
-export abstract class Metaplasm {
-    // strategy pattern
-    abstract apply(word: Word, morphemes: Array<Morpheme>)
-}
+export abstract class Metaplasm {}
 
 //------------------------------------------------------------------------------
 //  Lexeme
@@ -23,11 +20,11 @@ export class Lexeme {
 export class InflexionLexeme extends Lexeme {
     word: Word = new Word
     partOfSpeech: string = ''
-    metaplasm: TonalMetaplasm
+    metaplasm: TonalWordMetaplasm
 }
 
 export class LemmatizationLexeme extends Lexeme {
-    metaplasm: TonalMetaplasm
+    metaplasm: TonalWordMetaplasm
 }
 
 export class DummyLexeme extends InflexionLexeme {

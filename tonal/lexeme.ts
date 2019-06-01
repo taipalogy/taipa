@@ -3,23 +3,21 @@ import { Word, LexemeMaker, Lexeme, Metaplasm, LemmatizationLexeme } from '../le
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
+import { Morpheme } from '../morpheme'
 
 //------------------------------------------------------------------------------
 //  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-export class TonalMetaplasm extends Metaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>) {}
+export class TonalWordMetaplasm extends Metaplasm {
+    apply(word: TonalWord, morphemes: Array<Morpheme>) {}
 }
 
-export class ZeroMetaplasm extends Metaplasm {
-    apply() {}
-}
-
-class TonalAdverbLemmatization extends TonalMetaplasm {}
-class TonalPronounLemmatization extends TonalMetaplasm {}
-class TonalParticleLemmatization extends TonalMetaplasm {}
-export class TonalLemmatization extends TonalMetaplasm {
+class TonalAdverbLemmatization extends TonalWordMetaplasm {}
+class TonalPronounLemmatization extends TonalWordMetaplasm {}
+class TonalParticleLemmatization extends TonalWordMetaplasm {}
+class TonalZeroLemmatization extends TonalWordMetaplasm {}
+export class TonalLemmatization extends TonalWordMetaplasm {
     word: TonalWord
     morphemes: Array<TonalLemmatizationMorpheme>
     inflectionalEnding: InflectionalEnding = null
@@ -192,7 +190,7 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
         this.word = word;
     }
 
-    apply(ms: Array<TonalLemmatizationMorpheme>, tm: TonalMetaplasm): any {
+    apply(ms: Array<TonalLemmatizationMorpheme>, tm: TonalWordMetaplasm): any {
         return tm.apply(this.word, ms)
     }
 }

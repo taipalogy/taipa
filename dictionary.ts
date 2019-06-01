@@ -63,6 +63,7 @@ export let dictionary: IndexedDictionary = {
     koany: ['欵'],
     kongzsqun: ['空軍'],
     lanzs: ['玍'],
+    liamzsmi: ['拈乜'],
     liokkwqun: ['陸軍'],
     mihhwqiannzs: ['物件'],
     mzs: ['不'],
