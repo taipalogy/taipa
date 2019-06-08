@@ -2,7 +2,7 @@ import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
 import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalWordMetaplasm,
      } from '../tonal/lexeme'
-import { TonalSyllable, syllabifyTonal, TonalSyllableMetaplasm } from '../tonal/morpheme'
+import { TonalSyllable, syllabifyTonal, TonalCombiningMetaplasm } from '../tonal/morpheme'
 import { MorphemeMaker, Morpheme } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
@@ -62,7 +62,7 @@ export let FORMS = {
 //  Tonal Syllable Metaplasm
 //------------------------------------------------------------------------------
 
-export class TonalCombiningForms extends TonalSyllableMetaplasm {
+export class TonalCombiningForms extends TonalCombiningMetaplasm {
     assignAllomorph(syllable: TonalSyllable): Allomorph {
         if(listOfUncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
             return listOfUncombinedCheckedAllomorphs.get(syllable.lastLetter.literal)
@@ -183,9 +183,9 @@ class TonalInflexion extends TonalWordMetaplasm {
 export class TonalInflexionMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
-    metaplasm: TonalSyllableMetaplasm
+    metaplasm: TonalCombiningMetaplasm
 
-    constructor(syllable: TonalSyllable, tsm: TonalSyllableMetaplasm) {
+    constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
         super()
         this.syllable = syllable;
         this.metaplasm = tsm
@@ -206,9 +206,9 @@ export class TonalInflexionMorpheme extends Morpheme {
 
 export class TonalInflexionMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
-    metaplasm: TonalSyllableMetaplasm
+    metaplasm: TonalCombiningMetaplasm
     
-    constructor(graphemes: Array<AlphabeticGrapheme>, tsm: TonalSyllableMetaplasm) {
+    constructor(graphemes: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
         super()
         this.graphemes = new Array();
         this.graphemes = graphemes;

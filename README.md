@@ -45,3 +45,7 @@ See dictionary.ts for more sample inputs. Use `Client.processOneToken` to proces
 ## Dependency Parser
 
 Use `Client.process` method to parse a sentence
+
+## Formosa 臺灣語
+
+小川 尚義 (おがわ なおよし). Thomas Barclay.

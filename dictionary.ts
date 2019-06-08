@@ -1,9 +1,6 @@
-
-
 interface IndexedDictionary {
     readonly [index: string]: Array<string>
 }
-
 
 export let dictionary: IndexedDictionary = {
     a: ['阿', '鴉'],
@@ -55,8 +52,10 @@ export let dictionary: IndexedDictionary = {
     giny: ['囝'],
     giwiongcsqun: ['義勇軍'],
     haicsqun: ['海軍'],
+    hiongzsdiong: ['雄中'],
     hoang: ['風'],
     hongzsqun: ['皇軍'],
+    jiwcitfvowduizs: ['二七部隊'],
     ka: ['脚'],
     kakfsitt: ['確實'],
     kazscng: ['尻'],

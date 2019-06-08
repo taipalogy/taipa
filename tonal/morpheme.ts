@@ -1,22 +1,20 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, SyllableMetaplasm } from '../morpheme'
-import { Syllabary } from '../morpheme'
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, Syllabary } from '../morpheme'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
-import { AlphabeticLetter, AlphabeticGrapheme, Tonal } from '../grapheme'
+import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
+import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
-import { CheckedAllomorph, FreeAllomorph, Allomorph, listOfUncombinedCheckedAllomorphs,
-    listOfUncombinedFreeAllomorphs, AllomorphY } from './version2'
 
 //------------------------------------------------------------------------------
 //  Tonal Syllable Metaplasm
 //------------------------------------------------------------------------------
 
-export class TonalSyllableMetaplasm extends SyllableMetaplasm {
+export class TonalCombiningMetaplasm extends CombiningMetaplasm {
     assignAllomorph(syllable: TonalSyllable): Allomorph { return null }
     apply(syllable: TonalSyllable, allomorph: Allomorph) {}
 }
 
-export class TonalUncombiningForms extends TonalSyllableMetaplasm {
+export class TonalUncombiningForms extends TonalCombiningMetaplasm {
     assignAllomorph(syllable: TonalSyllable): Allomorph {
         let allomorph: Allomorph
         // assign the matched allomorph for this syllable
@@ -219,9 +217,9 @@ export class TonalSyllable extends Syllable {
 export class TonalLemmatizationMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
-    metaplasm: TonalSyllableMetaplasm
+    metaplasm: TonalCombiningMetaplasm
 
-    constructor(syllable: TonalSyllable, tsm: TonalSyllableMetaplasm) {
+    constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
         super()
         this.syllable = syllable;
         this.metaplasm = tsm
@@ -242,9 +240,9 @@ export class TonalLemmatizationMorpheme extends Morpheme {
 
 export class TonalLemmatizationMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
-    metaplasm: TonalSyllableMetaplasm
+    metaplasm: TonalCombiningMetaplasm
     
-    constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalSyllableMetaplasm) {
+    constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
         super()
         this.graphemes = new Array();
         this.graphemes = gs;

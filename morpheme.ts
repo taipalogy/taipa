@@ -6,7 +6,7 @@ import { TonalAffix, Allomorph } from './tonal/version2'
 //  Metaplasm
 //------------------------------------------------------------------------------
 
-export abstract class SyllableMetaplasm {
+export abstract class CombiningMetaplasm {
     abstract apply(syllable: Syllable, allomorphe: Allomorph)
 }
 
