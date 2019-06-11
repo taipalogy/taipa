@@ -1,6 +1,6 @@
 {
   "name": "taipa",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "parser",
   "main": "./lib/index.js",
   "scripts": {
@@ -12,5 +12,7 @@
   "devDependencies": {
     "@types/node": "^10.9.3"
   },
-  "files": ["lib/**/*"]
+  "files": [
+    "lib/**/*"
+  ]
 }
