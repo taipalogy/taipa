@@ -1,18 +1,16 @@
 {
-  "name": "parser",
-  "version": "0.0.1",
-  "description": "parser command line tool",
-  "main": ".bin/main.js",
+  "name": "taipa",
+  "version": "0.0.2",
+  "description": "parser",
+  "main": "./lib/index.js",
   "scripts": {
-    "build": "tsc --outDir bin"
+    "build": "tsc --outDir lib"
   },
-  "author": "sotronx",
+  "author": "sotron",
   "license": "MIT",
-  "bin": {
-    "parser": "./bin/main.js"
-  },
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^10.9.3"
-  }
+  },
+  "files": ["lib/**/*"]
 }

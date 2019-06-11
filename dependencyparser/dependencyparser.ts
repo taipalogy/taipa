@@ -16,8 +16,8 @@ export enum Dependency {
 
 export class Arc {
     dependency: Dependency
-    head: InflexionLexeme = null
-    dependent: InflexionLexeme = null
+    head: InflexionLexeme
+    dependent: InflexionLexeme
     constructor(dep: Dependency, head: InflexionLexeme, dependent: InflexionLexeme) {
         this.dependency = dep;
         this.head = head;
@@ -26,12 +26,15 @@ export class Arc {
 }
 
 export abstract class Transition {
-    abstract do(c: Configuration)
+    abstract do(c: Configuration): Configuration
 }
 
 export class Shift extends Transition {
     do(c: Configuration) {
-        c.stack.push(c.queue.shift());
+        let s = c.queue.shift()
+        if(s != undefined) {
+            c.stack.push(s);
+        }
         return c;
     }
 }

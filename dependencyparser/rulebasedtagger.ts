@@ -8,7 +8,7 @@ import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllom
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, Tonal, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import { InflexionLexeme, LexemeMaker } from '../lexeme'
+import { InflexionLexeme, LexemeMaker, Metaplasm } from '../lexeme'
 
 export let FORMS = {
     'VERB': {
@@ -231,7 +231,7 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
 export class TonalInflexionLexeme extends InflexionLexeme {
     word: TonalWord
     wordForms: Array<TonalWord>
-    metaplasm
+    metaplasm: TonalWordMetaplasm
 
     constructor(word: TonalWord) {
         super()
@@ -324,7 +324,7 @@ class ConstructionOfPhrase {
 //------------------------------------------------------------------------------
 
 class ConstructionElement {
-    lexeme
+    lexeme: TonalInflexionLexeme
 
     constructor(l: TonalInflexionLexeme) {
         this.lexeme = l

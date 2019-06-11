@@ -18,8 +18,8 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
 
     getMorphologicalAnalysisResults(str: string)
     getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>)
-    getMorphologicalAnalysisResults(x) {
-        let graphemes
+    getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>) {
+        let graphemes: AlphabeticGrapheme[] = []
         let g_results
         if(typeof x == "object") {
             graphemes = x

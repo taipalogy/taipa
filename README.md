@@ -15,7 +15,6 @@ This parser consists of the following functions:
 
 ## Requirements
 
-* node
 * https://www.npmjs.com/package/@types/node
 
 ## Running the app
@@ -46,6 +45,3 @@ See dictionary.ts for more sample inputs. Use `Client.processOneToken` to proces
 
 Use `Client.process` method to parse a sentence
 
-## Formosa 臺灣語
-
-小川 尚義 (おがわ なおよし). Thomas Barclay.
