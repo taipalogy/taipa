@@ -1,13 +1,14 @@
 import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
-import { TonalWord, TonalInputingLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'
-import { TonalSyllable, TonalInputingMorpheme, syllabifyTonal } from '../tonal/morpheme'
-import { RootMorpheme, MorphemeMaker } from '../morpheme'
+import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalWordMetaplasm,
+     } from '../tonal/lexeme'
+import { TonalSyllable, syllabifyTonal, TonalCombiningMetaplasm } from '../tonal/morpheme'
+import { MorphemeMaker, Morpheme } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, Tonal, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import { TonalLexeme, InflectiveLexemeMaker } from '../lexeme'
+import { InflexionLexeme, LexemeMaker, Metaplasm } from '../lexeme'
 
 export let FORMS = {
     'VERB': {
@@ -58,148 +59,91 @@ export let FORMS = {
 }
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Root Morpheme
+//  Tonal Syllable Metaplasm
 //------------------------------------------------------------------------------
 
-export class ToneSandhiRootMorpheme extends RootMorpheme {
-    syllable: TonalSyllable;
-    allomorph: Allomorph = null;
-
-
-    constructor(syllable: TonalSyllable) {
-        super();
-        this.syllable = syllable;
-    }
-
-    assignAllomorph() {}
-}
-
-export class CombiningFormMorpheme extends ToneSandhiRootMorpheme {
-    assignAllomorph() {
-        if(listOfUncombinedCheckedAllomorphs.has(this.syllable.lastLetter.literal)) {
-            this.allomorph = listOfUncombinedCheckedAllomorphs.get(this.syllable.lastLetter.literal)
-            return
+export class TonalCombiningForms extends TonalCombiningMetaplasm {
+    assignAllomorph(syllable: TonalSyllable): Allomorph {
+        if(listOfUncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
+            return listOfUncombinedCheckedAllomorphs.get(syllable.lastLetter.literal)
         }
 
-        if(listOfUncombinedFreeAllomorphs.has(this.syllable.lastLetter.literal)) {
-            this.allomorph = listOfUncombinedFreeAllomorphs.get(this.syllable.lastLetter.literal)
-            return
+        if(listOfUncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
+            return listOfUncombinedFreeAllomorphs.get(syllable.lastLetter.literal)
         }
 
-        this.allomorph = new ZeroAllomorph()
-        return
+        return new ZeroAllomorph()
     }
 
-    getCombiningForm(t: Tonal): TonalSyllable  {
-        if(this.allomorph != null) {
-            let s: TonalSyllable = new TonalSyllable(this.syllable.letters);
-            if(this.allomorph instanceof FreeAllomorph) {
-                if(this.allomorph instanceof ZeroAllomorph) {
-                    s.pushLetter(new AlphabeticLetter(t.characters))
-                } else if(this.allomorph instanceof AllomorphY) {
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
+        if(allomorph != null) {
+            let s: TonalSyllable = new TonalSyllable(syllable.letters);
+            if(allomorph instanceof FreeAllomorph) {
+                if(allomorph instanceof ZeroAllomorph) {
+                    let cfs = combiningRules.get(allomorph.tonal.getLiteral())
+                    for(let k in cfs) {
+                        // it should loop only once
+                        s.pushLetter(new AlphabeticLetter(cfs[k].characters))
+                    }
+                    return [s]
+                } else if(allomorph instanceof AllomorphY) {
                     s.popLetter()
-                    return s
+                    return [s]
                 } else {
                     s.popLetter()
-                    s.pushLetter(new AlphabeticLetter(t.characters))
-                    return s
+                    let cfs = combiningRules.get(allomorph.tonal.getLiteral())
+                    let rets = []
+                    for(let k in cfs) {
+                        s.pushLetter(new AlphabeticLetter(cfs[k].characters))
+                        rets.push(new TonalSyllable(s.letters))
+                        s.popLetter()
+                    }
+                    return rets
                 }
-            } else if(this.allomorph instanceof CheckedAllomorph) {
-                s.pushLetter(new AlphabeticLetter(this.allomorph.tonal.characters))
-                return s
+            } else if(allomorph instanceof CheckedAllomorph) {
+                // nothing to pop here
+                let cfs = combiningRules.get(allomorph.tonal.getLiteral())
+                let rets = []
+                for(let k in cfs) {
+                    s.pushLetter(new AlphabeticLetter(cfs[k].characters))
+                    rets.push(new TonalSyllable(s.letters))
+                    s.popLetter()
+                }
+                return rets
             }
         }
-        return null
+        return []
     }
+
 }
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Root Morpheme Maker
+//  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-export class ToneSandhiRootMorphemeMaker extends MorphemeMaker {
-    graphemes: Array<AlphabeticGrapheme>;
-    
-    constructor(graphemes: Array<AlphabeticGrapheme>) {
-        super()
-        this.graphemes = new Array();
-        this.graphemes = graphemes;
-    }
-
-    create(syllable: TonalSyllable) { return new TonalInputingMorpheme(syllable) }
-
-    createArray() { return new Array<TonalInputingMorpheme>() }
-
-    makeRootMorphemes() {
-        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
-    }
+class TonalCaseDeclension extends TonalWordMetaplasm {}
+class TonalAdverbInflexion extends TonalWordMetaplasm {}
+class TonalParticleInflexion extends TonalWordMetaplasm {}
+class TonalZeroInflexion extends TonalWordMetaplasm {
+    // examples: author and authoring. che qahf he
 }
-
-export class CombiningFormMorphemeMaker extends ToneSandhiRootMorphemeMaker {
-    
-    constructor(graphemes: Array<AlphabeticGrapheme>) {
-        super(graphemes)
-    }
-
-    createCombiningFormMorpheme(syllable: TonalSyllable) { 
-        let s = new CombiningFormMorpheme(syllable)
-        s.assignAllomorph()
-        return s 
-    }
-
-    makeCombiningMorphemes() {
-        // make morphemes and the last of them is a sandhi form
-        return this.postprecess(super.makeRootMorphemes().morphemes);
-    }
-
-    postprecess(tspms: Array<ToneSandhiRootMorpheme>) {
-        // replace the last morpheme with its sandhi form
-        if(tspms.length > 0) {
-            let last = tspms.pop()
-            tspms.push(this.createCombiningFormMorpheme(last.syllable))
-        }
-        return tspms
-    }
-}
-
-//------------------------------------------------------------------------------
-//  Inflection Lexeme
-//------------------------------------------------------------------------------
-
-export class ToneSandhiInflectionLexeme extends TonalLexeme {
-    // properties can be added or deleted
-    tonalEnding: TonalSymbolEnding = null
+class TonalInflexion extends TonalWordMetaplasm {
     word: TonalWord
-    kvp: { key: string , value: string }
+    morphemes: Array<TonalInflexionMorpheme>
+    tonalEnding: TonalSymbolEnding = null
 
-    constructor(w: TonalWord) {
-        super()
-        this.word = w
-    }
-
-    add(id: string) {
-        // use this.partOfSpeech to pick up k-v pairs from forms
-        let pos = Object.keys(FORMS).find(key => this.partOfSpeech === key)
-        // pick up the specific form from the part of speech
-        let k = Object.keys(FORMS[pos]).find(key => id === key )
-        // assign property and property value
-        this.kvp = { key: id, value: FORMS[pos][k] }
-    }
-
-    get baseForm() { 
-        // some determiners have only base form
-        return this.word
-    }
-
-    toString(id: string) {
-        if(this.kvp.key === id) {
-            return this[this.kvp.value].literal
+    apply(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
+        this.word = word
+        this.morphemes = morphemes
+        if(morphemes.length > 0) {
+            if(morphemes[morphemes.length-1].allomorph != null) {
+                // tonal ending needs to be assigned to sandhi lexeme
+                this.assignTonalEnding(morphemes[morphemes.length-1].allomorph);
+            }
         }
-    }
-}
 
-export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
-    private wordForSandhiForm: TonalWord
+        return this.getInflexionForms()
+    }
 
     assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
@@ -215,152 +159,147 @@ export class SandhiFormLexeme extends ToneSandhiInflectionLexeme {
         }
     }
 
-    private getSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: Tonal) {
+    private getInflexionForms() {
         if(this.tonalEnding != null) {
-            let word = new TonalWord(this.word.syllables);
-            if(this.tonalEnding instanceof FreeTonalEnding) {
-                let last = morphemes[morphemes.length-1]
-                if(last instanceof CombiningFormMorpheme) {
-                    word.popSyllable()
-                    word.pushSyllable(last.getCombiningForm(tm));
-                }
-                return word
-            } else if(this.tonalEnding instanceof CheckedTonalEnding) {
-                let last = morphemes[morphemes.length-1]
-                if(last instanceof CombiningFormMorpheme) {
-                    word.pushSyllable(last.getCombiningForm(tm));
-                }
-                return word
+            let wd = new TonalWord(this.word.syllables);
+            let last = this.morphemes[this.morphemes.length-1]
+            let slbs = last.apply()
+            let rets = []
+            for(let i in slbs) {
+                wd.popSyllable()
+                wd.pushSyllable(slbs[i]);
+                rets.push(wd)
             }
+            return rets
         }
         return null
-    }
-
-    get sandhiForm() {
-        return this.wordForSandhiForm
-    }
-
-    populateSandhiForm(morphemes: Array<ToneSandhiRootMorpheme>, tm: Tonal) {
-        this.wordForSandhiForm = this.getSandhiForm(morphemes, tm)
     }
 }
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Lexeme Maker
+//  Tonal Inflexion Morpheme
 //------------------------------------------------------------------------------
 
-export class TonalInflectionLexemeMaker extends InflectiveLexemeMaker {
-    morphemes: Array<ToneSandhiRootMorpheme>;
+export class TonalInflexionMorpheme extends Morpheme {
+    syllable: TonalSyllable;
+    allomorph: Allomorph = null; // required to populate stems
+    metaplasm: TonalCombiningMetaplasm
 
-    constructor(morphemes: Array<ToneSandhiRootMorpheme>) {
+    constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
+        super()
+        this.syllable = syllable;
+        this.metaplasm = tsm
+
+        // assign allomorph for each syllable
+        this.allomorph = this.metaplasm.assignAllomorph(this.syllable)
+    }
+    
+    apply(): any {
+        return this.metaplasm.apply(this.syllable, this.allomorph)
+    }
+
+}
+
+//------------------------------------------------------------------------------
+//  Tonal Inflexion Morpheme Maker
+//------------------------------------------------------------------------------
+
+export class TonalInflexionMorphemeMaker extends MorphemeMaker {
+    graphemes: Array<AlphabeticGrapheme>;
+    metaplasm: TonalCombiningMetaplasm
+    
+    constructor(graphemes: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
+        super()
+        this.graphemes = new Array();
+        this.graphemes = graphemes;
+        this.metaplasm = tsm
+    }
+
+    create(syllable: TonalSyllable) { return new TonalInflexionMorpheme(syllable, this.metaplasm) }
+
+    createArray() { return new Array<TonalInflexionMorpheme>() }
+
+    makeMorphemes() {
+        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Tonal Inflection Lexeme
+//------------------------------------------------------------------------------
+
+export class TonalInflexionLexeme extends InflexionLexeme {
+    word: TonalWord
+    wordForms: Array<TonalWord>
+    metaplasm: TonalWordMetaplasm
+
+    constructor(word: TonalWord) {
+        super()
+        this.word = word;
+    }
+
+    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalWordMetaplasm): any {
+        return tm.apply(this.word, ms)
+    }
+
+    /*
+    toString(id: string) {
+        if(this.kvp.key === id) {
+            return this[this.kvp.value].literal
+        }
+    }
+    */
+}
+
+//------------------------------------------------------------------------------
+//  Tonal Inflexion Lexeme Maker
+//------------------------------------------------------------------------------
+
+export class TonalInflexionLexemeMaker extends LexemeMaker {
+    morphemes: Array<TonalInflexionMorpheme>;
+
+    constructor(morphemes: Array<TonalInflexionMorpheme>) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;
     }
 
-    makeInflectionLexemes() {
+    makeLexemes() {
         return this.postprocess(this.make(this.preprocess()))
     }
 
     make(syllables: Array<TonalSyllable>) {
-        return new ToneSandhiInflectionLexeme(new TonalWord(syllables));
+        return new TonalInflexionLexeme(new TonalWord(syllables));
     }
 
-    postprocess(tspl: ToneSandhiInflectionLexeme) {
-        if(this.morphemes.length > 0) {
-            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-            }
-        }
+    postprocess(tl: TonalInflexionLexeme) {
+        let applied = tl.apply(this.morphemes, new TonalInflexion())
 
-        let lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
-        lexemes.push(tspl);
+        let lexemes: Array<TonalInflexionLexeme> = new Array();
+        lexemes.push(tl);
 
-        return lexemes
+        return { lexemes: lexemes, inflectedForms: applied }
     }
 }
 
-class TonalInflectedLexemeMaker extends TonalInflectionLexemeMaker {
-    tonal: Tonal
-
-    constructor(morphemes: Array<ToneSandhiRootMorpheme>, tm?: Tonal) {
-        super(morphemes)
-        //this.morphemes = new Array();
-        //this.morphemes = morphemes;
-        if(tm != undefined) {
-            this.tonal = tm
-        }
-    }
-
-    makeSandhiLexemes() {
-        return this.postprocess(this.make(this.preprocess()))
-    }
-
-    make(syllables: Array<TonalSyllable>) {
-        return new SandhiFormLexeme(new TonalWord(syllables));
-    }
-
-    postprocess(tspl: SandhiFormLexeme) {
-        if(this.morphemes.length > 0) {
-            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // tonal ending needs to be assigned to sandhi lexeme
-                tspl.assignTonalEnding(this.morphemes[this.morphemes.length-1].allomorph);
-            }
-        }
-
-        tspl.populateSandhiForm(this.morphemes, this.tonal)
-
-        let lexemes: Array<SandhiFormLexeme> = new Array();
-        lexemes.push(tspl);
-
-        return lexemes
-    }
-    
-}
-
 //------------------------------------------------------------------------------
-//  Lexeme Turner
+//  Tonal Lexeme Analyzer
 //------------------------------------------------------------------------------
 
-export class TurningIntoInflectionLexeme {
-    turnIntoLexemes(str: string) {
+export class TonalInflextionAnalyzer {
+    makeLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         let output = gm.makeGraphemes();
         let graphemes = output.graphemes
 
         // Morpheme Maker
-        let tsmm = new ToneSandhiRootMorphemeMaker(graphemes);
-        let obj = tsmm.makeRootMorphemes();
+        let tmm = new TonalInflexionMorphemeMaker(graphemes, new TonalCombiningForms());
+        let obj = tmm.makeMorphemes();
 
         // Lexeme Maker
-        let tslm = new TonalInflectionLexemeMaker(obj.morphemes);
-        let lexemes = tslm.makeInflectionLexemes();
-
-        return lexemes;
-    }
-}
-
-export class TurningIntoSandhiForm extends TurningIntoInflectionLexeme {
-    tonal: Tonal
-
-    constructor (tm: Tonal) {
-        super()
-        this.tonal = tm
-    }
-
-    turnIntoLexemes(str: string) {
-        // Grapheme Maker
-        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        let output = gm.makeGraphemes();
-        let graphemes = output.graphemes
-
-        // Morpheme Maker
-        let tsmm = new CombiningFormMorphemeMaker(graphemes);
-        let morphemes = tsmm.makeCombiningMorphemes(); // only the last morpheme is used
-
-        // Lexeme Maker
-        let tslm = new TonalInflectedLexemeMaker(morphemes, this.tonal);
-        let lexemes = tslm.makeSandhiLexemes();
+        let tslm = new TonalInflexionLexemeMaker(obj.morphemes);
+        let lexemes = tslm.makeLexemes();
 
         return lexemes;
     }
@@ -380,52 +319,34 @@ class ConstructionOfPhrase {
     }
 }
 
-class ConstructionOfClause {
-    isSeperable
-}
-
-class Conversion {
-    // different from parsing lexmem. convert between part of speeches.
-    /*
-    forms: Array<ToneSandhiInflectionLexeme> = null
-    as(): ToneSandhiInflectionLexeme {
-        return this.forms[0]
-    }
-    */
-}
-
-class Quantifier extends Conversion {
-    constructor() {
-        super()
-    }
-}
-
 //------------------------------------------------------------------------------
 //  Construction Element
 //------------------------------------------------------------------------------
 
-class ConstructionElement{
-    id: string = ''
-    lexemes: Array<ToneSandhiInflectionLexeme> = new Array()
+class ConstructionElement {
+    lexeme: TonalInflexionLexeme
 
-    constructor(id: string) {
-        this.id = id
-    }
-
-    addLexeme(l: ToneSandhiInflectionLexeme) {
-        this.lexemes.push(l)
+    constructor(l: TonalInflexionLexeme) {
+        this.lexeme = l
     }
 
     check(w: TonalWord) {
-        for(let k in this.lexemes) {
-            if(this.lexemes[k].toString(this.id) === w.literal) {
-                return true
-            }
-        }
+        //for(let k in this.lexemes) {
+            //if(this.lexemes[k].toString(this.id) === w.literal) {
+            //if(this.lexemes[k].toString() === w.literal) {
+                //return true
+            //}
+        //}
         return false
     }
 
 }
+
+class Transitive extends ConstructionElement {}
+
+class Proceeding extends ConstructionElement {}
+
+class Intransitive extends ConstructionElement {}
 
 //------------------------------------------------------------------------------
 //  Type of Construction
@@ -436,35 +357,28 @@ abstract class TypeOfConstruction {
 }
 
 class VerbPhrase extends TypeOfConstruction {
-    //new ConstructionOfPhrase(['intransitive', 'intransitive']),
-    //new ConstructionOfPhrase(['serial', 'serial', 'intransitive']),
-    //new ConstructionOfPhrase(['causative', 'accusative', 'intransitive'])
 
     constructions: Array<ConstructionOfPhrase> = []
 
     constructor() {
         super()
 
-        let turner1 = new TurningIntoSandhiForm(combiningRules.get('zs')['w'])
-        let l1 = turner1.turnIntoLexemes('oannzs')[0]
-        l1.partOfSpeech = SYMBOLS.VERB
-        l1.add('transitive')
-        let transitive = new ConstructionElement('transitive')
-        transitive.addLexeme(l1)
-        
-        let turner2 = new TurningIntoSandhiForm(combiningRules.get('y')['zero'])
-        let l2 = turner2.turnIntoLexemes('goay')[0]
-        l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
-        l2.add('proceeding')
-        let proceeding = new ConstructionElement('proceeding')
-        proceeding.addLexeme(l2)
+        let analyzer = new TonalInflextionAnalyzer()
+        let results1 = analyzer.makeLexemes('oannzs')
+        let results2 = analyzer.makeLexemes('goay')
+        let results3 = analyzer.makeLexemes('churw')
 
-        let turner3 = new TurningIntoInflectionLexeme()
-        let l3 = turner3.turnIntoLexemes('zurw')[0]
+        let l1 = results1.lexemes[0]
+        l1.partOfSpeech = SYMBOLS.VERB
+        let transitive = new Transitive(l1)
+        
+        let l2 = results2.lexemes[0]
+        l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
+        let proceeding = new Proceeding(l2)
+
+        let l3 = results3.lexemes[0]
         l3.partOfSpeech = SYMBOLS.VERB
-        l3.add('intransitive')
-        let intransitive = new ConstructionElement('intransitive')
-        intransitive.addLexeme(l3)
+        let intransitive = new Intransitive(l3)
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
@@ -472,10 +386,8 @@ class VerbPhrase extends TypeOfConstruction {
 }
 
 class DitransitiveVerbPhrase extends TypeOfConstruction {
-    //new ConstructionOfPhrase(['ditransitive', 'dative', 'accusative'])
     constructions = []
 }
-
 
 //------------------------------------------------------------------------------
 //  Rule-Based Tagger
@@ -483,20 +395,20 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 
 export class RuleBasedTagger {
 
-    lexemes: Array<ToneSandhiInflectionLexeme> = new Array();
+    lexemes: Array<TonalInflexionLexeme> = new Array();
 
-    constructor(lexemes: Array<TonalInputingLexeme>) {
+    constructor(lexemes: Array<TonalLemmatizationLexeme>) {
         this.match(lexemes)
     }
 
-    match(lexemes: Array<TonalInputingLexeme>) {
+    match(lexemes: Array<TonalLemmatizationLexeme>) {
         // take in lemma lexemes and then check them against parsing lexemes
         // store matched parsing lexemes in nodes
         let w: TonalWord = lexemes[0].word
 
         let cop: ConstructionOfPhrase
         let vp = new VerbPhrase()
-        //if(w instanceof ToneSandhiWord) {
+        //if(w instanceof TonalWord) {
             for(let key in vp.constructions) {
                 if(vp.constructions[key].elements[0].check(w)) {
                     cop = vp.constructions[key]
@@ -504,13 +416,11 @@ export class RuleBasedTagger {
             }
         //} else if(w instanceof TonallessWord) {}
 
-        if(cop.elements[1].check(lexemes[1].word))
-        { }
-        if(cop.elements[2].check(lexemes[2].word))
-        { }
+        //if(cop.elements[1].check(lexemes[1].word)) {}
+        //if(cop.elements[2].check(lexemes[2].word)) {}
 
         for(let k in lexemes) {
-            this.lexemes.push(vp.constructions[0].elements[k].lexemes[0])
+            this.lexemes.push(vp.constructions[0].elements[k].lexeme)
         }
     }
 }

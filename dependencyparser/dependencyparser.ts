@@ -1,8 +1,4 @@
-
-
-import { MORPH_RULES } from './morphrules'
-import { SYMBOLS } from './symbols';
-import { Lexeme } from '../lexeme';
+import { InflexionLexeme } from '../lexeme';
 
 export enum Dependency {
     aux_caus = 'aux:caus',
@@ -20,9 +16,9 @@ export enum Dependency {
 
 export class Arc {
     dependency: Dependency
-    head: Lexeme = null
-    dependent: Lexeme = null
-    constructor(dep: Dependency, head: Lexeme, dependent: Lexeme) {
+    head: InflexionLexeme
+    dependent: InflexionLexeme
+    constructor(dep: Dependency, head: InflexionLexeme, dependent: InflexionLexeme) {
         this.dependency = dep;
         this.head = head;
         this.dependent = dependent
@@ -30,12 +26,15 @@ export class Arc {
 }
 
 export abstract class Transition {
-    abstract do(c: Configuration)
+    abstract do(c: Configuration): Configuration
 }
 
 export class Shift extends Transition {
     do(c: Configuration) {
-        c.stack.push(c.queue.shift());
+        let s = c.queue.shift()
+        if(s != undefined) {
+            c.stack.push(s);
+        }
         return c;
     }
 }
@@ -54,8 +53,8 @@ export class LeftArc extends Transition {
 }
 
 export class Configuration {
-    queue: Array<Lexeme> = new Array()
-    stack: Array<Lexeme> = new Array()
+    queue: Array<InflexionLexeme> = new Array()
+    stack: Array<InflexionLexeme> = new Array()
     graph: Array<Arc> = new Array();
 
     constructor() {}

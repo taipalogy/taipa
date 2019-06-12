@@ -1,6 +1,14 @@
-import { AlphabeticLetter, Sound } from './grapheme'
+import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { Result, NoSuccess, Success } from './result';
-import { TonalAffix } from './tonal/version2'
+import { TonalAffix, Allomorph } from './tonal/version2'
+
+//------------------------------------------------------------------------------
+//  Metaplasm
+//------------------------------------------------------------------------------
+
+export abstract class CombiningMetaplasm {
+    abstract apply(syllable: Syllable, allomorphe: Allomorph)
+}
 
 //------------------------------------------------------------------------------
 //  Syllabary
@@ -47,10 +55,6 @@ class GrammaticalSuffix {
 //------------------------------------------------------------------------------
 
 export class Morpheme {}
-
-class TonallessMorpheme extends Morpheme {}
-
-export class RootMorpheme extends Morpheme {}
 
 //------------------------------------------------------------------------------
 //  Syllable Patterns

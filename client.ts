@@ -1,29 +1,103 @@
-import { TonalAnalyzer, TonalInputingLexeme } from './tonal/lexeme'
-import { DummyLexeme, Lexeme } from './lexeme'
+import { TonalLemmatizationLexeme, TonalLemmatization } from './tonal/lexeme'
+import { InflexionLexeme, Lexeme, Word } from './lexeme'
 import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger, SandhiFormLexeme, ToneSandhiInflectionLexeme } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger, TonalInflexionLexeme } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
+import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 
 export class Document {
-    lemmaLexemes: Array<TonalInputingLexeme> = new Array();
+    lexemes: Array<TonalLemmatizationLexeme> = new Array();
+    forms: Array<Word> = new Array();
+    inflectionalEnding: string = ''
     parsingLexemes: Array<Lexeme> = new Array();
     combinedMorphemes: Array<Sound[]> = new Array()
-    graph: Array<Arc>
+    graph: Array<Arc> = new Array()
+}
+
+export class Display {
+    
+    constructor(private doc: Document) {}
+
+    render() {
+        //let clt = new Client();
+        //let doc = clt.processOneToken(input);
+        let output = ''
+        for(let i in this.doc.lexemes) {
+            let l = this.doc.lexemes[i].word.literal
+            let en = this.doc.inflectionalEnding
+            if(l.length-en.length != 0) {
+                output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
+            }
+            let filler: string = ''
+            for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) { 
+                filler += ' '
+            }
+            if(en.length > 0) output += '\n' + filler + en + ' - ' + 'inflectional ending'
+    
+            for(let j in this.doc.combinedMorphemes) {
+                let syll = ''
+                let saunz = []
+                for(let k in this.doc.combinedMorphemes[j]) {
+                    let sou = this.doc.combinedMorphemes[j][k]
+                    saunz.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
+                    syll += sou.getLiteral()
+                }
+                output += '\n' + '- ' + syll
+                for(let k in saunz) {
+                    output += '\n' + saunz[k]
+                }
+            }
+    
+            let ipw = this.lookup(this.doc.lexemes[i].word.literal);
+            // when the input word can be found in the dictionary
+            if(ipw != null) {
+                output += '\n' + ipw
+            }
+    
+            let ls = this.doc.forms
+    
+            for(let j in ls) {
+                let bsw = this.lookup(ls[j].literal);
+                // when the base form of the word can be found in the dictionary
+                if(bsw != null) {
+                    output += '\n' + bsw
+                }
+            }
+    
+        }
+
+        return output
+    }
+
+    lookup(k: string) {
+        for(let key in dictionary) {
+            let value
+            if(key == k) {
+                value = dictionary[key];
+            }
+            if(value != null) {
+                return value[0];
+            }
+        }
+        return null;
+    }
+
 }
 
 export class Client {
+/*
     output(input: string) {
         let clt = new Client();
         let doc = clt.processOneToken(input);
         let output = ''
-        for(let i in doc.lemmaLexemes) {
-            let l = doc.lemmaLexemes[i].word.literal
-            let en = doc.lemmaLexemes[i].getInflectionalEnding()
+        for(let i in doc.lexemes) {
+            let l = doc.lexemes[i].word.literal
+            let en = doc.inflectionalEnding
             if(l.length-en.length != 0) {
                 output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
             }
@@ -47,13 +121,13 @@ export class Client {
                 }
             }
     
-            let ipw = clt.lookup(doc.lemmaLexemes[i].word.literal);
+            let ipw = clt.lookup(doc.lexemes[i].word.literal);
             // when the input word can be found in the dictionary
             if(ipw != null) {
                 output += '\n' + ipw
             }
     
-            let ls = doc.lemmaLexemes[i].getBaseForms()
+            let ls = doc.forms
     
             for(let j in ls) {
                 let bsw = clt.lookup(ls[j].literal);
@@ -67,7 +141,8 @@ export class Client {
 
         return output
     }
-
+*/
+/*
     lookup(k: string) {
         for(let key in dictionary) {
             if(key == k) {
@@ -79,22 +154,32 @@ export class Client {
         }
         return null;
     }
-
+*/
     processOneToken(str: string) {
 
         let al = new AnalyzerLoader()
+
+        // kana
         al.load(Kana)
-        let objM = al.aws[0].analyzer.getDataOfMorphologicalAnalysis(str)
-        if(objM.result.successful == true) {
-            al.aws[0].getBlocks(objM.morphemes)
-        } else al.aws[0].getBlocks(objM.morphemes)
+        let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
+        if(m_results.result.successful == true) {
+            al.aws[0].getBlocks(m_results.morphemes)
+        } else al.aws[0].getBlocks(m_results.morphemes)
 
+        // tonal
         let doc: Document = new Document();
-        let turner = new TonalAnalyzer()
-        doc.lemmaLexemes = turner.getDataOfLexicalAnalysis(str.match(/\w+/g)[0])
-
-        // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
-        doc.combinedMorphemes = turner.arraysOfSounds
+        let turner = new TonalLemmatizationAnalyzer()
+        let tokens = str.match(/\w+/g)
+        let l_results
+        if(tokens != null && tokens.length > 0) {
+            l_results = turner.getLexicalAnalysisResults(tokens[0])
+            doc.lexemes = l_results.lexemes
+            doc.forms = l_results.lemmata
+            doc.inflectionalEnding = l_results.inflectionalEnding
+    
+            // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
+            doc.combinedMorphemes = l_results.arraysOfSounds    
+        }
 
         return doc;
     }
@@ -104,10 +189,12 @@ export class Client {
         let c: Configuration = dp.getInitialConfiguration();
         let tokens = str.match(/\w+/g);
 
-        let lexemes: Array<TonalInputingLexeme> = new Array();
-        let turner = new TonalAnalyzer()
-        for(let key in tokens) {
-            lexemes.push(turner.getDataOfLexicalAnalysis(tokens[key])[0])
+        let lexemes: Array<TonalLemmatizationLexeme> = new Array();
+        let turner = new TonalLemmatizationAnalyzer()
+        if(tokens != null && tokens.length >0) {
+            for(let key in tokens) {
+                lexemes.push(turner.getLexicalAnalysisResults(tokens[key]).lexemes[0])
+            }
         }
 
         // can lexemes be replaced by a phraseme?
@@ -117,9 +204,9 @@ export class Client {
         for(let key in nodes) {
             c.queue.push(nodes[key])
         }
-        
+
         let guide = new Guide()
-        let root = new DummyLexeme()
+        let root = new InflexionLexeme()
         root.word.literal = 'ROOT'
         c.stack.push(root)
 
@@ -129,35 +216,24 @@ export class Client {
             guide.transitions.push(new Shift())
         }
 
-
         while(!c.isTerminalConfiguration()) {
-            
-            let t: Transition = guide.getNextTransition();
-            if(t == null) break
+            let t = guide.getNextTransition();
+            if(t == null || t == undefined) break
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
                 if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.VERB) {
                     let l = c.stack[c.stack.length-1]
-                    if(l instanceof SandhiFormLexeme) {
-                        if(l.kvp.key === 'transitive') {
+                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
                             guide.transitions.push(new Shift())
-                        }
-                    } else if(l instanceof ToneSandhiInflectionLexeme) {
-                        if(l.kvp.key === 'intransitive') {
+                    } else {
                             guide.transitions.push(new RightArc())
                             c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                             guide.transitions.push(new RightArc())
-                            
-                        }
                     }
                 } if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
                     let l = c.stack[c.stack.length-1]
-                    if(l instanceof SandhiFormLexeme) {
-                        if(l.kvp.key === 'proceeding') {
                             guide.transitions.push(new Shift())
                             c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
-                        }
-                    }
                 }
             }
         }

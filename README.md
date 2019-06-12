@@ -15,7 +15,6 @@ This parser consists of the following functions:
 
 ## Requirements
 
-* node
 * https://www.npmjs.com/package/@types/node
 
 ## Running the app
@@ -45,3 +44,4 @@ See dictionary.ts for more sample inputs. Use `Client.processOneToken` to proces
 ## Dependency Parser
 
 Use `Client.process` method to parse a sentence
+

@@ -11,8 +11,8 @@ function createInstance<A extends AnalyzerWrapper>(c: new () => A): A {
 //------------------------------------------------------------------------------
 
 export abstract class Analyzer {
-    abstract getDataOfMorphologicalAnalysis(x: any)
-    abstract getDataOfLexicalAnalysis(str: string)
+    abstract getMorphologicalAnalysisResults(x: any)
+    abstract getLexicalAnalysisResults(str: string)
 }
 
 export class AnalyzerWrapper {

@@ -4,10 +4,11 @@
     ], 
     "exclude": [
         "node_modules",
-        "**/*.spec.ts"
     ],
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es6"
+        "target": "es6",
+        "declaration": true,
+        "outDir": "./lib",
     }
 }

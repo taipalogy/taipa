@@ -1,6 +1,6 @@
 
 import { InflectionalEnding } from "./tonal/lexeme"
-import { TonalWord, TonalInputingLexeme } from './tonal/lexeme'
+import { TonalWord, TonalLemmatizationLexeme } from './tonal/lexeme'
 
 //------------------------------------------------------------------------------
 //  Tone Group
@@ -80,9 +80,9 @@ export class ToneSandhiPhrase extends Phrase {
 //------------------------------------------------------------------------------
 
 export class ToneSandhiPhrasemeMaker {
-    lexemes: Array<TonalInputingLexeme>;
+    lexemes: Array<TonalLemmatizationLexeme>;
 
-    constructor(lexemes: Array<TonalInputingLexeme>) {
+    constructor(lexemes: Array<TonalLemmatizationLexeme>) {
         this.lexemes = new Array();
         this.lexemes = lexemes;
     }

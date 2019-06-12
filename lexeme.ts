@@ -1,34 +1,35 @@
-import { Syllable } from './morpheme';
-import { TonalInputingLexeme } from './tonal/lexeme'
+import { Syllable, Morpheme } from './morpheme';
 import { TonalSyllable } from './tonal/morpheme';
+import { TonalWordMetaplasm } from './tonal/lexeme';
+
 
 //------------------------------------------------------------------------------
-//  Internal Sandhi Rule
+//  Metaplasm
 //------------------------------------------------------------------------------
 
+export abstract class Metaplasm {}
 
 //------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
 
 export class Lexeme {
-    // this is used in rule-based tagger for both tone-sandhi and 
-    // tone-mark-less lexemes
     word: Word
-    partOfSpeech: string = ''
 }
 
-//------------------------------------------------------------------------------
-//  Tone Sandhi Lexeme
-//------------------------------------------------------------------------------
+export class InflexionLexeme extends Lexeme {
+    word: Word = new Word
+    partOfSpeech: string = ''
+    metaplasm: TonalWordMetaplasm
+}
 
-class TonallessLexeme extends Lexeme {}
+export class LemmatizationLexeme extends Lexeme {
+    metaplasm: TonalWordMetaplasm
+}
 
-//------------------------------------------------------------------------------
-//  Tone Sandhi Lexeme
-//------------------------------------------------------------------------------
-
-export class TonalLexeme extends Lexeme {}
+export class DummyLexeme extends InflexionLexeme {
+    word: Word = new Word()
+}
 
 //------------------------------------------------------------------------------
 //  Word
@@ -55,32 +56,6 @@ export class Word {
 }
 
 //------------------------------------------------------------------------------
-//  Inflectional Lexeme
-//------------------------------------------------------------------------------
-
-class InflectionalLexeme extends Lexeme {
-    word: InflectiveWord
-}
-
-//------------------------------------------------------------------------------
-//  Dummy Lexeme
-//------------------------------------------------------------------------------
-
-export class DummyLexeme extends Lexeme {
-    word: Word = new Word()
-}
-
-//------------------------------------------------------------------------------
-//  Inflectional Word
-//------------------------------------------------------------------------------
-
-export class InflectiveWord extends Word {
-}
-
-export class AgglutinativeWord extends Word {
-}
-
-//------------------------------------------------------------------------------
 //  Lexeme Maker
 //------------------------------------------------------------------------------
 
@@ -102,14 +77,6 @@ export abstract class LexemeMaker {
     }
 
     abstract make(syllables: Array<Syllable>)
-}
-
-export abstract class InflectiveLexemeMaker extends LexemeMaker {
-    abstract postprocess(tsl: TonalLexeme)
-}
-
-export abstract class InputingLexemeMaker extends LexemeMaker {
-    abstract postprocess(tsil: TonalInputingLexeme)
 }
 
 export class DummyLexemeMaker {

@@ -2,7 +2,7 @@ import { Sound } from '../grapheme'
 import { list_of_lexical_roots } from './lexicalroots2'
 import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
     SetOfNasalizations, SetOfStopFinals, combiningRules, letterClass } from './version2'
-import { TonalAnalyzer } from './lexeme';
+import { TonalLemmatizationAnalyzer } from './analyzer'
 import { Syllabary } from '../morpheme'
 
 //------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ class ClientOfGenerator {
         let lastElement = entry[entry.length-1]
         let n = lastElement.lastIndexOf('.')
         let key = lastElement.slice(0, n)
-        let tos = combiningRules.get(key) // plural to
+        let tos = combiningRules.get(key) // plural form of to
         let ret: Array<string[]> = new Array
 
         if(lastElement.lastIndexOf('freeTonal') > 0) {
@@ -229,12 +229,12 @@ class ClientOfGenerator {
         let lrg = new LexicalRootGenerator()
         let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with beggining
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let turner = new TonalAnalyzer()
+        let turner = new TonalLemmatizationAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let output = turner.getDataOfGraphemicAnalysis(strs[i])
+            let output = turner.getGraphemicAnalysisResults(strs[i])
             let ls: string[] = []
             for(let j in output.graphemes) {
                 ls.push(output.graphemes[j].letter.literal)
