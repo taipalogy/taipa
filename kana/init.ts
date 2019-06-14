@@ -64,7 +64,7 @@ export class Kana extends AnalyzerWrapper {
                 kanas += 'っ'
             }
         }
-        console.log('>' + kanas)
+        console.info('>' + kanas)
         
         return ''
     }

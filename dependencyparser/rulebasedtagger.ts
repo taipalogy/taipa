@@ -125,7 +125,7 @@ class TonalCaseDeclension extends TonalWordMetaplasm {}
 class TonalAdverbInflexion extends TonalWordMetaplasm {}
 class TonalParticleInflexion extends TonalWordMetaplasm {}
 class TonalZeroInflexion extends TonalWordMetaplasm {
-    // examples: author and authoring. che qahf he
+    // examples: author and authoring. che qahf he. type and typing
 }
 class TonalInflexion extends TonalWordMetaplasm {
     word: TonalWord

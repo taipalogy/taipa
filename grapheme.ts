@@ -18,7 +18,7 @@ class Grapheme {}
 
 export class AlphabeticGrapheme extends Grapheme {
     letter: AlphabeticLetter
-    
+
     constructor(letter?: AlphabeticLetter) {
         super();
         this.letter = letter;
@@ -88,7 +88,7 @@ export class GraphemeMaker {
             this.list.push(lowerLetters[key])
         }
     }
-    
+
     makeGraphemes() {
         let graphemes = this.make(this.characters);
         return graphemes;
@@ -100,7 +100,7 @@ export class GraphemeMaker {
 
         if(characters[beginOfLetter].character === 'n') {
             if(characters.length-beginOfLetter >= 'nng'.length) {
-                if(characters[beginOfLetter].character === 'n' 
+                if(characters[beginOfLetter].character === 'n'
                     && characters[beginOfLetter+1].character === 'n'
                     && characters[beginOfLetter+2].character === 'g') {
                     // at the beginning of a letter, we should always prefer 'n' to 'nn'
@@ -149,13 +149,13 @@ export class GraphemeMaker {
         for(let i = 0; i < characters.length; i++) {
             //console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
             //console.log("metadata letter array looping.");
-            
+
             if(i-beginOfLetter == 0) {
-                
+
                 //console.log("matchedLen: %d", ms.matchedLength);
 
                 let candidates = this.list.filter(l => l.characters[0].character === characters[i].character);
-                
+
                 //console.log(candidates)
 
                 let ms = this.getMatchedSequence(characters, beginOfLetter, candidates)
@@ -246,7 +246,12 @@ export class StopFinal extends Final {name = 'stop final'}
 export class NasalFinal extends Final {name = 'nasal final'}
 
 export class SetOfSounds {
-    toString(elements: Array<Sound>) {
+    beginWith(str: string) {
+        if(str.search(new RegExp(this.toString())) == 0) return true
+        return false
+    }
+
+    toRegexString(elements: Array<Sound>) {
         let str = '';
         for(let i = 0; i < elements.length; i++) {
             if(i+1 < elements.length) {

@@ -3,7 +3,7 @@ import { TonalLemmatizationLexemeMaker } from './lexeme'
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { lowerLettersOfTonal } from './version2';
 import { NoSuccess, Success } from '../result'
-import { TonalLemmatizationMorphemeMaker, TonalUncombiningForms } from './morpheme'
+import { TonalLemmatizationMorphemeMaker, TonalUncombiningForms, TonalLemmatizationMorpheme } from './morpheme'
 
 //------------------------------------------------------------------------------
 //  Tonal Analyzer
@@ -36,12 +36,19 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return tmm.makeMorphemes(); 
     }
 
-    getLexicalAnalysisResults(str: string) {
-        let m_results = this.getMorphologicalAnalysisResults(str)
+    getLexicalAnalysisResults(str: string)
+    getLexicalAnalysisResults(ms: Array<TonalLemmatizationMorpheme>)
+    getLexicalAnalysisResults(x: string | Array<TonalLemmatizationMorpheme>) {
         let morphemes
-        if(m_results.result instanceof Success) {
-            morphemes = m_results.morphemes
-        } else morphemes = []
+        let m_results
+        if(typeof x == "object") {
+
+        } else if(typeof x == "string") {
+            m_results = this.getMorphologicalAnalysisResults(x)
+            if(m_results.result instanceof Success) {
+                morphemes = m_results.morphemes
+            } else morphemes = []
+        }
 
         // Lexeme Maker
         let tlm = new TonalLemmatizationLexemeMaker(morphemes);

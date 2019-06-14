@@ -108,49 +108,49 @@ class ClientOfGenerator {
     }
 
     private isMaterLectionis(str: string) {
-        if(str.search(new RegExp(new SetOfMaterLectionis().toString())) == 0) return true
+        if(new SetOfMaterLectionis().beginWith(str) == true) return true
 
         return false
     }
 
     private isVowel(str: string) {
-        if(str.search(new RegExp(new SetOfMedials().toString())) == 0) return true
+        if(new SetOfMedials().beginWith(str) == true) return true
 
         return false
     }
 
     private isInitialConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfInitials().toString())) == 0) return true
+        if(new SetOfInitials().beginWith(str) == true) return true
 
         return false
     }
 
     private isFreeTonal(str: string) {
-        if(str.search(new RegExp(new SetOfFreeTonals().toString())) == 0) return true
+        if(new SetOfFreeTonals().beginWith(str) == true) return true
 
         return false
     }
     
     private isFinalConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfFinals().toString())) == 0) return true
+        if(new SetOfFinals().beginWith(str) == true) return true
 
         return false
     }
 
     private isNasalization(str: string) {
-        if(str.search(new RegExp(new SetOfNasalizations().toString())) == 0) return true
+        if(new SetOfNasalizations().beginWith(str) == true) return true
         
         return false
     }
 
     private isStopFinal(str: string) {
-        if(str.search(new RegExp(new SetOfStopFinals().toString())) == 0) return true
+        if(new SetOfStopFinals().beginWith(str) == true) return true
         
         return false
     }
 
     private isNeutralFinal(str: string) {
-        if(str.search(new RegExp(new SetOfNeutralFinals().toString())) == 0) return true
+        if(new SetOfNeutralFinals().beginWith(str) == true) return true
         
         return false
     }

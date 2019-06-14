@@ -80,31 +80,30 @@ class ClientOfGenerator {
     }
 
     private isInitialConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfInitialConsonants().toString())) == 0) return true
+        if(new SetOfInitialConsonants().beginWith(str) == true) return true
 
         return false
     }
 
     private isSemivowel(str: string) {
-        if(str.search(new RegExp(new SetOfSemivowels().toString())) == 0) return true
+        if(new SetOfSemivowels().beginWith(str) == true) return true
 
         return false
     }
 
     private isVowel(str: string) {
-        if(str.search(new RegExp(new SetOfVowels().toString())) == 0) return true
+        if(new SetOfVowels().beginWith(str) == true) return true
 
         return false
     }
 
     private isGerminatedConsonant(str: string) {
-        if(str.search(new RegExp(new SetOfGerminatedConsonants().toString())) == 0) return true
+        if(new SetOfGerminatedConsonants().beginWith(str) == true) return true
 
         return false
     }
 
     private isFinalConsonant(str: string) {
-        //if(str.search(new RegExp(new SetOfFinalConsonants().toString())) == 0) return true
         if(new SetOfFinalConsonants().beginWith(str) == true) return true
 
         return false
@@ -150,7 +149,7 @@ class ClientOfGenerator {
             sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0)
 
             if((this.isInitialConsonant(ls[0]) || this.isGerminatedConsonant(ls[0])) && ls.length > 1) {
-                
+
                 if(this.isVowel(ls[1]) || this.isSemivowel(ls[1])) {
                     // analyze initial consonants
                     sounds.push(ls[0] + '.initialConsonant')
@@ -291,7 +290,7 @@ export class SetOfInitialConsonants extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.initialConsonants)
+        return super.toRegexString(this.initialConsonants)
     }
 }
 
@@ -306,13 +305,13 @@ export class SetOfVowels extends SetOfSounds {
         this.vowels.push(new VowelO())
     }
 
-    beginWith(str: string) { 
+    beginWith(str: string) {
         if(str.search(new RegExp(this.toString())) == 0) return true
         return false
     }
 
     toString() {
-        return super.toString(this.vowels)
+        return super.toRegexString(this.vowels)
     }
 }
 
@@ -328,7 +327,7 @@ class SetOfGerminatedConsonants extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.theGerminated)
+        return super.toRegexString(this.theGerminated)
     }
 }
 
@@ -337,11 +336,11 @@ class SetOfSemivowels extends SetOfSounds {
     constructor() {
         super()
         this.semivowels.push(new SemivowelW())
-        this.semivowels.push(new SemivowelY())        
+        this.semivowels.push(new SemivowelY())
     }
 
     toString() {
-        return super.toString(this.semivowels)
+        return super.toRegexString(this.semivowels)
     }
 }
 
@@ -354,14 +353,14 @@ export class SetOfFinalConsonants extends SetOfSounds {
         this.finalConsonants.push(new FinalConsonantS())
         this.finalConsonants.push(new FinalConsonantT())
     }
-
-    beginWith(str: string) { 
+/*
+    beginWith(str: string) {
         if(str.search(new RegExp(this.toString())) == 0) return true
         return false
     }
-
+*/
     toString() {
-        return super.toString(this.finalConsonants)
+        return super.toRegexString(this.finalConsonants)
     }
 }
 

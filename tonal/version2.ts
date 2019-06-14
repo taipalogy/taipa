@@ -238,7 +238,7 @@ export class SetOfNasalizations extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.nasals)
+        return super.toRegexString(this.nasals)
     }
 }
 
@@ -252,7 +252,7 @@ export class SetOfNasalFinals extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.nasalFinals)
+        return super.toRegexString(this.nasalFinals)
     }
 }
 
@@ -264,7 +264,7 @@ export class SetOfNeutralFinals extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.neutralFinals)
+        return super.toRegexString(this.neutralFinals)
     }
 }
 
@@ -281,7 +281,7 @@ export class SetOfMedials extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.medials)
+        return super.toRegexString(this.medials)
     }
 }
 
@@ -295,7 +295,7 @@ export class SetOfMaterLectionis extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.materLectionis)
+        return super.toRegexString(this.materLectionis)
     }
 }
 
@@ -326,7 +326,7 @@ export class SetOfInitials extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.initials)
+        return super.toRegexString(this.initials)
     }
 }
 
@@ -346,7 +346,7 @@ export class SetOfFreeTonals extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.freeTonals)
+        return super.toRegexString(this.freeTonals)
     }
 }
 
@@ -369,7 +369,7 @@ export class SetOfFinals extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.finals)
+        return super.toRegexString(this.finals)
     }
 }
 
@@ -388,7 +388,7 @@ export class SetOfStopFinals extends SetOfSounds {
     }
 
     toString() {
-        return super.toString(this.stopFinals)
+        return super.toRegexString(this.stopFinals)
     }
 }
 

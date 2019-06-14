@@ -1,6 +1,6 @@
-# Parser
+# taipa
 
-This parser consists of the following functions:
+This natural language processing library consists of the following functions:
 
 * lemmatizer
 * stemmer
@@ -9,39 +9,12 @@ This parser consists of the following functions:
 * input method
 * dependency parser
 
-## Building
-
-`npm run build`
-
 ## Requirements
 
 * https://www.npmjs.com/package/@types/node
 
-## Running the app
+## API
 
-### steps
-
-`cd bin`
-
-denpendency parsing:
-
-`node main.js`
-
-morphological analyzer + input method:
-
-`node main.js suzsjippwhoat`
-
-## Running the test
-
-run the test to see examples of word-parsing
-
-`node test.js`
-
-## Input Method
-
-See dictionary.ts for more sample inputs. Use `Client.processOneToken` to process a word
-
-## Dependency Parser
-
-Use `Client.process` method to parse a sentence
-
+* Client.processKana
+* Client.processTonal
+* Display.render

@@ -8,6 +8,7 @@ import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
+import { TonalInflective } from './tonal/init'
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 
 export class Document {
@@ -15,17 +16,15 @@ export class Document {
     forms: Array<Word> = new Array();
     inflectionalEnding: string = ''
     parsingLexemes: Array<Lexeme> = new Array();
-    combinedMorphemes: Array<Sound[]> = new Array()
+    combiningMorphemes: Array<Sound[]> = new Array()
     graph: Array<Arc> = new Array()
 }
 
 export class Display {
-    
+
     constructor(private doc: Document) {}
 
     render() {
-        //let clt = new Client();
-        //let doc = clt.processOneToken(input);
         let output = ''
         for(let i in this.doc.lexemes) {
             let l = this.doc.lexemes[i].word.literal
@@ -34,16 +33,16 @@ export class Display {
                 output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
             }
             let filler: string = ''
-            for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) { 
+            for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) {
                 filler += ' '
             }
             if(en.length > 0) output += '\n' + filler + en + ' - ' + 'inflectional ending'
-    
-            for(let j in this.doc.combinedMorphemes) {
+
+            for(let j in this.doc.combiningMorphemes) {
                 let syll = ''
                 let saunz = []
-                for(let k in this.doc.combinedMorphemes[j]) {
-                    let sou = this.doc.combinedMorphemes[j][k]
+                for(let k in this.doc.combiningMorphemes[j]) {
+                    let sou = this.doc.combiningMorphemes[j][k]
                     saunz.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
                     syll += sou.getLiteral()
                 }
@@ -52,15 +51,15 @@ export class Display {
                     output += '\n' + saunz[k]
                 }
             }
-    
+
             let ipw = this.lookup(this.doc.lexemes[i].word.literal);
             // when the input word can be found in the dictionary
             if(ipw != null) {
                 output += '\n' + ipw
             }
-    
+
             let ls = this.doc.forms
-    
+
             for(let j in ls) {
                 let bsw = this.lookup(ls[j].literal);
                 // when the base form of the word can be found in the dictionary
@@ -68,7 +67,7 @@ export class Display {
                     output += '\n' + bsw
                 }
             }
-    
+
         }
 
         return output
@@ -90,73 +89,7 @@ export class Display {
 }
 
 export class Client {
-/*
-    output(input: string) {
-        let clt = new Client();
-        let doc = clt.processOneToken(input);
-        let output = ''
-        for(let i in doc.lexemes) {
-            let l = doc.lexemes[i].word.literal
-            let en = doc.inflectionalEnding
-            if(l.length-en.length != 0) {
-                output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
-            }
-            let filler: string = ''
-            for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) { 
-                filler += ' '
-            }
-            if(en.length > 0) output += '\n' + filler + en + ' - ' + 'inflectional ending'
-    
-            for(let j in doc.combinedMorphemes) {
-                let syll = ''
-                let saunz = []
-                for(let k in doc.combinedMorphemes[j]) {
-                    let sou = doc.combinedMorphemes[j][k]
-                    saunz.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
-                    syll += sou.getLiteral()
-                }
-                output += '\n' + '- ' + syll
-                for(let k in saunz) {
-                    output += '\n' + saunz[k]
-                }
-            }
-    
-            let ipw = clt.lookup(doc.lexemes[i].word.literal);
-            // when the input word can be found in the dictionary
-            if(ipw != null) {
-                output += '\n' + ipw
-            }
-    
-            let ls = doc.forms
-    
-            for(let j in ls) {
-                let bsw = clt.lookup(ls[j].literal);
-                // when the base form of the word can be found in the dictionary
-                if(bsw != null) {
-                    output += '\n' + bsw
-                }
-            }
-    
-        }
-
-        return output
-    }
-*/
-/*
-    lookup(k: string) {
-        for(let key in dictionary) {
-            if(key == k) {
-                var value = dictionary[key];
-            }
-            if(value != null) {
-                return value[0];
-            }
-        }
-        return null;
-    }
-*/
-    processOneToken(str: string) {
-
+    processKana(str: string) {
         let al = new AnalyzerLoader()
 
         // kana
@@ -165,22 +98,28 @@ export class Client {
         if(m_results.result.successful == true) {
             al.aws[0].getBlocks(m_results.morphemes)
         } else al.aws[0].getBlocks(m_results.morphemes)
+        
+        al.unload(Kana)
+    }
+
+    processTonal(str: string) {
+        let al = new AnalyzerLoader()
 
         // tonal
-        let doc: Document = new Document();
-        let turner = new TonalLemmatizationAnalyzer()
+        al.load(TonalInflective)
         let tokens = str.match(/\w+/g)
         let l_results
+        let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
-            l_results = turner.getLexicalAnalysisResults(tokens[0])
+            l_results = al.aws[0].analyzer.getLexicalAnalysisResults(tokens[0])
             doc.lexemes = l_results.lexemes
             doc.forms = l_results.lemmata
             doc.inflectionalEnding = l_results.inflectionalEnding
-    
-            // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
-            doc.combinedMorphemes = l_results.arraysOfSounds    
-        }
 
+            // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
+            doc.combiningMorphemes = l_results.arraysOfSounds    
+        }
+        al.unload(TonalInflective)
         return doc;
     }
 
