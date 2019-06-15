@@ -1,6 +1,6 @@
 {
   "name": "taipa",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Taiwanese parsing",
   "main": "./lib/index.js",
   "scripts": {
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/sotronx/taipa.git"
   },
-  "keywords": ["parser", "natural language processing", "nlp"],
+  "keywords": [
+    "parser",
+    "natural language processing",
+    "nlp"
+  ],
   "author": "sotron",
   "license": "MIT",
   "dependencies": {},
