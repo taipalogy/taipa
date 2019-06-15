@@ -1,13 +1,13 @@
-# taipa
+# Taipa
 
 This natural language processing library consists of the following functions:
 
-* lemmatizer
-* stemmer
-* morpheme-based morphological analyzer
-* graphemic analyzer
+* lemmatizing
+* stemming
+* morpheme-based morphological analyzing
+* graphemic analyzing
 * input method
-* dependency parser
+* dependency parsing
 
 ## Requirements
 
@@ -15,6 +15,6 @@ This natural language processing library consists of the following functions:
 
 ## API
 
-* Client.processKana
 * Client.processTonal
+* Client.processKana
 * Display.render
