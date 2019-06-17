@@ -1,14 +1,20 @@
 
 let list_of_new_syllables = [
+    'coaih', 'dngh',
+	
     'hoang',
 
     'jirx', 'jex', 'jek', 'jeng', 'jerx',
+	
+	'kiaih', 'kuih',
 
-    'lirey',
+    'laih', 'langh', 'lirey', 'lih', 'loaih', 'loeh', 'loeih', 'lurih',
 
     'mnghh',
 
     'n',
+	
+	'qinnh',
 
     'sm',
 ]

@@ -1,6 +1,6 @@
 import { TonalLemmatizationLexeme, TonalLemmatization } from './tonal/lexeme'
 import { InflexionLexeme, Lexeme, Word } from './lexeme'
-import { dictionary } from './dictionary'
+//import { dictionary } from './dictionary'
 import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
 import { RuleBasedTagger, TonalInflexionLexeme } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
@@ -12,80 +12,11 @@ import { TonalInflective } from './tonal/init'
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 
 export class Document {
-    lexemes: Array<TonalLemmatizationLexeme> = new Array();
-    forms: Array<Word> = new Array();
+    tonalLemmatizationLexemes: Array<TonalLemmatizationLexeme> = new Array();
+    lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
-    parsingLexemes: Array<Lexeme> = new Array();
     combiningMorphemes: Array<Sound[]> = new Array()
     graph: Array<Arc> = new Array()
-}
-
-export class Display {
-
-    constructor(private doc: Document) {}
-
-    render() {
-        let output = ''
-        for(let i in this.doc.lexemes) {
-            let l = this.doc.lexemes[i].word.literal
-            let en = this.doc.inflectionalEnding
-            if(l.length-en.length != 0) {
-                output += l.substr(0, l.length-en.length) + ' - ' + 'inflectional stem'
-            }
-            let filler: string = ''
-            for(let n = 0; n < l.substr(0, l.length-en.length).length; n++) {
-                filler += ' '
-            }
-            if(en.length > 0) output += '\n' + filler + en + ' - ' + 'inflectional ending'
-
-            for(let j in this.doc.combiningMorphemes) {
-                let syll = ''
-                let saunz = []
-                for(let k in this.doc.combiningMorphemes[j]) {
-                    let sou = this.doc.combiningMorphemes[j][k]
-                    saunz.push('  - ' + sou.getLiteral() + ' - ' + sou.name)
-                    syll += sou.getLiteral()
-                }
-                output += '\n' + '- ' + syll
-                for(let k in saunz) {
-                    output += '\n' + saunz[k]
-                }
-            }
-
-            let ipw = this.lookup(this.doc.lexemes[i].word.literal);
-            // when the input word can be found in the dictionary
-            if(ipw != null) {
-                output += '\n' + ipw
-            }
-
-            let ls = this.doc.forms
-
-            for(let j in ls) {
-                let bsw = this.lookup(ls[j].literal);
-                // when the base form of the word can be found in the dictionary
-                if(bsw != null) {
-                    output += '\n' + bsw
-                }
-            }
-
-        }
-
-        return output
-    }
-
-    lookup(k: string) {
-        for(let key in dictionary) {
-            let value
-            if(key == k) {
-                value = dictionary[key];
-            }
-            if(value != null) {
-                return value[0];
-            }
-        }
-        return null;
-    }
-
 }
 
 export class Client {
@@ -112,8 +43,8 @@ export class Client {
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
             l_results = al.aws[0].analyzer.getLexicalAnalysisResults(tokens[0])
-            doc.lexemes = l_results.lexemes
-            doc.forms = l_results.lemmata
+            doc.tonalLemmatizationLexemes = l_results.lexemes
+            doc.lemmata = l_results.lemmata
             doc.inflectionalEnding = l_results.inflectionalEnding
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
