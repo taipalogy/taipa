@@ -1,5 +1,4 @@
 import { Morpheme } from './morpheme'
-import { Lexeme } from './lexeme';
 import { AlphabeticGrapheme } from './grapheme';
 import { TonalLemmatizationMorpheme } from './tonal/morpheme';
 

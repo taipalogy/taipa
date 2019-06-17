@@ -1,6 +1,6 @@
-import { Syllable, Morpheme } from './morpheme';
+import { Syllable } from './morpheme';
 import { TonalSyllable } from './tonal/morpheme';
-import { TonalWordMetaplasm } from './tonal/lexeme';
+import { TonalInflectingMetaplasm } from './tonal/lexeme';
 
 
 //------------------------------------------------------------------------------
@@ -20,11 +20,11 @@ export class Lexeme {
 export class InflexionLexeme extends Lexeme {
     word: Word = new Word
     partOfSpeech: string = ''
-    metaplasm: TonalWordMetaplasm
+    metaplasm: TonalInflectingMetaplasm
 }
 
 export class LemmatizationLexeme extends Lexeme {
-    metaplasm: TonalWordMetaplasm
+    metaplasm: TonalInflectingMetaplasm
 }
 
 export class DummyLexeme extends InflexionLexeme {

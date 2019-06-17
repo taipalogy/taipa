@@ -1,62 +1,14 @@
 import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
-import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalWordMetaplasm,
+import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalInflectingMetaplasm,
      } from '../tonal/lexeme'
 import { TonalSyllable, syllabifyTonal, TonalCombiningMetaplasm } from '../tonal/morpheme'
 import { MorphemeMaker, Morpheme } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
-import { AlphabeticLetter, Tonal, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
+import { AlphabeticLetter, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import { InflexionLexeme, LexemeMaker, Metaplasm } from '../lexeme'
-
-export let FORMS = {
-    'VERB': {
-        'intransitive': 'baseForm',
-        'transitive': 'sandhiForm',
-        'ditransitive': 'sandhiForm',
-        'causative': 'sandhiForm',
-        'perfective': 'baseForm',
-        'attributive': 'sandhiForm',
-        'continuative': 'sandhiForm', // adverbial
-    },
-    'ADJECTIVE': {
-        'basic': 'baseForm',
-        'attributive': 'sandhiForm',
-        'adverbial': 'sandhiForm', // ay
-    },
-    'NOUN': {
-        'basic': 'baseForm',
-        'adverbial': 'sandhiForm',
-    },
-    'PRONOUN': {},
-    'PARTICLE': {
-        'basic': 'baseForm',
-        'continuative': 'sandhiForm', // adverbial
-    },
-    'PREPOSITION': {},
-    'EXCLAMATION': {},
-    'DEMONSTRATIVEPRONOUN': {},
-    'PERSONALPRONOUN': {
-        'basic': 'baseForm',
-        'proceeding': 'sandhiForm',
-        'terminalFirst': 'sandhiForm',
-        'terminalSeventh': 'sandhiForm', // complement
-        'terminalThird': 'sandhiForm', // complement
-
-        'adverbial': 'sandhiForm',
-
-        'indirectObject': 'sandhiForm', // proceeding
-        'directObject': 'baseForm',
-    },
-    'DETERMINER': {},
-    'QUANTIFIER': {
-        'basic': 'baseForm',
-        'attributive': 'sandhiForm',
-        'continuative': 'sandhiForm',
-        'adverbial': 'sandhiForm',
-    },
-}
+import { InflexionLexeme, LexemeMaker } from '../lexeme'
 
 //------------------------------------------------------------------------------
 //  Tonal Syllable Metaplasm
@@ -121,48 +73,43 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
 //  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-class TonalCaseDeclension extends TonalWordMetaplasm {}
-class TonalAdverbInflexion extends TonalWordMetaplasm {}
-class TonalParticleInflexion extends TonalWordMetaplasm {}
-class TonalZeroInflexion extends TonalWordMetaplasm {
+class TonalCaseDeclension extends TonalInflectingMetaplasm {}
+class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
+class TonalParticleInflexion extends TonalInflectingMetaplasm {}
+class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing
 }
-class TonalInflexion extends TonalWordMetaplasm {
-    word: TonalWord
-    morphemes: Array<TonalInflexionMorpheme>
-    tonalEnding: TonalSymbolEnding = null
-
+class TonalInflexion extends TonalInflectingMetaplasm {
     apply(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
-        this.word = word
-        this.morphemes = morphemes
+        let tonalEnding: TonalSymbolEnding
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorph != null) {
                 // tonal ending needs to be assigned to sandhi lexeme
-                this.assignTonalEnding(morphemes[morphemes.length-1].allomorph);
+                tonalEnding = this.assignTonalEnding(morphemes[morphemes.length-1].allomorph);
             }
         }
 
-        return this.getInflexionForms()
+        return this.getInflexionForms(word, morphemes, tonalEnding)
     }
 
-    assignTonalEnding(allomorph: Allomorph) {
+    private assignTonalEnding(allomorph: Allomorph) {
         if(allomorph instanceof FreeAllomorph) {
             // replace the tonal ending
             let fte = new FreeTonalEnding()
             fte.allomorph = allomorph
-            this.tonalEnding = fte
+            return fte
         } else if(allomorph instanceof CheckedAllomorph) {
             // append the tonal of the tonal ending
             let cte = new CheckedTonalEnding()
             cte.allomorph = allomorph
-            this.tonalEnding = cte
+            return cte
         }
     }
 
-    private getInflexionForms() {
-        if(this.tonalEnding != null) {
-            let wd = new TonalWord(this.word.syllables);
-            let last = this.morphemes[this.morphemes.length-1]
+    private getInflexionForms(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>, tonalEnding: TonalSymbolEnding) {
+        if(tonalEnding != null) {
+            let wd = new TonalWord(word.syllables);
+            let last = morphemes[morphemes.length-1]
             let slbs = last.apply()
             let rets = []
             for(let i in slbs) {
@@ -231,24 +178,16 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
 export class TonalInflexionLexeme extends InflexionLexeme {
     word: TonalWord
     wordForms: Array<TonalWord>
-    metaplasm: TonalWordMetaplasm
+    metaplasm: TonalInflectingMetaplasm
 
     constructor(word: TonalWord) {
         super()
         this.word = word;
     }
 
-    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalWordMetaplasm): any {
+    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalInflectingMetaplasm): any {
         return tm.apply(this.word, ms)
     }
-
-    /*
-    toString(id: string) {
-        if(this.kvp.key === id) {
-            return this[this.kvp.value].literal
-        }
-    }
-    */
 }
 
 //------------------------------------------------------------------------------
@@ -331,12 +270,9 @@ class ConstructionElement {
     }
 
     check(w: TonalWord) {
-        //for(let k in this.lexemes) {
-            //if(this.lexemes[k].toString(this.id) === w.literal) {
-            //if(this.lexemes[k].toString() === w.literal) {
-                //return true
-            //}
-        //}
+        if(this.lexeme.word.literal === w.literal) {
+            return true
+        }
         return false
     }
 

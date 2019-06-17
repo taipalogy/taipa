@@ -6,7 +6,6 @@ This natural language processing library consists of the following functions:
 * stemming
 * morpheme-based morphological analyzing
 * graphemic analyzing
-* dependency parsing
 
 ## API
 
