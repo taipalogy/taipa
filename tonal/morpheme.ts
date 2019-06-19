@@ -1,4 +1,4 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, Syllabary } from '../morpheme'
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, Syllabary, TonalCombiningMetaplasm } from '../morpheme'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
@@ -8,11 +8,6 @@ import { ListOfLexicalRoots } from './lexicalroot'
 //------------------------------------------------------------------------------
 //  Tonal Syllable Metaplasm
 //------------------------------------------------------------------------------
-
-export class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    assignAllomorph(syllable: TonalSyllable): Allomorph { return null }
-    apply(syllable: TonalSyllable, allomorph: Allomorph) {}
-}
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
     assignAllomorph(syllable: TonalSyllable): Allomorph {

@@ -2,8 +2,8 @@ import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
 import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding,
      } from '../tonal/lexeme'
-import { TonalSyllable, syllabifyTonal, TonalCombiningMetaplasm } from '../tonal/morpheme'
-import { MorphemeMaker, Morpheme } from '../morpheme'
+import { TonalSyllable, syllabifyTonal } from '../tonal/morpheme'
+import { MorphemeMaker, Morpheme, TonalCombiningMetaplasm } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
@@ -80,7 +80,7 @@ class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing
 }
 class TonalInflexion extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
+    getWordForms(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
         let tonalEnding: TonalSymbolEnding
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorph != null) {
@@ -185,8 +185,8 @@ export class TonalInflexionLexeme extends InflexionLexeme {
         this.word = word;
     }
 
-    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalInflexion): any {
-        return tm.apply(this.word, ms)
+    assignWordForms(ms: Array<TonalInflexionMorpheme>, tm: TonalInflexion): any {
+        this.wordForms = tm.getWordForms(this.word, ms)
     }
 }
 
@@ -212,12 +212,13 @@ export class TonalInflexionLexemeMaker extends LexemeMaker {
     }
 
     postprocess(tl: TonalInflexionLexeme) {
-        let applied = tl.apply(this.morphemes, new TonalInflexion())
+        tl.assignWordForms(this.morphemes, new TonalInflexion())
 
         let lexemes: Array<TonalInflexionLexeme> = new Array();
         lexemes.push(tl);
 
-        return { lexemes: lexemes, inflectedForms: applied }
+        //return { lexemes: lexemes, inflectedForms: applied }
+        return lexemes
     }
 }
 
@@ -301,21 +302,25 @@ class VerbPhrase extends TypeOfConstruction {
         super()
 
         let analyzer = new TonalInflextionAnalyzer()
+        /*
         let results1 = analyzer.makeLexemes('oannzs')
         let results2 = analyzer.makeLexemes('goay')
         let results3 = analyzer.makeLexemes('churw')
-
-        let l1 = results1.lexemes[0]
-        l1.partOfSpeech = SYMBOLS.VERB
-        let transitive = new Transitive(l1)
+*/
+        //let l1 = results1.lexemes[0]
+        let l1 = analyzer.makeLexemes('oannzs')
+        l1[0].partOfSpeech = SYMBOLS.VERB
+        let transitive = new Transitive(l1[0])
         
-        let l2 = results2.lexemes[0]
-        l2.partOfSpeech = SYMBOLS.PERSONALPRONOUN
-        let proceeding = new Proceeding(l2)
+        //let l2 = results2.lexemes[0]
+        let l2 = analyzer.makeLexemes('goay')
+        l2[0].partOfSpeech = SYMBOLS.PERSONALPRONOUN
+        let proceeding = new Proceeding(l2[0])
 
-        let l3 = results3.lexemes[0]
-        l3.partOfSpeech = SYMBOLS.VERB
-        let intransitive = new Intransitive(l3)
+        //let l3 = results3.lexemes[0]
+        let l3 = analyzer.makeLexemes('churw')
+        l3[0].partOfSpeech = SYMBOLS.VERB
+        let intransitive = new Intransitive(l3[0])
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 

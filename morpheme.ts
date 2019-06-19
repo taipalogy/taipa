@@ -1,7 +1,7 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { Result, NoSuccess, Success } from './result';
 import { TonalAffix, Allomorph } from './tonal/version2'
-import { TonalLemmatizationMorpheme } from './tonal/morpheme';
+import { TonalLemmatizationMorpheme, TonalSyllable } from './tonal/morpheme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -9,6 +9,11 @@ import { TonalLemmatizationMorpheme } from './tonal/morpheme';
 
 export abstract class CombiningMetaplasm {
     abstract apply(syllable: Syllable, allomorphe: Allomorph)
+}
+
+export class TonalCombiningMetaplasm extends CombiningMetaplasm {
+    assignAllomorph(syllable: TonalSyllable): Allomorph { return null }
+    apply(syllable: TonalSyllable, allomorph: Allomorph) {}
 }
 
 //------------------------------------------------------------------------------
