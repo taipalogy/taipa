@@ -20,15 +20,11 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
     getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>)
     getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>) {
         let graphemes: AlphabeticGrapheme[] = []
-        let g_results
+        //let g_results
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             g_results = this.getGraphemicAnalysisResults(x)
-             if(g_results.result instanceof NoSuccess) {
-                 return g_results
-             }
-             graphemes = g_results.graphemes
+             graphemes = this.getGraphemicAnalysisResults(x)
         }
 
         // Morpheme Maker
@@ -39,23 +35,16 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
     getLexicalAnalysisResults(str: string)
     getLexicalAnalysisResults(ms: Array<TonalLemmatizationMorpheme>)
     getLexicalAnalysisResults(x: string | Array<TonalLemmatizationMorpheme>) {
-        let morphemes
-        let m_results
+        let morphemes: Array<TonalLemmatizationMorpheme> = []
         if(typeof x == "object") {
             morphemes = x
         } else if(typeof x == "string") {
-            //m_results = this.getMorphologicalAnalysisResults(x)
             morphemes = this.getMorphologicalAnalysisResults(x)
-            //if(m_results.result instanceof Success) {
-            //    morphemes = m_results.morphemes
-            //} else morphemes = []
         }
 
         // Lexeme Maker
         let tlm = new TonalLemmatizationLexemeMaker(morphemes);
-        //let l_results = tlm.makeLexemes()
         let lexemes = tlm.makeLexemes()
-        //return { lexemes: l_results.lexemes, lemmata: l_results.lemmata, inflectionalEnding: l_results.inflectionalEnding }
         return lexemes
     }
 }

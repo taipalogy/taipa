@@ -12,7 +12,6 @@ export abstract class CombiningMetaplasm {
 }
 
 export class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    assignAllomorph(syllable: TonalSyllable): Allomorph { return null }
     apply(syllable: TonalSyllable, allomorph: Allomorph) {}
 }
 

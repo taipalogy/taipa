@@ -19,16 +19,11 @@ export class KanaAnalyzer extends Analyzer {
     getMorphologicalAnalysisResults(str: string)
     getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>)
     getMorphologicalAnalysisResults(x) {
-        let graphemes
-        let g_data
+        let graphemes: Array<AlphabeticGrapheme> = []
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             g_data = this.getGraphemicAnalysisResults(x)
-             if(g_data instanceof NoSuccess) {
-                return g_data
-            }
-            graphemes = g_data.graphemes
+            graphemes = this.getGraphemicAnalysisResults(x)
         }
 
         // Morpheme Maker

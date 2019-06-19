@@ -192,7 +192,7 @@ export class GraphemeMaker {
             }
         }
         //console.log("metadata letter array length %d", letters.length);
-        return { 'graphemes': graphemes, 'result': result, 'debug': debug };
+        return graphemes
     }
 }
 

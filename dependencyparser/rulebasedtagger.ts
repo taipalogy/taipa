@@ -15,18 +15,6 @@ import { InflexionLexeme, LexemeMaker, TonalInflectingMetaplasm } from '../lexem
 //------------------------------------------------------------------------------
 
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
-    assignAllomorph(syllable: TonalSyllable): Allomorph {
-        if(listOfUncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
-            return listOfUncombinedCheckedAllomorphs.get(syllable.lastLetter.literal)
-        }
-
-        if(listOfUncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
-            return listOfUncombinedFreeAllomorphs.get(syllable.lastLetter.literal)
-        }
-
-        return new ZeroAllomorph()
-    }
-
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
         if(allomorph != null) {
             let s: TonalSyllable = new TonalSyllable(syllable.letters);
@@ -80,7 +68,7 @@ class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing
 }
 class TonalInflexion extends TonalInflectingMetaplasm {
-    getWordForms(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
+    apply(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
         let tonalEnding: TonalSymbolEnding
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorph != null) {
@@ -110,7 +98,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
         if(tonalEnding != null) {
             let wd = new TonalWord(word.syllables);
             let last = morphemes[morphemes.length-1]
-            let slbs = last.apply()
+            let slbs = last.getForms()
             let rets = []
             for(let i in slbs) {
                 wd.popSyllable()
@@ -138,11 +126,23 @@ export class TonalInflexionMorpheme extends Morpheme {
         this.metaplasm = tsm
 
         // assign allomorph for each syllable
-        this.allomorph = this.metaplasm.assignAllomorph(this.syllable)
+        this.allomorph = this.assignAllomorph(this.syllable)
     }
     
-    apply(): any {
+    getForms(): any {
         return this.metaplasm.apply(this.syllable, this.allomorph)
+    }
+
+    private assignAllomorph(syllable: TonalSyllable): Allomorph {
+        if(listOfUncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
+            return listOfUncombinedCheckedAllomorphs.get(syllable.lastLetter.literal)
+        }
+
+        if(listOfUncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
+            return listOfUncombinedFreeAllomorphs.get(syllable.lastLetter.literal)
+        }
+
+        return new ZeroAllomorph()
     }
 
 }
@@ -186,7 +186,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
     }
 
     assignWordForms(ms: Array<TonalInflexionMorpheme>, tm: TonalInflexion): any {
-        this.wordForms = tm.getWordForms(this.word, ms)
+        this.wordForms = tm.apply(this.word, ms)
     }
 }
 
@@ -230,16 +230,14 @@ export class TonalInflextionAnalyzer {
     makeLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        let output = gm.makeGraphemes();
-        let graphemes = output.graphemes
+        let graphemes = gm.makeGraphemes()
 
         // Morpheme Maker
         let tmm = new TonalInflexionMorphemeMaker(graphemes, new TonalCombiningForms());
-        let obj = tmm.makeMorphemes();
+        let morphemes = tmm.makeMorphemes();
 
         // Lexeme Maker
-        //let tslm = new TonalInflexionLexemeMaker(obj.morphemes);
-        let tslm = new TonalInflexionLexemeMaker(obj);
+        let tslm = new TonalInflexionLexemeMaker(morphemes);
         let lexemes = tslm.makeLexemes();
 
         return lexemes;
@@ -302,22 +300,15 @@ class VerbPhrase extends TypeOfConstruction {
         super()
 
         let analyzer = new TonalInflextionAnalyzer()
-        /*
-        let results1 = analyzer.makeLexemes('oannzs')
-        let results2 = analyzer.makeLexemes('goay')
-        let results3 = analyzer.makeLexemes('churw')
-*/
-        //let l1 = results1.lexemes[0]
+
         let l1 = analyzer.makeLexemes('oannzs')
         l1[0].partOfSpeech = SYMBOLS.VERB
         let transitive = new Transitive(l1[0])
         
-        //let l2 = results2.lexemes[0]
         let l2 = analyzer.makeLexemes('goay')
         l2[0].partOfSpeech = SYMBOLS.PERSONALPRONOUN
         let proceeding = new Proceeding(l2[0])
 
-        //let l3 = results3.lexemes[0]
         let l3 = analyzer.makeLexemes('churw')
         l3[0].partOfSpeech = SYMBOLS.VERB
         let intransitive = new Intransitive(l3[0])
@@ -350,16 +341,12 @@ export class RuleBasedTagger {
 
         let cop: ConstructionOfPhrase
         let vp = new VerbPhrase()
-        //if(w instanceof TonalWord) {
-            for(let key in vp.constructions) {
-                if(vp.constructions[key].elements[0].check(w)) {
-                    cop = vp.constructions[key]
-                }
+        // if w is an instance of TonalWord or tonefree word
+        for(let key in vp.constructions) {
+            if(vp.constructions[key].elements[0].check(w)) {
+                cop = vp.constructions[key]
             }
-        //} else if(w instanceof TonallessWord) {}
-
-        //if(cop.elements[1].check(lexemes[1].word)) {}
-        //if(cop.elements[2].check(lexemes[2].word)) {}
+        }
 
         for(let k in lexemes) {
             this.lexemes.push(vp.constructions[0].elements[k].lexeme)

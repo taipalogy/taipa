@@ -1,7 +1,6 @@
-import { TonalLemmatizationLexeme, TonalLemmatization } from './tonal/lexeme'
-import { InflexionLexeme, Lexeme, Word } from './lexeme'
-//import { dictionary } from './dictionary'
-import { DependencyParser, Configuration, Guide, Transition, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
+import { TonalLemmatizationLexeme } from './tonal/lexeme'
+import { InflexionLexeme, Word } from './lexeme'
+import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
 import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
@@ -15,7 +14,7 @@ export class Document {
     tonalLemmatizationLexemes: Array<TonalLemmatizationLexeme> = new Array();
     lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
-    combiningMorphemes: Array<Sound[]> = new Array()
+    arraysOfSounds: Array<Sound[]> = new Array()
     graph: Array<Arc> = new Array()
 }
 
@@ -25,12 +24,8 @@ export class Client {
 
         // kana
         al.load(Kana)
-        //let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
         let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
-        //if(m_results.result.successful == true) {
-        //    al.aws[0].getBlocks(m_results.morphemes)
         al.aws[0].getBlocks(morphemes)
-        //} else al.aws[0].getBlocks(m_results.morphemes)
         
         al.unload(Kana)
     }
@@ -44,22 +39,15 @@ export class Client {
         let l_results
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
-            //let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
-            //let morphemes = m_results.morphemes
             let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
-            //l_results = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
             let lexemes = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
-            //doc.tonalLemmatizationLexemes = l_results.lexemes
             doc.tonalLemmatizationLexemes = lexemes
-            //doc.lemmata = l_results.lemmata
             doc.lemmata = lexemes[0].getLemmata()
-            //doc.inflectionalEnding = l_results.inflectionalEnding
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
-            //doc.combiningMorphemes = m_results.arraysOfSounds
             for(let m of morphemes) {
-                doc.combiningMorphemes.push(m.sounds)
+                doc.arraysOfSounds.push(m.sounds)
             }
         }
         al.unload(TonalInflective)
@@ -75,7 +63,6 @@ export class Client {
         let turner = new TonalLemmatizationAnalyzer()
         if(tokens != null && tokens.length >0) {
             for(let key in tokens) {
-                //lexemes.push(turner.getLexicalAnalysisResults(tokens[key]).lexemes[0])
                 lexemes.push(turner.getLexicalAnalysisResults(tokens[key])[0])
             }
         }
