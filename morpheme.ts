@@ -1,6 +1,7 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { Result, NoSuccess, Success } from './result';
 import { TonalAffix, Allomorph } from './tonal/version2'
+import { TonalLemmatizationMorpheme } from './tonal/morpheme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -155,6 +156,10 @@ export abstract class MorphemeMaker {
                     }
                     tsm =  this.create(new Syllable(msp.letters))
 
+                    if(tsm instanceof TonalLemmatizationMorpheme) {
+                        tsm.sounds = msp.pattern
+                    }
+
                     arraysOfSounds.push(msp.pattern)
 
                     // here we should match the combining form with its root
@@ -177,6 +182,7 @@ export abstract class MorphemeMaker {
             }
         }
         if(result.messages.length == 0) result = new Success()
-        return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes, 'result': result }
+        //return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes, 'result': result }
+        return morphemes
     }
 }

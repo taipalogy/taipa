@@ -237,7 +237,8 @@ export class TonalInflextionAnalyzer {
         let obj = tmm.makeMorphemes();
 
         // Lexeme Maker
-        let tslm = new TonalInflexionLexemeMaker(obj.morphemes);
+        //let tslm = new TonalInflexionLexemeMaker(obj.morphemes);
+        let tslm = new TonalInflexionLexemeMaker(obj);
         let lexemes = tslm.makeLexemes();
 
         return lexemes;

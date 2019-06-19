@@ -42,17 +42,18 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         let morphemes
         let m_results
         if(typeof x == "object") {
-
+            morphemes = x
         } else if(typeof x == "string") {
-            m_results = this.getMorphologicalAnalysisResults(x)
-            if(m_results.result instanceof Success) {
-                morphemes = m_results.morphemes
-            } else morphemes = []
+            //m_results = this.getMorphologicalAnalysisResults(x)
+            morphemes = this.getMorphologicalAnalysisResults(x)
+            //if(m_results.result instanceof Success) {
+            //    morphemes = m_results.morphemes
+            //} else morphemes = []
         }
 
         // Lexeme Maker
         let tlm = new TonalLemmatizationLexemeMaker(morphemes);
         let l_results = tlm.makeLexemes()
-        return { lexemes: l_results.lexemes, lemmata: l_results.lemmata, inflectionalEnding: l_results.inflectionalEnding, arraysOfSounds: m_results.arraysOfSounds }
+        return { lexemes: l_results.lexemes, lemmata: l_results.lemmata, inflectionalEnding: l_results.inflectionalEnding }
     }
 }

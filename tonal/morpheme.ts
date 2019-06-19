@@ -2,7 +2,7 @@ import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, 
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
-import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme'
+import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
 
 //------------------------------------------------------------------------------
@@ -218,6 +218,7 @@ export class TonalLemmatizationMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
     metaplasm: TonalCombiningMetaplasm
+    sounds: Array<Sound>
 
     constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
         super()

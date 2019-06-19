@@ -25,10 +25,12 @@ export class Client {
 
         // kana
         al.load(Kana)
-        let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
-        if(m_results.result.successful == true) {
-            al.aws[0].getBlocks(m_results.morphemes)
-        } else al.aws[0].getBlocks(m_results.morphemes)
+        //let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
+        let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
+        //if(m_results.result.successful == true) {
+        //    al.aws[0].getBlocks(m_results.morphemes)
+        al.aws[0].getBlocks(morphemes)
+        //} else al.aws[0].getBlocks(m_results.morphemes)
         
         al.unload(Kana)
     }
@@ -42,13 +44,19 @@ export class Client {
         let l_results
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
-            l_results = al.aws[0].analyzer.getLexicalAnalysisResults(tokens[0])
+            //let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
+            //let morphemes = m_results.morphemes
+            let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
+            l_results = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
             doc.tonalLemmatizationLexemes = l_results.lexemes
             doc.lemmata = l_results.lemmata
             doc.inflectionalEnding = l_results.inflectionalEnding
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
-            doc.combiningMorphemes = l_results.arraysOfSounds    
+            //doc.combiningMorphemes = m_results.arraysOfSounds
+            for(let m of morphemes) {
+                doc.combiningMorphemes.push(m.sounds)
+            }
         }
         al.unload(TonalInflective)
         return doc;
