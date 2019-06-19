@@ -53,7 +53,9 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
 
         // Lexeme Maker
         let tlm = new TonalLemmatizationLexemeMaker(morphemes);
-        let l_results = tlm.makeLexemes()
-        return { lexemes: l_results.lexemes, lemmata: l_results.lemmata, inflectionalEnding: l_results.inflectionalEnding }
+        //let l_results = tlm.makeLexemes()
+        let lexemes = tlm.makeLexemes()
+        //return { lexemes: l_results.lexemes, lemmata: l_results.lemmata, inflectionalEnding: l_results.inflectionalEnding }
+        return lexemes
     }
 }

@@ -1,6 +1,6 @@
 import { SYMBOLS } from './symbols'
 import { combiningRules } from '../tonal/version2'
-import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, TonalInflectingMetaplasm,
+import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding,
      } from '../tonal/lexeme'
 import { TonalSyllable, syllabifyTonal, TonalCombiningMetaplasm } from '../tonal/morpheme'
 import { MorphemeMaker, Morpheme } from '../morpheme'
@@ -8,7 +8,7 @@ import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllom
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import { InflexionLexeme, LexemeMaker } from '../lexeme'
+import { InflexionLexeme, LexemeMaker, TonalInflectingMetaplasm } from '../lexeme'
 
 //------------------------------------------------------------------------------
 //  Tonal Syllable Metaplasm
@@ -185,7 +185,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
         this.word = word;
     }
 
-    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalInflectingMetaplasm): any {
+    apply(ms: Array<TonalInflexionMorpheme>, tm: TonalInflexion): any {
         return tm.apply(this.word, ms)
     }
 }

@@ -47,10 +47,14 @@ export class Client {
             //let m_results = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
             //let morphemes = m_results.morphemes
             let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
-            l_results = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
-            doc.tonalLemmatizationLexemes = l_results.lexemes
-            doc.lemmata = l_results.lemmata
-            doc.inflectionalEnding = l_results.inflectionalEnding
+            //l_results = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
+            let lexemes = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
+            //doc.tonalLemmatizationLexemes = l_results.lexemes
+            doc.tonalLemmatizationLexemes = lexemes
+            //doc.lemmata = l_results.lemmata
+            doc.lemmata = lexemes[0].getLemmata()
+            //doc.inflectionalEnding = l_results.inflectionalEnding
+            doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             //doc.combiningMorphemes = m_results.arraysOfSounds
@@ -71,7 +75,8 @@ export class Client {
         let turner = new TonalLemmatizationAnalyzer()
         if(tokens != null && tokens.length >0) {
             for(let key in tokens) {
-                lexemes.push(turner.getLexicalAnalysisResults(tokens[key]).lexemes[0])
+                //lexemes.push(turner.getLexicalAnalysisResults(tokens[key]).lexemes[0])
+                lexemes.push(turner.getLexicalAnalysisResults(tokens[key])[0])
             }
         }
 
