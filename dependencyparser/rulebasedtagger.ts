@@ -61,7 +61,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
 //  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-class TonalCaseDeclension extends TonalInflectingMetaplasm {}
+class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {}
 class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
 class TonalParticleInflexion extends TonalInflectingMetaplasm {}
 class TonalZeroInflexion extends TonalInflectingMetaplasm {
@@ -217,7 +217,6 @@ export class TonalInflexionLexemeMaker extends LexemeMaker {
         let lexemes: Array<TonalInflexionLexeme> = new Array();
         lexemes.push(tl);
 
-        //return { lexemes: lexemes, inflectedForms: applied }
         return lexemes
     }
 }

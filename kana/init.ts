@@ -2,7 +2,7 @@ import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
 import { letterClass, lowerLettersOfKana } from './kana'
 import { SetOfFinalConsonants } from './kana'
-import { KanaInputingMorpheme } from './morpheme'
+import { KanaLemmatizationMorpheme } from './morpheme'
 import { HiraganaAndKatakana } from './kana'
 
 export class Kana extends AnalyzerWrapper {
@@ -45,7 +45,7 @@ export class Kana extends AnalyzerWrapper {
         }
     }
 
-    getBlocks(ms: KanaInputingMorpheme[]) {
+    getBlocks(ms: KanaLemmatizationMorpheme[]) {
         //console.log(ms)
 
         let kanas = ''
@@ -64,8 +64,7 @@ export class Kana extends AnalyzerWrapper {
                 kanas += 'っ'
             }
         }
-        console.info('>' + kanas)
         
-        return ''
+        return kanas
     }
 }

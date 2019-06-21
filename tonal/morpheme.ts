@@ -237,12 +237,14 @@ export class TonalLemmatizationMorpheme extends Morpheme {
 export class TonalLemmatizationMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     metaplasm: TonalCombiningMetaplasm
+    lexicalRoots: ListOfLexicalRoots
     
     constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
         super()
         this.graphemes = new Array();
         this.graphemes = gs;
         this.metaplasm = tsm
+        this.lexicalRoots = new ListOfLexicalRoots()
     }
 
     create(syllable: TonalSyllable) { return new TonalLemmatizationMorpheme(syllable, this.metaplasm) }
@@ -250,6 +252,6 @@ export class TonalLemmatizationMorphemeMaker extends MorphemeMaker {
     createArray() { return new Array<TonalLemmatizationMorpheme>() }
 
     makeMorphemes() {
-        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
+        return this.make(this.preprocess(), this.lexicalRoots, syllabifyTonal);
     }
 }

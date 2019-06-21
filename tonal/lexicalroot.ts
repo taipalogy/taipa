@@ -229,17 +229,13 @@ class ClientOfGenerator {
         let lrg = new LexicalRootGenerator()
         let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with beggining
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let turner = new TonalLemmatizationAnalyzer()
+        let analyzer = new TonalLemmatizationAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            //let output = turner.getGraphemicAnalysisResults(strs[i])
-            let graphemes = turner.getGraphemicAnalysisResults(strs[i])
+            let graphemes = analyzer.getGraphemicAnalysisResults(strs[i])
             let ls: string[] = []
-            //for(let j in output.graphemes) {
-              //  ls.push(output.graphemes[j].letter.literal)
-            //}
             for(let j in graphemes) {
                 ls.push(graphemes[j].letter.literal)
             }

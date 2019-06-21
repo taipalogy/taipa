@@ -131,12 +131,12 @@ class ClientOfGenerator {
         let rkg = new RomanizedKanaGenerator()
         let strs: Array<string> = rkg.generate(beginning) // retrieve all needed syllables beginning with begginning
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
-        let turner = new KanaAnalyzer()
+        let analyzer = new KanaAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = turner.getGraphemicAnalysisResults(strs[i])
+            let graphemes = analyzer.getGraphemicAnalysisResults(strs[i])
             let ls: string[] = []
             for(let j in graphemes) {
                 ls.push(graphemes[j].letter.literal)

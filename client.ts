@@ -15,6 +15,7 @@ export class Document {
     lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
     arraysOfSounds: Array<Sound[]> = new Array()
+    blocks: string = ''
     graph: Array<Arc> = new Array()
 }
 
@@ -25,9 +26,11 @@ export class Client {
         // kana
         al.load(Kana)
         let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
-        al.aws[0].getBlocks(morphemes)
-        
+        let doc: Document = new Document()
+        //let blocks: string = al.aws[0].getBlocks(morphemes)
+        doc.blocks = al.aws[0].getBlocks(morphemes)
         al.unload(Kana)
+        return doc
     }
 
     processTonal(str: string) {
@@ -60,10 +63,10 @@ export class Client {
         let tokens = str.match(/\w+/g);
 
         let lexemes: Array<TonalLemmatizationLexeme> = new Array();
-        let turner = new TonalLemmatizationAnalyzer()
+        let analyzer = new TonalLemmatizationAnalyzer()
         if(tokens != null && tokens.length >0) {
             for(let key in tokens) {
-                lexemes.push(turner.getLexicalAnalysisResults(tokens[key])[0])
+                lexemes.push(analyzer.getLexicalAnalysisResults(tokens[key])[0])
             }
         }
 
