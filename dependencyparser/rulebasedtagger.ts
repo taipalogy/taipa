@@ -68,7 +68,7 @@ class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing
 }
 class TonalInflexion extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>) {
+    apply(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>) {
         let tonalEnding: TonalSymbolEnding
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorph != null) {
@@ -94,7 +94,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
         }
     }
 
-    private getInflexionForms(word: TonalWord, morphemes: Array<TonalInflexionMorpheme>, tonalEnding: TonalSymbolEnding) {
+    private getInflexionForms(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>, tonalEnding: TonalSymbolEnding) {
         if(tonalEnding != null) {
             let wd = new TonalWord(word.syllables);
             let last = morphemes[morphemes.length-1]
@@ -115,7 +115,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
 //  Tonal Inflexion Morpheme
 //------------------------------------------------------------------------------
 
-export class TonalInflexionMorpheme extends Morpheme {
+export class TonalCombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
     metaplasm: TonalCombiningMetaplasm
@@ -162,9 +162,9 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
         this.metaplasm = tsm
     }
 
-    create(syllable: TonalSyllable) { return new TonalInflexionMorpheme(syllable, this.metaplasm) }
+    create(syllable: TonalSyllable) { return new TonalCombiningMorpheme(syllable, this.metaplasm) }
 
-    createArray() { return new Array<TonalInflexionMorpheme>() }
+    createArray() { return new Array<TonalCombiningMorpheme>() }
 
     makeMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
@@ -185,7 +185,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
         this.word = word;
     }
 
-    assignWordForms(ms: Array<TonalInflexionMorpheme>, tm: TonalInflexion): any {
+    assignWordForms(ms: Array<TonalCombiningMorpheme>, tm: TonalInflexion): any {
         this.wordForms = tm.apply(this.word, ms)
     }
 }
@@ -195,9 +195,9 @@ export class TonalInflexionLexeme extends InflexionLexeme {
 //------------------------------------------------------------------------------
 
 export class TonalInflexionLexemeMaker extends LexemeMaker {
-    morphemes: Array<TonalInflexionMorpheme>;
+    morphemes: Array<TonalCombiningMorpheme>;
 
-    constructor(morphemes: Array<TonalInflexionMorpheme>) {
+    constructor(morphemes: Array<TonalCombiningMorpheme>) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;

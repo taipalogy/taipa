@@ -1,6 +1,6 @@
 import { Morpheme } from './morpheme'
 import { AlphabeticGrapheme } from './grapheme';
-import { TonalLemmatizationMorpheme } from './tonal/morpheme';
+import { TonalUncombiningMorpheme } from './tonal/morpheme';
 
 type Class = { new(...args: any[]): any; };
 
@@ -14,7 +14,7 @@ function createInstance<A extends AnalyzerWrapper>(c: new () => A): A {
 
 export abstract class Analyzer {
     abstract getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>)
-    abstract getLexicalAnalysisResults(x: string | Array<TonalLemmatizationMorpheme>)
+    abstract getLexicalAnalysisResults(x: string | Array<TonalUncombiningMorpheme>)
 }
 
 export class AnalyzerWrapper {

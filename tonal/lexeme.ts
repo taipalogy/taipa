@@ -1,4 +1,4 @@
-import { TonalSyllable, TonalLemmatizationMorpheme } from './morpheme'
+import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme'
 import { Word, LexemeMaker, LemmatizationLexeme, TonalInflectingMetaplasm } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
@@ -13,19 +13,19 @@ class TonalPronounLemmatization extends TonalInflectingMetaplasm {}
 class TonalParticleLemmatization extends TonalInflectingMetaplasm {}
 class TonalZeroLemmatization extends TonalInflectingMetaplasm {}
 export class TonalLemmatization extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>, inflectionalEnding: InflectionalEnding) {
+    apply(word: TonalWord, morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
   
         return  this.populateLemmata(word, morphemes, inflectionalEnding)
     }
 
-    private replaceLastSyllable(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>) {
+    private replaceLastSyllable(word: TonalWord, morphemes: Array<TonalUncombiningMorpheme>) {
         let wd = new TonalWord(word.syllables);
         wd.popSyllable();
         wd.pushSyllable(morphemes[morphemes.length-1].apply()[0])
         return wd;
     }
 
-    private getLemmas(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>, inflectionalEnding: InflectionalEnding): Array<TonalWord> {
+    private getLemmas(word: TonalWord, morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding): Array<TonalWord> {
         if(inflectionalEnding != null) {
             if(inflectionalEnding instanceof FreeInflectionalEnding) {
                 if(inflectionalEnding.baseAffixes.length == 1) {
@@ -50,7 +50,7 @@ export class TonalLemmatization extends TonalInflectingMetaplasm {
         return [];
     }
 
-    private populateLemmata(word: TonalWord, morphemes: Array<TonalLemmatizationMorpheme>, inflectionalEnding: InflectionalEnding) {
+    private populateLemmata(word: TonalWord, morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         let lemmata: Array<TonalWord> = new Array();
 
         // turn morphemes into lemmas
@@ -135,7 +135,7 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
         this.word = word;
     }
 
-    assignLemmata(ms: Array<TonalLemmatizationMorpheme>, tm: TonalLemmatization): any {
+    assignLemmata(ms: Array<TonalUncombiningMorpheme>, tm: TonalLemmatization): any {
         this.lemmata = tm.apply(this.word, ms, this.inflectionalEnding)
     }
 
@@ -176,9 +176,9 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
 //------------------------------------------------------------------------------
 
 export class TonalLemmatizationLexemeMaker extends LexemeMaker {
-    morphemes: Array<TonalLemmatizationMorpheme>;
+    morphemes: Array<TonalUncombiningMorpheme>;
 
-    constructor(morphemes: Array<TonalLemmatizationMorpheme>, ) {
+    constructor(morphemes: Array<TonalUncombiningMorpheme>, ) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;

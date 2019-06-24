@@ -1,7 +1,7 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { Result, NoSuccess, Success } from './result';
 import { TonalAffix, Allomorph } from './tonal/version2'
-import { TonalLemmatizationMorpheme, TonalSyllable } from './tonal/morpheme';
+import { TonalUncombiningMorpheme, TonalSyllable } from './tonal/morpheme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -160,7 +160,7 @@ export abstract class MorphemeMaker {
                     }
                     tsm =  this.create(new Syllable(msp.letters))
 
-                    if(tsm instanceof TonalLemmatizationMorpheme) {
+                    if(tsm instanceof TonalUncombiningMorpheme) {
                         tsm.sounds = msp.pattern
                     }
 
