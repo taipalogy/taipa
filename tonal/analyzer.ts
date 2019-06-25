@@ -3,7 +3,7 @@ import { TonalLemmatizationLexemeMaker } from './lexeme'
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { lowerLettersOfTonal } from './version2';
 import { NoSuccess, Success } from '../result'
-import { TonalLemmatizationMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme'
+import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme'
 
 //------------------------------------------------------------------------------
 //  Tonal Analyzer
@@ -28,7 +28,7 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         }
 
         // Morpheme Maker
-        let tmm = new TonalLemmatizationMorphemeMaker(graphemes, new TonalUncombiningForms());
+        let tmm = new TonalUncombiningMorphemeMaker(graphemes, new TonalUncombiningForms());
         return tmm.makeMorphemes(); 
     }
 
@@ -43,8 +43,7 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         }
 
         // Lexeme Maker
-        let tlm = new TonalLemmatizationLexemeMaker(morphemes);
-        let lexemes = tlm.makeLexemes()
-        return lexemes
+        let tllm = new TonalLemmatizationLexemeMaker(morphemes);
+        return tllm.makeLexemes()
     }
 }

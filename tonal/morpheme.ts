@@ -133,7 +133,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph = null; // required to populate stems
     metaplasm: TonalCombiningMetaplasm
-    sounds: Array<Sound>
+    sounds: Array<Sound> // populated in MorphemeMaker.make
 
     constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
         super()
@@ -234,7 +234,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
 //  Tonal Lemmatization Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class TonalLemmatizationMorphemeMaker extends MorphemeMaker {
+export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     metaplasm: TonalCombiningMetaplasm
     lexicalRoots: ListOfLexicalRoots

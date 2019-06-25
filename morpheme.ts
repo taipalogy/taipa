@@ -132,7 +132,7 @@ export abstract class MorphemeMaker {
     make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
         // a word can be made of multiple syllables
         let morphemes = this.createArray()
-        let arraysOfSounds: Array<Sound[]> = new Array()
+        //let arraysOfSounds: Array<Sound[]> = new Array()
         let result: Result = new NoSuccess()
         
         //console.log(letters);
@@ -164,7 +164,7 @@ export abstract class MorphemeMaker {
                         tsm.sounds = msp.pattern
                     }
 
-                    arraysOfSounds.push(msp.pattern)
+                    //arraysOfSounds.push(msp.pattern)
 
                     // here we should match the combining form with its root
 
@@ -186,7 +186,6 @@ export abstract class MorphemeMaker {
             }
         }
         if(result.messages.length == 0) result = new Success()
-        //return { 'arraysOfSounds': arraysOfSounds, 'morphemes': morphemes, 'result': result }
         return morphemes
     }
 }
