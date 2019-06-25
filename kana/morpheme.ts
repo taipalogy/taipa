@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme } from '../grapheme'
 import { Syllable, MatchedPattern } from '../morpheme'
 import { MorphemeMaker } from '../morpheme'
-import { RomanizedKana, SetOfInitialConsonants, SetOfVowels } from './kana'
+import { RomanizedKana, SetOfInitialConsonants, SetOfVowels, Hatsuon } from './kana'
 import { Syllabary } from '../morpheme'
 import { AlphabeticLetter } from '../grapheme'
 
@@ -15,7 +15,7 @@ export class KanaSyllable extends Syllable {}
 //  Kana Inputing Morpheme
 //------------------------------------------------------------------------------
 
-export class KanaLemmatizationMorpheme {
+export class KanaUncombiningMorpheme {
     syllable: KanaSyllable;
 
     constructor(syllable: KanaSyllable) {
@@ -52,7 +52,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
             }
         }
     }
-
+    
     let mp = new MatchedPattern();
     if(arraysOfLetters.length == 1) {
         // only one matched
@@ -82,6 +82,13 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         }
 
         if(letters.length-beginOfSyllable == arraysOfLetters[longerEntry].length) {
+            if(new Hatsuon().beginWith(arraysOfLetters[longerEntry][arraysOfLetters[longerEntry].length-1].literal)) {
+                // return the longer one
+                for(let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
+                    mp.letters[q] = letters[beginOfSyllable+q];
+                }
+                return mp    
+            }
             // return the shorter one
             for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
                 mp.letters[q] = letters[beginOfSyllable+q];
@@ -130,7 +137,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 //  Kana Morpheme Maker
 //------------------------------------------------------------------------------
 
-export class KanaLemmatizationMorphemeMaker extends MorphemeMaker {
+export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     romanizedKana: RomanizedKana
 
@@ -141,9 +148,9 @@ export class KanaLemmatizationMorphemeMaker extends MorphemeMaker {
         this.romanizedKana = new RomanizedKana()
     }
 
-    create(syllable: Syllable) { return new KanaLemmatizationMorpheme(syllable) }
+    create(syllable: Syllable) { return new KanaUncombiningMorpheme(syllable) }
 
-    createArray() { return new Array<KanaLemmatizationMorpheme>() }
+    createArray() { return new Array<KanaUncombiningMorpheme>() }
 
     makeInputingMorphemes() {
         return this.make(this.preprocess(), this.romanizedKana, syllabifyKana);

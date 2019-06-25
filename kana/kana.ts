@@ -45,11 +45,11 @@ class RomanizedKanaGenerator {
 function isSokuon(str: string) {
     return false
 }
-
+/*
 function getKanas(str: string) {
     if(isSokuon(str)) {}
 }
-
+*/
 class ClientOfGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFinalConsonant(ls[index])) {
@@ -266,7 +266,6 @@ class FinalConsonantT extends FinalConsonant {characters = [characters.get('t')]
 
 class GerminatedConsonantC extends GerminatedConsonant {characters = [characters.get('c')]}
 class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
-class GerminatedConsonantL extends GerminatedConsonant {characters = [characters.get('l')]}
 class GerminatedConsonantP extends GerminatedConsonant {characters = [characters.get('p')]}
 class GerminatedConsonantS extends GerminatedConsonant {characters = [characters.get('s')]}
 class GerminatedConsonantT extends GerminatedConsonant {characters = [characters.get('t')]}
@@ -351,6 +350,7 @@ export class SetOfFinalConsonants extends SetOfSounds {
     constructor() {
         super()
         this.finalConsonants.push(new FinalConsonantK())
+        this.finalConsonants.push(new FinalConsonantN())
         this.finalConsonants.push(new FinalConsonantP())
         this.finalConsonants.push(new FinalConsonantS())
         this.finalConsonants.push(new FinalConsonantT())
@@ -358,6 +358,18 @@ export class SetOfFinalConsonants extends SetOfSounds {
 
     toString() {
         return super.toRegexString(this.finalConsonants)
+    }
+}
+
+export class Hatsuon extends SetOfSounds {
+    hatsuon: Array<FinalConsonant> = new Array()
+    constructor() {
+        super()
+        this.hatsuon.push(new FinalConsonantN())
+    }
+
+    toString() {
+        return super.toRegexString(this.hatsuon)
     }
 }
 
@@ -460,7 +472,8 @@ class PSM implements PartialISound {
 
 class PSN implements PartialISound {
     name = 'n'
-    initialConsonant: InitialConsonant = new InitialConsonantN()
+    initialConsonant: InitialConsonant = new InitialConsonantN();
+    finalConsonant: FinalConsonant = new FinalConsonantN()
 }
 
 class PSO implements PartialISound {
@@ -471,7 +484,8 @@ class PSO implements PartialISound {
 class PSP implements PartialISound {
     name = 'p';
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantP();
-    initialConsonant: InitialConsonant = new InitialConsonantP()
+    initialConsonant: InitialConsonant = new InitialConsonantP();
+    finalConsonant: FinalConsonant = new FinalConsonantP()
 }
 
 class PSQ implements PartialISound {
@@ -483,12 +497,14 @@ class PSS implements PartialISound {
     name = 's';
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantS();
     initialConsonant: InitialConsonant = new InitialConsonantS();
+    finalConsonant: FinalConsonant = new FinalConsonantS();
 }
 
 class PST implements PartialISound {
     name = 't';
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantT()
-    initialConsonant: InitialConsonant = new InitialConsonantT()
+    initialConsonant: InitialConsonant = new InitialConsonantT();
+    finalConsonant: FinalConsonant = new FinalConsonantT()
 }
 
 class PSU implements PartialISound {
@@ -675,5 +691,9 @@ export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
     .set('vya', [])
     .set('vyu', [])
     .set('vyo', [])
+    .set('n', ['ん', 'ン'])
 
 let list_of_romanized_kana = Array.from(HiraganaAndKatakana.keys())
+
+export const kogakimoji: Map<string, Array<string>> = new Map()
+    .set('chu', ['っ', 'ッ'])

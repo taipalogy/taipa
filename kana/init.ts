@@ -1,8 +1,8 @@
 import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
-import { letterClass, lowerLettersOfKana } from './kana'
+import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji } from './kana'
 import { SetOfFinalConsonants } from './kana'
-import { KanaLemmatizationMorpheme } from './morpheme'
+import { KanaUncombiningMorpheme } from './morpheme'
 import { HiraganaAndKatakana } from './kana'
 
 export class Kana extends AnalyzerWrapper {
@@ -45,10 +45,9 @@ export class Kana extends AnalyzerWrapper {
         }
     }
 
-    getBlocks(ms: KanaLemmatizationMorpheme[]) {
+    getBlocks(ms: KanaUncombiningMorpheme[]) {
         let kanas = ''
 
-        //let len = ms.length
         for(let e of ms) {
             let ks = HiraganaAndKatakana.get(e.syllable.literal)
             if(ks != undefined && ks[0] != undefined) {
@@ -59,7 +58,11 @@ export class Kana extends AnalyzerWrapper {
                 if(ks != undefined && ks[0] != undefined) {
                     kanas += ks[0]
                 }
-                kanas += 'っ'
+                if(new Hatsuon().beginWith(e.syllable.literal[e.syllable.literal.length-1])) {
+                    kanas += HiraganaAndKatakana.get(new Hatsuon().hatsuon[0].getLiteral())[0]
+                } else {
+                    kanas += kogakimoji.get("chu")[0]
+                }
             }
         }
         

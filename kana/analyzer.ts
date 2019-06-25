@@ -1,5 +1,5 @@
 import { GraphemeMaker } from '../grapheme'
-import { KanaLemmatizationMorphemeMaker } from './morpheme'
+import { KanaUncombiningMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
 import { Analyzer } from '../analyzer'
 import { AlphabeticGrapheme } from '../grapheme'
@@ -27,7 +27,7 @@ export class KanaAnalyzer extends Analyzer {
         }
 
         // Morpheme Maker
-        let kimm = new KanaLemmatizationMorphemeMaker(graphemes);
+        let kimm = new KanaUncombiningMorphemeMaker(graphemes);
         return kimm.makeInputingMorphemes();
     }
 
