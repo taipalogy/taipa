@@ -46,18 +46,16 @@ export class Kana extends AnalyzerWrapper {
     }
 
     getBlocks(ms: KanaLemmatizationMorpheme[]) {
-        //console.log(ms)
-
         let kanas = ''
 
-        let len = ms.length
+        //let len = ms.length
         for(let e of ms) {
             let ks = HiraganaAndKatakana.get(e.syllable.literal)
             if(ks != undefined && ks[0] != undefined) {
                 // in case the kana is absent, we check against ks[0]
                 kanas += ks[0]
-            } else if(new SetOfFinalConsonants().beginWith(ms[0].syllable.literal[ms[0].syllable.literal.length-1]) == true) {
-                ks = HiraganaAndKatakana.get(ms[0].syllable.literal.substring(0, ms[0].syllable.literal.length-1))
+            } else if(new SetOfFinalConsonants().beginWith(e.syllable.literal[e.syllable.literal.length-1]) == true) {
+                ks = HiraganaAndKatakana.get(e.syllable.literal.substring(0, e.syllable.literal.length-1))
                 if(ks != undefined && ks[0] != undefined) {
                     kanas += ks[0]
                 }

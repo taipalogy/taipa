@@ -67,14 +67,20 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         let longerEntry: number = -1 // length of the longest matched entry
         let shorterEntry: number = -1
     
-        if(arraysOfLetters[0].length > arraysOfLetters[1].length) {
+        let index: number = 0
+        for(let j=0; j<arraysOfLetters.length; j++) {
+            if(arraysOfLetters[j].length > arraysOfLetters[index].length) {
+                index = j
+            }
+        }
+        if(index > 0) {
+            longerEntry = index
+            shorterEntry = 0
+        } else {
             longerEntry = 0
             shorterEntry = 1
-        } else {
-            longerEntry = 1
-            shorterEntry = 0
         }
-        
+
         if(letters.length-beginOfSyllable == arraysOfLetters[longerEntry].length) {
             // return the shorter one
             for(let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
@@ -85,7 +91,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 
         // look ahead for 1 letter
         if(letters.length-beginOfSyllable == arraysOfLetters[longerEntry].length+1) {
-            if(letters[beginOfSyllable+arraysOfLetters[longerEntry].length].literal.search(new RegExp(new SetOfInitialConsonants().toString())) == 0) {
+            if(new SetOfInitialConsonants().beginWith(letters[beginOfSyllable+arraysOfLetters[longerEntry].length].literal) == true) {
                 // consonant-ending
                 // return the longer one
                 for(let q = 0; q < arraysOfLetters[longerEntry].length; q++) {

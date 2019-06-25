@@ -26,9 +26,15 @@ class RomanizedKanaGenerator {
                 // double vowels. repeat the vowel.
                 strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
                 // consonant germination
-                strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
+                if(new SetOfGerminatedConsonants().beginWith(list_of_romanized_kana[i]) == true) {
+                    strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
+                }
                 // sokuon
-                strs.push(list_of_romanized_kana[i] + 'k')
+                let fcs = new SetOfFinalConsonants()
+                for(let e of fcs.finalConsonants) {
+                    //strs.push(list_of_romanized_kana[i] + 'k')
+                    strs.push(list_of_romanized_kana[i] + e.getLiteral())
+                }
             }
         }
         //for(let i in strs) console.info(strs[i])
@@ -258,8 +264,9 @@ class FinalConsonantP extends FinalConsonant {characters = [characters.get('p')]
 class FinalConsonantS extends FinalConsonant {characters = [characters.get('s')]}
 class FinalConsonantT extends FinalConsonant {characters = [characters.get('t')]}
 
-class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
 class GerminatedConsonantC extends GerminatedConsonant {characters = [characters.get('c')]}
+class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
+class GerminatedConsonantL extends GerminatedConsonant {characters = [characters.get('l')]}
 class GerminatedConsonantP extends GerminatedConsonant {characters = [characters.get('p')]}
 class GerminatedConsonantS extends GerminatedConsonant {characters = [characters.get('s')]}
 class GerminatedConsonantT extends GerminatedConsonant {characters = [characters.get('t')]}
@@ -305,11 +312,6 @@ export class SetOfVowels extends SetOfSounds {
         this.vowels.push(new VowelO())
     }
 
-    beginWith(str: string) {
-        if(str.search(new RegExp(this.toString())) == 0) return true
-        return false
-    }
-
     toString() {
         return super.toRegexString(this.vowels)
     }
@@ -353,12 +355,7 @@ export class SetOfFinalConsonants extends SetOfSounds {
         this.finalConsonants.push(new FinalConsonantS())
         this.finalConsonants.push(new FinalConsonantT())
     }
-/*
-    beginWith(str: string) {
-        if(str.search(new RegExp(this.toString())) == 0) return true
-        return false
-    }
-*/
+
     toString() {
         return super.toRegexString(this.finalConsonants)
     }
@@ -410,7 +407,7 @@ class PSD implements PartialISound {
 }
 
 class PSDL implements PartialISound {
-    name = 'dl'
+    name = 'dl';
     initialConsonant: InitialConsonant = new InitialConsonantDL()
 }
 
@@ -472,7 +469,8 @@ class PSO implements PartialISound {
 }
 
 class PSP implements PartialISound {
-    name = 'p'
+    name = 'p';
+    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantP();
     initialConsonant: InitialConsonant = new InitialConsonantP()
 }
 
@@ -488,7 +486,8 @@ class PSS implements PartialISound {
 }
 
 class PST implements PartialISound {
-    name = 't'
+    name = 't';
+    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantT()
     initialConsonant: InitialConsonant = new InitialConsonantT()
 }
 
@@ -569,11 +568,11 @@ export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
     .set('qu', [])
     .set('qe', [])
     .set('qo', [])
-    .set('sa', ['さ'])
-    .set('si', ['し'])
-    .set('su', ['す'])
-    .set('se', ['せ'])
-    .set('so', ['そ'])
+    .set('sa', ['さ', 'サ'])
+    .set('si', ['し', 'シ'])
+    .set('su', ['す', 'ス'])
+    .set('se', ['せ', 'セ'])
+    .set('so', ['そ', 'ソ'])
     .set('ta', ['た', 'タ'])
     .set('ci', ['ち', 'チ'])
     .set('chu', ['つ', 'ツ'])
