@@ -14,8 +14,8 @@ export class Document {
     tonalLemmatizationLexemes: Array<TonalLemmatizationLexeme> = new Array();
     lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
-    arraysOfSounds: Array<Sound[]> = new Array()
-    arraysOfBlocks: string[] = []
+    soundSequences: Array<Sound[]> = new Array()
+    blockSequences: string[] = []
     graph: Array<Arc> = new Array()
 }
 
@@ -28,7 +28,7 @@ export class Client {
         let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
         let doc: Document = new Document()
         //let blocks: string = al.aws[0].getBlocks(morphemes)
-        doc.arraysOfBlocks = al.aws[0].getBlocks(morphemes)
+        doc.blockSequences = al.aws[0].getBlocks(morphemes)
         al.unload(Kana)
         return doc
     }
@@ -50,7 +50,7 @@ export class Client {
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             for(let m of morphemes) {
-                doc.arraysOfSounds.push(m.sounds)
+                doc.soundSequences.push(m.sounds)
             }
         }
         al.unload(TonalInflective)
