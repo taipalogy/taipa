@@ -1,9 +1,7 @@
 import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
-import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji } from './kana'
-import { SetOfFinalConsonants } from './kana'
+import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji, hiragana_katakana, SetOfFinalConsonants } from './kana'
 import { KanaUncombiningMorpheme } from './morpheme'
-import { HiraganaAndKatakana } from './kana'
 
 export class Kana extends AnalyzerWrapper {
 
@@ -46,26 +44,32 @@ export class Kana extends AnalyzerWrapper {
     }
 
     getBlocks(ms: KanaUncombiningMorpheme[]) {
-        let kanas = ''
+        let kana_compositions: [string, string] = ['', '']
 
         for(let e of ms) {
-            let ks = HiraganaAndKatakana.get(e.syllable.literal)
+            let ks = hiragana_katakana.get(e.syllable.literal)
             if(ks != undefined && ks[0] != undefined) {
                 // in case the kana is absent, we check against ks[0]
-                kanas += ks[0]
+                kana_compositions[0] += ks[0]
+                kana_compositions[1] += ks[1]
             } else if(new SetOfFinalConsonants().beginWith(e.syllable.literal[e.syllable.literal.length-1]) == true) {
-                ks = HiraganaAndKatakana.get(e.syllable.literal.substring(0, e.syllable.literal.length-1))
+                ks = hiragana_katakana.get(e.syllable.literal.substring(0, e.syllable.literal.length-1))
                 if(ks != undefined && ks[0] != undefined) {
-                    kanas += ks[0]
+                    kana_compositions[0] += ks[0]
+                    kana_compositions[1] += ks[1]
                 }
                 if(new Hatsuon().beginWith(e.syllable.literal[e.syllable.literal.length-1])) {
-                    kanas += HiraganaAndKatakana.get(new Hatsuon().hatsuon[0].getLiteral())[0]
+                    ks = hiragana_katakana.get(new Hatsuon().hatsuon[0].getLiteral())
+                    kana_compositions[0] += ks[0]
+                    kana_compositions[1] += ks[1]
                 } else {
-                    kanas += kogakimoji.get("chu")[0]
+                    ks = kogakimoji.get("chu")
+                    kana_compositions[0] += ks[0]
+                    kana_compositions[1] += ks[1]
                 }
             }
         }
         
-        return kanas
+        return kana_compositions
     }
 }

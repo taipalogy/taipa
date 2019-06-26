@@ -15,7 +15,7 @@ export class Document {
     lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
     arraysOfSounds: Array<Sound[]> = new Array()
-    blocks: string = ''
+    arraysOfBlocks: string[] = []
     graph: Array<Arc> = new Array()
 }
 
@@ -28,7 +28,7 @@ export class Client {
         let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
         let doc: Document = new Document()
         //let blocks: string = al.aws[0].getBlocks(morphemes)
-        doc.blocks = al.aws[0].getBlocks(morphemes)
+        doc.arraysOfBlocks = al.aws[0].getBlocks(morphemes)
         al.unload(Kana)
         return doc
     }
@@ -39,7 +39,7 @@ export class Client {
         // tonal
         al.load(TonalInflective)
         let tokens = str.match(/\w+/g)
-        let l_results
+        //let l_results
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
             let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])

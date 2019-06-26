@@ -568,7 +568,7 @@ export const letterClass: Map<string, PartialISound> = new Map()
 //  Romanized Kana
 //------------------------------------------------------------------------------
 
-export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
+export const hiragana_katakana: Map<string, Array<string>> = new Map()
     .set('a', ['あ', 'ア'])
     .set('i', ['い', 'イ'])
     .set('u', ['う', 'ウ'])
@@ -693,7 +693,7 @@ export const HiraganaAndKatakana: Map<string, Array<string>> = new Map()
     .set('vyo', [])
     .set('n', ['ん', 'ン'])
 
-let list_of_romanized_kana = Array.from(HiraganaAndKatakana.keys())
+let list_of_romanized_kana = Array.from(hiragana_katakana.keys())
 
 export const kogakimoji: Map<string, Array<string>> = new Map()
     .set('chu', ['っ', 'ッ'])

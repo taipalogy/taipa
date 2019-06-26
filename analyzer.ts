@@ -19,7 +19,7 @@ export abstract class Analyzer {
 
 export class AnalyzerWrapper {
     analyzer: Analyzer
-    getBlocks(ms: Morpheme[]): string { return '' }
+    getBlocks(ms: Morpheme[]): string[] { return [''] }
 }
 
 export class AnalyzerLoader {
