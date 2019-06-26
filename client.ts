@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme'
-import { InflexionLexeme, Word } from './lexeme'
+import { InflexionLexeme, Word, LemmatizationLexeme } from './lexeme'
 import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
 import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
@@ -11,7 +11,7 @@ import { TonalInflective } from './tonal/init'
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 
 export class Document {
-    tonalLemmatizationLexemes: Array<TonalLemmatizationLexeme> = new Array();
+    lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
     lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
     soundSequences: Array<Sound[]> = new Array()
@@ -44,7 +44,7 @@ export class Client {
         if(tokens != null && tokens.length > 0) {
             let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
             let lexemes = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
-            doc.tonalLemmatizationLexemes = lexemes
+            doc.lemmatizationLexemes = lexemes
             doc.lemmata = lexemes[0].getLemmata()
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
 
