@@ -23,8 +23,6 @@ class RomanizedKanaGenerator {
         for(let i in list_of_romanized_kana) {
             if(list_of_romanized_kana[i].search(beginning) == 0) {
                 strs.push(list_of_romanized_kana[i])
-                // double vowels. repeat the vowel.
-                strs.push(list_of_romanized_kana[i] + list_of_romanized_kana[i].charAt(list_of_romanized_kana[i].length-1))
                 // consonant germination
                 if(new SetOfGerminatedConsonants().beginWith(list_of_romanized_kana[i]) == true) {
                     strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i])
@@ -32,7 +30,6 @@ class RomanizedKanaGenerator {
                 // sokuon
                 let fcs = new SetOfFinalConsonants()
                 for(let e of fcs.finalConsonants) {
-                    //strs.push(list_of_romanized_kana[i] + 'k')
                     strs.push(list_of_romanized_kana[i] + e.getLiteral())
                 }
             }
@@ -316,7 +313,7 @@ export class SetOfVowels extends SetOfSounds {
     }
 }
 
-class SetOfGerminatedConsonants extends SetOfSounds {
+export class SetOfGerminatedConsonants extends SetOfSounds {
     theGerminated: Array<GerminatedConsonant> = new Array()
     constructor() {
         super()
