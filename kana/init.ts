@@ -1,6 +1,6 @@
 import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
-import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji, hiragana_katakana, SetOfFinalConsonants, SetOfGerminatedConsonants, SetOfInitialConsonants } from './kana'
+import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji, hiragana_katakana, SetOfFinalConsonants, SetOfGerminatedConsonants, SetOfInitialConsonants, hatsuon } from './kana'
 import { KanaUncombiningMorpheme } from './morpheme'
 
 export class Kana extends AnalyzerWrapper {
@@ -78,7 +78,7 @@ export class Kana extends AnalyzerWrapper {
                     kana_compositions[2] += ks[1]
                 }
                 if(new Hatsuon().beginWith(e.syllable.literal[e.syllable.literal.length-1])) {
-                    ks = hiragana_katakana.get(new Hatsuon().hatsuon[0].getLiteral())
+                    ks = hatsuon.get("n")
                     kana_compositions[0] += ks[0]
                     kana_compositions[1] += ks[1]
                     kana_compositions[2] += ks[1]

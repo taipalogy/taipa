@@ -42,11 +42,7 @@ class RomanizedKanaGenerator {
 function isSokuon(str: string) {
     return false
 }
-/*
-function getKanas(str: string) {
-    if(isSokuon(str)) {}
-}
-*/
+
 class ClientOfGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFinalConsonant(ls[index])) {
@@ -688,9 +684,11 @@ export const hiragana_katakana: Map<string, Array<string>> = new Map()
     .set('vya', [])
     .set('vyu', [])
     .set('vyo', [])
-    .set('n', ['ん', 'ン'])
 
 let list_of_romanized_kana = Array.from(hiragana_katakana.keys())
 
 export const kogakimoji: Map<string, Array<string>> = new Map()
     .set('chu', ['っ', 'ッ'])
+
+export const hatsuon: Map<string, Array<string>> = new Map()
+    .set('n', ['ん', 'ン'])
