@@ -340,7 +340,7 @@ export class RuleBasedTagger {
 
         let cop: ConstructionOfPhrase
         let vp = new VerbPhrase()
-        // if w is an instance of TonalWord or tonefree word
+        // if w is an instance of TonalWord or ~
         for(let key in vp.constructions) {
             if(vp.constructions[key].elements[0].check(w)) {
                 cop = vp.constructions[key]

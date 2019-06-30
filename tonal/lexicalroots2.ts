@@ -1,22 +1,44 @@
 
 let list_of_new_syllables = [
-    'coaih', 'dngh',
-	
-    'hoang',
+    'berh', 'berhh', 'berx', 'bery', 'berzs',
 
-    'jirx', 'jex', 'jek', 'jeng', 'jerx',
-	
-	'kiaih', 'kuih',
+    'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerzs', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coaih',
 
-    'laih', 'langh', 'lirey', 'lih', 'loaih', 'loeh', 'loeih', 'lurih',
+    'cher', 'chereh', 'cherehh', 'cherew', 'cherex', 'cherezs', 'cherh', 'cherhh', 'cherw', 'cherzs', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirzs',
+
+    'derex', 'derey', 'derezs', 'derh', 'derhh', 'derw', 'dery', 'derzs', 'dinnh', 'dir', 'dirinnw', 'dirinnzs', 'dirw', 'dirx', 'dirzs', 'dirng', 'dngh',
+
+    'ennh', 'er', 'ere', 'erehh', 'erex', 'erey', 'erezs', 'erh', 'erw', 'erx', 'erzs', 'erehh',
+
+    'gereh', 'gerehh', 'gerhh', 'gerex', 'gerezs', 'gerx', 'giauh', 'girnx', 'girnzs', 'girt', 'girx', 'giry', 'girzs',
+	
+    'her', 'herezs', 'herw', 'herx', 'hery', 'herzs', 'haunnh', 'hio', 'hir', 'hirinnx', 'hirinnzs', 'hirny', 'hirnzs', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hmhh', 'hoang', 'hop',
+
+    'ionn', 'ir', 'irinnx', 'irn', 'irny', 'irpp', 'irw', 'irx', 'iry', 'irzs',
+
+    'jirx', 'jiry', 'jex', 'jek', 'jeng', 'jerx',
+	
+	'kainnh', 'ker', 'kere', 'kereh', 'kerew', 'kerw', 'kerh', 'kerx', 'kiaih', 'kir', 'kirnx', 'kirny', 'kirw', 'kuih',
+
+    'laih', 'langh', 'lerehh', 'lerex', 'lerh', 'lerx', 'lirey', 'liry', 'lirx', 'lirzs', 'lih', 'loaih', 'loeh', 'loeih', 'lurih',
 
     'mnghh',
 
-    'n',
-	
-	'qinnh',
+    'n', 'naih', 'nirix', 'nirizs',
 
-    'sm',
+    'ngiriy',
+
+    'per', 'perhh', 'perw', 'perx', 'perzs',
+	
+	'qere', 'qereh', 'qerew', 'qerex', 'qerey', 'qerezs', 'qerh', 'qerw', 'qery', 'qinnh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnzs', 'qirw', 'qirx', 'qiry', 'qirzs',
+
+    'sere', 'serew', 'serew', 'serh', 'serhh', 'serx', 'serw', 'serzs', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirzs', 'sm',
+
+    'ter', 'tere', 'terehh', 'terew', 'terhh', 'terw', 'tirx', 'tiry',
+
+    'uihh', 'uinnx', 
+
+    'ver', 'very', 'verw', 'verx', 'verzs', 'veng',
 ]
 
 export let list_of_lexical_roots = [
