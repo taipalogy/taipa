@@ -1,5 +1,5 @@
 import { AlphabeticGrapheme } from '../grapheme'
-import { Syllable, MatchedPattern } from '../morpheme'
+import { Syllable, MatchedPattern, Morpheme } from '../morpheme'
 import { MorphemeMaker } from '../morpheme'
 import { RomanizedKana, SetOfInitialConsonants, SetOfVowels, Hatsuon } from './kana'
 import { Syllabary } from '../morpheme'
@@ -15,10 +15,11 @@ export class KanaSyllable extends Syllable {}
 //  Kana Inputing Morpheme
 //------------------------------------------------------------------------------
 
-export class KanaUncombiningMorpheme {
+export class KanaUncombiningMorpheme extends Morpheme {
     syllable: KanaSyllable;
 
     constructor(syllable: KanaSyllable) {
+        super()
         this.syllable = syllable;
     }
 }

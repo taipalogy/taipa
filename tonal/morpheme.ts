@@ -6,7 +6,7 @@ import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
 
 //------------------------------------------------------------------------------
-//  Tonal Syllable Metaplasm
+//  Tonal Uncombining Forms
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
@@ -126,7 +126,7 @@ export class TonalSyllable extends Syllable {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Lemmatization Morpheme
+//  Tonal Uncombining Morpheme
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningMorpheme extends Morpheme {

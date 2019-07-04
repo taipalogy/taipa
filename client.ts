@@ -9,6 +9,7 @@ import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
 import { TonalInflective } from './tonal/init'
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
+import { KanaUncombiningMorpheme } from './kana/morpheme';
 
 export class Document {
     lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
@@ -25,7 +26,7 @@ export class Client {
 
         // kana
         al.load(Kana)
-        let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
+        let morphemes: KanaUncombiningMorpheme[] = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
         let doc: Document = new Document()
         //let blocks: string = al.aws[0].getBlocks(morphemes)
         doc.blockSequences = al.aws[0].getBlocks(morphemes)

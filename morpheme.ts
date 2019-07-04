@@ -8,12 +8,18 @@ import { TonalUncombiningMorpheme, TonalSyllable } from './tonal/morpheme';
 //------------------------------------------------------------------------------
 
 export abstract class CombiningMetaplasm {
-    abstract apply(syllable: Syllable, allomorphe: Allomorph)
+    abstract apply(syllable: Syllable, allomorphe: Allomorph): Array<Syllable>
 }
 
 export class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph) {}
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> { return [] }
 }
+
+export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
+    // epenthesis, nasalization.
+}
+
+export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 
 //------------------------------------------------------------------------------
 //  Syllabary
@@ -59,7 +65,9 @@ class GrammaticalSuffix {
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
 
-export class Morpheme {}
+export class Morpheme {
+    syllable: Syllable
+}
 
 //------------------------------------------------------------------------------
 //  Syllable Patterns

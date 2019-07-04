@@ -2,6 +2,7 @@ import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
 import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji, hiragana_katakana, SetOfFinalConsonants, SetOfGerminatedConsonants, SetOfInitialConsonants, hatsuon } from './kana'
 import { KanaUncombiningMorpheme } from './morpheme'
+import { Morpheme } from '../morpheme';
 
 export class Kana extends AnalyzerWrapper {
 
@@ -51,7 +52,8 @@ export class Kana extends AnalyzerWrapper {
         return false
     }
 
-    getBlocks(ms: KanaUncombiningMorpheme[]) {
+    //getBlocks(ms: KanaUncombiningMorpheme[]) {
+    getBlocks(ms: Morpheme[]): string[] {
         // string one is hiragan, string two is katakana, string 3 is chouon
         let kana_compositions: [string, string, string] = ['', '', '']
         let previous = ''

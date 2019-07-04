@@ -11,7 +11,7 @@ import { ListOfLexicalRoots } from '../tonal/lexicalroot'
 import { InflexionLexeme, LexemeMaker, TonalInflectingMetaplasm } from '../lexeme'
 
 //------------------------------------------------------------------------------
-//  Tonal Syllable Metaplasm
+//  Tonal Combining Forms
 //------------------------------------------------------------------------------
 
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
