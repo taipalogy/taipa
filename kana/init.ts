@@ -20,18 +20,19 @@ export class Kana extends AnalyzerWrapper {
     }
 
     findDuplicates() {
-        let arr = [];
+        let arr: string[] = [];
         let duplicates = [];
 
         for (let e of letterClass.values()) {
             arr.push(e.name)
         }
         
-        let uniq = arr
-            .map((name) => {
+        // object of key-value pairs
+        let uniq: { [key: string]: number } = arr
+            .map((name: string) => {
                 return {count: 1, name: name}
             })
-            .reduce((a, b) => {
+            .reduce((a: { [key: string]: number }, b) => {
                 a[b.name] = (a[b.name] || 0) + b.count
                 return a
             }, {})
@@ -81,14 +82,18 @@ export class Kana extends AnalyzerWrapper {
                 }
                 if(new Hatsuon().beginWith(e.syllable.literal[e.syllable.literal.length-1])) {
                     ks = hatsuon.get("n")
-                    kana_compositions[0] += ks[0]
-                    kana_compositions[1] += ks[1]
-                    kana_compositions[2] += ks[1]
+                    if(ks) {
+                        kana_compositions[0] += ks[0]
+                        kana_compositions[1] += ks[1]
+                        kana_compositions[2] += ks[1]
+                    }
                 } else {
                     ks = kogakimoji.get("chu")
-                    kana_compositions[0] += ks[0]
-                    kana_compositions[1] += ks[1]
-                    kana_compositions[2] += ks[1]
+                    if(ks) {
+                        kana_compositions[0] += ks[0]
+                        kana_compositions[1] += ks[1]
+                        kana_compositions[2] += ks[1]
+                    }
                 }
             } else {
                 let first = e.syllable.literal[0]
@@ -96,14 +101,18 @@ export class Kana extends AnalyzerWrapper {
 
                 if(first === second && new SetOfGerminatedConsonants().beginWith(first) == true) {
                     ks = kogakimoji.get("chu")
-                    kana_compositions[0] += ks[0]
-                    kana_compositions[1] += ks[1]
-                    kana_compositions[2] += ks[1]
+                    if(ks) {
+                        kana_compositions[0] += ks[0]
+                        kana_compositions[1] += ks[1]
+                        kana_compositions[2] += ks[1]
+                    }
 
                     ks = hiragana_katakana.get(e.syllable.literal.substring(1, e.syllable.literal.length))
-                    kana_compositions[0] += ks[0]
-                    kana_compositions[1] += ks[1]
-                    kana_compositions[2] += ks[1]
+                    if(ks) {
+                        kana_compositions[0] += ks[0]
+                        kana_compositions[1] += ks[1]
+                        kana_compositions[2] += ks[1]
+                    }
                 }
             }
 

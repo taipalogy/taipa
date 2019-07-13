@@ -58,7 +58,6 @@ class ZeroAffix extends FreeAffix {
 //------------------------------------------------------------------------------
 
 interface ISound {
-    name: string
     initial: Initial
     medial: Medial
     final: Final
@@ -68,6 +67,11 @@ interface ISound {
 }
 
 export type PartialISound = Partial<ISound>
+
+interface PositionalSound extends PartialISound {
+    // name should not be optional nor undefined
+    name: string
+}
 
 //------------------------------------------------------------------------------
 //  Alphabet
@@ -396,211 +400,211 @@ export class SetOfStopFinals extends SetOfSounds {
 //  Positional Sound for Lexical Root
 //------------------------------------------------------------------------------
 
-class PSA implements PartialISound {
+class PSA implements PositionalSound {
     name = 'a'
     medial: Medial = new MedialA()
 }
 
-class PSB implements PartialISound {
+class PSB implements PositionalSound {
     name = 'b'
     initial: Initial = new InitialB()
     //static final: Final = new FinalB()
 }
 
-class PSC implements PartialISound {
+class PSC implements PositionalSound {
     name = 'c'
     initial: Initial = new InitialC()
 }
 
-class PSCH implements PartialISound {
+class PSCH implements PositionalSound {
     name = 'ch'
     initial: Initial = new InitialCH()
 }
 
-class PSD implements PartialISound {
+class PSD implements PositionalSound {
     name = 'd'
     initial: Initial = new InitialD()
     //static final: Final = new FinalD()
 }
 
-class PSE implements PartialISound {
+class PSE implements PositionalSound {
     name = 'e'
     medial: Medial = new MedialE()
 }
 
-class PSF implements PartialISound {
+class PSF implements PositionalSound {
     name = 'f'
     checkedTonal: CheckedTonal = new TonalF()
 }
 
-class PSCS implements PartialISound {
+class PSCS implements PositionalSound {
     name = 'cs'
     freeTonal: TonalCS = new TonalCS()
 }
 
-class PSZS implements PartialISound {
+class PSZS implements PositionalSound {
     name = 'zs'
     freeTonal: TonalZS = new TonalZS()
 }
 
-class PSG implements PartialISound {
+class PSG implements PositionalSound {
     name = 'g'
     initial: Initial = new InitialG()
     //static final: Final = new FinalG()
 }
 
-class PSH implements PartialISound {
+class PSH implements PositionalSound {
     name = 'h'
     initial: Initial = new InitialH()
     final: Final = new FinalH()
 }
 
-class PSHH implements PartialISound {
+class PSHH implements PositionalSound {
     name = 'hh'
     final: Final = new FinalHH()
 }
 
-class PSI implements PartialISound {
+class PSI implements PositionalSound {
     name = 'i'
     medial: Medial = new MedialI()
 }
 
-class PSJ implements PartialISound {
+class PSJ implements PositionalSound {
     name = 'j'
     initial: Initial = new InitialJ()
 }
 
-class PSK implements PartialISound {
+class PSK implements PositionalSound {
     name = 'k'
     initial: Initial = new InitialK()
     final: Final = new FinalK()
 }
 
-class PSKK implements PartialISound {
+class PSKK implements PositionalSound {
     name = 'kk'
     final: Final = new FinalKK()
 }
 
-class PSL implements PartialISound {
+class PSL implements PositionalSound {
     name = 'l'
     initial: Initial = new InitialL()
     //static final: Final = new FinalL()
 }
 
-class PSM implements PartialISound {
+class PSM implements PositionalSound {
     name = 'm'
     initial: Initial = new InitialM()
     medial: Medial = new MaterLectionisM()
     final: Final = new FinalM()
 }
 
-class PSN implements PartialISound {
+class PSN implements PositionalSound {
     name = 'n'
     initial: Initial = new InitialN()
     medial: Medial = new MaterLectionisN()
     final: Final = new FinalN()
 }
 
-class PSNN implements PartialISound {
+class PSNN implements PositionalSound {
     name = 'nn'
     nasalization: Nasal = new NasalizationNN()
 }
 
-class PSNG implements PartialISound {
+class PSNG implements PositionalSound {
     name = 'ng'
     initial: Initial = new InitialNG()
     medial: Medial = new MaterLectionisNG()
     final: Final = new FinalNG()
 }
 
-class PSO implements PartialISound {
+class PSO implements PositionalSound {
     name = 'o'
     medial: Medial = new MedialO()
 }
 
-class PSP implements PartialISound {
+class PSP implements PositionalSound {
     name = 'p'
     initial: Initial = new InitialP()
     final: Final = new FinalP()
 }
 
-class PSPP implements PartialISound {
+class PSPP implements PositionalSound {
     name = 'pp'
     final: Final = new FinalPP()
 }
 
-class PSQ implements PartialISound {
+class PSQ implements PositionalSound {
     name = 'q'
     initial: Initial = new InitialQ()
 }
 
-class PSS implements PartialISound {
+class PSS implements PositionalSound {
     name = 's'
     initial: Initial = new InitialS()
 }
 
-class PST implements PartialISound {
+class PST implements PositionalSound {
     name = 't'
     initial: Initial = new InitialT()
     final: Final = new FinalT()
 }
 
-class PSTT implements PartialISound {
+class PSTT implements PositionalSound {
     name = 'tt'
     final: Final = new FinalTT()
 }
 
-class PSU implements PartialISound {
+class PSU implements PositionalSound {
     name = 'u'
     medial: Medial = new MedialU()
 }
 
-class PSUR implements PartialISound {
+class PSUR implements PositionalSound {
     name = 'ur'
     medial: Medial = new MedialUR()
 }
 
-class PSV implements PartialISound {
+class PSV implements PositionalSound {
     name = 'v'
     initial: Initial = new InitialV()
 }
 
-class PSW implements PartialISound {
+class PSW implements PositionalSound {
     name = 'w'
     freeTonal: TonalW = new TonalW()
     checkedTonal: CheckedTonal = new CheckedTonalW()
 }
 
-class PSX implements PartialISound {
+class PSX implements PositionalSound {
     name = 'x'
     freeTonal: FreeTonalX = new FreeTonalX()
-    checkedTonal: CheckedTonalX = new CheckedTonalX()
+    checkedTonal: CheckedTonal = new CheckedTonalX()
 }
 
-class PSXX implements PartialISound {
+class PSXX implements PositionalSound {
     name = 'xx'
-    freeTonal: TonalXX = new TonalXX()
+    freeTonal: FreeTonal = new TonalXX()
 }
 
-class PSXXX implements PartialISound {
+class PSXXX implements PositionalSound {
     name = 'xxx'
-    freeTonal: TonalXX = new TonalXXX()
+    freeTonal: FreeTonal = new TonalXXX()
 }
 
-class PSY implements PartialISound {
+class PSY implements PositionalSound {
     name = 'y'
-    freeTonal: FreeTonalY = new FreeTonalY()
-    checkedTonal: CheckedTonalY = new CheckedTonalY()
+    freeTonal: FreeTonal = new FreeTonalY()
+    checkedTonal: CheckedTonal = new CheckedTonalY()
 }
 
-class PSZZS implements PartialISound {
+class PSZZS implements PositionalSound {
     name = 'zzs'
-    freeTonal: TonalZZS = new TonalZZS()
+    freeTonal: FreeTonal = new TonalZZS()
 }
 
-class PSZero implements PartialISound {
+class PSZero implements PositionalSound {
     name = 'zero'
-    freeTonal: ZeroTonal = new ZeroTonal()
+    freeTonal: FreeTonal = new ZeroTonal()
 }
 
 //------------------------------------------------------------------------------
@@ -624,7 +628,7 @@ export const combiningRules: Map<string, any> = new Map()
 
 
 // need to verify the size of the map
-export const letterClass: Map<string, PartialISound> = new Map()
+export const letterClass: Map<string, PositionalSound> = new Map()
     .set('a', new PSA())
     .set('b', new PSB())
     .set('c', new PSC())

@@ -371,7 +371,6 @@ export class Hatsuon extends SetOfSounds {
 //------------------------------------------------------------------------------
 
 interface ISound {
-    name: string
     germinatedConsonant: GerminatedConsonant
     initialConsonant: InitialConsonant
     semivowel: Semivowel
@@ -381,146 +380,151 @@ interface ISound {
 
 type PartialISound = Partial<ISound>
 
+interface PositionalSound extends PartialISound {
+    // name should not be optional nor undefined
+    name: string
+}
+
 //------------------------------------------------------------------------------
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
 
-class PSA implements PartialISound {
+class PSA implements PositionalSound {
     name = 'a'
-    vowel: Vowel = new VowelA()
+    vowel: Vowel = new VowelA() as Vowel
 }
 
-class PSB implements PartialISound {
+class PSB implements PositionalSound {
     name = 'b'
     initialConsonant: InitialConsonant = new InitialConsonantB()
 }
 
-class PSC implements PartialISound {
+class PSC implements PositionalSound {
     name = 'c'
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantC()
     initialConsonant: InitialConsonant = new InitialConsonantC()
 }
 
-class PSCH implements PartialISound {
+class PSCH implements PositionalSound {
     name = 'ch'
     initialConsonant: InitialConsonant = new InitialConsonantCH()
 }
 
-class PSD implements PartialISound {
+class PSD implements PositionalSound {
     name = 'd'
     initialConsonant: InitialConsonant = new InitialConsonantD()
 }
 
-class PSDL implements PartialISound {
+class PSDL implements PositionalSound {
     name = 'dl';
     initialConsonant: InitialConsonant = new InitialConsonantDL()
 }
 
-class PSE implements PartialISound {
+class PSE implements PositionalSound {
     name = 'e'
     vowel: Vowel = new VowelE()
 }
 
-class PSF implements PartialISound {
+class PSF implements PositionalSound {
     name = 'f'
     initialConsonant: InitialConsonant = new InitialConsonantF()
 }
 
-class PSG implements PartialISound {
+class PSG implements PositionalSound {
     name = 'g'
     initialConsonant: InitialConsonant = new InitialConsonantG()
 }
 
-class PSH implements PartialISound {
+class PSH implements PositionalSound {
     name = 'h'
     initialConsonant: InitialConsonant = new InitialConsonantH()
 }
 
-class PSI implements PartialISound {
+class PSI implements PositionalSound {
     name = 'i'
     vowel: Vowel = new VowelI()
 }
 
-class PSJ implements PartialISound {
+class PSJ implements PositionalSound {
     name = 'j'
     initialConsonant: InitialConsonant = new InitialConsonantJ()
 }
 
-class PSK implements PartialISound {
+class PSK implements PositionalSound {
     name = 'k'
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantK()
     initialConsonant: InitialConsonant = new InitialConsonantK()
     finalConsonant: FinalConsonant = new FinalConsonantK()
 }
 
-class PSL implements PartialISound {
+class PSL implements PositionalSound {
     name = 'l'
     initialConsonant: InitialConsonant = new InitialConsonantL()
 }
 
-class PSM implements PartialISound {
+class PSM implements PositionalSound {
     name = 'm'
     initialConsonant: InitialConsonant = new InitialConsonantM()
 }
 
-class PSN implements PartialISound {
+class PSN implements PositionalSound {
     name = 'n'
     initialConsonant: InitialConsonant = new InitialConsonantN();
     finalConsonant: FinalConsonant = new FinalConsonantN()
 }
 
-class PSO implements PartialISound {
+class PSO implements PositionalSound {
     name = 'o'
     vowel: Vowel = new VowelO()
 }
 
-class PSP implements PartialISound {
+class PSP implements PositionalSound {
     name = 'p';
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantP();
     initialConsonant: InitialConsonant = new InitialConsonantP();
     finalConsonant: FinalConsonant = new FinalConsonantP()
 }
 
-class PSQ implements PartialISound {
+class PSQ implements PositionalSound {
     name = 'q'
     initialConsonant: InitialConsonant = new InitialConsonantQ()
 }
 
-class PSS implements PartialISound {
+class PSS implements PositionalSound {
     name = 's';
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantS();
     initialConsonant: InitialConsonant = new InitialConsonantS();
     finalConsonant: FinalConsonant = new FinalConsonantS();
 }
 
-class PST implements PartialISound {
+class PST implements PositionalSound {
     name = 't';
     germinatedConsonant: GerminatedConsonant = new GerminatedConsonantT()
     initialConsonant: InitialConsonant = new InitialConsonantT();
     finalConsonant: FinalConsonant = new FinalConsonantT()
 }
 
-class PSU implements PartialISound {
+class PSU implements PositionalSound {
     name = 'u'
     vowel: Vowel = new VowelU()
 }
 
-class PSV implements PartialISound {
+class PSV implements PositionalSound {
     name = 'v'
     initialConsonant: InitialConsonant = new InitialConsonantV()
 }
 
-class PSW implements PartialISound {
+class PSW implements PositionalSound {
     name = 'w'
     semivowel: Semivowel = new SemivowelW()
 }
 
-class PSY implements PartialISound {
+class PSY implements PositionalSound {
     name = 'y'
     semivowel: Semivowel = new SemivowelY()
 }
 
-class PSZ implements PartialISound {
+class PSZ implements PositionalSound {
     name = 'z'
     initialConsonant: InitialConsonant = new InitialConsonantZ()
 }
@@ -529,7 +533,7 @@ class PSZ implements PartialISound {
 //  Letter Class
 //------------------------------------------------------------------------------
 
-export const letterClass: Map<string, PartialISound> = new Map()
+export const letterClass: Map<string, PositionalSound> = new Map()
     .set('a', new PSA())
     .set('b', new PSB())
     .set('c', new PSC())
