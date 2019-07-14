@@ -1,6 +1,7 @@
-import { Character } from './character';
+import { Character, characters } from './character';
 import { Result, NoSuccess, Success } from './result';
 import { Debug } from './debug'
+//import { Letters } from './tonal/version2';
 
 //------------------------------------------------------------------------------
 //  Alphabet
@@ -65,6 +66,36 @@ export class MatchedSequence {
     }
 }
 
+export class Letters {
+    larr: string[]
+    private o: Map<string, AlphabeticLetter> = new Map()
+
+    protected assign(e: string) {
+        let carr: Character[] = []
+        for(let i=0; i<e.length; i++) {
+            let c = characters.get(e[i])
+            console.log(c)
+            if(c) {
+                carr.push(c)
+            }
+            this.o.set(e, new AlphabeticLetter(carr))
+        }
+        console.log(carr)
+    }
+
+    get(key: string): AlphabeticLetter {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new AlphabeticLetter([])
+    }
+
+    get size() {
+        return this.o.size
+    }
+}
+
 //------------------------------------------------------------------------------
 //  Grapheme Maker
 //------------------------------------------------------------------------------
@@ -73,6 +104,7 @@ export class GraphemeMaker {
     characters: Array<Character>;
     list: Array<AlphabeticLetter>;
 
+    //constructor(l: string, lowerLetters: ILetters) {
     constructor(l: string, lowerLetters: ILetters) {
         this.characters = new Array();
         let len = l.length;
@@ -153,7 +185,7 @@ export class GraphemeMaker {
             if(i-beginOfLetter == 0) {
 
                 //console.log("matchedLen: %d", ms.matchedLength);
-
+                //console.log(this.list[0].characters)
                 let candidates = this.list.filter(l => l.characters[0].character === characters[i].character);
 
                 //console.log(candidates)
@@ -218,7 +250,7 @@ export class Sound {
         }
 
         return l;
-    }
+    }    
 }
 
 export class Initial extends Sound {name = 'initial'}

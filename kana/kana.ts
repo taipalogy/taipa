@@ -1,4 +1,4 @@
-import { Sound, SetOfSounds } from '../grapheme'
+import { Sound, SetOfSounds, Letters } from '../grapheme'
 import { KanaAnalyzer } from './analyzer';
 import { characters } from '../character'
 import { AlphabeticLetter, ILetters } from '../grapheme'
@@ -175,7 +175,27 @@ class ClientOfGenerator {
 //------------------------------------------------------------------------------
 //  Alphabet
 //------------------------------------------------------------------------------
+/*
+export class LettersOfKana extends Letters {
+    constructor() {
+        super()
+        super.larr = ['a', 'e', 'i', 'o', 'u',
+        'b', 'c', 'ch', 'd', 'dl',
+        'f', 'g', 'h', 'j', 'k',
+        'l', 'm', 'q', 's', 'v',
+        'z', 'p', 't',
+        'w', 'y',
+        'n']
 
+        console.log('constructor hit')
+
+        for(let i=0; i<this.larr.length; i++) {
+            this.assign(this.larr[i])
+        }
+    }
+}
+export let lowerLettersOfKana = new LettersOfKana()
+*/
 export let lowerLettersOfKana: ILetters = {
     // vowels
     'a': new AlphabeticLetter([characters.get('a')]),

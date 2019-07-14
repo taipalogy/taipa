@@ -1,3 +1,4 @@
+import { AlphabeticLetter } from "./grapheme";
 
 //------------------------------------------------------------------------------
 //  Character
@@ -14,7 +15,7 @@ export class Character {
 //------------------------------------------------------------------------------
 //  CharacterCase
 //------------------------------------------------------------------------------
-
+/*
 export const characters: Map<string, Character> = new Map()
     .set('a', new Character('a'))
     .set('b', new Character('b'))
@@ -42,3 +43,39 @@ export const characters: Map<string, Character> = new Map()
     .set('x', new Character('x'))
     .set('y', new Character('y'))
     .set('z', new Character('z'))
+*/
+
+class Characters {
+    private carr: string[] = ['a', 'b', 'c', 'd', 'e',
+                            'f', 'g', 'h', 'i', 'j',
+                            'k', 'l', 'm', 'n', 'o',
+                            'p', 'q', 'r', 's', 't',
+                            'u', 'v', 'w', 'x', 'y',
+                            'z']
+    private o: Map<string, Character> = new Map()
+
+    constructor() {
+        for(let e of this.carr) {
+            this.assign(e)
+        }
+    }
+
+    private assign(e: string) {
+        this.o.set(e, new Character(e))
+    }
+
+    get(key: string): Character {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new Character('')
+    }
+
+    get size() {
+        return this.o.size
+    }
+}
+
+export const characters = new Characters()
+//console.log(charactersNew.get('a'))

@@ -1,6 +1,6 @@
-import { characters } from '../character'
+import { characters, Character } from '../character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    Tonal, AlphabeticLetter, ILetters } from '../grapheme'
+    Tonal, AlphabeticLetter, ILetters, Letters } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -76,6 +76,63 @@ interface PositionalSound extends PartialISound {
 //------------------------------------------------------------------------------
 //  Alphabet
 //------------------------------------------------------------------------------
+/*
+export class LettersOfTonal extends Letters {
+    constructor() {
+        super()
+        super.larr = ['a', 'e', 'i', 'o', 'u','ur',
+        'c', 'd', 'ch', 'j', 'q', 's', 'v',
+        'm', 'n', 'ng',
+        'nn',
+        'cs', 'w', 'xx', 'xxx', 'zs', 'zzs',
+        'x',
+        'y',
+        'b', 'g', 'l',
+        'k', 'p', 't',
+        'kk', 'pp', 'tt', 'hh',
+        'f',
+        'h']
+
+        console.log('constructor hit')
+
+        for(let i=0; i<this.larr.length; i++) {
+            this.assign(this.larr[i])
+        }
+    }
+
+    //private o: Map<string, AlphabeticLetter> = new Map()
+
+    constructor() {
+        for(let e of this.larr) {
+            this.assign(e)
+        }
+    }
+
+    private assign(e: string) {
+        let carr: Character[] = []
+        for(let i=0; i<e.length; i++) {
+            let c = characters.get(e[i])
+            if(c) {
+                carr.push(c)
+            }
+            this.o.set(e, new AlphabeticLetter(carr))
+        }
+    }
+
+    get(key: string): AlphabeticLetter {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new AlphabeticLetter([])
+    }
+
+}
+
+//export let lowerLettersOfTonal = new LettersOfTonal()
+//console.log(lowerLettersOfTonal.get('a'))
+*/
+
 
 export let lowerLettersOfTonal: ILetters = {
     // medials
