@@ -68,19 +68,23 @@ export class MatchedSequence {
 
 export class Letters {
     larr: string[]
-    private o: Map<string, AlphabeticLetter> = new Map()
+    protected o: Map<string, AlphabeticLetter> = new Map()
 
+    constructor(larr: string[]) {
+        this.larr = larr
+        for(let i=0; i<this.larr.length; i++) {
+            this.assign(this.larr[i])
+        }
+    }
     protected assign(e: string) {
         let carr: Character[] = []
         for(let i=0; i<e.length; i++) {
             let c = characters.get(e[i])
-            console.log(c)
             if(c) {
                 carr.push(c)
             }
-            this.o.set(e, new AlphabeticLetter(carr))
         }
-        console.log(carr)
+        this.o.set(e, new AlphabeticLetter(carr))
     }
 
     get(key: string): AlphabeticLetter {
@@ -94,6 +98,10 @@ export class Letters {
     get size() {
         return this.o.size
     }
+
+    get values() {
+        return this.o.values()
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -105,7 +113,7 @@ export class GraphemeMaker {
     list: Array<AlphabeticLetter>;
 
     //constructor(l: string, lowerLetters: ILetters) {
-    constructor(l: string, lowerLetters: ILetters) {
+    constructor(l: string, lowerLetters: Letters) {
         this.characters = new Array();
         let len = l.length;
         for(var i = 0; i < len; i++) {
@@ -116,9 +124,10 @@ export class GraphemeMaker {
 
         this.list = new Array();
 
-        for(let key in lowerLetters) {
-            this.list.push(lowerLetters[key])
-        }
+        //for(let key in lowerLetters) {
+          //  this.list.push(lowerLetters[key])
+        //}
+        this.list = Array.from(lowerLetters.values)
     }
 
     makeGraphemes() {

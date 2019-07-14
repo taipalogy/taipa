@@ -14,7 +14,7 @@ export class Kana extends AnalyzerWrapper {
     }
 
     checkSize() {
-        if(letterClass.size !== Object.keys(lowerLettersOfKana).length) {
+        if(letterClass.size !== lowerLettersOfKana.size) {
             console.log('sizes unmatched')
         }
     }

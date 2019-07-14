@@ -3,7 +3,6 @@ import { KanaUncombiningMorphemeMaker } from './morpheme'
 import { lowerLettersOfKana } from './kana'
 import { Analyzer } from '../analyzer'
 import { AlphabeticGrapheme } from '../grapheme'
-//import { NoSuccess, Success } from '../result';
 
 //------------------------------------------------------------------------------
 //  Kana Analyxer
