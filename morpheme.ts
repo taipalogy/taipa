@@ -124,7 +124,7 @@ export abstract class MorphemeMaker {
 
     abstract create(syllable: Syllable): Morpheme
 
-    abstract createArray() // the return type of this declaration should be left blank
+    abstract createArray<T extends Morpheme>(): Array<T> // the return type of this declaration should be left blank
                             // an abstract type of TonalCombinedMorpheme and 
                             // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
 

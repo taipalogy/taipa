@@ -164,7 +164,7 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
 
     create(syllable: TonalSyllable) { return new TonalCombiningMorpheme(syllable, this.metaplasm) }
 
-    createArray() { return new Array<TonalCombiningMorpheme>() }
+    createArray<TonalCombiningMorpheme>() { return new Array<TonalCombiningMorpheme>() }
 
     makeMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
@@ -236,7 +236,8 @@ export class TonalInflextionAnalyzer {
         let morphemes = tmm.makeMorphemes();
 
         // Lexeme Maker
-        let tslm = new TonalInflexionLexemeMaker(morphemes);
+        // TODO: typecasting is a temp solution. the analyzer needs to extend Analyzer
+        let tslm = new TonalInflexionLexemeMaker(<Array<TonalCombiningMorpheme>> morphemes);
         let lexemes = tslm.makeLexemes();
 
         return lexemes;

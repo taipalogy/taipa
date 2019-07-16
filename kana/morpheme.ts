@@ -151,7 +151,7 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
 
     create(syllable: Syllable) { return new KanaUncombiningMorpheme(syllable) }
 
-    createArray() { return new Array<KanaUncombiningMorpheme>() }
+    createArray<KanaUncombiningMorpheme>() { return new Array<KanaUncombiningMorpheme>() }
 
     makeInputingMorphemes() {
         return this.make(this.preprocess(), this.romanizedKana, syllabifyKana);

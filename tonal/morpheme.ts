@@ -249,7 +249,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     create(syllable: TonalSyllable) { return new TonalUncombiningMorpheme(syllable, this.metaplasm) }
 
-    createArray() { return new Array<TonalUncombiningMorpheme>() }
+    createArray<TonalUncombiningMorpheme>() { return new Array<TonalUncombiningMorpheme>() }
 
     makeMorphemes() {
         return this.make(this.preprocess(), this.lexicalRoots, syllabifyTonal);
