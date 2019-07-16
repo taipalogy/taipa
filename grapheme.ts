@@ -22,7 +22,11 @@ export class AlphabeticGrapheme extends Grapheme {
 
     constructor(letter?: AlphabeticLetter) {
         super();
-        this.letter = letter;
+        if(letter) {
+            this.letter = letter;
+        } else {
+            this.letter = new AlphabeticLetter([])
+        }
     }
 }
 
@@ -112,7 +116,6 @@ export class GraphemeMaker {
     characters: Array<Character>;
     list: Array<AlphabeticLetter>;
 
-    //constructor(l: string, lowerLetters: ILetters) {
     constructor(l: string, lowerLetters: Letters) {
         this.characters = new Array();
         let len = l.length;
@@ -124,9 +127,6 @@ export class GraphemeMaker {
 
         this.list = new Array();
 
-        //for(let key in lowerLetters) {
-          //  this.list.push(lowerLetters[key])
-        //}
         this.list = Array.from(lowerLetters.values)
     }
 
@@ -194,7 +194,7 @@ export class GraphemeMaker {
             if(i-beginOfLetter == 0) {
 
                 //console.log("matchedLen: %d", ms.matchedLength);
-                //console.log(this.list[0].characters)
+
                 let candidates = this.list.filter(l => l.characters[0].character === characters[i].character);
 
                 //console.log(candidates)
@@ -224,7 +224,9 @@ export class GraphemeMaker {
                 if(i+1-beginOfLetter == letters[0].characters.length) {
                     // when index i plus one equals the length of the matched syllable
                     let l = letters.shift();
-                    beginOfLetter +=  l.characters.length;
+                    if(l) {
+                        beginOfLetter +=  l.characters.length;
+                    }
                     // pack letters into sounds
                     let gr = new AlphabeticGrapheme(l);
                     graphemes.push(gr);
@@ -242,9 +244,9 @@ export class GraphemeMaker {
 //------------------------------------------------------------------------------
 
 export class Sound {
-    name: string
+    name: string = ''
     // an array of character objects. can be used to make a word object.
-    characters: Array<Character> = null
+    characters: Array<Character> = new Array()
 
     // we still need a method for combinning characters from each character objects.
     // this is different from an array of character objects. it is a string.

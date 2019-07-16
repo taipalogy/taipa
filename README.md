@@ -1,6 +1,6 @@
 # Taipa
 
-This natural language processing library consists of the following functions:
+A library for analyzing and processing Taiwanese language. This library consists of the following functions:
 
 * lemmatizing
 * stemming

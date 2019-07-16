@@ -1,7 +1,7 @@
 {
   "name": "taipa",
   "version": "0.0.5",
-  "description": "Taiwanese parsing",
+  "description": "Taiwanese parsing library",
   "main": "./lib/index.js",
   "scripts": {
     "build": "tsc --outDir lib"

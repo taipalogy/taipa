@@ -184,43 +184,6 @@ export let lowerLettersOfKana = new LettersOfKana(['a', 'e', 'i', 'o', 'u',
                                                     'w', 'y',
                                                     'n'])
 
-
-/*
-export let lowerLettersOfKana: ILetters = {
-    // vowels
-    'a': new AlphabeticLetter([characters.get('a')]),
-    'e': new AlphabeticLetter([characters.get('e')]),
-    'i': new AlphabeticLetter([characters.get('i')]),
-    'o': new AlphabeticLetter([characters.get('o')]),
-    'u': new AlphabeticLetter([characters.get('u')]),
-
-    // consonants
-    'b': new AlphabeticLetter([characters.get('b')]),
-    'c': new AlphabeticLetter([characters.get('c')]),
-    'ch': new AlphabeticLetter([characters.get('c'), characters.get('h')]),
-    'd': new AlphabeticLetter([characters.get('d')]),
-    'dl': new AlphabeticLetter([characters.get('d'), characters.get('l')]),
-    'f': new AlphabeticLetter([characters.get('f')]),
-    'g': new AlphabeticLetter([characters.get('g')]),
-    'h': new AlphabeticLetter([characters.get('h')]),
-    'j': new AlphabeticLetter([characters.get('j')]),
-    'k': new AlphabeticLetter([characters.get('k')]),
-    'l': new AlphabeticLetter([characters.get('l')]),
-    'm': new AlphabeticLetter([characters.get('m')]),
-    'q': new AlphabeticLetter([characters.get('q')]),
-    's': new AlphabeticLetter([characters.get('s')]),
-    'v': new AlphabeticLetter([characters.get('v')]),
-    'z': new AlphabeticLetter([characters.get('z')]),
-    'p': new AlphabeticLetter([characters.get('p')]),
-    't': new AlphabeticLetter([characters.get('t')]),
-
-    // semivowels
-    'w': new AlphabeticLetter([characters.get('w')]),
-    'y': new AlphabeticLetter([characters.get('y')]),
-
-    'n': new AlphabeticLetter([characters.get('n')]),
-}
-*/
 //------------------------------------------------------------------------------
 //  Sound
 //------------------------------------------------------------------------------

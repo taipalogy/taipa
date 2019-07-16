@@ -91,91 +91,11 @@ export let lowerLettersOfTonal = new LettersOfTonal(['a', 'e', 'i', 'o', 'u','ur
                                                     'kk', 'pp', 'tt', 'hh',
                                                     'f',
                                                     'h'])
-//console.log(lowerLettersOfTonal.get('a'))
-
-
-/*
-export let lowerLettersOfTonal: ILetters = {
-    // medials
-    'a': new AlphabeticLetter([characters.get('a')]),
-    'e': new AlphabeticLetter([characters.get('e')]),
-    'i': new AlphabeticLetter([characters.get('i')]),
-    'o': new AlphabeticLetter([characters.get('o')]),
-    'u': new AlphabeticLetter([characters.get('u')]),
-    'ur': new AlphabeticLetter([characters.get('u'), characters.get('r')]),
-
-    // initials excludes checked finals and neutral finals
-    'c': new AlphabeticLetter([characters.get('c')]),
-    'ch': new AlphabeticLetter([characters.get('c'), characters.get('h')]),
-    'j': new AlphabeticLetter([characters.get('j')]),
-    'q': new AlphabeticLetter([characters.get('q')]),
-    's': new AlphabeticLetter([characters.get('s')]),
-    'v': new AlphabeticLetter([characters.get('v')]),
-
-    // initials, medial, and nasal finals
-    'm': new AlphabeticLetter([characters.get('m')]),
-    'n': new AlphabeticLetter([characters.get('n')]),
-    'ng': new AlphabeticLetter([characters.get('n'), characters.get('g')]),
-    
-    // nasalization
-    'nn': new AlphabeticLetter([characters.get('n'), characters.get('n')]),
-
-    // free tonals
-    'cs': new AlphabeticLetter([characters.get('c'), characters.get('s')]),
-    'w': new AlphabeticLetter([characters.get('w')]),
-    'xx': new AlphabeticLetter([characters.get('x'), characters.get('x')]),
-    'xxx': new AlphabeticLetter([characters.get('x'), characters.get('x'), characters.get('x')]),
-    'zs': new AlphabeticLetter([characters.get('z'), characters.get('s')]),
-    'zzs': new AlphabeticLetter([characters.get('z'), characters.get('z'), characters.get('s')]),
-
-    // free tonal, checked tonal
-    'x': new AlphabeticLetter([characters.get('x')]),
-
-    // free tonal, neutral tonal
-    'y': new AlphabeticLetter([characters.get('y')]),
-
-    // initials, stop finals
-    'b': new AlphabeticLetter([characters.get('b')]),
-    'd': new AlphabeticLetter([characters.get('d')]),
-    'g': new AlphabeticLetter([characters.get('g')]),
-    'l': new AlphabeticLetter([characters.get('l')]),
-
-    // initials and stop finals
-    'k': new AlphabeticLetter([characters.get('k')]),
-    'p': new AlphabeticLetter([characters.get('p')]),
-    't': new AlphabeticLetter([characters.get('t')]),
-
-    // stop finals
-    'kk': new AlphabeticLetter([characters.get('k'), characters.get('k')]),
-    'pp': new AlphabeticLetter([characters.get('p'), characters.get('p')]),
-    'tt': new AlphabeticLetter([characters.get('t'), characters.get('t')]),
-    'hh': new AlphabeticLetter([characters.get('h'), characters.get('h')]),
-    
-    // checked tonal
-    'f': new AlphabeticLetter([characters.get('f')]),
-
-    // initia and neutral final
-    'h': new AlphabeticLetter([characters.get('h')]),
-}
-*/
 
 export let vowelLettersOfTonal = new LettersOfTonal(['ee', 'or', 'er', 'ir'])
-/*
-let vowelLetters: ILetters = {
-    // medial
-    'ee': new AlphabeticLetter([characters.get('e'), characters.get('e')]),
-    'or': new AlphabeticLetter([characters.get('o'), characters.get('r')]),
-    'er': new AlphabeticLetter([characters.get('e'), characters.get('r')]),
-    'ir': new AlphabeticLetter([characters.get('i'), characters.get('r')]),
-}
-*/
+
 export let consonantLettersOfTonal = new LettersOfTonal(['dl'])
-/*
-let consonantLetters: ILetters = {
-    // voiced d
-    'dl': new AlphabeticLetter([characters.get('d'), characters.get('l')]),
-}
-*/
+
 //------------------------------------------------------------------------------
 //  Sound
 //------------------------------------------------------------------------------

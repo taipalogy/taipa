@@ -10,7 +10,7 @@ import { Syllabary } from '../morpheme'
 //------------------------------------------------------------------------------
 
 export class ListOfLexicalRoots extends Syllabary {
-    list: Array<Sound[]> =  new Array()
+    //list: Array<Sound[]> =  new Array()
 
     setFirstLetter(beginning: string) {
         let cog = new ClientOfGenerator()

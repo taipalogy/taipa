@@ -26,8 +26,8 @@ export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 //------------------------------------------------------------------------------
 
 export abstract class Syllabary {
-    list: Array<Sound[]>
-    abstract setFirstLetter(beginning: string)
+    list: Array<Sound[]> = new Array()
+    abstract setFirstLetter(beginning: string): void
 }
 
 //------------------------------------------------------------------------------
@@ -42,12 +42,12 @@ class TonalMorpheme {}
 //------------------------------------------------------------------------------
 
 class LexicalRoot {
-    stem: LexicalStem
-    affix: TonalAffix
+    //stem: LexicalStem
+    //affix: TonalAffix
 }
 
 export class LexicalStem {
-    sounds: Array<Sound>;
+    //sounds: Array<Sound>;
 }
 
 class VowelStem extends LexicalStem {}
@@ -65,8 +65,8 @@ class GrammaticalSuffix {
 //  Tone Sandhi Morpheme
 //------------------------------------------------------------------------------
 
-export class Morpheme {
-    syllable: Syllable
+export abstract class Morpheme {
+    abstract syllable: Syllable
 }
 
 //------------------------------------------------------------------------------
@@ -120,9 +120,9 @@ export class Syllable {
 //------------------------------------------------------------------------------
 
 export abstract class MorphemeMaker {
-    abstract graphemes
+    abstract graphemes: Array<AlphabeticGrapheme>
 
-    abstract create(syllable: Syllable)
+    abstract create(syllable: Syllable): Morpheme
 
     abstract createArray() // the return type of this declaration should be left blank
                             // an abstract type of TonalCombinedMorpheme and 
@@ -185,7 +185,7 @@ export abstract class MorphemeMaker {
             if(morphemes.length == 0) {
                 result.messages.push('nothing matched')
             } else if(morphemes.length >= 1) {
-                if(msp == null) break
+                if(msp == undefined) break
 
                 if(msp.matchedLength > 0) {
                     i += beginOfSyllable-i-1;
@@ -193,7 +193,7 @@ export abstract class MorphemeMaker {
 
             }
         }
-        if(result.messages.length == 0) result = new Success()
+        //if(result.messages.length == 0) result = new Success()
         return morphemes
     }
 }
