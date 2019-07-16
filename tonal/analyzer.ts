@@ -2,7 +2,6 @@ import { Analyzer } from '../analyzer'
 import { TonalLemmatizationLexemeMaker } from './lexeme'
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { lowerLettersOfTonal } from './version2';
-import { NoSuccess, Success } from '../result'
 import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme'
 
 //------------------------------------------------------------------------------

@@ -1,5 +1,4 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
-import { Result, NoSuccess, Success } from './result';
 import { TonalAffix, Allomorph } from './tonal/version2'
 import { TonalUncombiningMorpheme, TonalSyllable } from './tonal/morpheme';
 
@@ -141,20 +140,19 @@ export abstract class MorphemeMaker {
         // a word can be made of multiple syllables
         let morphemes = this.createArray()
         //let arraysOfSounds: Array<Sound[]> = new Array()
-        let result: Result = new NoSuccess()
         
         //console.log(letters);
         let beginOfSyllable: number = 0;
         for(let i = 0; i < letters.length; i++) {
             //console.debug("examining letter: %s. length of letters: %d. i: %d. beginOfSyllable: %d", letters[i].literal, letters.length, i, beginOfSyllable);
             
-            let msp: MatchedPattern;
+            let msp: MatchedPattern = new MatchedPattern();
             if(i-beginOfSyllable == 0) {
                 
                 msp = syllabify(letters, beginOfSyllable, syllabary)
 
                 if(msp.matchedLength == 0) {
-                    result.messages.push('no matched syllables found. the syllable might need to be added')
+                    //console.log('no matched syllables found. the syllable might need to be added')
                 }
 
                 //console.log("matchedLen: %d", msp.matchedLength);
@@ -183,7 +181,7 @@ export abstract class MorphemeMaker {
             }
             
             if(morphemes.length == 0) {
-                result.messages.push('nothing matched')
+                //console.log('nothing matched')
             } else if(morphemes.length >= 1) {
                 if(msp == undefined) break
 
