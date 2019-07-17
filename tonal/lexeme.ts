@@ -126,13 +126,6 @@ export class TonalWord extends Word {
 
 export abstract class LemmatizationLexeme extends Lexeme {
     abstract word: Word
-    /*
-    
-    constructor(word: Word) {
-        super()
-        this.word = word
-    }
-    */
 }
 
 export class TonalLemmatizationLexeme extends LemmatizationLexeme {
@@ -143,7 +136,6 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
 
     constructor(word: TonalWord) {
         super()
-        //super(word)
         this.word = word;
     }
 

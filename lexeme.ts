@@ -1,6 +1,7 @@
 import { Syllable, Morpheme } from './morpheme';
-import { TonalSyllable } from './tonal/morpheme';
-import { TonalWord, InflectionalEnding } from './tonal/lexeme';
+import { TonalSyllable, TonalUncombiningMorpheme } from './tonal/morpheme';
+import { TonalWord, InflectionalEnding, LemmatizationLexeme, TonalLemmatizationLexeme } from './tonal/lexeme';
+import { InflexionLexeme, TonalInflexionLexeme, TonalCombiningMorpheme } from './dependencyparser/rulebasedtagger';
 
 
 //------------------------------------------------------------------------------
@@ -21,26 +22,8 @@ export class TonalLemmatizingMetaplasm extends Metaplasm {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export abstract class Lexeme {
-    //abstract word: Word
-}
-/*
-export class InflexionLexeme extends Lexeme {
-    //abstract word: Word = new Word
-    partOfSpeech: string = ''
-    metaplasm: TonalInflectingMetaplasm 
-}
-*/
-/*
-export class LemmatizationLexeme extends Lexeme {
-    metaplasm: TonalLemmatizingMetaplasm
-}
-*/
-/*
-export class DummyLexeme extends InflexionLexeme {
-    word: Word = new Word()
-}
-*/
+export abstract class Lexeme {}
+
 //------------------------------------------------------------------------------
 //  Word
 //------------------------------------------------------------------------------
@@ -78,7 +61,8 @@ export class Word {
 //------------------------------------------------------------------------------
 
 export abstract class LexemeMaker {
-    abstract morphemes
+    // TODO: change LexemeMaker to TonalLexemeMaker which inherits LexemeMaker
+    abstract morphemes: Array<TonalCombiningMorpheme> | Array<TonalUncombiningMorpheme>
 
     preprocess() {
         // extract syllables from morphemes. concatenate syllables into a word.
@@ -94,5 +78,5 @@ export abstract class LexemeMaker {
         return syllables
     }
 
-    abstract make(syllables: Array<Syllable>)
+    abstract make(syllables: Array<Syllable>): TonalInflexionLexeme | TonalLemmatizationLexeme
 }
