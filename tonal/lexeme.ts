@@ -1,5 +1,5 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme'
-import { Word, LexemeMaker, LemmatizationLexeme, TonalInflectingMetaplasm } from '../lexeme'
+import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
@@ -8,11 +8,11 @@ import { TonalAffix } from './version2'
 //  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-class TonalAdverbLemmatization extends TonalInflectingMetaplasm {}
-class TonalPronounLemmatization extends TonalInflectingMetaplasm {}
-class TonalParticleLemmatization extends TonalInflectingMetaplasm {}
-class TonalZeroLemmatization extends TonalInflectingMetaplasm {}
-export class TonalLemmatization extends TonalInflectingMetaplasm {
+class TonalAdverbLemmatization extends TonalLemmatizingMetaplasm {}
+class TonalPronounLemmatization extends TonalLemmatizingMetaplasm {}
+class TonalParticleLemmatization extends TonalLemmatizingMetaplasm {}
+class TonalZeroLemmatization extends TonalLemmatizingMetaplasm {}
+export class TonalLemmatization extends TonalLemmatizingMetaplasm {
     apply(word: TonalWord, morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
   
         return  this.populateLemmata(word, morphemes, inflectionalEnding)
@@ -124,14 +124,25 @@ export class TonalWord extends Word {
 //  Tonal Lexeme
 //------------------------------------------------------------------------------
 
+export class LemmatizationLexeme extends Lexeme {
+    /*
+    word: Word
+    constructor(word: Word) {
+        super()
+        this.word = word
+    }
+    */
+}
+
 export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     word: TonalWord
-    lemmata: Array<TonalWord>
+    lemmata: Array<TonalWord> = new Array()
     inflectionalEnding: InflectionalEnding
-    metaplasm
+    metaplasm: TonalLemmatizingMetaplasm = new TonalZeroLemmatization()
 
     constructor(word: TonalWord) {
         super()
+        //super(word)
         this.word = word;
     }
 

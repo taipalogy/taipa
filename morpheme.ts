@@ -123,10 +123,8 @@ export abstract class MorphemeMaker {
 
     abstract create(syllable: Syllable): Morpheme
 
-    abstract createArray<T extends Morpheme>(): Array<T> // the return type of this declaration should be left blank
-                            // an abstract type of TonalCombinedMorpheme and 
-                            // ToneSandhiRootMorpheme will not be passed into ToneSandhiInflectionLexemeMaker
-
+    abstract createArray<T extends Morpheme>(): Array<T>
+    
     preprocess() {
         // unpack graphemes and get letters from them
         let letters: Array<AlphabeticLetter> = new Array();

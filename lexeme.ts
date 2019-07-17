@@ -13,6 +13,10 @@ export class TonalInflectingMetaplasm extends Metaplasm {
     apply(word: TonalWord, morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
 }
 
+export class TonalLemmatizingMetaplasm extends Metaplasm {
+    apply(word: TonalWord, morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
+}
+
 //------------------------------------------------------------------------------
 //  Lexeme
 //------------------------------------------------------------------------------
@@ -20,21 +24,23 @@ export class TonalInflectingMetaplasm extends Metaplasm {
 export class Lexeme {
     word: Word
 }
-
+/*
 export class InflexionLexeme extends Lexeme {
-    word: Word = new Word
+    //abstract word: Word = new Word
     partOfSpeech: string = ''
-    metaplasm: TonalInflectingMetaplasm
+    metaplasm: TonalInflectingMetaplasm 
 }
-
+*/
+/*
 export class LemmatizationLexeme extends Lexeme {
-    metaplasm: TonalInflectingMetaplasm
+    metaplasm: TonalLemmatizingMetaplasm
 }
-
+*/
+/*
 export class DummyLexeme extends InflexionLexeme {
     word: Word = new Word()
 }
-
+*/
 //------------------------------------------------------------------------------
 //  Word
 //------------------------------------------------------------------------------
@@ -42,6 +48,14 @@ export class DummyLexeme extends InflexionLexeme {
 export class Word {
     literal: string = '';
     syllables: Array<Syllable>
+
+    constructor(syllables?: Array<Syllable>) {
+        if(syllables) {
+            this.syllables = syllables
+        } else {
+            this.syllables = new Array()
+        }
+    }
 
     popSyllable() {
         // trim the literal
@@ -82,13 +96,3 @@ export abstract class LexemeMaker {
 
     abstract make(syllables: Array<Syllable>)
 }
-
-export class DummyLexemeMaker {
-    makeLexeme(str: string) {
-        let l = new DummyLexeme();
-        l.word = new Word();
-        l.word.literal = str;
-        return l;
-    }
-}
-

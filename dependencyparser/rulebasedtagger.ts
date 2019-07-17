@@ -8,7 +8,7 @@ import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllom
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
-import { InflexionLexeme, LexemeMaker, TonalInflectingMetaplasm } from '../lexeme'
+import { LexemeMaker, TonalInflectingMetaplasm, Lexeme, Word } from '../lexeme'
 
 //------------------------------------------------------------------------------
 //  Tonal Combining Forms
@@ -65,7 +65,7 @@ class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {}
 class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
 class TonalParticleInflexion extends TonalInflectingMetaplasm {}
 class TonalZeroInflexion extends TonalInflectingMetaplasm {
-    // examples: author and authoring. che qahf he. type and typing
+    // examples: author and authoring. che qahf he. type and typing. meet and meeting.
 }
 class TonalInflexion extends TonalInflectingMetaplasm {
     apply(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>) {
@@ -175,18 +175,38 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
 //  Tonal Inflection Lexeme
 //------------------------------------------------------------------------------
 
+export class InflexionLexeme extends Lexeme {
+    partOfSpeech: string = ''
+    /*
+    word: Word
+    
+    constructor(word: Word) {
+        super()
+        this.word = word
+    }
+    */
+}
+
 export class TonalInflexionLexeme extends InflexionLexeme {
     word: TonalWord
-    wordForms: Array<TonalWord>
-    metaplasm: TonalInflectingMetaplasm
+    wordForms: Array<TonalWord> = new Array()
+    metaplasm: TonalInflectingMetaplasm = new TonalZeroInflexion()
 
     constructor(word: TonalWord) {
         super()
+        //super(word)
         this.word = word;
     }
 
     assignWordForms(ms: Array<TonalCombiningMorpheme>, tm: TonalInflexion): any {
         this.wordForms = tm.apply(this.word, ms)
+    }
+}
+
+export class DummyLexeme extends InflexionLexeme {
+    word: Word = new Word()
+    constructor() {
+        super()
     }
 }
 
@@ -218,6 +238,15 @@ export class TonalInflexionLexemeMaker extends LexemeMaker {
         lexemes.push(tl);
 
         return lexemes
+    }
+}
+
+export class DummyLexemeMaker {
+    makeLexeme(str: string) {
+        let l = new DummyLexeme();
+        l.word = new Word();
+        l.word.literal = str;
+        return l;
     }
 }
 
@@ -269,7 +298,7 @@ class ConstructionElement {
         this.lexeme = l
     }
 
-    check(w: TonalWord) {
+    check(w: Word) {
         if(this.lexeme.word.literal === w.literal) {
             return true
         }
@@ -337,7 +366,7 @@ export class RuleBasedTagger {
     match(lexemes: Array<TonalLemmatizationLexeme>) {
         // take in lemma lexemes and then check them against parsing lexemes
         // store matched parsing lexemes in nodes
-        let w: TonalWord = lexemes[0].word
+        let w: Word = lexemes[0].word
 
         let cop: ConstructionOfPhrase
         let vp = new VerbPhrase()

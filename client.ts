@@ -1,7 +1,7 @@
-import { TonalLemmatizationLexeme } from './tonal/lexeme'
-import { InflexionLexeme, Word, LemmatizationLexeme } from './lexeme'
+import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
+import { Word } from './lexeme'
 import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger, DummyLexeme } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
@@ -80,7 +80,7 @@ export class Client {
         }
 
         let guide = new Guide()
-        let root = new InflexionLexeme()
+        let root = new DummyLexeme()
         root.word.literal = 'ROOT'
         c.stack.push(root)
 

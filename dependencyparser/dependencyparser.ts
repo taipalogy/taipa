@@ -1,4 +1,4 @@
-import { InflexionLexeme } from '../lexeme';
+import { InflexionLexeme } from './rulebasedtagger';
 
 export enum Dependency {
     aux_caus = 'aux:caus',
