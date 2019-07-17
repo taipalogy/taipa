@@ -21,8 +21,8 @@ export class TonalLemmatizingMetaplasm extends Metaplasm {
 //  Lexeme
 //------------------------------------------------------------------------------
 
-export class Lexeme {
-    word: Word
+export abstract class Lexeme {
+    //abstract word: Word
 }
 /*
 export class InflexionLexeme extends Lexeme {

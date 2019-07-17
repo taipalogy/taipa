@@ -175,10 +175,11 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
 //  Tonal Inflection Lexeme
 //------------------------------------------------------------------------------
 
-export class InflexionLexeme extends Lexeme {
+export abstract class InflexionLexeme extends Lexeme {
+    abstract word: Word
     partOfSpeech: string = ''
     /*
-    word: Word
+    
     
     constructor(word: Word) {
         super()
