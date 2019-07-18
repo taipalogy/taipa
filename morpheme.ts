@@ -1,6 +1,8 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { TonalAffix, Allomorph } from './tonal/version2'
 import { TonalUncombiningMorpheme, TonalSyllable } from './tonal/morpheme';
+import { KanaUncombiningMorpheme } from './kana/morpheme';
+import { TonalCombiningMorpheme } from './dependencyparser/rulebasedtagger';
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -121,9 +123,9 @@ export class Syllable {
 export abstract class MorphemeMaker {
     abstract graphemes: Array<AlphabeticGrapheme>
 
-    abstract create(syllable: Syllable): Morpheme
+    //abstract create(syllable: Syllable): Morpheme
 
-    abstract createArray<T extends Morpheme>(): Array<T>
+    //abstract createArray<T extends Morpheme>(): Array<T>
     
     preprocess() {
         // unpack graphemes and get letters from them
@@ -134,6 +136,12 @@ export abstract class MorphemeMaker {
         return letters        
     }
 
+    abstract make(letters: Array<AlphabeticLetter>, 
+                    syllabary: Syllabary, 
+                    syllabify: (letters: Array<AlphabeticLetter>, 
+                                beginOfSyllable: number, 
+                                syllabary: Syllabary) => MatchedPattern): TonalUncombiningMorpheme[] | TonalCombiningMorpheme[] | KanaUncombiningMorpheme[]
+/*
     make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
         // a word can be made of multiple syllables
         let morphemes = this.createArray()
@@ -192,4 +200,5 @@ export abstract class MorphemeMaker {
         //if(result.messages.length == 0) result = new Success()
         return morphemes
     }
+    */
 }

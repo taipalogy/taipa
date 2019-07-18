@@ -1,5 +1,5 @@
 import { Analyzer } from '../analyzer'
-import { TonalLemmatizationLexemeMaker } from './lexeme'
+import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme'
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { lowerLettersOfTonal } from './version2';
 import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme'
@@ -15,8 +15,8 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return gm.makeGraphemes();
     }
 
-    getMorphologicalAnalysisResults(str: string)
-    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>)
+    getMorphologicalAnalysisResults(str: string): TonalUncombiningMorpheme[]
+    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[]
     getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>) {
         let graphemes: AlphabeticGrapheme[] = []
         //let g_results
@@ -31,8 +31,8 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return tmm.makeMorphemes(); 
     }
 
-    getLexicalAnalysisResults(str: string)
-    getLexicalAnalysisResults(ms: Array<TonalUncombiningMorpheme>)
+    getLexicalAnalysisResults(str: string): TonalLemmatizationLexeme[]
+    getLexicalAnalysisResults(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme[]
     getLexicalAnalysisResults(x: string | Array<TonalUncombiningMorpheme>) {
         let morphemes: Array<TonalUncombiningMorpheme> = []
         if(typeof x == "object") {

@@ -1,5 +1,5 @@
 import { GraphemeMaker } from '../grapheme'
-import { KanaUncombiningMorphemeMaker } from './morpheme'
+import { KanaUncombiningMorphemeMaker, KanaUncombiningMorpheme } from './morpheme'
 import { lowerLettersOfKana } from './kana'
 import { Analyzer } from '../analyzer'
 import { AlphabeticGrapheme } from '../grapheme'
@@ -15,8 +15,8 @@ export class KanaAnalyzer extends Analyzer {
         return gm.makeGraphemes();
     }
 
-    getMorphologicalAnalysisResults(str: string)
-    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>)
+    getMorphologicalAnalysisResults(str: string): KanaUncombiningMorpheme[]
+    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[]
     getMorphologicalAnalysisResults(x) {
         let graphemes: Array<AlphabeticGrapheme> = []
         if(typeof x == "object") {

@@ -149,9 +149,52 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
         this.romanizedKana = new RomanizedKana()
     }
 
-    create(syllable: Syllable) { return new KanaUncombiningMorpheme(syllable) }
+    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
+        let morphemes = new Array<KanaUncombiningMorpheme>()
 
-    createArray<KanaUncombiningMorpheme>() { return new Array<KanaUncombiningMorpheme>() }
+        let beginOfSyllable: number = 0;
+        for(let i = 0; i < letters.length; i++) {
+            
+            let msp: MatchedPattern = new MatchedPattern();
+            if(i-beginOfSyllable == 0) {
+                
+                msp = syllabify(letters, beginOfSyllable, syllabary)
+
+                if(msp.matchedLength == 0) {
+                    //console.log('no matched syllables found. the syllable might need to be added')
+                }
+
+                //console.log("matchedLen: %d", msp.matchedLength);
+                //console.log(msp.pattern);
+                //console.log(msp.letters)
+
+                let tsm: KanaUncombiningMorpheme;
+                if(msp.letters.length > 0) {
+                    for(let j in msp.letters) {
+                        //console.log("msp.letters: %s", msp.letters[j].literal)
+                    }
+                    tsm =  new KanaUncombiningMorpheme(new KanaSyllable(msp.letters))
+
+                    morphemes.push(tsm);
+                }
+
+                beginOfSyllable += msp.matchedLength;
+            }
+            
+            if(morphemes.length == 0) {
+                //console.log('nothing matched')
+            } else if(morphemes.length >= 1) {
+                if(msp == undefined) break
+
+                if(msp.matchedLength > 0) {
+                    i += beginOfSyllable-i-1;
+                }
+
+            }
+        }
+
+        return morphemes
+    }
 
     makeInputingMorphemes() {
         return this.make(this.preprocess(), this.romanizedKana, syllabifyKana);

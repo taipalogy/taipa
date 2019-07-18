@@ -3,7 +3,7 @@ import { combiningRules } from '../tonal/version2'
 import { TonalWord, TonalLemmatizationLexeme, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding,
      } from '../tonal/lexeme'
 import { TonalSyllable, syllabifyTonal } from '../tonal/morpheme'
-import { MorphemeMaker, Morpheme, TonalCombiningMetaplasm } from '../morpheme'
+import { MorphemeMaker, Morpheme, TonalCombiningMetaplasm, Syllabary, MatchedPattern } from '../morpheme'
 import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllomorphs, 
     FreeAllomorph, CheckedAllomorph, ZeroAllomorph, AllomorphY, lowerLettersOfTonal } from '../tonal/version2'
 import { AlphabeticLetter, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
@@ -163,9 +163,51 @@ export class TonalInflexionMorphemeMaker extends MorphemeMaker {
         this.metaplasm = tsm
     }
 
-    create(syllable: TonalSyllable) { return new TonalCombiningMorpheme(syllable, this.metaplasm) }
+    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
+        let morphemes = new Array<TonalCombiningMorpheme>()
+        let beginOfSyllable: number = 0;
+        for(let i = 0; i < letters.length; i++) {
+            
+            let msp: MatchedPattern = new MatchedPattern();
+            if(i-beginOfSyllable == 0) {
+                
+                msp = syllabify(letters, beginOfSyllable, syllabary)
 
-    createArray<TonalCombiningMorpheme>() { return new Array<TonalCombiningMorpheme>() }
+                if(msp.matchedLength == 0) {
+                    //console.log('no matched syllables found. the syllable might need to be added')
+                }
+
+                //console.log("matchedLen: %d", msp.matchedLength);
+                //console.log(msp.pattern);
+                //console.log(msp.letters)
+
+                let tsm: TonalCombiningMorpheme;
+                if(msp.letters.length > 0) {
+                    for(let j in msp.letters) {
+                        //console.log("msp.letters: %s", msp.letters[j].literal)
+                    }
+                    tsm = new TonalCombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm)
+
+                    morphemes.push(tsm);
+                }
+
+                beginOfSyllable += msp.matchedLength;
+            }
+            
+            if(morphemes.length == 0) {
+                //console.log('nothing matched')
+            } else if(morphemes.length >= 1) {
+                if(msp == undefined) break
+
+                if(msp.matchedLength > 0) {
+                    i += beginOfSyllable-i-1;
+                }
+
+            }
+        }
+
+        return morphemes
+    }
 
     makeMorphemes() {
         return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
@@ -258,8 +300,7 @@ export class TonalInflextionAnalyzer extends Analyzer {
         let morphemes = tmm.makeMorphemes();
 
         // Lexeme Maker
-        // TODO: typecasting is a temp solution. the analyzer needs to extend Analyzer
-        let tslm = new TonalInflexionLexemeMaker(<Array<TonalCombiningMorpheme>> morphemes);
+        let tslm = new TonalInflexionLexemeMaker(morphemes);
         let lexemes = tslm.makeLexemes();
 
         return lexemes;
