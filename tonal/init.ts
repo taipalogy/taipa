@@ -3,7 +3,7 @@ import { AnalyzerWrapper } from '../analyzer'
 
 export class TonalInflective extends AnalyzerWrapper {
     constructor() {
-        super()
-        super.analyzer = new TonalLemmatizationAnalyzer()
+        super(new TonalLemmatizationAnalyzer())
+        //super.analyzer = new TonalLemmatizationAnalyzer()
     }
 }

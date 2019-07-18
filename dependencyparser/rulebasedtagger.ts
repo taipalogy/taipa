@@ -9,6 +9,7 @@ import { Allomorph, listOfUncombinedCheckedAllomorphs, listOfUncombinedFreeAllom
 import { AlphabeticLetter, AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
 import { ListOfLexicalRoots } from '../tonal/lexicalroot'
 import { LexemeMaker, TonalInflectingMetaplasm, Lexeme, Word } from '../lexeme'
+import { Analyzer } from '../analyzer';
 
 //------------------------------------------------------------------------------
 //  Tonal Combining Forms
@@ -246,7 +247,7 @@ export class DummyLexemeMaker {
 //  Tonal Lexeme Analyzer
 //------------------------------------------------------------------------------
 
-export class TonalInflextionAnalyzer {
+export class TonalInflextionAnalyzer extends Analyzer {
     makeLexemes(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);

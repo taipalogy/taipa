@@ -1,7 +1,7 @@
 import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
 import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger, DummyLexeme } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger, DummyLexeme, TonalInflexionLexeme } from './dependencyparser/rulebasedtagger'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
@@ -10,6 +10,8 @@ import { Kana } from './kana/init';
 import { TonalInflective } from './tonal/init'
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 import { KanaUncombiningMorpheme } from './kana/morpheme';
+import { TonalUncombiningMorpheme } from './tonal/morpheme';
+import { KanaAnalyzer } from './kana/analyzer';
 
 export class Document {
     lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
@@ -26,9 +28,8 @@ export class Client {
 
         // kana
         al.load(Kana)
-        let morphemes: KanaUncombiningMorpheme[] = al.aws[0].analyzer.getMorphologicalAnalysisResults(str)
+        let morphemes: KanaUncombiningMorpheme[] = (<KanaAnalyzer>al.aws[0].analyzer).getMorphologicalAnalysisResults(str)
         let doc: Document = new Document()
-        //let blocks: string = al.aws[0].getBlocks(morphemes)
         doc.blockSequences = al.aws[0].getBlocks(morphemes)
         al.unload(Kana)
         return doc
@@ -43,8 +44,8 @@ export class Client {
         //let l_results
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
-            let morphemes = al.aws[0].analyzer.getMorphologicalAnalysisResults(tokens[0])
-            let lexemes = al.aws[0].analyzer.getLexicalAnalysisResults(morphemes)
+            let morphemes: TonalUncombiningMorpheme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).getMorphologicalAnalysisResults(tokens[0])
+            let lexemes: TonalLemmatizationLexeme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).getLexicalAnalysisResults(morphemes)
             doc.lemmatizationLexemes = lexemes
             doc.lemmata = lexemes[0].getLemmata()
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()

@@ -5,12 +5,12 @@ import { KanaUncombiningMorpheme } from './morpheme'
 import { Morpheme } from '../morpheme';
 
 export class Kana extends AnalyzerWrapper {
-
+    
     constructor() {
-        super()
+        super(new KanaAnalyzer())
         this.checkSize()
         this.findDuplicates()
-        super.analyzer = new KanaAnalyzer()
+        //super.analyzer = new KanaAnalyzer()
     }
 
     checkSize() {
