@@ -10,7 +10,6 @@ export class Kana extends AnalyzerWrapper {
         super(new KanaAnalyzer())
         this.checkSize()
         this.findDuplicates()
-        //super.analyzer = new KanaAnalyzer()
     }
 
     checkSize() {

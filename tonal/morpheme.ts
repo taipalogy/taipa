@@ -1,6 +1,6 @@
 import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, Syllabary, TonalCombiningMetaplasm } from '../morpheme'
 import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
-    ZeroAllomorph, AllomorphHY, AllomorphX } from './version2'
+    ZeroAllomorph, AllomorphHY, AllomorphX, ZeroTonal } from './version2'
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme'
 import { ListOfLexicalRoots } from './lexicalroot'
@@ -131,7 +131,7 @@ export class TonalSyllable extends Syllable {
 
 export class TonalUncombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
-    allomorph: Allomorph = null; // required to populate stems
+    allomorph: Allomorph // required to populate stems
     metaplasm: TonalCombiningMetaplasm
     sounds: Array<Sound> // populated in MorphemeMaker.make
 
@@ -142,6 +142,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
 
         // assign allomorph for each syllable
         this.allomorph = this.assignAllomorph(this.syllable)
+        this.sounds = new Array()
     }
     
     apply(): any {
@@ -189,7 +190,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
                         }
                     }
                 }
-            } else if(aoas.length == 1 && aoas[0].tonal == null){
+            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new ZeroTonal())){//== null){
                 // just return for stop finals without tonal
                 return
             } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {

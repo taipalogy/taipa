@@ -13,7 +13,7 @@ export class Morph {}
 //------------------------------------------------------------------------------
 
 export class Allomorph extends Morph {
-    tonal: Tonal = null;
+    tonal: Tonal = new ZeroTonal()//null;
 
     getLiteral() {
         if(this.tonal.getLiteral().length == 0) { 
@@ -26,10 +26,11 @@ export class Allomorph extends Morph {
 export class FreeAllomorph extends Allomorph {}
 
 export class CheckedAllomorph extends Allomorph {
-    final: Final = null;
+    final: Final = new ZeroFinal()//null;
 
     getLiteral() {
-        if(this.tonal != null) {
+        //if(this.tonal != null) {
+        if(this.tonal.getLiteral()) {            
             return this.final.getLiteral() + this.tonal.getLiteral()
         }
         return this.final.getLiteral()
@@ -37,7 +38,7 @@ export class CheckedAllomorph extends Allomorph {
 }
 
 export class TonalAffix extends Morph {
-    tonal: Tonal = null
+    tonal: Tonal = new ZeroTonal()//null
     getLiteral() {
         return this.tonal.getLiteral()
     }
@@ -132,7 +133,7 @@ class InitialM extends Initial {characters = [characters.get('m')]}
 class InitialN extends Initial {characters = [characters.get('n')]}
 class InitialNG extends Initial {characters = [characters.get('n'), characters.get('g')]}
 
-export class ZeroTonal extends FreeTonal {characters = null;}
+export class ZeroTonal extends FreeTonal {characters = [];}
 
 export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 export class TonalW extends FreeTonal {characters = [characters.get('w')]}
@@ -154,26 +155,17 @@ export class FinalP extends StopFinal {characters = [characters.get('p')]}
 export class FinalT extends StopFinal {characters = [characters.get('t')]}
 export class FinalK extends StopFinal {characters = [characters.get('k')]}
 export class FinalH extends StopFinal {characters = [characters.get('h')]}
-/*
-export class FinalB extends StopFinal {characters = [characters.get('b')]}
-export class FinalD extends StopFinal {characters = [characters.get('d')]}
-export class FinalG extends StopFinal {characters = [characters.get('g')]}
-export class FinalL extends StopFinal {characters = [characters.get('l')]}
-*/
+
 export class FinalPP extends StopFinal {characters = [characters.get('p'), characters.get('p')]}
 export class FinalTT extends StopFinal {characters = [characters.get('t'), characters.get('t')]}
 export class FinalKK extends StopFinal {characters = [characters.get('k'), characters.get('k')]}
 export class FinalHH extends StopFinal {characters = [characters.get('h'), characters.get('h')]}
-/*
-export class FinalBB extends StopFinal {characters = [characters.get('b'), characters.get('b')]}
-export class FinalDD extends StopFinal {characters = [characters.get('d'), characters.get('d')]}
-export class FinalGG extends StopFinal {characters = [characters.get('g'), characters.get('g')]}
-export class FinalLL extends StopFinal {characters = [characters.get('l'), characters.get('l')]}
-*/
 
 class FinalM extends NasalFinal {characters = [characters.get('m')]}
 class FinalN extends NasalFinal {characters = [characters.get('n')]}
 class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
+
+export class ZeroFinal extends Final {characters = []}
 
 class NasalizationNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 

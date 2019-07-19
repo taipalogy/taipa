@@ -107,12 +107,12 @@ export class Syllable {
 
     get lastLetter() {
         if(this.letters.length >= 1) return this.letters[this.letters.length-1]
-        return null
+        return new AlphabeticLetter()
     }
 
     get lastSecondLetter() {
         if(this.letters.length >= 2) return this.letters[this.letters.length-2]
-        return null
+        return new AlphabeticLetter()
     }
 }
 
@@ -122,10 +122,6 @@ export class Syllable {
 
 export abstract class MorphemeMaker {
     abstract graphemes: Array<AlphabeticGrapheme>
-
-    //abstract create(syllable: Syllable): Morpheme
-
-    //abstract createArray<T extends Morpheme>(): Array<T>
     
     preprocess() {
         // unpack graphemes and get letters from them
@@ -141,64 +137,4 @@ export abstract class MorphemeMaker {
                     syllabify: (letters: Array<AlphabeticLetter>, 
                                 beginOfSyllable: number, 
                                 syllabary: Syllabary) => MatchedPattern): TonalUncombiningMorpheme[] | TonalCombiningMorpheme[] | KanaUncombiningMorpheme[]
-/*
-    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
-        // a word can be made of multiple syllables
-        let morphemes = this.createArray()
-        //let arraysOfSounds: Array<Sound[]> = new Array()
-        
-        //console.log(letters);
-        let beginOfSyllable: number = 0;
-        for(let i = 0; i < letters.length; i++) {
-            //console.debug("examining letter: %s. length of letters: %d. i: %d. beginOfSyllable: %d", letters[i].literal, letters.length, i, beginOfSyllable);
-            
-            let msp: MatchedPattern = new MatchedPattern();
-            if(i-beginOfSyllable == 0) {
-                
-                msp = syllabify(letters, beginOfSyllable, syllabary)
-
-                if(msp.matchedLength == 0) {
-                    //console.log('no matched syllables found. the syllable might need to be added')
-                }
-
-                //console.log("matchedLen: %d", msp.matchedLength);
-                //console.log(msp.pattern);
-                //console.log(msp.letters)
-
-                let tsm: Morpheme;
-                if(msp.letters.length > 0) {
-                    for(let j in msp.letters) {
-                        //console.log("msp.letters: %s", msp.letters[j].literal)
-                    }
-                    tsm =  this.create(new Syllable(msp.letters))
-
-                    if(tsm instanceof TonalUncombiningMorpheme) {
-                        tsm.sounds = msp.pattern
-                    }
-
-                    //arraysOfSounds.push(msp.pattern)
-
-                    // here we should match the combining form with its root
-
-                    morphemes.push(tsm);
-                }
-
-                beginOfSyllable += msp.matchedLength;
-            }
-            
-            if(morphemes.length == 0) {
-                //console.log('nothing matched')
-            } else if(morphemes.length >= 1) {
-                if(msp == undefined) break
-
-                if(msp.matchedLength > 0) {
-                    i += beginOfSyllable-i-1;
-                }
-
-            }
-        }
-        //if(result.messages.length == 0) result = new Success()
-        return morphemes
-    }
-    */
 }
