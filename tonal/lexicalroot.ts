@@ -18,6 +18,7 @@ export class ListOfLexicalRoots extends Syllabary {
         for(let i in entries) {
             this.list.push(entries[i])
         }
+        //console.log(this.list)
     }
 
     toString() {
@@ -158,8 +159,8 @@ class ClientOfGenerator {
     private makeCombiningForms(entry: string[]) {
         let lastElement = entry[entry.length-1]
         let n = lastElement.lastIndexOf('.')
-        let key = lastElement.slice(0, n)
-        let tos = combiningRules.get(key) // plural form of to
+        let key = lastElement.slice(0, n) // tone of base form
+        let tos = combiningRules.get(key) // plural form of to. get tones of combining form
         let ret: Array<string[]> = new Array
 
         if(lastElement.lastIndexOf('freeTonal') > 0) {
@@ -189,8 +190,8 @@ class ClientOfGenerator {
         return ret
     }
 
-    private findNew(buffer: Array<string[]>) {
-        // find new tones based on the same stem
+    private findCombiningForms(buffer: Array<string[]>) {
+        // find combining forms based on the same stem
         let cfs
         for(let i in buffer) {
             cfs = this.makeCombiningForms(buffer[i])
@@ -285,7 +286,7 @@ class ClientOfGenerator {
 
             let entry = arrayOfSounds[k]
             let lastElement = entry[entry.length-1]
-
+            
             if(this.isStopFinal(lastElement)) {
                 let lastElement = entry[entry.length-1]
                 let n = lastElement.lastIndexOf('.')
@@ -303,7 +304,7 @@ class ClientOfGenerator {
     
                 if(k == arrayOfSounds.length-1) {
                     // terminal condition of iterator of arrayofSounds
-                    this.findNew(buffer)
+                    this.findCombiningForms(buffer)
                     for(let i in buffer) {
                         entries.push(this.convert(buffer[i]))
                     }
@@ -318,7 +319,8 @@ class ClientOfGenerator {
                 if(nextStem.length != currentStem.length) {
                     // when the stems are not in the same length
                     currentStem = nextStem
-                    this.findNew(buffer)
+                    this.findCombiningForms(buffer)
+                    // aw
                     for(let i in buffer) {
                         entries.push(this.convert(buffer[i]))
                     }
@@ -328,7 +330,7 @@ class ClientOfGenerator {
                         if(currentStem[e] !== nextStem[e]) {
                             // when the stems are not the same
                             currentStem = nextStem
-                            this.findNew(buffer)
+                            this.findCombiningForms(buffer)
                             for(let i in buffer) {
                                 entries.push(this.convert(buffer[i]))
                             }

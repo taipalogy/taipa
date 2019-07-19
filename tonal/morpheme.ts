@@ -32,7 +32,6 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                         // pop letter
                         // push letter
                         let s: TonalSyllable = new TonalSyllable(syllable.letters);
-                        //if(!facrs.rules[this.allomorph.getLiteral()][i].isCharacterNull()) {
                         if(!(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
@@ -80,6 +79,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
     // get the longest matched syllable pattern
     syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    // TODO: if the first letter is x, letter a will be set. need to fix it.
     let matchedLen = 0;
     let mp = new MatchedPattern();
     for(let m in syllabary.list) {
@@ -88,6 +88,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             for(let n = 0; n < min; n++) {
                 if(syllabary.list[m][n] != undefined) {
                     if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+                        //console.log(syllabary[m])
                         if(n+1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
@@ -150,7 +151,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
-        let allomorph: Allomorph
+        let allomorph: Allomorph = new ZeroAllomorph()
         // assign the matched allomorph for this syllable
         // don't assign if the checked syllable is already in base form
         let aoas: Array<Allomorph> = []; // array of allomorphs
@@ -214,7 +215,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         if(aoas.length == 0) {
             // tone 1 has no allomorph
             allomorph = new ZeroAllomorph();
-        } else if(aoas.length) {
+        } else if(aoas.length == 1) {
             // are there multiple allomorphs? there should be only one.
             for(let i = 0; i < aoas.length; i++) {
                 if(aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
@@ -273,9 +274,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                     }
                     tsm = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm)
 
-                    if(tsm instanceof TonalUncombiningMorpheme) {
-                        tsm.sounds = msp.pattern
-                    }
+                    tsm.sounds = msp.pattern
 
                     morphemes.push(tsm);
                 }
