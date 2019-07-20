@@ -191,9 +191,9 @@ export class TonalUncombiningMorpheme extends Morpheme {
                         }
                     }
                 }
-            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new ZeroTonal())){//== null){
-                // just return for stop finals without tonal
-                return
+            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new ZeroTonal())){
+                // return stop finals without tonal
+                return aoas.shift()
             } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
                 // there should be no more than 2 matches, either 1 match or 2
                 // just fall through for the case of 'hy'

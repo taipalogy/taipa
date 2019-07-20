@@ -1,6 +1,6 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme'
 import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
-import { freeAllomorphUncombiningRules, ZeroAffix, ZeroAllomorph } from './version2'
+import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
 
@@ -71,36 +71,28 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
 class Ending {}
 
 export class InflectionalEnding extends Ending {
-    affix: TonalAffix = new ZeroAffix()//null;
+    affix: TonalAffix = new TonalAffix()
     getLiteral() {
         return this.affix.getLiteral()
     }
 }
 
 export class FreeInflectionalEnding extends InflectionalEnding {
-    affix = new TonalAffix();
     baseAffixes: Array<TonalAffix> = new Array();
 }
 
-export class CheckedInflectionalEnding extends InflectionalEnding {
-    affix = new TonalAffix();
-}
+export class CheckedInflectionalEnding extends InflectionalEnding {}
 
 export class TonalSymbolEnding extends Ending {
-    allomorph: Allomorph = new ZeroAllomorph()//null
+    allomorph: Allomorph = new Allomorph()
     getLiteral() {
         return this.allomorph.getLiteral()
     }
 }
 
-export class FreeTonalEnding extends TonalSymbolEnding {
-    allomorph: Allomorph = new ZeroAllomorph()//null
-    //sandhiAllomorph: Allomorph = new Allomorph()
-}
+export class FreeTonalEnding extends TonalSymbolEnding {}
 
-export class CheckedTonalEnding extends TonalSymbolEnding {
-    allomorph: Allomorph = new ZeroAllomorph()//null
-}
+export class CheckedTonalEnding extends TonalSymbolEnding {}
 
 //------------------------------------------------------------------------------
 //  Tonal Word
@@ -135,24 +127,19 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     metaplasm: TonalLemmatizingMetaplasm = new TonalZeroLemmatization()
 
     constructor(word: TonalWord, ms: Array<TonalUncombiningMorpheme>, tl: TonalLemmatization) {
+        // TODO: parameter word may be redundant
         super()
         this.word = word;
         this.inflectionalEnding = this.assignInflectionalEnding(ms[ms.length-1].allomorph);
         this.lemmata = tl.apply(this.word, ms, this.inflectionalEnding)
     }
-/*
-    assignLemmata(ms: Array<TonalUncombiningMorpheme>, tm: TonalLemmatization): any {
-        this.lemmata = tm.apply(this.word, ms, this.inflectionalEnding)
-    }
-*/
+
     getLemmata() {
         // this must be called after populateLemmata is called
-        //if(this.lemmata == null) return []
         return this.lemmata
     }
 
     getInflectionalEnding() {
-        //if(this.inflectionalEnding == null) return ''
         return this.inflectionalEnding.getLiteral()
     }
 
@@ -171,11 +158,9 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
         } else if(allomorph instanceof CheckedAllomorph) {
             let cie = new CheckedInflectionalEnding();
             cie.affix.tonal = allomorph.tonal;
-            //this.inflectionalEnding = cie;
             inf = cie
         }
-        // when there is no inflectinal ending assigned, this word is already in base form
-        // and its last syllable is checked tone
+        // this word is already in base form, and its last syllable is checked tone
         return inf
     }
 }
@@ -202,15 +187,6 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     }
 
     postprocess(tl: TonalLemmatizationLexeme) {
-        /*
-        if(this.morphemes.length > 0) {
-            if(this.morphemes[this.morphemes.length-1].allomorph != null) {
-                // inflectional ending needs to be assigned to combined lexeme
-                tl.assignInflectionalEnding(this.morphemes[this.morphemes.length-1].allomorph);
-            }
-        }
-*/
-        //tl.assignLemmata(this.morphemes, new TonalLemmatization())
 
         let lexemes: Array<TonalLemmatizationLexeme> = new Array();
 

@@ -1,9 +1,4 @@
 import { Morpheme } from './morpheme'
-import { AlphabeticGrapheme } from './grapheme';
-import { TonalUncombiningMorpheme } from './tonal/morpheme';
-import { KanaUncombiningMorpheme } from './kana/morpheme';
-import { LemmatizationLexeme, TonalLemmatizationLexeme } from './tonal/lexeme';
-import { InflexionLexeme, TonalCombiningMorpheme, TonalInflexionLexeme } from './dependencyparser/rulebasedtagger';
 
 type Class = { new(...args: any[]): any; };
 
@@ -15,10 +10,7 @@ function createInstance<A extends AnalyzerWrapper>(c: new () => A): A {
 //  Analyzer
 //------------------------------------------------------------------------------
 
-export abstract class Analyzer {
-    //abstract getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>)
-    //abstract getLexicalAnalysisResults(x: string | Array<TonalUncombiningMorpheme> | Array<TonalCombiningMorpheme>)
-}
+export abstract class Analyzer {}
 
 export class AnalyzerWrapper {
     analyzer: Analyzer

@@ -1,6 +1,6 @@
-import { characters, Character } from '../character'
+import { characters } from '../character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    Tonal, AlphabeticLetter, ILetters, Letters } from '../grapheme'
+    Tonal, Letters } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -13,7 +13,7 @@ export class Morph {}
 //------------------------------------------------------------------------------
 
 export class Allomorph extends Morph {
-    tonal: Tonal = new ZeroTonal()//null;
+    tonal: Tonal = new Tonal()
 
     getLiteral() {
         if(this.tonal.getLiteral().length == 0) { 
@@ -26,10 +26,9 @@ export class Allomorph extends Morph {
 export class FreeAllomorph extends Allomorph {}
 
 export class CheckedAllomorph extends Allomorph {
-    final: Final = new ZeroFinal()//null;
+    final: Final = new Final()
 
     getLiteral() {
-        //if(this.tonal != null) {
         if(this.tonal.getLiteral()) {            
             return this.final.getLiteral() + this.tonal.getLiteral()
         }
@@ -38,7 +37,7 @@ export class CheckedAllomorph extends Allomorph {
 }
 
 export class TonalAffix extends Morph {
-    tonal: Tonal = new ZeroTonal()//null
+    tonal: Tonal = new Tonal()
     getLiteral() {
         return this.tonal.getLiteral()
     }
@@ -48,10 +47,6 @@ class FreeAffix extends TonalAffix {}
 
 class CheckedAffix extends TonalAffix {
     // there is no final for affix
-}
-
-export class ZeroAffix extends FreeAffix {
-    tonal = new ZeroTonal()
 }
 
 //------------------------------------------------------------------------------
@@ -133,7 +128,7 @@ class InitialM extends Initial {characters = [characters.get('m')]}
 class InitialN extends Initial {characters = [characters.get('n')]}
 class InitialNG extends Initial {characters = [characters.get('n'), characters.get('g')]}
 
-export class ZeroTonal extends FreeTonal {characters = [];}
+export class ZeroTonal extends Tonal {characters = [];}
 
 export class TonalZS extends FreeTonal {characters = [characters.get('z'), characters.get('s')]}
 export class TonalW extends FreeTonal {characters = [characters.get('w')]}
@@ -164,8 +159,6 @@ export class FinalHH extends StopFinal {characters = [characters.get('h'), chara
 class FinalM extends NasalFinal {characters = [characters.get('m')]}
 class FinalN extends NasalFinal {characters = [characters.get('n')]}
 class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
-
-export class ZeroFinal extends Final {characters = []}
 
 class NasalizationNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
 
