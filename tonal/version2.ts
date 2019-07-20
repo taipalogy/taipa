@@ -50,7 +50,7 @@ class CheckedAffix extends TonalAffix {
     // there is no final for affix
 }
 
-class ZeroAffix extends FreeAffix {
+export class ZeroAffix extends FreeAffix {
     tonal = new ZeroTonal()
 }
 
