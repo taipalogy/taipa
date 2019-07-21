@@ -221,7 +221,14 @@ class ClientOfGenerator {
             let clasName = entry[i].slice(0, n)
             let position = entry[i].slice(n+1)
             //console.debug(entry + ' ' + clasName + ' ' + position)
-            ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
+            //ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
+            let ps = letterClass.get(clasName)
+            if(ps) {
+                let snd = ps.map.get(position)
+                if(snd) {
+                    ret.push(snd)
+                }
+            }
         }
         return ret
     }

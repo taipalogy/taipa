@@ -30,7 +30,7 @@ let list_of_new_syllables = [
 
     'per', 'perhh', 'perw', 'perx', 'perzs',
 	
-	'qere', 'qereh', 'qerew', 'qerex', 'qerey', 'qerezs', 'qerh', 'qerw', 'qery', 'qinnh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnzs', 'qirw', 'qirx', 'qiry', 'qirzs',
+	'qere', 'qereh', 'qerew', 'qerex', 'qerey', 'qerezs', 'qerh', 'qerw', 'qery', 'qinnh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnzs', 'qirw', 'qirx', 'qiry', 'qirzs', 'qnghh',
 
     'sere', 'serew', 'serew', 'serh', 'serhh', 'serx', 'serw', 'serzs', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirzs', 'sm',
 

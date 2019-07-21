@@ -130,7 +130,11 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
         // TODO: parameter word may be redundant
         super()
         this.word = word;
-        this.inflectionalEnding = this.assignInflectionalEnding(ms[ms.length-1].allomorph);
+        if(ms.length > 0) {
+            if(ms[ms.length-1].allomorph) {
+                this.inflectionalEnding = this.assignInflectionalEnding(ms[ms.length-1].allomorph);
+            }
+        }
         this.lemmata = tl.apply(this.word, ms, this.inflectionalEnding)
     }
 
@@ -140,7 +144,8 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     }
 
     getInflectionalEnding() {
-        return this.inflectionalEnding.getLiteral()
+        if(this.inflectionalEnding) return this.inflectionalEnding.getLiteral()
+        return ''
     }
 
     private assignInflectionalEnding(allomorph: Allomorph) {
