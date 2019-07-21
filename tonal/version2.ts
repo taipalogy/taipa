@@ -58,9 +58,9 @@ interface IPositionalSound {
     map: Map<string, Sound>
 }
 
-abstract class PositionalSound implements IPositionalSound {
-    abstract name: string
-    abstract map: Map<string, Sound>
+class PositionalSound implements IPositionalSound {
+    name: string = ''
+    map: Map<string, Sound> = new Map()
     get(key: string) {
         let snd = this.map.get(key)
         if(snd) return snd
@@ -525,63 +525,94 @@ class PSZero extends PositionalSound {
 //  Combining Rule
 //------------------------------------------------------------------------------
 
-// TODO: change any to { toneMark: Tonal }?
-export const combiningRules: Map<string, any> = new Map()
-    .set('zero', { zs: new PSZS().get('freeTonal') })
-    .set('y', { zero: new PSZero().get('freeTonal'), cs: new PSCS().get('freeTonal') })
-    .set('w', { y: new PSY().get('freeTonal') })
-    .set('x', { zs: new PSZS().get('freeTonal'), w: new PSW().get('freeTonal') })
-    .set('zs', { w: new PSW().get('freeTonal') })
-    .set('p', { f: new PSF().get('checkedTonal') })
-    .set('t', { f: new PSF().get('checkedTonal') })
-    .set('k', { f: new PSF().get('checkedTonal') })
-    .set('h', { f: new PSF().get('checkedTonal'), y: new PSY().get('checkedTonal') })
-    .set('pp', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
-    .set('tt', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
-    .set('kk', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
-    .set('hh', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
 
+class CombiningRules {
+    // return value of PositionalSound.get is of type Sound
+    private o: Map<string, { [key: string]: Sound }> = new Map()
 
-// need to verify the size of the map
-export const letterClass: Map<string, PositionalSound> = new Map()
-    .set('a', new PSA())
-    .set('b', new PSB())
-    .set('c', new PSC())
-    .set('ch', new PSCH())
-    .set('d', new PSD())
-    .set('e', new PSE())
-    .set('f', new PSF())
-    .set('g', new PSG())
-    .set('h', new PSH())
-    .set('hh', new PSHH())
-    .set('i', new PSI())
-    .set('j', new PSJ())
-    .set('k', new PSK())
-    .set('kk', new PSKK())
-    .set('l', new PSL())
-    .set('m', new PSM())
-    .set('n', new PSN())
-    .set('nn', new PSNN())
-    .set('ng', new PSNG())
-    .set('o', new PSO())
-    .set('p', new PSP())
-    .set('pp', new PSPP())
-    .set('q', new PSQ())
-    .set('s', new PSS())
-    .set('cs', new PSCS())
-    .set('t', new PST())
-    .set('tt', new PSTT())
-    .set('u', new PSU())
-    .set('ur', new PSUR())
-    .set('v', new PSV())
-    .set('w', new PSW())
-    .set('x', new PSX())
-    .set('xx', new PSXX())
-    .set('xxx', new PSXXX())
-    .set('y', new PSY())
-    .set('zs', new PSZS())
-    .set('zzs', new PSZZS())
+    constructor() {
+        this.o
+            .set('zero', { zs: new PSZS().get('freeTonal') })
+            .set('y', { zero: new PSZero().get('freeTonal'), cs: new PSCS().get('freeTonal') })
+            .set('w', { y: new PSY().get('freeTonal') })
+            .set('x', { zs: new PSZS().get('freeTonal'), w: new PSW().get('freeTonal') })
+            .set('zs', { w: new PSW().get('freeTonal') })
+            .set('p', { f: new PSF().get('checkedTonal') })
+            .set('t', { f: new PSF().get('checkedTonal') })
+            .set('k', { f: new PSF().get('checkedTonal') })
+            .set('h', { f: new PSF().get('checkedTonal'), y: new PSY().get('checkedTonal') })
+            .set('pp', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
+            .set('tt', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
+            .set('kk', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
+            .set('hh', { w: new PSW().get('checkedTonal'), x: new PSX().get('checkedTonal')})
+    
+    }
 
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return {}
+    }
+}
+
+export const combiningRules = new CombiningRules()
+
+class LetterClasses {
+    private o: Map<string, PositionalSound> = new Map()
+
+    constructor() {
+        this.o
+            .set('a', new PSA())
+            .set('b', new PSB())
+            .set('c', new PSC())
+            .set('ch', new PSCH())
+            .set('d', new PSD())
+            .set('e', new PSE())
+            .set('f', new PSF())
+            .set('g', new PSG())
+            .set('h', new PSH())
+            .set('hh', new PSHH())
+            .set('i', new PSI())
+            .set('j', new PSJ())
+            .set('k', new PSK())
+            .set('kk', new PSKK())
+            .set('l', new PSL())
+            .set('m', new PSM())
+            .set('n', new PSN())
+            .set('nn', new PSNN())
+            .set('ng', new PSNG())
+            .set('o', new PSO())
+            .set('p', new PSP())
+            .set('pp', new PSPP())
+            .set('q', new PSQ())
+            .set('s', new PSS())
+            .set('cs', new PSCS())
+            .set('t', new PST())
+            .set('tt', new PSTT())
+            .set('u', new PSU())
+            .set('ur', new PSUR())
+            .set('v', new PSV())
+            .set('w', new PSW())
+            .set('x', new PSX())
+            .set('xx', new PSXX())
+            .set('xxx', new PSXXX())
+            .set('y', new PSY())
+            .set('zs', new PSZS())
+            .set('zzs', new PSZZS())    
+    }
+
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new PositionalSound()
+    }
+}
+
+export const letterClasses = new LetterClasses()
 
 //------------------------------------------------------------------------------
 //  Allomorph
@@ -623,16 +654,35 @@ class AllomorphZZS extends FreeAllomorph {
     tonal = new TonalZZS()
 }
 
-export const listOfFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set('cs', new AllomorphCS())
-    .set('w', new AllomorphW())
-    .set('xx', new AllomorphXX())
-    .set('xxx', new AllomorphXXX())
-    .set('zs', new AllomorphZS())
-    .set('zzs', new AllomorphZZS())
-    .set('y', new AllomorphY())
-    .set('x', new AllomorphX())
+class FreeAllomorphs {
+    private o: Map<string, Allomorph> = new Map()
 
+    constructor() {
+        this.o
+            .set('cs', new AllomorphCS())
+            .set('w', new AllomorphW())
+            .set('xx', new AllomorphXX())
+            .set('xxx', new AllomorphXXX())
+            .set('zs', new AllomorphZS())
+            .set('zzs', new AllomorphZZS())
+            .set('y', new AllomorphY())
+            .set('x', new AllomorphX())    
+    }
+
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new Allomorph()
+    }
+
+    has(key: string) {
+        return this.o.has(key)
+    }
+}
+
+export const freeAllomorphs = new FreeAllomorphs()
 
 class AllomorphP extends CheckedAllomorph {
     final = new FinalP()
@@ -731,52 +781,128 @@ class AllomorphHHX extends CheckedAllomorph {
     tonal = new CheckedTonalX()
 }
 
-export const listOfCheckedAllomorphs: Map<string, Allomorph> = new Map()
-    .set(new PSP().get('final').getLiteral(), new AllomorphP())
-    .set(new PST().get('final').getLiteral(), new AllomorphT())
-    .set(new PSK().get('final').getLiteral(), new AllomorphK())
-    .set(new PSH().get('final').getLiteral(), new AllomorphH())
-    .set(new PSPP().get('final').getLiteral(), new AllomorphPP())
-    .set(new PSTT().get('final').getLiteral(), new AllomorphTT())
-    .set(new PSKK().get('final').getLiteral(), new AllomorphKK())
-    .set(new PSHH().get('final').getLiteral(), new AllomorphHH())
-    .set(new PSP().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphPF())
-    .set(new PST().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphTF())
-    .set(new PSK().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphKF())
-    .set(new PSH().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphHF())
-    .set(new PSPP().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphPPW())
-    .set(new PSTT().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphTTW())
-    .set(new PSKK().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphKKW())
-    .set(new PSHH().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphHHW())
-    .set(new PSH().get('final').getLiteral() + new PSY().get('checkedTonal').getLiteral(), new AllomorphHY())
-    .set(new PSPP().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphPPX())
-    .set(new PSTT().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphTTX())
-    .set(new PSKK().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphKKX())
-    .set(new PSHH().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphHHX())
+class CheckedAllomorphs {
+    private o: Map<string, Allomorph> = new Map()
 
-export const listOfUncombinedFreeAllomorphs: Map<string, Allomorph> = new Map()
-    .set(new PSW().get('freeTonal').getLiteral(), new AllomorphW())
-    .set(new PSZS().get('freeTonal').getLiteral(), new AllomorphZS())
-    .set(new PSX().get('freeTonal').getLiteral(), new AllomorphX())
-    .set(new PSY().get('freeTonal').getLiteral(), new AllomorphY())
+    constructor() {
+        this.o
+            .set(new PSP().get('final').getLiteral(), new AllomorphP())
+            .set(new PST().get('final').getLiteral(), new AllomorphT())
+            .set(new PSK().get('final').getLiteral(), new AllomorphK())
+            .set(new PSH().get('final').getLiteral(), new AllomorphH())
+            .set(new PSPP().get('final').getLiteral(), new AllomorphPP())
+            .set(new PSTT().get('final').getLiteral(), new AllomorphTT())
+            .set(new PSKK().get('final').getLiteral(), new AllomorphKK())
+            .set(new PSHH().get('final').getLiteral(), new AllomorphHH())
+            .set(new PSP().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphPF())
+            .set(new PST().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphTF())
+            .set(new PSK().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphKF())
+            .set(new PSH().get('final').getLiteral() + new PSF().get('checkedTonal').getLiteral(), new AllomorphHF())
+            .set(new PSPP().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphPPW())
+            .set(new PSTT().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphTTW())
+            .set(new PSKK().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphKKW())
+            .set(new PSHH().get('final').getLiteral() + new PSW().get('checkedTonal').getLiteral(), new AllomorphHHW())
+            .set(new PSH().get('final').getLiteral() + new PSY().get('checkedTonal').getLiteral(), new AllomorphHY())
+            .set(new PSPP().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphPPX())
+            .set(new PSTT().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphTTX())
+            .set(new PSKK().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphKKX())
+            .set(new PSHH().get('final').getLiteral() + new PSX().get('checkedTonal').getLiteral(), new AllomorphHHX())    
+    }
 
-export const listOfUncombinedCheckedAllomorphs: Map<string, Allomorph> = new Map()
-    .set(new PSP().get('final').getLiteral(), new AllomorphP())
-    .set(new PST().get('final').getLiteral(), new AllomorphT())
-    .set(new PSK().get('final').getLiteral(), new AllomorphK())
-    .set(new PSH().get('final').getLiteral(), new AllomorphH())
-    .set(new PSPP().get('final').getLiteral(), new AllomorphPP())
-    .set(new PSTT().get('final').getLiteral(), new AllomorphTT())
-    .set(new PSKK().get('final').getLiteral(), new AllomorphKK())
-    .set(new PSHH().get('final').getLiteral(), new AllomorphHH())
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new Allomorph()
+    }
 
-export const freeAllomorphUncombiningRules: Map<string, Tonal[]> = new Map()
-    .set(new PSCS().get('freeTonal').getLiteral(), [new FreeTonalY()])
-    .set(new PSW().get('freeTonal').getLiteral(), [new TonalZS(), new FreeTonalX()])
-    .set(new PSXX().get('freeTonal').getLiteral(), [new TonalZS(), new TonalCS, new FreeTonalX()])
-    .set(new PSXXX().get('freeTonal').getLiteral(), [new TonalZS(), new TonalCS(), new FreeTonalX()])
-    .set(new PSZS().get('freeTonal').getLiteral(), [new FreeTonalX(), new TonalCS(), new ZeroTonal()])
-    .set(new PSZZS().get('freeTonal').getLiteral(), [])
-    .set(new PSX().get('freeTonal').getLiteral(), [])
-    .set(new PSY().get('freeTonal').getLiteral(), [new TonalW()])
-    .set('zero', [new FreeTonalY()])
+    keys() {
+        return this.o.keys()
+    }
+}
+
+export const checkedAllomorphs = new CheckedAllomorphs()
+
+class UncombinedFreeAllomorphs {
+    private o: Map<string, Allomorph> = new Map()
+
+    constructor() {
+        this.o
+        .set(new PSW().get('freeTonal').getLiteral(), new AllomorphW())
+        .set(new PSZS().get('freeTonal').getLiteral(), new AllomorphZS())
+        .set(new PSX().get('freeTonal').getLiteral(), new AllomorphX())
+        .set(new PSY().get('freeTonal').getLiteral(), new AllomorphY())    
+    }
+
+    has(key: string) {
+        return this.o.has(key)
+    }
+
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new Allomorph()
+    }
+}
+
+export const uncombinedFreeAllomorphs = new UncombinedFreeAllomorphs()
+
+class UncombinedCheckedAllomorphs {
+    private o: Map<string, Allomorph> = new Map()
+
+    constructor() {
+        this.o
+            .set(new PSP().get('final').getLiteral(), new AllomorphP())
+            .set(new PST().get('final').getLiteral(), new AllomorphT())
+            .set(new PSK().get('final').getLiteral(), new AllomorphK())
+            .set(new PSH().get('final').getLiteral(), new AllomorphH())
+            .set(new PSPP().get('final').getLiteral(), new AllomorphPP())
+            .set(new PSTT().get('final').getLiteral(), new AllomorphTT())
+            .set(new PSKK().get('final').getLiteral(), new AllomorphKK())
+            .set(new PSHH().get('final').getLiteral(), new AllomorphHH())    
+    }
+
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return new Allomorph()
+    }
+
+    has(key: string) {
+        return this.o.has(key)
+    }
+}
+
+export const uncombinedCheckedAllomorphs = new UncombinedCheckedAllomorphs()
+
+class FreeAllomorphUncombiningRules {
+    private o: Map<string, Tonal[]> = new Map()
+
+    constructor() {
+        this.o
+            .set(new PSCS().get('freeTonal').getLiteral(), [new FreeTonalY()])
+            .set(new PSW().get('freeTonal').getLiteral(), [new TonalZS(), new FreeTonalX()])
+            .set(new PSXX().get('freeTonal').getLiteral(), [new TonalZS(), new TonalCS, new FreeTonalX()])
+            .set(new PSXXX().get('freeTonal').getLiteral(), [new TonalZS(), new TonalCS(), new FreeTonalX()])
+            .set(new PSZS().get('freeTonal').getLiteral(), [new FreeTonalX(), new TonalCS(), new ZeroTonal()])
+            .set(new PSZZS().get('freeTonal').getLiteral(), [])
+            .set(new PSX().get('freeTonal').getLiteral(), [])
+            .set(new PSY().get('freeTonal').getLiteral(), [new TonalW()])
+            .set('zero', [new FreeTonalY()])
+    }
+
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return []
+    }
+}
+
+export const freeAllomorphUncombiningRules = new FreeAllomorphUncombiningRules()

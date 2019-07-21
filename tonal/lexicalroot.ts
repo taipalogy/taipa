@@ -1,7 +1,7 @@
 import { Sound } from '../grapheme'
 import { list_of_lexical_roots } from './lexicalroots2'
 import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
-    SetOfNasalizations, SetOfStopFinals, combiningRules, letterClass } from './version2'
+    SetOfNasalizations, SetOfStopFinals, combiningRules, letterClasses } from './version2'
 import { TonalLemmatizationAnalyzer } from './analyzer'
 import { Syllabary } from '../morpheme'
 
@@ -10,7 +10,6 @@ import { Syllabary } from '../morpheme'
 //------------------------------------------------------------------------------
 
 export class ListOfLexicalRoots extends Syllabary {
-    //list: Array<Sound[]> =  new Array()
 
     setFirstLetter(beginning: string) {
         let cog = new ClientOfGenerator()
@@ -170,7 +169,7 @@ class ClientOfGenerator {
                 e = []
                 e = Object.assign([], entry)
                 e.pop()
-                if(tos[k].getLiteral() != 0) {
+                if(tos[k].getLiteral()) {
                     // zero-tone-mark for first tone will not be pushed
                     e.push(tos[k].getLiteral() + '.freeTonal')
                 }
@@ -221,8 +220,7 @@ class ClientOfGenerator {
             let clasName = entry[i].slice(0, n)
             let position = entry[i].slice(n+1)
             //console.debug(entry + ' ' + clasName + ' ' + position)
-            //ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
-            let ps = letterClass.get(clasName)
+            let ps = letterClasses.get(clasName)
             if(ps) {
                 let snd = ps.map.get(position)
                 if(snd) {

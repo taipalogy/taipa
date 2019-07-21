@@ -133,7 +133,11 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
         if(ms.length > 0) {
             if(ms[ms.length-1].allomorph) {
                 this.inflectionalEnding = this.assignInflectionalEnding(ms[ms.length-1].allomorph);
+            } else {
+                this.inflectionalEnding = new InflectionalEnding()
             }
+        } else {
+            this.inflectionalEnding = new InflectionalEnding()
         }
         this.lemmata = tl.apply(this.word, ms, this.inflectionalEnding)
     }

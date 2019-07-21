@@ -1,6 +1,6 @@
 import { AnalyzerWrapper } from '../analyzer'
 import { KanaAnalyzer } from './analyzer';
-import { letterClass, lowerLettersOfKana, Hatsuon, kogakimoji, hiragana_katakana, SetOfFinalConsonants, SetOfGerminatedConsonants, SetOfInitialConsonants, hatsuon } from './kana'
+import { letterClasses, lowerLettersOfKana, Hatsuon, kogakimoji, hiragana_katakana, SetOfFinalConsonants, SetOfGerminatedConsonants, SetOfInitialConsonants, hatsuon } from './kana'
 import { KanaUncombiningMorpheme } from './morpheme'
 import { Morpheme } from '../morpheme';
 
@@ -13,7 +13,7 @@ export class Kana extends AnalyzerWrapper {
     }
 
     checkSize() {
-        if(letterClass.size !== lowerLettersOfKana.size) {
+        if(letterClasses.size !== lowerLettersOfKana.size) {
             console.log('sizes unmatched')
         }
     }
@@ -22,7 +22,7 @@ export class Kana extends AnalyzerWrapper {
         let arr: string[] = [];
         let duplicates = [];
 
-        for (let e of letterClass.values()) {
+        for (let e of letterClasses.values()) {
             arr.push(e.name)
         }
         

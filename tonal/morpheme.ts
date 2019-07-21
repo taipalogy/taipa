@@ -1,5 +1,5 @@
 import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, Syllabary, TonalCombiningMetaplasm } from '../morpheme'
-import { freeAllomorphUncombiningRules, listOfCheckedAllomorphs, listOfFreeAllomorphs,
+import { freeAllomorphUncombiningRules, checkedAllomorphs, freeAllomorphs,
     ZeroAllomorph, AllomorphHY, AllomorphX, ZeroTonal } from './version2'
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme'
@@ -156,19 +156,19 @@ export class TonalUncombiningMorpheme extends Morpheme {
         // don't assign if the checked syllable is already in base form
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
-        let keys = Array.from(listOfCheckedAllomorphs.keys())
+        let keys = Array.from(checkedAllomorphs.keys())
         for(let k = 0; k < keys.length; k++) {
-            let am = listOfCheckedAllomorphs.get(keys[k])
+            let am = checkedAllomorphs.get(keys[k])
             if(am instanceof CheckedAllomorph) {
                 if(am.tonal != null) {
                     if(am.tonal.getLiteral() === syllable.lastLetter.literal
                         && am.final.getLiteral() === syllable.lastSecondLetter.literal) {
-                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
+                        aoas.push(checkedAllomorphs.get(keys[k]));
                         // there's no need to break here, as we want to collect the second match, if any
                     }
                 } else {
                     if(am.final.getLiteral() === syllable.lastLetter.literal) {
-                        aoas.push(listOfCheckedAllomorphs.get(keys[k]));
+                        aoas.push(checkedAllomorphs.get(keys[k]));
                     }
                 }
             }
@@ -208,8 +208,8 @@ export class TonalUncombiningMorpheme extends Morpheme {
 
         // after matching with checked allomorphs, we go on matching free allomorphs
         aoas = [];
-        if(listOfFreeAllomorphs.has(syllable.lastLetter.literal)) {
-            aoas.push(listOfFreeAllomorphs.get(syllable.lastLetter.literal));
+        if(freeAllomorphs.has(syllable.lastLetter.literal)) {
+            aoas.push(freeAllomorphs.get(syllable.lastLetter.literal));
         }
 
         if(aoas.length == 0) {

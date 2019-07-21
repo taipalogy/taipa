@@ -3,6 +3,7 @@ import { KanaAnalyzer } from './analyzer';
 import { characters } from '../character'
 import { AlphabeticLetter, ILetters } from '../grapheme'
 import { Syllabary } from '../morpheme'
+import { FinalK } from '../tonal/version2';
 
 export class RomanizedKana extends Syllabary {
     list: Array<Sound[]> = new Array()
@@ -115,12 +116,14 @@ class ClientOfGenerator {
             let n = entry[i].lastIndexOf('.')
             let clasName = entry[i].slice(0, n)
             let position = entry[i].slice(n+1)
-            //console.debug(entry + ' ' + clasName + ' ' + position)
-            let o = new Object()
-            o = Object.assign({}, letterClass.get(clasName))
-            if(o.hasOwnProperty(position)) {
-                ret.push(letterClass.get(clasName)[position]) // this will call the static member of the class
+            let ps = letterClasses.get(clasName)
+            if(ps) {
+                let snd = ps.map.get(position)
+                if(snd) {
+                    ret.push(snd)
+                }
             }
+
         }
         return ret
     }
@@ -343,170 +346,160 @@ export class Hatsuon extends SetOfSounds {
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
 
-interface ISound {
-    germinatedConsonant: GerminatedConsonant
-    initialConsonant: InitialConsonant
-    semivowel: Semivowel
-    vowel: Vowel
-    finalConsonant: FinalConsonant
+interface IPositionalSound {
+    name: string
+    map: Map<string, Sound>
 }
 
-type PartialISound = Partial<ISound>
-
-interface PositionalSound extends PartialISound {
-    // name should not be optional nor undefined
-    name: string
+class PositionalSound implements IPositionalSound {
+    name: string = ''
+    map: Map<string, Sound> = new Map()
+    get(key: string) {
+        let snd = this.map.get(key)
+        if(snd) return snd
+        return new Sound()
+    }
 }
 
 //------------------------------------------------------------------------------
 //  Positional Sound for Romanized Kana
 //------------------------------------------------------------------------------
 
-class PSA implements PositionalSound {
+class PSA extends PositionalSound {
     name = 'a'
-    vowel: Vowel = new VowelA() as Vowel
+    map = new Map<string, Sound>().set('vowel', new VowelA())
 }
 
-class PSB implements PositionalSound {
+class PSB extends PositionalSound {
     name = 'b'
-    initialConsonant: InitialConsonant = new InitialConsonantB()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantB())
 }
 
-class PSC implements PositionalSound {
+class PSC extends PositionalSound {
     name = 'c'
-    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantC()
-    initialConsonant: InitialConsonant = new InitialConsonantC()
+    map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantC()).set('initialConsonant', new InitialConsonantC())
 }
 
-class PSCH implements PositionalSound {
+class PSCH extends PositionalSound {
     name = 'ch'
-    initialConsonant: InitialConsonant = new InitialConsonantCH()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantCH())
 }
 
-class PSD implements PositionalSound {
+class PSD extends PositionalSound {
     name = 'd'
-    initialConsonant: InitialConsonant = new InitialConsonantD()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantD())
 }
 
-class PSDL implements PositionalSound {
+class PSDL extends PositionalSound {
     name = 'dl';
-    initialConsonant: InitialConsonant = new InitialConsonantDL()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantDL())
 }
 
-class PSE implements PositionalSound {
+class PSE extends PositionalSound {
     name = 'e'
-    vowel: Vowel = new VowelE()
+    map = new Map<string, Sound>().set('vowel', new VowelE())
 }
 
-class PSF implements PositionalSound {
+class PSF extends PositionalSound {
     name = 'f'
-    initialConsonant: InitialConsonant = new InitialConsonantF()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantF())
 }
 
-class PSG implements PositionalSound {
+class PSG extends PositionalSound {
     name = 'g'
-    initialConsonant: InitialConsonant = new InitialConsonantG()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantG())
 }
 
-class PSH implements PositionalSound {
+class PSH extends PositionalSound {
     name = 'h'
-    initialConsonant: InitialConsonant = new InitialConsonantH()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantH())
 }
 
-class PSI implements PositionalSound {
+class PSI extends PositionalSound {
     name = 'i'
-    vowel: Vowel = new VowelI()
+    map = new Map<string, Sound>().set('vowel', new VowelI())
 }
 
-class PSJ implements PositionalSound {
+class PSJ extends PositionalSound {
     name = 'j'
-    initialConsonant: InitialConsonant = new InitialConsonantJ()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantJ())
 }
 
-class PSK implements PositionalSound {
+class PSK extends PositionalSound {
     name = 'k'
-    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantK()
-    initialConsonant: InitialConsonant = new InitialConsonantK()
-    finalConsonant: FinalConsonant = new FinalConsonantK()
+    map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantK()).set('initialConsonant', new InitialConsonantK()).set('finalConsonant', new FinalConsonantK())
 }
 
-class PSL implements PositionalSound {
+class PSL extends PositionalSound {
     name = 'l'
-    initialConsonant: InitialConsonant = new InitialConsonantL()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantL())
 }
 
-class PSM implements PositionalSound {
+class PSM extends PositionalSound {
     name = 'm'
-    initialConsonant: InitialConsonant = new InitialConsonantM()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantM())
 }
 
-class PSN implements PositionalSound {
+class PSN extends PositionalSound {
     name = 'n'
-    initialConsonant: InitialConsonant = new InitialConsonantN();
-    finalConsonant: FinalConsonant = new FinalConsonantN()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantN()).set('finalConsonant', new FinalConsonantN())
 }
 
-class PSO implements PositionalSound {
+class PSO extends PositionalSound {
     name = 'o'
-    vowel: Vowel = new VowelO()
+    map = new Map<string, Sound>().set('vowel', new VowelO())
 }
 
-class PSP implements PositionalSound {
+class PSP extends PositionalSound {
     name = 'p';
-    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantP();
-    initialConsonant: InitialConsonant = new InitialConsonantP();
-    finalConsonant: FinalConsonant = new FinalConsonantP()
+    map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantP()).set('initialConsonant', new InitialConsonantP()).set('finalConsonant', new FinalConsonantP())
 }
 
-class PSQ implements PositionalSound {
+class PSQ extends PositionalSound {
     name = 'q'
-    initialConsonant: InitialConsonant = new InitialConsonantQ()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonant())
 }
 
-class PSS implements PositionalSound {
+class PSS extends PositionalSound {
     name = 's';
-    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantS();
-    initialConsonant: InitialConsonant = new InitialConsonantS();
-    finalConsonant: FinalConsonant = new FinalConsonantS();
+    map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantS()).set('initialConsonant', new InitialConsonantS()).set('finalConsonant', new FinalConsonantS())
 }
 
-class PST implements PositionalSound {
+class PST extends PositionalSound {
     name = 't';
-    germinatedConsonant: GerminatedConsonant = new GerminatedConsonantT()
-    initialConsonant: InitialConsonant = new InitialConsonantT();
-    finalConsonant: FinalConsonant = new FinalConsonantT()
+    map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantT()).set('initialConsonant', new InitialConsonantT()).set('finalConsonant', new FinalConsonantT())
 }
 
-class PSU implements PositionalSound {
+class PSU extends PositionalSound {
     name = 'u'
-    vowel: Vowel = new VowelU()
+    map = new Map<string, Sound>().set('vowel', new VowelU())
 }
 
-class PSV implements PositionalSound {
+class PSV extends PositionalSound {
     name = 'v'
-    initialConsonant: InitialConsonant = new InitialConsonantV()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantV())
 }
 
-class PSW implements PositionalSound {
+class PSW extends PositionalSound {
     name = 'w'
-    semivowel: Semivowel = new SemivowelW()
+    map = new Map<string, Sound>().set('semivowel', new SemivowelW())
 }
 
-class PSY implements PositionalSound {
+class PSY extends PositionalSound {
     name = 'y'
-    semivowel: Semivowel = new SemivowelY()
+    map = new Map<string, Sound>().set('semivowel', new SemivowelY())
 }
 
-class PSZ implements PositionalSound {
+class PSZ extends PositionalSound {
     name = 'z'
-    initialConsonant: InitialConsonant = new InitialConsonantZ()
+    map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantZ())
 }
 
 //------------------------------------------------------------------------------
 //  Letter Class
 //------------------------------------------------------------------------------
 
-export const letterClass: Map<string, PositionalSound> = new Map()
+export const letterClasses: Map<string, PositionalSound> = new Map()
     .set('a', new PSA())
     .set('b', new PSB())
     .set('c', new PSC())
