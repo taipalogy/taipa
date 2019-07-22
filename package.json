@@ -2,7 +2,8 @@
   "name": "taipa",
   "version": "0.0.5",
   "description": "Taiwanese parsing library",
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc --outDir lib"
   },
@@ -20,7 +21,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^10.9.3"
+    "@types/node": "^12.4.0"
   },
   "files": [
     "lib/**/*"
