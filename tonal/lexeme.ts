@@ -153,7 +153,7 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     }
 
     private assignInflectionalEnding(allomorph: Allomorph) {
-        let inf: InflectionalEnding = new InflectionalEnding()
+        let infe: InflectionalEnding = new InflectionalEnding()
         // change allomorph to affix
         if(allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
@@ -163,14 +163,14 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
                 a.tonal = freeAllomorphUncombiningRules.get(allomorph.getLiteral())[key];
                 fie.baseAffixes.push(a);
             }
-            inf = fie;
+            infe = fie;
         } else if(allomorph instanceof CheckedAllomorph) {
             let cie = new CheckedInflectionalEnding();
             cie.affix.tonal = allomorph.tonal;
-            inf = cie
+            infe = cie
         }
         // this word is already in base form, and its last syllable is checked tone
-        return inf
+        return infe
     }
 }
 

@@ -17,7 +17,7 @@ export class KanaAnalyzer extends Analyzer {
 
     getMorphologicalAnalysisResults(str: string): KanaUncombiningMorpheme[]
     getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[]
-    getMorphologicalAnalysisResults(x) {
+    getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>) {
         let graphemes: Array<AlphabeticGrapheme> = []
         if(typeof x == "object") {
             graphemes = x

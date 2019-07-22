@@ -72,7 +72,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
     apply(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>) {
         let tonalEnding: TonalSymbolEnding
         if(morphemes.length > 0) {
-            if(morphemes[morphemes.length-1].allomorph != null) {
+            if(morphemes[morphemes.length-1].allomorph) {
                 // tonal ending needs to be assigned to sandhi lexeme
                 tonalEnding = this.assignTonalEnding(morphemes[morphemes.length-1].allomorph);
             }
@@ -82,17 +82,22 @@ class TonalInflexion extends TonalInflectingMetaplasm {
     }
 
     private assignTonalEnding(allomorph: Allomorph) {
+        let tse: TonalSymbolEnding = new TonalSymbolEnding()
+
         if(allomorph instanceof FreeAllomorph) {
             // replace the tonal ending
             let fte = new FreeTonalEnding()
             fte.allomorph = allomorph
-            return fte
+            //return fte
+            tse = fte
         } else if(allomorph instanceof CheckedAllomorph) {
             // append the tonal of the tonal ending
             let cte = new CheckedTonalEnding()
             cte.allomorph = allomorph
-            return cte
+            //return cte
+            tse = cte
         }
+        return tse
     }
 
     private getInflexionForms(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>, tonalEnding: TonalSymbolEnding) {
@@ -118,7 +123,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
 
 export class TonalCombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
-    allomorph: Allomorph = null; // required to populate stems
+    allomorph: Allomorph// required to populate stems
     metaplasm: TonalCombiningMetaplasm
 
     constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
@@ -352,7 +357,7 @@ class Intransitive extends ConstructionElement {}
 //------------------------------------------------------------------------------
 
 abstract class TypeOfConstruction {
-    abstract constructions: Array<ConstructionOfPhrase> = null;
+    abstract constructions: Array<ConstructionOfPhrase>;
 }
 
 class VerbPhrase extends TypeOfConstruction {

@@ -153,7 +153,6 @@ export class TonalUncombiningMorpheme extends Morpheme {
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
         let allomorph: Allomorph = new ZeroAllomorph()
         // assign the matched allomorph for this syllable
-        // don't assign if the checked syllable is already in base form
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
         let keys = Array.from(checkedAllomorphs.keys())
@@ -193,17 +192,19 @@ export class TonalUncombiningMorpheme extends Morpheme {
                 }
             } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new ZeroTonal())){
                 // return stop finals without tonal
-                return aoas.shift()
+                let ret = aoas.shift()
+                if(ret) return ret
+                return new Allomorph()
             } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
                 // there should be no more than 2 matches, either 1 match or 2
                 // just fall through for the case of 'hy'
             } 
 
             // there is only one match after processing, we just assign it
-            allomorph = aoas.shift();
-
-            // we already have an allomorph assigned, just return
-            return allomorph;
+            let ret = aoas.shift();
+            if(ret) return ret
+            // we already one allomorph
+            return new Allomorph()
         }
 
         // after matching with checked allomorphs, we go on matching free allomorphs

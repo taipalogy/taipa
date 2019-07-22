@@ -95,6 +95,7 @@ export let consonantLettersOfTonal = new LettersOfTonal(['dl'])
 //  Sound
 //------------------------------------------------------------------------------
 
+// TODO: makeCharacters method. characters = makeCharacters('ur')
 class MedialA extends Medial {characters = [characters.get('a')]}
 class MedialE extends Medial {characters = [characters.get('e')]}
 class MedialI extends Medial {characters = [characters.get('i')]}
