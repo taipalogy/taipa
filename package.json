@@ -1,6 +1,6 @@
 {
   "name": "taipa",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Taiwanese parsing library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
