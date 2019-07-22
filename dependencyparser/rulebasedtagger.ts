@@ -135,15 +135,11 @@ export class TonalCombiningMorpheme extends Morpheme {
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
-        //if(listOfUncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
         if(uncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
-            //return listOfUncombinedCheckedAllomorphs.get(syllable.lastLetter.literal)
             return uncombinedCheckedAllomorphs.get(syllable.lastLetter.literal)
         }
 
-        //if(listOfUncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
         if(uncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
-            //return listOfUncombinedFreeAllomorphs.get(syllable.lastLetter.literal)
             return uncombinedFreeAllomorphs.get(syllable.lastLetter.literal)
         }
 
