@@ -1,6 +1,6 @@
 import { characters } from '../character'
 import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    Tonal, Letters, Sound } from '../grapheme'
+    Tonal, Letters, Sound, SoundNames, PositionalSound } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -47,25 +47,6 @@ class FreeAffix extends TonalAffix {}
 
 class CheckedAffix extends TonalAffix {
     // there is no final for affix
-}
-
-//------------------------------------------------------------------------------
-//  ISound for Lexical Root
-//------------------------------------------------------------------------------
-
-interface IPositionalSound {
-    name: string
-    map: Map<string, Sound>
-}
-
-class PositionalSound implements IPositionalSound {
-    name: string = ''
-    map: Map<string, Sound> = new Map()
-    get(key: string) {
-        let snd = this.map.get(key)
-        if(snd) return snd
-        return new Sound()
-    }
 }
 
 //------------------------------------------------------------------------------
@@ -330,7 +311,7 @@ export class SetOfStopFinals extends SetOfSounds {
 
 class PSA extends PositionalSound {
     name = 'a'
-    map = new Map<string, Sound>().set('medial', new MedialA())
+    map = new Map<string, Sound>().set(SoundNames.Medial, new MedialA())
 }
 
 class PSB extends PositionalSound {

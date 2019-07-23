@@ -1,4 +1,4 @@
-import { Sound, SetOfSounds, Letters } from '../grapheme'
+import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme'
 import { KanaAnalyzer } from './analyzer';
 import { characters } from '../character'
 import { AlphabeticLetter, ILetters } from '../grapheme'
@@ -339,25 +339,6 @@ export class Hatsuon extends SetOfSounds {
 
     toString() {
         return super.toRegexString(this.hatsuon)
-    }
-}
-
-//------------------------------------------------------------------------------
-//  Positional Sound for Romanized Kana
-//------------------------------------------------------------------------------
-
-interface IPositionalSound {
-    name: string
-    map: Map<string, Sound>
-}
-
-class PositionalSound implements IPositionalSound {
-    name: string = ''
-    map: Map<string, Sound> = new Map()
-    get(key: string) {
-        let snd = this.map.get(key)
-        if(snd) return snd
-        return new Sound()
     }
 }
 

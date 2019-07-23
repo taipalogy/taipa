@@ -235,6 +235,33 @@ export class GraphemeMaker {
 //  Sound
 //------------------------------------------------------------------------------
 
+interface IPositionalSound {
+    name: string
+    map: Map<string, Sound>
+}
+
+export class PositionalSound implements IPositionalSound {
+    name: string = ''
+    map: Map<string, Sound> = new Map()
+    get(key: string) {
+        let snd = this.map.get(key)
+        if(snd) return snd
+        return new Sound()
+    }
+}
+
+// TODO: sound names
+export enum SoundNames {
+    Initial = 'initial',
+    Medial = 'medial',
+    Nasalization = 'nasalization',
+    Final = 'final',
+    StopFinal = 'stopFinal',
+    NasalFinal = 'nasalFinal',
+    CheckedTonal = 'checkedTonal',
+    FreeTonal = 'freeTonal',
+}
+
 export class Sound {
     name: string = ''
     // an array of character objects. can be used to make a word object.
@@ -256,7 +283,7 @@ export class Sound {
     }    
 }
 
-export class Initial extends Sound {name = 'initial'}
+export class Initial extends Sound {name = SoundNames.Initial}
 export class Medial extends Sound {name = 'medial'}
 export class Final extends Sound {name = 'final'}
 export class Nasal extends Sound {name = 'nasalization'}
