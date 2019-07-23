@@ -2,7 +2,7 @@ import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { TonalAffix, Allomorph } from './tonal/version2'
 import { TonalUncombiningMorpheme, TonalSyllable } from './tonal/morpheme';
 import { KanaUncombiningMorpheme } from './kana/morpheme';
-import { TonalCombiningMorpheme } from './dependencyparser/rulebasedtagger';
+import { TonalCombiningMorpheme } from './dependencyparser/morpheme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm

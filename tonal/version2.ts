@@ -68,7 +68,7 @@ export let lowerLettersOfTonal = new LettersOfTonal(['a', 'e', 'i', 'o', 'u','ur
                                                     'f',
                                                     'h'])
 
-export let vowelLettersOfTonal = new LettersOfTonal(['ee', 'or', 'er', 'ir'])
+export let vowelLettersOfTonal = new LettersOfTonal(['or', 'er', 'ir'])
 
 export let consonantLettersOfTonal = new LettersOfTonal(['dl'])
 

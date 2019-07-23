@@ -1,7 +1,8 @@
 import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
 import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger, DummyLexeme, TonalInflexionLexeme } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
+import { DummyLexeme } from './dependencyparser/lexeme'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
