@@ -103,7 +103,6 @@ export class Syllable {
     pushLetter(l: AlphabeticLetter) {
         this.letters.push(l);
         this.literal += l.literal;
-        //console.log("%s", l.literal);
     }
 }
 
@@ -127,6 +126,6 @@ export abstract class MorphemeMaker {
                     syllabary: Syllabary, 
                     syllabify: (letters: Array<AlphabeticLetter>, 
                                 beginOfSyllable: number, 
-                                syllabary: Syllabary) => MatchedPattern): TonalUncombiningMorpheme[] | TonalCombiningMorpheme[] | KanaUncombiningMorpheme[]
+                                syllabary: Syllabary) => MatchedPattern): Morpheme[]
 
 }

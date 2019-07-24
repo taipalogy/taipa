@@ -1,4 +1,4 @@
-import { TonalInflectingMetaplasm, Lexeme, Word, TonalLexemeMaker } from '../lexeme'
+import { TonalInflectingMetaplasm, Lexeme, Word, LexemeMaker } from '../lexeme'
 import { TonalCombiningMorpheme } from './morpheme'
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'
 import { TonalSyllable } from '../tonal/morpheme'
@@ -79,13 +79,14 @@ export class TonalInflexionLexeme extends InflexionLexeme {
     wordForms: Array<TonalWord> = new Array()
     metaplasm: TonalInflectingMetaplasm = new TonalZeroInflexion()
 
-    constructor(word: TonalWord) {
+    constructor(word: TonalWord, ms: Array<TonalCombiningMorpheme>, ti: TonalInflexion) {
         super()
         this.word = word;
+        this.assignWordForms(ms, ti)
     }
 
-    assignWordForms(ms: Array<TonalCombiningMorpheme>, tm: TonalInflexion): any {
-        this.wordForms = tm.apply(this.word, ms)
+    private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflexion) {
+        return ti.apply(this.word, ms)
     }
 }
 
@@ -100,7 +101,7 @@ export class DummyLexeme extends InflexionLexeme {
 //  Tonal Inflexion Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class TonalInflexionLexemeMaker extends TonalLexemeMaker {
+export class TonalInflexionLexemeMaker extends LexemeMaker {
     morphemes: Array<TonalCombiningMorpheme>;
 
     constructor(morphemes: Array<TonalCombiningMorpheme>) {
@@ -109,18 +110,26 @@ export class TonalInflexionLexemeMaker extends TonalLexemeMaker {
         this.morphemes = morphemes;
     }
 
+    preprocess() {
+        let syllables: Array<TonalSyllable> = new Array();
+        for(let key in this.morphemes) {
+            syllables.push(this.morphemes[key].syllable);
+        }
+
+        return syllables
+    }
+
     makeLexemes() {
         return this.postprocess(this.make(this.preprocess()))
     }
 
     make(syllables: Array<TonalSyllable>) {
-        return new TonalInflexionLexeme(new TonalWord(syllables));
+        return new TonalInflexionLexeme(new TonalWord(syllables), this.morphemes, new TonalInflexion());
     }
 
     postprocess(tl: TonalInflexionLexeme) {
-        tl.assignWordForms(this.morphemes, new TonalInflexion())
-
         let lexemes: Array<TonalInflexionLexeme> = new Array();
+
         lexemes.push(tl);
 
         return lexemes

@@ -1,5 +1,5 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme'
-import { Word, TonalLexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
+import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
@@ -178,13 +178,22 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
 //  Tonal Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class TonalLemmatizationLexemeMaker extends TonalLexemeMaker {
+export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     morphemes: Array<TonalUncombiningMorpheme>;
 
     constructor(morphemes: Array<TonalUncombiningMorpheme>, ) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;
+    }
+
+    preprocess() {
+        let syllables: Array<TonalSyllable> = new Array();
+        for(let key in this.morphemes) {
+            syllables.push(this.morphemes[key].syllable);
+        }
+
+        return syllables
     }
 
     makeLexemes() {
@@ -196,7 +205,6 @@ export class TonalLemmatizationLexemeMaker extends TonalLexemeMaker {
     }
 
     postprocess(tl: TonalLemmatizationLexeme) {
-
         let lexemes: Array<TonalLemmatizationLexeme> = new Array();
 
         lexemes.push(tl);

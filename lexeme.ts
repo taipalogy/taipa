@@ -59,24 +59,11 @@ export class Word {
 //------------------------------------------------------------------------------
 //  Lexeme Maker
 //------------------------------------------------------------------------------
-class LexemeMaker {}
 
-export abstract class TonalLexemeMaker extends  LexemeMaker{
-    abstract morphemes: Array<TonalCombiningMorpheme> | Array<TonalUncombiningMorpheme>
+export abstract class LexemeMaker {
+    abstract morphemes: Array<Morpheme>
 
-    preprocess() {
-        // extract syllables from morphemes. concatenate syllables into a word.
-        // wrap the word in a lexeme. use morephemes to populate lemmata of a lexeme.
-        // assign inflectinal affix to a lexeme.
-        // push the lexeme into an array of lexemes.
-        // unpack morphemes and take syllables out from them
-        let syllables: Array<TonalSyllable> = new Array();
-        for(let key in this.morphemes) {
-            syllables.push(this.morphemes[key].syllable);
-        }
+    abstract preprocess(): Syllable[]
 
-        return syllables
-    }
-
-    abstract make(syllables: Array<Syllable>): TonalInflexionLexeme | TonalLemmatizationLexeme
+    abstract make(syllables: Array<Syllable>): Lexeme
 }
