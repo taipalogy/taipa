@@ -1,4 +1,4 @@
-import { TonalInflectingMetaplasm, Lexeme, Word, LexemeMaker } from '../lexeme'
+import { TonalInflectingMetaplasm, Lexeme, Word, TonalLexemeMaker } from '../lexeme'
 import { TonalCombiningMorpheme } from './morpheme'
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme'
 import { TonalSyllable } from '../tonal/morpheme'
@@ -100,7 +100,7 @@ export class DummyLexeme extends InflexionLexeme {
 //  Tonal Inflexion Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class TonalInflexionLexemeMaker extends LexemeMaker {
+export class TonalInflexionLexemeMaker extends TonalLexemeMaker {
     morphemes: Array<TonalCombiningMorpheme>;
 
     constructor(morphemes: Array<TonalCombiningMorpheme>) {

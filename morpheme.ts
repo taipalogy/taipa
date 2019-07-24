@@ -1,6 +1,7 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
-import { TonalAffix, Allomorph } from './tonal/version2'
-import { TonalUncombiningMorpheme, TonalSyllable } from './tonal/morpheme';
+import { Allomorph } from './tonal/version2'
+import { TonalSyllable } from './tonal/morpheme'
+import { TonalUncombiningMorpheme } from './tonal/morpheme'
 import { KanaUncombiningMorpheme } from './kana/morpheme';
 import { TonalCombiningMorpheme } from './dependencyparser/morpheme';
 
@@ -104,16 +105,6 @@ export class Syllable {
         this.literal += l.literal;
         //console.log("%s", l.literal);
     }
-
-    get lastLetter() {
-        if(this.letters.length >= 1) return this.letters[this.letters.length-1]
-        return new AlphabeticLetter()
-    }
-
-    get lastSecondLetter() {
-        if(this.letters.length >= 2) return this.letters[this.letters.length-2]
-        return new AlphabeticLetter()
-    }
 }
 
 //------------------------------------------------------------------------------
@@ -137,4 +128,5 @@ export abstract class MorphemeMaker {
                     syllabify: (letters: Array<AlphabeticLetter>, 
                                 beginOfSyllable: number, 
                                 syllabary: Syllabary) => MatchedPattern): TonalUncombiningMorpheme[] | TonalCombiningMorpheme[] | KanaUncombiningMorpheme[]
+
 }

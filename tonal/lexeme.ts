@@ -1,5 +1,5 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme'
-import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
+import { Word, TonalLexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
 import { freeAllomorphUncombiningRules } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
@@ -178,7 +178,7 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
 //  Tonal Lexeme Maker
 //------------------------------------------------------------------------------
 
-export class TonalLemmatizationLexemeMaker extends LexemeMaker {
+export class TonalLemmatizationLexemeMaker extends TonalLexemeMaker {
     morphemes: Array<TonalUncombiningMorpheme>;
 
     constructor(morphemes: Array<TonalUncombiningMorpheme>, ) {

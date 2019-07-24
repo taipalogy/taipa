@@ -11,7 +11,7 @@ import { ListOfLexicalRoots } from '../tonal/lexicalroot'
 
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
-        if(allomorph != null) {
+        if(allomorph) {
             let s: TonalSyllable = new TonalSyllable(syllable.letters);
             if(allomorph instanceof FreeAllomorph) {
                 if(allomorph instanceof ZeroAllomorph) {

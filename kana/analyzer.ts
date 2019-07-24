@@ -29,6 +29,4 @@ export class KanaAnalyzer extends Analyzer {
         let kimm = new KanaUncombiningMorphemeMaker(graphemes);
         return kimm.makeInputingMorphemes();
     }
-
-    getLexicalAnalysisResults(str: string) {}
 }

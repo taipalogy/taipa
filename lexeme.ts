@@ -59,9 +59,9 @@ export class Word {
 //------------------------------------------------------------------------------
 //  Lexeme Maker
 //------------------------------------------------------------------------------
+class LexemeMaker {}
 
-export abstract class LexemeMaker {
-    // TODO: change LexemeMaker to TonalLexemeMaker which inherits LexemeMaker
+export abstract class TonalLexemeMaker extends  LexemeMaker{
     abstract morphemes: Array<TonalCombiningMorpheme> | Array<TonalUncombiningMorpheme>
 
     preprocess() {

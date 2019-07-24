@@ -13,7 +13,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
 
         // get base forms as strings
-        if(allomorph != null) {
+        if(allomorph) {
             // member variable allomorph is not null
             if(allomorph instanceof FreeAllomorph) {
                 if(allomorph instanceof ZeroAllomorph) {
@@ -124,6 +124,17 @@ export class TonalSyllable extends Syllable {
         this.literal = tmp;
         this.letters = this.letters.slice(0, this.letters.length-1);
     }
+
+    get lastLetter() {
+        if(this.letters.length >= 1) return this.letters[this.letters.length-1]
+        return new AlphabeticLetter()
+    }
+
+    get lastSecondLetter() {
+        if(this.letters.length >= 2) return this.letters[this.letters.length-2]
+        return new AlphabeticLetter()
+    }
+
 }
 
 //------------------------------------------------------------------------------
