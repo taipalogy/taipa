@@ -250,16 +250,16 @@ export class PositionalSound implements IPositionalSound {
     }
 }
 
-// TODO: sound names
-export enum SoundNames {
-    Initial = 'initial',
-    Medial = 'medial',
-    Nasalization = 'nasalization',
-    Final = 'final',
-    StopFinal = 'stopFinal',
-    NasalFinal = 'nasalFinal',
-    CheckedTonal = 'checkedTonal',
-    FreeTonal = 'freeTonal',
+export enum SoundTags {
+    initial = 'initial',
+    medial = 'medial',
+    nasalization = 'nasalization',
+    final = 'final',
+    tonal = 'tonal',
+    stopFinal = 'stopFinal',
+    nasalFinal = 'nasalFinal',
+    checkedTonal = 'checkedTonal',
+    freeTonal = 'freeTonal',
 }
 
 export class Sound {
@@ -283,12 +283,12 @@ export class Sound {
     }    
 }
 
-export class Initial extends Sound {name = SoundNames.Initial}
-export class Medial extends Sound {name = 'medial'}
-export class Final extends Sound {name = 'final'}
-export class Nasal extends Sound {name = 'nasalization'}
+export class Initial extends Sound {name = SoundTags.initial}
+export class Medial extends Sound {name = SoundTags.medial}
+export class Final extends Sound {name = SoundTags.final}
+export class Nasal extends Sound {name = SoundTags.nasalization}
 export class Tonal extends Sound {
-    name = 'tonal'
+    name = SoundTags.tonal
     isEqualToTonal(tonal: Tonal) {
         if(this.getLiteral() === tonal.getLiteral()) {
             return true;
@@ -298,14 +298,14 @@ export class Tonal extends Sound {
 }
 
 export class FreeTonal extends Tonal {
-    name = 'free tonal'
+    name = SoundTags.freeTonal
 }
 export class CheckedTonal extends Tonal {
-    name = 'checked tonal'
+    name = SoundTags.checkedTonal
 }
 
-export class StopFinal extends Final {name = 'stop final'}
-export class NasalFinal extends Final {name = 'nasal final'}
+export class StopFinal extends Final {name = SoundTags.stopFinal}
+export class NasalFinal extends Final {name = SoundTags.nasalFinal}
 
 export class SetOfSounds {
     beginWith(str: string) {
