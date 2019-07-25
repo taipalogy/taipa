@@ -71,6 +71,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
 
 export abstract class InflexionLexeme extends Lexeme {
     abstract word: Word
+    // this subclass is created to contain the partOfSpeech member
     partOfSpeech: string = ''
 }
 
