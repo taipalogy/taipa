@@ -1,9 +1,7 @@
 import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme'
 import { KanaAnalyzer } from './analyzer';
 import { characters } from '../character'
-import { AlphabeticLetter, ILetters } from '../grapheme'
 import { Syllabary } from '../morpheme'
-import { FinalK } from '../tonal/version2';
 
 export class RomanizedKana extends Syllabary {
     list: Array<Sound[]> = new Array()
@@ -178,14 +176,50 @@ class ClientOfGenerator {
 //  Alphabet
 //------------------------------------------------------------------------------
 
+enum KanaLetterTags {
+    a = 'a',
+    e = 'e',
+    i = 'i',
+    o = 'o',
+    u = 'u',
+
+    b = 'b',
+    c = 'c',
+    ch = 'ch',
+    d = 'd',
+    dl = 'dl',
+
+    f = 'f',
+    g = 'g',
+    h = 'h',
+    j = 'j',
+    k = 'k',
+
+    l = 'l',
+    m = 'm',
+    q = 'q',
+    s = 's',
+    v = 'v',
+
+    z = 'z',
+    p = 'p',
+    t = 't',
+
+    w = 'w',
+    y = 'y',
+
+    n = 'n',
+}
+
 export class LettersOfKana extends Letters {}
-export let lowerLettersOfKana = new LettersOfKana(['a', 'e', 'i', 'o', 'u',
-                                                    'b', 'c', 'ch', 'd', 'dl',
-                                                    'f', 'g', 'h', 'j', 'k',
-                                                    'l', 'm', 'q', 's', 'v',
-                                                    'z', 'p', 't',
-                                                    'w', 'y',
-                                                    'n'])
+export let lowerLettersOfKana = new LettersOfKana(
+    [KanaLetterTags.a, 'e', 'i', 'o', 'u',
+    'b', 'c', 'ch', 'd', 'dl',
+    'f', 'g', 'h', 'j', 'k',
+    'l', 'm', 'q', 's', 'v',
+    'z', 'p', 't',
+    'w', 'y',
+    'n'])
 
 //------------------------------------------------------------------------------
 //  Sound
@@ -197,47 +231,47 @@ class Semivowel extends Sound {name = 'semivowel'}
 class Vowel extends Sound {name = 'vowel'}
 class FinalConsonant extends Sound {name = 'finalConsonant'}
 
-class InitialConsonantB extends InitialConsonant {characters = [characters.get('b')]}
-class InitialConsonantC extends InitialConsonant {characters = [characters.get('c')]}
-class InitialConsonantCH extends InitialConsonant {characters = [characters.get('c'), characters.get('h')]}
-class InitialConsonantD extends InitialConsonant {characters = [characters.get('d')]}
-class InitialConsonantDL extends InitialConsonant {characters = [characters.get('d'), characters.get('l')]}
-class InitialConsonantF extends InitialConsonant {characters = [characters.get('f')]}
-class InitialConsonantG extends InitialConsonant {characters = [characters.get('g')]}
-class InitialConsonantH extends InitialConsonant {characters = [characters.get('h')]}
-class InitialConsonantJ extends InitialConsonant {characters = [characters.get('j')]}
-class InitialConsonantK extends InitialConsonant {characters = [characters.get('k')]}
-class InitialConsonantL extends InitialConsonant {characters = [characters.get('l')]}
-class InitialConsonantM extends InitialConsonant {characters = [characters.get('m')]}
-class InitialConsonantN extends InitialConsonant {characters = [characters.get('n')]}
-class InitialConsonantP extends InitialConsonant {characters = [characters.get('p')]}
-class InitialConsonantQ extends InitialConsonant {characters = [characters.get('q')]}
-class InitialConsonantS extends InitialConsonant {characters = [characters.get('s')]}
-class InitialConsonantT extends InitialConsonant {characters = [characters.get('t')]}
-class InitialConsonantV extends InitialConsonant {characters = [characters.get('v')]}
-class InitialConsonantZ extends InitialConsonant {characters = [characters.get('z')]}
+class InitialConsonantB extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.b)}
+class InitialConsonantC extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.c)}
+class InitialConsonantCH extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.ch)}
+class InitialConsonantD extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.d)}
+class InitialConsonantDL extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.dl)}
+class InitialConsonantF extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.f)}
+class InitialConsonantG extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.g)}
+class InitialConsonantH extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.h)}
+class InitialConsonantJ extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.j)}
+class InitialConsonantK extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.k)}
+class InitialConsonantL extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.l)}
+class InitialConsonantM extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.m)}
+class InitialConsonantN extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.n)}
+class InitialConsonantP extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.p)}
+class InitialConsonantQ extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.q)}
+class InitialConsonantS extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.s)}
+class InitialConsonantT extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.t)}
+class InitialConsonantV extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.v)}
+class InitialConsonantZ extends InitialConsonant {characters = this.makeCharacters(KanaLetterTags.z)}
 
-class SemivowelW extends Semivowel {characters = [characters.get('w')]}
-class SemivowelY extends Semivowel {characters = [characters.get('y')]}
+class SemivowelW extends Semivowel {characters = this.makeCharacters(KanaLetterTags.w)}
+class SemivowelY extends Semivowel {characters = this.makeCharacters(KanaLetterTags.y)}
 
-class VowelA extends Vowel {characters = [characters.get('a')]}
-class VowelE extends Vowel {characters = [characters.get('e')]}
-class VowelI extends Vowel {characters = [characters.get('i')]}
-class VowelO extends Vowel {characters = [characters.get('o')]}
-class VowelU extends Vowel {characters = [characters.get('u')]}
+class VowelA extends Vowel {characters = this.makeCharacters(KanaLetterTags.a)}
+class VowelE extends Vowel {characters = this.makeCharacters(KanaLetterTags.e)}
+class VowelI extends Vowel {characters = this.makeCharacters(KanaLetterTags.i)}
+class VowelO extends Vowel {characters = this.makeCharacters(KanaLetterTags.o)}
+class VowelU extends Vowel {characters = this.makeCharacters(KanaLetterTags.u)}
 
-class FinalConsonantK extends FinalConsonant {characters = [characters.get('k')]}
-class FinalConsonantH extends FinalConsonant {characters = [characters.get('h')]}
-class FinalConsonantN extends FinalConsonant {characters = [characters.get('n')]}
-class FinalConsonantP extends FinalConsonant {characters = [characters.get('p')]}
-class FinalConsonantS extends FinalConsonant {characters = [characters.get('s')]}
-class FinalConsonantT extends FinalConsonant {characters = [characters.get('t')]}
+class FinalConsonantK extends FinalConsonant {characters = this.makeCharacters(KanaLetterTags.k)}
+class FinalConsonantH extends FinalConsonant {characters = this.makeCharacters(KanaLetterTags.h)}
+class FinalConsonantN extends FinalConsonant {characters = this.makeCharacters(KanaLetterTags.n)}
+class FinalConsonantP extends FinalConsonant {characters = this.makeCharacters(KanaLetterTags.p)}
+class FinalConsonantS extends FinalConsonant {characters = this.makeCharacters(KanaLetterTags.s)}
+class FinalConsonantT extends FinalConsonant {characters = this.makeCharacters(KanaLetterTags.t)}
 
-class GerminatedConsonantC extends GerminatedConsonant {characters = [characters.get('c')]}
-class GerminatedConsonantK extends GerminatedConsonant {characters = [characters.get('k')]}
-class GerminatedConsonantP extends GerminatedConsonant {characters = [characters.get('p')]}
-class GerminatedConsonantS extends GerminatedConsonant {characters = [characters.get('s')]}
-class GerminatedConsonantT extends GerminatedConsonant {characters = [characters.get('t')]}
+class GerminatedConsonantC extends GerminatedConsonant {characters = this.makeCharacters(KanaLetterTags.c)}
+class GerminatedConsonantK extends GerminatedConsonant {characters = this.makeCharacters(KanaLetterTags.k)}
+class GerminatedConsonantP extends GerminatedConsonant {characters = this.makeCharacters(KanaLetterTags.p)}
+class GerminatedConsonantS extends GerminatedConsonant {characters = this.makeCharacters(KanaLetterTags.s)}
+class GerminatedConsonantT extends GerminatedConsonant {characters = this.makeCharacters(KanaLetterTags.t)}
 
 export class SetOfInitialConsonants extends SetOfSounds {
     initialConsonants: Array<InitialConsonant> = new Array()
@@ -347,132 +381,132 @@ export class Hatsuon extends SetOfSounds {
 //------------------------------------------------------------------------------
 
 class PSA extends PositionalSound {
-    name = 'a'
+    name = KanaLetterTags.a
     map = new Map<string, Sound>().set('vowel', new VowelA())
 }
 
 class PSB extends PositionalSound {
-    name = 'b'
+    name = KanaLetterTags.b
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantB())
 }
 
 class PSC extends PositionalSound {
-    name = 'c'
+    name = KanaLetterTags.c
     map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantC()).set('initialConsonant', new InitialConsonantC())
 }
 
 class PSCH extends PositionalSound {
-    name = 'ch'
+    name = KanaLetterTags.ch
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantCH())
 }
 
 class PSD extends PositionalSound {
-    name = 'd'
+    name = KanaLetterTags.d
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantD())
 }
 
 class PSDL extends PositionalSound {
-    name = 'dl';
+    name = KanaLetterTags.dl
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantDL())
 }
 
 class PSE extends PositionalSound {
-    name = 'e'
+    name = KanaLetterTags.e
     map = new Map<string, Sound>().set('vowel', new VowelE())
 }
 
 class PSF extends PositionalSound {
-    name = 'f'
+    name = KanaLetterTags.f
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantF())
 }
 
 class PSG extends PositionalSound {
-    name = 'g'
+    name = KanaLetterTags.g
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantG())
 }
 
 class PSH extends PositionalSound {
-    name = 'h'
+    name = KanaLetterTags.h
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantH())
 }
 
 class PSI extends PositionalSound {
-    name = 'i'
+    name = KanaLetterTags.i
     map = new Map<string, Sound>().set('vowel', new VowelI())
 }
 
 class PSJ extends PositionalSound {
-    name = 'j'
+    name = KanaLetterTags.j
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantJ())
 }
 
 class PSK extends PositionalSound {
-    name = 'k'
+    name = KanaLetterTags.k
     map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantK()).set('initialConsonant', new InitialConsonantK()).set('finalConsonant', new FinalConsonantK())
 }
 
 class PSL extends PositionalSound {
-    name = 'l'
+    name = KanaLetterTags.l
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantL())
 }
 
 class PSM extends PositionalSound {
-    name = 'm'
+    name = KanaLetterTags.m
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantM())
 }
 
 class PSN extends PositionalSound {
-    name = 'n'
+    name = KanaLetterTags.n
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantN()).set('finalConsonant', new FinalConsonantN())
 }
 
 class PSO extends PositionalSound {
-    name = 'o'
+    name = KanaLetterTags.o
     map = new Map<string, Sound>().set('vowel', new VowelO())
 }
 
 class PSP extends PositionalSound {
-    name = 'p';
+    name = KanaLetterTags.p
     map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantP()).set('initialConsonant', new InitialConsonantP()).set('finalConsonant', new FinalConsonantP())
 }
 
 class PSQ extends PositionalSound {
-    name = 'q'
+    name = KanaLetterTags.q
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonant())
 }
 
 class PSS extends PositionalSound {
-    name = 's';
+    name = KanaLetterTags.s
     map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantS()).set('initialConsonant', new InitialConsonantS()).set('finalConsonant', new FinalConsonantS())
 }
 
 class PST extends PositionalSound {
-    name = 't';
+    name = KanaLetterTags.t
     map = new Map<string, Sound>().set('germinatedConsonant', new GerminatedConsonantT()).set('initialConsonant', new InitialConsonantT()).set('finalConsonant', new FinalConsonantT())
 }
 
 class PSU extends PositionalSound {
-    name = 'u'
+    name = KanaLetterTags.u
     map = new Map<string, Sound>().set('vowel', new VowelU())
 }
 
 class PSV extends PositionalSound {
-    name = 'v'
+    name = KanaLetterTags.v
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantV())
 }
 
 class PSW extends PositionalSound {
-    name = 'w'
+    name = KanaLetterTags.w
     map = new Map<string, Sound>().set('semivowel', new SemivowelW())
 }
 
 class PSY extends PositionalSound {
-    name = 'y'
+    name = KanaLetterTags.y
     map = new Map<string, Sound>().set('semivowel', new SemivowelY())
 }
 
 class PSZ extends PositionalSound {
-    name = 'z'
+    name = KanaLetterTags.z
     map = new Map<string, Sound>().set('initialConsonant', new InitialConsonantZ())
 }
 
@@ -481,32 +515,32 @@ class PSZ extends PositionalSound {
 //------------------------------------------------------------------------------
 
 export const letterClasses: Map<string, PositionalSound> = new Map()
-    .set('a', new PSA())
-    .set('b', new PSB())
-    .set('c', new PSC())
-    .set('ch', new PSCH())
-    .set('d', new PSD())
-    .set('dl', new PSDL())
-    .set('e', new PSE())
-    .set('f', new PSF())
-    .set('g', new PSG())
-    .set('h', new PSH())
-    .set('i', new PSI())
-    .set('j', new PSJ())
-    .set('k', new PSK())
-    .set('l', new PSL())
-    .set('m', new PSM())
-    .set('n', new PSN())
-    .set('o', new PSO())
-    .set('p', new PSP())
-    .set('q', new PSQ())
-    .set('s', new PSS())
-    .set('t', new PST())
-    .set('u', new PSU())
-    .set('v', new PSV())
-    .set('w', new PSW())
-    .set('y', new PSY())
-    .set('z', new PSZ())
+    .set(KanaLetterTags.a, new PSA())
+    .set(KanaLetterTags.b, new PSB())
+    .set(KanaLetterTags.c, new PSC())
+    .set(KanaLetterTags.ch, new PSCH())
+    .set(KanaLetterTags.d, new PSD())
+    .set(KanaLetterTags.dl, new PSDL())
+    .set(KanaLetterTags.e, new PSE())
+    .set(KanaLetterTags.f, new PSF())
+    .set(KanaLetterTags.g, new PSG())
+    .set(KanaLetterTags.h, new PSH())
+    .set(KanaLetterTags.i, new PSI())
+    .set(KanaLetterTags.j, new PSJ())
+    .set(KanaLetterTags.k, new PSK())
+    .set(KanaLetterTags.l, new PSL())
+    .set(KanaLetterTags.m, new PSM())
+    .set(KanaLetterTags.n, new PSN())
+    .set(KanaLetterTags.o, new PSO())
+    .set(KanaLetterTags.p, new PSP())
+    .set(KanaLetterTags.q, new PSQ())
+    .set(KanaLetterTags.s, new PSS())
+    .set(KanaLetterTags.t, new PST())
+    .set(KanaLetterTags.u, new PSU())
+    .set(KanaLetterTags.v, new PSV())
+    .set(KanaLetterTags.w, new PSW())
+    .set(KanaLetterTags.y, new PSY())
+    .set(KanaLetterTags.z, new PSZ())
 
 //------------------------------------------------------------------------------
 //  Romanized Kana

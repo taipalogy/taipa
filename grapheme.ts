@@ -2,14 +2,6 @@ import { Character, characters } from './character';
 import { LetterTags } from './tonal/version2';
 
 //------------------------------------------------------------------------------
-//  Alphabet
-//------------------------------------------------------------------------------
-
-export interface ILetters {
-    readonly [index: string]: AlphabeticLetter
-}
-
-//------------------------------------------------------------------------------
 //  Grapheme
 //------------------------------------------------------------------------------
 
@@ -283,7 +275,7 @@ export class Sound {
         return l;
     }
 
-    makeCharacters(str: LetterTags) {
+    makeCharacters(str: string) {
         let arr: Array<Character> = new Array()
         for(let i=0; i<str.length; i++) {
             arr.push(new Character(str[i]))
@@ -291,31 +283,7 @@ export class Sound {
         return arr
     }
 }
-/*
-export class Initial extends Sound {name = SoundTags.initial}
-export class Medial extends Sound {name = SoundTags.medial}
-export class Final extends Sound {name = SoundTags.final}
-export class Nasal extends Sound {name = SoundTags.nasalization}
-export class Tonal extends Sound {
-    name = SoundTags.tonal
-    isEqualToTonal(tonal: Tonal) {
-        if(this.getLiteral() === tonal.getLiteral()) {
-            return true;
-        }
-        return false;
-    }
-}
 
-export class FreeTonal extends Tonal {
-    name = SoundTags.freeTonal
-}
-export class CheckedTonal extends Tonal {
-    name = SoundTags.checkedTonal
-}
-
-export class StopFinal extends Final {name = SoundTags.stopFinal}
-export class NasalFinal extends Final {name = SoundTags.nasalFinal}
-*/
 export class SetOfSounds {
     beginWith(str: string) {
         if(str.search(new RegExp(this.toString())) == 0) return true
