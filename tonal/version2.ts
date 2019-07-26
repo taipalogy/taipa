@@ -1,6 +1,6 @@
 import { characters } from '../character'
-import { FreeTonal, CheckedTonal, StopFinal, Final, SetOfSounds, Medial, Initial, NasalFinal, Nasal,
-    Tonal, Letters, Sound, PositionalSound, SoundTags } from '../grapheme'
+//import { FreeTonal, CheckedTonal, StopFinal, Final, Medial, Initial, NasalFinal, Nasal, Tonal, 
+import { Letters, Sound, PositionalSound, SoundTags, SetOfSounds } from '../grapheme'
 
 //------------------------------------------------------------------------------
 //  Morph
@@ -53,99 +53,169 @@ class CheckedAffix extends TonalAffix {
 //  Alphabet
 //------------------------------------------------------------------------------
 
-enum LetterTags {
+export enum LetterTags {
+    a = 'a',
+    e = 'e',
+    i = 'i',
+    o = 'o',
+    u = 'u',
+    ur = 'ur',
+
+    c = 'c',
+    d = 'd',
+    ch = 'ch',
+    j = 'j',
+    q = 'q',
+    s = 's',
+    v = 'v',
+
+    m = 'm',
+    n = 'n',
+    ng = 'ng',
+
+    nn = 'nn',
+
+    sf = 'sf',
+    w = 'w',
+    xx = 'xx',
+    xxx = 'xxx',
+    z = 'z',
+    zx = 'zx',
+
+    x = 'x',
+    y = 'y',
+
+    b = 'b',
+    g = 'g',
+    l = 'l',
+
+    k = 'k',
+    p = 'p',
+    t = 't',
+
+    kk = 'kk',
+    pp = 'pp',
+    tt = 'tt',
+    hh = 'hh',
+    
+    f = 'f',
+
+    h = 'h',
+
     zero = 'zero',
 }
 
 export class LettersOfTonal extends Letters {}
 
-export let lowerLettersOfTonal = new LettersOfTonal(['a', 'e', 'i', 'o', 'u','ur',
-                                                    'c', 'd', 'ch', 'j', 'q', 's', 'v',
-                                                    'm', 'n', 'ng',
-                                                    'nn',
-                                                    'sf', 'w', 'xx', 'xxx', 'z', 'zx',
-                                                    'x',
-                                                    'y',
-                                                    'b', 'g', 'l',
-                                                    'k', 'p', 't',
-                                                    'kk', 'pp', 'tt', 'hh',
-                                                    'f',
-                                                    'h'])
+export let lowerLettersOfTonal = new LettersOfTonal(
+    [LetterTags.a, LetterTags.e, LetterTags.i, LetterTags.o, LetterTags.u, LetterTags.ur,
+    LetterTags.c, LetterTags.d, LetterTags.ch, LetterTags.j, LetterTags.q, LetterTags.s, LetterTags.v,
+    LetterTags.m, LetterTags.n, LetterTags.ng,
+    LetterTags.nn,
+    LetterTags.sf, LetterTags.w, LetterTags.xx, LetterTags.xxx, LetterTags.z, LetterTags.zx,
+    LetterTags.x,
+    LetterTags.y,
+    LetterTags.b, LetterTags.g, LetterTags.l,
+    LetterTags.k, LetterTags.p, LetterTags.t,
+    LetterTags.kk, LetterTags.pp, LetterTags.tt, LetterTags.hh,
+    LetterTags.f,
+    LetterTags.h])
 
 export let vowelLettersOfTonal = new LettersOfTonal(['or', 'er', 'ir'])
-
-export let consonantLettersOfTonal = new LettersOfTonal(['dl'])
 
 //------------------------------------------------------------------------------
 //  Sound
 //------------------------------------------------------------------------------
 
-// TODO: makeCharacters method. characters = makeCharacters('ur')
-class MedialA extends Medial {characters = [characters.get('a')]}
-class MedialE extends Medial {characters = [characters.get('e')]}
-class MedialI extends Medial {characters = [characters.get('i')]}
-class MedialO extends Medial {characters = [characters.get('o')]}
-class MedialU extends Medial {characters = [characters.get('u')]}
-class MedialUR extends Medial {characters = [characters.get('u'), characters.get('r')]}
+export class Initial extends Sound {name = SoundTags.initial}
+export class Medial extends Sound {name = SoundTags.medial}
+export class Final extends Sound {name = SoundTags.final}
+export class Nasal extends Sound {name = SoundTags.nasalization}
+export class Tonal extends Sound {
+    name = SoundTags.tonal
+    isEqualToTonal(tonal: Tonal) {
+        if(this.getLiteral() === tonal.getLiteral()) {
+            return true;
+        }
+        return false;
+    }
+}
 
-class MaterLectionisM  extends Medial {characters = [characters.get('m')]}
-class MaterLectionisN  extends Medial {characters = [characters.get('n')]}
-class MaterLectionisNG  extends Medial {characters = [characters.get('n'), characters.get('g')]}
+export class FreeTonal extends Tonal {
+    name = SoundTags.freeTonal
+}
+export class CheckedTonal extends Tonal {
+    name = SoundTags.checkedTonal
+}
 
-class InitialC extends Initial {characters = [characters.get('c')]}
-class InitialCH extends Initial {characters = [characters.get('c'), characters.get('h')]}
-class InitialJ extends Initial {characters = [characters.get('j')]}
-class InitialL extends Initial {characters = [characters.get('l')]}
-class InitialQ extends Initial {characters = [characters.get('q')]}
-class InitialS extends Initial {characters = [characters.get('s')]}
-class InitialV extends Initial {characters = [characters.get('v')]}
+export class StopFinal extends Final {name = SoundTags.stopFinal}
+export class NasalFinal extends Final {name = SoundTags.nasalFinal}
 
-class InitialH extends Initial {characters = [characters.get('h')]}
+class MedialA extends Medial {characters = this.makeCharacters(LetterTags.a)}
+class MedialE extends Medial {characters = this.makeCharacters(LetterTags.e)}
+class MedialI extends Medial {characters = this.makeCharacters(LetterTags.i)}
+class MedialO extends Medial {characters = this.makeCharacters(LetterTags.o)}
+class MedialU extends Medial {characters = this.makeCharacters(LetterTags.u)}
+class MedialUR extends Medial {characters = this.makeCharacters(LetterTags.ur)}
 
-class InitialP extends Initial {characters = [characters.get('p')]}
-class InitialT extends Initial {characters = [characters.get('t')]}
-class InitialK extends Initial {characters = [characters.get('k')]}
-class InitialB extends Initial {characters = [characters.get('b')]}
-class InitialD extends Initial {characters = [characters.get('d')]}
-class InitialG extends Initial {characters = [characters.get('g')]}
+class MaterLectionisM  extends Medial {characters = this.makeCharacters(LetterTags.m)}
+class MaterLectionisN  extends Medial {characters = this.makeCharacters(LetterTags.n)}
+class MaterLectionisNG  extends Medial {characters = this.makeCharacters(LetterTags.ng)}
 
-class InitialM extends Initial {characters = [characters.get('m')]}
-class InitialN extends Initial {characters = [characters.get('n')]}
-class InitialNG extends Initial {characters = [characters.get('n'), characters.get('g')]}
+class InitialC extends Initial {characters = this.makeCharacters(LetterTags.c)}
+class InitialCH extends Initial {characters = this.makeCharacters(LetterTags.ch)}
+class InitialJ extends Initial {characters = this.makeCharacters(LetterTags.j)}
+class InitialL extends Initial {characters = this.makeCharacters(LetterTags.l)}
+class InitialQ extends Initial {characters = this.makeCharacters(LetterTags.q)}
+class InitialS extends Initial {characters = this.makeCharacters(LetterTags.s)}
+class InitialV extends Initial {characters = this.makeCharacters(LetterTags.v)}
+
+class InitialH extends Initial {characters = this.makeCharacters(LetterTags.h)}
+
+class InitialP extends Initial {characters = this.makeCharacters(LetterTags.p)}
+class InitialT extends Initial {characters = this.makeCharacters(LetterTags.t)}
+class InitialK extends Initial {characters = this.makeCharacters(LetterTags.k)}
+class InitialB extends Initial {characters = this.makeCharacters(LetterTags.b)}
+class InitialD extends Initial {characters = this.makeCharacters(LetterTags.d)}
+class InitialG extends Initial {characters = this.makeCharacters(LetterTags.g)}
+
+class InitialM extends Initial {characters = this.makeCharacters(LetterTags.m)}
+class InitialN extends Initial {characters = this.makeCharacters(LetterTags.n)}
+class InitialNG extends Initial {characters = this.makeCharacters(LetterTags.ng)}
 
 export class ZeroTonal extends Tonal {characters = [];}
 
-export class TonalZ extends FreeTonal {characters = [characters.get('z')]}
-export class TonalW extends FreeTonal {characters = [characters.get('w')]}
-export class TonalSF extends FreeTonal {characters = [characters.get('s'), characters.get('f')]}
-export class TonalXX extends FreeTonal {characters = [characters.get('x'), characters.get('x')]}
-export class TonalXXX extends FreeTonal {characters = [characters.get('x'), characters.get('x'), characters.get('x')]}
-export class TonalZX extends FreeTonal {characters = [characters.get('z'), characters.get('x')]}
+export class TonalZ extends FreeTonal {characters = this.makeCharacters(LetterTags.z)}
+export class TonalW extends FreeTonal {characters = this.makeCharacters(LetterTags.w)}
+export class TonalSF extends FreeTonal {characters = this.makeCharacters(LetterTags.sf)}
+export class TonalXX extends FreeTonal {characters = this.makeCharacters(LetterTags.xx)}
+export class TonalXXX extends FreeTonal {characters =this.makeCharacters(LetterTags.xxx)}
+export class TonalZX extends FreeTonal {characters = this.makeCharacters(LetterTags.zx)}
 
-export class FreeTonalX extends FreeTonal {characters = [characters.get('x')]}
-export class FreeTonalY extends FreeTonal {characters = [characters.get('y')]}
+export class FreeTonalX extends FreeTonal {characters = this.makeCharacters(LetterTags.x)}
+export class FreeTonalY extends FreeTonal {characters = this.makeCharacters(LetterTags.y)}
 
-export class CheckedTonalW extends CheckedTonal {characters = [characters.get('w')]}
-export class TonalF extends CheckedTonal {characters = [characters.get('f')]}
+export class CheckedTonalW extends CheckedTonal {characters = this.makeCharacters(LetterTags.w)}
+export class TonalF extends CheckedTonal {characters = this.makeCharacters(LetterTags.f)}
 
-export class CheckedTonalX extends CheckedTonal {characters = [characters.get('x')]}
-export class CheckedTonalY extends CheckedTonal {characters = [characters.get('y')]}
+export class CheckedTonalX extends CheckedTonal {characters = this.makeCharacters(LetterTags.x)}
+export class CheckedTonalY extends CheckedTonal {characters = this.makeCharacters(LetterTags.y)}
 
-export class FinalP extends StopFinal {characters = [characters.get('p')]}
-export class FinalT extends StopFinal {characters = [characters.get('t')]}
-export class FinalK extends StopFinal {characters = [characters.get('k')]}
-export class FinalH extends StopFinal {characters = [characters.get('h')]}
+export class FinalP extends StopFinal {characters = this.makeCharacters(LetterTags.p)}
+export class FinalT extends StopFinal {characters = this.makeCharacters(LetterTags.t)}
+export class FinalK extends StopFinal {characters = this.makeCharacters(LetterTags.k)}
+export class FinalH extends StopFinal {characters = this.makeCharacters(LetterTags.h)}
 
-export class FinalPP extends StopFinal {characters = [characters.get('p'), characters.get('p')]}
-export class FinalTT extends StopFinal {characters = [characters.get('t'), characters.get('t')]}
-export class FinalKK extends StopFinal {characters = [characters.get('k'), characters.get('k')]}
-export class FinalHH extends StopFinal {characters = [characters.get('h'), characters.get('h')]}
+export class FinalPP extends StopFinal {characters = this.makeCharacters(LetterTags.pp)}
+export class FinalTT extends StopFinal {characters = this.makeCharacters(LetterTags.tt)}
+export class FinalKK extends StopFinal {characters = this.makeCharacters(LetterTags.kk)}
+export class FinalHH extends StopFinal {characters = this.makeCharacters(LetterTags.hh)}
 
-class FinalM extends NasalFinal {characters = [characters.get('m')]}
-class FinalN extends NasalFinal {characters = [characters.get('n')]}
-class FinalNG extends NasalFinal {characters = [characters.get('n'), characters.get('g')]}
+class FinalM extends NasalFinal {characters = this.makeCharacters(LetterTags.m)}
+class FinalN extends NasalFinal {characters = this.makeCharacters(LetterTags.n)}
+class FinalNG extends NasalFinal {characters = this.makeCharacters(LetterTags.ng)}
 
-class NasalizationNN extends Nasal {characters = [characters.get('n'), characters.get('n')]}
+class NasalizationNN extends Nasal {characters = this.makeCharacters(LetterTags.nn)}
 
 export class SetOfNasalizations extends SetOfSounds {
     nasals: Array<Nasal> = new Array()
@@ -314,191 +384,191 @@ export class SetOfStopFinals extends SetOfSounds {
 //------------------------------------------------------------------------------
 
 class PSA extends PositionalSound {
-    name = 'a'
+    name = LetterTags.a//'a'
     map = new Map<string, Sound>().set(SoundTags.medial, new MedialA())
 }
 
 class PSB extends PositionalSound {
-    name = 'b'
+    name = LetterTags.b
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialB())
 }
 
 class PSC extends PositionalSound {
-    name = 'c'
+    name = LetterTags.c
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialC())
 }
 
 class PSCH extends PositionalSound {
-    name = 'ch'
+    name = LetterTags.ch
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialCH())
 }
 
 class PSD extends PositionalSound {
-    name = 'd'
+    name = LetterTags.d
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialD())
 }
 
 class PSE extends PositionalSound {
-    name = 'e'
+    name = LetterTags.e
     map = new Map<string, Sound>().set(SoundTags.medial, new MedialE())
 }
 
 class PSF extends PositionalSound {
-    name = 'f'
+    name = LetterTags.f
     map = new Map<string, Sound>().set(SoundTags.checkedTonal, new TonalF())
 }
 
 class PSG extends PositionalSound {
-    name = 'g'
+    name = LetterTags.g
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialG())
 }
 
 class PSHH extends PositionalSound {
-    name = 'hh'
+    name = LetterTags.hh
     map = new Map<string, Sound>().set(SoundTags.stopFinal, new FinalHH())
 }
 
 class PSI extends PositionalSound {
-    name = 'i'
+    name = LetterTags.i
     map = new Map<string, Sound>().set(SoundTags.medial, new MedialI())
 }
 
 class PSJ extends PositionalSound {
-    name = 'j'
+    name = LetterTags.j
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialJ())
 }
 
 class PSK extends PositionalSound {
-    name = 'k'
+    name = LetterTags.k
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialK()).set(SoundTags.stopFinal, new FinalK())
     initial: Initial = new InitialK()
 }
 
 class PSKK extends PositionalSound {
-    name = 'kk'
+    name = LetterTags.kk
     map = new Map<string, Sound>().set(SoundTags.stopFinal, new FinalKK())
 }
 
 class PSL extends PositionalSound {
-    name = 'l'
+    name = LetterTags.l
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialL())
 }
 
 class PSM extends PositionalSound {
-    name = 'm'
+    name = LetterTags.m
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialM()).set(SoundTags.medial, new MaterLectionisM()).set(SoundTags.nasalFinal, new FinalM())
 }
 
 class PSN extends PositionalSound {
-    name = 'n'
+    name = LetterTags.n
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialN()).set(SoundTags.medial, new MaterLectionisN()).set(SoundTags.nasalFinal, new FinalN())
 }
 
 class PSNN extends PositionalSound {
-    name = 'nn'
+    name = LetterTags.nn
     map = new Map<string, Sound>().set(SoundTags.nasalization, new NasalizationNN())
 }
 
 class PSNG extends PositionalSound {
-    name = 'ng'
+    name = LetterTags.ng
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialNG()).set(SoundTags.medial, new MaterLectionisNG()).set(SoundTags.nasalFinal, new FinalNG())
 }
 
 class PSO extends PositionalSound {
-    name = 'o'
+    name = LetterTags.o
     map = new Map<string, Sound>().set(SoundTags.medial, new MedialO())
 }
 
 class PSP extends PositionalSound {
-    name = 'p'
+    name = LetterTags.p
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialP()).set(SoundTags.stopFinal, new FinalP())
 }
 
 class PSPP extends PositionalSound {
-    name = 'pp'
+    name = LetterTags.pp
     map = new Map<string, Sound>().set(SoundTags.stopFinal, new FinalPP())
 }
 
 class PSQ extends PositionalSound {
-    name = 'q'
+    name = LetterTags.q
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialQ())
 }
 
 class PSH extends PositionalSound {
-    name = 'h'
+    name = LetterTags.h
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialH()).set(SoundTags.stopFinal, new FinalH())
     initial: Initial = new InitialH()
 }
 
 class PSS extends PositionalSound {
-    name = 's'
+    name = LetterTags.s
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialS())
 }
 
 class PSSF extends PositionalSound {
-    name = 'sf'
+    name = LetterTags.sf
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new TonalSF())
 }
 
 class PST extends PositionalSound {
-    name = 't'
+    name = LetterTags.t
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialT()).set(SoundTags.stopFinal, new FinalT())
     initial: Initial = new InitialT()
 }
 
 class PSTT extends PositionalSound {
-    name = 'tt'
+    name = LetterTags.tt
     map = new Map<string, Sound>().set(SoundTags.stopFinal, new FinalTT())
 }
 
 class PSU extends PositionalSound {
-    name = 'u'
+    name = LetterTags.u
     map = new Map<string, Sound>().set(SoundTags.medial, new MedialU())
 }
 
 class PSUR extends PositionalSound {
-    name = 'ur'
+    name = LetterTags.ur
     map = new Map<string, Sound>().set(SoundTags.medial, new MedialUR())
 }
 
 class PSV extends PositionalSound {
-    name = 'v'
+    name = LetterTags.v
     map = new Map<string, Sound>().set(SoundTags.initial, new InitialV())
 }
 
 class PSW extends PositionalSound {
-    name = 'w'
+    name = LetterTags.w
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new TonalW()).set(SoundTags.checkedTonal, new CheckedTonalW())
 }
 
 class PSX extends PositionalSound {
-    name = 'x'
+    name = LetterTags.x
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new FreeTonalX()).set(SoundTags.checkedTonal, new CheckedTonalX())
 }
 
 class PSXX extends PositionalSound {
-    name = 'xx'
+    name = LetterTags.xx
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new TonalXX())
 }
 
 class PSXXX extends PositionalSound {
-    name = 'xxx'
+    name = LetterTags.xxx
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new TonalXXX())
 }
 
 class PSY extends PositionalSound {
-    name = 'y'
+    name = LetterTags.y
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new FreeTonalY()).set(SoundTags.checkedTonal, new CheckedTonalY())
     freeTonal: FreeTonal = new FreeTonalY()
 }
 
 class PSZ extends PositionalSound {
-    name = 'z'
+    name = LetterTags.z
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new TonalZ())
 }
 
 class PSZX extends PositionalSound {
-    name = 'zx'
+    name = LetterTags.zx
     map = new Map<string, Sound>().set(SoundTags.freeTonal, new TonalZX())
 }
 
@@ -518,19 +588,19 @@ class CombiningRules {
 
     constructor() {
         this.o
-            .set('zero', { z: new PSZ().get(SoundTags.freeTonal) })
-            .set('y', { zero: new PSZero().get(SoundTags.freeTonal), sf: new PSSF().get(SoundTags.freeTonal) })
-            .set('w', { y: new PSY().get(SoundTags.freeTonal) })
-            .set('x', { z: new PSZ().get(SoundTags.freeTonal), w: new PSW().get(SoundTags.freeTonal) })
-            .set('z', { w: new PSW().get(SoundTags.freeTonal) })
-            .set('p', { f: new PSF().get(SoundTags.checkedTonal) })
-            .set('t', { f: new PSF().get(SoundTags.checkedTonal) })
-            .set('k', { f: new PSF().get(SoundTags.checkedTonal) })
-            .set('h', { f: new PSF().get(SoundTags.checkedTonal), y: new PSY().get(SoundTags.checkedTonal) })
-            .set('pp', { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
-            .set('tt', { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
-            .set('kk', { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
-            .set('hh', { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
+            .set(LetterTags.zero, { z: new PSZ().get(SoundTags.freeTonal) })
+            .set(LetterTags.y, { zero: new PSZero().get(SoundTags.freeTonal), sf: new PSSF().get(SoundTags.freeTonal) })
+            .set(LetterTags.w, { y: new PSY().get(SoundTags.freeTonal) })
+            .set(LetterTags.x, { z: new PSZ().get(SoundTags.freeTonal), w: new PSW().get(SoundTags.freeTonal) })
+            .set(LetterTags.z, { w: new PSW().get(SoundTags.freeTonal) })
+            .set(LetterTags.p, { f: new PSF().get(SoundTags.checkedTonal) })
+            .set(LetterTags.t, { f: new PSF().get(SoundTags.checkedTonal) })
+            .set(LetterTags.k, { f: new PSF().get(SoundTags.checkedTonal) })
+            .set(LetterTags.h, { f: new PSF().get(SoundTags.checkedTonal), y: new PSY().get(SoundTags.checkedTonal) })
+            .set(LetterTags.pp, { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
+            .set(LetterTags.tt, { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
+            .set(LetterTags.kk, { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
+            .set(LetterTags.hh, { w: new PSW().get(SoundTags.checkedTonal), x: new PSX().get(SoundTags.checkedTonal)})
     
     }
 
@@ -550,43 +620,43 @@ class LetterClasses {
 
     constructor() {
         this.o
-            .set('a', new PSA())
-            .set('b', new PSB())
-            .set('c', new PSC())
-            .set('ch', new PSCH())
-            .set('d', new PSD())
-            .set('e', new PSE())
-            .set('f', new PSF())
-            .set('g', new PSG())
-            .set('h', new PSH())
-            .set('hh', new PSHH())
-            .set('i', new PSI())
-            .set('j', new PSJ())
-            .set('k', new PSK())
-            .set('kk', new PSKK())
-            .set('l', new PSL())
-            .set('m', new PSM())
-            .set('n', new PSN())
-            .set('nn', new PSNN())
-            .set('ng', new PSNG())
-            .set('o', new PSO())
-            .set('p', new PSP())
-            .set('pp', new PSPP())
-            .set('q', new PSQ())
-            .set('s', new PSS())
-            .set('sf', new PSSF())
-            .set('t', new PST())
-            .set('tt', new PSTT())
-            .set('u', new PSU())
-            .set('ur', new PSUR())
-            .set('v', new PSV())
-            .set('w', new PSW())
-            .set('x', new PSX())
-            .set('xx', new PSXX())
-            .set('xxx', new PSXXX())
-            .set('y', new PSY())
-            .set('z', new PSZ())
-            .set('zx', new PSZX())
+            .set(LetterTags.a, new PSA())
+            .set(LetterTags.b, new PSB())
+            .set(LetterTags.c, new PSC())
+            .set(LetterTags.ch, new PSCH())
+            .set(LetterTags.d, new PSD())
+            .set(LetterTags.e, new PSE())
+            .set(LetterTags.f, new PSF())
+            .set(LetterTags.g, new PSG())
+            .set(LetterTags.h, new PSH())
+            .set(LetterTags.hh, new PSHH())
+            .set(LetterTags.i, new PSI())
+            .set(LetterTags.j, new PSJ())
+            .set(LetterTags.k, new PSK())
+            .set(LetterTags.kk, new PSKK())
+            .set(LetterTags.l, new PSL())
+            .set(LetterTags.m, new PSM())
+            .set(LetterTags.n, new PSN())
+            .set(LetterTags.nn, new PSNN())
+            .set(LetterTags.ng, new PSNG())
+            .set(LetterTags.o, new PSO())
+            .set(LetterTags.p, new PSP())
+            .set(LetterTags.pp, new PSPP())
+            .set(LetterTags.q, new PSQ())
+            .set(LetterTags.s, new PSS())
+            .set(LetterTags.sf, new PSSF())
+            .set(LetterTags.t, new PST())
+            .set(LetterTags.tt, new PSTT())
+            .set(LetterTags.u, new PSU())
+            .set(LetterTags.ur, new PSUR())
+            .set(LetterTags.v, new PSV())
+            .set(LetterTags.w, new PSW())
+            .set(LetterTags.x, new PSX())
+            .set(LetterTags.xx, new PSXX())
+            .set(LetterTags.xxx, new PSXXX())
+            .set(LetterTags.y, new PSY())
+            .set(LetterTags.z, new PSZ())
+            .set(LetterTags.zx, new PSZX())
     }
 
     get(key: string) {
@@ -645,14 +715,14 @@ class FreeAllomorphs {
 
     constructor() {
         this.o
-            .set('sf', new AllomorphSF())
-            .set('w', new AllomorphW())
-            .set('xx', new AllomorphXX())
-            .set('xxx', new AllomorphXXX())
-            .set('z', new AllomorphZ())
-            .set('zx', new AllomorphZX())
-            .set('y', new AllomorphY())
-            .set('x', new AllomorphX())    
+            .set(LetterTags.sf, new AllomorphSF())
+            .set(LetterTags.w, new AllomorphW())
+            .set(LetterTags.xx, new AllomorphXX())
+            .set(LetterTags.xxx, new AllomorphXXX())
+            .set(LetterTags.z, new AllomorphZ())
+            .set(LetterTags.zx, new AllomorphZX())
+            .set(LetterTags.y, new AllomorphY())
+            .set(LetterTags.x, new AllomorphX())    
     }
 
     get(key: string) {

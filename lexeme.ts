@@ -1,8 +1,5 @@
 import { Syllable, Morpheme } from './morpheme';
-import { TonalSyllable, TonalUncombiningMorpheme } from './tonal/morpheme';
-import { TonalWord, InflectionalEnding, TonalLemmatizationLexeme } from './tonal/lexeme';
-import { TonalInflexionLexeme } from './dependencyparser/lexeme';
-import { TonalCombiningMorpheme } from './dependencyparser/morpheme'
+import { TonalWord, InflectionalEnding } from './tonal/lexeme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm

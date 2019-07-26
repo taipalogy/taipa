@@ -1,9 +1,6 @@
 import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme'
 import { Allomorph } from './tonal/version2'
 import { TonalSyllable } from './tonal/morpheme'
-import { TonalUncombiningMorpheme } from './tonal/morpheme'
-import { KanaUncombiningMorpheme } from './kana/morpheme';
-import { TonalCombiningMorpheme } from './dependencyparser/morpheme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm

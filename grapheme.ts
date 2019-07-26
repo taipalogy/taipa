@@ -1,4 +1,5 @@
 import { Character, characters } from './character';
+import { LetterTags } from './tonal/version2';
 
 //------------------------------------------------------------------------------
 //  Alphabet
@@ -280,9 +281,17 @@ export class Sound {
         }
 
         return l;
-    }    
-}
+    }
 
+    makeCharacters(str: LetterTags) {
+        let arr: Array<Character> = new Array()
+        for(let i=0; i<str.length; i++) {
+            arr.push(new Character(str[i]))
+        }
+        return arr
+    }
+}
+/*
 export class Initial extends Sound {name = SoundTags.initial}
 export class Medial extends Sound {name = SoundTags.medial}
 export class Final extends Sound {name = SoundTags.final}
@@ -306,7 +315,7 @@ export class CheckedTonal extends Tonal {
 
 export class StopFinal extends Final {name = SoundTags.stopFinal}
 export class NasalFinal extends Final {name = SoundTags.nasalFinal}
-
+*/
 export class SetOfSounds {
     beginWith(str: string) {
         if(str.search(new RegExp(this.toString())) == 0) return true
