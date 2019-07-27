@@ -89,16 +89,13 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 
 export class RuleBasedTagger {
 
-    lexemes: Array<InflexionLexeme> = new Array();
     elements: Array<ConstructionElement> = new Array()
 
     constructor(lexemes: Array<TonalLemmatizationLexeme>) {
         this.match(lexemes)
     }
 
-    match(lexemes: Array<TonalLemmatizationLexeme>) {
-        // take in lemma lexemes and then check them against parsing lexemes
-        // store matched parsing lexemes in nodes
+    private match(lexemes: Array<TonalLemmatizationLexeme>) {
         let w: Word = lexemes[0].word
 
         let cop: ConstructionOfPhrase
@@ -111,7 +108,6 @@ export class RuleBasedTagger {
         }
 
         for(let k in lexemes) {
-            this.lexemes.push(vp.constructions[0].elements[k].lexeme)
             this.elements.push(vp.constructions[0].elements[k])
         }
     }
