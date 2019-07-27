@@ -1,7 +1,7 @@
 import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
 import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger, ConstructionElement } from './dependencyparser/rulebasedtagger'
 import { DummyLexeme } from './dependencyparser/lexeme'
 import { SYMBOLS } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
@@ -75,16 +75,16 @@ export class Client {
 
         // can lexemes be replaced by a phraseme?
         let tagger = new RuleBasedTagger(lexemes);
-        let nodes = tagger.lexemes;
+        let elems = tagger.elements;
 
-        for(let key in nodes) {
-            c.queue.push(nodes[key])
+        for(let key of elems) {
+            c.queue.push(key)
         }
 
         let guide = new Guide()
         let root = new DummyLexeme()
         root.word.literal = 'ROOT'
-        c.stack.push(root)
+        c.stack.push(new ConstructionElement(root))
 
         if(c.stack.length == 1 && c.queue.length > 0) {
             // initial configuration

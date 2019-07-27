@@ -1,4 +1,5 @@
 import { InflexionLexeme } from './lexeme';
+import { ConstructionElement } from './rulebasedtagger';
 
 export enum Dependency {
     aux_caus = 'aux:caus',
@@ -16,9 +17,10 @@ export enum Dependency {
 
 export class Arc {
     dependency: Dependency
-    head: InflexionLexeme
-    dependent: InflexionLexeme
-    constructor(dep: Dependency, head: InflexionLexeme, dependent: InflexionLexeme) {
+    head: ConstructionElement
+    dependent: ConstructionElement
+
+    constructor(dep: Dependency, head: ConstructionElement, dependent: ConstructionElement) {
         this.dependency = dep;
         this.head = head;
         this.dependent = dependent
@@ -53,8 +55,8 @@ export class LeftArc extends Transition {
 }
 
 export class Configuration {
-    queue: Array<InflexionLexeme> = new Array()
-    stack: Array<InflexionLexeme> = new Array()
+    queue: Array<ConstructionElement> = new Array()
+    stack: Array<ConstructionElement> = new Array()
     graph: Array<Arc> = new Array();
 
     constructor() {}

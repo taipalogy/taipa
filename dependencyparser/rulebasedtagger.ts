@@ -2,7 +2,7 @@ import { SYMBOLS } from './symbols'
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { Word } from '../lexeme'
-import { TonalInflexionLexeme } from './lexeme'
+import { TonalInflexionLexeme, InflexionLexeme } from './lexeme'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
@@ -22,10 +22,11 @@ class ConstructionOfPhrase {
 //  Construction Element
 //------------------------------------------------------------------------------
 
-class ConstructionElement {
-    lexeme: TonalInflexionLexeme
+export class ConstructionElement {
+    lexeme: InflexionLexeme
+    partOfSpeech: string = ''
 
-    constructor(l: TonalInflexionLexeme) {
+    constructor(l: InflexionLexeme) {
         this.lexeme = l
     }
 
@@ -61,17 +62,17 @@ class VerbPhrase extends TypeOfConstruction {
 
         let analyzer = new TonalInflextionAnalyzer()
 
-        let l1 = analyzer.makeLexemes('oannzs')
-        l1[0].partOfSpeech = SYMBOLS.VERB
+        let l1 = analyzer.makeLexemes('oannz')
         let transitive = new Transitive(l1[0])
+        transitive.partOfSpeech = SYMBOLS.VERB
         
         let l2 = analyzer.makeLexemes('goay')
-        l2[0].partOfSpeech = SYMBOLS.PERSONALPRONOUN
         let proceeding = new Proceeding(l2[0])
+        proceeding.partOfSpeech = SYMBOLS.PERSONALPRONOUN
 
         let l3 = analyzer.makeLexemes('churw')
-        l3[0].partOfSpeech = SYMBOLS.VERB
         let intransitive = new Intransitive(l3[0])
+        intransitive.partOfSpeech = SYMBOLS.VERB
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
@@ -88,7 +89,8 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
 
 export class RuleBasedTagger {
 
-    lexemes: Array<TonalInflexionLexeme> = new Array();
+    lexemes: Array<InflexionLexeme> = new Array();
+    elements: Array<ConstructionElement> = new Array()
 
     constructor(lexemes: Array<TonalLemmatizationLexeme>) {
         this.match(lexemes)
@@ -110,6 +112,7 @@ export class RuleBasedTagger {
 
         for(let k in lexemes) {
             this.lexemes.push(vp.constructions[0].elements[k].lexeme)
+            this.elements.push(vp.constructions[0].elements[k])
         }
     }
 }
