@@ -293,7 +293,6 @@ class ClientOfGenerator {
         let currentStem: string[] = []
         let nextStem: string[] = []
         for(let k = 0; k < arrayOfSounds.length; k++) {
-
             //console.debug(arrayOfSounds[k])
             entries.push(this.convert(arrayOfSounds[k]))
 

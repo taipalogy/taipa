@@ -1,44 +1,48 @@
 
 let list_of_new_syllables = [
+    'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
+
     'berh', 'berhh', 'berx', 'bery', 'berz',
 
-    'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coaih',
+    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coaih', 'coanny', 'coannw', 'coannz', 'cuinn', 'cuinny', 'cuinnw',
 
-    'cher', 'chereh', 'cherehh', 'cherew', 'cherex', 'cherez', 'cherh', 'cherhh', 'cherw', 'cherz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz',
+    'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'cher', 'chereh', 'cherehh', 'cherew', 'cherex', 'cherez', 'cherh', 'cherhh', 'cherw', 'cherz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
 
-    'derex', 'derey', 'derez', 'derh', 'derhh', 'derw', 'dery', 'derz', 'dinnh', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'dirng', 'dngh',
+    'dainyy', 'dainnw', 'dainnx', 'dainnz', 'dainnhh', 'denny', 'dennx', 'derex', 'derey', 'derez', 'derh', 'derhh', 'derw', 'dery', 'derz', 'diann', 'diannw', 'dinnh', 'dinnw', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'dirng', 'dngh', 'doanny', 'duinny', 'duinnw', 'duinnx', 'duinnz',
 
-    'ennh', 'er', 'ere', 'erehh', 'erex', 'erey', 'erez', 'erh', 'erw', 'erx', 'erz', 'erehh',
+    'enny', 'ennh', 'ennz', 'ennhh', 'er', 'ere', 'erehh', 'erex', 'erey', 'erez', 'erh', 'erw', 'erx', 'erz', 'erehh',
 
     'gereh', 'gerehh', 'gerhh', 'gerex', 'gerez', 'gerx', 'giauh', 'girnx', 'girnz', 'girt', 'girx', 'giry', 'girz',
 	
-    'her', 'herez', 'herw', 'herx', 'hery', 'herz', 'haunnh', 'hio', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hmhh', 'hoang', 'hop',
+    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'her', 'herez', 'herw', 'herx', 'hery', 'herz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hio', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'hoainnh', 'hoang', 'hoannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
 
-    'ionn', 'ir', 'irinnx', 'irn', 'irny', 'irpp', 'irw', 'irx', 'iry', 'irz',
+    'ionn', 'innh', 'innhh', 'ir', 'irinnx', 'irn', 'irny', 'irpp', 'irw', 'irx', 'iry', 'irz',
 
-    'jirx', 'jiry', 'jex', 'jek', 'jeng', 'jerx',
+    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jirx', 'jiry', 'jex', 'jek', 'jeng', 'jerx',
 	
-	'kainnh', 'ker', 'kere', 'kereh', 'kerew', 'kerw', 'kerh', 'kerx', 'kiaih', 'kir', 'kirnx', 'kirny', 'kirw', 'kuih',
+	'kannx', 'kainnh', 'kainnw', 'kaunnhh', 'kennh', 'kennx', 'ker', 'kere', 'kereh', 'kerew', 'kerw', 'kerh', 'kerx', 'kiaih', 'kiann', 'kiannw', 'kinn', 'kir', 'kirnx', 'kirny', 'kirw', 'kngz', 'koainn', 'koainnw', 'konny', 'kuih', 'kuinnw',
 
     'laih', 'langh', 'lerehh', 'lerex', 'lerh', 'lerx', 'lirey', 'liry', 'lirx', 'lirz', 'lih', 'loaih', 'loeh', 'loeih', 'lurih',
 
-    'mnghh',
+    'maix', 'mih', 'mihh', 'mng', 'mnghh', 'moaix', 'moaiz', 'moex', 'moez', 'mui', 'muiz',
 
-    'n', 'naih', 'nirix', 'niriz',
+    'n', 'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'nngh', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
 
-    'ngiriy',
+    'ngai', 'ngaiy', 'ngauy', 'ngauh', 'ngauhh', 'ngaw', 'ngaz', 'nge', 'ngh', 'nghh', 'ngiahh', 'ngiriy', 'ngiuy', 'ngiux', 'ngiz', 'ngoeh', 'ngoehh',
 
-    'per', 'perhh', 'perw', 'perx', 'perz',
+    'oainn', 'oainnh', 'oainnz', 'oainnhh', 'oannx',
+
+    'painn', 'pennw', 'per', 'perhh', 'perw', 'perx', 'perz', 'pinny', 'pinnhh', 'png', 'pngy', 'pngw', 'pngz', 'pnghh', 'poannx', 'ponn', 'puinn', 'puinnw', 'puinnx',
 	
-	'qere', 'qereh', 'qerew', 'qerex', 'qerey', 'qerez', 'qerh', 'qerw', 'qery', 'qinnh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnz', 'qirw', 'qirx', 'qiry', 'qirz', 'qnghh',
+	'qainny', 'qainnw', 'qainnz', 'qannhh', 'qere', 'qereh', 'qerew', 'qerex', 'qerey', 'qerez', 'qerh', 'qerw', 'qery', 'qiaunnhh', 'qinny', 'qinnh', 'qinnhh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnz', 'qirw', 'qirx', 'qiry', 'qirz', 'qiunnx', 'qiunnz', 'qnghh', 'qoainnw', 'qoainnx', 'qoainnhh', 'qoannw', 'qoenny', 'qonnz', 'quinn', 'quinny', 'quinnw',
 
-    'sere', 'serew', 'serew', 'serh', 'serhh', 'serx', 'serw', 'serz', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm',
+    'sainn', 'sanny', 'sannw', 'sannx', 'sere', 'serew', 'serew', 'serh', 'serhh', 'serx', 'serw', 'serz', 'sinnx', 'sinnhh', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm', 'smw', 'smh', 'snghh', 'soainn', 'soainnh', 'soainnx', 'soainnhh', 'soenn', 'soenny', 'soennw', 'suinn', 'suinny', 'suinnw',
 
-    'ter', 'tere', 'terehh', 'terew', 'terhh', 'terw', 'tirx', 'tiry',
+    'tainnw', 'tainnz', 'tannx', 'tannz', 'tenn', 'ter', 'tere', 'terehh', 'terew', 'terhh', 'terw', 'tinnw', 'tinnx', 'tirx', 'tiry', 'tiunny', 'toannx', 'tuinnw', 'tuinnx', 'tuinnz',
 
-    'uihh', 'uinnx', 
+    'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
-    'ver', 'very', 'verw', 'verx', 'verz', 'veng',
+    'vainny', 'vainnx', 'vainnz', 'ver', 'very', 'verw', 'verx', 'verz', 'veng', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
 ]
 
 export let list_of_lexical_roots = [
@@ -77,7 +81,7 @@ export let list_of_lexical_roots = [
     'choann', 'choanny', 'choannw', 'choannx', 'choannz', 'chutt', 'choew', 'choez', 'chuh', 'chui', 'chuiy', 'chuiw', 'chuix', 'chuiz', 'chun',
     'chuny', 'chunw', 'chunx', 'chunz', 'chut', 'chutt', 
 
-    'da', 'day', 'daw', 'dah', 'dahh', 'dai', 'daiy', 'daiw', 'daix', 'diaz', 'dainn', 'dianny', 'dak', 'dakk', 'dam', 'damy',
+    'da', 'day', 'daw', 'dah', 'dahh', 'dai', 'daiy', 'daiw', 'daix', 'daiz', 'dainn', 'dainny', 'dak', 'dakk', 'dam', 'damy',
     'damw', 'damx', 'damz', 'dan', 'dany', 'danw', 'danx', 'danz', 'dang', 'dangy', 'dangw', 'dangx', 'dangz', 'dann', 'danny',
     'dannw', 'dannx', 'dannz', 'dap', 'dapp', 'dat', 'datt', 'dau', 'dauy', 'dauw', 'daux', 'dauz', 'dauh', 'dauhh', 'de', 'dey',
     'dew', 'dex', 'dez', 'deh', 'denn', 'dennw', 'dennz', 'di', 'diy', 'diw', 'dix', 'diz', 'dia', 'diah', 'diahh', 'diak',
