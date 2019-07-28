@@ -1,9 +1,9 @@
 import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
-import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc, Dependency } from './dependencyparser/dependencyparser'
+import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc } from './dependencyparser/dependencyparser'
 import { RuleBasedTagger, ConstructionElement } from './dependencyparser/rulebasedtagger'
 import { DummyLexeme } from './dependencyparser/lexeme'
-import { SYMBOLS } from './dependencyparser/symbols'
+import { POS, Dependency } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
 
 import { AnalyzerLoader } from './analyzer'
@@ -97,16 +97,16 @@ export class Client {
             if(t == null || t == undefined) break
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
-                if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.VERB) {
+                if(c.stack[c.stack.length-1].partOfSpeech === POS.verb) {
                     let l = c.stack[c.stack.length-1]
-                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
+                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.personal_pronoun) {
                             guide.transitions.push(new Shift())
                     } else {
                             guide.transitions.push(new RightArc())
                             c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                             guide.transitions.push(new RightArc())
                     }
-                } if(c.stack[c.stack.length-1].partOfSpeech === SYMBOLS.PERSONALPRONOUN) {
+                } if(c.stack[c.stack.length-1].partOfSpeech === POS.personal_pronoun) {
                     let l = c.stack[c.stack.length-1]
                             guide.transitions.push(new Shift())
                             c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))

@@ -1,19 +1,5 @@
-import { InflexionLexeme } from './lexeme';
 import { ConstructionElement } from './rulebasedtagger';
-
-export enum Dependency {
-    aux_caus = 'aux:caus',
-    csubj = 'csubj',
-    ccomp = 'ccomp',
-    dobj = 'dobj',
-    iobj = 'iobj',
-    iobj_agent = 'iobj:agent',
-    nobj = 'nobj',
-    nsubj = 'nsubj',
-    nsubj_caus = 'nsubj:caus',
-    root = 'root',
-    xcomp = 'xcomp',
-}
+import { Dependency } from './symbols'
 
 export class Arc {
     dependency: Dependency

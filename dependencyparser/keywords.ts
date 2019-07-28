@@ -1,6 +1,6 @@
 
 
-export let STOP_WORDS = `
+export let key_words = `
 a
 
 e

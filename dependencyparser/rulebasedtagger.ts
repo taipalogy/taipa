@@ -1,4 +1,4 @@
-import { SYMBOLS } from './symbols'
+import { POS } from './symbols'
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { Word } from '../lexeme'
@@ -64,15 +64,15 @@ class VerbPhrase extends TypeOfConstruction {
 
         let l1 = analyzer.makeLexemes('oannz')
         let transitive = new Transitive(l1[0])
-        transitive.partOfSpeech = SYMBOLS.VERB
+        transitive.partOfSpeech = POS.verb
         
         let l2 = analyzer.makeLexemes('goay')
         let proceeding = new Proceeding(l2[0])
-        proceeding.partOfSpeech = SYMBOLS.PERSONALPRONOUN
+        proceeding.partOfSpeech = POS.personal_pronoun
 
         let l3 = analyzer.makeLexemes('churw')
         let intransitive = new Intransitive(l3[0])
-        intransitive.partOfSpeech = SYMBOLS.VERB
+        intransitive.partOfSpeech = POS.verb
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
