@@ -1,7 +1,7 @@
-import { Sound, SoundTags } from '../grapheme'
-import { list_of_lexical_roots } from './lexicalroots2'
+import { Sound } from '../grapheme'
+import { list_of_lexical_roots, } from './lexicalroots2'
 import { SetOfMaterLectionis, SetOfMedials, SetOfInitials, SetOfFreeTonals, SetOfFinals, SetOfNeutralFinals,
-    SetOfNasalizations, SetOfStopFinals, combiningRules, letterClasses, SetOfNasalFinals } from './version2'
+    SetOfNasalizations, SetOfStopFinals, combiningRules, letterClasses, SetOfNasalFinals, TonalSoundTags } from './version2'
 import { TonalLemmatizationAnalyzer } from './analyzer'
 import { Syllabary } from '../morpheme'
 
@@ -49,10 +49,10 @@ class ClientOfGenerator {
     private analyzeAfterNasalFinalsOrNasalization(ls: string[], sounds: string[], index: number): string[] {
         // base form of checked tone do not have a tonal
         if(this.isFreeTonal(ls[index])) {
-            sounds.push(ls[ls.length-1] + '.' + SoundTags.freeTonal)
+            sounds.push(ls[ls.length-1] + '.' + TonalSoundTags.freeTonal)
         } else if(this.isNeutralFinal(ls[index])) {
             // when a nasal final m, n, or ng is followed by a neutral final h
-            sounds.push(ls[ls.length-1] + '.' + SoundTags.stopFinal)
+            sounds.push(ls[ls.length-1] + '.' + TonalSoundTags.stopFinal)
         }
 
         return sounds
@@ -60,9 +60,9 @@ class ClientOfGenerator {
 
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if(this.isFreeTonal(ls[index])) {
-            sounds.push(ls[ls.length-1] + '.' + SoundTags.freeTonal)
+            sounds.push(ls[ls.length-1] + '.' + TonalSoundTags.freeTonal)
         } else if(this.isNasalization(ls[index])) {
-            sounds.push(ls[index] + '.' + SoundTags.nasalization)
+            sounds.push(ls[index] + '.' + TonalSoundTags.nasalization)
             if(ls.length > sounds.length) {
                 sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length)
             }
@@ -70,9 +70,9 @@ class ClientOfGenerator {
             let k = index
             while(k < ls.length) {
                 if(this.isNasalFinal(ls[k])) {
-                    sounds.push(ls[k] + '.' + SoundTags.nasalFinal)
+                    sounds.push(ls[k] + '.' + TonalSoundTags.nasalFinal)
                 } else if(this.isFinalConsonant(ls[k])) {
-                    sounds.push(ls[k] + '.' + SoundTags.stopFinal)
+                    sounds.push(ls[k] + '.' + TonalSoundTags.stopFinal)
                 }
                 k++
             }
@@ -91,7 +91,7 @@ class ClientOfGenerator {
             let k = index
             while(k < ls.length) {
                 if(this.isVowel(ls[k])) {
-                    sounds.push(ls[k] + '.' + SoundTags.medial)
+                    sounds.push(ls[k] + '.' + TonalSoundTags.medial)
                 }
                 k++
             }
@@ -170,7 +170,7 @@ class ClientOfGenerator {
         let tos = combiningRules.get(key) // plural form of to. get tones of combining form
         let ret: Array<string[]> = new Array
 
-        if(lastElement.lastIndexOf(SoundTags.freeTonal) > 0) {
+        if(lastElement.lastIndexOf(TonalSoundTags.freeTonal) > 0) {
             let e: string[] = []
             for(let k in tos) {
                 
@@ -179,7 +179,7 @@ class ClientOfGenerator {
                 e.pop()
                 if(tos[k].getLiteral()) {
                     // zero-tone-mark for first tone will not be pushed
-                    e.push(tos[k].getLiteral() + '.' + SoundTags.freeTonal)
+                    e.push(tos[k].getLiteral() + '.' + TonalSoundTags.freeTonal)
                 }
 
                 // first tone is still pushed to return
@@ -190,7 +190,7 @@ class ClientOfGenerator {
             e = Object.assign([], entry)
             let to = combiningRules.get('zero')
             //console.debug(Object.keys(to))
-            e.push(combiningRules.get('zero')[Object.keys(to)[0]].getLiteral() + '.' + SoundTags.freeTonal)
+            e.push(combiningRules.get('zero')[Object.keys(to)[0]].getLiteral() + '.' + TonalSoundTags.freeTonal)
             ret.push(e)
         }
     
@@ -259,7 +259,7 @@ class ClientOfGenerator {
             if((this.isMaterLectionis(ls[0]) && ls.length == 1) 
                 || (ls.length == 2 && this.isMaterLectionis(ls[0]) && this.isFreeTonal(ls[1]))) {
                 
-                sounds.push(ls[0] + '.' + SoundTags.medial)
+                sounds.push(ls[0] + '.' + TonalSoundTags.medial)
                 if(ls.length > sounds.length) {
                     if(this.isFreeTonal(ls[1])) {
                         sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length)
@@ -276,7 +276,7 @@ class ClientOfGenerator {
 
             if(this.isInitialConsonant(ls[0])) {
                 // analyze initial consonants
-                sounds.push(ls[0] + '.' + SoundTags.initial)
+                sounds.push(ls[0] + '.' + TonalSoundTags.initial)
                 if(this.isVowel(ls[1])) {
                     // consonants followed by vowels
                     sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length)
@@ -309,7 +309,7 @@ class ClientOfGenerator {
                 for(let k in tos) {
                     e = []
                     e = Object.assign([], entry)
-                    e.push(tos[k].getLiteral() + '.' + SoundTags.checkedTonal)
+                    e.push(tos[k].getLiteral() + '.' + TonalSoundTags.checkedTonal)
 
                     entries.push(this.convert(e))
                 }
@@ -322,7 +322,7 @@ class ClientOfGenerator {
                     }
                 }
             } else {
-                if(lastElement.lastIndexOf(SoundTags.freeTonal) > 0) {
+                if(lastElement.lastIndexOf(TonalSoundTags.freeTonal) > 0) {
                     nextStem = entry.slice(0, entry.length-1)
                 } else {
                     nextStem = entry

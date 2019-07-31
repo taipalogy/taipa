@@ -18,3 +18,7 @@ export enum Dependency {
     root = 'root',
     xcomp = 'xcomp',
 }
+
+export enum PTBTags {
+    VBG = 'VBG'
+}

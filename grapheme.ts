@@ -1,5 +1,4 @@
 import { Character, characters } from './character';
-import { LetterTags } from './tonal/version2';
 
 //------------------------------------------------------------------------------
 //  Grapheme
@@ -241,18 +240,6 @@ export class PositionalSound implements IPositionalSound {
         if(snd) return snd
         return new Sound()
     }
-}
-
-export enum SoundTags {
-    initial = 'initial',
-    medial = 'medial',
-    nasalization = 'nasalization',
-    final = 'final',
-    tonal = 'tonal',
-    stopFinal = 'stopFinal',
-    nasalFinal = 'nasalFinal',
-    checkedTonal = 'checkedTonal',
-    freeTonal = 'freeTonal',
 }
 
 export class Sound {
