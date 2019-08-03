@@ -73,7 +73,7 @@ export enum TonalLetterTags {
 
     nn = 'nn',
 
-    sf = 'sf',
+    cf = 'cf',
     w = 'w',
     xx = 'xx',
     xxx = 'xxx',
@@ -110,7 +110,7 @@ export let lowerLettersOfTonal = new LettersOfTonal(
     TonalLetterTags.c, TonalLetterTags.d, TonalLetterTags.ch, TonalLetterTags.j, TonalLetterTags.q, TonalLetterTags.s, TonalLetterTags.v,
     TonalLetterTags.m, TonalLetterTags.n, TonalLetterTags.ng,
     TonalLetterTags.nn,
-    TonalLetterTags.sf, TonalLetterTags.w, TonalLetterTags.xx, TonalLetterTags.xxx, TonalLetterTags.z, TonalLetterTags.zx,
+    TonalLetterTags.cf, TonalLetterTags.w, TonalLetterTags.xx, TonalLetterTags.xxx, TonalLetterTags.z, TonalLetterTags.zx,
     TonalLetterTags.x,
     TonalLetterTags.y,
     TonalLetterTags.b, TonalLetterTags.g, TonalLetterTags.l,
@@ -197,7 +197,7 @@ export class ZeroTonal extends Tonal {characters = [];}
 
 export class TonalZ extends FreeTonal {characters = this.makeCharacters(TonalLetterTags.z)}
 export class TonalW extends FreeTonal {characters = this.makeCharacters(TonalLetterTags.w)}
-export class TonalSF extends FreeTonal {characters = this.makeCharacters(TonalLetterTags.sf)}
+export class TonalCF extends FreeTonal {characters = this.makeCharacters(TonalLetterTags.cf)}
 export class TonalXX extends FreeTonal {characters = this.makeCharacters(TonalLetterTags.xx)}
 export class TonalXXX extends FreeTonal {characters =this.makeCharacters(TonalLetterTags.xxx)}
 export class TonalZX extends FreeTonal {characters = this.makeCharacters(TonalLetterTags.zx)}
@@ -335,7 +335,7 @@ export class SetOfFreeTonals extends SetOfSounds {
         this.freeTonals.push(new TonalW())
         this.freeTonals.push(new TonalXX())
         this.freeTonals.push(new TonalXXX())
-        this.freeTonals.push(new TonalSF())
+        this.freeTonals.push(new TonalCF())
         this.freeTonals.push(new TonalZX())
 
         this.freeTonals.push(new FreeTonalX())
@@ -515,9 +515,9 @@ class PSS extends PositionalSound {
     map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialS())
 }
 
-class PSSF extends PositionalSound {
-    name = TonalLetterTags.sf
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalSF())
+class PSCF extends PositionalSound {
+    name = TonalLetterTags.cf
+    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalCF())
 }
 
 class PST extends PositionalSound {
@@ -599,7 +599,7 @@ class CombiningRules {
     constructor() {
         this.o
             .set(TonalLetterTags.zero, { z: new PSZ().get(TonalSoundTags.freeTonal) })
-            .set(TonalLetterTags.y, { zero: new PSZero().get(TonalSoundTags.freeTonal), sf: new PSSF().get(TonalSoundTags.freeTonal) })
+            .set(TonalLetterTags.y, { zero: new PSZero().get(TonalSoundTags.freeTonal), cf: new PSCF().get(TonalSoundTags.freeTonal) })
             .set(TonalLetterTags.w, { y: new PSY().get(TonalSoundTags.freeTonal) })
             .set(TonalLetterTags.x, { z: new PSZ().get(TonalSoundTags.freeTonal), w: new PSW().get(TonalSoundTags.freeTonal) })
             .set(TonalLetterTags.z, { w: new PSW().get(TonalSoundTags.freeTonal) })
@@ -654,7 +654,7 @@ class LetterClasses {
             .set(TonalLetterTags.pp, new PSPP())
             .set(TonalLetterTags.q, new PSQ())
             .set(TonalLetterTags.s, new PSS())
-            .set(TonalLetterTags.sf, new PSSF())
+            .set(TonalLetterTags.cf, new PSCF())
             .set(TonalLetterTags.t, new PST())
             .set(TonalLetterTags.tt, new PSTT())
             .set(TonalLetterTags.u, new PSU())
@@ -688,8 +688,8 @@ export class ZeroAllomorph extends FreeAllomorph {
     tonal = new ZeroTonal()
 }
 
-class AllomorphSF extends FreeAllomorph {
-    tonal = new TonalSF()
+class AllomorphCF extends FreeAllomorph {
+    tonal = new TonalCF()
 }
 
 class AllomorphZ extends FreeAllomorph {
@@ -725,7 +725,7 @@ class FreeAllomorphs {
 
     constructor() {
         this.o
-            .set(TonalLetterTags.sf, new AllomorphSF())
+            .set(TonalLetterTags.cf, new AllomorphCF())
             .set(TonalLetterTags.w, new AllomorphW())
             .set(TonalLetterTags.xx, new AllomorphXX())
             .set(TonalLetterTags.xxx, new AllomorphXXX())
@@ -951,11 +951,11 @@ class FreeAllomorphUncombiningRules {
 
     constructor() {
         this.o
-            .set(new PSSF().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalY()])
+            .set(new PSCF().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalY()])
             .set(new PSW().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new FreeTonalX()])
-            .set(new PSXX().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new TonalSF, new FreeTonalX()])
-            .set(new PSXXX().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new TonalSF(), new FreeTonalX()])
-            .set(new PSZ().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalX(), new TonalSF(), new ZeroTonal()])
+            .set(new PSXX().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new TonalCF, new FreeTonalX()])
+            .set(new PSXXX().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new TonalCF(), new FreeTonalX()])
+            .set(new PSZ().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalX(), new TonalCF(), new ZeroTonal()])
             .set(new PSZX().get(TonalSoundTags.freeTonal).getLiteral(), [])
             .set(new PSX().get(TonalSoundTags.freeTonal).getLiteral(), [])
             .set(new PSY().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalW()])
