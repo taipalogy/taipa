@@ -3,6 +3,7 @@ export enum POS {
     verb = 'verb',
     pronoun = 'pronoun',
     personal_pronoun = 'personal_pronoun',
+    postposition = 'postposition',
 }
 
 export enum Dependency {

@@ -8,14 +8,15 @@ import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2'
 //  Tonal Metaplasm
 //------------------------------------------------------------------------------
 
-class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {}
-class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
-class TonalParticleInflexion extends TonalInflectingMetaplasm {}
-class TonalZeroInflexion extends TonalInflectingMetaplasm {
+export class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {}
+export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
+export class TonalParticleInflexion extends TonalInflectingMetaplasm {}
+export class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
 }
-class TonalInflexion extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>) {
+export class TonalInflexion extends TonalInflectingMetaplasm {
+    apply(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding) {
+        /*
         let tse: TonalSymbolEnding
         if(morphemes.length > 0) {
             if(morphemes[morphemes.length-1].allomorph) {
@@ -27,10 +28,10 @@ class TonalInflexion extends TonalInflectingMetaplasm {
         } else {
             tse = new TonalSymbolEnding()
         }
-
+*/
         return this.getInflexionForms(word, morphemes, tse)
     }
-
+/*
     private assignTonalEnding(allomorph: Allomorph) {
         let tse: TonalSymbolEnding = new TonalSymbolEnding()
 
@@ -47,7 +48,7 @@ class TonalInflexion extends TonalInflectingMetaplasm {
         }
         return tse
     }
-
+*/
     private getInflexionForms(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding) {
         if(tse) {
             let wd = new TonalWord(word.syllables);
@@ -76,16 +77,46 @@ export abstract class InflexionLexeme extends Lexeme {
 export class TonalInflexionLexeme extends InflexionLexeme {
     word: TonalWord
     wordForms: Array<TonalWord> = new Array()
-    metaplasm: TonalInflectingMetaplasm = new TonalZeroInflexion()
+    //metaplasm: TonalInflectingMetaplasm = new TonalZeroInflexion()
+    private tse: TonalSymbolEnding
 
-    constructor(word: TonalWord, ms: Array<TonalCombiningMorpheme>, ti: TonalInflexion) {
+    constructor(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
         super()
         this.word = word;
-        this.assignWordForms(ms, ti)
+
+        if(ms.length > 0) {
+            if(ms[ms.length-1].allomorph) {
+                // tonal ending needs to be assigned to sandhi lexeme
+                this.tse = this.assignTonalEnding(ms[ms.length-1].allomorph);
+            } else {
+                this.tse = new TonalSymbolEnding()
+            }
+        } else {
+            this.tse = new TonalSymbolEnding()
+        }
+
+        this.wordForms = this.assignWordForms(ms, tim)
     }
 
-    private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflexion) {
-        return ti.apply(this.word, ms)
+    private assignTonalEnding(allomorph: Allomorph) {
+        let tse: TonalSymbolEnding = new TonalSymbolEnding()
+
+        if(allomorph instanceof FreeAllomorph) {
+            // replace the tonal ending
+            let fte = new FreeTonalEnding()
+            fte.allomorph = allomorph
+            tse = fte
+        } else if(allomorph instanceof CheckedAllomorph) {
+            // append the tonal of the tonal ending
+            let cte = new CheckedTonalEnding()
+            cte.allomorph = allomorph
+            tse = cte
+        }
+        return tse
+    }
+
+    private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectingMetaplasm): TonalWord[] {
+        return ti.apply(this.word, ms, this.tse)
     }
 }
 
@@ -103,7 +134,7 @@ export class DummyLexeme extends InflexionLexeme {
 export class TonalInflexionLexemeMaker extends LexemeMaker {
     morphemes: Array<TonalCombiningMorpheme>;
 
-    constructor(morphemes: Array<TonalCombiningMorpheme>) {
+    constructor(morphemes: Array<TonalCombiningMorpheme>, private tim : TonalInflectingMetaplasm) {
         super()
         this.morphemes = new Array();
         this.morphemes = morphemes;
@@ -123,7 +154,7 @@ export class TonalInflexionLexemeMaker extends LexemeMaker {
     }
 
     make(syllables: Array<TonalSyllable>) {
-        return new TonalInflexionLexeme(new TonalWord(syllables), this.morphemes, new TonalInflexion());
+        return new TonalInflexionLexeme(new TonalWord(syllables), this.morphemes, this.tim);
     }
 
     postprocess(tl: TonalInflexionLexeme) {

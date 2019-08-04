@@ -1,5 +1,5 @@
 import { Syllable, Morpheme } from './morpheme';
-import { TonalWord, InflectionalEnding } from './tonal/lexeme';
+import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme';
 
 //------------------------------------------------------------------------------
 //  Metaplasm
@@ -8,7 +8,7 @@ import { TonalWord, InflectionalEnding } from './tonal/lexeme';
 export abstract class Metaplasm {}
 
 export class TonalInflectingMetaplasm extends Metaplasm {
-    apply(word: TonalWord, morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
+    apply(word: TonalWord, morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] { return [] }
 }
 
 export class TonalLemmatizingMetaplasm extends Metaplasm {

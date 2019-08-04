@@ -2,7 +2,7 @@ import { POS } from './symbols'
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { Word } from '../lexeme'
-import { TonalInflexionLexeme, InflexionLexeme } from './lexeme'
+import { TonalInflexionLexeme, InflexionLexeme, TonalInflexion } from './lexeme'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
@@ -62,15 +62,15 @@ class VerbPhrase extends TypeOfConstruction {
 
         let analyzer = new TonalInflextionAnalyzer()
 
-        let l1 = analyzer.makeLexemes('oannz')
+        let l1 = analyzer.makeLexemes('oannz', new TonalInflexion())
         let transitive = new Transitive(l1[0])
         transitive.partOfSpeech = POS.verb
         
-        let l2 = analyzer.makeLexemes('goay')
+        let l2 = analyzer.makeLexemes('goay', new TonalInflexion())
         let proceeding = new Proceeding(l2[0])
         proceeding.partOfSpeech = POS.personal_pronoun
 
-        let l3 = analyzer.makeLexemes('churw')
+        let l3 = analyzer.makeLexemes('churw', new TonalInflexion())
         let intransitive = new Intransitive(l3[0])
         intransitive.partOfSpeech = POS.verb
 
