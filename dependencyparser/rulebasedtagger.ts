@@ -1,8 +1,7 @@
-import { POS } from './symbols'
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { Word } from '../lexeme'
-import { TonalInflexionLexeme, InflexionLexeme, TonalInflexion } from './lexeme'
+import { PersonalPronouns, ConstructionElement, Verb, FirstSingular } from './keywords'
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
@@ -17,33 +16,6 @@ class ConstructionOfPhrase {
         }
     }
 }
-
-//------------------------------------------------------------------------------
-//  Construction Element
-//------------------------------------------------------------------------------
-
-export class ConstructionElement {
-    lexeme: InflexionLexeme
-    partOfSpeech: string = ''
-
-    constructor(l: InflexionLexeme) {
-        this.lexeme = l
-    }
-
-    check(w: Word) {
-        if(this.lexeme.word.literal === w.literal) {
-            return true
-        }
-        return false
-    }
-
-}
-
-class Transitive extends ConstructionElement {}
-
-class Proceeding extends ConstructionElement {}
-
-class Intransitive extends ConstructionElement {}
 
 //------------------------------------------------------------------------------
 //  Type of Construction
@@ -62,17 +34,11 @@ class VerbPhrase extends TypeOfConstruction {
 
         let analyzer = new TonalInflextionAnalyzer()
 
-        let l1 = analyzer.makeLexemes('oannz', new TonalInflexion())
-        let transitive = new Transitive(l1[0])
-        transitive.partOfSpeech = POS.verb
+        let transitive = new Verb('oannz')
         
-        let l2 = analyzer.makeLexemes('goay', new TonalInflexion())
-        let proceeding = new Proceeding(l2[0])
-        proceeding.partOfSpeech = POS.personal_pronoun
+        let proceeding = new FirstSingular(PersonalPronouns.FirstSingular)
 
-        let l3 = analyzer.makeLexemes('churw', new TonalInflexion())
-        let intransitive = new Intransitive(l3[0])
-        intransitive.partOfSpeech = POS.verb
+        let intransitive = new Verb('churw')
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 

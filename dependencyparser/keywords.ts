@@ -1,73 +1,111 @@
-import { TonalInflexionLexeme, TonalInflexion, TonalZeroInflexion, TonalPersonalPronounDeclension } from './lexeme'
+import { TonalInflexion, InflexionLexeme } from './lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
-import { ConstructionElement } from './rulebasedtagger'
 import { POS } from './symbols';
+import { TonalInflectingMetaplasm, Word } from '../lexeme';
+import { TonalCombiningMorpheme } from './morpheme';
+import { TonalWord, TonalSymbolEnding } from '../tonal/lexeme';
+
+export class ConstructionElement {
+    lexeme: InflexionLexeme
+    partOfSpeech: string = ''
+
+    constructor(l: InflexionLexeme) {
+        this.lexeme = l
+    }
+
+    check(w: Word) {
+        if(this.lexeme.word.literal === w.literal) {
+            return true
+        }
+        return false
+    }
+
+}
 
 export let FORMS = {
     'VERB': {
-        'intransitive': 'baseForm',
-        'transitive': 'sandhiForm',
-        'ditransitive': 'sandhiForm',
-        'causative': 'sandhiForm',
-        'perfective': 'baseForm',
-        'attributive': 'sandhiForm',
-        'continuative': 'sandhiForm', // adverbial
+        'baseForm': ['intransitive', 'perfective'],
+        'sandhiForm': ['transitive', 'ditransitive', 'causative', 'attributive', 'continuative'],
     },
     'ADJECTIVE': {
-        'basic': 'baseForm',
-        'attributive': 'sandhiForm',
-        'adverbial': 'sandhiForm', // ay
+        'baseForm': ['basic'],
+        'sandhiForm': ['attributive', 'adverbial'],
     },
     'NOUN': {
-        'basic': 'baseForm',
-        'adverbial': 'sandhiForm',
+        'baseForm': ['basic'],
+        'sandhiForm': ['adjective'],
     },
     'PRONOUN': {},
     'PARTICLE': {
-        'basic': 'baseForm',
-        'continuative': 'sandhiForm', // adverbial
+        'baseForm': ['basic'],
+        'sandhiForm': ['continuative'],
     },
     'PREPOSITION': {},
-    'DEMONSTRATIVEPRONOUN': {},
-    'PERSONALPRONOUN': {
-        'basic': 'baseForm',
-        'subjective': 'sandhiForm',
-        'firstEnclitic': 'firstEndingForm',
-        'seventhEnclitic': 'seventhEndingForm', // complement
-        'thirdEnclitic': 'thirdEndingForm', // complement
-
-        'adverbial': 'adverbialForm',
-
-        'indirectObject': 'sandhiForm', // proceeding
-        'directObject': 'baseForm',
+    'DEMONSTRATIVE_PRONOUN': {},
+    'PERSONAL_PRONOUN': {
+        'baseForm': ['basic', 'directObject'],
+        'sandhiForm': ['firstEnclitic', 'subjective', 'indirectObject'],
+        'sevenForm': ['seventhEnclitic'],
+        'adverbialForm': ['adverbialForm', 'thirdEnclitic'],
     },
     'DETERMINER': {},
     'QUANTIFIER': {
-        'basic': 'baseForm',
-        'attributive': 'sandhiForm',
-        'continuative': 'sandhiForm',
-        'adverbial': 'adverbialForm',
+        'baseForm': ['basic'],
+        'sandhiForm': ['attributive', 'continuative'],
+        'adverbialForm': ['adverbial'],
     },
 }
 
-enum PersonalPronouns {
-    FirstSingular = 'goay',
+export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
+export class TonalParticleInflexion extends TonalInflectingMetaplasm {}
+export class TonalZeroInflexion extends TonalInflectingMetaplasm {
+    // examples: author and authoring. che qahf he. type and typing. meet and meeting.
+}
+class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {
+    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] { 
+        return []
+    }
 }
 
-class FirstSingular extends ConstructionElement {
-    constructor() {
+export enum PersonalPronouns {
+    FirstSingular = 'goay',
+    SecondSingularLiy = 'liy',
+    SecondSingularLuy = 'luy',
+    SecondSingularLiry = 'liry',
+    FirstPluralExclusiveGuny = 'guny',
+    FirstPluralExclusiveGoany = 'goany',
+    FirstPluralInclusive = 'lany',
+    SecondPlural = 'liny',
+
+    ThirdSingular = 'i',
+    ThirdPlural = 'in',
+}
+
+export class FirstSingular extends ConstructionElement {
+    constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
-        let l = analyzer.makeLexemes(PersonalPronouns.FirstSingular, new TonalPersonalPronounDeclension())[0]
+        //let l = analyzer.makeLexemes(str, new TonalPersonalPronounDeclension())[0]
+        let l = analyzer.makeLexemes(str, new TonalInflexion())[0]
         super(l)
+        this.partOfSpeech = POS.personal_pronoun
     }
 }
 
 class Postposition extends ConstructionElement {
-    constructor() {
+    constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
-        let l = analyzer.makeLexemes('laiwdey', new TonalZeroInflexion())[0]
+        let l = analyzer.makeLexemes(str, new TonalZeroInflexion())[0]
         super(l)
         this.partOfSpeech = POS.postposition
+    }
+}
+
+export class Verb extends ConstructionElement {
+    constructor(str: string) {
+        let analyzer = new TonalInflextionAnalyzer()
+        let l = analyzer.makeLexemes(str, new TonalInflexion())[0]
+        super(l)
+        this.partOfSpeech = POS.verb
     }
 }
 
@@ -90,5 +128,5 @@ qaw qazs
 
 siw
 
-goa goaw goay goazs
+goa goaw goay goaz
 `.match(/\w+/g);

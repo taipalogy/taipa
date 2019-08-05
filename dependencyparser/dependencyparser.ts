@@ -1,4 +1,4 @@
-import { ConstructionElement } from './rulebasedtagger';
+import { ConstructionElement } from './keywords';
 import { Dependency } from './symbols'
 
 export class Arc {

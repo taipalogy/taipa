@@ -1,10 +1,11 @@
 import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
 import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger, ConstructionElement } from './dependencyparser/rulebasedtagger'
+import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
 import { DummyLexeme } from './dependencyparser/lexeme'
 import { POS, Dependency } from './dependencyparser/symbols'
 import { Sound } from './grapheme';
+import { ConstructionElement } from './dependencyparser/keywords'
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
