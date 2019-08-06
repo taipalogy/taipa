@@ -26,10 +26,10 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                     return [s]
                 } else {
                     s.popLetter()
-                    let cfs = combiningRules.get(allomorph.tonal.getLiteral())
+                    let crs = combiningRules.get(allomorph.tonal.getLiteral())
                     let rets = []
-                    for(let k in cfs) {
-                        s.pushLetter(new AlphabeticLetter(cfs[k].characters))
+                    for(let k in crs) {
+                        s.pushLetter(new AlphabeticLetter(crs[k].characters))
                         rets.push(new TonalSyllable(s.letters))
                         s.popLetter()
                     }

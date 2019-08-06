@@ -593,7 +593,6 @@ class PSZero extends PositionalSound {
 
 
 class CombiningRules {
-    // return value of PositionalSound.get is of type Sound
     private o: Map<string, { [key: string]: Sound }> = new Map()
 
     constructor() {
@@ -972,3 +971,23 @@ class FreeAllomorphUncombiningRules {
 }
 
 export const freeAllomorphUncombiningRules = new FreeAllomorphUncombiningRules()
+
+class DeclensionRules {
+    private o: Map<string, { [key: string]: Sound }> = new Map()
+
+    constructor() {
+        this.o
+            .set(TonalLetterTags.y, { zero: new PSZero().get(TonalSoundTags.freeTonal), w: new PSW().get(TonalSoundTags.freeTonal), z: new PSZ().get(TonalSoundTags.freeTonal) })
+            .set(TonalLetterTags.zero, { w: new PSW().get(TonalSoundTags.freeTonal), z: new PSZ().get(TonalSoundTags.freeTonal) })
+        }
+
+    get(key: string) {
+        let value = this.o.get(key)
+        if(value) {
+            return value
+        }
+        return {}
+    }
+}
+
+export const declensionRules = new DeclensionRules()

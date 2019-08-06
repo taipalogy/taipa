@@ -5,6 +5,9 @@ import { TonalInflectingMetaplasm, Word } from '../lexeme';
 import { TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
 import { TonalWord, TonalSymbolEnding } from '../tonal/lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
+import { TonalSyllable } from '../tonal/morpheme';
+import { Allomorph, FreeAllomorph, declensionRules, AllomorphY } from '../tonal/version2';
+import { AlphabeticLetter, Sound } from '../grapheme';
 
 export class ConstructionElement {
     lexeme: InflexionLexeme
@@ -64,7 +67,6 @@ export class TonalZeroInflexion extends TonalInflectingMetaplasm {
 }
 class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {
     apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
-        /*
         if(tse) {
             let wd = new TonalWord(word.syllables);
             let last = ms[ms.length-1]
@@ -77,12 +79,35 @@ class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {
             }
             return rets
         }
-*/
         return []
     }
 }
 
 export class TonalZeroCombining extends TonalCombiningMetaplasm {}
+class FromTone2ToTone137 extends TonalCombiningMetaplasm {
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
+        if(allomorph) {
+            let rets = []
+            if(allomorph instanceof FreeAllomorph) {
+                // get tone1, tone3, tone7 from tone2
+                let ds = declensionRules.get(allomorph.tonal.getLiteral())
+                let rets = []
+                for(let k in ds) {
+                    let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                    s.popLetter()
+                    if(ds[k].getLiteral()) {
+                        s.pushLetter(new AlphabeticLetter(ds[k].characters))
+                        rets.push(new TonalSyllable(s.letters))
+                    } else {
+                        rets.push(new TonalSyllable(s.letters))
+                    }
+                }
+                return rets
+            }
+        }
+        return []
+    }
+}
 
 export enum PersonalPronouns {
     FirstSingular = 'goay',
@@ -101,9 +126,9 @@ export enum PersonalPronouns {
 export class FirstSingular extends ConstructionElement {
     constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
-        //let l = analyzer.makeLexemes(str, new TonalPersonalPronounDeclension())[0]
-        let ms = analyzer.getMorphologicalAnalysisResults(str, new TonalCombiningForms())
-        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        let ms = analyzer.getMorphologicalAnalysisResults(str, new FromTone2ToTone137())
+        //let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalPersonalPronounDeclension())
         super(ls[0])
         this.partOfSpeech = POS.personal_pronoun
     }
