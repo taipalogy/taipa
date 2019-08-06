@@ -988,6 +988,12 @@ class DeclensionRules {
         }
         return {}
     }
+
+    get keys() {
+        let obj = this.o.get(TonalLetterTags.y)
+        if(obj)
+        return Object.keys(obj)
+    }
 }
 
 export const declensionRules = new DeclensionRules()

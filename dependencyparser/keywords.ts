@@ -49,7 +49,7 @@ export let FORMS = {
     'PERSONAL_PRONOUN': {
         'baseForm': ['basic', 'directObject'],
         'sandhiForm': ['firstEnclitic', 'subjective', 'indirectObject'],
-        'sevenForm': ['seventhEnclitic'],
+        'seventhForm': ['seventhEnclitic'],
         'adverbialForm': ['adverbialForm', 'thirdEnclitic'],
     },
     'DETERMINER': {},
@@ -68,11 +68,11 @@ export class TonalZeroInflexion extends TonalInflectingMetaplasm {
 class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {
     apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         if(tse) {
-            let wd = new TonalWord(word.syllables);
             let last = ms[ms.length-1]
             let slbs = last.getForms()
             let rets = []
             for(let i in slbs) {
+                let wd = new TonalWord(word.syllables);
                 wd.popSyllable()
                 wd.pushSyllable(slbs[i]);
                 rets.push(wd)
@@ -127,10 +127,19 @@ export class FirstSingular extends ConstructionElement {
     constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
         let ms = analyzer.getMorphologicalAnalysisResults(str, new FromTone2ToTone137())
-        //let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
         let ls = analyzer.getLexicalAnalysisResults(ms, new TonalPersonalPronounDeclension())
         super(ls[0])
         this.partOfSpeech = POS.personal_pronoun
+        /*
+        if(declensionRules.keys) {
+            if(declensionRules.keys[0] === 'zero')
+                console.log(declensionRules.keys[0] + ':' + ls[0].wordForms[0].literal + ':' + FORMS.PERSONAL_PRONOUN.sandhiForm)
+            if(declensionRules.keys[1] === 'w')
+                console.log(declensionRules.keys[1] + ':' + ls[0].wordForms[1].literal + ':' + FORMS.PERSONAL_PRONOUN.adverbialForm)
+            if(declensionRules.keys[2] === 'z')
+                console.log(declensionRules.keys[2] + ':' + ls[0].wordForms[2].literal + ':' + FORMS.PERSONAL_PRONOUN.seventhForm)
+        }
+        */
     }
 }
 
