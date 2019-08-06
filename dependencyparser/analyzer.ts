@@ -1,28 +1,46 @@
-import { GraphemeMaker } from '../grapheme'
+import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme'
 import { Analyzer } from '../analyzer';
-import { TonalInflexionMorphemeMaker, TonalCombiningForms } from './morpheme'
+import { TonalCombiningMorphemeMaker, TonalCombiningForms, TonalCombiningMorpheme } from './morpheme'
 import { lowerLettersOfTonal } from '../tonal/version2'
-import { TonalInflexionLexemeMaker } from './lexeme'
+import { TonalInflexionLexemeMaker, TonalInflexionLexeme } from './lexeme'
 import { TonalInflectingMetaplasm } from '../lexeme';
+import { TonalCombiningMetaplasm } from '../morpheme';
 
 //------------------------------------------------------------------------------
 //  Tonal Lexeme Analyzer
 //------------------------------------------------------------------------------
 
 export class TonalInflextionAnalyzer extends Analyzer {
-    makeLexemes(str: string, tim: TonalInflectingMetaplasm) {
+    getGraphemicAnalysisResults(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        let graphemes = gm.makeGraphemes()
+        return gm.makeGraphemes();
+    }
+
+    getMorphologicalAnalysisResults(str: string, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[]
+    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[]
+    getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm) {
+        let graphemes: AlphabeticGrapheme[] = []
+        if(typeof x == "object") {
+            graphemes = x
+        } else if(typeof x == 'string') {
+             graphemes = this.getGraphemicAnalysisResults(x)
+        }
 
         // Morpheme Maker
-        let tmm = new TonalInflexionMorphemeMaker(graphemes, new TonalCombiningForms());
-        let morphemes = tmm.makeMorphemes();
+        let tmm = new TonalCombiningMorphemeMaker(graphemes, tcm);
+        return tmm.makeMorphemes(); 
+    }
+
+    getLexicalAnalysisResults(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme[]
+    getLexicalAnalysisResults(x: string | Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
+        let morphemes: Array<TonalCombiningMorpheme> = []
+        if(typeof x == "object") {
+            morphemes = x
+        }
 
         // Lexeme Maker
-        let tslm = new TonalInflexionLexemeMaker(morphemes, tim);
-        let lexemes = tslm.makeLexemes();
-
-        return lexemes;
+        let tllm = new TonalInflexionLexemeMaker(morphemes, tim);
+        return tllm.makeLexemes()
     }
 }

@@ -2,8 +2,9 @@ import { TonalInflexion, InflexionLexeme } from './lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { POS } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
-import { TonalCombiningMorpheme } from './morpheme';
+import { TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
 import { TonalWord, TonalSymbolEnding } from '../tonal/lexeme';
+import { TonalCombiningMetaplasm } from '../morpheme';
 
 export class ConstructionElement {
     lexeme: InflexionLexeme
@@ -62,10 +63,26 @@ export class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
 }
 class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] { 
+    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+        /*
+        if(tse) {
+            let wd = new TonalWord(word.syllables);
+            let last = ms[ms.length-1]
+            let slbs = last.getForms()
+            let rets = []
+            for(let i in slbs) {
+                wd.popSyllable()
+                wd.pushSyllable(slbs[i]);
+                rets.push(wd)
+            }
+            return rets
+        }
+*/
         return []
     }
 }
+
+export class TonalZeroCombining extends TonalCombiningMetaplasm {}
 
 export enum PersonalPronouns {
     FirstSingular = 'goay',
@@ -85,8 +102,9 @@ export class FirstSingular extends ConstructionElement {
     constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
         //let l = analyzer.makeLexemes(str, new TonalPersonalPronounDeclension())[0]
-        let l = analyzer.makeLexemes(str, new TonalInflexion())[0]
-        super(l)
+        let ms = analyzer.getMorphologicalAnalysisResults(str, new TonalCombiningForms())
+        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        super(ls[0])
         this.partOfSpeech = POS.personal_pronoun
     }
 }
@@ -94,8 +112,9 @@ export class FirstSingular extends ConstructionElement {
 class Postposition extends ConstructionElement {
     constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
-        let l = analyzer.makeLexemes(str, new TonalZeroInflexion())[0]
-        super(l)
+        let ms = analyzer.getMorphologicalAnalysisResults(str, new TonalZeroCombining())
+        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalZeroInflexion())
+        super(ls[0])
         this.partOfSpeech = POS.postposition
     }
 }
@@ -103,8 +122,9 @@ class Postposition extends ConstructionElement {
 export class Verb extends ConstructionElement {
     constructor(str: string) {
         let analyzer = new TonalInflextionAnalyzer()
-        let l = analyzer.makeLexemes(str, new TonalInflexion())[0]
-        super(l)
+        let ms = analyzer.getMorphologicalAnalysisResults(str, new TonalCombiningForms())
+        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        super(ls[0])
         this.partOfSpeech = POS.verb
     }
 }

@@ -3,6 +3,7 @@ import { KanaUncombiningMorphemeMaker, KanaUncombiningMorpheme } from './morphem
 import { lowerLettersOfKana } from './kana'
 import { Analyzer } from '../analyzer'
 import { AlphabeticGrapheme } from '../grapheme'
+import { KanaCombiningMetaplasm } from '../morpheme';
 
 //------------------------------------------------------------------------------
 //  Kana Analyxer
@@ -26,7 +27,7 @@ export class KanaAnalyzer extends Analyzer {
         }
 
         // Morpheme Maker
-        let kimm = new KanaUncombiningMorphemeMaker(graphemes);
+        let kimm = new KanaUncombiningMorphemeMaker(graphemes, new KanaCombiningMetaplasm());
         return kimm.makeInputingMorphemes();
     }
 }

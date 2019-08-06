@@ -1,5 +1,5 @@
 import { AlphabeticGrapheme } from '../grapheme'
-import { Syllable, MatchedPattern, Morpheme } from '../morpheme'
+import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme'
 import { MorphemeMaker } from '../morpheme'
 import { RomanizedKana, SetOfInitialConsonants, SetOfVowels, Hatsuon } from './kana'
 import { Syllabary } from '../morpheme'
@@ -17,10 +17,12 @@ export class KanaSyllable extends Syllable {}
 
 export class KanaUncombiningMorpheme extends Morpheme {
     syllable: KanaSyllable;
+    metaplasm: KanaCombiningMetaplasm
 
-    constructor(syllable: KanaSyllable) {
+    constructor(syllable: KanaSyllable, kcm: KanaCombiningMetaplasm) {
         super()
         this.syllable = syllable;
+        this.metaplasm = kcm
     }
 }
 
@@ -140,63 +142,24 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 
 export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
-    romanizedKana: RomanizedKana
+    metaplasm: KanaCombiningMetaplasm
 
-    constructor(gs: Array<AlphabeticGrapheme>) {
+    constructor(gs: Array<AlphabeticGrapheme>, kcm: KanaCombiningMetaplasm) {
         super()
         this.graphemes = new Array();
         this.graphemes = gs;
-        this.romanizedKana = new RomanizedKana()
+        this.metaplasm = kcm
     }
 
-    make(letters: Array<AlphabeticLetter>, syllabary: Syllabary, syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern) {
-        let morphemes = new Array<KanaUncombiningMorpheme>()
+    createMorphemes() {
+        return new Array<KanaUncombiningMorpheme>()
+    }
 
-        let beginOfSyllable: number = 0;
-        for(let i = 0; i < letters.length; i++) {
-            
-            let msp: MatchedPattern = new MatchedPattern();
-            if(i-beginOfSyllable == 0) {
-                
-                msp = syllabify(letters, beginOfSyllable, syllabary)
-
-                if(msp.matchedLength == 0) {
-                    //console.log('no matched syllables found. the syllable might need to be added')
-                }
-
-                //console.log("matchedLen: %d", msp.matchedLength);
-                //console.log(msp.pattern);
-                //console.log(msp.letters)
-
-                let tsm: KanaUncombiningMorpheme;
-                if(msp.letters.length > 0) {
-                    for(let j in msp.letters) {
-                        //console.log("msp.letters: %s", msp.letters[j].literal)
-                    }
-                    tsm =  new KanaUncombiningMorpheme(new KanaSyllable(msp.letters))
-
-                    morphemes.push(tsm);
-                }
-
-                beginOfSyllable += msp.matchedLength;
-            }
-            
-            if(morphemes.length == 0) {
-                //console.log('nothing matched')
-            } else if(morphemes.length >= 1) {
-                if(msp == undefined) break
-
-                if(msp.matchedLength > 0) {
-                    i += beginOfSyllable-i-1;
-                }
-
-            }
-        }
-
-        return morphemes
+    createMorpheme(msp: MatchedPattern, kcm: KanaCombiningMetaplasm) {
+        return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), kcm)
     }
 
     makeInputingMorphemes() {
-        return this.make(this.preprocess(), this.romanizedKana, syllabifyKana);
+        return this.make(this.preprocess(), new RomanizedKana(), syllabifyKana);
     }
 }
