@@ -9,17 +9,13 @@ import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2'
 //------------------------------------------------------------------------------
 
 export class TonalInflexion extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding) {
-        return this.getInflexionForms(word, morphemes, tse)
-    }
-
-    private getInflexionForms(word: TonalWord, morphemes: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding) {
+    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         if(tse) {
-            let wd = new TonalWord(word.syllables);
-            let last = morphemes[morphemes.length-1]
+            let last = ms[ms.length-1]
             let slbs = last.getForms()
             let rets = []
             for(let i in slbs) {
+                let wd = new TonalWord(word.syllables);
                 wd.popSyllable()
                 wd.pushSyllable(slbs[i]);
                 rets.push(wd)

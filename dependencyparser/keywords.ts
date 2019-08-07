@@ -1,4 +1,4 @@
-import { TonalInflexion, InflexionLexeme } from './lexeme'
+import { TonalInflexion, InflexionLexeme, TonalInflexionLexeme } from './lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { POS } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
@@ -6,7 +6,7 @@ import { TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
 import { TonalWord, TonalSymbolEnding } from '../tonal/lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
-import { Allomorph, FreeAllomorph, declensionRules, AllomorphY } from '../tonal/version2';
+import { Allomorph, FreeAllomorph, declensionRules, AllomorphY, TonalLetterTags } from '../tonal/version2';
 import { AlphabeticLetter, Sound } from '../grapheme';
 
 export class ConstructionElement {
@@ -26,65 +26,13 @@ export class ConstructionElement {
 
 }
 
-export let FORMS = {
-    'VERB': {
-        'baseForm': ['intransitive', 'perfective'],
-        'sandhiForm': ['transitive', 'ditransitive', 'causative', 'attributive', 'continuative'],
-    },
-    'ADJECTIVE': {
-        'baseForm': ['basic'],
-        'sandhiForm': ['attributive', 'adverbial'],
-    },
-    'NOUN': {
-        'baseForm': ['basic'],
-        'sandhiForm': ['adjective'],
-    },
-    'PRONOUN': {},
-    'PARTICLE': {
-        'baseForm': ['basic'],
-        'sandhiForm': ['continuative'],
-    },
-    'PREPOSITION': {},
-    'DEMONSTRATIVE_PRONOUN': {},
-    'PERSONAL_PRONOUN': {
-        'baseForm': ['basic', 'directObject'],
-        'sandhiForm': ['firstEnclitic', 'subjective', 'indirectObject'],
-        'seventhForm': ['seventhEnclitic'],
-        'adverbialForm': ['adverbialForm', 'thirdEnclitic'],
-    },
-    'DETERMINER': {},
-    'QUANTIFIER': {
-        'baseForm': ['basic'],
-        'sandhiForm': ['attributive', 'continuative'],
-        'adverbialForm': ['adverbial'],
-    },
-}
-
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
-export class TonalParticleInflexion extends TonalInflectingMetaplasm {}
 export class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
 }
-class TonalPersonalPronounDeclension extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
-        if(tse) {
-            let last = ms[ms.length-1]
-            let slbs = last.getForms()
-            let rets = []
-            for(let i in slbs) {
-                let wd = new TonalWord(word.syllables);
-                wd.popSyllable()
-                wd.pushSyllable(slbs[i]);
-                rets.push(wd)
-            }
-            return rets
-        }
-        return []
-    }
-}
 
 export class TonalZeroCombining extends TonalCombiningMetaplasm {}
-class FromTone2ToTone137 extends TonalCombiningMetaplasm {
+export class FromTone2ToTone137 extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
         if(allomorph) {
             let rets = []
@@ -124,50 +72,119 @@ export enum PersonalPronouns {
 }
 
 export class FirstSingular extends ConstructionElement {
-    constructor(str: string) {
-        let analyzer = new TonalInflextionAnalyzer()
-        let ms = analyzer.getMorphologicalAnalysisResults(str, new FromTone2ToTone137())
-        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalPersonalPronounDeclension())
-        super(ls[0])
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
         this.partOfSpeech = POS.personal_pronoun
-        /*
-        if(declensionRules.keys) {
-            if(declensionRules.keys[0] === 'zero')
-                console.log(declensionRules.keys[0] + ':' + ls[0].wordForms[0].literal + ':' + FORMS.PERSONAL_PRONOUN.sandhiForm)
-            if(declensionRules.keys[1] === 'w')
-                console.log(declensionRules.keys[1] + ':' + ls[0].wordForms[1].literal + ':' + FORMS.PERSONAL_PRONOUN.adverbialForm)
-            if(declensionRules.keys[2] === 'z')
-                console.log(declensionRules.keys[2] + ':' + ls[0].wordForms[2].literal + ':' + FORMS.PERSONAL_PRONOUN.seventhForm)
+        if(declensionRules.keys && declensionRules.keys.length === 3) {
+            this.tone_funcs
+                .set('baseForm', ['basic', 'directObject'])
+                .set(declensionRules.keys[0], ['firstEnclitic', 'subjective', 'indirectObject'])
+                .set(declensionRules.keys[1], ['adverbialForm', 'thirdEnclitic'])
+                .set(declensionRules.keys[2], ['seventhEnclitic'])
         }
-        */
+    }
+}
+
+export class ThirdSingular extends ConstructionElement {
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.personal_pronoun
+        if(declensionRules.keys && declensionRules.keys.length === 3) {
+            this.tone_funcs
+                .set('baseForm', ['basic', 'firstEnclitic', 'subjective', 'directObject', 'indirectObject'])
+                .set(declensionRules.keys[0], ['adverbialForm', 'thirdEnclitic'])
+                .set(declensionRules.keys[1], ['seventhEnclitic'])
+        }
     }
 }
 
 class Postposition extends ConstructionElement {
-    constructor(str: string) {
-        let analyzer = new TonalInflextionAnalyzer()
-        let ms = analyzer.getMorphologicalAnalysisResults(str, new TonalZeroCombining())
-        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalZeroInflexion())
-        super(ls[0])
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
         this.partOfSpeech = POS.postposition
     }
 }
 
 export class Verb extends ConstructionElement {
-    constructor(str: string) {
-        let analyzer = new TonalInflextionAnalyzer()
-        let ms = analyzer.getMorphologicalAnalysisResults(str, new TonalCombiningForms())
-        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
-        super(ls[0])
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
         this.partOfSpeech = POS.verb
+        this.tone_funcs
+            .set('baseForm', ['intransitive', 'perfective'])
+            .set('sandhiForm', ['transitive', 'ditransitive', 'causative', 'attributive', 'continuative'])
     }
 }
 
-class Enclitic {}
+export class NumeralQuantifier extends ConstructionElement {
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.numeral_quantifier
+        this.tone_funcs
+            .set('baseForm', ['basic'])
+            .set('sandhiForm', ['attributive', 'continuative'])
+            .set('adverbialForm', ['adverbial'])
+    }
+}
+
+export class EncliticLe extends ConstructionElement {
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.particle
+        this.tone_funcs
+            .set('baseForm', ['basic', 'imperative'])
+            .set('sandhiForm', ['conjunctive'])
+    }
+}
+
+export class EncliticE extends ConstructionElement {
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.particle
+        this.tone_funcs
+            .set('baseForm', ['basic', 'participle', 'terminal'])
+            .set('sandhiForm', ['attributive'])
+    }
+}
+
+class EncliticA extends ConstructionElement {
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.particle
+    }
+}
+
 class AuxiliaryVerb {}
-class Particle {}
 class CaseMarker {}
 class Demostrative {}
+class Particle {}
+
+export class Adjective extends ConstructionElement {
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.adjective
+        this.tone_funcs
+            .set('baseForm', ['basic'])
+            .set('sandhiForm', ['attributive', 'adverbial'])
+    }
+}
+
+export class Noun extends ConstructionElement {
+    private tone_funcs: Map<string, string[]> = new Map()
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.noun
+        this.tone_funcs
+            .set('baseForm', ['basic'])
+            .set('sandhiForm', ['adjective'])
+    }
+}
 
 export let key_words = `
 a

@@ -4,6 +4,10 @@ export enum POS {
     pronoun = 'pronoun',
     personal_pronoun = 'personal_pronoun',
     postposition = 'postposition',
+    numeral_quantifier = 'numeral_quantifier',
+    particle = 'particle',
+    adjective = 'adjective',
+    noun = 'noun',
 }
 
 export enum Dependency {

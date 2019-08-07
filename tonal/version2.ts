@@ -979,7 +979,7 @@ class DeclensionRules {
         this.o
             .set(TonalLetterTags.y, { zero: new PSZero().get(TonalSoundTags.freeTonal), w: new PSW().get(TonalSoundTags.freeTonal), z: new PSZ().get(TonalSoundTags.freeTonal) })
             .set(TonalLetterTags.zero, { w: new PSW().get(TonalSoundTags.freeTonal), z: new PSZ().get(TonalSoundTags.freeTonal) })
-        }
+    }
 
     get(key: string) {
         let value = this.o.get(key)

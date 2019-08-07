@@ -1,7 +1,9 @@
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { Word } from '../lexeme'
-import { PersonalPronouns, ConstructionElement, Verb, FirstSingular } from './keywords'
+import { PersonalPronouns, ConstructionElement, Verb, FirstSingular, FromTone2ToTone137 } from './keywords'
+import { TonalCombiningForms } from './morpheme';
+import { TonalInflexion } from './lexeme';
 
 //------------------------------------------------------------------------------
 //  Construction of Phrase
@@ -34,11 +36,17 @@ class VerbPhrase extends TypeOfConstruction {
 
         let analyzer = new TonalInflextionAnalyzer()
 
-        let transitive = new Verb('oannz')
-        
-        let proceeding = new FirstSingular(PersonalPronouns.FirstSingular)
+        let ms = analyzer.getMorphologicalAnalysisResults('oannz', new TonalCombiningForms())
+        let ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        let transitive = new Verb(ls[0])
 
-        let intransitive = new Verb('churw')
+        ms = analyzer.getMorphologicalAnalysisResults(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
+        ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        let proceeding = new FirstSingular(ls[0])
+
+        ms = analyzer.getMorphologicalAnalysisResults('churw', new TonalCombiningForms())
+        ls = analyzer.getLexicalAnalysisResults(ms, new TonalInflexion())
+        let intransitive = new Verb(ls[0])
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
