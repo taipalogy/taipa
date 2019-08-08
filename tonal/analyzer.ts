@@ -9,21 +9,21 @@ import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningM
 //------------------------------------------------------------------------------
 
 export class TonalLemmatizationAnalyzer extends Analyzer {
-    getGraphemicAnalysisResults(str: string) {
+    doGraphemicAnalysis(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
     }
 
-    getMorphologicalAnalysisResults(str: string): TonalUncombiningMorpheme[]
-    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[]
-    getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>) {
+    doMorphologicalAnalysis(str: string): TonalUncombiningMorpheme[]
+    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[]
+    doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>) {
         let graphemes: AlphabeticGrapheme[] = []
         //let g_results
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             graphemes = this.getGraphemicAnalysisResults(x)
+             graphemes = this.doGraphemicAnalysis(x)
         }
 
         // Morpheme Maker
@@ -31,14 +31,14 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return tmm.makeMorphemes(); 
     }
 
-    getLexicalAnalysisResults(str: string): TonalLemmatizationLexeme[]
-    getLexicalAnalysisResults(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme[]
-    getLexicalAnalysisResults(x: string | Array<TonalUncombiningMorpheme>) {
+    doLexicalAnalysis(str: string): TonalLemmatizationLexeme[]
+    doLexicalAnalysis(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme[]
+    doLexicalAnalysis(x: string | Array<TonalUncombiningMorpheme>) {
         let morphemes: Array<TonalUncombiningMorpheme> = []
         if(typeof x == "object") {
             morphemes = x
         } else if(typeof x == "string") {
-            morphemes = this.getMorphologicalAnalysisResults(x)
+            morphemes = this.doMorphologicalAnalysis(x)
         }
 
         // Lexeme Maker

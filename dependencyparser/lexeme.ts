@@ -32,12 +32,12 @@ export class TonalInflexion extends TonalInflectingMetaplasm {
 
 export abstract class InflexionLexeme extends Lexeme {
     abstract word: Word
+    abstract otherForms: Array<Word>
 }
 
 export class TonalInflexionLexeme extends InflexionLexeme {
     word: TonalWord
-    wordForms: Array<TonalWord> = new Array()
-    //metaplasm: TonalInflectingMetaplasm = new TonalZeroInflexion()
+    otherForms: Array<TonalWord> = new Array()
     private tse: TonalSymbolEnding
 
     constructor(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
@@ -55,7 +55,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
             this.tse = new TonalSymbolEnding()
         }
 
-        this.wordForms = this.assignWordForms(ms, tim)
+        this.otherForms = this.assignWordForms(ms, tim)
     }
 
     private assignTonalEnding(allomorph: Allomorph) {
@@ -82,6 +82,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
 
 export class DummyLexeme extends InflexionLexeme {
     word: Word = new Word()
+    otherForms = []
     constructor() {
         super()
     }

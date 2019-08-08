@@ -1,13 +1,11 @@
-import { TonalInflexion, InflexionLexeme, TonalInflexionLexeme } from './lexeme'
-import { TonalInflextionAnalyzer } from './analyzer'
+import { InflexionLexeme, TonalInflexionLexeme, TonalInflexion } from './lexeme'
 import { POS } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
-import { TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
-import { TonalWord, TonalSymbolEnding } from '../tonal/lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
-import { Allomorph, FreeAllomorph, declensionRules, AllomorphY, TonalLetterTags } from '../tonal/version2';
-import { AlphabeticLetter, Sound } from '../grapheme';
+import { Allomorph, FreeAllomorph, declensionRules } from '../tonal/version2';
+import { AlphabeticLetter } from '../grapheme';
+import { TonalInflextionAnalyzer } from './analyzer';
 
 export class ConstructionElement {
     lexeme: InflexionLexeme
@@ -72,12 +70,12 @@ export enum PersonalPronouns {
 }
 
 export class FirstSingular extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.personal_pronoun
         if(declensionRules.keys && declensionRules.keys.length === 3) {
-            this.tone_funcs
+            this.form_funcs
                 .set('baseForm', ['basic', 'directObject'])
                 .set(declensionRules.keys[0], ['firstEnclitic', 'subjective', 'indirectObject'])
                 .set(declensionRules.keys[1], ['adverbialForm', 'thirdEnclitic'])
@@ -87,12 +85,12 @@ export class FirstSingular extends ConstructionElement {
 }
 
 export class ThirdSingular extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.personal_pronoun
         if(declensionRules.keys && declensionRules.keys.length === 3) {
-            this.tone_funcs
+            this.form_funcs
                 .set('baseForm', ['basic', 'firstEnclitic', 'subjective', 'directObject', 'indirectObject'])
                 .set(declensionRules.keys[0], ['adverbialForm', 'thirdEnclitic'])
                 .set(declensionRules.keys[1], ['seventhEnclitic'])
@@ -108,22 +106,22 @@ class Postposition extends ConstructionElement {
 }
 
 export class Verb extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.verb
-        this.tone_funcs
+        this.form_funcs
             .set('baseForm', ['intransitive', 'perfective'])
             .set('sandhiForm', ['transitive', 'ditransitive', 'causative', 'attributive', 'continuative'])
     }
 }
 
 export class NumeralQuantifier extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.numeral_quantifier
-        this.tone_funcs
+        this.form_funcs
             .set('baseForm', ['basic'])
             .set('sandhiForm', ['attributive', 'continuative'])
             .set('adverbialForm', ['adverbial'])
@@ -131,22 +129,22 @@ export class NumeralQuantifier extends ConstructionElement {
 }
 
 export class EncliticLe extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.particle
-        this.tone_funcs
+        this.form_funcs
             .set('baseForm', ['basic', 'imperative'])
             .set('sandhiForm', ['conjunctive'])
     }
 }
 
 export class EncliticE extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.particle
-        this.tone_funcs
+        this.form_funcs
             .set('baseForm', ['basic', 'participle', 'terminal'])
             .set('sandhiForm', ['attributive'])
     }
@@ -161,43 +159,60 @@ class EncliticA extends ConstructionElement {
 
 class AuxiliaryVerb {}
 class CaseMarker {}
-class Demostrative {}
+
+class Demonstrative extends ConstructionElement {
+    constructor(l: TonalInflexionLexeme) {
+        super(l)
+        this.partOfSpeech = POS.demonstrative
+    }
+}
+
 class Particle {}
 
 export class Adjective extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.adjective
-        this.tone_funcs
+        this.form_funcs
             .set('baseForm', ['basic'])
             .set('sandhiForm', ['attributive', 'adverbial'])
     }
 }
 
 export class Noun extends ConstructionElement {
-    private tone_funcs: Map<string, string[]> = new Map()
+    private form_funcs: Map<string, string[]> = new Map()
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.noun
-        this.tone_funcs
+        this.form_funcs
             .set('baseForm', ['basic'])
             .set('sandhiForm', ['adjective'])
     }
 }
 
-export let key_words = `
-a
+export class KeyWords {
+    analyzer = new TonalInflextionAnalyzer()
+    key_words: Array<ConstructionElement> = [
+        this.makeDemonstrative('che'),
+        this.makePersonalPronoun(PersonalPronouns.FirstSingular),
+        this.makeDemonstrative('he'),
+    ]
 
-e
+    makePersonalPronoun(str: string) {
+        let ms = this.analyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
+        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        return new FirstSingular(ls[0])
+    }
 
-kahf
+    makeDemonstrative(str: string) {
+        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        return new Demonstrative(ls[0])
+    }
 
-langx
-
-qaw qazs
-
-siw
-
-goa goaw goay goaz
-`.match(/\w+/g);
+    search(str: string) {
+        let i 
+        console.log(`i: ${i}`)
+    }
+}

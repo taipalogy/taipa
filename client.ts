@@ -30,7 +30,7 @@ export class Client {
 
         // kana
         al.load(Kana)
-        let morphemes: KanaUncombiningMorpheme[] = (<KanaAnalyzer>al.aws[0].analyzer).getMorphologicalAnalysisResults(str)
+        let morphemes: KanaUncombiningMorpheme[] = (<KanaAnalyzer>al.aws[0].analyzer).doMorphologicalAnalysis(str)
         let doc: Document = new Document()
         doc.blockSequences = al.aws[0].getBlocks(morphemes)
         al.unload(Kana)
@@ -46,8 +46,8 @@ export class Client {
         //let l_results
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
-            let morphemes: TonalUncombiningMorpheme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).getMorphologicalAnalysisResults(tokens[0])
-            let lexemes: TonalLemmatizationLexeme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).getLexicalAnalysisResults(morphemes)
+            let morphemes: TonalUncombiningMorpheme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).doMorphologicalAnalysis(tokens[0])
+            let lexemes: TonalLemmatizationLexeme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).doLexicalAnalysis(morphemes)
             doc.lemmatizationLexemes = lexemes
             doc.lemmata = lexemes[0].getLemmata()
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
@@ -70,7 +70,7 @@ export class Client {
         let analyzer = new TonalLemmatizationAnalyzer()
         if(tokens != null && tokens.length >0) {
             for(let key in tokens) {
-                lexemes.push(analyzer.getLexicalAnalysisResults(tokens[key])[0])
+                lexemes.push(analyzer.doLexicalAnalysis(tokens[key])[0])
             }
         }
 

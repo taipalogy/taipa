@@ -11,20 +11,20 @@ import { TonalCombiningMetaplasm } from '../morpheme';
 //------------------------------------------------------------------------------
 
 export class TonalInflextionAnalyzer extends Analyzer {
-    getGraphemicAnalysisResults(str: string) {
+    doGraphemicAnalysis(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
     }
 
-    getMorphologicalAnalysisResults(str: string, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[]
-    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[]
-    getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm) {
+    doMorphologicalAnalysis(str: string, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[]
+    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[]
+    doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm) {
         let graphemes: AlphabeticGrapheme[] = []
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-             graphemes = this.getGraphemicAnalysisResults(x)
+             graphemes = this.doGraphemicAnalysis(x)
         }
 
         // Morpheme Maker
@@ -32,8 +32,8 @@ export class TonalInflextionAnalyzer extends Analyzer {
         return tmm.makeMorphemes(); 
     }
 
-    getLexicalAnalysisResults(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme[]
-    getLexicalAnalysisResults(x: string | Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
+    doLexicalAnalysis(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme[]
+    doLexicalAnalysis(x: string | Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
         let morphemes: Array<TonalCombiningMorpheme> = []
         if(typeof x == "object") {
             morphemes = x

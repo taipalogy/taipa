@@ -135,7 +135,7 @@ class ClientOfGenerator {
 
         for(let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = analyzer.getGraphemicAnalysisResults(strs[i])
+            let graphemes = analyzer.doGraphemicAnalysis(strs[i])
             let ls: string[] = []
             for(let j in graphemes) {
                 ls.push(graphemes[j].letter.literal)

@@ -8,6 +8,7 @@ export enum POS {
     particle = 'particle',
     adjective = 'adjective',
     noun = 'noun',
+    demonstrative = 'demonstrative',
 }
 
 export enum Dependency {

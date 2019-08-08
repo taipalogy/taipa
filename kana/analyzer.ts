@@ -10,20 +10,20 @@ import { KanaCombiningMetaplasm } from '../morpheme';
 //------------------------------------------------------------------------------
 
 export class KanaAnalyzer extends Analyzer {
-    getGraphemicAnalysisResults(str: string) {
+    doGraphemicAnalysis(str: string) {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfKana);
         return gm.makeGraphemes();
     }
 
-    getMorphologicalAnalysisResults(str: string): KanaUncombiningMorpheme[]
-    getMorphologicalAnalysisResults(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[]
-    getMorphologicalAnalysisResults(x: string | Array<AlphabeticGrapheme>) {
+    doMorphologicalAnalysis(str: string): KanaUncombiningMorpheme[]
+    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[]
+    doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>) {
         let graphemes: Array<AlphabeticGrapheme> = []
         if(typeof x == "object") {
             graphemes = x
         } else if(typeof x == 'string') {
-            graphemes = this.getGraphemicAnalysisResults(x)
+            graphemes = this.doGraphemicAnalysis(x)
         }
 
         // Morpheme Maker
