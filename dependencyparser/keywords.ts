@@ -157,17 +157,12 @@ class EncliticA extends ConstructionElement {
     }
 }
 
-class AuxiliaryVerb {}
-class CaseMarker {}
-
 class Demonstrative extends ConstructionElement {
     constructor(l: TonalInflexionLexeme) {
         super(l)
         this.partOfSpeech = POS.demonstrative
     }
 }
-
-class Particle {}
 
 export class Adjective extends ConstructionElement {
     private form_funcs: Map<string, string[]> = new Map()
@@ -191,18 +186,39 @@ export class Noun extends ConstructionElement {
     }
 }
 
+class AuxiliaryVerb {}
+class CaseMarker {}
+class Particle {}
+ 
 export class KeyWords {
-    analyzer = new TonalInflextionAnalyzer()
-    keyword_serialno: Array<[string, number]> = new Array()
-    keyElems: Array<ConstructionElement> = new Array()
+    private analyzer = new TonalInflextionAnalyzer()
+    private keyword_serialno: Array<[string, number]> = new Array()
+    private keyElems: Array<ConstructionElement> = new Array()
 
-    makePersonalPronoun(str: string) {
+    constructor() {
+        this.populateKeyElems()
+        let i: number = 0
+        let buffer: Array<[string, number]> = new Array()
+        for(let entry of this.keyElems) {
+            buffer.push([entry.lexeme.word.literal, i])
+            if(entry.lexeme.otherForms.length) {
+                for(let elem of entry.lexeme.otherForms)
+                buffer.push([elem.literal, i])
+            }
+            i++
+        }
+        this.keyword_serialno = Array.from(buffer).sort((a: [string, number], b: [string, number]) => {
+            return (a[0]<b[0] ? -1 : (a[0]>b[0] ? 1 : 0));
+        })
+    }
+
+    private makePersonalPronoun(str: string) {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
         let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         return new FirstSingular(ls[0])
     }
 
-    makeDemonstrative(str: string): Demonstrative {
+    private makeDemonstrative(str: string): Demonstrative {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
         let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         return new Demonstrative(ls[0])
@@ -233,26 +249,11 @@ export class KeyWords {
         return -1
     }
 
-    constructor() {
-        this.populateKeyElems()
-        let i: number = 0
-        let buffer: Array<[string, number]> = new Array()
-        for(let entry of this.keyElems) {
-            buffer.push([entry.lexeme.word.literal, i])
-            if(entry.lexeme.otherForms.length) {
-                for(let elem of entry.lexeme.otherForms)
-                buffer.push([elem.literal, i])
-            }
-            i++
-        }
-        this.keyword_serialno = Array.from(buffer).sort((a: [string, number], b: [string, number]) => {
-            return (a[0]<b[0] ? -1 : (a[0]>b[0] ? 1 : 0));
-        })
-    }
-
     private populateKeyElems() {
-        this.keyElems.push(this.makeDemonstrative('che'))
-        this.keyElems.push(this.makeDemonstrative('he'))
-        this.keyElems.push(this.makePersonalPronoun(PersonalPronouns.FirstSingular))
+        this.keyElems = [
+            this.makeDemonstrative('che'),
+            this.makeDemonstrative('he'),
+            this.makePersonalPronoun(PersonalPronouns.FirstSingular),
+        ]
     }
 }
