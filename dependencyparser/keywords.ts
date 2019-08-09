@@ -193,11 +193,8 @@ export class Noun extends ConstructionElement {
 
 export class KeyWords {
     analyzer = new TonalInflextionAnalyzer()
-    key_words: Array<ConstructionElement> = [
-        this.makeDemonstrative('che'),
-        this.makePersonalPronoun(PersonalPronouns.FirstSingular),
-        this.makeDemonstrative('he'),
-    ]
+    keyword_serialno: Array<[string, number]> = new Array()
+    keyElems: Array<ConstructionElement> = new Array()
 
     makePersonalPronoun(str: string) {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
@@ -205,14 +202,57 @@ export class KeyWords {
         return new FirstSingular(ls[0])
     }
 
-    makeDemonstrative(str: string) {
+    makeDemonstrative(str: string): Demonstrative {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
         let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         return new Demonstrative(ls[0])
     }
 
     search(str: string) {
-        let i 
-        console.log(`i: ${i}`)
+        let i: number
+        i = this.doBSearch(this.keyword_serialno, str, (a: string, b: string) => {
+            return (a<b ? -1 : (a>b ? 1 : 0));
+        })
+        let serialno: number = 0
+        if(this.keyword_serialno[i])
+            serialno = this.keyword_serialno[i][1]
+        //console.log(`i: ${i}, serialno: ${serialno}`)
+        //console.log(this.keyElems[serialno].lexeme.word.literal)
+    }
+
+    private doBSearch(arr: Array<[string, number]>, str: string, compareFunc: (a: string, b: string) => number): number {
+        let bot = 0;
+        let top = arr.length;
+        while(bot < top) {
+            let mid = Math.floor((bot+top)/2)
+            let c = compareFunc(arr[mid][0], str)
+            if (c === 0) return mid
+            if (c < 0) bot = mid+1
+            if (0 < c) top = mid
+        }
+        return -1
+    }
+
+    constructor() {
+        this.populateKeyElems()
+        let i: number = 0
+        let buffer: Array<[string, number]> = new Array()
+        for(let entry of this.keyElems) {
+            buffer.push([entry.lexeme.word.literal, i])
+            if(entry.lexeme.otherForms.length) {
+                for(let elem of entry.lexeme.otherForms)
+                buffer.push([elem.literal, i])
+            }
+            i++
+        }
+        this.keyword_serialno = Array.from(buffer).sort((a: [string, number], b: [string, number]) => {
+            return (a[0]<b[0] ? -1 : (a[0]>b[0] ? 1 : 0));
+        })
+    }
+
+    private populateKeyElems() {
+        this.keyElems.push(this.makeDemonstrative('che'))
+        this.keyElems.push(this.makeDemonstrative('he'))
+        this.keyElems.push(this.makePersonalPronoun(PersonalPronouns.FirstSingular))
     }
 }
