@@ -11,6 +11,7 @@ import { TonalCombiningForms } from './morpheme';
 export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme()
     partOfSpeech: string = ''
+    protected inflection: Map<string, string[]> = new Map()
 
     check(w: Word) {
         if(this.lexeme.word.literal === w.literal) {
@@ -19,20 +20,29 @@ export class ConstructionElement {
         return false
     }
 
+    protected validate(inflectTo: [string, string]) {
+        if(this.inflection.has(inflectTo[0])) {
+            let arr = this.inflection.get(inflectTo[0])
+            if(arr)
+                for(let e of arr) {
+                    if(e === inflectTo[1])
+                        return true
+                }
+        }
+        return false
+    }
+
 }
 
-enum Forms {
-    baseForm = 'baseForm',
-    sandhiForm = 'sandhiForm',
-    adverbialForm = 'adverbialForm',
-    w = 'w',
-    z = 'z',
-    zero = 'zero',
-}
-
-enum Funktions {
-    basic = 'basic',
-    subjective = 'subjective',
+let NOUN_DECLENSION = {
+    baseForm: {
+        name: 'baseForm',
+        basic: 'basic' ,
+    },
+    sandhiForm: {
+        name: 'sandhiForm', 
+        adjective: 'adjective',
+    }
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
@@ -199,20 +209,17 @@ export class Adjective extends ConstructionElement {
 }
 
 export class Noun extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
-    constructor() {
+    private declined: [string, string] = ['', '']
+    constructor(declinedTo?: [string, string]) {
         super()
         this.partOfSpeech = POS.noun
-        this.form_funcs
-            .set('baseForm', ['basic'])
-            .set('sandhiForm', ['adjective'])
-    }
-}
-
-class PlainNoun extends ConstructionElement {
-    constructor() {
-        super()
-        this.partOfSpeech = POS.noun
+        this.inflection
+            .set(NOUN_DECLENSION.baseForm.name, [NOUN_DECLENSION.baseForm.basic])
+            .set(NOUN_DECLENSION.sandhiForm.name, [NOUN_DECLENSION.sandhiForm.adjective])
+        if(declinedTo && this.validate(declinedTo)) {
+            this.declined[0] = declinedTo[0]
+            this.declined[1] = declinedTo[1]
+        }
     }
 }
 
