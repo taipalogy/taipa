@@ -38,15 +38,19 @@ class VerbPhrase extends TypeOfConstruction {
 
         let ms = analyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms())
         let ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let transitive = new Verb(ls[0])
+        let transitive = new Verb()
+        transitive.lexeme = ls[0]
+
 
         ms = analyzer.doMorphologicalAnalysis(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
         ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let proceeding = new FirstSingular(ls[0])
+        let proceeding = new FirstSingular()
+        proceeding.lexeme = ls[0]
 
         ms = analyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms())
         ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let intransitive = new Verb(ls[0])
+        let intransitive = new Verb()
+        intransitive.lexeme = ls[0]
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 

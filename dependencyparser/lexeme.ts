@@ -30,9 +30,9 @@ export class TonalInflexion extends TonalInflectingMetaplasm {
 //  Tonal Inflection Lexeme
 //------------------------------------------------------------------------------
 
-export abstract class InflexionLexeme extends Lexeme {
-    abstract word: Word
-    abstract otherForms: Array<Word>
+export class InflexionLexeme extends Lexeme {
+    word: Word = new Word()
+    otherForms: Array<Word> = []
 }
 
 export class TonalInflexionLexeme extends InflexionLexeme {

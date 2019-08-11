@@ -85,7 +85,9 @@ export class Client {
         let guide = new Guide()
         let root = new DummyLexeme()
         root.word.literal = 'ROOT'
-        c.stack.push(new ConstructionElement(root))
+        let ce = new ConstructionElement()
+        ce.lexeme = root
+        c.stack.push(ce)
 
         if(c.stack.length == 1 && c.queue.length > 0) {
             // initial configuration
