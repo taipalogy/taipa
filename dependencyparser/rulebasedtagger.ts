@@ -1,65 +1,9 @@
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
-import { TonalInflextionAnalyzer } from './analyzer'
+import { ConstructionOfPhrase, VerbPhrase } from './rules'
 import { Word } from '../lexeme'
-import { PersonalPronouns, ConstructionElement, Verb, FirstSingular, FromTone2ToTone137 } from './keywords'
-import { TonalCombiningForms } from './morpheme';
-import { TonalInflexion } from './lexeme';
-
-//------------------------------------------------------------------------------
-//  Construction of Phrase
-//------------------------------------------------------------------------------
-
-class ConstructionOfPhrase {
-    elements: Array<ConstructionElement> = new Array()
-
-    constructor(arr: Array<ConstructionElement>){
-        for(let key in arr) {
-            this.elements.push(arr[key])
-        }
-    }
-}
-
-//------------------------------------------------------------------------------
-//  Type of Construction
-//------------------------------------------------------------------------------
-
-abstract class TypeOfConstruction {
-    abstract constructions: Array<ConstructionOfPhrase>;
-}
-
-class VerbPhrase extends TypeOfConstruction {
-
-    constructions: Array<ConstructionOfPhrase> = []
-
-    constructor() {
-        super()
-
-        let analyzer = new TonalInflextionAnalyzer()
-
-        let ms = analyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms())
-        let ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let transitive = new Verb()
-        transitive.lexeme = ls[0]
+import { PersonalPronouns, ConstructionElement, Verb, PersonalPronoun2To137 } from './keywords'
 
 
-        ms = analyzer.doMorphologicalAnalysis(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
-        ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let proceeding = new FirstSingular()
-        proceeding.lexeme = ls[0]
-
-        ms = analyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms())
-        ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let intransitive = new Verb()
-        intransitive.lexeme = ls[0]
-
-        this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
-
-    }
-}
-
-class DitransitiveVerbPhrase extends TypeOfConstruction {
-    constructions = []
-}
 
 //------------------------------------------------------------------------------
 //  Rule-Based Tagger

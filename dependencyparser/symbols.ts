@@ -2,11 +2,11 @@
 export enum POS {
     verb = 'verb',
     pronoun = 'pronoun',
-    personal_pronoun = 'personal_pronoun',
     postposition = 'postposition',
     particle = 'particle',
     adjective = 'adjective',
     noun = 'noun',
+    auxiliary_verb = 'auxiliary_verb',
 }
 
 export enum Dependency {

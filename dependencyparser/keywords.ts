@@ -90,12 +90,16 @@ export enum PersonalPronouns {
     ThirdPlural = 'in',
 }
 
-export class FirstSingular extends ConstructionElement {
+export class PersonalPronoun extends ConstructionElement {
+    partOfSpeech = POS.pronoun
+}
+
+export class PersonalPronoun2To137 extends ConstructionElement {
     private form_funcs: Map<string, string[]> = new Map()
-    matchedFF: [string, string] = ['', '']
+    private declined: [string, string] = ['', '']
     constructor() {
         super()
-        this.partOfSpeech = POS.personal_pronoun
+        this.partOfSpeech = POS.pronoun
         if(declensionRules.keys && declensionRules.keys.length === 3) {
             this.form_funcs
                 .set('baseForm', ['basic', 'directObject'])
@@ -106,11 +110,11 @@ export class FirstSingular extends ConstructionElement {
     }
 }
 
-export class ThirdSingular extends ConstructionElement {
+export class PersonalPronoun1To37 extends ConstructionElement {
     private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
-        this.partOfSpeech = POS.personal_pronoun
+        this.partOfSpeech = POS.pronoun
         if(declensionRules.keys && declensionRules.keys.length === 2) {
             this.form_funcs
                 .set('baseForm', ['basic', 'firstEnclitic', 'subjective', 'directObject', 'indirectObject'])
@@ -138,7 +142,7 @@ export class Verb extends ConstructionElement {
     }
 }
 
-class Copula extends ConstructionElement {
+export class Copula extends ConstructionElement {
     private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
@@ -184,17 +188,11 @@ export class EncliticE extends ConstructionElement {
 }
 
 class EncliticA extends ConstructionElement {
-    constructor() {
-        super()
-        this.partOfSpeech = POS.particle
-    }
+    partOfSpeech = POS.particle
 }
 
 class Demonstrative extends ConstructionElement {
-    constructor() {
-        super()
-        this.partOfSpeech = POS.pronoun
-    }
+    partOfSpeech = POS.pronoun
 }
 
 export class Adjective extends ConstructionElement {
@@ -208,11 +206,14 @@ export class Adjective extends ConstructionElement {
     }
 }
 
+class PlainNoun extends ConstructionElement {
+    partOfSpeech = POS.noun
+}
+
 export class Noun extends ConstructionElement {
     private declined: [string, string] = ['', '']
     constructor(declinedTo?: [string, string]) {
         super()
-        this.partOfSpeech = POS.noun
         this.inflection
             .set(NOUN_DECLENSION.baseForm.name, [NOUN_DECLENSION.baseForm.basic])
             .set(NOUN_DECLENSION.sandhiForm.name, [NOUN_DECLENSION.sandhiForm.adjective])
@@ -223,7 +224,10 @@ export class Noun extends ConstructionElement {
     }
 }
 
-class AuxiliaryVerb {}
+export class Auxiliary extends ConstructionElement{
+    partOfSpeech = POS.auxiliary_verb
+}
+
 class CaseMarker {}
 class Particle {}
  
@@ -252,7 +256,7 @@ export class KeyWords {
     private makePersonalPronoun(str: string) {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
         let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let ret = new FirstSingular()
+        let ret = new PersonalPronoun2To137()
         ret.lexeme = ls[0]
         return ret
     }
@@ -285,6 +289,14 @@ export class KeyWords {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
         let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Copula()
+        ret.lexeme = ls[0]
+        return ret
+    }
+
+    private makeAuxiliary(str: string): Auxiliary {
+        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ret = new Auxiliary()
         ret.lexeme = ls[0]
         return ret
     }
@@ -324,6 +336,16 @@ export class KeyWords {
             this.makeCopula('siz'),
 
             this.makeNoun('langx'),
+
+            this.makeAuxiliary('qaz'),
+            this.makeAuxiliary('qaw'),
+            this.makeAuxiliary('qangx'),
+            this.makeAuxiliary('qangz'),
+            this.makeAuxiliary('hoz'),
+            this.makeAuxiliary('how'),
+            this.makeAuxiliary('hongx'),
+            this.makeAuxiliary('hongz'),
+            this.makeAuxiliary('homz'),
         ]
     }
 }
