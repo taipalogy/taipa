@@ -1,4 +1,4 @@
-import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137, Particle } from './keywords'
+import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords } from './keywords'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
@@ -15,6 +15,11 @@ export class ConstructionOfPhrase {
 
 abstract class TypeOfConstruction {
     abstract constructions: Array<ConstructionOfPhrase>;
+    protected keyWords: KeyWords = new KeyWords()
+    protected get(str: string) {
+        const clone = this.keyWords.get(str).clone()
+        return clone
+    }
 }
 
 export class VerbPhrase extends TypeOfConstruction {
@@ -54,6 +59,7 @@ class CopulaPhrase extends TypeOfConstruction {
     constructor() {
         super()
         this.constructions.push(new ConstructionOfPhrase([new Copula()]))
+        this.constructions.push(new ConstructionOfPhrase([<Copula>this.get('siz').select(['sandhiForm', 'copulative'])]))
         this.constructions.push(new ConstructionOfPhrase([new Verb(), new Particle()]))
     }
 }
@@ -62,21 +68,17 @@ class DitransitiveVerbPhrase extends TypeOfConstruction {
     constructions = []
 }
 
-class Rule {
-    r: ConstructionOfPhrase[]
-    constructor(arr: ConstructionOfPhrase[]) {
-        this.r = arr
-    }
-}
-
-class Rules {
-    arr: Array<Rule> = []
+export class Rules {
+    arr: Array<ConstructionOfPhrase> = new Array()
 
     constructor() {
         this.populateArray()
     }
 
     private populateArray() {
-        this.arr = []
+        const copulaPhrase: CopulaPhrase = new CopulaPhrase()
+        for(let e of copulaPhrase.constructions) {
+            this.arr.push(e)
+        }
     }
 }

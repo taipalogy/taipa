@@ -33,11 +33,12 @@ export class ConstructionElement {
         return false
     }
 
-    select(selection?: [string, string]): void {
+    select(selection: [string, string]): ConstructionElement {
         if(selection && this.validate(selection)) {
             this.selected[0] = selection[0]
             this.selected[1] = selection[1]
         }
+        return this
     }
 
     clone(): ConstructionElement {

@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
-import { ConstructionOfPhrase, VerbPhrase } from './rules'
+import { ConstructionOfPhrase, VerbPhrase, Rules } from './rules'
 import { Word } from '../lexeme'
 import { PersonalPronouns, ConstructionElement, Verb, PersonalPronoun2To137 } from './keywords'
 
