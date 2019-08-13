@@ -12,6 +12,7 @@ export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme()
     partOfSpeech: string = ''
     protected inflection: Map<string, string[]> = new Map()
+    selected: [string, string] = ['', '']
 
     check(w: Word) {
         if(this.lexeme.word.literal === w.literal) {
@@ -32,6 +33,17 @@ export class ConstructionElement {
         return false
     }
 
+    select(selection?: [string, string]): void {
+        if(selection && this.validate(selection)) {
+            this.selected[0] = selection[0]
+            this.selected[1] = selection[1]
+        }
+    }
+
+    clone(): ConstructionElement {
+        const clone = Object.create(this);
+        return clone
+    }
 }
 
 let NOUN_DECLENSION = {
@@ -91,36 +103,46 @@ export enum PersonalPronouns {
 }
 
 export class PersonalPronoun extends ConstructionElement {
-    partOfSpeech = POS.pronoun
+    constructor() {
+        super()
+        this.partOfSpeech = POS.pronoun
+    }
 }
 
 export class PersonalPronoun2To137 extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
-    private declined: [string, string] = ['', '']
     constructor() {
         super()
         this.partOfSpeech = POS.pronoun
         if(declensionRules.keys && declensionRules.keys.length === 3) {
-            this.form_funcs
+            this.inflection
                 .set('baseForm', ['basic', 'directObject'])
                 .set(declensionRules.keys[0], ['firstEnclitic', 'subjective', 'indirectObject'])
                 .set(declensionRules.keys[1], ['adverbialForm', 'thirdEnclitic'])
                 .set(declensionRules.keys[2], ['seventhEnclitic'])
         }
     }
+
+    clone(): PersonalPronoun2To137 {
+        const clone = Object.create(this);
+        return clone
+    }
 }
 
 export class PersonalPronoun1To37 extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.pronoun
         if(declensionRules.keys && declensionRules.keys.length === 2) {
-            this.form_funcs
+            this.inflection
                 .set('baseForm', ['basic', 'firstEnclitic', 'subjective', 'directObject', 'indirectObject'])
                 .set(declensionRules.keys[0], ['adverbialForm', 'thirdEnclitic'])
                 .set(declensionRules.keys[1], ['seventhEnclitic', 'subjective'])
         }
+    }
+
+    clone(): PersonalPronoun1To37 {
+        const clone = Object.create(this);
+        return clone
     }
 }
 
@@ -132,33 +154,30 @@ class Postposition extends ConstructionElement {
 }
 
 export class Verb extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.verb
-        this.form_funcs
+        this.inflection
             .set('baseForm', ['intransitive', 'perfective'])
             .set('sandhiForm', ['transitive', 'ditransitive', 'causative', 'attributive', 'continuative'])
     }
 }
 
 export class Copula extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.verb
-        this.form_funcs
+        this.inflection
             .set('baseForm', ['intransitive'])
             .set('sandhiForm', ['conpulative'])
     }
 }
 
 export class NumeralQuantifier extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.noun
-        this.form_funcs
+        this.inflection
             .set('baseForm', ['basic'])
             .set('sandhiForm', ['attributive', 'continuative'])
             .set('adverbialForm', ['adverbial'])
@@ -166,71 +185,92 @@ export class NumeralQuantifier extends ConstructionElement {
 }
 
 export class EncliticLe extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.particle
-        this.form_funcs
+        this.inflection
             .set('baseForm', ['basic', 'imperative'])
             .set('sandhiForm', ['conjunctive'])
     }
 }
 
 export class EncliticE extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.particle
-        this.form_funcs
+        this.inflection
             .set('baseForm', ['basic', 'participle', 'terminal'])
             .set('sandhiForm', ['attributive'])
     }
 }
 
 class EncliticA extends ConstructionElement {
-    partOfSpeech = POS.particle
+    constructor() {
+        super()
+        this.partOfSpeech = POS.particle
+    }
 }
 
 class Demonstrative extends ConstructionElement {
-    partOfSpeech = POS.pronoun
+    constructor() {
+        super()
+        this.partOfSpeech = POS.pronoun
+    }
+
+    clone(): Demonstrative {
+        const clone = Object.create(this);
+        return clone
+    }
 }
 
 export class Adjective extends ConstructionElement {
-    private form_funcs: Map<string, string[]> = new Map()
     constructor() {
         super()
         this.partOfSpeech = POS.adjective
-        this.form_funcs
+        this.inflection
             .set('baseForm', ['basic'])
             .set('sandhiForm', ['attributive', 'adverbial'])
     }
 }
 
 class PlainNoun extends ConstructionElement {
-    partOfSpeech = POS.noun
+    constructor() {
+        super()
+        this.partOfSpeech = POS.noun
+    }
 }
 
 export class Noun extends ConstructionElement {
-    private declined: [string, string] = ['', '']
-    constructor(declinedTo?: [string, string]) {
+    constructor() {
         super()
+        this.partOfSpeech = POS.noun
         this.inflection
             .set(NOUN_DECLENSION.baseForm.name, [NOUN_DECLENSION.baseForm.basic])
             .set(NOUN_DECLENSION.sandhiForm.name, [NOUN_DECLENSION.sandhiForm.adjective])
-        if(declinedTo && this.validate(declinedTo)) {
-            this.declined[0] = declinedTo[0]
-            this.declined[1] = declinedTo[1]
-        }
+    }
+
+    clone(): Noun {
+        const clone = Object.create(this);
+        return clone
     }
 }
 
 export class Auxiliary extends ConstructionElement{
-    partOfSpeech = POS.auxiliary_verb
+    constructor() {
+        super()
+        this.partOfSpeech = POS.auxiliary_verb
+    }
+}
+
+export class Particle extends ConstructionElement {
+    constructor() {
+        super()
+        this.partOfSpeech = POS.particle
+    }
 }
 
 class CaseMarker {}
-class Particle {}
- 
+
 export class KeyWords {
     private analyzer = new TonalInflextionAnalyzer()
     private keyword_serialno: Array<[string, number]> = new Array()
@@ -309,8 +349,7 @@ export class KeyWords {
         let serialno: number = 0
         if(this.keyword_serialno[i])
             serialno = this.keyword_serialno[i][1]
-        //console.log(`i: ${i}, serialno: ${serialno}`)
-        //console.log(this.keyElems[serialno].lexeme.word.literal)
+        return serialno
     }
 
     private doBSearch(arr: Array<[string, number]>, str: string, compareFunc: (a: string, b: string) => number): number {
@@ -324,6 +363,12 @@ export class KeyWords {
             if (0 < c) top = mid
         }
         return -1
+    }
+
+    get(str: string) {
+        let serialno = this.search(str)
+        //console.log(this.keyElems[serialno].lexeme.word.literal)
+        return this.keyElems[serialno]
     }
 
     private populateKeyElems() {

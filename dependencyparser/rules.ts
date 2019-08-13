@@ -1,4 +1,4 @@
-import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137 } from './keywords'
+import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137, Particle } from './keywords'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
@@ -45,7 +45,16 @@ export class VerbPhrase extends TypeOfConstruction {
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
 
         this.constructions.push(new ConstructionOfPhrase([new PersonalPronoun(), new Auxiliary(), new Verb()]))
-        this.constructions.push(new ConstructionOfPhrase([new PersonalPronoun(), new Copula()]))
+    }
+}
+
+class CopulaPhrase extends TypeOfConstruction {
+    constructions: Array<ConstructionOfPhrase> = []
+
+    constructor() {
+        super()
+        this.constructions.push(new ConstructionOfPhrase([new Copula()]))
+        this.constructions.push(new ConstructionOfPhrase([new Verb(), new Particle()]))
     }
 }
 
