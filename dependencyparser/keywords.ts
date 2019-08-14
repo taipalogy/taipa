@@ -12,12 +12,13 @@ export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme()
     partOfSpeech: string = ''
     protected inflection: Map<string, string[]> = new Map()
-    selected: [string, string] = ['', '']
+    private selected: [string, string] = ['', '']
 
-    check(w: Word) {
-        if(this.lexeme.word.literal === w.literal) {
-            return true
-        }
+    match(w: Word) {
+        if(this.lexeme.word.literal === w.literal) return true
+        if(this.lexeme.otherForms[0] && this.lexeme.otherForms[0].literal === w.literal) return true
+        if(this.lexeme.otherForms[1] && this.lexeme.otherForms[1].literal === w.literal) return true
+        if(this.lexeme.otherForms[2] && this.lexeme.otherForms[2].literal === w.literal) return true
         return false
     }
 
@@ -33,18 +34,14 @@ export class ConstructionElement {
         return false
     }
 
-    select(selection: [string, string]): ConstructionElement {
-        if(selection && this.validate(selection)) {
-            this.selected[0] = selection[0]
-            this.selected[1] = selection[1]
-        }
-        return this
-    }
-
     clone(): ConstructionElement {
         const clone = Object.create(this);
         return clone
     }
+
+    setForm(str: string) { this.selected[0] = str; return this }
+    
+    setFunc(str: string) { this.selected[1] = str; return this }
 }
 
 let NOUN_DECLENSION = {

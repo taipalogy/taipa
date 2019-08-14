@@ -48,8 +48,6 @@ export class VerbPhrase extends TypeOfConstruction {
         intransitive.lexeme = ls[0]
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
-
-        this.constructions.push(new ConstructionOfPhrase([new PersonalPronoun(), new Auxiliary(), new Verb()]))
     }
 }
 
@@ -59,7 +57,7 @@ class CopulaPhrase extends TypeOfConstruction {
     constructor() {
         super()
         this.constructions.push(new ConstructionOfPhrase([new Copula()]))
-        this.constructions.push(new ConstructionOfPhrase([<Copula>this.get('siz').select(['sandhiForm', 'copulative'])]))
+        this.constructions.push(new ConstructionOfPhrase([<Copula>this.get('siz')]))
         this.constructions.push(new ConstructionOfPhrase([new Verb(), new Particle()]))
     }
 }

@@ -1,13 +1,7 @@
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
-import { ConstructionOfPhrase, VerbPhrase, Rules } from './rules'
+import { ConstructionOfPhrase, VerbPhrase } from './rules'
 import { Word } from '../lexeme'
-import { PersonalPronouns, ConstructionElement, Verb, PersonalPronoun2To137 } from './keywords'
-
-
-
-//------------------------------------------------------------------------------
-//  Rule-Based Tagger
-//------------------------------------------------------------------------------
+import { ConstructionElement } from './keywords'
 
 export class RuleBasedTagger {
 
@@ -24,7 +18,7 @@ export class RuleBasedTagger {
         let vp = new VerbPhrase()
         // if w is an instance of TonalWord or ~
         for(let key in vp.constructions) {
-            if(vp.constructions[key].elements[0].check(w)) {
+            if(vp.constructions[key].elements[0].match(w)) {
                 cop = vp.constructions[key]
             }
         }
