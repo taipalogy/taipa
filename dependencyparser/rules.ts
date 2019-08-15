@@ -7,41 +7,13 @@ import { Phraseme } from '../phraseme';
 
 export class ConstructionOfPhrase {
     phraseme: Phraseme = new Phraseme()
+    partOfSpeech: string = ''
     elements: Array<ConstructionElement> = new Array()
 
-    constructor(arr: Array<ConstructionElement>){
+    constructor(private arr: Array<ConstructionElement>) {
         for(let key in arr) {
             this.elements.push(arr[key])
         }
-    }
-}
-
-class Rule {
-    previous: string = ''
-    next: string = ''
-}
-
-class CopulaRule extends Rule {
-    constructor() {
-        super()
-        this.previous = POS.pronoun
-        this.next = POS.noun
-    }
-}
-
-class PhrasalCopulaRule extends Rule {
-    constructor() {
-        super()
-        this.previous = POS.pronoun
-        this.next = POS.adjective
-    }
-}
-
-abstract class TypeOfConstruction {
-    protected static keyWords: KeyWords = new KeyWords()
-    protected get(str: string) {
-        const clone = TypeOfConstruction.keyWords.get(str).clone()
-        return clone
     }
 }
 
@@ -73,35 +45,48 @@ export class VerbPhrase {
     }
 }
 
-class CopulaPhrase extends TypeOfConstruction {
-    phrases: Array<ConstructionOfPhrase> = new Array()
+export class Rules {
+    private expressions: Array<ConstructionOfPhrase[]> = new Array()
+    protected keyWords: KeyWords = new KeyWords()
 
     constructor() {
-        super()
-        this.phrases.push(new ConstructionOfPhrase([new PersonalPronoun()]))
-        this.phrases.push(new ConstructionOfPhrase([<Copula>this.get('siz')]))
-        this.phrases.push(new ConstructionOfPhrase([new Noun()]))        
+        this.populateExpressions()
+    }
+
+    protected get(str: string) {
+        const clone = this.keyWords.get(str).clone()
+        return clone
+    }
+
+    match(strs: string[]) {
+        for(let e of this.expressions) {
+            for(let i=0; i<e.length; i++) {
+                if(e[i].elements[0].match(strs[i])) {
+                    if(i+1 === e.length) {
+                        return e
+                    }
+                }
+            }
+        }
+    }
+
+    populateExpressions() {
+        // copula
+        this.expressions.push([new ConstructionOfPhrase([new PersonalPronoun()])
+                                , new ConstructionOfPhrase([<Copula>this.get('siz')])
+                                , new ConstructionOfPhrase([new Noun()])])
+
+        this.expressions.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
+                                , new ConstructionOfPhrase([new Adjective])])
+        
+        this.expressions.push([new ConstructionOfPhrase([this.get('goay')])
+                                , new ConstructionOfPhrase([this.get('siz')])
+                                , new ConstructionOfPhrase([this.get('langx')])])
+                                
+        // phrasal copula
+        this.expressions.push([new ConstructionOfPhrase([new Verb(), new Particle()])
+                                ,new ConstructionOfPhrase([new Adjective])])
+
+        // serial verbs
     }
 }
-
-class CopulaPhrase2 extends TypeOfConstruction {
-    phrases: Array<ConstructionOfPhrase> = new Array()
-
-    constructor() {
-        super()
-        this.phrases.push(new ConstructionOfPhrase([<Copula>this.get('siz')]))
-        this.phrases.push(new ConstructionOfPhrase([new PersonalPronoun()]))
-    }
-}
-
-class PhraslCopulaPhrase extends TypeOfConstruction {
-    phrases: Array<ConstructionOfPhrase> = new Array()
-
-    constructor() {
-        super()
-        this.phrases.push(new ConstructionOfPhrase([new Verb(), new Particle()]))
-        this.phrases.push(new ConstructionOfPhrase([new Adjective]))
-    }
-}
-
-class SerialVerbsConstruction {}

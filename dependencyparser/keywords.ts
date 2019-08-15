@@ -14,14 +14,14 @@ export class ConstructionElement {
     protected inflection: Map<string, string[]> = new Map()
     private selected: [string, string] = ['', '']
 
-    match(w: Word) {
-        if(this.lexeme.word.literal === w.literal) {
+    match(str: string) {
+        if(this.lexeme.word.literal === str) {
             this.selected[0] = 'baseForm'
             return true
         }
         if(this.lexeme.otherForms.length > 0) {
             for(let i=0; i<this.lexeme.otherForms.length; i++) {
-                if(this.lexeme.otherForms[i] && this.lexeme.otherForms[i].literal === w.literal) {
+                if(this.lexeme.otherForms[i] && this.lexeme.otherForms[i].literal === str) {
                     return true
                 }
             }

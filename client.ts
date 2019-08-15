@@ -66,16 +66,12 @@ export class Client {
         let c: Configuration = dp.getInitialConfiguration();
         let tokens = str.match(/\w+/g);
 
-        let lexemes: Array<TonalLemmatizationLexeme> = new Array();
-        let analyzer = new TonalLemmatizationAnalyzer()
+        let tagger
         if(tokens != null && tokens.length >0) {
-            for(let key in tokens) {
-                lexemes.push(analyzer.doLexicalAnalysis(tokens[key])[0])
-            }
+            tagger = new RuleBasedTagger(tokens);
+        } else {
+            tagger = new RuleBasedTagger([])
         }
-
-        // can lexemes be replaced by a phraseme?
-        let tagger = new RuleBasedTagger(lexemes);
         let elems = tagger.elements;
 
         for(let key of elems) {
