@@ -15,10 +15,17 @@ export class ConstructionElement {
     private selected: [string, string] = ['', '']
 
     match(w: Word) {
-        if(this.lexeme.word.literal === w.literal) return true
-        if(this.lexeme.otherForms[0] && this.lexeme.otherForms[0].literal === w.literal) return true
-        if(this.lexeme.otherForms[1] && this.lexeme.otherForms[1].literal === w.literal) return true
-        if(this.lexeme.otherForms[2] && this.lexeme.otherForms[2].literal === w.literal) return true
+        if(this.lexeme.word.literal === w.literal) {
+            this.selected[0] = 'baseForm'
+            return true
+        }
+        if(this.lexeme.otherForms.length > 0) {
+            for(let i=0; i<this.lexeme.otherForms.length; i++) {
+                if(this.lexeme.otherForms[i] && this.lexeme.otherForms[i].literal === w.literal) {
+                    return true
+                }
+            }
+        }
         return false
     }
 

@@ -1,9 +1,12 @@
-import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords } from './keywords'
+import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective } from './keywords'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
+import { POS } from './symbols';
+import { Phraseme } from '../phraseme';
 
 export class ConstructionOfPhrase {
+    phraseme: Phraseme = new Phraseme()
     elements: Array<ConstructionElement> = new Array()
 
     constructor(arr: Array<ConstructionElement>){
@@ -13,21 +16,40 @@ export class ConstructionOfPhrase {
     }
 }
 
+class Rule {
+    previous: string = ''
+    next: string = ''
+}
+
+class CopulaRule extends Rule {
+    constructor() {
+        super()
+        this.previous = POS.pronoun
+        this.next = POS.noun
+    }
+}
+
+class PhrasalCopulaRule extends Rule {
+    constructor() {
+        super()
+        this.previous = POS.pronoun
+        this.next = POS.adjective
+    }
+}
+
 abstract class TypeOfConstruction {
-    abstract constructions: Array<ConstructionOfPhrase>;
-    protected keyWords: KeyWords = new KeyWords()
+    protected static keyWords: KeyWords = new KeyWords()
     protected get(str: string) {
-        const clone = this.keyWords.get(str).clone()
+        const clone = TypeOfConstruction.keyWords.get(str).clone()
         return clone
     }
 }
 
-export class VerbPhrase extends TypeOfConstruction {
+export class VerbPhrase {
 
     constructions: Array<ConstructionOfPhrase> = []
 
     constructor() {
-        super()
 
         let analyzer = new TonalInflextionAnalyzer()
 
@@ -52,31 +74,34 @@ export class VerbPhrase extends TypeOfConstruction {
 }
 
 class CopulaPhrase extends TypeOfConstruction {
-    constructions: Array<ConstructionOfPhrase> = []
+    phrases: Array<ConstructionOfPhrase> = new Array()
 
     constructor() {
         super()
-        this.constructions.push(new ConstructionOfPhrase([new Copula()]))
-        this.constructions.push(new ConstructionOfPhrase([<Copula>this.get('siz')]))
-        this.constructions.push(new ConstructionOfPhrase([new Verb(), new Particle()]))
+        this.phrases.push(new ConstructionOfPhrase([new PersonalPronoun()]))
+        this.phrases.push(new ConstructionOfPhrase([<Copula>this.get('siz')]))
+        this.phrases.push(new ConstructionOfPhrase([new Noun()]))        
     }
 }
 
-class DitransitiveVerbPhrase extends TypeOfConstruction {
-    constructions = []
-}
-
-export class Rules {
-    arr: Array<ConstructionOfPhrase> = new Array()
+class CopulaPhrase2 extends TypeOfConstruction {
+    phrases: Array<ConstructionOfPhrase> = new Array()
 
     constructor() {
-        this.populateArray()
-    }
-
-    private populateArray() {
-        const copulaPhrase: CopulaPhrase = new CopulaPhrase()
-        for(let e of copulaPhrase.constructions) {
-            this.arr.push(e)
-        }
+        super()
+        this.phrases.push(new ConstructionOfPhrase([<Copula>this.get('siz')]))
+        this.phrases.push(new ConstructionOfPhrase([new PersonalPronoun()]))
     }
 }
+
+class PhraslCopulaPhrase extends TypeOfConstruction {
+    phrases: Array<ConstructionOfPhrase> = new Array()
+
+    constructor() {
+        super()
+        this.phrases.push(new ConstructionOfPhrase([new Verb(), new Particle()]))
+        this.phrases.push(new ConstructionOfPhrase([new Adjective]))
+    }
+}
+
+class SerialVerbsConstruction {}

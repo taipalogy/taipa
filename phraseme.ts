@@ -1,6 +1,7 @@
 
 import { InflectionalEnding } from "./tonal/lexeme"
 import { TonalWord, TonalLemmatizationLexeme } from './tonal/lexeme'
+import { TonalInflexionLexeme } from "./dependencyparser/lexeme";
 
 //------------------------------------------------------------------------------
 //  Tone Group
@@ -16,13 +17,12 @@ class ToneSandhiGroup extends ToneGroup{}
 //  Phraseme
 //------------------------------------------------------------------------------
 
-class Phraseme {
-}
+export class Phraseme {}
 
-export class ToneSandhiPhraseme extends Phraseme {
-    phrase: ToneSandhiPhrase
+export class TonalPhraseme extends Phraseme {
+    phrase: TonalPhrase
 
-    constructor(phrase: ToneSandhiPhrase) {
+    constructor(phrase: TonalPhrase) {
         super();
         this.phrase = phrase
     }
@@ -42,7 +42,7 @@ class Phrase {
     literal: string = ''
 }
 
-export class ToneSandhiPhrase extends Phrase {
+export class TonalPhrase extends Phrase {
     words: Array<TonalWord>
 
     constructor(words?: Array<TonalWord>) {
@@ -79,16 +79,16 @@ export class ToneSandhiPhrase extends Phrase {
 //  Tone Sandhi Phraseme Maker
 //------------------------------------------------------------------------------
 
-export class ToneSandhiPhrasemeMaker {
-    lexemes: Array<TonalLemmatizationLexeme>;
+export class TonalPhrasemeMaker {
+    lexemes: Array<TonalInflexionLexeme>;
 
-    constructor(lexemes: Array<TonalLemmatizationLexeme>) {
+    constructor(lexemes: Array<TonalInflexionLexeme>) {
         this.lexemes = new Array();
         this.lexemes = lexemes;
     }
 
     makePhrasemes() {
-        let phrasemes: Array<ToneSandhiPhraseme> = new Array();
+        let phrasemes: Array<TonalPhraseme> = new Array();
 
         // unpack lexemes and take words out from them
         let words: Array<TonalWord> = new Array();
@@ -96,7 +96,7 @@ export class ToneSandhiPhrasemeMaker {
             words.push(this.lexemes[key].word);
         }
         
-        let tsp = new ToneSandhiPhraseme(new ToneSandhiPhrase(words));
+        let tsp = new TonalPhraseme(new TonalPhrase(words));
         if(this.lexemes.length > 0) {
             let tg = new ToneGroup();
             for(let k in this.lexemes) {
