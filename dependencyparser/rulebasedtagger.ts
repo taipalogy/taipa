@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from '../tonal/lexeme'
-import { ConstructionOfPhrase, VerbPhrase, Rules } from './rules'
+import { ConstructionOfPhrase, VerbPhrase, MultiWordExpressions } from './rules'
 import { Word } from '../lexeme'
 import { ConstructionElement } from './keywords'
 
@@ -27,8 +27,8 @@ export class RuleBasedTagger {
             this.elements.push(vp.constructions[0].elements[k])
         }
 
-        const rules = new Rules()
-        const cops = rules.match(strs)
+        const xprsns = new MultiWordExpressions()
+        const cops = xprsns.match(strs)
 /*
         if(cops)
             for(let e of cops) {

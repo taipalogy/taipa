@@ -1,5 +1,7 @@
 import { ConstructionElement } from './keywords';
-import { Dependency } from './symbols'
+import { Dependency, POS } from './symbols'
+import { DummyLexeme } from './lexeme';
+import { Document } from '../document'
 
 export class Arc {
     dependency: Dependency
@@ -69,6 +71,53 @@ export class Configuration {
 export class DependencyParser {
     getInitialConfiguration() {
         return new Configuration();
+    }
+
+    parse(elems: ConstructionElement[]) {
+        let c: Configuration = this.getInitialConfiguration();
+        for(let key of elems) {
+            c.queue.push(key)
+        }
+
+        let guide = new Guide()
+        let root = new DummyLexeme()
+        root.word.literal = 'ROOT'
+        let ce = new ConstructionElement()
+        ce.lexeme = root
+        c.stack.push(ce)
+
+        if(c.stack.length == 1 && c.queue.length > 0) {
+            // initial configuration
+            // shift the first lexeme from queue to stack
+            guide.transitions.push(new Shift())
+        }
+
+        while(!c.isTerminalConfiguration()) {
+            let t = guide.getNextTransition();
+            if(t == null || t == undefined) break
+            c = c.makeTransition(t);
+            if(c.stack[c.stack.length-1] != undefined) {
+                if(c.stack[c.stack.length-1].partOfSpeech === POS.verb) {
+                    let l = c.stack[c.stack.length-1]
+                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.pronoun) {
+                            guide.transitions.push(new Shift())
+                    } else {
+                            guide.transitions.push(new RightArc())
+                            c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                            guide.transitions.push(new RightArc())
+                    }
+                } if(c.stack[c.stack.length-1].partOfSpeech === POS.pronoun) {
+                    let l = c.stack[c.stack.length-1]
+                            guide.transitions.push(new Shift())
+                            c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                }
+            }
+        }
+
+        let doc: Document = new Document();
+        doc.graph = c.getGraph();
+        return doc;
+
     }
 }
 

@@ -45,12 +45,12 @@ export class VerbPhrase {
     }
 }
 
-export class Rules {
-    private expressions: Array<ConstructionOfPhrase[]> = new Array()
+export class MultiWordExpressions {
+    private patterns: Array<ConstructionOfPhrase[]> = new Array()
     protected keyWords: KeyWords = new KeyWords()
 
     constructor() {
-        this.populateExpressions()
+        this.populatePatterns()
     }
 
     protected get(str: string) {
@@ -59,7 +59,7 @@ export class Rules {
     }
 
     match(strs: string[]) {
-        for(let e of this.expressions) {
+        for(let e of this.patterns) {
             for(let i=0; i<e.length; i++) {
                 if(e[i].elements[0].match(strs[i])) {
                     if(i+1 === e.length) {
@@ -70,21 +70,21 @@ export class Rules {
         }
     }
 
-    populateExpressions() {
+    populatePatterns() {
         // copula
-        this.expressions.push([new ConstructionOfPhrase([new PersonalPronoun()])
+        this.patterns.push([new ConstructionOfPhrase([new PersonalPronoun()])
                                 , new ConstructionOfPhrase([<Copula>this.get('siz')])
                                 , new ConstructionOfPhrase([new Noun()])])
 
-        this.expressions.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
+        this.patterns.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
                                 , new ConstructionOfPhrase([new Adjective])])
         
-        this.expressions.push([new ConstructionOfPhrase([this.get('goay')])
+        this.patterns.push([new ConstructionOfPhrase([this.get('goay')])
                                 , new ConstructionOfPhrase([this.get('siz')])
                                 , new ConstructionOfPhrase([this.get('langx')])])
                                 
         // phrasal copula
-        this.expressions.push([new ConstructionOfPhrase([new Verb(), new Particle()])
+        this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])
                                 ,new ConstructionOfPhrase([new Adjective])])
 
         // serial verbs

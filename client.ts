@@ -1,11 +1,6 @@
-import { TonalLemmatizationLexeme, LemmatizationLexeme } from './tonal/lexeme'
-import { Word } from './lexeme'
-import { DependencyParser, Configuration, Guide, Arc, Shift, RightArc } from './dependencyparser/dependencyparser'
+import { TonalLemmatizationLexeme } from './tonal/lexeme'
+import { DependencyParser } from './dependencyparser/dependencyparser'
 import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
-import { DummyLexeme } from './dependencyparser/lexeme'
-import { POS, Dependency } from './dependencyparser/symbols'
-import { Sound } from './grapheme';
-import { ConstructionElement } from './dependencyparser/keywords'
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
@@ -14,15 +9,7 @@ import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
 import { KanaUncombiningMorpheme } from './kana/morpheme';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
 import { KanaAnalyzer } from './kana/analyzer';
-
-export class Document {
-    lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
-    lemmata: Array<Word> = new Array();
-    inflectionalEnding: string = ''
-    soundSequences: Array<Sound[]> = new Array()
-    blockSequences: string[] = []
-    graph: Array<Arc> = new Array()
-}
+import { Document } from './document'
 
 export class Client {
     processKana(str: string) {
@@ -62,10 +49,10 @@ export class Client {
     }
 
     process(str: string): Document {
-        let dp = new DependencyParser();
-        let c: Configuration = dp.getInitialConfiguration();
+        // tokenization
         let tokens = str.match(/\w+/g);
 
+        // tagging
         let tagger
         if(tokens != null && tokens.length >0) {
             tagger = new RuleBasedTagger(tokens);
@@ -74,47 +61,8 @@ export class Client {
         }
         let elems = tagger.elements;
 
-        for(let key of elems) {
-            c.queue.push(key)
-        }
-
-        let guide = new Guide()
-        let root = new DummyLexeme()
-        root.word.literal = 'ROOT'
-        let ce = new ConstructionElement()
-        ce.lexeme = root
-        c.stack.push(ce)
-
-        if(c.stack.length == 1 && c.queue.length > 0) {
-            // initial configuration
-            // shift the first lexeme from queue to stack
-            guide.transitions.push(new Shift())
-        }
-
-        while(!c.isTerminalConfiguration()) {
-            let t = guide.getNextTransition();
-            if(t == null || t == undefined) break
-            c = c.makeTransition(t);
-            if(c.stack[c.stack.length-1] != undefined) {
-                if(c.stack[c.stack.length-1].partOfSpeech === POS.verb) {
-                    let l = c.stack[c.stack.length-1]
-                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.pronoun) {
-                            guide.transitions.push(new Shift())
-                    } else {
-                            guide.transitions.push(new RightArc())
-                            c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
-                            guide.transitions.push(new RightArc())
-                    }
-                } if(c.stack[c.stack.length-1].partOfSpeech === POS.pronoun) {
-                    let l = c.stack[c.stack.length-1]
-                            guide.transitions.push(new Shift())
-                            c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
-                }
-            }
-        }
-
-        let doc = new Document();
-        doc.graph = c.getGraph();
-        return doc;
+        // dependency parsing
+        let dp = new DependencyParser();
+        return dp.parse(elems)
     }
 }
