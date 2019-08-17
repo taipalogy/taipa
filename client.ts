@@ -1,6 +1,6 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme'
-import { DependencyParser } from './dependencyparser/dependencyparser'
-import { RuleBasedTagger } from './dependencyparser/rulebasedtagger'
+import { DependencyParser } from './dparser/transition'
+import { RuleBasedTagger } from './dparser/tagger'
 
 import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';

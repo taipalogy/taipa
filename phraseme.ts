@@ -1,7 +1,7 @@
 
 import { InflectionalEnding } from "./tonal/lexeme"
 import { TonalWord, TonalLemmatizationLexeme } from './tonal/lexeme'
-import { TonalInflexionLexeme } from "./dependencyparser/lexeme";
+import { TonalInflexionLexeme } from "./dparser/lexeme";
 
 //------------------------------------------------------------------------------
 //  Tone Group

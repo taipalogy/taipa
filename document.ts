@@ -1,7 +1,7 @@
 import { LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
 import { Sound } from './grapheme';
-import { Arc } from './dependencyparser/dependencyparser'
+import { Arc } from './dparser/transition'
 
 export class Document {
     lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
