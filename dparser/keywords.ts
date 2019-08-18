@@ -1,5 +1,5 @@
 import { InflexionLexeme, TonalInflexionLexeme, TonalInflexion } from './lexeme'
-import { POS } from './symbols';
+import { POS, PERSONAL_PRONOUN2TO137_DECLENSION, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
@@ -11,7 +11,6 @@ import { TonalCombiningForms } from './morpheme';
 export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme()
     partOfSpeech: string = ''
-    protected inflection: Map<string, string[]> = new Map() // TODO: to be deleted
     protected selected: [string, string] = ['', '']
 
     match(str: string) {
@@ -28,18 +27,6 @@ export class ConstructionElement {
         return false
     }
 
-    protected validate(inflectTo: [string, string]) {
-        if(this.inflection.has(inflectTo[0])) {
-            let arr = this.inflection.get(inflectTo[0])
-            if(arr)
-                for(let e of arr) {
-                    if(e === inflectTo[1])
-                        return true
-                }
-        }
-        return false
-    }
-
     clone(): ConstructionElement {
         const clone = Object.create(this);
         return clone
@@ -48,129 +35,8 @@ export class ConstructionElement {
     protected setForm(str: string) { this.selected[0] = str; return this }
     
     setFunc(str: string) { this.selected[1] = str; return this }
-}
 
-let PERSONAL_PRONOUN2TO137_DECLENSION = {
-    baseForm: {
-        name: 'baseForm',
-        directObject: 'directObject',
-    },
-    sandhiForm: {
-        zero: {
-            firstEnclitic: 'firstEnclitic',
-            subjective: 'subjective',
-            indirectObject: 'indirectObject',
-        },
-        w: {
-            adverbial: 'adverbial',
-            thirdEnclitic: 'thirdEnclitic',
-        },
-        z: {
-            seventhEnclitic: 'seventhEnclitic',
-        },
-    }
-}
-
-let PERSONAL_PRONOUN1TO37_DECLENSION = {
-    baseForm: {
-        name: 'baseForm',
-        firstEnclitic: 'firstEnclitic',
-        subjective: 'subjective',
-        directObject: 'directObject',
-        indirectObject: 'indirectObject',
-    },
-    sandhiForm: {
-        w: {
-            adverbial: 'adverbial',
-            thirdEnclitic: 'thirdEnclitic',
-        },
-        z: {
-            subjective: 'subjective',
-            seventhEnclitic: 'seventhEnclitic',
-        }
-    }
-}
-
-let VERB_CONJUGATION = {
-    baseForm: {
-        name: 'baseForm',
-        intransitive: 'intransitive',
-        perfective: 'perfective',
-    },
-    sandhiForm: {
-        name: 'sandhiForm',
-        transitive: 'transitive',
-        ditransitive: 'ditransitive',
-        causative: 'causative',
-        attributive: 'attributive',
-        continuative: 'continuative',
-    }
-}
-
-let NUMERAL_QUANTIFIER = {
-    baseForm: {
-        name: 'baseForm',
-        nominal: 'nominal',
-    },
-    sandhiForm: {
-        name: 'sandhiForm',
-        attributive: 'attributive',
-        continuative: 'continuative',
-    },
-    adverbialForm: {
-        name: 'adverbialForm',
-        adverbial: 'adverbial',
-    }
-}
-
-let ADJECTIVE_INFLECTION = {
-    baseForm: {
-        name: 'baseForm',
-        adjective: 'adjective',
-    },
-    sandhiForm: {
-        name: 'sandhiForm',
-        attributive: 'attributive',
-        adverbial: 'adverbial',
-    }
-}
-
-let COPULA_CONJUGATION = {
-    baseForm: {
-        name: 'baseForm',
-        intransitive: 'intransitive'
-    },
-    sandhiForm: {
-        name: 'sandhiFor',
-        copulative: 'copulative'
-    },
-}
-
-let NOUN_DECLENSION = {
-    baseForm: {
-        name: 'baseForm',
-        nominal: 'nominal' ,
-    },
-    sandhiForm: {
-        name: 'sandhiForm', 
-        adjective: 'adjective',
-    }
-}
-
-let ENCLITIC_E_INFLECTION = {
-    baseForm: {
-        name: 'baseForm',
-        participle: 'participle',
-        attributive: 'attributive',
-    }
-}
-
-let ENCLITIC_LE_INFLECTION = {
-    baseForm: {
-        name: 'baseForm',
-        imperative: 'imperative',
-        conjunctive: 'conjunctive',
-    }
+    get form() { return this.selected[0] }
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}

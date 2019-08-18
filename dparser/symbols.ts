@@ -50,3 +50,126 @@ export enum PTBTags {
 
     comma = ',',
 }
+
+export let PERSONAL_PRONOUN2TO137_DECLENSION = {
+    baseForm: {
+        name: 'baseForm',
+        directObject: 'directObject',
+    },
+    sandhiForm: {
+        zero: {
+            firstEnclitic: 'firstEnclitic',
+            subjective: 'subjective',
+            indirectObject: 'indirectObject',
+        },
+        w: {
+            adverbial: 'adverbial',
+            thirdEnclitic: 'thirdEnclitic',
+        },
+        z: {
+            seventhEnclitic: 'seventhEnclitic',
+        },
+    }
+}
+
+export let PERSONAL_PRONOUN1TO37_DECLENSION = {
+    baseForm: {
+        name: 'baseForm',
+        firstEnclitic: 'firstEnclitic',
+        subjective: 'subjective',
+        directObject: 'directObject',
+        indirectObject: 'indirectObject',
+    },
+    sandhiForm: {
+        w: {
+            adverbial: 'adverbial',
+            thirdEnclitic: 'thirdEnclitic',
+        },
+        z: {
+            subjective: 'subjective',
+            seventhEnclitic: 'seventhEnclitic',
+        }
+    }
+}
+
+export let VERB_CONJUGATION = {
+    baseForm: {
+        name: 'baseForm',
+        intransitive: 'intransitive',
+        perfective: 'perfective',
+    },
+    sandhiForm: {
+        name: 'sandhiForm',
+        transitive: 'transitive',
+        ditransitive: 'ditransitive',
+        causative: 'causative',
+        attributive: 'attributive',
+        continuative: 'continuative',
+    }
+}
+
+export let NUMERAL_QUANTIFIER = {
+    baseForm: {
+        name: 'baseForm',
+        nominal: 'nominal',
+    },
+    sandhiForm: {
+        name: 'sandhiForm',
+        attributive: 'attributive',
+        continuative: 'continuative',
+    },
+    adverbialForm: {
+        name: 'adverbialForm',
+        adverbial: 'adverbial',
+    }
+}
+
+export let ADJECTIVE_INFLECTION = {
+    baseForm: {
+        name: 'baseForm',
+        adjective: 'adjective',
+    },
+    sandhiForm: {
+        name: 'sandhiForm',
+        attributive: 'attributive',
+        adverbial: 'adverbial',
+    }
+}
+
+export let COPULA_CONJUGATION = {
+    baseForm: {
+        name: 'baseForm',
+        intransitive: 'intransitive'
+    },
+    sandhiForm: {
+        name: 'sandhiFor',
+        copulative: 'copulative'
+    },
+}
+
+export let NOUN_DECLENSION = {
+    baseForm: {
+        name: 'baseForm',
+        nominal: 'nominal' ,
+    },
+    sandhiForm: {
+        name: 'sandhiForm', 
+        adjective: 'adjective',
+    }
+}
+
+export let ENCLITIC_E_INFLECTION = {
+    baseForm: {
+        name: 'baseForm',
+        participle: 'participle',
+        attributive: 'attributive',
+    }
+}
+
+export let ENCLITIC_LE_INFLECTION = {
+    baseForm: {
+        name: 'baseForm',
+        imperative: 'imperative',
+        conjunctive: 'conjunctive',
+    }
+}

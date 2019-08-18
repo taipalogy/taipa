@@ -98,18 +98,25 @@ export class DependencyParser {
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
                 if(c.stack[c.stack.length-1].partOfSpeech === POS.verb) {
-                    let l = c.stack[c.stack.length-1]
-                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.pronoun) {
+                    if(c.stack[c.stack.length-1].form === 'copulative') {
+                        if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.noun) {
                             guide.transitions.push(new Shift())
+                            c.graph.push(new Arc(Dependency.cop, c.stack[c.stack.length-2], c.stack[c.stack.length-3]))
+                            c.graph.push(new Arc(Dependency.nsubj, c.stack[c.stack.length-1], c.stack[c.stack.length-3]))
+                        }
+                    }
+                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.pronoun) {
+                        guide.transitions.push(new Shift())
                     } else {
-                            guide.transitions.push(new RightArc())
-                            c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
-                            guide.transitions.push(new RightArc())
+                        guide.transitions.push(new RightArc())
+                        c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                        guide.transitions.push(new RightArc())
                     }
                 } if(c.stack[c.stack.length-1].partOfSpeech === POS.pronoun) {
-                    let l = c.stack[c.stack.length-1]
-                            guide.transitions.push(new Shift())
-                            c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                    guide.transitions.push(new Shift())
+                    c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                } if(c.stack[c.stack.length-1].partOfSpeech === POS.noun) {
+                    guide.transitions.push(new Shift())
                 }
             }
         }

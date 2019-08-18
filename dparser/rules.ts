@@ -54,7 +54,7 @@ class Rule {
 }
 
 export class MultiWordExpressions {
-    private chunks: Array<ConstructionOfPhrase[]> = new Array()
+    private patterns: Array<ConstructionOfPhrase[]> = new Array()
     protected keyWords: KeyWords = new KeyWords()
 
     constructor() {
@@ -67,7 +67,7 @@ export class MultiWordExpressions {
     }
 
     match(strs: string[]) {
-        for(let e of this.chunks) {
+        for(let e of this.patterns) {
             for(let i=0; i<e.length; i++) {
                 if(e[i].elements[0].match(strs[i])) {
                     if(i+1 === e.length) {
@@ -80,19 +80,19 @@ export class MultiWordExpressions {
 
     populatePatterns() {
         // copula
-        this.chunks.push([new ConstructionOfPhrase([new PersonalPronoun()])
+        this.patterns.push([new ConstructionOfPhrase([new PersonalPronoun()])
                                 , new ConstructionOfPhrase([<Copula>this.get('siz')])
                                 , new ConstructionOfPhrase([new Noun()])])
 
-        this.chunks.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
+        this.patterns.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
                                 , new ConstructionOfPhrase([new Adjective])])
         
-        this.chunks.push([new ConstructionOfPhrase([this.get('goay')])
+        this.patterns.push([new ConstructionOfPhrase([this.get('goay')])
                                 , new ConstructionOfPhrase([this.get('siz')])
                                 , new ConstructionOfPhrase([this.get('langx')])])
                                 
         // phrasal copula
-        this.chunks.push([new ConstructionOfPhrase([new Verb(), new Particle()])
+        this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])
                                 ,new ConstructionOfPhrase([new Adjective])])
 
         // serial verbs
