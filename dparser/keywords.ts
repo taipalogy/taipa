@@ -11,17 +11,16 @@ import { TonalCombiningForms } from './morpheme';
 export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme()
     partOfSpeech: string = ''
-    protected inflection: Map<string, string[]> = new Map()
-    private selected: [string, string] = ['', '']
+    protected inflection: Map<string, string[]> = new Map() // TODO: to be deleted
+    protected selected: [string, string] = ['', '']
 
     match(str: string) {
         if(this.lexeme.word.literal === str) {
-            this.selected[0] = 'baseForm'
             return true
         }
         if(this.lexeme.otherForms.length > 0) {
             for(let i=0; i<this.lexeme.otherForms.length; i++) {
-                if(this.lexeme.otherForms[i] && this.lexeme.otherForms[i].literal === str) {
+                if(this.lexeme.otherForms[i].literal === str) {
                     return true
                 }
             }
@@ -46,19 +45,131 @@ export class ConstructionElement {
         return clone
     }
 
-    setForm(str: string) { this.selected[0] = str; return this }
+    protected setForm(str: string) { this.selected[0] = str; return this }
     
     setFunc(str: string) { this.selected[1] = str; return this }
+}
+
+let PERSONAL_PRONOUN2TO137_DECLENSION = {
+    baseForm: {
+        name: 'baseForm',
+        directObject: 'directObject',
+    },
+    sandhiForm: {
+        zero: {
+            firstEnclitic: 'firstEnclitic',
+            subjective: 'subjective',
+            indirectObject: 'indirectObject',
+        },
+        w: {
+            adverbial: 'adverbial',
+            thirdEnclitic: 'thirdEnclitic',
+        },
+        z: {
+            seventhEnclitic: 'seventhEnclitic',
+        },
+    }
+}
+
+let PERSONAL_PRONOUN1TO37_DECLENSION = {
+    baseForm: {
+        name: 'baseForm',
+        firstEnclitic: 'firstEnclitic',
+        subjective: 'subjective',
+        directObject: 'directObject',
+        indirectObject: 'indirectObject',
+    },
+    sandhiForm: {
+        w: {
+            adverbial: 'adverbial',
+            thirdEnclitic: 'thirdEnclitic',
+        },
+        z: {
+            subjective: 'subjective',
+            seventhEnclitic: 'seventhEnclitic',
+        }
+    }
+}
+
+let VERB_CONJUGATION = {
+    baseForm: {
+        name: 'baseForm',
+        intransitive: 'intransitive',
+        perfective: 'perfective',
+    },
+    sandhiForm: {
+        name: 'sandhiForm',
+        transitive: 'transitive',
+        ditransitive: 'ditransitive',
+        causative: 'causative',
+        attributive: 'attributive',
+        continuative: 'continuative',
+    }
+}
+
+let NUMERAL_QUANTIFIER = {
+    baseForm: {
+        name: 'baseForm',
+        nominal: 'nominal',
+    },
+    sandhiForm: {
+        name: 'sandhiForm',
+        attributive: 'attributive',
+        continuative: 'continuative',
+    },
+    adverbialForm: {
+        name: 'adverbialForm',
+        adverbial: 'adverbial',
+    }
+}
+
+let ADJECTIVE_INFLECTION = {
+    baseForm: {
+        name: 'baseForm',
+        adjective: 'adjective',
+    },
+    sandhiForm: {
+        name: 'sandhiForm',
+        attributive: 'attributive',
+        adverbial: 'adverbial',
+    }
+}
+
+let COPULA_CONJUGATION = {
+    baseForm: {
+        name: 'baseForm',
+        intransitive: 'intransitive'
+    },
+    sandhiForm: {
+        name: 'sandhiFor',
+        copulative: 'copulative'
+    },
 }
 
 let NOUN_DECLENSION = {
     baseForm: {
         name: 'baseForm',
-        basic: 'basic' ,
+        nominal: 'nominal' ,
     },
     sandhiForm: {
         name: 'sandhiForm', 
         adjective: 'adjective',
+    }
+}
+
+let ENCLITIC_E_INFLECTION = {
+    baseForm: {
+        name: 'baseForm',
+        participle: 'participle',
+        attributive: 'attributive',
+    }
+}
+
+let ENCLITIC_LE_INFLECTION = {
+    baseForm: {
+        name: 'baseForm',
+        imperative: 'imperative',
+        conjunctive: 'conjunctive',
     }
 }
 
@@ -118,18 +229,28 @@ export class PersonalPronoun2To137 extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.pronoun
-        if(declensionRules.keys && declensionRules.keys.length === 3) {
-            this.inflection
-                .set('baseForm', ['basic', 'directObject'])
-                .set(declensionRules.keys[0], ['firstEnclitic', 'subjective', 'indirectObject'])
-                .set(declensionRules.keys[1], ['adverbialForm', 'thirdEnclitic'])
-                .set(declensionRules.keys[2], ['seventhEnclitic'])
-        }
     }
 
     clone(): PersonalPronoun2To137 {
         const clone = Object.create(this);
         return clone
+    }
+
+    match(str: string): boolean {
+        if(this.lexeme.word.literal === str) {
+            this.setForm(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.name)
+            this.setFunc(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.directObject)
+            return true
+        }
+        if(this.lexeme.otherForms.length > 0) {
+            for(let i=0; i<this.lexeme.otherForms.length; i++) {
+                if(this.lexeme.otherForms[i].literal === str) {
+                    this.setForm(Object.keys(PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm)[i])
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
 
@@ -137,12 +258,6 @@ export class PersonalPronoun1To37 extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.pronoun
-        if(declensionRules.keys && declensionRules.keys.length === 2) {
-            this.inflection
-                .set('baseForm', ['basic', 'firstEnclitic', 'subjective', 'directObject', 'indirectObject'])
-                .set(declensionRules.keys[0], ['adverbialForm', 'thirdEnclitic'])
-                .set(declensionRules.keys[1], ['seventhEnclitic', 'subjective'])
-        }
     }
 
     clone(): PersonalPronoun1To37 {
@@ -162,9 +277,6 @@ export class Verb extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.verb
-        this.inflection
-            .set('baseForm', ['intransitive', 'perfective'])
-            .set('sandhiForm', ['transitive', 'ditransitive', 'causative', 'attributive', 'continuative'])
     }
 }
 
@@ -172,9 +284,27 @@ export class Copula extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.verb
-        this.inflection
-            .set('baseForm', ['intransitive'])
-            .set('sandhiForm', ['conpulative'])
+    }
+
+    clone(): Copula {
+        const clone = Object.create(this);
+        return clone
+    }
+
+    match(str: string): boolean {
+        if(this.lexeme.word.literal === str) {
+            this.setForm(COPULA_CONJUGATION.baseForm.name)
+            this.setFunc(COPULA_CONJUGATION.baseForm.intransitive)
+            return true
+        }
+
+        if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
+            this.setForm(COPULA_CONJUGATION.sandhiForm.name)
+            this.setFunc(COPULA_CONJUGATION.sandhiForm.copulative)
+            return true
+        }
+
+        return false
     }
 }
 
@@ -182,10 +312,6 @@ export class NumeralQuantifier extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.noun
-        this.inflection
-            .set('baseForm', ['basic'])
-            .set('sandhiForm', ['attributive', 'continuative'])
-            .set('adverbialForm', ['adverbial'])
     }
 }
 
@@ -193,9 +319,6 @@ export class EncliticLe extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.particle
-        this.inflection
-            .set('baseForm', ['basic', 'imperative'])
-            .set('sandhiForm', ['conjunctive'])
     }
 }
 
@@ -203,9 +326,6 @@ export class EncliticE extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.particle
-        this.inflection
-            .set('baseForm', ['basic', 'participle', 'terminal'])
-            .set('sandhiForm', ['attributive'])
     }
 }
 
@@ -216,7 +336,7 @@ class EncliticA extends ConstructionElement {
     }
 }
 
-class Demonstrative extends ConstructionElement {
+export class Demonstrative extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.pronoun
@@ -232,9 +352,6 @@ export class Adjective extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.adjective
-        this.inflection
-            .set('baseForm', ['basic'])
-            .set('sandhiForm', ['attributive', 'adverbial'])
     }
 }
 
@@ -249,15 +366,29 @@ export class Noun extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POS.noun
-        this.inflection
-            .set(NOUN_DECLENSION.baseForm.name, [NOUN_DECLENSION.baseForm.basic])
-            .set(NOUN_DECLENSION.sandhiForm.name, [NOUN_DECLENSION.sandhiForm.adjective])
     }
 
     clone(): Noun {
         const clone = Object.create(this);
         return clone
     }
+
+    match(str: string): boolean {
+        if(this.lexeme.word.literal === str) {
+            this.setForm(NOUN_DECLENSION.baseForm.name)
+            this.setFunc(NOUN_DECLENSION.baseForm.nominal)
+            return true
+        }
+
+        if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
+            this.setForm(NOUN_DECLENSION.sandhiForm.name)
+            this.setFunc(NOUN_DECLENSION.sandhiForm.adjective)
+            return true
+        }
+
+        return false
+    }
+
 }
 
 export class Auxiliary extends ConstructionElement{
@@ -279,7 +410,7 @@ class CaseMarker {}
 export class KeyWords {
     private analyzer = new TonalInflextionAnalyzer()
     private keyword_serialno: Array<[string, number]> = new Array()
-    private keyElems: Array<ConstructionElement> = new Array()
+    private keyElems: Array<Copula | Demonstrative | Noun> = new Array()
 
     constructor() {
         this.populateKeyElems()

@@ -25,21 +25,28 @@ export enum Dependency {
 }
 
 export enum PTBTags {
-    CC = 'CC',
-    CD = 'CD',
-    DT = 'DT',
-    IN = 'IN',
-    JJ = 'JJ',
-    MD = 'MD',
+    CC = 'CC', // coordinating conjunction
+    CD = 'CD', // cardinal number
+    DT = 'DT', // determiner
+    FW = 'FW', // foreign word
+    IN = 'IN', // preposition. subordinate conjunction
+    JJ = 'JJ', // adjective
+    JJR = 'JJR',
+    JJS = 'JJS',
+    MD = 'MD', // modal
     NN = 'NN',
     NNP = 'NNP',
     PDT = 'PDT',
-    PRP = 'PRP',
-    PRP$ = 'PRP$',
-    RB = 'RB',
-    RP = 'RP',
-    SYM = 'SYM',
-    UH = 'UH',
-    VB = 'VB',
-    VBG = 'VBG',
+    PRP = 'PRP', // personal pronoun
+    PRPS = 'PRP$', // possessive pronoun
+    RB = 'RB', // adverb
+    RBR = 'RBR',
+    RBS = 'RBS',
+    RP = 'RP', // particle
+    SYM = 'SYM', // symbol
+    UH = 'UH', // interjection
+    VB = 'VB', // verb base form
+    VBG = 'VBG', // verb gerund
+
+    comma = ',',
 }

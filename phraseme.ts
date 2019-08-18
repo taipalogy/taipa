@@ -1,11 +1,9 @@
 
 import { InflectionalEnding } from "./tonal/lexeme"
-import { TonalWord, TonalLemmatizationLexeme } from './tonal/lexeme'
+import { TonalWord } from './tonal/lexeme'
 import { TonalInflexionLexeme } from "./dparser/lexeme";
 
-//------------------------------------------------------------------------------
-//  Tone Group
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 export class ToneGroup {
     inflectionalEndings: Array<InflectionalEnding> = new Array()
@@ -13,9 +11,7 @@ export class ToneGroup {
 
 class ToneSandhiGroup extends ToneGroup{}
 
-//------------------------------------------------------------------------------
-//  Phraseme
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 export class Phraseme {}
 
@@ -34,9 +30,7 @@ export class TonalPhraseme extends Phraseme {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Phrase
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 class Phrase {
     literal: string = ''
@@ -75,9 +69,7 @@ export class TonalPhrase extends Phrase {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Tone Sandhi Phraseme Maker
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 export class TonalPhrasemeMaker {
     lexemes: Array<TonalInflexionLexeme>;

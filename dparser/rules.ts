@@ -1,9 +1,10 @@
-import { ConstructionElement, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns, FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective } from './keywords'
+import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns
+    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective } from './keywords'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import { POS } from './symbols';
-import { Phraseme } from '../phraseme';
+import { Phraseme, ToneGroup } from '../phraseme';
 
 export class ConstructionOfPhrase {
     phraseme: Phraseme = new Phraseme()
@@ -45,8 +46,15 @@ export class VerbPhrase {
     }
 }
 
+class Rule {
+    forms: Array<string> = []
+    funcs: Array<string> = []
+    parts_of_speech: Array<string> = []
+    tones: ToneGroup = new ToneGroup()
+}
+
 export class MultiWordExpressions {
-    private patterns: Array<ConstructionOfPhrase[]> = new Array()
+    private chunks: Array<ConstructionOfPhrase[]> = new Array()
     protected keyWords: KeyWords = new KeyWords()
 
     constructor() {
@@ -59,7 +67,7 @@ export class MultiWordExpressions {
     }
 
     match(strs: string[]) {
-        for(let e of this.patterns) {
+        for(let e of this.chunks) {
             for(let i=0; i<e.length; i++) {
                 if(e[i].elements[0].match(strs[i])) {
                     if(i+1 === e.length) {
@@ -72,19 +80,19 @@ export class MultiWordExpressions {
 
     populatePatterns() {
         // copula
-        this.patterns.push([new ConstructionOfPhrase([new PersonalPronoun()])
+        this.chunks.push([new ConstructionOfPhrase([new PersonalPronoun()])
                                 , new ConstructionOfPhrase([<Copula>this.get('siz')])
                                 , new ConstructionOfPhrase([new Noun()])])
 
-        this.patterns.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
+        this.chunks.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
                                 , new ConstructionOfPhrase([new Adjective])])
         
-        this.patterns.push([new ConstructionOfPhrase([this.get('goay')])
+        this.chunks.push([new ConstructionOfPhrase([this.get('goay')])
                                 , new ConstructionOfPhrase([this.get('siz')])
                                 , new ConstructionOfPhrase([this.get('langx')])])
                                 
         // phrasal copula
-        this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])
+        this.chunks.push([new ConstructionOfPhrase([new Verb(), new Particle()])
                                 ,new ConstructionOfPhrase([new Adjective])])
 
         // serial verbs

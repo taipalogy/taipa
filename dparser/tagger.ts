@@ -1,6 +1,4 @@
-import { TonalLemmatizationLexeme } from '../tonal/lexeme'
 import { ConstructionOfPhrase, VerbPhrase, MultiWordExpressions } from './rules'
-import { Word } from '../lexeme'
 import { ConstructionElement } from './keywords'
 
 export class RuleBasedTagger {
@@ -34,7 +32,7 @@ export class RuleBasedTagger {
             for(let e of cops) {
                 console.log(e.elements[0].lexeme.word.literal)
             }
-            */
+*/
     }
 
 }
