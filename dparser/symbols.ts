@@ -1,12 +1,27 @@
 
 export enum POS {
-    verb = 'verb',
-    pronoun = 'pronoun',
-    postposition = 'postposition',
-    particle = 'particle',
-    adjective = 'adjective',
-    noun = 'noun',
-    auxiliary_verb = 'auxiliary_verb',
+    /*
+      Universal POS tags
+      https://universaldependencies.org/u/pos/
+    */
+    adjective = 'ADJ',
+    adposition = 'ADP',
+    adverb = 'ADV',
+    auxiliary = 'AUX',
+    conjunction = 'CONJ',
+    coordinating_conjunction = 'CCONJ',
+    determiner = 'DET',
+    interjection = 'INTJ',
+    noun = 'NOUN',
+    number = 'NUM',
+    particle = 'PART',
+    pronoun = 'PRON',
+    proper_noun = 'PROPN',
+    punctuation = 'PUNCT',
+    subordinating_conjunction = 'SCONJ',
+    symbol = 'SYM',
+    verb = 'VERB',
+    other = 'X',
 }
 
 export enum Dependency {
@@ -57,16 +72,16 @@ export let PERSONAL_PRONOUN2TO137_DECLENSION = {
         directObject: 'directObject',
     },
     sandhiForm: {
-        zero: {
+        first: {
             firstEnclitic: 'firstEnclitic',
             subjective: 'subjective',
             indirectObject: 'indirectObject',
         },
-        w: {
+        third: {
             adverbial: 'adverbial',
             thirdEnclitic: 'thirdEnclitic',
         },
-        z: {
+        seventh: {
             seventhEnclitic: 'seventhEnclitic',
         },
     }
@@ -81,11 +96,11 @@ export let PERSONAL_PRONOUN1TO37_DECLENSION = {
         indirectObject: 'indirectObject',
     },
     sandhiForm: {
-        w: {
+        third: {
             adverbial: 'adverbial',
             thirdEnclitic: 'thirdEnclitic',
         },
-        z: {
+        seventh: {
             subjective: 'subjective',
             seventhEnclitic: 'seventhEnclitic',
         }
@@ -142,7 +157,7 @@ export let COPULA_CONJUGATION = {
         intransitive: 'intransitive'
     },
     sandhiForm: {
-        name: 'sandhiFor',
+        name: 'sandhiForm',
         copulative: 'copulative'
     },
 }

@@ -1,5 +1,5 @@
 import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns
-    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective } from './keywords'
+    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech } from './keywords'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
@@ -9,9 +9,9 @@ import { Phraseme, ToneGroup } from '../phraseme';
 export class ConstructionOfPhrase {
     phraseme: Phraseme = new Phraseme()
     partOfSpeech: string = ''
-    elements: Array<ConstructionElement> = new Array()
+    elements: Array<PartsOfSpeech> = new Array()
 
-    constructor(private arr: Array<ConstructionElement>) {
+    constructor(private arr: Array<PartsOfSpeech>) {
         for(let key in arr) {
             this.elements.push(arr[key])
         }
@@ -46,10 +46,10 @@ export class VerbPhrase {
     }
 }
 
-class Rule {
+export class Rule {
     forms: Array<string> = []
     funcs: Array<string> = []
-    parts_of_speech: Array<string> = []
+    psos: Array<string> = []
     tones: ToneGroup = new ToneGroup()
 }
 
@@ -67,11 +67,11 @@ export class MultiWordExpressions {
     }
 
     match(strs: string[]) {
-        for(let e of this.patterns) {
-            for(let i=0; i<e.length; i++) {
-                if(e[i].elements[0].match(strs[i])) {
-                    if(i+1 === e.length) {
-                        return e
+        for(let p of this.patterns) {
+            for(let i=0; i<p.length; i++) {
+                if(p[i].elements[0].match(strs[i])) {
+                    if(i+1 === p.length) {
+                        return p
                     }
                 }
             }

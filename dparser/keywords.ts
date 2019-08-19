@@ -37,6 +37,8 @@ export class ConstructionElement {
     setFunc(str: string) { this.selected[1] = str; return this }
 
     get form() { return this.selected[0] }
+
+    get func() { return this.selected[1] }
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
@@ -135,7 +137,7 @@ export class PersonalPronoun1To37 extends ConstructionElement {
 class Postposition extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.postposition
+        this.partOfSpeech = POS.adposition
     }
 }
 
@@ -260,7 +262,7 @@ export class Noun extends ConstructionElement {
 export class Auxiliary extends ConstructionElement{
     constructor() {
         super()
-        this.partOfSpeech = POS.auxiliary_verb
+        this.partOfSpeech = POS.auxiliary
     }
 }
 
@@ -273,10 +275,12 @@ export class Particle extends ConstructionElement {
 
 class CaseMarker {}
 
+export type PartsOfSpeech = Copula | Demonstrative | Noun
+
 export class KeyWords {
     private analyzer = new TonalInflextionAnalyzer()
     private keyword_serialno: Array<[string, number]> = new Array()
-    private keyElems: Array<Copula | Demonstrative | Noun> = new Array()
+    private keyElems: Array<PartsOfSpeech> = new Array()
 
     constructor() {
         this.populateKeyElems()

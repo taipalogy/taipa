@@ -91,7 +91,7 @@ export class DependencyParser {
             // shift the first lexeme from queue to stack
             guide.transitions.push(new Shift())
         }
-
+/*
         while(!c.isTerminalConfiguration()) {
             let t = guide.getNextTransition();
             if(t == null || t == undefined) break
@@ -120,7 +120,7 @@ export class DependencyParser {
                 }
             }
         }
-
+*/
         let doc: Document = new Document();
         doc.graph = c.getGraph();
         return doc;
