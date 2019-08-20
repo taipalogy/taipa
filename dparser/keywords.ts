@@ -1,5 +1,5 @@
 import { InflexionLexeme, TonalInflexionLexeme, TonalInflexion } from './lexeme'
-import { POS, PERSONAL_PRONOUN2TO137_DECLENSION, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
+import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
@@ -89,14 +89,14 @@ export enum PersonalPronouns {
 export class PersonalPronoun extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.pronoun
+        this.partOfSpeech = POSTags.pronoun
     }
 }
 
 export class PersonalPronoun2To137 extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.pronoun
+        this.partOfSpeech = POSTags.pronoun
     }
 
     clone(): PersonalPronoun2To137 {
@@ -125,7 +125,7 @@ export class PersonalPronoun2To137 extends ConstructionElement {
 export class PersonalPronoun1To37 extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.pronoun
+        this.partOfSpeech = POSTags.pronoun
     }
 
     clone(): PersonalPronoun1To37 {
@@ -137,21 +137,21 @@ export class PersonalPronoun1To37 extends ConstructionElement {
 class Postposition extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.adposition
+        this.partOfSpeech = POSTags.adposition
     }
 }
 
 export class Verb extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.verb
+        this.partOfSpeech = POSTags.verb
     }
 }
 
 export class Copula extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.verb
+        this.partOfSpeech = POSTags.verb
     }
 
     clone(): Copula {
@@ -179,35 +179,35 @@ export class Copula extends ConstructionElement {
 export class NumeralQuantifier extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.noun
+        this.partOfSpeech = POSTags.noun
     }
 }
 
 export class EncliticLe extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.particle
+        this.partOfSpeech = POSTags.particle
     }
 }
 
 export class EncliticE extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.particle
+        this.partOfSpeech = POSTags.particle
     }
 }
 
 class EncliticA extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.particle
+        this.partOfSpeech = POSTags.particle
     }
 }
 
 export class Demonstrative extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.pronoun
+        this.partOfSpeech = POSTags.pronoun
     }
 
     clone(): Demonstrative {
@@ -219,21 +219,21 @@ export class Demonstrative extends ConstructionElement {
 export class Adjective extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.adjective
+        this.partOfSpeech = POSTags.adjective
     }
 }
 
 class PlainNoun extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.noun
+        this.partOfSpeech = POSTags.noun
     }
 }
 
 export class Noun extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.noun
+        this.partOfSpeech = POSTags.noun
     }
 
     clone(): Noun {
@@ -262,14 +262,14 @@ export class Noun extends ConstructionElement {
 export class Auxiliary extends ConstructionElement{
     constructor() {
         super()
-        this.partOfSpeech = POS.auxiliary
+        this.partOfSpeech = POSTags.auxiliary
     }
 }
 
 export class Particle extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POS.particle
+        this.partOfSpeech = POSTags.particle
     }
 }
 

@@ -1,14 +1,14 @@
 import { ConstructionElement } from './keywords';
-import { Dependency, POS } from './symbols'
+import { DependencyLabels, POSTags } from './symbols'
 import { DummyLexeme } from './lexeme';
 import { Document } from '../document'
 
 export class Arc {
-    dependency: Dependency
+    dependency: DependencyLabels
     head: ConstructionElement
     dependent: ConstructionElement
 
-    constructor(dep: Dependency, head: ConstructionElement, dependent: ConstructionElement) {
+    constructor(dep: DependencyLabels, head: ConstructionElement, dependent: ConstructionElement) {
         this.dependency = dep;
         this.head = head;
         this.dependent = dependent
@@ -91,36 +91,34 @@ export class DependencyParser {
             // shift the first lexeme from queue to stack
             guide.transitions.push(new Shift())
         }
-/*
+
         while(!c.isTerminalConfiguration()) {
             let t = guide.getNextTransition();
             if(t == null || t == undefined) break
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
-                if(c.stack[c.stack.length-1].partOfSpeech === POS.verb) {
-                    if(c.stack[c.stack.length-1].form === 'copulative') {
-                        if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.noun) {
+                if(c.stack[c.stack.length-1].partOfSpeech === POSTags.verb) {
+                    if(c.stack[c.stack.length-1].func === 'copulative') {
+                        if(c.queue.length > 0 && c.queue[0].partOfSpeech === POSTags.noun) {
                             guide.transitions.push(new Shift())
-                            c.graph.push(new Arc(Dependency.cop, c.stack[c.stack.length-2], c.stack[c.stack.length-3]))
-                            c.graph.push(new Arc(Dependency.nsubj, c.stack[c.stack.length-1], c.stack[c.stack.length-3]))
                         }
-                    }
-                    if(c.queue.length > 0 && c.queue[0].partOfSpeech === POS.pronoun) {
+                    } else if(c.queue.length > 0 && c.queue[0].partOfSpeech === POSTags.pronoun) {
                         guide.transitions.push(new Shift())
                     } else {
                         guide.transitions.push(new RightArc())
-                        c.graph.push(new Arc(Dependency.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                        c.graph.push(new Arc(DependencyLabels.ccomp, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                         guide.transitions.push(new RightArc())
                     }
-                } if(c.stack[c.stack.length-1].partOfSpeech === POS.pronoun) {
+                } if(c.stack[c.stack.length-1].partOfSpeech === POSTags.pronoun) {
                     guide.transitions.push(new Shift())
-                    c.graph.push(new Arc(Dependency.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
-                } if(c.stack[c.stack.length-1].partOfSpeech === POS.noun) {
-                    guide.transitions.push(new Shift())
+                    c.graph.push(new Arc(DependencyLabels.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                } if(c.stack[c.stack.length-1].partOfSpeech === POSTags.noun) {
+                    c.graph.push(new Arc(DependencyLabels.cop, c.stack[c.stack.length-1], c.stack[c.stack.length-2]))
+                    c.graph.push(new Arc(DependencyLabels.nsubj, c.stack[c.stack.length-1], c.stack[c.stack.length-3]))
                 }
             }
         }
-*/
+
         let doc: Document = new Document();
         doc.graph = c.getGraph();
         return doc;

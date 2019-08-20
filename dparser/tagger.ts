@@ -1,6 +1,6 @@
-import { ConstructionOfPhrase, VerbPhrase, MultiWordExpressions, Rule } from './rules'
+import { ConstructionOfPhrase, MultiWordExpressions, Rule } from './rules'
 import { ConstructionElement, PartsOfSpeech } from './keywords'
-import { POS } from './symbols';
+import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION } from './symbols';
 
 export class RuleBasedTagger {
 
@@ -11,24 +11,6 @@ export class RuleBasedTagger {
     }
 
     private match(strs: string[]) {
-/*
-        let str: string = strs[0]
-
-        let cop: ConstructionOfPhrase
-        let vp = new VerbPhrase()
-        // if w is an instance of TonalWord or ~
-        for(let key in vp.constructions) {
-            if(vp.constructions[key].elements[0].match(str)) {
-                cop = vp.constructions[key]
-            }
-        }
-
-        for(let k in strs) {
-            this.elements.push(vp.constructions[0].elements[k])
-        }
-
-        this.elements = []
-        */
         const xprsns = new MultiWordExpressions()
         const cops = xprsns.match(strs)
         let ppsubj = new Rule()
@@ -36,8 +18,8 @@ export class RuleBasedTagger {
         ppsubj.forms.push('sandhiForm')
         ppsubj.funcs.push('subjective')
         ppsubj.funcs.push('copulative')
-        ppsubj.psos.push(POS.pronoun)
-        ppsubj.psos.push(POS.verb)
+        ppsubj.psos.push(POSTags.pronoun)
+        ppsubj.psos.push(POSTags.verb)
 
         if(cops)
             for(let p of cops) {
@@ -47,7 +29,9 @@ export class RuleBasedTagger {
                 }
             }
 
-        //console.log(this.elements)
+        for(let i in this.elements) {
+            //console.log(this.elements[i].func)
+        }
     }
 
 }

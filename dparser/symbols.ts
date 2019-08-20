@@ -1,5 +1,5 @@
 
-export enum POS {
+export enum POSTags {
     /*
       Universal POS tags
       https://universaldependencies.org/u/pos/
@@ -24,7 +24,7 @@ export enum POS {
     other = 'X',
 }
 
-export enum Dependency {
+export enum DependencyLabels {
     aux_caus = 'aux:caus',
     csubj = 'csubj',
     ccomp = 'ccomp',
@@ -49,9 +49,9 @@ export enum PTBTags {
     JJR = 'JJR',
     JJS = 'JJS',
     MD = 'MD', // modal
-    NN = 'NN',
-    NNP = 'NNP',
-    PDT = 'PDT',
+    NN = 'NN', // noun
+    NNP = 'NNP', // proper noun
+    PDT = 'PDT', // predeterminer
     PRP = 'PRP', // personal pronoun
     PRPS = 'PRP$', // possessive pronoun
     RB = 'RB', // adverb
@@ -64,6 +64,7 @@ export enum PTBTags {
     VBG = 'VBG', // verb gerund
 
     comma = ',',
+    sent_end_punc = '.',
 }
 
 export let PERSONAL_PRONOUN2TO137_DECLENSION = {

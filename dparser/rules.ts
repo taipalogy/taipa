@@ -3,7 +3,6 @@ import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, C
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
-import { POS } from './symbols';
 import { Phraseme, ToneGroup } from '../phraseme';
 
 export class ConstructionOfPhrase {
@@ -18,7 +17,7 @@ export class ConstructionOfPhrase {
     }
 }
 
-export class VerbPhrase {
+export class Custom {
 
     constructions: Array<ConstructionOfPhrase> = []
 
@@ -96,5 +95,8 @@ export class MultiWordExpressions {
                                 ,new ConstructionOfPhrase([new Adjective])])
 
         // serial verbs
+
+        // others
+        this.patterns.push([new Custom().constructions[0]])
     }
 }
