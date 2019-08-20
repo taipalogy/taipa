@@ -1,5 +1,5 @@
 import { ConstructionElement } from './keywords';
-import { DependencyLabels, POSTags } from './symbols'
+import { DependencyLabels, POSTags, COPULA_CONJUGATION } from './symbols'
 import { DummyLexeme } from './lexeme';
 import { Document } from '../document'
 
@@ -98,11 +98,11 @@ export class DependencyParser {
             c = c.makeTransition(t);
             if(c.stack[c.stack.length-1] != undefined) {
                 if(c.stack[c.stack.length-1].partOfSpeech === POSTags.verb) {
-                    if(c.stack[c.stack.length-1].func === 'copulative') {
-                        if(c.queue.length > 0 && c.queue[0].partOfSpeech === POSTags.noun) {
+                    if(c.stack[c.stack.length-1].func === COPULA_CONJUGATION.sandhiForm.copulative) {
+                        if(c.queue.length>0 && c.queue[0].partOfSpeech === POSTags.noun) {
                             guide.transitions.push(new Shift())
                         }
-                    } else if(c.queue.length > 0 && c.queue[0].partOfSpeech === POSTags.pronoun) {
+                    } else if(c.queue.length>0 && c.queue[0].partOfSpeech === POSTags.pronoun) {
                         guide.transitions.push(new Shift())
                     } else {
                         guide.transitions.push(new RightArc())
@@ -111,7 +111,9 @@ export class DependencyParser {
                     }
                 } if(c.stack[c.stack.length-1].partOfSpeech === POSTags.pronoun) {
                     guide.transitions.push(new Shift())
-                    c.graph.push(new Arc(DependencyLabels.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                    if(c.queue.length>0 && c.queue[0].func != COPULA_CONJUGATION.sandhiForm.copulative) {
+                        c.graph.push(new Arc(DependencyLabels.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
+                    }
                 } if(c.stack[c.stack.length-1].partOfSpeech === POSTags.noun) {
                     c.graph.push(new Arc(DependencyLabels.cop, c.stack[c.stack.length-1], c.stack[c.stack.length-2]))
                     c.graph.push(new Arc(DependencyLabels.nsubj, c.stack[c.stack.length-1], c.stack[c.stack.length-3]))
