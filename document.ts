@@ -1,7 +1,7 @@
 import { LemmatizationLexeme } from './tonal/lexeme'
 import { Word } from './lexeme'
 import { Sound } from './grapheme';
-import { Arc } from './dparser/transition'
+import { Relation } from './dparser/transition'
 
 export class Document {
     lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
@@ -9,5 +9,5 @@ export class Document {
     inflectionalEnding: string = ''
     soundSequences: Array<Sound[]> = new Array()
     blockSequences: string[] = []
-    graph: Array<Arc> = new Array()
+    graph: Array<Relation> = new Array()
 }

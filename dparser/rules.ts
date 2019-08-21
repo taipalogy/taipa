@@ -17,7 +17,7 @@ export class ConstructionOfPhrase {
     }
 }
 
-export class Custom {
+export class Chunk {
 
     constructions: Array<ConstructionOfPhrase> = []
 
@@ -97,6 +97,6 @@ export class MultiWordExpressions {
         // serial verbs
 
         // others
-        this.patterns.push([new Custom().constructions[0]])
+        this.patterns.push([new Chunk().constructions[0]])
     }
 }

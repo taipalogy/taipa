@@ -347,9 +347,18 @@ export class KeyWords {
         return ret
     }
 
+    private makeParticle(str: string): Particle {
+        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ret = new Particle()
+        ret.lexeme = ls[0]
+        return ret
+    }
+
+
     search(str: string) {
         let i: number
-        i = this.doBSearch(this.keyword_serialno, str, (a: string, b: string) => {
+        i = this.doBinarySearch(this.keyword_serialno, str, (a: string, b: string) => {
             return (a<b ? -1 : (a>b ? 1 : 0));
         })
         let serialno: number = 0
@@ -358,7 +367,7 @@ export class KeyWords {
         return serialno
     }
 
-    private doBSearch(arr: Array<[string, number]>, str: string, compareFunc: (a: string, b: string) => number): number {
+    private doBinarySearch(arr: Array<[string, number]>, str: string, compareFunc: (a: string, b: string) => number): number {
         let bot = 0;
         let top = arr.length;
         while(bot < top) {
@@ -397,6 +406,8 @@ export class KeyWords {
             this.makeAuxiliary('hongx'),
             this.makeAuxiliary('hongz'),
             this.makeAuxiliary('homz'),
+
+            this.makeParticle('qahf'),
         ]
     }
 }
