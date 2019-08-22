@@ -4,6 +4,7 @@ import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import { Phraseme, ToneGroup } from '../phraseme';
+import { POSTags } from './symbols';
 
 export class ConstructionOfPhrase {
     phraseme: Phraseme = new Phraseme()
@@ -43,13 +44,6 @@ export class Chunk {
 
         this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]))
     }
-}
-
-export class Rule {
-    forms: Array<string> = []
-    funcs: Array<string> = []
-    psos: Array<string> = []
-    tones: ToneGroup = new ToneGroup()
 }
 
 export class MultiWordExpressions {

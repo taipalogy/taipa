@@ -65,13 +65,52 @@ export class Configuration {
     }
 }
 
+export class Feature {
+    form: string = ''
+    pos: string = ''
+    // tones: Array<string> = []
+}
+
+class FeatureTemplate {
+    arr: Array<Feature> = new Array()
+    operation: string = ''
+}
+
+export class Features {
+    constructor() {
+        let s1 = new Feature()
+        let s2 = new Feature()
+        s1.form = 'sandhiForm'
+        s2.form = 'first'
+        s1.pos = 'copulative'
+        s2.pos = 'subjective'
+        let ft = new FeatureTemplate()
+        ft.arr.push(s1)
+        ft.arr.push(s2)
+        ft.operation = 'shift'
+    }
+}
+
 export class Guide {
     transitions: Array<Transition>  = new Array()
 
     getNextTransition(c: Configuration) {
+        let s1: Feature = new Feature()
+        if(c.stack[c.stack.length-1]) {
+            s1 = { form: c.stack[c.stack.length-1].form, pos: c.stack[c.stack.length-1].tag }
+        }
+        let s2: Feature = new Feature()
+        if(c.stack[c.stack.length-2]) {
+            s2 = { form: c.stack[c.stack.length-2].form, pos: c.stack[c.stack.length-2].tag }
+        }
+        let b1: Feature = new Feature()
+        if(c.queue[0]) {
+            b1 = { form: c.queue[0].form, pos: c.queue[0].tag }
+        }
+
         if(c.stack[c.stack.length-1] != undefined) {
             if(c.stack[c.stack.length-1].partOfSpeech === POSTags.verb) {
-                if(c.stack[c.stack.length-1].func === COPULA_CONJUGATION.sandhiForm.copulative) {
+                if(c.stack[c.stack.length-1].tag === COPULA_CONJUGATION.sandhiForm.copulative) {
                     if(c.queue.length>0 && c.queue[0].partOfSpeech === POSTags.noun) {
                         this.transitions.push(new Shift())
                     }
@@ -83,7 +122,7 @@ export class Guide {
                 }
             } if(c.stack[c.stack.length-1].partOfSpeech === POSTags.pronoun) {
                 this.transitions.push(new Shift())
-                if(c.queue.length>0 && c.queue[0].func != COPULA_CONJUGATION.sandhiForm.copulative) {
+                if(c.queue.length>0 && c.queue[0].tag != COPULA_CONJUGATION.sandhiForm.copulative) {
                     this.transitions.push(new RightArc())
                     c.relations.push(new Relation(DependencyLabels.csubj, c.stack[c.stack.length-2], c.stack[c.stack.length-1]))
                 }

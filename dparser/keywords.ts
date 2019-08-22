@@ -34,11 +34,11 @@ export class ConstructionElement {
 
     protected setForm(str: string) { this.selected[0] = str; return this }
     
-    setFunc(str: string) { this.selected[1] = str; return this }
+    setTag(str: string) { this.selected[1] = str; return this }
 
     get form() { return this.selected[0] }
 
-    get func() { return this.selected[1] }
+    get tag() { return this.selected[1] }
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
@@ -107,7 +107,7 @@ export class PersonalPronoun2To137 extends ConstructionElement {
     match(str: string): boolean {
         if(this.lexeme.word.literal === str) {
             this.setForm(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.name)
-            this.setFunc(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.directObject)
+            this.setTag(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.directObject)
             return true
         }
         if(this.lexeme.otherForms.length > 0) {
@@ -162,13 +162,13 @@ export class Copula extends ConstructionElement {
     match(str: string): boolean {
         if(this.lexeme.word.literal === str) {
             this.setForm(COPULA_CONJUGATION.baseForm.name)
-            this.setFunc(COPULA_CONJUGATION.baseForm.intransitive)
+            this.setTag(COPULA_CONJUGATION.baseForm.intransitive)
             return true
         }
 
         if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
             this.setForm(COPULA_CONJUGATION.sandhiForm.name)
-            this.setFunc(COPULA_CONJUGATION.sandhiForm.copulative)
+            this.setTag(COPULA_CONJUGATION.sandhiForm.copulative)
             return true
         }
 
@@ -244,13 +244,13 @@ export class Noun extends ConstructionElement {
     match(str: string): boolean {
         if(this.lexeme.word.literal === str) {
             this.setForm(NOUN_DECLENSION.baseForm.name)
-            this.setFunc(NOUN_DECLENSION.baseForm.nominal)
+            this.setTag(NOUN_DECLENSION.baseForm.nominal)
             return true
         }
 
         if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
             this.setForm(NOUN_DECLENSION.sandhiForm.name)
-            this.setFunc(NOUN_DECLENSION.sandhiForm.adjective)
+            this.setTag(NOUN_DECLENSION.sandhiForm.adjective)
             return true
         }
 

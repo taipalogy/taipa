@@ -1,4 +1,4 @@
-import { ConstructionOfPhrase, MultiWordExpressions, Rule } from './rules'
+import { ConstructionOfPhrase, MultiWordExpressions } from './rules'
 import { ConstructionElement, PartsOfSpeech } from './keywords'
 import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION } from './symbols';
 
@@ -13,13 +13,6 @@ export class RuleBasedTagger {
     private match(strs: string[]) {
         const xprsns = new MultiWordExpressions()
         const cops = xprsns.match(strs)
-        let ppsubj = new Rule()
-        ppsubj.forms.push('first')
-        ppsubj.forms.push('sandhiForm')
-        ppsubj.funcs.push('subjective')
-        ppsubj.funcs.push('copulative')
-        ppsubj.psos.push(POSTags.pronoun)
-        ppsubj.psos.push(POSTags.verb)
 
         if(cops)
             for(let p of cops) {
