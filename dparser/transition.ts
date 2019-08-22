@@ -68,31 +68,47 @@ export class Configuration {
 export class Feature {
     form: string = ''
     pos: string = ''
-    // tones: Array<string> = []
 }
 
-class FeatureTemplate {
-    arr: Array<Feature> = new Array()
-    operation: string = ''
+class FeatureTemplate {}
+
+class FeatureTemplateS1S2 extends FeatureTemplate {
+    constructor(private s1: Feature, private s2: Feature, private operation: string) { super() }
+    get s1pos() { return this.s1.pos }
+    get s1form() { return this.s1.form }
+    get s2form() { return this.s2.form }
+    get op() { return this.operation }
 }
 
-export class Features {
+class FeatureTemplateS1B1 extends FeatureTemplate {
+    constructor(private s1: Feature, private b1: Feature, private operation: string) { super() }
+}
+
+export class FeatureTemplates {
+    arrS1S2: Array<FeatureTemplateS1S2> = new Array() // array?
     constructor() {
-        let s1 = new Feature()
-        let s2 = new Feature()
-        s1.form = 'sandhiForm'
-        s2.form = 'first'
-        s1.pos = 'copulative'
-        s2.pos = 'subjective'
-        let ft = new FeatureTemplate()
-        ft.arr.push(s1)
-        ft.arr.push(s2)
-        ft.operation = 'shift'
+        this.arrS1S2.push(new FeatureTemplateS1S2({form: 'sandhiForm', pos: 'copulative'},
+                                         {form: 'first', pos: ''}, 
+                                         'shift'))
+        this.arrS1S2.push(new FeatureTemplateS1S2({form: 'baseForm', pos: ''},
+                                        {form: 'sandhiForm', pos: 'copulative'}, 
+                                        'leftArc'))
     }
 }
 
 export class Guide {
     transitions: Array<Transition>  = new Array()
+
+    matchFeatureTemplate(s1: Feature, s2: Feature, b1: Feature) {
+        const fts = new FeatureTemplates()
+        for(let ft of fts.arrS1S2) {
+            if(s1.pos == ft.s1pos && s1.form === ft.s1form && s2.form === ft.s2form) {
+                return ft.op
+            }
+        }
+
+        return ''
+    }
 
     getNextTransition(c: Configuration) {
         let s1: Feature = new Feature()
@@ -107,6 +123,8 @@ export class Guide {
         if(c.queue[0]) {
             b1 = { form: c.queue[0].form, pos: c.queue[0].tag }
         }
+
+        this.matchFeatureTemplate(s1, s2, b1)
 
         if(c.stack[c.stack.length-1] != undefined) {
             if(c.stack[c.stack.length-1].partOfSpeech === POSTags.verb) {
