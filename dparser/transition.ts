@@ -66,62 +66,42 @@ export class Configuration {
 }
 
 export class Feature {
-    form: string = ''
-    pos: string = ''
+    wordForm: string = ''
+    tag: string = ''
 }
 
-class FeatureTemplate {}
-
-class FeatureTemplateS1S2 extends FeatureTemplate {
-    constructor(private s1: Feature, private s2: Feature, private operation: string) { super() }
-    get s1pos() { return this.s1.pos }
-    get s1form() { return this.s1.form }
-    get s2form() { return this.s2.form }
+class FeatureTemplateOneWord {
+    constructor(private elem: Feature, private operation: string) {}
+    get tag() { return this.elem.tag }
+    get wordForm() { return this.elem.wordForm }
+    get wordFormTag() { return this.wordForm + this.tag }
     get op() { return this.operation }
 }
 
-class FeatureTemplateS1B1 extends FeatureTemplate {
-    constructor(private s1: Feature, private b1: Feature, private operation: string) { super() }
-}
-
-export class FeatureTemplates {
-    arrS1S2: Array<FeatureTemplateS1S2> = new Array() // array?
-    constructor() {
-        this.arrS1S2.push(new FeatureTemplateS1S2({form: 'sandhiForm', pos: 'copulative'},
-                                         {form: 'first', pos: ''}, 
-                                         'shift'))
-        this.arrS1S2.push(new FeatureTemplateS1S2({form: 'baseForm', pos: ''},
-                                        {form: 'sandhiForm', pos: 'copulative'}, 
-                                        'leftArc'))
-    }
+class FeatureTemplateTwoWord {
+    position1: FeatureTemplateOneWord = new FeatureTemplateOneWord({wordForm: '', tag: ''}, '')
+    position2: FeatureTemplateOneWord = new FeatureTemplateOneWord({wordForm: '', tag: ''}, '')
+    constructor(p1: FeatureTemplateOneWord, p2: FeatureTemplateOneWord, private operation: string) {}
+    get op() { return this.operation }
 }
 
 export class Guide {
     transitions: Array<Transition>  = new Array()
 
-    matchFeatureTemplate(s1: Feature, s2: Feature, b1: Feature) {
-        const fts = new FeatureTemplates()
-        for(let ft of fts.arrS1S2) {
-            if(s1.pos == ft.s1pos && s1.form === ft.s1form && s2.form === ft.s2form) {
-                return ft.op
-            }
-        }
-
-        return ''
-    }
+    matchFeatureTemplate(s1: Feature, s2: Feature, b1: Feature) {}
 
     getNextTransition(c: Configuration) {
         let s1: Feature = new Feature()
         if(c.stack[c.stack.length-1]) {
-            s1 = { form: c.stack[c.stack.length-1].form, pos: c.stack[c.stack.length-1].tag }
+            s1 = { wordForm: c.stack[c.stack.length-1].form, tag: c.stack[c.stack.length-1].tag }
         }
         let s2: Feature = new Feature()
         if(c.stack[c.stack.length-2]) {
-            s2 = { form: c.stack[c.stack.length-2].form, pos: c.stack[c.stack.length-2].tag }
+            s2 = { wordForm: c.stack[c.stack.length-2].form, tag: c.stack[c.stack.length-2].tag }
         }
         let b1: Feature = new Feature()
         if(c.queue[0]) {
-            b1 = { form: c.queue[0].form, pos: c.queue[0].tag }
+            b1 = { wordForm: c.queue[0].form, tag: c.queue[0].tag }
         }
 
         this.matchFeatureTemplate(s1, s2, b1)
