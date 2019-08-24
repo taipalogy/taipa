@@ -294,8 +294,8 @@ export class KeyWords {
             }
             i++
         }
-        this.keyword_serialno = Array.from(buffer).sort((a: [string, number], b: [string, number]) => {
-            return (a[0]<b[0] ? -1 : (a[0]>b[0] ? 1 : 0));
+        this.keyword_serialno = Array.from(buffer).sort((lhs: [string, number], rhs: [string, number]) => {
+            return (lhs[0]<rhs[0] ? -1 : (lhs[0]>rhs[0] ? 1 : 0));
         })
     }
 
@@ -355,11 +355,10 @@ export class KeyWords {
         return ret
     }
 
-
     search(str: string) {
         let i: number
-        i = this.doBinarySearch(this.keyword_serialno, str, (a: string, b: string) => {
-            return (a<b ? -1 : (a>b ? 1 : 0));
+        i = this.doBinarySearch(this.keyword_serialno, str, (lhs: string, rhs: string) => {
+            return (lhs<rhs ? -1 : (lhs>rhs ? 1 : 0));
         })
         let serialno: number = 0
         if(this.keyword_serialno[i])
