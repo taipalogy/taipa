@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme'
-import { DependencyParser } from './dparser/transition'
+import { DependencyParser } from './dparser/parser'
 import { RuleBasedTagger } from './dparser/tagger'
 
 import { AnalyzerLoader } from './analyzer'
@@ -59,10 +59,12 @@ export class Client {
         } else {
             tagger = new RuleBasedTagger([])
         }
-        let elems = tagger.elements;
+        let cops = tagger.cops;
 
         // dependency parsing
         let dp = new DependencyParser();
-        return dp.parse(elems)
+        let doc: Document = new Document();
+        doc.graph = dp.parseCP(cops)
+        return doc;
     }
 }

@@ -4,7 +4,8 @@ import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION } from './symbols';
 
 export class RuleBasedTagger {
 
-    elements: Array<PartsOfSpeech> = new Array()
+    //elems: Array<PartsOfSpeech> = new Array()
+    cops: Array<ConstructionOfPhrase> = new Array()
 
     constructor(strs: string[]) {
         this.match(strs)
@@ -12,19 +13,17 @@ export class RuleBasedTagger {
 
     private match(strs: string[]) {
         const xprsns = new MultiWordExpressions()
-        const cops = xprsns.match(strs)
+        const ps = xprsns.match(strs)
+        if(ps)
+            this.cops = ps
 
-        if(cops)
-            for(let p of cops) {
+        if(this.cops)
+            for(let p of this.cops) {
                 for(let e of p.elements) {
-                    this.elements.push(e)
                     //console.log(e.form + ':' + e.func)
                 }
             }
-
-        for(let i in this.elements) {
-            //console.log(this.elements[i].func)
-        }
     }
 
+    getCops() { return this.cops }
 }
