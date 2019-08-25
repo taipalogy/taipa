@@ -46,7 +46,7 @@ export class Chunk {
     }
 }
 
-export class MultiWordExpressions {
+export class Rules {
     private patterns: Array<ConstructionOfPhrase[]> = new Array()
     protected keyWords: KeyWords = new KeyWords()
 
@@ -74,19 +74,22 @@ export class MultiWordExpressions {
     populatePatterns() {
         // copula
         this.patterns.push([new ConstructionOfPhrase([new PersonalPronoun()])
-                                , new ConstructionOfPhrase([<Copula>this.get('siz')])
-                                , new ConstructionOfPhrase([new Noun()])])
+                            , new ConstructionOfPhrase([<Copula>this.get('siz')])
+                            , new ConstructionOfPhrase([new Noun()])])
 
         this.patterns.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
-                                , new ConstructionOfPhrase([new Adjective])])
+                            , new ConstructionOfPhrase([new Adjective])])
         
         this.patterns.push([new ConstructionOfPhrase([this.get('goay')])
-                                , new ConstructionOfPhrase([this.get('siz')])
-                                , new ConstructionOfPhrase([this.get('langx')])])
-                                
+                            , new ConstructionOfPhrase([this.get('siz')])
+                            , new ConstructionOfPhrase([this.get('langx')])])
+
+        // phrasal verb
+        this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])])
+
         // phrasal copula
         this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])
-                                ,new ConstructionOfPhrase([new Adjective])])
+                            ,new ConstructionOfPhrase([new Adjective])])
 
         // serial verbs
 

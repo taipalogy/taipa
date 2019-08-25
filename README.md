@@ -6,8 +6,6 @@ A library for analyzing and processing Taiwanese language. This library consists
 * stemming
 * morpheme-based morphological analyzing
 * graphemic analyzing
-* part-of-speech tagging
-* dependency parsing
 
 ## API
 

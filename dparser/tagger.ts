@@ -1,4 +1,4 @@
-import { ConstructionOfPhrase, MultiWordExpressions } from './rules'
+import { ConstructionOfPhrase, Rules } from './rules'
 import { ConstructionElement, PartsOfSpeech } from './keywords'
 import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION } from './symbols';
 
@@ -12,8 +12,8 @@ export class RuleBasedTagger {
     }
 
     private match(strs: string[]) {
-        const xprsns = new MultiWordExpressions()
-        const ps = xprsns.match(strs)
+        const rs = new Rules()
+        const ps = rs.match(strs)
         if(ps)
             this.cops = ps
 
