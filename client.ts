@@ -59,7 +59,7 @@ export class Client {
         } else {
             tagger = new RuleBasedTagger([])
         }
-        let cops = tagger.cops;
+        let cops = tagger.cps;
 
         // dependency parsing
         let dp = new DependencyParser();

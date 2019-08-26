@@ -3,7 +3,7 @@ import { ConstructionOfPhrase, Rules } from './rules'
 export class RuleBasedTagger {
 
     //elems: Array<PartsOfSpeech> = new Array()
-    cops: Array<ConstructionOfPhrase> = new Array()
+    cps: Array<ConstructionOfPhrase> = new Array()
 
     constructor(strs: string[]) {
         this.match(strs)
@@ -13,15 +13,16 @@ export class RuleBasedTagger {
         const rs = new Rules()
         const ps = rs.match(strs)
         if(ps)
-            this.cops = ps
+            this.cps = ps
 
-        if(this.cops)
-            for(let p of this.cops) {
-                for(let e of p.elements) {
-                    //console.log(e.form + ':' + e.tag)
+        if(this.cps)
+            for(let cp of this.cps) {
+                //console.log(cp.partOfSpeech)
+                for(let e of cp.elements) {
+                    //console.log(e.form + ':' + e.tag + '.' + e.lexeme.word.literal)
                 }
             }
     }
 
-    getCops() { return this.cops }
+    getCops() { return this.cps }
 }

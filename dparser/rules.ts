@@ -44,12 +44,12 @@ class SetOfPhrasalVerbs {
         return ret
     }
 
-    private makeInflectingParticle() {}
-
     private populatePhrasalVerbs() {
         let ptclOne = new Particle()
         let ptclTwo = new Particle()
-        this.phrasalVerbs.push(new ConstructionOfPhrase([new Verb(), this.makeParticle('diurh')]))
+        let cp = new ConstructionOfPhrase([new Verb(), this.makeParticle('diurh')])
+        cp.partOfSpeech = POSTags.verb
+        this.phrasalVerbs.push(cp)
     }
 }
 
@@ -98,13 +98,19 @@ export class Rules {
     match(strs: string[]) {
         for(let p of this.patterns) {
             for(let i=0; i<p.length; i++) {
-                //for(let e in p[i].elements)
-                    //console.log('>' + p[i].elements[e].lexeme.word.literal + '-' + strs[e])
+                for(let e in p[i].elements) {
+                    if(p[i].elements[e].lexeme.word.literal === strs[e]) {
+                        //console.log('>' + p[i].elements[e].lexeme.word.literal + '-' + strs[e])
+                        return p
+                    }
+                }
+/*
                 if(p[i].elements[0].match(strs[i])) {
                     if(i+1 === p.length) {
                         return p
                     }
                 }
+                */
             }
         }
     }
