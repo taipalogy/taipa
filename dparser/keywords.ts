@@ -266,14 +266,14 @@ export class Auxiliary extends ConstructionElement{
     }
 }
 
-export class PlainParticle extends ConstructionElement {
+export class Particle extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POSTags.particle
     }
 }
 
-export class Particle extends ConstructionElement {
+export class PlainParticle extends ConstructionElement {
     constructor() {
         super()
         this.partOfSpeech = POSTags.particle
@@ -354,10 +354,10 @@ export class KeyWords {
         return ret
     }
 
-    private makePlainParticle(str: string): PlainParticle {
+    private makeParticle(str: string): Particle {
         let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
         let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
-        let ret = new PlainParticle()
+        let ret = new Particle()
         ret.lexeme = ls[0]
         return ret
     }
@@ -415,14 +415,15 @@ export class KeyWords {
             this.makeAuxiliary('hongz'),
             this.makeAuxiliary('homz'),
 
-            this.makePlainParticle('kih'),
-            this.makePlainParticle('leh'),
-            this.makePlainParticle('jip'),
-            this.makePlainParticle('chit'),
-            this.makePlainParticle('cheh'),
+            this.makeParticle('kih'),
+            this.makeParticle('leh'),
+            this.makeParticle('jip'),
+            this.makeParticle('chit'),
+            this.makeParticle('cheh'),
+            this.makeParticle('diurh'),
 
-            this.makePlainParticle('qahf'),
-            this.makePlainParticle('siongw'),
+            this.makeParticle('qahf'),
+            this.makeParticle('siongw'),
         ]
     }
 }

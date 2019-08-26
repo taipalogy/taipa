@@ -32,9 +32,11 @@ export enum DependencyLabels {
     dobj = 'dobj',
     iobj = 'iobj',
     iobj_agent = 'iobj:agent',
+    mwe = 'mwe',
     nobj = 'nobj',
     nsubj = 'nsubj',
     nsubj_caus = 'nsubj:caus',
+    prt = 'prt',
     root = 'root',
     xcomp = 'xcomp',
 }

@@ -1,5 +1,5 @@
 import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns
-    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech } from './keywords'
+    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech, TonalZeroCombining } from './keywords'
 import { TonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
@@ -11,10 +11,45 @@ export class ConstructionOfPhrase {
     partOfSpeech: string = ''
     elements: Array<PartsOfSpeech> = new Array()
 
-    constructor(private arr: Array<PartsOfSpeech>) {
+    constructor(arr: Array<PartsOfSpeech>) {
         for(let key in arr) {
             this.elements.push(arr[key])
         }
+    }
+}
+
+class NounPhrase {}
+class ParticlePhrase {}
+class VerbPhrase extends ConstructionOfPhrase {}
+
+class PhrasalVerb extends VerbPhrase {
+    constructor(arr: Array<PartsOfSpeech>) {
+        super(arr)
+    }
+}
+
+class SetOfPhrasalVerbs {
+    private analyzer = new TonalInflextionAnalyzer()
+    phrasalVerbs: Array<ConstructionOfPhrase> = []
+
+    constructor() {
+        this.populatePhrasalVerbs()
+    }
+
+    private makeParticle(str: string) {
+        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ret = new Particle()
+        ret.lexeme = ls[0]
+        return ret
+    }
+
+    private makeInflectingParticle() {}
+
+    private populatePhrasalVerbs() {
+        let ptclOne = new Particle()
+        let ptclTwo = new Particle()
+        this.phrasalVerbs.push(new ConstructionOfPhrase([new Verb(), this.makeParticle('diurh')]))
     }
 }
 
@@ -52,6 +87,7 @@ export class Rules {
 
     constructor() {
         this.populatePatterns()
+        this.populatePhrasalVerbs()
     }
 
     protected get(str: string) {
@@ -62,6 +98,8 @@ export class Rules {
     match(strs: string[]) {
         for(let p of this.patterns) {
             for(let i=0; i<p.length; i++) {
+                //for(let e in p[i].elements)
+                    //console.log('>' + p[i].elements[e].lexeme.word.literal + '-' + strs[e])
                 if(p[i].elements[0].match(strs[i])) {
                     if(i+1 === p.length) {
                         return p
@@ -71,7 +109,15 @@ export class Rules {
         }
     }
 
-    populatePatterns() {
+    private populatePhrasalVerbs() {
+        const s = new SetOfPhrasalVerbs()
+        for(let pv of s.phrasalVerbs) {
+            //console.log(pv.elements[1].lexeme.word.literal)
+            this.patterns.push([pv])
+        }
+    }
+
+    private populatePatterns() {
         // copula
         this.patterns.push([new ConstructionOfPhrase([new PersonalPronoun()])
                             , new ConstructionOfPhrase([<Copula>this.get('siz')])

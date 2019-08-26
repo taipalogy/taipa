@@ -1,6 +1,4 @@
 import { ConstructionOfPhrase, Rules } from './rules'
-import { ConstructionElement, PartsOfSpeech } from './keywords'
-import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION } from './symbols';
 
 export class RuleBasedTagger {
 
@@ -20,7 +18,7 @@ export class RuleBasedTagger {
         if(this.cops)
             for(let p of this.cops) {
                 for(let e of p.elements) {
-                    //console.log(e.form + ':' + e.func)
+                    //console.log(e.form + ':' + e.tag)
                 }
             }
     }
