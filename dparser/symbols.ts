@@ -25,6 +25,10 @@ export enum POSTags {
 }
 
 export enum DependencyLabels {
+    /*
+      Universal Dependencies
+      https://universaldependencies.org/u/dep/all.html
+    */
     aux_caus = 'aux:caus',
     csubj = 'csubj',
     ccomp = 'ccomp',
@@ -41,7 +45,7 @@ export enum DependencyLabels {
     xcomp = 'xcomp',
 }
 
-export enum PTBTags {
+export enum Tagset {
     CC = 'CC', // coordinating conjunction
     CD = 'CD', // cardinal number
     DT = 'DT', // determiner
@@ -55,7 +59,7 @@ export enum PTBTags {
     NNP = 'NNP', // proper noun
     PDT = 'PDT', // predeterminer
     PRP = 'PRP', // personal pronoun
-    PRPS = 'PRP$', // possessive pronoun
+    PRPS = 'PRPS', // possessive pronoun
     RB = 'RB', // adverb
     RBR = 'RBR',
     RBS = 'RBS',
@@ -67,6 +71,8 @@ export enum PTBTags {
 
     comma = ',',
     sent_end_punc = '.',
+
+    PVRP = 'PVRP', // particle of phrasal verb
 }
 
 export let PERSONAL_PRONOUN2TO137_DECLENSION = {

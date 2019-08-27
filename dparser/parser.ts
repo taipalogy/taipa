@@ -41,17 +41,17 @@ export class DependencyParser {
             c = this.apply<ConstructionElement>(t, c);
         }
 
-        return []
+        return c.relations
     }
 
-    parseCP(cops: ConstructionOfPhrase[]): Relation[] {
-        for(let p in cops) {
-            const cerels = this.parseCE(cops[p].elements)
-            //console.log(cerels)
+    parseCP(cps: ConstructionOfPhrase[]): Relation[] {
+        const rels_of_ces: Array<Relation[]> = new Array() 
+        for(let p in cps) {
+            rels_of_ces.push(this.parseCE(cps[p].elements))
         }
 
         let c: Configuration<ConstructionOfPhrase> = this.getInitialConfiguration<ConstructionOfPhrase>();
-        for(let p of cops) {
+        for(let p of cps) {
             c.queue.push(p)
         }
 
@@ -63,6 +63,8 @@ export class DependencyParser {
             c = this.apply<ConstructionOfPhrase>(t, c);
         }
 
-        return []
+        //console.log(rels_of_ces)
+
+        return c.relations
     }
 }

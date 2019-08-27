@@ -1,7 +1,7 @@
 import { Configuration, Transition, Shift, LeftArc, RightArc } from './configuration'
 import { ConstructionElement } from './keywords';
 import { ConstructionOfPhrase } from './rules';
-import { DependencyLabels } from './symbols';
+import { DependencyLabels, POSTags, Tagset } from './symbols';
 import { Relation } from './relation';
 
 export class GuideForConstructionElement {
@@ -24,6 +24,11 @@ export class GuideForConstructionElement {
         return new Relation(lbl, this.s1, this.s2)
     }
 
+    private isQueueEmpty(c: Configuration<ConstructionElement>) {
+        if(c.queue.length === 0) return true
+        return false
+    }
+
     getNextTransition(c: Configuration<ConstructionElement>) {
         this.s1 = new ConstructionElement()
         if(c.stack.length > 1) this.s1 = c.stack[c.stack.length-1]
@@ -31,6 +36,13 @@ export class GuideForConstructionElement {
         if(c.stack.length > 2) this.s2 = c.stack[c.stack.length-2]
         this.b1 = new ConstructionElement()
         if(c.queue.length > 0) this.b1 = c.queue[0]
+
+        if(this.s1.tag === Tagset.VB && this.b1.tag === Tagset.PVRP) this.shift()
+        if(this.isQueueEmpty(c)) {
+            if(this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PVRP) {
+                c.relations.push(this.rightArc(DependencyLabels.prt))
+            }
+        }
 
         if(this.transitions.length == 0) return undefined
         return this.transitions.shift();

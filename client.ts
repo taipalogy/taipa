@@ -59,12 +59,12 @@ export class Client {
         } else {
             tagger = new RuleBasedTagger([])
         }
-        let cops = tagger.cps;
+        let cps = tagger.cps;
 
         // dependency parsing
         let dp = new DependencyParser();
         let doc: Document = new Document();
-        doc.graph = dp.parseCP(cops)
+        doc.graph = dp.parseCP(cps)
         return doc;
     }
 }
