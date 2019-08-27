@@ -29,6 +29,11 @@ export class GuideForConstructionElement {
         return false
     }
 
+    private isStackEmpty(c: Configuration<ConstructionElement>) {
+        if(c.stack.length === 2) return true
+        return false
+    }
+
     getNextTransition(c: Configuration<ConstructionElement>) {
         this.s1 = new ConstructionElement()
         if(c.stack.length > 1) this.s1 = c.stack[c.stack.length-1]
@@ -41,6 +46,8 @@ export class GuideForConstructionElement {
         if(this.isQueueEmpty(c)) {
             if(this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PVRP) {
                 c.relations.push(this.rightArc(DependencyLabels.prt))
+            } else if(this.isStackEmpty(c)) {
+                c.relations.push(this.rightArc(DependencyLabels.root))
             }
         }
 

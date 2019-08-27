@@ -18,19 +18,20 @@ export class ConstructionOfPhrase {
     }
 }
 
-class NounPhrase {}
+class NounPhrase extends ConstructionOfPhrase {}
 class ParticlePhrase {}
 class VerbPhrase extends ConstructionOfPhrase {}
 
 class PhrasalVerb extends VerbPhrase {
-    constructor(arr: Array<PartsOfSpeech>) {
+    constructor(arr: Array<ConstructionElement>) {
         super(arr)
+        this.partOfSpeech = POSTags.verb
     }
 }
 
 class SetOfPhrasalVerbs {
     private analyzer = new TonalInflextionAnalyzer()
-    phrasalVerbs: Array<ConstructionOfPhrase> = []
+    phrasalVerbs: Array<PhrasalVerb> = []
 
     constructor() {
         this.populatePhrasalVerbs()
@@ -45,11 +46,21 @@ class SetOfPhrasalVerbs {
     }
 
     private populatePhrasalVerbs() {
-        let ptclOne = new Particle()
-        let ptclTwo = new Particle()
-        let cp = new ConstructionOfPhrase([new Verb(), this.makeParticle('diurh')])
-        cp.partOfSpeech = POSTags.verb
-        this.phrasalVerbs.push(cp)
+        this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]))
+    }
+}
+
+class PersonalPronominalPhrase extends NounPhrase {
+    constructor(arr: Array<ConstructionElement>) {
+        super(arr)
+        this.partOfSpeech = POSTags.pronoun
+    }
+}
+
+class DeterminativePhrase extends NounPhrase {
+    constructor(arr: Array<ConstructionElement>) {
+        super(arr)
+        this.partOfSpeech = POSTags.determiner
     }
 }
 
@@ -104,13 +115,6 @@ export class Rules {
                         return p
                     }
                 }
-/*
-                if(p[i].elements[0].match(strs[i])) {
-                    if(i+1 === p.length) {
-                        return p
-                    }
-                }
-                */
             }
         }
     }
