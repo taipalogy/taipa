@@ -76,23 +76,11 @@ export enum Tagset {
 }
 
 export let PERSONAL_PRONOUN2TO137_DECLENSION = {
-    baseForm: {
-        name: 'baseForm',
-        directObject: 'directObject',
-    },
+    baseForm: 'baseForm',
     sandhiForm: {
-        first: {
-            firstEnclitic: 'firstEnclitic',
-            subjective: 'subjective',
-            indirectObject: 'indirectObject',
-        },
-        third: {
-            adverbial: 'adverbial',
-            thirdEnclitic: 'thirdEnclitic',
-        },
-        seventh: {
-            seventhEnclitic: 'seventhEnclitic',
-        },
+        first: 'first',
+        third: 'third',
+        seventh: 'seventh',
     }
 }
 

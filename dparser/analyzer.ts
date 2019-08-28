@@ -32,15 +32,18 @@ export class TonalInflextionAnalyzer extends Analyzer {
         return tmm.makeMorphemes(); 
     }
 
-    doLexicalAnalysis(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme[]
-    doLexicalAnalysis(x: string | Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
-        let morphemes: Array<TonalCombiningMorpheme> = []
-        if(typeof x == "object") {
-            morphemes = x
-        }
+    doLexicalAnalysis(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme[] {
+        let morphemes: Array<TonalCombiningMorpheme> = ms
 
         // Lexeme Maker
         let tllm = new TonalInflexionLexemeMaker(morphemes, tim);
         return tllm.makeLexemes()
     }
+
+    doAnalysis(str: string, tcm: TonalCombiningMetaplasm, tim: TonalInflectingMetaplasm) {
+        const tilm = new TonalInflexionLexemeMaker(this.doMorphologicalAnalysis(str, tcm), tim)
+        return tilm.makeLexemes()
+    }
 }
+
+export const tonalInflextionAnalyzer = new TonalInflextionAnalyzer()

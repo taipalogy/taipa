@@ -1,6 +1,6 @@
 import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns
     , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech, TonalZeroCombining } from './keywords'
-import { TonalInflextionAnalyzer } from './analyzer'
+import { tonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import { Phraseme, ToneGroup } from '../phraseme';
@@ -30,7 +30,6 @@ class PhrasalVerb extends VerbPhrase {
 }
 
 class SetOfPhrasalVerbs {
-    private analyzer = new TonalInflextionAnalyzer()
     phrasalVerbs: Array<PhrasalVerb> = []
 
     constructor() {
@@ -38,29 +37,13 @@ class SetOfPhrasalVerbs {
     }
 
     private makeParticle(str: string) {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Particle()
-        ret.lexeme = ls[0]
+        ret.lexeme = tonalInflextionAnalyzer.doAnalysis(str, new TonalZeroCombining(), new TonalInflexion())[0]
         return ret
     }
 
     private populatePhrasalVerbs() {
         this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]))
-    }
-}
-
-class PersonalPronominalPhrase extends NounPhrase {
-    constructor(arr: Array<ConstructionElement>) {
-        super(arr)
-        this.partOfSpeech = POSTags.pronoun
-    }
-}
-
-class DeterminativePhrase extends NounPhrase {
-    constructor(arr: Array<ConstructionElement>) {
-        super(arr)
-        this.partOfSpeech = POSTags.determiner
     }
 }
 
@@ -70,21 +53,18 @@ export class Chunk {
 
     constructor() {
 
-        let analyzer = new TonalInflextionAnalyzer()
-
-        let ms = analyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms())
-        let ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let transitive = new Verb()
         transitive.lexeme = ls[0]
 
-
-        ms = analyzer.doMorphologicalAnalysis(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
-        ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
+        ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let proceeding = new PersonalPronoun2To137()
         proceeding.lexeme = ls[0]
 
-        ms = analyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms())
-        ls = analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        ms = tonalInflextionAnalyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms())
+        ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let intransitive = new Verb()
         intransitive.lexeme = ls[0]
 
@@ -102,11 +82,19 @@ export class Rules {
     }
 
     protected get(str: string) {
-        const clone = this.keyWords.get(str).clone()
-        return clone
+        const kw = this.keyWords.get(str)
+        let clone: PartsOfSpeech
+        if(kw)
+            return kw.clone()
+        else
+            return undefined
     }
 
-    match(strs: string[]) {
+    matchKeyWords(str: string) {
+        return this.keyWords.get(str)
+    }
+
+    matchPatterns(strs: string[]) {
         for(let p of this.patterns) {
             for(let i=0; i<p.length; i++) {
                 for(let e in p[i].elements) {
@@ -136,9 +124,9 @@ export class Rules {
         this.patterns.push([new ConstructionOfPhrase([<Copula>this.get('siz')])
                             , new ConstructionOfPhrase([new Adjective])])
         
-        this.patterns.push([new ConstructionOfPhrase([this.get('goay')])
-                            , new ConstructionOfPhrase([this.get('siz')])
-                            , new ConstructionOfPhrase([this.get('langx')])])
+        this.patterns.push([new ConstructionOfPhrase([<PersonalPronoun>this.get('goay')])
+                            , new ConstructionOfPhrase([<Copula>this.get('siz')])
+                            , new ConstructionOfPhrase([<Noun>this.get('langx')])])
 
         // phrasal verb
         this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])])

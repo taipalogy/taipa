@@ -1,11 +1,11 @@
-import { InflexionLexeme, TonalInflexionLexeme, TonalInflexion } from './lexeme'
+import { InflexionLexeme, TonalInflexion } from './lexeme'
 import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Allomorph, FreeAllomorph, declensionRules } from '../tonal/version2';
 import { AlphabeticLetter } from '../grapheme';
-import { TonalInflextionAnalyzer } from './analyzer';
+import { tonalInflextionAnalyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 
 export class ConstructionElement {
@@ -39,6 +39,8 @@ export class ConstructionElement {
     get form() { return this.selected[0] }
 
     get tag() { return this.selected[1] }
+
+    get wordForm(): string { return '' }
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
@@ -106,8 +108,7 @@ export class PersonalPronoun2To137 extends ConstructionElement {
 
     match(str: string): boolean {
         if(this.lexeme.word.literal === str) {
-            this.setForm(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.name)
-            this.setTag(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm.directObject)
+            this.setForm(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm)
             return true
         }
         if(this.lexeme.otherForms.length > 0) {
@@ -119,6 +120,14 @@ export class PersonalPronoun2To137 extends ConstructionElement {
             }
         }
         return false
+    }
+
+    get wordForm(): string {
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.baseForm) return this.lexeme.word.literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm.first) return this.lexeme.otherForms[0].literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm.third) return this.lexeme.otherForms[1].literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm.seventh) return this.lexeme.otherForms[2].literal
+        return ''
     }
 }
 
@@ -285,7 +294,6 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun
 
 export class KeyWords {
-    private analyzer = new TonalInflextionAnalyzer()
     private keyword_serialno: Array<[string, number]> = new Array()
     private keyElems: Array<PartsOfSpeech> = new Array()
 
@@ -307,67 +315,67 @@ export class KeyWords {
     }
 
     private makePersonalPronoun(str: string) {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new PersonalPronoun2To137()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeDemonstrative(str: string): Demonstrative {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Demonstrative()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeVerb(str: string): Verb {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Verb()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeNoun(str: string): Noun {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Noun()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeCopula(str: string): Copula {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Copula()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeAuxiliary(str: string): Auxiliary {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Auxiliary()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeParticle(str: string): Particle {
-        let ms = this.analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = this.analyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Particle()
         ret.lexeme = ls[0]
         return ret
     }
 
-    search(str: string) {
+    private search(str: string) {
         let i: number
         i = this.doBinarySearch(this.keyword_serialno, str, (lhs: string, rhs: string) => {
             return (lhs<rhs ? -1 : (lhs>rhs ? 1 : 0));
         })
-        let serialno: number = 0
+        let serialno: number = -1
         if(this.keyword_serialno[i])
             serialno = this.keyword_serialno[i][1]
         return serialno
@@ -388,8 +396,10 @@ export class KeyWords {
 
     get(str: string) {
         let serialno = this.search(str)
-        //console.log(this.keyElems[serialno].lexeme.word.literal)
-        return this.keyElems[serialno]
+        if(serialno === -1) return undefined
+        const e = this.keyElems[serialno]
+        e.match(str)
+        return e
     }
 
     private populateKeyElems() {

@@ -2,6 +2,7 @@ let list_of_new_syllables_2 = [
     'lit',
 ]
 
+// TODO: remove duplicates
 let list_of_new_syllables = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 

@@ -2,7 +2,7 @@ import { ConstructionElement } from './keywords';
 import { ConstructionOfPhrase } from './rules';
 import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration'
-import { GuideForConstructionElement, GuideForConstructionOfPhrase } from './guide'
+import { GuideForConstructionElement } from './guide'
 import { DummyLexeme } from './lexeme';
 
 export class DependencyParser {
@@ -15,10 +15,9 @@ export class DependencyParser {
     }
 
     parseCE(ces: ConstructionElement[]): Relation[] {
-        
         let c: Configuration<ConstructionElement> = this.getInitialConfiguration<ConstructionElement>();
         for(let ce of ces) {
-            //console.log(ce.lexeme.word.literal)
+            //console.log(ce.wordForm)
             c.queue.push(ce)
         }
 
@@ -44,27 +43,4 @@ export class DependencyParser {
         return c.relations
     }
 
-    parseCP(cps: ConstructionOfPhrase[]): Relation[] {
-        const rels_of_ces: Array<Relation[]> = new Array() 
-        for(let p in cps) {
-            rels_of_ces.push(this.parseCE(cps[p].elements))
-        }
-
-        let c: Configuration<ConstructionOfPhrase> = this.getInitialConfiguration<ConstructionOfPhrase>();
-        for(let p of cps) {
-            c.queue.push(p)
-        }
-
-        let guide = new GuideForConstructionOfPhrase()
-    
-        while(!c.isTerminalConfiguration()) {
-            let t = guide.getNextTransition(c);
-            if(t == null || t == undefined) break
-            c = this.apply<ConstructionOfPhrase>(t, c);
-        }
-
-        //console.log(rels_of_ces)
-
-        return c.relations
-    }
 }

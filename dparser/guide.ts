@@ -43,9 +43,12 @@ export class GuideForConstructionElement {
         if(c.queue.length > 0) this.b1 = c.queue[0]
 
         if(this.s1.tag === Tagset.VB && this.b1.tag === Tagset.PVRP) this.shift()
+        if(this.s1.tag === Tagset.PRP && this.b1.tag === Tagset.VB) this.shift()
         if(this.isQueueEmpty(c)) {
             if(this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PVRP) {
                 c.relations.push(this.rightArc(DependencyLabels.prt))
+            } else if(this.s2.tag === Tagset.PRP && this.s1.tag === Tagset.VB) {
+                c.relations.push(this.leftArc(DependencyLabels.nsubj))
             } else if(this.isStackEmpty(c)) {
                 c.relations.push(this.rightArc(DependencyLabels.root))
             }
@@ -55,14 +58,3 @@ export class GuideForConstructionElement {
         return this.transitions.shift();
     }
 }
-
-export class GuideForConstructionOfPhrase {
-    transitions: Array<Transition<ConstructionOfPhrase>>  = new Array()
-
-    getNextTransition(c: Configuration<ConstructionOfPhrase>) {
-
-        if(this.transitions.length == 0) return undefined
-        return this.transitions.shift();
-    }
-}
-
