@@ -12,13 +12,13 @@ export class Kana extends AnalyzerWrapper {
         this.findDuplicates()
     }
 
-    checkSize() {
+    private checkSize() {
         if(letterClasses.size !== lowerLettersOfKana.size) {
             console.log('sizes unmatched')
         }
     }
 
-    findDuplicates() {
+    private findDuplicates() {
         let arr: string[] = [];
         let duplicates = [];
 

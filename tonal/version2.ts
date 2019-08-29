@@ -761,7 +761,7 @@ class AllomorphK extends CheckedAllomorph {
     final = new FinalK()
 }
 
-class AllomorphH extends CheckedAllomorph {
+export class AllomorphH extends CheckedAllomorph {
     final = new FinalH()
 }
 

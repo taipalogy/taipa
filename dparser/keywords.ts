@@ -1,9 +1,9 @@
 import { InflexionLexeme, TonalInflexion } from './lexeme'
-import { POSTags, PERSONAL_PRONOUN2TO137_DECLENSION, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
+import { POSTags, PERSONAL_PRONOUN2TO137_FORMS, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
 import { TonalInflectingMetaplasm, Word } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
-import { Allomorph, FreeAllomorph, declensionRules } from '../tonal/version2';
+import { Allomorph, FreeAllomorph, declensionRules, AllomorphH, TonalLetterTags, lowerLettersOfTonal } from '../tonal/version2';
 import { AlphabeticLetter } from '../grapheme';
 import { tonalInflextionAnalyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
@@ -13,7 +13,7 @@ export class ConstructionElement {
     partOfSpeech: string = ''
     protected selected: [string, string] = ['', '']
 
-    match(str: string) {
+    matchFormFor(str: string): boolean {
         if(this.lexeme.word.literal === str) {
             return true
         }
@@ -32,9 +32,9 @@ export class ConstructionElement {
         return clone
     }
 
-    protected setForm(str: string) { this.selected[0] = str; return this }
+    protected setForm(str: string) { this.selected[0] = str }
     
-    setTag(str: string) { this.selected[1] = str; return this }
+    setTag(str: string) { this.selected[1] = str }
 
     get form() { return this.selected[0] }
 
@@ -52,7 +52,7 @@ export class TonalZeroCombining extends TonalCombiningMetaplasm {}
 export class FromTone2ToTone137 extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
         if(allomorph) {
-            let rets = []
+            //let rets = []
             if(allomorph instanceof FreeAllomorph) {
                 // get tone1, tone3, tone7 from tone2
                 let ds = declensionRules.get(allomorph.tonal.getLiteral())
@@ -67,6 +67,23 @@ export class FromTone2ToTone137 extends TonalCombiningMetaplasm {
                         rets.push(new TonalSyllable(s.letters))
                     }
                 }
+                return rets
+            }
+        }
+        return []
+    }
+}
+
+export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable>  {
+        if(allomorph) {
+            if(allomorph instanceof AllomorphH) {
+                let rets = []
+                let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                s.popLetter()
+                s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.hh))
+                s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.w))
+                rets.push(new TonalSyllable(s.letters))
                 return rets
             }
         }
@@ -106,15 +123,15 @@ export class PersonalPronoun2To137 extends ConstructionElement {
         return clone
     }
 
-    match(str: string): boolean {
+    matchFromFor(str: string): boolean {
         if(this.lexeme.word.literal === str) {
-            this.setForm(PERSONAL_PRONOUN2TO137_DECLENSION.baseForm)
+            this.setForm(PERSONAL_PRONOUN2TO137_FORMS.baseForm)
             return true
         }
         if(this.lexeme.otherForms.length > 0) {
             for(let i=0; i<this.lexeme.otherForms.length; i++) {
                 if(this.lexeme.otherForms[i].literal === str) {
-                    this.setForm(Object.keys(PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm)[i])
+                    this.setForm(Object.keys(PERSONAL_PRONOUN2TO137_FORMS.sandhiForm)[i])
                     return true
                 }
             }
@@ -123,10 +140,10 @@ export class PersonalPronoun2To137 extends ConstructionElement {
     }
 
     get wordForm(): string {
-        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.baseForm) return this.lexeme.word.literal
-        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm.first) return this.lexeme.otherForms[0].literal
-        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm.third) return this.lexeme.otherForms[1].literal
-        if(this.selected[0] === PERSONAL_PRONOUN2TO137_DECLENSION.sandhiForm.seventh) return this.lexeme.otherForms[2].literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.baseForm) return this.lexeme.word.literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.first) return this.lexeme.otherForms[0].literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.third) return this.lexeme.otherForms[1].literal
+        if(this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.seventh) return this.lexeme.otherForms[2].literal
         return ''
     }
 }
@@ -168,16 +185,14 @@ export class Copula extends ConstructionElement {
         return clone
     }
 
-    match(str: string): boolean {
+    matchFormFor(str: string): boolean {
         if(this.lexeme.word.literal === str) {
             this.setForm(COPULA_CONJUGATION.baseForm.name)
-            this.setTag(COPULA_CONJUGATION.baseForm.intransitive)
             return true
         }
 
         if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
             this.setForm(COPULA_CONJUGATION.sandhiForm.name)
-            this.setTag(COPULA_CONJUGATION.sandhiForm.copulative)
             return true
         }
 
@@ -250,16 +265,14 @@ export class Noun extends ConstructionElement {
         return clone
     }
 
-    match(str: string): boolean {
+    matchFormFor(str: string): boolean {
         if(this.lexeme.word.literal === str) {
             this.setForm(NOUN_DECLENSION.baseForm.name)
-            this.setTag(NOUN_DECLENSION.baseForm.nominal)
             return true
         }
 
         if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
             this.setForm(NOUN_DECLENSION.sandhiForm.name)
-            this.setTag(NOUN_DECLENSION.sandhiForm.adjective)
             return true
         }
 
@@ -294,7 +307,7 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun
 
 export class KeyWords {
-    private keyword_serialno: Array<[string, number]> = new Array()
+    private keyword_serialnos: Array<[string, number]> = new Array()
     private keyElems: Array<PartsOfSpeech> = new Array()
 
     constructor() {
@@ -309,9 +322,10 @@ export class KeyWords {
             }
             i++
         }
-        this.keyword_serialno = Array.from(buffer).sort((lhs: [string, number], rhs: [string, number]) => {
+        this.keyword_serialnos = Array.from(buffer).sort((lhs: [string, number], rhs: [string, number]) => {
             return (lhs[0]<rhs[0] ? -1 : (lhs[0]>rhs[0] ? 1 : 0));
         })
+        this.findDuplicates()
     }
 
     private makePersonalPronoun(str: string) {
@@ -372,12 +386,12 @@ export class KeyWords {
 
     private search(str: string) {
         let i: number
-        i = this.doBinarySearch(this.keyword_serialno, str, (lhs: string, rhs: string) => {
+        i = this.doBinarySearch(this.keyword_serialnos, str, (lhs: string, rhs: string) => {
             return (lhs<rhs ? -1 : (lhs>rhs ? 1 : 0));
         })
         let serialno: number = -1
-        if(this.keyword_serialno[i])
-            serialno = this.keyword_serialno[i][1]
+        if(this.keyword_serialnos[i])
+            serialno = this.keyword_serialnos[i][1]
         return serialno
     }
 
@@ -394,11 +408,38 @@ export class KeyWords {
         return -1
     }
 
+    private findDuplicates() {
+        let arr: Array<[string, number]> = new Array();
+        let duplicates = [];
+
+        for (let e of this.keyword_serialnos.values()) {
+            arr.push(e)
+        }
+        
+        // object of key-value pairs
+        let uniq: { [key: string]: number } = arr
+            .map((name: [string, number]) => {
+                return {count: 1, name: name}
+            })
+            .reduce((a: { [key: string]: number }, b) => {
+                a[b.name[0]] = (a[b.name[0]] || 0) + b.count
+                return a
+            }, {})
+
+        duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
+
+        if(duplicates.length > 0) {
+            console.log('number of duplicates found: %d', duplicates.length)
+            console.log(duplicates)
+        }
+
+    }
+
     get(str: string) {
         let serialno = this.search(str)
         if(serialno === -1) return undefined
         const e = this.keyElems[serialno]
-        e.match(str)
+        e.matchFormFor(str)
         return e
     }
 

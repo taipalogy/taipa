@@ -75,7 +75,7 @@ export enum Tagset {
     PVRP = 'PVRP', // particle of phrasal verb
 }
 
-export let PERSONAL_PRONOUN2TO137_DECLENSION = {
+export let PERSONAL_PRONOUN2TO137_FORMS = {
     baseForm: 'baseForm',
     sandhiForm: {
         first: 'first',

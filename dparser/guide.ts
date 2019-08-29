@@ -4,7 +4,7 @@ import { ConstructionOfPhrase } from './rules';
 import { DependencyLabels, POSTags, Tagset } from './symbols';
 import { Relation } from './relation';
 
-export class GuideForConstructionElement {
+export class Guide {
     transitions: Array<Transition<ConstructionElement>>  = new Array()
     private s1: ConstructionElement = new ConstructionElement()
     private s2: ConstructionElement = new ConstructionElement()

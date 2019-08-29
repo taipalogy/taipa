@@ -2,7 +2,7 @@ import { ConstructionElement } from './keywords';
 import { ConstructionOfPhrase } from './rules';
 import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration'
-import { GuideForConstructionElement } from './guide'
+import { Guide } from './guide'
 import { DummyLexeme } from './lexeme';
 
 export class DependencyParser {
@@ -21,7 +21,7 @@ export class DependencyParser {
             c.queue.push(ce)
         }
 
-        let guide = new GuideForConstructionElement()
+        let guide = new Guide()
         let root = new DummyLexeme()
         root.word.literal = 'ROOT'
         let ce = new ConstructionElement()

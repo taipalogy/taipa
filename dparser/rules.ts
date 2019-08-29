@@ -1,5 +1,5 @@
 import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns
-    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech, TonalZeroCombining } from './keywords'
+    , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech, TonalZeroCombining, PhrasalVerbParticleDiurh } from './keywords'
 import { tonalInflextionAnalyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
@@ -38,7 +38,7 @@ class SetOfPhrasalVerbs {
 
     private makeParticle(str: string) {
         let ret = new Particle()
-        ret.lexeme = tonalInflextionAnalyzer.doAnalysis(str, new TonalZeroCombining(), new TonalInflexion())[0]
+        ret.lexeme = tonalInflextionAnalyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0]
         return ret
     }
 
@@ -95,15 +95,23 @@ export class Rules {
     }
 
     matchPatterns(strs: string[]) {
-        for(let p of this.patterns) {
-            for(let i=0; i<p.length; i++) {
-                for(let e in p[i].elements) {
-                    if(p[i].elements[e].lexeme.word.literal === strs[e]) {
-                        //console.log('>' + p[i].elements[e].lexeme.word.literal + '-' + strs[e])
-                        return p
-                    }
+        let elems: Array<PartsOfSpeech> = []
+        for(let pat of this.patterns) {
+            for(let i=0; i<pat.length; i++) {
+                for(let e of pat[i].elements) {
+                    //console.log(e)
+                    elems.push(e)
                 }
             }
+
+            for(let i=0; i<elems.length; i++) {
+                if(elems[i].matchFormFor(strs[i])) {
+                    if(i+1 === elems.length) {
+                        return pat
+                    }
+                }
+            }    
+            elems = []
         }
     }
 
