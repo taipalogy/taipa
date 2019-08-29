@@ -4,6 +4,7 @@ import { TonalInflextionAnalyzer, tonalInflextionAnalyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import { ConstructionElement } from './keywords';
+import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
 export class RuleBasedTagger {
     private cps: Array<ConstructionOfPhrase> = new Array()
@@ -28,6 +29,25 @@ export class RuleBasedTagger {
                 this.cps = ps
                 for(let e of buf)
                     matchData.push(e)
+                
+                for(let cp of this.cps) {
+                    //console.log(matchData[0])
+                    if(cp.partOfSpeech === POSTags.verb && cp.elements[cp.elements.length-1].partOfSpeech === POSTags.particle) {
+                        cp.elements[cp.elements.length-1].setTag(Tagset.PVRP)
+                        cp.elements[cp.elements.length-1].setWordForm('diurhhw')
+    
+                        const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(matchData[0])
+                        cp.elements[0].lexeme = tonalInflextionAnalyzer.doAnalysis(ls[0].lemmata[0].literal, new TonalCombiningForms(), new TonalInflexion())[0]
+                        cp.elements[0].setTag(Tagset.VB)
+                        cp.elements[0].setWordForm(matchData[0])    
+                    }
+                    for(let e of cp.elements) {
+                        //console.log(e.wordForm + ':' + e.lexeme.word.literal + '.' + e.tag)
+                        this.ces.push(e)
+                    }
+                }
+        
+                
                 buf = []
             } else {
                 // for key words
@@ -36,29 +56,15 @@ export class RuleBasedTagger {
                     if(kw) {
                         //console.log(kw.lexeme.word.literal + ': key word matched')
                         buf = []
-                        kw.setTag(Tagset.PRP)
+                        if(s === 'goa') kw.setTag(Tagset.PRP)
+                        if(s === 'che') kw.setTag(Tagset.DT)
+                        //console.log(kw)
                         this.ces.push(kw)
                     }
                 }
             }    
         }
 
-        if(this.cps)
-            for(let cp of this.cps) {
-                //console.log(matchData[0])
-                if(cp.partOfSpeech === POSTags.verb && cp.elements[cp.elements.length-1].partOfSpeech === POSTags.particle) {
-                    const ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(matchData[0], new TonalCombiningForms())
-                    const ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
-                    cp.elements[0].lexeme = ls[0]
-                    cp.elements[0].setTag(Tagset.VB)
-                    cp.elements[cp.elements.length-1].setTag(Tagset.PVRP)
-                    //console.log(cp.elements[cp.elements.length-1])
-                }
-                for(let e of cp.elements) {
-                    //console.log(e.form + ':' + e.lexeme.word.literal + '.' + e.tag)
-                    this.ces.push(e)
-                }
-            }
     }
 
     getCes() { return this.ces }

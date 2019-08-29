@@ -32,15 +32,17 @@ export class ConstructionElement {
         return clone
     }
 
-    protected setForm(str: string) { this.selected[0] = str }
+    //protected setForm(str: string) { this.selected[0] = str }
     
     setTag(str: string) { this.selected[1] = str }
 
-    get form() { return this.selected[0] }
+    //get form() { return this.selected[0] }
 
     get tag() { return this.selected[1] }
 
-    get wordForm(): string { return '' }
+    get wordForm(): string { return this.selected[0] }
+
+    setWordForm(str: string) { this.selected[0] = str }
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
@@ -123,22 +125,6 @@ export class PersonalPronoun2To137 extends ConstructionElement {
         return clone
     }
 
-    matchFromFor(str: string): boolean {
-        if(this.lexeme.word.literal === str) {
-            this.setForm(PERSONAL_PRONOUN2TO137_FORMS.baseForm)
-            return true
-        }
-        if(this.lexeme.otherForms.length > 0) {
-            for(let i=0; i<this.lexeme.otherForms.length; i++) {
-                if(this.lexeme.otherForms[i].literal === str) {
-                    this.setForm(Object.keys(PERSONAL_PRONOUN2TO137_FORMS.sandhiForm)[i])
-                    return true
-                }
-            }
-        }
-        return false
-    }
-
     get wordForm(): string {
         if(this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.baseForm) return this.lexeme.word.literal
         if(this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.first) return this.lexeme.otherForms[0].literal
@@ -183,20 +169,6 @@ export class Copula extends ConstructionElement {
     clone(): Copula {
         const clone = Object.create(this);
         return clone
-    }
-
-    matchFormFor(str: string): boolean {
-        if(this.lexeme.word.literal === str) {
-            this.setForm(COPULA_CONJUGATION.baseForm.name)
-            return true
-        }
-
-        if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
-            this.setForm(COPULA_CONJUGATION.sandhiForm.name)
-            return true
-        }
-
-        return false
     }
 }
 
@@ -265,20 +237,6 @@ export class Noun extends ConstructionElement {
         return clone
     }
 
-    matchFormFor(str: string): boolean {
-        if(this.lexeme.word.literal === str) {
-            this.setForm(NOUN_DECLENSION.baseForm.name)
-            return true
-        }
-
-        if(this.lexeme.otherForms.length === 1 && this.lexeme.otherForms[0].literal === str) {
-            this.setForm(NOUN_DECLENSION.sandhiForm.name)
-            return true
-        }
-
-        return false
-    }
-
 }
 
 export class Auxiliary extends ConstructionElement{
@@ -307,7 +265,7 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun
 
 export class KeyWords {
-    private keyword_serialnos: Array<[string, number]> = new Array()
+    private keyword_serialnos: Array<[string, number]> = new Array() // TODO: redundant member variable
     private keyElems: Array<PartsOfSpeech> = new Array()
 
     constructor() {

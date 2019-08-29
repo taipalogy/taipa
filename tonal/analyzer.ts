@@ -46,3 +46,5 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return tllm.makeLexemes()
     }
 }
+
+export const tonal_lemmatization_analyzer = new TonalLemmatizationAnalyzer()

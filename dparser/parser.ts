@@ -1,5 +1,4 @@
 import { ConstructionElement } from './keywords';
-import { ConstructionOfPhrase } from './rules';
 import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration'
 import { Guide } from './guide'
