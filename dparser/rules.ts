@@ -1,9 +1,9 @@
 import { ConstructionElement, Demonstrative, Auxiliary, Verb, PersonalPronoun, Copula, PersonalPronouns
     , FromTone2ToTone137, PersonalPronoun2To137, Particle, KeyWords, Noun, Adjective, PartsOfSpeech, TonalZeroCombining, PhrasalVerbParticleDiurh } from './keywords'
-import { tonalInflextionAnalyzer } from './analyzer'
+import { tonal_inflextion_analyzer } from './analyzer'
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
-import { Phraseme, ToneGroup } from '../phraseme';
+import { Phraseme } from '../phraseme';
 import { POSTags } from './symbols';
 
 export class ConstructionOfPhrase {
@@ -38,7 +38,7 @@ class SetOfPhrasalVerbs {
 
     private makeParticle(str: string) {
         let ret = new Particle()
-        ret.lexeme = tonalInflextionAnalyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0]
+        ret.lexeme = tonal_inflextion_analyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0]
         return ret
     }
 
@@ -53,18 +53,18 @@ export class Chunk {
 
     constructor() {
 
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let transitive = new Verb()
         transitive.lexeme = ls[0]
 
-        ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
-        ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(PersonalPronouns.FirstSingular, new FromTone2ToTone137())
+        ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let proceeding = new PersonalPronoun2To137()
         proceeding.lexeme = ls[0]
 
-        ms = tonalInflextionAnalyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms())
-        ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        ms = tonal_inflextion_analyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms())
+        ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let intransitive = new Verb()
         intransitive.lexeme = ls[0]
 

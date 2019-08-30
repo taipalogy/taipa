@@ -5,12 +5,12 @@ import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Allomorph, FreeAllomorph, declensionRules, AllomorphH, TonalLetterTags, lowerLettersOfTonal } from '../tonal/version2';
 import { AlphabeticLetter } from '../grapheme';
-import { tonalInflextionAnalyzer } from './analyzer';
+import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 
 export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme()
-    partOfSpeech: string = ''
+    pos: string = ''
     protected selected: [string, string] = ['', '']
 
     matchFormFor(str: string): boolean {
@@ -110,14 +110,14 @@ export enum PersonalPronouns {
 export class PersonalPronoun extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.pronoun
+        this.pos = POSTags.pronoun
     }
 }
 
 export class PersonalPronoun2To137 extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.pronoun
+        this.pos = POSTags.pronoun
     }
 
     clone(): PersonalPronoun2To137 {
@@ -137,7 +137,7 @@ export class PersonalPronoun2To137 extends ConstructionElement {
 export class PersonalPronoun1To37 extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.pronoun
+        this.pos = POSTags.pronoun
     }
 
     clone(): PersonalPronoun1To37 {
@@ -149,21 +149,21 @@ export class PersonalPronoun1To37 extends ConstructionElement {
 class Postposition extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.adposition
+        this.pos = POSTags.adposition
     }
 }
 
 export class Verb extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.verb
+        this.pos = POSTags.verb
     }
 }
 
 export class Copula extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.verb
+        this.pos = POSTags.verb
     }
 
     clone(): Copula {
@@ -175,35 +175,35 @@ export class Copula extends ConstructionElement {
 export class NumeralQuantifier extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.noun
+        this.pos = POSTags.noun
     }
 }
 
 export class EncliticLe extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.particle
+        this.pos = POSTags.particle
     }
 }
 
 export class EncliticE extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.particle
+        this.pos = POSTags.particle
     }
 }
 
 class EncliticA extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.particle
+        this.pos = POSTags.particle
     }
 }
 
 export class Demonstrative extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.pronoun
+        this.pos = POSTags.pronoun
     }
 
     clone(): Demonstrative {
@@ -215,21 +215,21 @@ export class Demonstrative extends ConstructionElement {
 export class Adjective extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.adjective
+        this.pos = POSTags.adjective
     }
 }
 
 class PlainNoun extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.noun
+        this.pos = POSTags.noun
     }
 }
 
 export class Noun extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.noun
+        this.pos = POSTags.noun
     }
 
     clone(): Noun {
@@ -242,21 +242,21 @@ export class Noun extends ConstructionElement {
 export class Auxiliary extends ConstructionElement{
     constructor() {
         super()
-        this.partOfSpeech = POSTags.auxiliary
+        this.pos = POSTags.auxiliary
     }
 }
 
 export class Particle extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.particle
+        this.pos = POSTags.particle
     }
 }
 
 export class PlainParticle extends ConstructionElement {
     constructor() {
         super()
-        this.partOfSpeech = POSTags.particle
+        this.pos = POSTags.particle
     }
 }
 
@@ -287,56 +287,56 @@ export class KeyWords {
     }
 
     private makePersonalPronoun(str: string) {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new FromTone2ToTone137())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new PersonalPronoun2To137()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeDemonstrative(str: string): Demonstrative {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Demonstrative()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeVerb(str: string): Verb {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Verb()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeNoun(str: string): Noun {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Noun()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeCopula(str: string): Copula {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Copula()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeAuxiliary(str: string): Auxiliary {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Auxiliary()
         ret.lexeme = ls[0]
         return ret
     }
 
     private makeParticle(str: string): Particle {
-        let ms = tonalInflextionAnalyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
-        let ls = tonalInflextionAnalyzer.doLexicalAnalysis(ms, new TonalInflexion())
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining())
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion())
         let ret = new Particle()
         ret.lexeme = ls[0]
         return ret

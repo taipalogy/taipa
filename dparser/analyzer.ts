@@ -46,4 +46,4 @@ export class TonalInflextionAnalyzer extends Analyzer {
     }
 }
 
-export const tonalInflextionAnalyzer = new TonalInflextionAnalyzer()
+export const tonal_inflextion_analyzer = new TonalInflextionAnalyzer()
