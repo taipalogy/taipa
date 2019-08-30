@@ -127,7 +127,6 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     metaplasm: TonalLemmatizingMetaplasm = new TonalZeroLemmatization()
 
     constructor(word: TonalWord, ms: Array<TonalUncombiningMorpheme>, tl: TonalLemmatization) {
-        // TODO: parameter word may be redundant
         super()
         this.word = word;
         if(ms.length > 0) {

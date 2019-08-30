@@ -251,7 +251,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
 
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
-    metaplasm: TonalCombiningMetaplasm // TODO: redundant member variable
+    metaplasm: TonalCombiningMetaplasm
     lexicalRoots: ListOfLexicalRoots
     
     constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {

@@ -1,36 +1,49 @@
-let list_of_new_syllables_2 = [
-    'lit',
+let list_of_new_syllables = []
+
+let list_of_new_lexical_roots = [
+    'coaih', 'dngh',
+	
+    'hoang',
+
+    'jex', 'jek', 'jeng',
+	
+	'kiaih', 'kuih',
+
+    'laih', 'langh', 'lirey', 'lih', 'lit', 'loaih', 'loeh', 'loeih', 'lurih',
+
+    'mnghh',
+
+    'n',
 ]
 
-// TODO: remove duplicates
-let list_of_new_syllables = [
+let list_of_addon_lexical_roots = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
     'berh', 'berhh', 'berx', 'bery', 'berz',
 
-    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coaih', 'coanny', 'coannw', 'coannz', 'cuinn', 'cuinny', 'cuinnw',
+    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coanny', 'coannw', 'coannz', 'cuinn', 'cuinny', 'cuinnw',
 
     'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'cher', 'chereh', 'cherehh', 'cherew', 'cherex', 'cherez', 'cherh', 'cherhh', 'cherw', 'cherz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
 
-    'dainyy', 'dainnw', 'dainnx', 'dainnz', 'dainnhh', 'denny', 'dennx', 'derex', 'derey', 'derez', 'derh', 'derhh', 'derw', 'dery', 'derz', 'diann', 'diannw', 'dinnh', 'dinnw', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'dirng', 'dngh', 'doanny', 'duinny', 'duinnw', 'duinnx', 'duinnz',
+    'dainyy', 'dainnw', 'dainnx', 'dainnz', 'dainnhh', 'denny', 'dennx', 'derex', 'derey', 'derez', 'derh', 'derhh', 'derw', 'dery', 'derz', 'diann', 'diannw', 'dinnh', 'dinnw', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'dirng', 'doanny', 'duinny', 'duinnw', 'duinnx', 'duinnz',
 
     'enny', 'ennh', 'ennz', 'ennhh', 'er', 'ere', 'erehh', 'erex', 'erey', 'erez', 'erh', 'erw', 'erx', 'erz', 'erehh',
 
     'gereh', 'gerehh', 'gerhh', 'gerex', 'gerez', 'gerx', 'giauh', 'girnx', 'girnz', 'girt', 'girx', 'giry', 'girz',
 	
-    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'her', 'herez', 'herw', 'herx', 'hery', 'herz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hio', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'hoainnh', 'hoang', 'hoannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
+    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'her', 'herez', 'herw', 'herx', 'hery', 'herz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hio', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'hoainnh', 'hoannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
 
     'ionn', 'innh', 'innhh', 'ir', 'irinnx', 'irn', 'irny', 'irpp', 'irw', 'irx', 'iry', 'irz',
 
-    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jirx', 'jiry', 'jex', 'jek', 'jeng', 'jerx',
+    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jiry', 'jirx', 'jerx',
 	
-	'kannx', 'kainnh', 'kainnw', 'kaunnhh', 'kennh', 'kennx', 'ker', 'kere', 'kereh', 'kerew', 'kerw', 'kerh', 'kerx', 'kiaih', 'kiann', 'kiannw', 'kinn', 'kir', 'kirnx', 'kirny', 'kirw', 'kngz', 'koainn', 'koainnw', 'konny', 'kuih', 'kuinnw',
+	'kannx', 'kainnh', 'kainnw', 'kaunnhh', 'kennh', 'kennx', 'ker', 'kere', 'kereh', 'kerew', 'kerw', 'kerh', 'kerx', 'kiann', 'kiannw', 'kinn', 'kir', 'kirnx', 'kirny', 'kirw', 'kngz', 'koainn', 'koainnw', 'konny', 'kuinnw',
 
-    'laih', 'langh', 'lerehh', 'lerex', 'lerh', 'lerx', 'lirey', 'liry', 'lirx', 'lirz', 'lih', 'loaih', 'loeh', 'loeih', 'lurih',
+    'lerehh', 'lerex', 'lerh', 'lerx', 'liry', 'lirx', 'lirz',
 
-    'maix', 'mih', 'mihh', 'mng', 'mnghh', 'moaix', 'moaiz', 'moex', 'moez', 'mui', 'muiz',
+    'maix', 'mih', 'mihh', 'mng', 'moaix', 'moaiz', 'moex', 'moez', 'mui', 'muiz',
 
-    'n', 'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'nngh', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
+    'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'nngh', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
 
     'ngai', 'ngaiy', 'ngauy', 'ngauh', 'ngauhh', 'ngaw', 'ngaz', 'nge', 'ngh', 'nghh', 'ngiahh', 'ngiriy', 'ngiuy', 'ngiux', 'ngiz', 'ngoeh', 'ngoehh',
 
@@ -46,7 +59,7 @@ let list_of_new_syllables = [
 
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
-    'vainny', 'vainnx', 'vainnz', 'ver', 'very', 'verw', 'verx', 'verz', 'veng', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
+    'vainny', 'vainnx', 'vainnz', 'ver', 'very', 'verw', 'verx', 'verz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
 ]
 
 export let list_of_lexical_roots = [
