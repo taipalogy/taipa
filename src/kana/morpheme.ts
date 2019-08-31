@@ -37,6 +37,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     }
 
     syllabary.setFirstLetter(letters[beginOfSyllable].literal, len)
+    
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array()
 
     for(let m in syllabary.list) {

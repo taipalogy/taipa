@@ -82,11 +82,12 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     for(let l of letters) {
         len = len + l.characters.length
     }
+
     syllabary.setFirstLetter(letters[beginOfSyllable].literal, len)
-    // TODO: if the first letter is dl, letter d will be set.
-    // And if the first letter is nn, roots begin with nng will be retrieved.
+
     let matchedLen = 0;
     let mp = new MatchedPattern();
+    
     for(let m in syllabary.list) {
         let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
         if(syllabary.list[m].length == min) {
