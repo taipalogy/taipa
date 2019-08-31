@@ -11,9 +11,9 @@ import { Syllabary } from '../morpheme'
 
 export class ListOfLexicalRoots extends Syllabary {
 
-    setFirstLetter(beginning: string) {
+    setFirstLetter(beginning: string, len: number) {
         let cog = new ClientOfGenerator()
-        let entries: Array<Sound[]> = cog.generate(beginning)
+        let entries: Array<Sound[]> = cog.generate(beginning, len)
         for(let i in entries) {
             this.list.push(entries[i])
         }
@@ -33,10 +33,10 @@ export class ListOfLexicalRoots extends Syllabary {
 }
 
 class LexicalRootGenerator {
-    generate(beginning: string) {
+    generate(beginning: string, len: number) {
         let strs: string[] = new Array
         for(let i in list_of_lexical_roots) {
-            if(list_of_lexical_roots[i].search(beginning) == 0) {
+            if(list_of_lexical_roots[i].search(beginning) == 0 && list_of_lexical_roots[i].length <= len) {
                 strs.push(list_of_lexical_roots[i])
             }
         }
@@ -239,9 +239,9 @@ class ClientOfGenerator {
         return ret
     }
 
-    generate(beginning: string) {
+    generate(beginning: string, len: number) {
         let lrg = new LexicalRootGenerator()
-        let strs: Array<string> = lrg.generate(beginning) // retrieve all needed roots beginning with beggining
+        let strs: Array<string> = lrg.generate(beginning, len) // retrieve all needed roots beginning with beggining
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
         let analyzer = new TonalLemmatizationAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned

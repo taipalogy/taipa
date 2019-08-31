@@ -78,7 +78,11 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 
 export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
     // get the longest matched syllable pattern
-    syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    let len = 0 // limit on the length of fetched syllables, hence the amount of syllables limited
+    for(let l of letters) {
+        len = len + l.characters.length
+    }
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal, len)
     // TODO: if the first letter is dl, letter d will be set.
     // And if the first letter is nn, roots begin with nng will be retrieved.
     let matchedLen = 0;

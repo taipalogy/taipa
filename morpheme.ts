@@ -26,7 +26,7 @@ export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
 
 export abstract class Syllabary {
     list: Array<Sound[]> = new Array()
-    abstract setFirstLetter(beginning: string): void
+    abstract setFirstLetter(beginning: string, length: number): void
 }
 
 //------------------------------------------------------------------------------

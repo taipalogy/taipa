@@ -128,6 +128,7 @@ export class GraphemeMaker {
         let ms = new MatchedSequence();
         let matchedLen = 0;
 
+        //console.log(characters)
         if(characters[beginOfLetter].character === 'n') {
             if(characters.length-beginOfLetter >= 'nng'.length) {
                 if(characters[beginOfLetter].character === 'n'
@@ -171,7 +172,6 @@ export class GraphemeMaker {
     make(characters: Array<Character>) {
         let graphemes: Array<AlphabeticGrapheme> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
-        //console.log(characters);
         let beginOfLetter: number = 0;
         let letters: Array<AlphabeticLetter> = new Array();
         for(let i = 0; i < characters.length; i++) {
@@ -183,8 +183,6 @@ export class GraphemeMaker {
                 //console.log("matchedLen: %d", ms.matchedLength);
 
                 let candidates = this.list.filter(l => l.characters[0].character === characters[i].character);
-
-                //console.log(candidates)
 
                 let ms = this.getMatchedSequence(characters, beginOfLetter, candidates)
 
@@ -218,6 +216,7 @@ export class GraphemeMaker {
                 }
             }
         }
+
         //console.log("metadata letter array length %d", letters.length);
         return graphemes
     }

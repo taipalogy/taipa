@@ -265,7 +265,7 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun
 
 export class KeyWords {
-    private keyword_serialnos: Array<[string, number]> = new Array() // TODO: redundant member variable
+    private keyword_serialnos: Array<[string, number]> = new Array() // TODO: redesign index of keywords
     private keyElems: Array<PartsOfSpeech> = new Array()
 
     constructor() {

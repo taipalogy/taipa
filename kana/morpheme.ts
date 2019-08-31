@@ -31,7 +31,12 @@ export class KanaUncombiningMorpheme extends Morpheme {
 //------------------------------------------------------------------------------
 
 function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
-    syllabary.setFirstLetter(letters[beginOfSyllable].literal)
+    let len = 0 // limit on the length of fetched syllables, hence the amount of syllables limited
+    for(let l of letters) {
+        len = len + l.characters.length
+    }
+
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal, len)
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array()
 
     for(let m in syllabary.list) {

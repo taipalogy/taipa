@@ -5,9 +5,9 @@ import { Syllabary } from '../morpheme'
 
 export class RomanizedKana extends Syllabary {
     list: Array<Sound[]> = new Array()
-    setFirstLetter(beginning: string) {
+    setFirstLetter(beginning: string, len: number) {
         let cog = new ClientOfGenerator()
-        let entries: Array<Sound[]> = cog.generate(beginning)
+        let entries: Array<Sound[]> = cog.generate(beginning, len)
         for(let i in entries) {
             this.list.push(entries[i])
         }
@@ -16,10 +16,10 @@ export class RomanizedKana extends Syllabary {
 }
 
 class RomanizedKanaGenerator {
-    generate(beginning: string) {
+    generate(beginning: string, len: number) {
         let strs: string[] = new Array()
         for(let i in list_of_romanized_kana) {
-            if(list_of_romanized_kana[i].search(beginning) == 0) {
+            if(list_of_romanized_kana[i].search(beginning) == 0 && list_of_romanized_kana[i].length <= len) {
                 strs.push(list_of_romanized_kana[i])
                 // consonant germination
                 if(new SetOfGerminatedConsonants().beginWith(list_of_romanized_kana[i]) == true) {
@@ -126,9 +126,9 @@ class ClientOfGenerator {
         return ret
     }
 
-    generate(beginning: string) {
+    generate(beginning: string, len: number) {
         let rkg = new RomanizedKanaGenerator()
-        let strs: Array<string> = rkg.generate(beginning) // retrieve all needed syllables beginning with begginning
+        let strs: Array<string> = rkg.generate(beginning, len) // retrieve all needed syllables beginning with begginning
         let arrayOfSounds: Array<string[]> = new Array() // collecting all sounds to be processed
         let analyzer = new KanaAnalyzer()
         let entries: Array<Sound[]> = new Array() // to be returned
