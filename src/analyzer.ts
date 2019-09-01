@@ -26,7 +26,6 @@ export class AnalyzerLoader {
         this.aws.push(createInstance(klas))
     }
     unload(klas: Class) {
-        const len = this.aws.length
         for(let i=0; i < this.aws.length; i++) {
             if(this.aws[i] instanceof klas) {
                 this.aws.splice(i, 1) // remove it from array

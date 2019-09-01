@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc --outDir lib"
+    "build": "./node_modules/.bin/tsc --outDir lib",
+    "lint": "./node_modules/.bin/eslint \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,11 @@
   "homepage": "https://sotrox.github.io/susiahetong",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^12.7.3"
+    "@types/node": "^12.7.3",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.3.0",
+    "typescript": "^3.6.2"
   },
   "files": [
     "lib/**/*"
