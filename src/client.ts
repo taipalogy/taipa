@@ -2,7 +2,6 @@ import { TonalLemmatizationLexeme } from './tonal/lexeme'
 import { DependencyParser } from './dparser/parser'
 import { RuleBasedTagger } from './dparser/tagger'
 
-import { AnalyzerLoader } from './analyzer'
 import { Kana } from './kana/init';
 import { TonalInflective } from './tonal/init'
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
@@ -13,28 +12,24 @@ import { Document } from './document'
 
 export class Client {
     processKana(str: string) {
-        let al = new AnalyzerLoader()
-
         // kana
-        al.load(Kana)
-        let morphemes: KanaUncombiningMorpheme[] = (<KanaAnalyzer>al.aws[0].analyzer).doMorphologicalAnalysis(str)
+        let aw = new Kana()
+        let ka = <KanaAnalyzer>aw.analyzer
+        let morphemes: KanaUncombiningMorpheme[] = ka.doMorphologicalAnalysis(str)
         let doc: Document = new Document()
-        doc.blockSequences = al.aws[0].getBlocks(morphemes)
-        al.unload(Kana)
+        doc.blockSequences = aw.getBlocks(morphemes)
         return doc
     }
 
     processTonal(str: string) {
-        let al = new AnalyzerLoader()
-
         // tonal
-        al.load(TonalInflective)
         let tokens = str.match(/\w+/g)
-        //let l_results
+        let aw = new TonalInflective()
+        let tla = <TonalLemmatizationAnalyzer>aw.analyzer
         let doc: Document = new Document();
         if(tokens != null && tokens.length > 0) {
-            let morphemes: TonalUncombiningMorpheme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).doMorphologicalAnalysis(tokens[0])
-            let lexemes: TonalLemmatizationLexeme[] = (<TonalLemmatizationAnalyzer>al.aws[0].analyzer).doLexicalAnalysis(morphemes)
+            let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0])
+            let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes)
             doc.lemmatizationLexemes = lexemes
             doc.lemmata = lexemes[0].getLemmata()
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
@@ -44,7 +39,6 @@ export class Client {
                 doc.soundSequences.push(m.sounds)
             }
         }
-        al.unload(TonalInflective)
         return doc;
     }
 
