@@ -1,9 +1,15 @@
+# jest
+coverage
+
 # npm
 lib
 node_modules
 
 # Mac OS X
 *.DS_Store
+
+# VS Code
+.vscode
 
 # Windows
 Thumbs.db
