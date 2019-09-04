@@ -176,52 +176,25 @@ export class TonalUncombiningMorpheme extends Morpheme {
         for(let k = 0; k < keys.length; k++) {
             let am = checkedAllomorphs.get(keys[k])
             if(am instanceof CheckedAllomorph) {
-                if(am.tonal != null) {
+                if(am.tonal) {
                     if(am.tonal.getLiteral() === syllable.lastLetter.literal
                         && am.final.getLiteral() === syllable.lastSecondLetter.literal) {
                         aoas.push(checkedAllomorphs.get(keys[k]));
-                        // there's no need to break here, as we want to collect the second match, if any
-                    }
-                } else {
-                    if(am.final.getLiteral() === syllable.lastLetter.literal) {
-                        aoas.push(checkedAllomorphs.get(keys[k]));
+                        break;
+                    } else {
+                        if(am.final.getLiteral() === syllable.lastLetter.literal) {
+                            aoas.push(checkedAllomorphs.get(keys[k]));
+                            break;
+                        }
                     }
                 }
             }
         }
 
         if(aoas.length > 0) {
-            //console.debug('length of aoas: %d', aoas.length)
-            if(aoas.length == 2) {
-                let first = aoas[0]
-                let second = aoas[1]
-                if(first instanceof CheckedAllomorph && second instanceof CheckedAllomorph) {
-                    if(first.final.getLiteral() === second.final.getLiteral()) {
-                        // discard the base form
-                        if(aoas[1].tonal != null) {
-                            // the 1st element is in base form
-                            aoas.shift()
-                        } else if(aoas[0].tonal != null) {
-                            // the 2nd element is in base form
-                            aoas.pop()
-                        }
-                    }
-                }
-            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new ZeroTonal())){
-                // return stop finals without tonal
-                let ret = aoas.shift()
-                if(ret) return ret
-                return new Allomorph()
-            } else if(aoas.length == 1 && aoas[0].tonal.isEqualToTonal(new AllomorphHY().tonal)) {
-                // there should be no more than 2 matches, either 1 match or 2
-                // just fall through for the case of 'hy'
-            } 
-
             // there is only one match after processing, we just assign it
             let ret = aoas.shift();
             if(ret) return ret
-            // we already one allomorph
-            return new Allomorph()
         }
 
         // after matching with checked allomorphs, we go on matching free allomorphs

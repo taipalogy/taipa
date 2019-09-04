@@ -1,12 +1,8 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme'
 import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme'
-import { freeAllomorphUncombiningRules } from './version2'
+import { freeAllomorphUncombiningRules, ZeroTonal } from './version2'
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2'
 import { TonalAffix } from './version2'
-
-//------------------------------------------------------------------------------
-//  Tonal Metaplasm
-//------------------------------------------------------------------------------
 
 class TonalAdverbLemmatization extends TonalLemmatizingMetaplasm {}
 class TonalPronounLemmatization extends TonalLemmatizingMetaplasm {}
@@ -26,7 +22,7 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
     }
 
     private getLemmas(word: TonalWord, morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding): Array<TonalWord> {
-        if(inflectionalEnding != null) {
+        if(inflectionalEnding) {
             if(inflectionalEnding instanceof FreeInflectionalEnding) {
                 if(inflectionalEnding.baseAffixes.length == 1) {
                     return [this.replaceLastSyllable(word, morphemes)];
@@ -43,6 +39,7 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
                     return ret;
                 }
             } else if(inflectionalEnding instanceof CheckedInflectionalEnding) {
+                if(inflectionalEnding.affix.tonal.getLiteral() === '') return []
                 return [this.replaceLastSyllable(word, morphemes)];
             }
         }

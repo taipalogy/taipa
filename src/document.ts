@@ -5,6 +5,7 @@ import { Relation } from './dparser/relation'
 
 export class Document {
     lemmatizationLexemes: Array<LemmatizationLexeme> = new Array();
+    //word: Word = new Word()
     lemmata: Array<Word> = new Array();
     inflectionalEnding: string = ''
     soundSequences: Array<Sound[]> = new Array()

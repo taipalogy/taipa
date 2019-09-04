@@ -31,6 +31,7 @@ export class Client {
             let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0])
             let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes)
             doc.lemmatizationLexemes = lexemes
+            //doc.word = lexemes[0].word
             doc.lemmata = lexemes[0].getLemmata()
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
 
