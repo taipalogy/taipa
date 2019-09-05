@@ -1,4 +1,3 @@
-
 export enum POSTags {
     /*
       Universal POS tags
@@ -81,8 +80,8 @@ export let PERSONAL_PRONOUN2TO137_FORMS = {
         first: 'first',
         third: 'third',
         seventh: 'seventh',
-    }
-}
+    },
+};
 
 export let PERSONAL_PRONOUN1TO37_DECLENSION = {
     baseForm: {
@@ -100,9 +99,9 @@ export let PERSONAL_PRONOUN1TO37_DECLENSION = {
         seventh: {
             subjective: 'subjective',
             seventhEnclitic: 'seventhEnclitic',
-        }
-    }
-}
+        },
+    },
+};
 
 export let VERB_CONJUGATION = {
     baseForm: {
@@ -117,8 +116,8 @@ export let VERB_CONJUGATION = {
         causative: 'causative',
         attributive: 'attributive',
         continuative: 'continuative',
-    }
-}
+    },
+};
 
 export let NUMERAL_QUANTIFIER = {
     baseForm: {
@@ -133,8 +132,8 @@ export let NUMERAL_QUANTIFIER = {
     adverbialForm: {
         name: 'adverbialForm',
         adverbial: 'adverbial',
-    }
-}
+    },
+};
 
 export let ADJECTIVE_INFLECTION = {
     baseForm: {
@@ -145,43 +144,43 @@ export let ADJECTIVE_INFLECTION = {
         name: 'sandhiForm',
         attributive: 'attributive',
         adverbial: 'adverbial',
-    }
-}
+    },
+};
 
 export let COPULA_CONJUGATION = {
     baseForm: {
         name: 'baseForm',
-        intransitive: 'intransitive'
+        intransitive: 'intransitive',
     },
     sandhiForm: {
         name: 'sandhiForm',
-        copulative: 'copulative'
+        copulative: 'copulative',
     },
-}
+};
 
 export let NOUN_DECLENSION = {
     baseForm: {
         name: 'baseForm',
-        nominal: 'nominal' ,
+        nominal: 'nominal',
     },
     sandhiForm: {
-        name: 'sandhiForm', 
+        name: 'sandhiForm',
         adjective: 'adjective',
-    }
-}
+    },
+};
 
 export let ENCLITIC_E_INFLECTION = {
     baseForm: {
         name: 'baseForm',
         participle: 'participle',
         attributive: 'attributive',
-    }
-}
+    },
+};
 
 export let ENCLITIC_LE_INFLECTION = {
     baseForm: {
         name: 'baseForm',
         imperative: 'imperative',
         conjunctive: 'conjunctive',
-    }
-}
+    },
+};

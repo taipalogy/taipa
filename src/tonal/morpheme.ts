@@ -1,9 +1,24 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, CombiningMetaplasm, Syllabary, TonalCombiningMetaplasm } from '../morpheme'
-import { freeAllomorphUncombiningRules, checkedAllomorphs, freeAllomorphs,
-    ZeroAllomorph, AllomorphHY, AllomorphX, ZeroTonal } from './version2'
-import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2'
-import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme'
-import { ListOfLexicalRoots } from './lexicalroot'
+import {
+    Syllable,
+    Morpheme,
+    MorphemeMaker,
+    MatchedPattern,
+    CombiningMetaplasm,
+    Syllabary,
+    TonalCombiningMetaplasm,
+} from '../morpheme';
+import {
+    freeAllomorphUncombiningRules,
+    checkedAllomorphs,
+    freeAllomorphs,
+    ZeroAllomorph,
+    AllomorphHY,
+    AllomorphX,
+    ZeroTonal,
+} from './version2';
+import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
+import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
+import { ListOfLexicalRoots } from './lexicalroot';
 
 //------------------------------------------------------------------------------
 //  Tonal Uncombining Forms
@@ -11,12 +26,11 @@ import { ListOfLexicalRoots } from './lexicalroot'
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
-
         // get base forms as strings
-        if(allomorph) {
+        if (allomorph) {
             // member variable allomorph is not null
-            if(allomorph instanceof FreeAllomorph) {
-                if(allomorph instanceof ZeroAllomorph) {
+            if (allomorph instanceof FreeAllomorph) {
+                if (allomorph instanceof ZeroAllomorph) {
                     // no need to pop letter
                     // push letter to make tone 2
                     // the base tone of the first tone is the second tone
@@ -28,17 +42,21 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                 } else {
                     // the 7th tone has two baseforms
                     let ret = [];
-                    for(let i in freeAllomorphUncombiningRules.get(allomorph.getLiteral())) {
+                    for (let i in freeAllomorphUncombiningRules.get(allomorph.getLiteral())) {
                         // pop letter
                         // push letter
                         let s: TonalSyllable = new TonalSyllable(syllable.letters);
-                        if(!(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
+                        if (!(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
                             s.popLetter();
                             // there are base tonals
                             // includes ss and x, exclude zero allomorph
-                            s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i].characters));
+                            s.pushLetter(
+                                new AlphabeticLetter(
+                                    freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i].characters,
+                                ),
+                            );
                             ret.push(s);
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
@@ -52,7 +70,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     //console.log(ret)
                     return ret;
                 }
-            } else if(allomorph instanceof CheckedAllomorph) {
+            } else if (allomorph instanceof CheckedAllomorph) {
                 // pop the last letter
                 // no need to push letter
                 // 1 to 4. 3 to 8. 2 to 4. 5 to 8.  ---->
@@ -69,7 +87,6 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         }
         return []; // return empty array
     }
-
 }
 
 //------------------------------------------------------------------------------
@@ -78,32 +95,32 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 
 export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
     // get the longest matched syllable pattern
-    let len = 0 // limit on the length of fetched syllables, hence the amount of syllables limited
-    for(let l of letters) {
-        len = len + l.characters.length
+    let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
+    for (let l of letters) {
+        len = len + l.characters.length;
     }
 
-    syllabary.setFirstLetter(letters[beginOfSyllable].literal, len)
+    syllabary.setFirstLetter(letters[beginOfSyllable].literal, len);
 
     let matchedLen = 0;
     let mp = new MatchedPattern();
-    
-    for(let m in syllabary.list) {
-        let min = Math.min(letters.length-beginOfSyllable, syllabary.list[m].length);
-        if(syllabary.list[m].length == min) {
-            for(let n = 0; n < min; n++) {
-                if(syllabary.list[m][n] != undefined) {
-                    if(letters[beginOfSyllable+n].literal === syllabary.list[m][n].getLiteral()) {
+
+    for (let m in syllabary.list) {
+        let min = Math.min(letters.length - beginOfSyllable, syllabary.list[m].length);
+        if (syllabary.list[m].length == min) {
+            for (let n = 0; n < min; n++) {
+                if (syllabary.list[m][n] != undefined) {
+                    if (letters[beginOfSyllable + n].literal === syllabary.list[m][n].getLiteral()) {
                         //console.log(syllabary[m])
-                        if(n+1 == min && min > matchedLen) {
+                        if (n + 1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
                             // last letter matched for the pattern
                             matchedLen = min;
                             // copy the matched letters
-                            for(let q = 0; q < matchedLen; q++) {
-                                mp.letters[q] = letters[beginOfSyllable+q];
+                            for (let q = 0; q < matchedLen; q++) {
+                                mp.letters[q] = letters[beginOfSyllable + q];
                             }
-                            
+
                             // copy the pattern of sounds
                             mp.pattern = syllabary.list[m];
                             //console.log(syllabary.list[m])
@@ -111,7 +128,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                         }
                     } else {
                         break;
-                    }    
+                    }
                 }
             }
         }
@@ -125,22 +142,21 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
 
 export class TonalSyllable extends Syllable {
     popLetter() {
-        let tmp = this.literal.substr(0, this.literal.length-this.letters[this.letters.length-1].literal.length);
+        let tmp = this.literal.substr(0, this.literal.length - this.letters[this.letters.length - 1].literal.length);
         this.literal = '';
         this.literal = tmp;
-        this.letters = this.letters.slice(0, this.letters.length-1);
+        this.letters = this.letters.slice(0, this.letters.length - 1);
     }
 
     get lastLetter() {
-        if(this.letters.length >= 1) return this.letters[this.letters.length-1]
-        return new AlphabeticLetter()
+        if (this.letters.length >= 1) return this.letters[this.letters.length - 1];
+        return new AlphabeticLetter();
     }
 
     get lastSecondLetter() {
-        if(this.letters.length >= 2) return this.letters[this.letters.length-2]
-        return new AlphabeticLetter()
+        if (this.letters.length >= 2) return this.letters[this.letters.length - 2];
+        return new AlphabeticLetter();
     }
-
 }
 
 //------------------------------------------------------------------------------
@@ -149,40 +165,42 @@ export class TonalSyllable extends Syllable {
 
 export class TonalUncombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
-    allomorph: Allomorph // required to populate stems
-    metaplasm: TonalCombiningMetaplasm
-    sounds: Array<Sound> // populated in MorphemeMaker.make
+    allomorph: Allomorph; // required to populate stems
+    metaplasm: TonalCombiningMetaplasm;
+    sounds: Array<Sound>; // populated in MorphemeMaker.make
 
     constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
-        super()
+        super();
         this.syllable = syllable;
-        this.metaplasm = tsm
+        this.metaplasm = tsm;
 
         // assign allomorph for each syllable
-        this.allomorph = this.assignAllomorph(this.syllable)
-        this.sounds = new Array()
+        this.allomorph = this.assignAllomorph(this.syllable);
+        this.sounds = new Array();
     }
-    
+
     apply(): any {
-        return this.metaplasm.apply(this.syllable, this.allomorph)
+        return this.metaplasm.apply(this.syllable, this.allomorph);
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
-        let allomorph: Allomorph = new ZeroAllomorph()
+        let allomorph: Allomorph = new ZeroAllomorph();
         // assign the matched allomorph for this syllable
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
-        let keys = Array.from(checkedAllomorphs.keys())
-        for(let k = 0; k < keys.length; k++) {
-            let am = checkedAllomorphs.get(keys[k])
-            if(am instanceof CheckedAllomorph) {
-                if(am.tonal) {
-                    if(am.tonal.getLiteral() === syllable.lastLetter.literal
-                        && am.final.getLiteral() === syllable.lastSecondLetter.literal) {
+        let keys = Array.from(checkedAllomorphs.keys());
+        for (let k = 0; k < keys.length; k++) {
+            let am = checkedAllomorphs.get(keys[k]);
+            if (am instanceof CheckedAllomorph) {
+                if (am.tonal) {
+                    if (
+                        am.tonal.getLiteral() === syllable.lastLetter.literal &&
+                        am.final.getLiteral() === syllable.lastSecondLetter.literal
+                    ) {
                         aoas.push(checkedAllomorphs.get(keys[k]));
                         break;
                     } else {
-                        if(am.final.getLiteral() === syllable.lastLetter.literal) {
+                        if (am.final.getLiteral() === syllable.lastLetter.literal) {
                             aoas.push(checkedAllomorphs.get(keys[k]));
                             break;
                         }
@@ -191,36 +209,35 @@ export class TonalUncombiningMorpheme extends Morpheme {
             }
         }
 
-        if(aoas.length > 0) {
+        if (aoas.length > 0) {
             // there is only one match after processing, we just assign it
             let ret = aoas.shift();
-            if(ret) return ret
+            if (ret) return ret;
         }
 
         // after matching with checked allomorphs, we go on matching free allomorphs
         aoas = [];
-        if(freeAllomorphs.has(syllable.lastLetter.literal)) {
+        if (freeAllomorphs.has(syllable.lastLetter.literal)) {
             aoas.push(freeAllomorphs.get(syllable.lastLetter.literal));
         }
 
-        if(aoas.length == 0) {
+        if (aoas.length == 0) {
             // tone 1 has no allomorph
             allomorph = new ZeroAllomorph();
-        } else if(aoas.length == 1) {
+        } else if (aoas.length == 1) {
             // are there multiple allomorphs? there should be only one.
-            for(let i = 0; i < aoas.length; i++) {
-                if(aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
+            for (let i = 0; i < aoas.length; i++) {
+                if (aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
                     // this syllable is already in base form
                     // in order to display this inflectional ending, we have to assign
-                    allomorph = aoas[i]
+                    allomorph = aoas[i];
                 } else {
                     allomorph = aoas[i];
                 }
             }
         }
-        return allomorph
+        return allomorph;
     }
-
 }
 
 //------------------------------------------------------------------------------
@@ -229,26 +246,26 @@ export class TonalUncombiningMorpheme extends Morpheme {
 
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
-    metaplasm: TonalCombiningMetaplasm
-    lexicalRoots: ListOfLexicalRoots
-    
+    metaplasm: TonalCombiningMetaplasm;
+    lexicalRoots: ListOfLexicalRoots;
+
     constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
-        super()
+        super();
         this.graphemes = new Array();
         this.graphemes = gs;
-        this.metaplasm = tsm
-        this.lexicalRoots = new ListOfLexicalRoots()
+        this.metaplasm = tsm;
+        this.lexicalRoots = new ListOfLexicalRoots();
     }
 
     createMorphemes() {
-        return new Array<TonalUncombiningMorpheme>()
+        return new Array<TonalUncombiningMorpheme>();
     }
 
     createMorpheme(msp: MatchedPattern, tcm: TonalCombiningMetaplasm) {
-        let tsm: TonalUncombiningMorpheme
-        tsm = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), tcm)
-        tsm.sounds = msp.pattern
-        return tsm
+        let tsm: TonalUncombiningMorpheme;
+        tsm = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), tcm);
+        tsm.sounds = msp.pattern;
+        return tsm;
     }
 
     makeMorphemes() {

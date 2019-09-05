@@ -8,7 +8,9 @@ import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme
 export abstract class Metaplasm {}
 
 export class TonalInflectingMetaplasm extends Metaplasm {
-    apply(word: TonalWord, morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] { return [] }
+    apply(word: TonalWord, morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] {
+        return [];
+    }
 }
 
 export class TonalLemmatizingMetaplasm extends Metaplasm {
@@ -27,23 +29,26 @@ export abstract class Lexeme {}
 
 export class Word {
     literal: string = '';
-    syllables: Array<Syllable>
+    syllables: Array<Syllable>;
 
     constructor(syllables?: Array<Syllable>) {
-        if(syllables) {
-            this.syllables = syllables
+        if (syllables) {
+            this.syllables = syllables;
         } else {
-            this.syllables = new Array()
+            this.syllables = new Array();
         }
     }
 
     popSyllable() {
         // trim the literal
-        let tmp = this.literal.substr(0, this.literal.length-this.syllables[this.syllables.length-1].literal.length);
+        let tmp = this.literal.substr(
+            0,
+            this.literal.length - this.syllables[this.syllables.length - 1].literal.length,
+        );
         // assign the new literal to this.literal
         this.literal = tmp;
         // get rid off the last syllable from array
-        this.syllables = this.syllables.slice(0, this.syllables.length-1);
+        this.syllables = this.syllables.slice(0, this.syllables.length - 1);
     }
 
     pushSyllable(tss: Syllable) {
@@ -58,9 +63,9 @@ export class Word {
 //------------------------------------------------------------------------------
 
 export abstract class LexemeMaker {
-    abstract morphemes: Array<Morpheme>
+    abstract morphemes: Array<Morpheme>;
 
-    abstract preprocess(): Syllable[]
+    abstract preprocess(): Syllable[];
 
-    abstract make(syllables: Array<Syllable>): Lexeme
+    abstract make(syllables: Array<Syllable>): Lexeme;
 }

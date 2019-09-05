@@ -1,7 +1,7 @@
 import { ConstructionElement } from './keywords';
 import { Relation } from './relation';
-import { Configuration, Transition, Shift } from './configuration'
-import { Guide } from './guide'
+import { Configuration, Transition, Shift } from './configuration';
+import { Guide } from './guide';
 import { DummyLexeme } from './lexeme';
 
 export class DependencyParser {
@@ -15,31 +15,30 @@ export class DependencyParser {
 
     parseCE(ces: ConstructionElement[]): Relation[] {
         let c: Configuration<ConstructionElement> = this.getInitialConfiguration<ConstructionElement>();
-        for(let ce of ces) {
+        for (let ce of ces) {
             //console.log(ce.wordForm)
-            c.queue.push(ce)
+            c.queue.push(ce);
         }
 
-        let guide = new Guide()
-        let root = new DummyLexeme()
-        root.word.literal = 'ROOT'
-        let ce = new ConstructionElement()
-        ce.lexeme = root
-        c.stack.push(ce)
+        let guide = new Guide();
+        let root = new DummyLexeme();
+        root.word.literal = 'ROOT';
+        let ce = new ConstructionElement();
+        ce.lexeme = root;
+        c.stack.push(ce);
 
-        if(c.stack.length == 1 && c.queue.length > 0) {
+        if (c.stack.length == 1 && c.queue.length > 0) {
             // initial configuration
             // shift the first lexeme from queue to stack
-            guide.transitions.push(new Shift<ConstructionElement>())
+            guide.transitions.push(new Shift<ConstructionElement>());
         }
 
-        while(!c.isTerminalConfiguration()) {
+        while (!c.isTerminalConfiguration()) {
             let t = guide.getNextTransition(c);
-            if(t == null || t == undefined) break
+            if (t == null || t == undefined) break;
             c = this.apply<ConstructionElement>(t, c);
         }
 
-        return c.relations
+        return c.relations;
     }
-
 }

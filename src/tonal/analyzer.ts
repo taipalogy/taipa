@@ -1,8 +1,8 @@
-import { Analyzer } from '../analyzer'
-import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme'
-import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme'
+import { Analyzer } from '../analyzer';
+import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme';
+import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme';
 import { lowerLettersOfTonal } from './version2';
-import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme'
+import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
 //  Tonal Analyzer
@@ -15,36 +15,36 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return gm.makeGraphemes();
     }
 
-    doMorphologicalAnalysis(str: string): TonalUncombiningMorpheme[]
-    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[]
+    doMorphologicalAnalysis(str: string): TonalUncombiningMorpheme[];
+    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[];
     doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>) {
-        let graphemes: AlphabeticGrapheme[] = []
+        let graphemes: AlphabeticGrapheme[] = [];
         //let g_results
-        if(typeof x == "object") {
-            graphemes = x
-        } else if(typeof x == 'string') {
-             graphemes = this.doGraphemicAnalysis(x)
+        if (typeof x == 'object') {
+            graphemes = x;
+        } else if (typeof x == 'string') {
+            graphemes = this.doGraphemicAnalysis(x);
         }
 
         // Morpheme Maker
         let tmm = new TonalUncombiningMorphemeMaker(graphemes, new TonalUncombiningForms());
-        return tmm.makeMorphemes(); 
+        return tmm.makeMorphemes();
     }
 
-    doLexicalAnalysis(str: string): TonalLemmatizationLexeme[]
-    doLexicalAnalysis(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme[]
+    doLexicalAnalysis(str: string): TonalLemmatizationLexeme[];
+    doLexicalAnalysis(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme[];
     doLexicalAnalysis(x: string | Array<TonalUncombiningMorpheme>) {
-        let morphemes: Array<TonalUncombiningMorpheme> = []
-        if(typeof x == "object") {
-            morphemes = x
-        } else if(typeof x == "string") {
-            morphemes = this.doMorphologicalAnalysis(x)
+        let morphemes: Array<TonalUncombiningMorpheme> = [];
+        if (typeof x == 'object') {
+            morphemes = x;
+        } else if (typeof x == 'string') {
+            morphemes = this.doMorphologicalAnalysis(x);
         }
 
         // Lexeme Maker
         let tllm = new TonalLemmatizationLexemeMaker(morphemes);
-        return tllm.makeLexemes()
+        return tllm.makeLexemes();
     }
 }
 
-export const tonal_lemmatization_analyzer = new TonalLemmatizationAnalyzer()
+export const tonal_lemmatization_analyzer = new TonalLemmatizationAnalyzer();

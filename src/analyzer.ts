@@ -1,4 +1,4 @@
-import { Morpheme } from './morpheme'
+import { Morpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
 //  Analyzer
@@ -7,9 +7,11 @@ import { Morpheme } from './morpheme'
 export abstract class Analyzer {}
 
 export class AnalyzerWrapper {
-    analyzer: Analyzer
-    getBlocks(ms: Morpheme[]): string[] { return [''] }
+    analyzer: Analyzer;
+    getBlocks(ms: Morpheme[]): string[] {
+        return [''];
+    }
     constructor(analyzer: Analyzer) {
-        this.analyzer = analyzer
+        this.analyzer = analyzer;
     }
 }

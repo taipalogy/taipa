@@ -1,8 +1,8 @@
-import { GraphemeMaker } from '../grapheme'
-import { KanaUncombiningMorphemeMaker, KanaUncombiningMorpheme } from './morpheme'
-import { lowerLettersOfKana } from './kana'
-import { Analyzer } from '../analyzer'
-import { AlphabeticGrapheme } from '../grapheme'
+import { GraphemeMaker } from '../grapheme';
+import { KanaUncombiningMorphemeMaker, KanaUncombiningMorpheme } from './morpheme';
+import { lowerLettersOfKana } from './kana';
+import { Analyzer } from '../analyzer';
+import { AlphabeticGrapheme } from '../grapheme';
 import { KanaCombiningMetaplasm } from '../morpheme';
 
 //------------------------------------------------------------------------------
@@ -16,14 +16,14 @@ export class KanaAnalyzer extends Analyzer {
         return gm.makeGraphemes();
     }
 
-    doMorphologicalAnalysis(str: string): KanaUncombiningMorpheme[]
-    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[]
+    doMorphologicalAnalysis(str: string): KanaUncombiningMorpheme[];
+    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[];
     doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>) {
-        let graphemes: Array<AlphabeticGrapheme> = []
-        if(typeof x == "object") {
-            graphemes = x
-        } else if(typeof x == 'string') {
-            graphemes = this.doGraphemicAnalysis(x)
+        let graphemes: Array<AlphabeticGrapheme> = [];
+        if (typeof x == 'object') {
+            graphemes = x;
+        } else if (typeof x == 'string') {
+            graphemes = this.doGraphemicAnalysis(x);
         }
 
         // Morpheme Maker

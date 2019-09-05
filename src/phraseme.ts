@@ -1,50 +1,47 @@
-
-import { InflectionalEnding } from "./tonal/lexeme"
-import { TonalWord } from './tonal/lexeme'
-import { TonalInflexionLexeme } from "./dparser/lexeme";
+import { InflectionalEnding } from './tonal/lexeme';
+import { TonalWord } from './tonal/lexeme';
+import { TonalInflexionLexeme } from './dparser/lexeme';
 
 // -----------------------------------------------------------------------------
 
 export class ToneGroup {
-    inflectionalEndings: Array<InflectionalEnding> = new Array()
+    inflectionalEndings: Array<InflectionalEnding> = new Array();
 }
 
-class ToneSandhiGroup extends ToneGroup{}
+class ToneSandhiGroup extends ToneGroup {}
 
 // -----------------------------------------------------------------------------
 
 export class Phraseme {}
 
 export class TonalPhraseme extends Phraseme {
-    phrase: TonalPhrase
+    phrase: TonalPhrase;
 
     constructor(phrase: TonalPhrase) {
         super();
-        this.phrase = phrase
+        this.phrase = phrase;
     }
 
     assignToneGroup(InflectionalEnding: InflectionalEnding) {}
 
-    getBaseForm() {
-        
-    }
+    getBaseForm() {}
 }
 
 // -----------------------------------------------------------------------------
 
 class Phrase {
-    literal: string = ''
+    literal: string = '';
 }
 
 export class TonalPhrase extends Phrase {
-    words: Array<TonalWord>
+    words: Array<TonalWord>;
 
     constructor(words?: Array<TonalWord>) {
-        super()
+        super();
         this.words = new Array();
-        if(words != undefined) {
+        if (words != undefined) {
             let len = words.length;
-            for(var i = 0; i < len; i++) {
+            for (var i = 0; i < len; i++) {
                 this.pushWord(words[i]);
             }
         }
@@ -52,17 +49,17 @@ export class TonalPhrase extends Phrase {
 
     popWord() {
         // trim the literal
-        let tmp = this.literal.substr(0, this.literal.length-this.words[this.words.length-1].literal.length);
+        let tmp = this.literal.substr(0, this.literal.length - this.words[this.words.length - 1].literal.length);
         this.literal = tmp;
         // get rid off the last word from array
-        this.words = this.words.slice(0, this.words.length-1);
+        this.words = this.words.slice(0, this.words.length - 1);
     }
 
     pushWord(w: TonalWord) {
         // push the word
         this.words.push(w);
         // concatenate a white space and the new word
-        if(this.words.length > 0) {
+        if (this.words.length > 0) {
             this.literal += ' ';
         }
         this.literal += w.literal;
@@ -84,19 +81,19 @@ export class TonalPhrasemeMaker {
 
         // unpack lexemes and take words out from them
         let words: Array<TonalWord> = new Array();
-        for(let key in this.lexemes) {
+        for (let key in this.lexemes) {
             words.push(this.lexemes[key].word);
         }
-        
+
         let tsp = new TonalPhraseme(new TonalPhrase(words));
-        if(this.lexemes.length > 0) {
+        if (this.lexemes.length > 0) {
             let tg = new ToneGroup();
-            for(let k in this.lexemes) {
+            for (let k in this.lexemes) {
             }
         }
 
         phrasemes.push(tsp);
 
-        return phrasemes
+        return phrasemes;
     }
 }
