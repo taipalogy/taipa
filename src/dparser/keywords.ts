@@ -1,6 +1,6 @@
 import { InflexionLexeme, TonalInflexion } from './lexeme';
-import { POSTags, PERSONAL_PRONOUN2TO137_FORMS, COPULA_CONJUGATION, NOUN_DECLENSION } from './symbols';
-import { TonalInflectingMetaplasm, Word } from '../lexeme';
+import { POSTags, PERSONAL_PRONOUN2TO137_FORMS } from './symbols';
+import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
 import {

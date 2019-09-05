@@ -1,6 +1,5 @@
 import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme';
 import { KanaAnalyzer } from './analyzer';
-import { characters } from '../character';
 import { Syllabary } from '../morpheme';
 
 export class RomanizedKana extends Syllabary {

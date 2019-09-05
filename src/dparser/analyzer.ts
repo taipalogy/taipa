@@ -1,6 +1,6 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
 import { Analyzer } from '../analyzer';
-import { TonalCombiningMorphemeMaker, TonalCombiningForms, TonalCombiningMorpheme } from './morpheme';
+import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme } from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
 import { TonalInflexionLexemeMaker, TonalInflexionLexeme } from './lexeme';
 import { TonalInflectingMetaplasm } from '../lexeme';

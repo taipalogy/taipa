@@ -1,4 +1,3 @@
-import { LemmatizationLexeme } from './tonal/lexeme';
 import { Word } from './lexeme';
 import { Sound } from './grapheme';
 import { Relation } from './dparser/relation';

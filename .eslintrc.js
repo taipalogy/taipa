@@ -5,7 +5,7 @@ module.exports = {
         "node": true
     },
     "extends": [
-        "eslint:recommended",
+        //"eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         'prettier/@typescript-eslint',
         'plugin:prettier/recommended',  // make sure to put it last in the extends array
