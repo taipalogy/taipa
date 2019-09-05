@@ -3,7 +3,7 @@
         "src"
     ], 
     "exclude": [
-        "node_modules",
+        "node_modules"
     ],
     "compilerOptions": {
         "module": "commonjs",
@@ -11,7 +11,7 @@
         "declaration": true,
         "outDir": "./lib",
         "strict": true,
-        "sourceMap": true,
+        "sourceMap": true
         //"noUnusedLocals": true,
         //"noUnusedParameters": true,
     }
