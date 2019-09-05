@@ -1,13 +1,15 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme'
+import { TonalInflective } from './tonal/init'
+import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
+import { TonalUncombiningMorpheme } from './tonal/morpheme';
+
+import { Kana } from './kana/init';
+import { KanaUncombiningMorpheme } from './kana/morpheme';
+import { KanaAnalyzer } from './kana/analyzer';
+
 import { DependencyParser } from './dparser/parser'
 import { RuleBasedTagger } from './dparser/tagger'
 
-import { Kana } from './kana/init';
-import { TonalInflective } from './tonal/init'
-import { TonalLemmatizationAnalyzer } from './tonal/analyzer'
-import { KanaUncombiningMorpheme } from './kana/morpheme';
-import { TonalUncombiningMorpheme } from './tonal/morpheme';
-import { KanaAnalyzer } from './kana/analyzer';
 import { Document } from './document'
 
 export class Client {
@@ -30,8 +32,7 @@ export class Client {
         if(tokens != null && tokens.length > 0) {
             let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0])
             let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes)
-            doc.lemmatizationLexemes = lexemes
-            //doc.word = lexemes[0].word
+            doc.word = lexemes[0].word
             doc.lemmata = lexemes[0].getLemmata()
             doc.inflectionalEnding = lexemes[0].getInflectionalEnding()
 
@@ -59,7 +60,7 @@ export class Client {
         // dependency parsing
         let dp = new DependencyParser();
         let doc: Document = new Document();
-        doc.graph = dp.parseCE(ces)
+        doc.relations = dp.parseCE(ces)
         return doc;
     }
 }
