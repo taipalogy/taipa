@@ -1,7 +1,7 @@
 import { Client } from '../src/client'
 import { Document } from '../src/document'
 
-describe("Lemma testing of chitt", () => {
+describe("Lemma testing", () => {
     let cli = new Client()
     let doc = new Document()
 
@@ -12,7 +12,7 @@ describe("Lemma testing of chitt", () => {
     });
 });
 
-describe("Lemma testing of suzjippwhoatf", () => {
+describe("Lemma testing", () => {
   let cli = new Client()
   let doc = new Document()
 
@@ -27,7 +27,7 @@ describe("Lemma testing of suzjippwhoatf", () => {
   });
 });
 
-describe("Lemma testing of sia", () => {
+describe("Lemma testing", () => {
   let cli = new Client()
   let doc = new Document()
 
@@ -42,7 +42,7 @@ describe("Lemma testing of sia", () => {
   });
 });
 
-describe("Lemma testing of siay", () => {
+describe("Lemma testing", () => {
   let cli = new Client()
   let doc = new Document()
 
@@ -57,7 +57,7 @@ describe("Lemma testing of siay", () => {
   });
 });
 
-describe("Lemma testing of siaw", () => {
+describe("Lemma testing", () => {
   let cli = new Client()
   let doc = new Document()
 
@@ -73,7 +73,7 @@ describe("Lemma testing of siaw", () => {
   });
 });
 
-describe("Lemma testing of siaz", () => {
+describe("Lemma testing", () => {
   let cli = new Client()
   let doc = new Document()
 
@@ -90,7 +90,7 @@ describe("Lemma testing of siaz", () => {
   });
 });
 
-describe("Lemma testing of siax", () => {
+describe("Lemma testing", () => {
   let cli = new Client()
   let doc = new Document()
 

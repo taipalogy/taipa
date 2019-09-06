@@ -1,5 +1,5 @@
 import { InflexionLexeme, TonalInflexion } from './lexeme';
-import { POSTags, PERSONAL_PRONOUN2TO137_FORMS } from './symbols';
+import { POSTags } from './symbols';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
@@ -39,24 +39,21 @@ export class ConstructionElement {
         return clone;
     }
 
-    //protected setForm(str: string) { this.selected[0] = str }
-
     setTag(str: string) {
         this.selected[1] = str;
     }
-
-    //get form() { return this.selected[0] }
 
     get tag() {
         return this.selected[1];
     }
 
     get wordForm(): string {
+        if(this.selected[0] === '') return this.lexeme.word.literal
         return this.selected[0];
     }
 
     setWordForm(str: string) {
-        this.selected[0] = str;
+        if(str != this.lexeme.word.literal) this.selected[0] = str;
     }
 }
 
@@ -138,17 +135,6 @@ export class PersonalPronoun2To137 extends ConstructionElement {
     clone(): PersonalPronoun2To137 {
         const clone = Object.create(this);
         return clone;
-    }
-
-    get wordForm(): string {
-        if (this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.baseForm) return this.lexeme.word.literal;
-        if (this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.first)
-            return this.lexeme.otherForms[0].literal;
-        if (this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.third)
-            return this.lexeme.otherForms[1].literal;
-        if (this.selected[0] === PERSONAL_PRONOUN2TO137_FORMS.sandhiForm.seventh)
-            return this.lexeme.otherForms[2].literal;
-        return '';
     }
 }
 

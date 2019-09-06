@@ -1,7 +1,7 @@
 import { Client } from '../src/client'
 import { Document } from '../src/document'
 
-describe("Inflectional ending testing of gengzchiapf", () => {
+describe("Inflectional ending testing", () => {
     let cli = new Client();
     let doc = new Document();
 
@@ -22,7 +22,7 @@ describe("Inflectional ending testing of gengzchiapf", () => {
     });
 });
 
-describe("Inflectional ending testing of piauzpietf", () => {
+describe("Inflectional ending testing", () => {
     let cli = new Client();
     let doc = new Document();
 
@@ -43,7 +43,7 @@ describe("Inflectional ending testing of piauzpietf", () => {
     });
 });
 
-describe("Inflectional ending testing of tengzsekf", () => {
+describe("Inflectional ending testing", () => {
     let cli = new Client();
     let doc = new Document();
 
@@ -64,7 +64,7 @@ describe("Inflectional ending testing of tengzsekf", () => {
     });
 });
 
-describe("Inflectional ending testing of sekfhappw", () => {
+describe("Inflectional ending testing", () => {
     let cli = new Client();
     let doc = new Document();
 
@@ -85,7 +85,7 @@ describe("Inflectional ending testing of sekfhappw", () => {
     });
 });
 
-describe("Inflectional ending testing of kakfsittw", () => {
+describe("Inflectional ending testing", () => {
     let cli = new Client();
     let doc = new Document();
 
@@ -106,7 +106,7 @@ describe("Inflectional ending testing of kakfsittw", () => {
     });
 });
 
-describe("Inflectional ending testing of qeysiokkw", () => {
+describe("Inflectional ending testing", () => {
     let cli = new Client();
     let doc = new Document();
 

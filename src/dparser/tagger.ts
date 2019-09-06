@@ -30,7 +30,7 @@ export class RuleBasedTagger {
                         cp.partOfSpeech === POSTags.verb &&
                         cp.elements[cp.elements.length - 1].pos === POSTags.particle
                     ) {
-                        cp.elements[cp.elements.length - 1].setTag(Tagset.PVRP);
+                        cp.elements[cp.elements.length - 1].setTag(Tagset.RPPV);
                         cp.elements[cp.elements.length - 1].setWordForm(buf[1]);
 
                         if (
@@ -68,7 +68,7 @@ export class RuleBasedTagger {
                     if (kw) {
                         if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.setTag(Tagset.PRP);
                         if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.setTag(Tagset.DT);
-                        //console.log(kw)
+                        kw.setWordForm(s)
                         this.ces.push(kw);
                         buf = [];
                     }

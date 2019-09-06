@@ -1,7 +1,7 @@
 import { Client } from '../src/client'
 import { Document } from '../src/document'
 
-describe("Kana testing of folumosa", () => {
+describe("Kana testing", () => {
     let cli = new Client()
     let doc = new Document()
 
@@ -13,7 +13,7 @@ describe("Kana testing of folumosa", () => {
     });
 });
 
-describe("Kana testing of takasago", () => {
+describe("Kana testing", () => {
     let cli = new Client()
     let doc = new Document()
 
@@ -25,7 +25,7 @@ describe("Kana testing of takasago", () => {
     });
 });
 
-describe("Kana testing of taiwankun", () => {
+describe("Kana testing", () => {
     let cli = new Client()
     let doc = new Document()
 
