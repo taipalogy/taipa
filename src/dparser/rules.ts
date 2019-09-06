@@ -1,7 +1,5 @@
 import {
     ConstructionElement,
-    Demonstrative,
-    Auxiliary,
     Verb,
     PersonalPronoun,
     Copula,
@@ -13,7 +11,6 @@ import {
     Noun,
     Adjective,
     PartsOfSpeech,
-    TonalZeroCombining,
     PhrasalVerbParticleDiurh,
 } from './keywords';
 import { tonal_inflextion_analyzer } from './analyzer';
@@ -100,7 +97,6 @@ export class Rules {
 
     protected get(str: string) {
         const kw = this.keyWords.get(str);
-        let clone: PartsOfSpeech;
         if (kw) return kw.clone();
         else return undefined;
     }

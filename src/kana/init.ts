@@ -11,7 +11,6 @@ import {
     SetOfInitialConsonants,
     hatsuon,
 } from './kana';
-import { KanaUncombiningMorpheme } from './morpheme';
 import { Morpheme } from '../morpheme';
 
 export class Kana extends AnalyzerWrapper {

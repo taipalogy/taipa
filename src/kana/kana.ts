@@ -36,10 +36,6 @@ class RomanizedKanaGenerator {
     }
 }
 
-function isSokuon(str: string) {
-    return false;
-}
-
 class ClientOfGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if (this.isFinalConsonant(ls[index])) {

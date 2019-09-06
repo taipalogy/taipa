@@ -1,4 +1,4 @@
-import { TonalCombiningMetaplasm, Morpheme, MatchedPattern, MorphemeMaker, Syllabary } from '../morpheme';
+import { TonalCombiningMetaplasm, Morpheme, MatchedPattern, MorphemeMaker } from '../morpheme';
 import { TonalSyllable, syllabifyTonal } from '../tonal/morpheme';
 import {
     FreeAllomorph,

@@ -1,20 +1,10 @@
-import {
-    Syllable,
-    Morpheme,
-    MorphemeMaker,
-    MatchedPattern,
-    CombiningMetaplasm,
-    Syllabary,
-    TonalCombiningMetaplasm,
-} from '../morpheme';
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, Syllabary, TonalCombiningMetaplasm } from '../morpheme';
 import {
     freeAllomorphUncombiningRules,
     checkedAllomorphs,
     freeAllomorphs,
     ZeroAllomorph,
-    AllomorphHY,
     AllomorphX,
-    ZeroTonal,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
