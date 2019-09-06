@@ -762,7 +762,11 @@ export const hiragana_katakana: Map<string, Array<string>> = new Map()
     .set('byo', ['びょ', 'ビョ'])
     .set('pya', ['ぴゃ', 'ピャ'])
     .set('pyu', ['ぴゅ', 'ピュ'])
-    .set('pyo', ['ぴょ', 'ピョ']);
+    .set('pyo', ['ぴょ', 'ピョ'])
+    .set('fa', ['ふぁ', 'ファ'])
+    .set('fi', ['ふぃ', 'フィ'])
+    .set('fe', ['ふぇ', 'フェ'])
+    .set('fo', ['ふぉ', 'フォ']);
 
 let list_of_romanized_kana = Array.from(hiragana_katakana.keys());
 
