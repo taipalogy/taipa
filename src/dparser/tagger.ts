@@ -68,7 +68,7 @@ export class RuleBasedTagger {
                     if (kw) {
                         if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.setTag(Tagset.PRP);
                         if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.setTag(Tagset.DT);
-                        kw.setWordForm(s)
+                        kw.setWordForm(s);
                         this.ces.push(kw);
                         buf = [];
                     }

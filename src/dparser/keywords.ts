@@ -48,12 +48,12 @@ export class ConstructionElement {
     }
 
     get wordForm(): string {
-        if(this.selected[0] === '') return this.lexeme.word.literal
+        if (this.selected[0] === '') return this.lexeme.word.literal;
         return this.selected[0];
     }
 
     setWordForm(str: string) {
-        if(str != this.lexeme.word.literal) this.selected[0] = str;
+        if (str != this.lexeme.word.literal) this.selected[0] = str;
     }
 }
 
