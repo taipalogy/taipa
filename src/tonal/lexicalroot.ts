@@ -17,10 +17,6 @@ import {
 import { TonalLemmatizationAnalyzer } from './analyzer';
 import { Syllabary } from '../morpheme';
 
-//------------------------------------------------------------------------------
-//  Lexical Root
-//------------------------------------------------------------------------------
-
 export class ListOfLexicalRoots extends Syllabary {
     setFirstLetter(beginning: string, len: number) {
         let cog = new ClientOfGenerator();

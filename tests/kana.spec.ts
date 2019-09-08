@@ -5,7 +5,7 @@ describe("Kana testing", () => {
     let cli = new Client()
     let doc = new Document()
 
-    doc = cli.processKana('folumosa')
+    doc = cli.processKana('forumosa')
 
     test("kanas", () => {
         expect(doc.blockSequences[0]).toEqual('ふぉるもさ');  

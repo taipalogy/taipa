@@ -24,7 +24,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     // no need to pop letter
                     // push letter to make tone 2
                     // the base tone of the first tone is the second tone
-                    // 1 to 2 ---->
+                    // 1 to 2
                     let s: TonalSyllable = new TonalSyllable(syllable.letters);
                     s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
                     //console.log(this.syllable)
@@ -38,7 +38,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                         let s: TonalSyllable = new TonalSyllable(syllable.letters);
                         if (!(freeAllomorphUncombiningRules.get(allomorph.getLiteral())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
-                            // 2 to 3. 3 to 7. 7 to 5. 3 to 5.  ---->
+                            // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
                             s.popLetter();
                             // there are base tonals
                             // includes ss and x, exclude zero allomorph
@@ -51,7 +51,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
                             // exclude ss and x.
-                            // 7 to 1 ---->
+                            // 7 to 1
                             // tone 1 has no allomorph
                             s.popLetter();
                             ret.push(s);
@@ -63,7 +63,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             } else if (allomorph instanceof CheckedAllomorph) {
                 // pop the last letter
                 // no need to push letter
-                // 1 to 4. 3 to 8. 2 to 4. 5 to 8.  ---->
+                // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
                 let s: TonalSyllable = new TonalSyllable(syllable.letters);
                 s.popLetter();
                 //console.log(s.literal)

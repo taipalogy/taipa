@@ -4,9 +4,10 @@ coverage
 # npm
 lib
 node_modules
+*.js.map
 
 # Mac OS X
-*.DS_Store
+.DS_Store
 
 # VS Code
 .vscode

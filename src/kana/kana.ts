@@ -189,7 +189,7 @@ enum KanaLetterTags {
 
     l = 'l',
     m = 'm',
-    q = 'q',
+    r = 'r',
     s = 's',
     v = 'v',
 
@@ -221,7 +221,7 @@ export let lowerLettersOfKana = new LettersOfKana([
     KanaLetterTags.k,
     KanaLetterTags.l,
     KanaLetterTags.m,
-    KanaLetterTags.q,
+    KanaLetterTags.r,
     KanaLetterTags.s,
     KanaLetterTags.v,
     KanaLetterTags.z,
@@ -299,8 +299,8 @@ class InitialConsonantN extends InitialConsonant {
 class InitialConsonantP extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.p);
 }
-class InitialConsonantQ extends InitialConsonant {
-    characters = this.makeCharacters(KanaLetterTags.q);
+class InitialConsonantR extends InitialConsonant {
+    characters = this.makeCharacters(KanaLetterTags.r);
 }
 class InitialConsonantS extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.s);
@@ -390,7 +390,7 @@ export class SetOfInitialConsonants extends SetOfSounds {
         this.initialConsonants.push(new InitialConsonantM());
         this.initialConsonants.push(new InitialConsonantN());
         this.initialConsonants.push(new InitialConsonantP());
-        this.initialConsonants.push(new InitialConsonantQ());
+        this.initialConsonants.push(new InitialConsonantR());
         this.initialConsonants.push(new InitialConsonantS());
         this.initialConsonants.push(new InitialConsonantT());
         this.initialConsonants.push(new InitialConsonantV());
@@ -480,8 +480,11 @@ export class Hatsuon extends SetOfSounds {
 //------------------------------------------------------------------------------
 
 class PSA extends PositionalSound {
-    name = KanaLetterTags.a;
-    map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelA());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.a;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelA());    
+    }
 }
 
 class PSB extends PositionalSound {
@@ -574,9 +577,9 @@ class PSP extends PositionalSound {
         .set(KanaSoundTags.finalConsonant, new FinalConsonantP());
 }
 
-class PSQ extends PositionalSound {
-    name = KanaLetterTags.q;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonant());
+class PSR extends PositionalSound {
+    name = KanaLetterTags.r;
+    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantR());
 }
 
 class PSS extends PositionalSound {
@@ -642,7 +645,7 @@ export const letterClasses: Map<string, PositionalSound> = new Map()
     .set(KanaLetterTags.n, new PSN())
     .set(KanaLetterTags.o, new PSO())
     .set(KanaLetterTags.p, new PSP())
-    .set(KanaLetterTags.q, new PSQ())
+    .set(KanaLetterTags.r, new PSR())
     .set(KanaLetterTags.s, new PSS())
     .set(KanaLetterTags.t, new PST())
     .set(KanaLetterTags.u, new PSU())
@@ -694,11 +697,11 @@ export const hiragana_katakana: Map<string, Array<string>> = new Map()
     .set('ya', ['や', 'ヤ'])
     .set('yu', ['ゆ', 'ユ'])
     .set('yo', ['よ', 'ヨ'])
-    .set('la', ['ら', 'ラ'])
-    .set('li', ['り', 'リ'])
-    .set('lu', ['る', 'ル'])
-    .set('le', ['れ', 'レ'])
-    .set('lo', ['ろ', 'ロ'])
+    .set('ra', ['ら', 'ラ'])
+    .set('ri', ['り', 'リ'])
+    .set('ru', ['る', 'ル'])
+    .set('re', ['れ', 'レ'])
+    .set('ro', ['ろ', 'ロ'])
     .set('wa', ['わ', 'ワ'])
     .set('wi', ['ゐ', 'ヰ'])
     .set('we', ['ゑ', 'ヱ'])
@@ -744,9 +747,9 @@ export const hiragana_katakana: Map<string, Array<string>> = new Map()
     .set('mya', ['みゃ', 'ミャ'])
     .set('myu', ['みゅ', 'みょ'])
     .set('myo', ['ミュ', 'ミョ'])
-    .set('lya', ['りゃ', 'リャ'])
-    .set('lyu', ['りゅ', 'リュ'])
-    .set('lyo', ['りょ', 'リョ'])
+    .set('rya', ['りゃ', 'リャ'])
+    .set('ryu', ['りゅ', 'リュ'])
+    .set('ryo', ['りょ', 'リョ'])
     .set('gya', ['ぎゃ', 'ギャ'])
     .set('gyu', ['ぎゅ', 'ギュ'])
     .set('gyo', ['ぎょ', 'ギョ'])
