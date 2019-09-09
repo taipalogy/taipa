@@ -30,8 +30,7 @@ export class RuleBasedTagger {
                         cp.partOfSpeech === POSTags.verb &&
                         cp.elements[cp.elements.length - 1].pos === POSTags.particle
                     ) {
-                        cp.elements[cp.elements.length - 1].setTag(Tagset.RPPV);
-                        cp.elements[cp.elements.length - 1].setWordForm(buf[1]);
+                        cp.elements[cp.elements.length - 1].tag = Tagset.RPPV;
 
                         if (
                             cp.elements[cp.elements.length - 1].wordForm !=
@@ -51,8 +50,8 @@ export class RuleBasedTagger {
                             )[0];
                         }
 
-                        cp.elements[0].setTag(Tagset.VB);
-                        cp.elements[0].setWordForm(buf[0]);
+                        cp.elements[0].tag = Tagset.VB;
+                        cp.elements[0].wordForm = buf[0];
                     }
                     for (let e of cp.elements) {
                         //console.log(e.wordForm + ':' + e.lexeme.word.literal + '.' + e.tag)
@@ -66,9 +65,9 @@ export class RuleBasedTagger {
                 if (s) {
                     let kw = rs.matchKeyWords(s);
                     if (kw) {
-                        if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.setTag(Tagset.PRP);
-                        if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.setTag(Tagset.DT);
-                        kw.setWordForm(s);
+                        if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
+                        if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
+
                         this.ces.push(kw);
                         buf = [];
                     }

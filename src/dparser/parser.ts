@@ -25,6 +25,7 @@ export class DependencyParser {
         root.word.literal = 'ROOT';
         let ce = new ConstructionElement();
         ce.lexeme = root;
+        ce.wordForm = 'ROOT'
         c.stack.push(ce);
 
         if (c.stack.length == 1 && c.queue.length > 0) {

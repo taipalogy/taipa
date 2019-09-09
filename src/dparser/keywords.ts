@@ -18,15 +18,18 @@ import { TonalCombiningForms } from './morpheme';
 export class ConstructionElement {
     lexeme: InflexionLexeme = new InflexionLexeme();
     pos: string = '';
-    protected selected: [string, string] = ['', ''];
+    tag: string = ''
+    wordForm: string = ''
 
     matchFormFor(str: string): boolean {
         if (this.lexeme.word.literal === str) {
+            this.wordForm = str
             return true;
         }
         if (this.lexeme.otherForms.length > 0) {
             for (let i = 0; i < this.lexeme.otherForms.length; i++) {
                 if (this.lexeme.otherForms[i].literal === str) {
+                    this.wordForm = str
                     return true;
                 }
             }
@@ -37,23 +40,6 @@ export class ConstructionElement {
     clone(): ConstructionElement {
         const clone = Object.create(this);
         return clone;
-    }
-
-    setTag(str: string) {
-        this.selected[1] = str;
-    }
-
-    get tag() {
-        return this.selected[1];
-    }
-
-    get wordForm(): string {
-        if (this.selected[0] === '') return this.lexeme.word.literal;
-        return this.selected[0];
-    }
-
-    setWordForm(str: string) {
-        if (str != this.lexeme.word.literal) this.selected[0] = str;
     }
 }
 

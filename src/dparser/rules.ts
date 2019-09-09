@@ -102,7 +102,7 @@ export class Rules {
     }
 
     matchKeyWords(str: string) {
-        return this.keyWords.get(str);
+        return this.keyWords.get(str)
     }
 
     matchPatterns(strs: string[]) {
