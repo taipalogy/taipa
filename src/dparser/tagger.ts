@@ -51,7 +51,7 @@ export class RuleBasedTagger {
                         }
 
                         cp.elements[0].tag = Tagset.VB;
-                        cp.elements[0].wordForm = buf[0];
+                        cp.elements[0].matchFormFor(buf[0])
                     }
                     for (let e of cp.elements) {
                         //console.log(e.wordForm + ':' + e.lexeme.word.literal + '.' + e.tag)

@@ -21,21 +21,12 @@ export class ListOfLexicalRoots extends Syllabary {
     setFirstLetter(beginning: string, len: number) {
         let cog = new ClientOfGenerator();
         let entries: Array<Sound[]> = cog.generate(beginning, len);
+        let list: Array<Sound[]> = new Array();
         for (let i in entries) {
-            this.list.push(entries[i]);
+            list.push(entries[i]);
         }
         //console.log(this.list)
-    }
-
-    toString() {
-        let str: string = '';
-        for (let k in this.list) {
-            for (let i in this.list[k]) {
-                str += this.list[k][i].getLiteral();
-                str += ', ';
-            }
-        }
-        return str;
+        return list
     }
 }
 

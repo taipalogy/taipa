@@ -90,17 +90,17 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         len = len + l.characters.length;
     }
 
-    syllabary.setFirstLetter(letters[beginOfSyllable].literal, len);
+    const list = syllabary.setFirstLetter(letters[beginOfSyllable].literal, len);
 
     let matchedLen = 0;
     let mp = new MatchedPattern();
 
-    for (let m in syllabary.list) {
-        let min = Math.min(letters.length - beginOfSyllable, syllabary.list[m].length);
-        if (syllabary.list[m].length == min) {
+    for (let m in list) {
+        let min = Math.min(letters.length - beginOfSyllable, list[m].length);
+        if (list[m].length == min) {
             for (let n = 0; n < min; n++) {
-                if (syllabary.list[m][n] != undefined) {
-                    if (letters[beginOfSyllable + n].literal === syllabary.list[m][n].getLiteral()) {
+                if (list[m][n] != undefined) {
+                    if (letters[beginOfSyllable + n].literal === list[m][n].getLiteral()) {
                         //console.log(syllabary[m])
                         if (n + 1 == min && min > matchedLen) {
                             // to make sure it is longer than previous patterns
@@ -112,7 +112,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                             }
 
                             // copy the pattern of sounds
-                            mp.pattern = syllabary.list[m];
+                            mp.pattern = list[m];
                             //console.log(syllabary.list[m])
                             //console.log(mp.letters)
                         }

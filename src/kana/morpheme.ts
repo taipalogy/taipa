@@ -6,13 +6,9 @@ import { Syllabary } from '../morpheme';
 import { AlphabeticLetter } from '../grapheme';
 
 //------------------------------------------------------------------------------
-//  Kana Syllable
-//------------------------------------------------------------------------------
 
 export class KanaSyllable extends Syllable {}
 
-//------------------------------------------------------------------------------
-//  Kana Inputing Morpheme
 //------------------------------------------------------------------------------
 
 export class KanaUncombiningMorpheme extends Morpheme {
@@ -27,8 +23,6 @@ export class KanaUncombiningMorpheme extends Morpheme {
 }
 
 //------------------------------------------------------------------------------
-//  syllabifyKana
-//------------------------------------------------------------------------------
 
 function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
     let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
@@ -36,16 +30,16 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         len = len + l.characters.length;
     }
 
-    syllabary.setFirstLetter(letters[beginOfSyllable].literal, len);
+    const list = syllabary.setFirstLetter(letters[beginOfSyllable].literal, len);
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
-    for (let m in syllabary.list) {
-        let min = Math.min(letters.length - beginOfSyllable, syllabary.list[m].length);
-        if (syllabary.list[m].length == min) {
+    for (let m in list) {
+        let min = Math.min(letters.length - beginOfSyllable, list[m].length);
+        if (list[m].length == min) {
             for (let n = 0; n < min; n++) {
-                if (syllabary.list[m][n] != undefined) {
-                    if (letters[beginOfSyllable + n].literal === syllabary.list[m][n].getLiteral()) {
+                if (list[m][n] != undefined) {
+                    if (letters[beginOfSyllable + n].literal === list[m][n].getLiteral()) {
                         if (n + 1 == min) {
                             // copy the matched letters
                             let arr: AlphabeticLetter[] = new Array();
@@ -151,8 +145,6 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     return mp;
 }
 
-//------------------------------------------------------------------------------
-//  Kana Morpheme Maker
 //------------------------------------------------------------------------------
 
 export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
