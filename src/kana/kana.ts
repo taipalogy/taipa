@@ -1,19 +1,5 @@
 import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme';
 import { KanaAnalyzer } from './analyzer';
-import { Syllabary } from '../morpheme';
-
-export class RomanizedKana extends Syllabary {
-    getFirstLetter(beginning: string, len: number) {
-        let cog = new ClientOfGenerator();
-        let entries: Array<Sound[]> = cog.generate(beginning, len);
-        const list: Array<Sound[]> = new Array();
-        for (let i in entries) {
-            list.push(entries[i]);
-        }
-        //console.info(this.list)
-        return list
-    }
-}
 
 class RomanizedKanaGenerator {
     generate(beginning: string, len: number) {
@@ -37,7 +23,7 @@ class RomanizedKanaGenerator {
     }
 }
 
-class ClientOfGenerator {
+export class ClientOfKanaGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if (this.isFinalConsonant(ls[index])) {
             sounds.push(ls[index] + '.' + KanaSoundTags.finalConsonant);
@@ -121,7 +107,7 @@ class ClientOfGenerator {
         return ret;
     }
 
-    generate(beginning: string, len: number) {
+    generate(beginning: string, len: number, slb: string) {
         let rkg = new RomanizedKanaGenerator();
         let strs: Array<string> = rkg.generate(beginning, len); // retrieve all needed syllables beginning with begginning
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed

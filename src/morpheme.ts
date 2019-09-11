@@ -18,10 +18,6 @@ export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 
 export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
 
-export abstract class Syllabary {
-    abstract getFirstLetter(beginning: string, length: number): Array<Sound[]>;
-}
-
 //------------------------------------------------------------------------------
 //  Tone Morpheme
 //------------------------------------------------------------------------------
@@ -121,15 +117,14 @@ export abstract class MorphemeMaker {
 
     make(
         letters: Array<AlphabeticLetter>,
-        syllabary: Syllabary,
-        syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) => MatchedPattern,
+        syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number) => MatchedPattern,
     ): Morpheme[] {
         let morphemes = this.createMorphemes();
         let beginOfSyllable: number = 0;
         for (let i = 0; i < letters.length; i++) {
             let msp: MatchedPattern = new MatchedPattern();
             if (i - beginOfSyllable == 0) {
-                msp = syllabify(letters, beginOfSyllable, syllabary);
+                msp = syllabify(letters, beginOfSyllable);
 
                 if (msp.matchedLength == 0) {
                     //console.log('no matched syllables found. the syllable might need to be added')

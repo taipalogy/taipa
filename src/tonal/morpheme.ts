@@ -1,4 +1,4 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, Syllabary, TonalCombiningMetaplasm } from '../morpheme';
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, TonalCombiningMetaplasm } from '../morpheme';
 import {
     freeAllomorphUncombiningRules,
     checkedAllomorphs,
@@ -7,17 +7,12 @@ import {
     AllomorphX,
     SetOfFreeTonals,
     SetOfStopFinals,
-    TonalLetterTags,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
-import { ListOfLexicalRoots, ClientOfGenerator } from './lexicalroot';
+import { ClientOfTonalGenerator } from './lexicalroot';
 import { list_of_lexical_roots } from './lexicalroots2';
 
-import { performance } from 'perf_hooks'
-
-//------------------------------------------------------------------------------
-//  Tonal Uncombining Forms
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
@@ -89,7 +84,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 //  syllabifyTonal
 //------------------------------------------------------------------------------
 
-export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
+export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number/*, syllabary: Syllabary*/) {
     // get the longest matched syllable pattern
     let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
     for (let l of letters) {
@@ -153,9 +148,10 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         }
     }
     //console.log('matched: ' + matched)
-    const cog = new ClientOfGenerator()
+    const cog = new ClientOfTonalGenerator()
     //console.log('matched: ' + matched)
-    const list = cog.generate('', 0, matched)
+    let list: Array<Sound[]> = new Array()
+    if(matched.length > 0) list = cog.generate('', 0, matched)
     //console.log(list)
 
     //const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);
@@ -195,8 +191,6 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     return mp;
 }
 
-//------------------------------------------------------------------------------
-//  Tonal Syllable
 //------------------------------------------------------------------------------
 
 export class TonalSyllable extends Syllable {
@@ -306,14 +300,12 @@ export class TonalUncombiningMorpheme extends Morpheme {
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     graphemes: Array<AlphabeticGrapheme>;
     metaplasm: TonalCombiningMetaplasm;
-    lexicalRoots: ListOfLexicalRoots;
 
     constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
         super();
         this.graphemes = new Array();
         this.graphemes = gs;
         this.metaplasm = tsm;
-        this.lexicalRoots = new ListOfLexicalRoots();
     }
 
     createMorphemes() {
@@ -328,6 +320,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     makeMorphemes() {
-        return this.make(this.preprocess(), this.lexicalRoots, syllabifyTonal);
+        return this.make(this.preprocess(), syllabifyTonal);
     }
 }

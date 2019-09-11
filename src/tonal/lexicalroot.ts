@@ -1,5 +1,4 @@
 import { Sound } from '../grapheme';
-import { list_of_lexical_roots } from './lexicalroots2';
 import {
     SetOfMaterLectionis,
     SetOfMedials,
@@ -15,43 +14,8 @@ import {
     TonalSoundTags,
 } from './version2';
 import { TonalLemmatizationAnalyzer } from './analyzer';
-import { Syllabary } from '../morpheme';
 
-export class ListOfLexicalRoots extends Syllabary {
-    
-    getFirstLetter(beginning: string, len: number) {
-        
-        let cog = new ClientOfGenerator();
-        let entries: Array<Sound[]> = cog.generate(beginning, len, '');
-        let list: Array<Sound[]> = new Array();
-        /*
-        for (let i in entries) {
-            list.push(entries[i]);
-        }
-        //console.log(this.list)
-        */
-        return list
-        
-    }
-    
-}
-/*
-class LexicalRootGenerator {
-    generate(beginning: string, len: number) {
-        let strs: string[] = new Array();
-        
-        for (let i in list_of_lexical_roots) {
-            if (list_of_lexical_roots[i].search(beginning) == 0 && list_of_lexical_roots[i].length <= len) {
-                strs.push(list_of_lexical_roots[i]);
-            }
-        }
-
-        for(let i in strs) console.info(strs[i])
-        return strs;
-    }
-}
-*/
-export class ClientOfGenerator {
+export class ClientOfTonalGenerator {
     private analyzeAfterNasalFinalsOrNasalization(ls: string[], sounds: string[], index: number): string[] {
         // base form of checked tone do not have a tonal
         if (this.isFreeTonal(ls[index])) {

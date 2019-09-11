@@ -11,7 +11,6 @@ import {
     uncombinedCheckedAllomorphs,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme';
-import { ListOfLexicalRoots } from '../tonal/lexicalroot';
 
 //------------------------------------------------------------------------------
 //  Tonal Combining Forms
@@ -114,6 +113,6 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
     }
 
     makeMorphemes() {
-        return this.make(this.preprocess(), new ListOfLexicalRoots(), syllabifyTonal);
+        return this.make(this.preprocess(), syllabifyTonal);
     }
 }

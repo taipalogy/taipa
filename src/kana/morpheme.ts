@@ -1,8 +1,7 @@
 import { AlphabeticGrapheme } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import { RomanizedKana, SetOfInitialConsonants, SetOfVowels, Hatsuon } from './kana';
-import { Syllabary } from '../morpheme';
+import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 
 //------------------------------------------------------------------------------
@@ -24,13 +23,16 @@ export class KanaUncombiningMorpheme extends Morpheme {
 
 //------------------------------------------------------------------------------
 
-function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number, syllabary: Syllabary) {
+function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number/*, syllabary: Syllabary*/) {
     let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
     for (let l of letters) {
         len = len + l.characters.length;
     }
 
-    const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);
+    const cog = new ClientOfKanaGenerator()
+    const list = cog.generate(letters[beginOfSyllable].literal, len, '')
+
+    //const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
@@ -167,6 +169,6 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     makeInputingMorphemes() {
-        return this.make(this.preprocess(), new RomanizedKana(), syllabifyKana);
+        return this.make(this.preprocess(), syllabifyKana);
     }
 }
