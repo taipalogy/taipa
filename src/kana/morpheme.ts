@@ -30,7 +30,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         len = len + l.characters.length;
     }
 
-    const list = syllabary.setFirstLetter(letters[beginOfSyllable].literal, len);
+    const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 

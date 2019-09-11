@@ -1,13 +1,14 @@
-/*eslint eqeqeq:0*/
-
-let list_of_new_syllables = []
-
+// prettier-ignore
 let list_of_new_lexical_roots = [
-    'coaih', 'dngh',
+    'coaih',
+
+    'choa',
+    
+    'dngh',
 	
     'hoang',
 
-    'jex', 'jek', 'jeng',
+    'jex', 'jek', 'jeng', 'jip',
 	
 	'kiaih', 'kuih',
 
@@ -18,6 +19,7 @@ let list_of_new_lexical_roots = [
     'n',
 ]
 
+// prettier-ignore
 let list_of_addon_lexical_roots = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
@@ -64,6 +66,7 @@ let list_of_addon_lexical_roots = [
     'vainny', 'vainnx', 'vainnz', 'ver', 'very', 'verw', 'verx', 'verz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
 ]
 
+// prettier-ignore
 export let list_of_lexical_roots = [
     'a', 'ay', 'az', 'ah', 'ahh', 'ai', 'aiy', 'aiw', 'ainnz', 'ak', 'am', 'amy', 'amw', 'amx', 'amz', 'an', 'any', 'anw', 'anx',
     'anz', 'ang', 'angw', 'angx', 'angz', 'annw', 'annx', 'annz', 'ap', 'app', 'at', 'au', 'auy', 'auw', 'aux', 'auz',

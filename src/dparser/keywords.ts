@@ -416,7 +416,6 @@ export class KeyWords {
 
             this.makeParticle('kih'),
             this.makeParticle('leh'),
-            this.makeParticle('jip'),
             this.makeParticle('chit'),
             this.makeParticle('cheh'),
             this.makeParticle('diurh'),

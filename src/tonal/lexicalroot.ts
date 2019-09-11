@@ -18,32 +18,40 @@ import { TonalLemmatizationAnalyzer } from './analyzer';
 import { Syllabary } from '../morpheme';
 
 export class ListOfLexicalRoots extends Syllabary {
-    setFirstLetter(beginning: string, len: number) {
+    
+    getFirstLetter(beginning: string, len: number) {
+        
         let cog = new ClientOfGenerator();
-        let entries: Array<Sound[]> = cog.generate(beginning, len);
+        let entries: Array<Sound[]> = cog.generate(beginning, len, '');
         let list: Array<Sound[]> = new Array();
+        /*
         for (let i in entries) {
             list.push(entries[i]);
         }
         //console.log(this.list)
+        */
         return list
+        
     }
+    
 }
-
+/*
 class LexicalRootGenerator {
     generate(beginning: string, len: number) {
         let strs: string[] = new Array();
+        
         for (let i in list_of_lexical_roots) {
             if (list_of_lexical_roots[i].search(beginning) == 0 && list_of_lexical_roots[i].length <= len) {
                 strs.push(list_of_lexical_roots[i]);
             }
         }
-        //for(let i in strs) console.info(strs[i])
+
+        for(let i in strs) console.info(strs[i])
         return strs;
     }
 }
-
-class ClientOfGenerator {
+*/
+export class ClientOfGenerator {
     private analyzeAfterNasalFinalsOrNasalization(ls: string[], sounds: string[], index: number): string[] {
         // base form of checked tone do not have a tonal
         if (this.isFreeTonal(ls[index])) {
@@ -235,16 +243,17 @@ class ClientOfGenerator {
         return ret;
     }
 
-    generate(beginning: string, len: number) {
-        let lrg = new LexicalRootGenerator();
-        let strs: Array<string> = lrg.generate(beginning, len); // retrieve all needed roots beginning with beggining
+    generate(beginning: string, len: number, slb: string) {
+        //let lrg = new LexicalRootGenerator();
+        //let strs: Array<string> = lrg.generate(beginning, len); // retrieve all needed roots beginning with beggining
+        let strs: Array<string> = [slb]
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let analyzer = new TonalLemmatizationAnalyzer();
         let entries: Array<Sound[]> = new Array(); // to be returned
 
         for (let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = analyzer.doGraphemicAnalysis(strs[i]);
+            let graphemes = analyzer.doGraphemicAnalysis(strs[i]); // TODO: replace graphemes with parameter letters
             let ls: string[] = [];
             for (let j in graphemes) {
                 ls.push(graphemes[j].letter.literal);
@@ -297,7 +306,7 @@ class ClientOfGenerator {
             let lastElement = entry[entry.length - 1];
 
             if (this.isStopFinal(lastElement)) {
-                let lastElement = entry[entry.length - 1];
+                //let lastElement = entry[entry.length - 1];
                 let n = lastElement.lastIndexOf('.');
                 let key = lastElement.slice(0, n);
                 let tos = combiningRules.get(key);
@@ -320,11 +329,12 @@ class ClientOfGenerator {
                 }
             } else {
                 if (lastElement.lastIndexOf(TonalSoundTags.freeTonal) > 0) {
-                    nextStem = entry.slice(0, entry.length - 1);
+                    //nextStem = entry.slice(0, entry.length - 1);    
                 } else {
-                    nextStem = entry;
+                    //nextStem = entry;
                 }
 
+/*
                 if (nextStem.length != currentStem.length) {
                     // when the stems are not in the same length
                     currentStem = nextStem;
@@ -350,6 +360,7 @@ class ClientOfGenerator {
                 }
 
                 buffer.push(entry);
+                */
             }
         }
 

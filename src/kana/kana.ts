@@ -3,8 +3,7 @@ import { KanaAnalyzer } from './analyzer';
 import { Syllabary } from '../morpheme';
 
 export class RomanizedKana extends Syllabary {
-    
-    setFirstLetter(beginning: string, len: number) {
+    getFirstLetter(beginning: string, len: number) {
         let cog = new ClientOfGenerator();
         let entries: Array<Sound[]> = cog.generate(beginning, len);
         const list: Array<Sound[]> = new Array();

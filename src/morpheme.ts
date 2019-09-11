@@ -19,7 +19,7 @@ export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
 
 export abstract class Syllabary {
-    abstract setFirstLetter(beginning: string, length: number): Array<Sound[]>;
+    abstract getFirstLetter(beginning: string, length: number): Array<Sound[]>;
 }
 
 //------------------------------------------------------------------------------
