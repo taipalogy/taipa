@@ -86,11 +86,12 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 
 export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number/*, syllabary: Syllabary*/) {
     // get the longest matched syllable pattern
+    /*
     let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
     for (let l of letters) {
         len = len + l.characters.length;
     }
-
+*/
     let literal = '';
     let matched = '';
     let begin: number = 0;
@@ -151,7 +152,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const cog = new ClientOfTonalGenerator()
     //console.log('matched: ' + matched)
     let list: Array<Sound[]> = new Array()
-    if(matched.length > 0) list = cog.generate('', 0, matched)
+    if(matched.length > 0) list = cog.generate(matched)
     //console.log(list)
 
     //const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);

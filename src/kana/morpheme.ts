@@ -1,7 +1,7 @@
-import { AlphabeticGrapheme } from '../grapheme';
+import { AlphabeticGrapheme, Sound } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator } from './kana';
+import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator, hiragana_katakana, SetOfFinalConsonants } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 
 //------------------------------------------------------------------------------
@@ -23,16 +23,20 @@ export class KanaUncombiningMorpheme extends Morpheme {
 
 //------------------------------------------------------------------------------
 
-function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number/*, syllabary: Syllabary*/) {
-    let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
-    for (let l of letters) {
-        len = len + l.characters.length;
+function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
+    const cog = new ClientOfKanaGenerator()
+    let literal = '';
+    let matched = '';
+
+    for(let i = beginOfSyllable; i < letters.length; i++) {
+        literal = literal + letters[i].literal;
+        if(hiragana_katakana.has(literal)) {
+            matched = literal;
+        }
     }
 
-    const cog = new ClientOfKanaGenerator()
-    const list = cog.generate(letters[beginOfSyllable].literal, len, '')
-
-    //const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);
+    let list: Array<Sound[]> = new Array()
+    if(matched.length > 0) list = cog.generate(matched);
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 

@@ -1,4 +1,4 @@
-import { Sound } from '../grapheme';
+import { Sound, AlphabeticLetter } from '../grapheme';
 import {
     SetOfMaterLectionis,
     SetOfMedials,
@@ -207,9 +207,7 @@ export class ClientOfTonalGenerator {
         return ret;
     }
 
-    generate(beginning: string, len: number, slb: string) {
-        //let lrg = new LexicalRootGenerator();
-        //let strs: Array<string> = lrg.generate(beginning, len); // retrieve all needed roots beginning with beggining
+    generate(slb: string) {
         let strs: Array<string> = [slb]
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let analyzer = new TonalLemmatizationAnalyzer();
@@ -217,7 +215,7 @@ export class ClientOfTonalGenerator {
 
         for (let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = analyzer.doGraphemicAnalysis(strs[i]); // TODO: replace graphemes with parameter letters
+            let graphemes = analyzer.doGraphemicAnalysis(strs[i]);
             let ls: string[] = [];
             for (let j in graphemes) {
                 ls.push(graphemes[j].letter.literal);
@@ -260,8 +258,6 @@ export class ClientOfTonalGenerator {
         }
 
         let buffer: Array<string[]> = new Array();
-        let currentStem: string[] = [];
-        let nextStem: string[] = [];
         for (let k = 0; k < arrayOfSounds.length; k++) {
             //console.debug(arrayOfSounds[k])
             entries.push(this.convert(arrayOfSounds[k]));
@@ -270,7 +266,6 @@ export class ClientOfTonalGenerator {
             let lastElement = entry[entry.length - 1];
 
             if (this.isStopFinal(lastElement)) {
-                //let lastElement = entry[entry.length - 1];
                 let n = lastElement.lastIndexOf('.');
                 let key = lastElement.slice(0, n);
                 let tos = combiningRules.get(key);
@@ -292,39 +287,7 @@ export class ClientOfTonalGenerator {
                     }
                 }
             } else {
-                if (lastElement.lastIndexOf(TonalSoundTags.freeTonal) > 0) {
-                    //nextStem = entry.slice(0, entry.length - 1);    
-                } else {
-                    //nextStem = entry;
-                }
 
-/*
-                if (nextStem.length != currentStem.length) {
-                    // when the stems are not in the same length
-                    currentStem = nextStem;
-                    this.findCombiningForms(buffer);
-                    // aw
-                    for (let i in buffer) {
-                        entries.push(this.convert(buffer[i]));
-                    }
-                    buffer = [];
-                } else {
-                    for (let e in currentStem) {
-                        if (currentStem[e] !== nextStem[e]) {
-                            // when the stems are not the same
-                            currentStem = nextStem;
-                            this.findCombiningForms(buffer);
-                            for (let i in buffer) {
-                                entries.push(this.convert(buffer[i]));
-                            }
-                            buffer = [];
-                            break;
-                        }
-                    }
-                }
-
-                buffer.push(entry);
-                */
             }
         }
 

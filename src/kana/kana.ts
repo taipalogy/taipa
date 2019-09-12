@@ -1,28 +1,6 @@
 import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme';
 import { KanaAnalyzer } from './analyzer';
 
-class RomanizedKanaGenerator {
-    generate(beginning: string, len: number) {
-        let strs: string[] = new Array();
-        for (let i in list_of_romanized_kana) {
-            if (list_of_romanized_kana[i].search(beginning) == 0 && list_of_romanized_kana[i].length <= len) {
-                strs.push(list_of_romanized_kana[i]);
-                // consonant germination
-                if (new SetOfGerminatedConsonants().beginWith(list_of_romanized_kana[i]) == true) {
-                    strs.push(list_of_romanized_kana[i].charAt(0) + list_of_romanized_kana[i]);
-                }
-                // sokuon
-                let fcs = new SetOfFinalConsonants();
-                for (let e of fcs.finalConsonants) {
-                    strs.push(list_of_romanized_kana[i] + e.getLiteral());
-                }
-            }
-        }
-        //for(let i in strs) console.info(strs[i])
-        return strs;
-    }
-}
-
 export class ClientOfKanaGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if (this.isFinalConsonant(ls[index])) {
@@ -107,9 +85,27 @@ export class ClientOfKanaGenerator {
         return ret;
     }
 
-    generate(beginning: string, len: number, slb: string) {
-        let rkg = new RomanizedKanaGenerator();
-        let strs: Array<string> = rkg.generate(beginning, len); // retrieve all needed syllables beginning with begginning
+    private genSokuonAndGerminated(slb: string) {
+        let strs: string[] = new Array();
+
+        strs.push(slb);
+
+        // consonant germination
+        if (new SetOfGerminatedConsonants().beginWith(slb) == true) {
+            strs.push(slb.charAt(0) + slb);
+        }
+
+        // sokuon
+        let fcs = new SetOfFinalConsonants();
+        for (let e of fcs.finalConsonants) {
+            strs.push(slb + e.getLiteral());
+        }
+        //for(let i in strs) console.info(strs[i])
+        return strs;
+    }
+
+    generate(slb: string) {
+        let strs: Array<string> = this.genSokuonAndGerminated(slb)
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let analyzer = new KanaAnalyzer();
         let entries: Array<Sound[]> = new Array(); // to be returned
