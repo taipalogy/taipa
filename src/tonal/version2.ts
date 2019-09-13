@@ -316,7 +316,7 @@ export class FreeTonalY extends FreeTonal {
 export class CheckedTonalW extends CheckedTonal {
     characters = this.makeCharacters(TonalLetterTags.w);
 }
-export class TonalF extends CheckedTonal {
+export class CheckedTonalF extends CheckedTonal {
     characters = this.makeCharacters(TonalLetterTags.f);
 }
 
@@ -487,6 +487,21 @@ export class SetOfFreeTonals extends SetOfSounds {
     }
 }
 
+export class SetOfCheckedTonals extends SetOfSounds {
+    checkedTonals: Array<FreeTonal> = new Array();
+    constructor() {
+        super();
+        this.checkedTonals.push(new CheckedTonalF());
+        this.checkedTonals.push(new CheckedTonalY());
+        this.checkedTonals.push(new CheckedTonalW());
+        this.checkedTonals.push(new CheckedTonalX());
+    }
+
+    toString() {
+        return super.toRegexString(this.checkedTonals);
+    }
+}
+
 export class SetOfFinals extends SetOfSounds {
     finals: Array<Final> = new Array();
     constructor() {
@@ -565,7 +580,7 @@ class PSE extends PositionalSound {
 
 class PSF extends PositionalSound {
     name = TonalLetterTags.f;
-    map = new Map<string, Sound>().set(TonalSoundTags.checkedTonal, new TonalF());
+    map = new Map<string, Sound>().set(TonalSoundTags.checkedTonal, new CheckedTonalF());
 }
 
 class PSG extends PositionalSound {
@@ -965,22 +980,22 @@ class AllomorphHH extends CheckedAllomorph {
 
 class AllomorphPF extends CheckedAllomorph {
     final = new FinalP();
-    tonal = new TonalF();
+    tonal = new CheckedTonalF();
 }
 
 class AllomorphTF extends CheckedAllomorph {
     final = new FinalT();
-    tonal = new TonalF();
+    tonal = new CheckedTonalF();
 }
 
 class AllomorphKF extends CheckedAllomorph {
     final = new FinalK();
-    tonal = new TonalF();
+    tonal = new CheckedTonalF();
 }
 
 class AllomorphHF extends CheckedAllomorph {
     final = new FinalH();
-    tonal = new TonalF();
+    tonal = new CheckedTonalF();
 }
 
 export class AllomorphHY extends CheckedAllomorph {
@@ -990,22 +1005,22 @@ export class AllomorphHY extends CheckedAllomorph {
 
 class AllomorphPPW extends CheckedAllomorph {
     final = new FinalPP();
-    tonal = new TonalW();
+    tonal = new CheckedTonalW();
 }
 
 class AllomorphTTW extends CheckedAllomorph {
     final = new FinalTT();
-    tonal = new TonalW();
+    tonal = new CheckedTonalW();
 }
 
 class AllomorphKKW extends CheckedAllomorph {
     final = new FinalKK();
-    tonal = new TonalW();
+    tonal = new CheckedTonalW();
 }
 
 class AllomorphHHW extends CheckedAllomorph {
     final = new FinalHH();
-    tonal = new TonalW();
+    tonal = new CheckedTonalW();
 }
 
 class AllomorphPPX extends CheckedAllomorph {

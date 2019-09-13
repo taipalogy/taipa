@@ -19,7 +19,7 @@ export class Client {
         let ka = <KanaAnalyzer>aw.analyzer;
         let morphemes: KanaUncombiningMorpheme[] = ka.doMorphologicalAnalysis(str);
         let doc: Document = new Document();
-        doc.blockSequences = aw.getBlocks(morphemes);
+        doc.blockSeqs = aw.getBlocks(morphemes);
         return doc;
     }
 
@@ -34,11 +34,11 @@ export class Client {
             let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes);
             doc.word = lexemes[0].word;
             doc.lemmata = lexemes[0].getLemmata();
-            doc.inflectionalEnding = lexemes[0].getInflectionalEnding();
+            doc.iEnding = lexemes[0].getInflectionalEnding();
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             for (let m of morphemes) {
-                doc.soundSequences.push(m.sounds);
+                doc.soundSeqs.push(m.sounds);
             }
         }
         return doc;

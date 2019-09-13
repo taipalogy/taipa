@@ -86,12 +86,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 
 export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number/*, syllabary: Syllabary*/) {
     // get the longest matched syllable pattern
-    /*
-    let len = 0; // limit on the length of fetched syllables, hence the amount of syllables limited
-    for (let l of letters) {
-        len = len + l.characters.length;
-    }
-*/
+
     let literal = '';
     let matched = '';
     let begin: number = 0;
@@ -99,6 +94,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals()
     const urs = freeAllomorphUncombiningRules;
+    let fnl: string = ''
 
     for(let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -112,7 +108,10 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             } else if(ssf.beginWith(letters[i].literal)) {
                 //console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
                 //console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
-                if(begin === beginOfSyllable) matched = literal;
+                if(begin === beginOfSyllable) {
+                    matched = literal;
+                    fnl = letters[i].literal
+                }
                 break;
             } else {
                 //console.log(`i: ${i}, literal: ${literal}`)
@@ -152,10 +151,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const cog = new ClientOfTonalGenerator()
     //console.log('matched: ' + matched)
     let list: Array<Sound[]> = new Array()
-    if(matched.length > 0) list = cog.generate(matched)
+    if(matched.length > 0) list = cog.generate(matched, fnl)
     //console.log(list)
-
-    //const list = syllabary.getFirstLetter(letters[beginOfSyllable].literal, len);
 
     let matchedLen = 0;
     let mp = new MatchedPattern();

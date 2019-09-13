@@ -12,17 +12,27 @@ import {
     letterClasses,
     SetOfNasalFinals,
     TonalSoundTags,
+    SetOfCheckedTonals,
 } from './version2';
 import { TonalLemmatizationAnalyzer } from './analyzer';
 
 export class ClientOfTonalGenerator {
     private analyzeAfterNasalFinalsOrNasalization(ls: string[], sounds: string[], index: number): string[] {
-        // base form of checked tone do not have a tonal
+        // base form of checked tone does not have a tonal
         if (this.isFreeTonal(ls[index])) {
             sounds.push(ls[ls.length - 1] + '.' + TonalSoundTags.freeTonal);
         } else if (this.isNeutralFinal(ls[index])) {
             // when a nasal final m, n, or ng is followed by a neutral final h
             sounds.push(ls[ls.length - 1] + '.' + TonalSoundTags.stopFinal);
+        }
+
+        return sounds;
+    }
+
+    private analyzeAfterStopFinal(ls: string[], sounds: string[], index: number): string[] {
+        // base form of checked tone does not have a tonal
+        if (this.isCheckedTonal(ls[index])) {
+            sounds.push(ls[ls.length - 1] + '.' + TonalSoundTags.checkedTonal);
         }
 
         return sounds;
@@ -41,14 +51,16 @@ export class ClientOfTonalGenerator {
             while (k < ls.length) {
                 if (this.isNasalFinal(ls[k])) {
                     sounds.push(ls[k] + '.' + TonalSoundTags.nasalFinal);
-                } else if (this.isFinalConsonant(ls[k])) {
+                    if (ls.length > sounds.length) {
+                        sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length);
+                    }        
+                } else if (this.isStopFinal(ls[k])) {
                     sounds.push(ls[k] + '.' + TonalSoundTags.stopFinal);
+                    if (ls.length > sounds.length) {
+                        sounds = this.analyzeAfterStopFinal(ls, sounds, sounds.length);
+                    }                            
                 }
                 k++;
-            }
-
-            if (ls.length > sounds.length) {
-                sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length);
             }
         }
 
@@ -104,6 +116,12 @@ export class ClientOfTonalGenerator {
 
     private isFreeTonal(str: string) {
         if (new SetOfFreeTonals().beginWith(str) == true) return true;
+
+        return false;
+    }
+
+    private isCheckedTonal(str: string) {
+        if (new SetOfCheckedTonals().beginWith(str) == true) return true;
 
         return false;
     }
@@ -165,28 +183,6 @@ export class ClientOfTonalGenerator {
         return ret;
     }
 
-    private findCombiningForms(buffer: Array<string[]>) {
-        // find combining forms based on the same stem
-        let cfs;
-        for (let i in buffer) {
-            cfs = this.makeCombiningForms(buffer[i]);
-
-            for (let m in cfs) {
-                for (let n = 0; n < buffer.length; n++) {
-                    let entry = buffer[n];
-                    if (entry[entry.length - 1] === cfs[m][cfs[m].length - 1]) {
-                        break;
-                    }
-                    if (n == buffer.length - 1) {
-                        // pushed to fill the slot, block following duplicates
-                        // duplicates come from combining rules
-                        buffer.push(cfs[m]);
-                    }
-                }
-            }
-        }
-    }
-
     private convert(entry: string[]) {
         // convert strings in an entry to sounds
         // ex: a.medial -> PSA.medial
@@ -207,15 +203,36 @@ export class ClientOfTonalGenerator {
         return ret;
     }
 
-    generate(slb: string) {
-        let strs: Array<string> = [slb]
+    private genChecked(slb: string, fnl: string) {
+        const to_s = combiningRules.get(fnl);
+        let strs: string[] = new Array();
+
+        strs.push(slb);
+
+        if(to_s) {
+            for(let i in to_s) {
+                strs.push(slb + to_s[i].getLiteral())
+            }
+        }
+
+        return strs
+    }
+
+    generate(slb: string, ltrStopFinal: string) {
+        let strs: Array<string> = new Array()
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let analyzer = new TonalLemmatizationAnalyzer();
         let entries: Array<Sound[]> = new Array(); // to be returned
 
+        if (this.isStopFinal(ltrStopFinal)) {
+            strs = this.genChecked(slb, ltrStopFinal)
+        } else {
+            strs.push(slb)
+        }
+
         for (let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = analyzer.doGraphemicAnalysis(strs[i]);
+            let graphemes = analyzer.doGraphemicAnalysis(strs[i]); // TODO: to be replaced with parameter letters
             let ls: string[] = [];
             for (let j in graphemes) {
                 ls.push(graphemes[j].letter.literal);
@@ -256,39 +273,10 @@ export class ClientOfTonalGenerator {
 
             arrayOfSounds.push(sounds);
         }
-
-        let buffer: Array<string[]> = new Array();
+        
+        //let buffer: Array<string[]> = new Array();
         for (let k = 0; k < arrayOfSounds.length; k++) {
-            //console.debug(arrayOfSounds[k])
             entries.push(this.convert(arrayOfSounds[k]));
-
-            let entry = arrayOfSounds[k];
-            let lastElement = entry[entry.length - 1];
-
-            if (this.isStopFinal(lastElement)) {
-                let n = lastElement.lastIndexOf('.');
-                let key = lastElement.slice(0, n);
-                let tos = combiningRules.get(key);
-
-                let e: string[] = [];
-                for (let k in tos) {
-                    e = [];
-                    e = Object.assign([], entry);
-                    e.push(tos[k].getLiteral() + '.' + TonalSoundTags.checkedTonal);
-
-                    entries.push(this.convert(e));
-                }
-
-                if (k == arrayOfSounds.length - 1) {
-                    // terminal condition of iterator of arrayofSounds
-                    this.findCombiningForms(buffer);
-                    for (let i in buffer) {
-                        entries.push(this.convert(buffer[i]));
-                    }
-                }
-            } else {
-
-            }
         }
 
         return entries;
