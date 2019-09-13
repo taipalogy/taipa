@@ -1,5 +1,4 @@
 import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme';
-import { KanaAnalyzer } from './analyzer';
 
 export class ClientOfKanaGenerator {
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
@@ -85,38 +84,43 @@ export class ClientOfKanaGenerator {
         return ret;
     }
 
-    private genSokuonAndGerminated(slb: string) {
-        let strs: string[] = new Array();
+    private genSokuonAndGerminated(ltrs: string[]) {
+        let strs: Array<string[]> = new Array();
 
-        strs.push(slb);
+        strs.push(ltrs);
 
         // consonant germination
-        if (new SetOfGerminatedConsonants().beginWith(slb) == true) {
-            strs.push(slb.charAt(0) + slb);
+        if (new SetOfGerminatedConsonants().beginWith(ltrs[0]) == true) {
+            let syl: string[] = new Array()
+            syl.push(ltrs[0].charAt(0))
+            for(let e of ltrs) {
+                syl.push(e)
+            }
+            strs.push(syl);
         }
 
         // sokuon
         let fcs = new SetOfFinalConsonants();
         for (let e of fcs.finalConsonants) {
-            strs.push(slb + e.getLiteral());
+            let syl: string[] = new Array()
+            Object.assign(syl, ltrs)
+            syl.push(e.getLiteral())
+            strs.push(syl);
         }
-        //for(let i in strs) console.info(strs[i])
+
         return strs;
     }
 
-    generate(slb: string) {
-        let strs: Array<string> = this.genSokuonAndGerminated(slb)
+    generate(ltrs: string[]) {
+        let strs: Array<string[]> = new Array()
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
-        let analyzer = new KanaAnalyzer();
         let entries: Array<Sound[]> = new Array(); // to be returned
+
+        strs = this.genSokuonAndGerminated(ltrs)
 
         for (let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = analyzer.doGraphemicAnalysis(strs[i]);
-            let ls: string[] = [];
-            for (let j in graphemes) {
-                ls.push(graphemes[j].letter.literal);
-            }
+            let ls: string[] = strs[i];
 
             let sounds: string[] = [];
 
@@ -749,8 +753,6 @@ export const hiragana_katakana: Map<string, Array<string>> = new Map()
     .set('fi', ['ふぃ', 'フィ'])
     .set('fe', ['ふぇ', 'フェ'])
     .set('fo', ['ふぉ', 'フォ']);
-
-let list_of_romanized_kana = Array.from(hiragana_katakana.keys());
 
 export const kogakimoji: Map<string, Array<string>> = new Map().set('chu', ['っ', 'ッ']);
 

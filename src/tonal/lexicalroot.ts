@@ -1,4 +1,4 @@
-import { Sound, AlphabeticLetter } from '../grapheme';
+import { Sound } from '../grapheme';
 import {
     SetOfMaterLectionis,
     SetOfMedials,
@@ -14,7 +14,6 @@ import {
     TonalSoundTags,
     SetOfCheckedTonals,
 } from './version2';
-import { TonalLemmatizationAnalyzer } from './analyzer';
 
 export class ClientOfTonalGenerator {
     private analyzeAfterNasalFinalsOrNasalization(ls: string[], sounds: string[], index: number): string[] {
@@ -203,40 +202,38 @@ export class ClientOfTonalGenerator {
         return ret;
     }
 
-    private genChecked(slb: string, fnl: string) {
-        const to_s = combiningRules.get(fnl);
-        let strs: string[] = new Array();
+    private genChecked(ltrs: string[]) {
+        const to_s = combiningRules.get(ltrs[ltrs.length-1]);
+        let strs: Array<string[]> = new Array();
 
-        strs.push(slb);
+        strs.push(ltrs);
 
         if(to_s) {
             for(let i in to_s) {
-                strs.push(slb + to_s[i].getLiteral())
+                let syl: string[] = new Array()
+                Object.assign(syl, ltrs)
+                syl.push(to_s[i].getLiteral())
+                strs.push(syl)
             }
         }
 
         return strs
     }
 
-    generate(slb: string, ltrStopFinal: string) {
-        let strs: Array<string> = new Array()
+    generate(ltrs: string[]) {
+        let strs: Array<string[]> = new Array()
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
-        let analyzer = new TonalLemmatizationAnalyzer();
         let entries: Array<Sound[]> = new Array(); // to be returned
 
-        if (this.isStopFinal(ltrStopFinal)) {
-            strs = this.genChecked(slb, ltrStopFinal)
+        if (this.isStopFinal(ltrs[ltrs.length-1])) {
+            strs = this.genChecked(ltrs)
         } else {
-            strs.push(slb)
+            strs.push(ltrs)
         }
 
         for (let i in strs) {
             // generates all needed sounds to be processed
-            let graphemes = analyzer.doGraphemicAnalysis(strs[i]); // TODO: to be replaced with parameter letters
-            let ls: string[] = [];
-            for (let j in graphemes) {
-                ls.push(graphemes[j].letter.literal);
-            }
+            let ls: string[] = strs[i];
 
             let sounds: string[] = [];
 
