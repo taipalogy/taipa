@@ -1,26 +1,18 @@
 import { Character, characters } from './character';
 
 //------------------------------------------------------------------------------
-//  Grapheme
-//------------------------------------------------------------------------------
 
 class Grapheme {}
 
 export class AlphabeticGrapheme extends Grapheme {
     letter: AlphabeticLetter;
 
-    constructor(letter?: AlphabeticLetter) {
+    constructor(letter: AlphabeticLetter) {
         super();
-        if (letter) {
-            this.letter = letter;
-        } else {
-            this.letter = new AlphabeticLetter([]);
-        }
+        this.letter = letter;
     }
 }
 
-//------------------------------------------------------------------------------
-//  Letter
 //------------------------------------------------------------------------------
 
 export class Letter {
@@ -99,8 +91,6 @@ export class Letters {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Grapheme Maker
 //------------------------------------------------------------------------------
 
 export class GraphemeMaker {
@@ -212,10 +202,10 @@ export class GraphemeMaker {
                     let l = letters.shift();
                     if (l) {
                         beginOfLetter += l.characters.length;
+                        // pack letters into sounds
+                        let gr = new AlphabeticGrapheme(l);
+                        graphemes.push(gr);
                     }
-                    // pack letters into sounds
-                    let gr = new AlphabeticGrapheme(l);
-                    graphemes.push(gr);
                 }
             }
         }
@@ -225,8 +215,6 @@ export class GraphemeMaker {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Sound
 //------------------------------------------------------------------------------
 
 interface IPositionalSound {

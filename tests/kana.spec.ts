@@ -8,8 +8,8 @@ describe("Kana testing", () => {
     doc = cli.processKana('forumosa')
 
     test("kanas", () => {
-        expect(doc.blockSeqs[0]).toEqual('ふぉるもさ');  
-        expect(doc.blockSeqs[1]).toEqual('フォルモサ');
+        expect(doc.blockSequences[0]).toEqual('ふぉるもさ');  
+        expect(doc.blockSequences[1]).toEqual('フォルモサ');
     });
 });
 
@@ -20,8 +20,8 @@ describe("Kana testing", () => {
     doc = cli.processKana('takasago')
 
     test("kanas", () => {
-        expect(doc.blockSeqs[0]).toEqual('たかさご');
-        expect(doc.blockSeqs[1]).toEqual('タカサゴ');
+        expect(doc.blockSequences[0]).toEqual('たかさご');
+        expect(doc.blockSequences[1]).toEqual('タカサゴ');
     });
 });
 
@@ -32,7 +32,7 @@ describe("Kana testing", () => {
     doc = cli.processKana('taiwankun')
 
     test("kanas", () => {
-        expect(doc.blockSeqs[0]).toEqual('たいわんくん');
-        expect(doc.blockSeqs[1]).toEqual('タイワンクン');
+        expect(doc.blockSequences[0]).toEqual('たいわんくん');
+        expect(doc.blockSequences[1]).toEqual('タイワンクン');
     });
 });

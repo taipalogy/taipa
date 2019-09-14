@@ -9,7 +9,7 @@ describe("Tonal testing", () => {
     doc = cli.processTonal('damwvurhhxoay');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSeqs[1][3].getLiteral()).toEqual(TonalLetterTags.x);
+        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.x);
     });
 });
 
@@ -20,7 +20,7 @@ describe("Tonal testing", () => {
     doc = cli.processTonal('binznacfchaiw');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSeqs[1][2].getLiteral()).toEqual(TonalLetterTags.cf);
+        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.cf);
     });
 });
 
@@ -31,7 +31,7 @@ describe("Tonal testing", () => {
     doc = cli.processTonal('qinznacfjitt');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSeqs[1][2].getLiteral()).toEqual(TonalLetterTags.cf);
+        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.cf);
     });
 });
 
@@ -42,6 +42,6 @@ describe("Tonal testing", () => {
     doc = cli.processTonal('chaucfchaeng');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSeqs[0][3].getLiteral()).toEqual(TonalLetterTags.cf);
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.cf);
     });
 });

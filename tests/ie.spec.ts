@@ -10,20 +10,20 @@ describe("Inflectional ending testing", () => {
 
     test("check the inflectional stem", () => {
         let l = doc.word.literal;
-        let en = doc.iEnding;
+        let en = doc.inflectionalEnding;
         expect(l.substr(0, l.length-en.length)).toEqual('gengzchiap');
     });
   
     test("check the inflectional ending", () => {
-        expect(doc.iEnding).toEqual(TonalLetterTags.f);
+        expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSeqs[1][4].getLiteral()).toEqual(TonalLetterTags.f);
+        expect(doc.soundSequences[1][4].getLiteral()).toEqual(TonalLetterTags.f);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
     });
 });
 
@@ -35,20 +35,20 @@ describe("Inflectional ending testing", () => {
 
     test("check the inflectional stem", () => {
         let l = doc.word.literal;
-        let en = doc.iEnding;
+        let en = doc.inflectionalEnding;
         expect(l.substr(0, l.length-en.length)).toEqual('piauzpiet');
     });
   
     test("check the inflectional ending", () => {
-        expect(doc.iEnding).toEqual(TonalLetterTags.f);
+        expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSeqs[1][4].getLiteral()).toEqual(TonalLetterTags.f);
+        expect(doc.soundSequences[1][4].getLiteral()).toEqual(TonalLetterTags.f);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
     });
 });
 
@@ -60,20 +60,20 @@ describe("Inflectional ending testing", () => {
 
     test("check the inflectional stem", () => {
         let l = doc.word.literal;
-        let en = doc.iEnding;
+        let en = doc.inflectionalEnding;
         expect(l.substr(0, l.length-en.length)).toEqual('tengzsek');
     });
   
     test("check the inflectional ending", () => {
-        expect(doc.iEnding).toEqual(TonalLetterTags.f);
+        expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSeqs[1][3].getLiteral()).toEqual(TonalLetterTags.f);
+        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.f);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[1][3].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTonal);
     });
 });
 
@@ -85,24 +85,24 @@ describe("Inflectional ending testing", () => {
 
     test("check the inflectional stem", () => {
         let l = doc.word.literal;
-        let en = doc.iEnding;
+        let en = doc.inflectionalEnding;
         expect(l.substr(0, l.length-en.length)).toEqual('sekfhapp');
     });
 
     test("check the inflectional ending", () => {
-        expect(doc.iEnding).toEqual(TonalLetterTags.w);
+        expect(doc.inflectionalEnding).toEqual(TonalLetterTags.w);
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSeqs[1][3].getLiteral()).toEqual(TonalLetterTags.w);
+        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.w);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[0][3].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[0][3].name).toEqual(TonalSoundTags.checkedTonal);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[1][3].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTonal);
     });
 });
 
@@ -114,24 +114,24 @@ describe("Inflectional ending testing", () => {
 
     test("check the inflectional stem", () => {
         let l = doc.word.literal;
-        let en = doc.iEnding;
+        let en = doc.inflectionalEnding;
         expect(l.substr(0, l.length-en.length)).toEqual('kakfsitt');
     });
   
     test("check the inflectional ending", () => {
-        expect(doc.iEnding).toEqual('w');
+        expect(doc.inflectionalEnding).toEqual('w');
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSeqs[1][3].getLiteral()).toEqual(TonalLetterTags.w);
+        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.w);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[0][3].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[0][3].name).toEqual(TonalSoundTags.checkedTonal);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[1][3].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTonal);
     });
 });
 
@@ -143,19 +143,19 @@ describe("Inflectional ending testing", () => {
 
     test("check the inflectional stem", () => {
         let l = doc.word.literal;
-        let en = doc.iEnding;
+        let en = doc.inflectionalEnding;
         expect(l.substr(0, l.length-en.length)).toEqual('qeysiokk');
     });
   
     test("check the inflectional ending", () => {
-        expect(doc.iEnding).toEqual('w');
+        expect(doc.inflectionalEnding).toEqual('w');
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSeqs[1][4].getLiteral()).toEqual(TonalLetterTags.w);
+        expect(doc.soundSequences[1][4].getLiteral()).toEqual(TonalLetterTags.w);
     });
 
     test("check the name of checked tonal", () => {
-        expect(doc.soundSeqs[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+        expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
     });
 });

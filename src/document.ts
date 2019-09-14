@@ -5,8 +5,8 @@ import { Relation } from './dparser/relation';
 export class Document {
     word: Word = new Word();
     lemmata: Array<Word> = new Array();
-    iEnding: string = ''; // inflectinal ending
-    soundSeqs: Array<Sound[]> = new Array(); // sound sequences
-    blockSeqs: string[] = []; // block sequences
+    inflectionalEnding: string = ''; // inflectinal ending
+    soundSequences: Array<Sound[]> = new Array(); // sound sequences
+    blockSequences: string[] = []; // block sequences
     relations: Array<Relation> = new Array(); // dependency
 }
