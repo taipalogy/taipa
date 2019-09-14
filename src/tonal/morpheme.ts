@@ -1,4 +1,4 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, TonalCombiningMetaplasm } from '../morpheme';
+import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../morpheme';
 import {
     freeAllomorphUncombiningRules,
     checkedAllomorphs,
@@ -7,6 +7,7 @@ import {
     AllomorphX,
     SetOfFreeTonals,
     SetOfStopFinals,
+    Epenthesis,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -143,7 +144,20 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const cog = new ClientOfTonalGenerator()
     //console.log('matched: ' + matched)
     let list: Array<Sound[]> = new Array()
+
     if(matched.length > 0) list = cog.generate(matchedLtrs)
+    else {
+        if(ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
+            const ep = new Epenthesis()
+            const rea = new RemovingEpenthesisOfAy()
+            const done = rea.applyToString(literal)
+            console.log(done.toString())
+            if(ep.beginWith(ltrs[0]) && list_of_lexical_roots.includes(done)) {    
+                list = cog.generate(ltrs)
+            }
+        }
+    }
+
     //console.log(list)
 
     let matchedLen = 0;

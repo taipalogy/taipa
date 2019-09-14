@@ -544,6 +544,22 @@ export class SetOfStopFinals extends SetOfSounds {
     }
 }
 
+export class Epenthesis extends SetOfSounds {
+    letters: Array<Initial> = new Array();
+    constructor() {
+        super();
+        this.letters.push(new InitialB());
+        this.letters.push(new InitialL());
+        this.letters.push(new InitialG());
+        this.letters.push(new InitialM());
+        this.letters.push(new InitialN());
+    }
+
+    toString() {
+        return super.toRegexString(this.letters);
+    }
+}
+
 //------------------------------------------------------------------------------
 //  Positional Sound for Lexical Root
 //------------------------------------------------------------------------------

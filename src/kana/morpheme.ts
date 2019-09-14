@@ -151,7 +151,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
             }
         }
     }
-
+    
     return mp;
 }
 

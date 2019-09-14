@@ -220,15 +220,15 @@ export class ClientOfTonalGenerator {
         return strs
     }
 
-    generate(ltrs: string[]) {
+    generate(letters: string[]) {
         let strs: Array<string[]> = new Array()
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let entries: Array<Sound[]> = new Array(); // to be returned
 
-        if (this.isStopFinal(ltrs[ltrs.length-1])) {
-            strs = this.genChecked(ltrs)
+        if (this.isStopFinal(letters[letters.length-1])) {
+            strs = this.genChecked(letters);
         } else {
-            strs.push(ltrs)
+            strs.push(letters);
         }
 
         for (let i in strs) {

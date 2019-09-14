@@ -111,12 +111,12 @@ export class ClientOfKanaGenerator {
         return strs;
     }
 
-    generate(ltrs: string[]) {
+    generate(letters: string[]) {
         let strs: Array<string[]> = new Array()
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let entries: Array<Sound[]> = new Array(); // to be returned
 
-        strs = this.genSokuonAndGerminated(ltrs)
+        strs = this.genSokuonAndGerminated(letters)
 
         for (let i in strs) {
             // generates all needed sounds to be processed

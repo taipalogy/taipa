@@ -254,7 +254,7 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun;
 
 export class KeyWords {
-    private keyword_serialnos: Array<[string, number]> = new Array(); // TODO: redesign index of keywords
+    private keyword_index: Array<[string, number]> = new Array();
     private keyElems: Array<PartsOfSpeech> = new Array();
 
     constructor() {
@@ -268,7 +268,7 @@ export class KeyWords {
             }
             i++;
         }
-        this.keyword_serialnos = Array.from(buffer).sort((lhs: [string, number], rhs: [string, number]) => {
+        this.keyword_index = Array.from(buffer).sort((lhs: [string, number], rhs: [string, number]) => {
             return lhs[0] < rhs[0] ? -1 : lhs[0] > rhs[0] ? 1 : 0;
         });
         this.findDuplicates();
@@ -332,11 +332,11 @@ export class KeyWords {
 
     private search(str: string) {
         let i: number;
-        i = this.doBinarySearch(this.keyword_serialnos, str, (lhs: string, rhs: string) => {
+        i = this.doBinarySearch(this.keyword_index, str, (lhs: string, rhs: string) => {
             return lhs < rhs ? -1 : lhs > rhs ? 1 : 0;
         });
         let serialno: number = -1;
-        if (this.keyword_serialnos[i]) serialno = this.keyword_serialnos[i][1];
+        if (this.keyword_index[i]) serialno = this.keyword_index[i][1];
         return serialno;
     }
 
@@ -361,7 +361,7 @@ export class KeyWords {
         let arr: Array<[string, number]> = new Array();
         let duplicates = [];
 
-        for (let e of this.keyword_serialnos.values()) {
+        for (let e of this.keyword_index.values()) {
             arr.push(e);
         }
 
