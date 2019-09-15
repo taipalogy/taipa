@@ -3,7 +3,7 @@ import { POSTags, Tagset } from './symbols';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
-import { ConstructionElement, Demonstrative, PersonalPronoun2To137 } from './keywords';
+import { ConstructionElement, Demonstrative, PersonalPronoun2To137, Auxiliary } from './keywords';
 import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
 export class RuleBasedTagger {
@@ -30,7 +30,7 @@ export class RuleBasedTagger {
                         cp.partOfSpeech === POSTags.verb &&
                         cp.elements[cp.elements.length - 1].pos === POSTags.particle
                     ) {
-                        cp.elements[cp.elements.length - 1].tag = Tagset.RPPV;
+                        cp.elements[cp.elements.length - 1].tag = Tagset.PPV;
 
                         if (
                             cp.elements[cp.elements.length - 1].wordForm !=
@@ -67,6 +67,7 @@ export class RuleBasedTagger {
                     if (kw) {
                         if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
                         if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
+                        if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
 
                         this.ces.push(kw);
                         buf = [];

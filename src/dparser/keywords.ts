@@ -254,24 +254,23 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun;
 
 export class KeyWords {
-    private keyword_index: Array<[string, number]> = new Array();
+    private keyword_index: { [surface:string] : number } = {};
     private keyElems: Array<PartsOfSpeech> = new Array();
 
     constructor() {
         this.populateKeyElems();
         let i: number = 0;
-        let buffer: Array<[string, number]> = new Array();
         for (let entry of this.keyElems) {
-            buffer.push([entry.lexeme.word.literal, i]);
+            if(this.keyword_index[entry.lexeme.word.literal] != undefined) console.info('duplicates found')
+            this.keyword_index[entry.lexeme.word.literal] = i;
             if (entry.lexeme.otherForms.length) {
-                for (let elem of entry.lexeme.otherForms) buffer.push([elem.literal, i]);
+                for (let elem of entry.lexeme.otherForms) {
+                    if(this.keyword_index[elem.literal] != undefined) console.info('duplicates found')
+                    this.keyword_index[elem.literal] = i;
+                }
             }
             i++;
         }
-        this.keyword_index = Array.from(buffer).sort((lhs: [string, number], rhs: [string, number]) => {
-            return lhs[0] < rhs[0] ? -1 : lhs[0] > rhs[0] ? 1 : 0;
-        });
-        this.findDuplicates();
     }
 
     private makePersonalPronoun(str: string) {
@@ -331,55 +330,13 @@ export class KeyWords {
     }
 
     private search(str: string) {
-        let i: number;
-        i = this.doBinarySearch(this.keyword_index, str, (lhs: string, rhs: string) => {
-            return lhs < rhs ? -1 : lhs > rhs ? 1 : 0;
-        });
-        let serialno: number = -1;
-        if (this.keyword_index[i]) serialno = this.keyword_index[i][1];
-        return serialno;
-    }
-
-    private doBinarySearch(
-        arr: Array<[string, number]>,
-        str: string,
-        compareFunc: (a: string, b: string) => number,
-    ): number {
-        let bot = 0;
-        let top = arr.length;
-        while (bot < top) {
-            let mid = Math.floor((bot + top) / 2);
-            let c = compareFunc(arr[mid][0], str);
-            if (c === 0) return mid;
-            if (c < 0) bot = mid + 1;
-            if (0 < c) top = mid;
-        }
-        return -1;
-    }
-
-    private findDuplicates() {
-        let arr: Array<[string, number]> = new Array();
-        let duplicates = [];
-
-        for (let e of this.keyword_index.values()) {
-            arr.push(e);
-        }
-
-        // object of key-value pairs
-        let uniq: { [key: string]: number } = arr
-            .map((name: [string, number]) => {
-                return { count: 1, name: name };
-            })
-            .reduce((a: { [key: string]: number }, b) => {
-                a[b.name[0]] = (a[b.name[0]] || 0) + b.count;
-                return a;
-            }, {});
-
-        duplicates = Object.keys(uniq).filter(a => uniq[a] > 1);
-
-        if (duplicates.length > 0) {
-            console.log('number of duplicates found: %d', duplicates.length);
-            console.log(duplicates);
+        const serialno_i = this.keyword_index[str]
+        if(serialno_i >= 0) {
+            // including index of value 0
+            return serialno_i
+        } else {
+            // undefined
+            return -1
         }
     }
 

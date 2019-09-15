@@ -28,6 +28,7 @@ export enum DependencyLabels {
       Universal Dependencies
       https://universaldependencies.org/u/dep/all.html
     */
+    aux = 'aux',
     aux_caus = 'aux:caus',
     csubj = 'csubj',
     ccomp = 'ccomp',
@@ -71,5 +72,6 @@ export enum Tagset {
     comma = ',',
     sent_end_punc = '.',
 
-    RPPV = 'RPPV', // particle of phrasal verb
+    AUX = 'AUX', // auxiliary
+    PPV = 'RPPV', // particle of phrasal verb
 }
