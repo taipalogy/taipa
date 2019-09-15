@@ -254,7 +254,7 @@ class CaseMarker {}
 export type PartsOfSpeech = Copula | Demonstrative | Noun;
 
 export class KeyWords {
-    private keyword_index: { [surface:string] : number } = {};
+    private keyword_index: { [surface: string] : number } = {};
     private keyElems: Array<PartsOfSpeech> = new Array();
 
     constructor() {

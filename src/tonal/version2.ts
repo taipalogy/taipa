@@ -1,13 +1,9 @@
 import { Letters, Sound, PositionalSound, SetOfSounds } from '../grapheme';
 
 //------------------------------------------------------------------------------
-//  Morph
-//------------------------------------------------------------------------------
 
 export class Morph {}
 
-//------------------------------------------------------------------------------
-//  Allomorph
 //------------------------------------------------------------------------------
 
 export class Allomorph extends Morph {
@@ -47,8 +43,6 @@ class CheckedAffix extends TonalAffix {
     // there is no final for affix
 }
 
-//------------------------------------------------------------------------------
-//  Alphabet
 //------------------------------------------------------------------------------
 
 export enum TonalLetterTags {
@@ -147,8 +141,6 @@ export let lowerLettersOfTonal = new LettersOfTonal([
 
 export let vowelLettersOfTonal = new LettersOfTonal(['or', 'er', 'ir']);
 
-//------------------------------------------------------------------------------
-//  Sound
 //------------------------------------------------------------------------------
 
 export enum TonalSoundTags {
@@ -561,228 +553,338 @@ export class Epenthesis extends SetOfSounds {
 }
 
 //------------------------------------------------------------------------------
-//  Positional Sound for Lexical Root
-//------------------------------------------------------------------------------
 
 class PSA extends PositionalSound {
-    name = TonalLetterTags.a; //'a'
-    map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialA());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.a;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialA());    
+    }
 }
 
 class PSB extends PositionalSound {
-    name = TonalLetterTags.b;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialB());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.b;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialB());    
+    }
 }
 
 class PSC extends PositionalSound {
-    name = TonalLetterTags.c;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialC());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.c;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialC());    
+    }
 }
 
 class PSCH extends PositionalSound {
-    name = TonalLetterTags.ch;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialCH());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.ch;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialCH());    
+    }
 }
 
 class PSD extends PositionalSound {
-    name = TonalLetterTags.d;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialD());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.d;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialD());    
+    }
 }
 
 class PSE extends PositionalSound {
-    name = TonalLetterTags.e;
-    map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialE());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.e;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialE());    
+    }
 }
 
 class PSF extends PositionalSound {
-    name = TonalLetterTags.f;
-    map = new Map<string, Sound>().set(TonalSoundTags.checkedTonal, new CheckedTonalF());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.f;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.checkedTonal, new CheckedTonalF());    
+    }
 }
 
 class PSG extends PositionalSound {
-    name = TonalLetterTags.g;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialG());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.g;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialG());    
+    }
 }
 
 class PSHH extends PositionalSound {
-    name = TonalLetterTags.hh;
-    map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalHH());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.hh;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalHH());    
+    }
 }
 
 class PSI extends PositionalSound {
-    name = TonalLetterTags.i;
-    map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialI());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.i;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialI());    
+    }
 }
 
 class PSJ extends PositionalSound {
-    name = TonalLetterTags.j;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialJ());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.j;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialJ());    
+    }
 }
 
 class PSK extends PositionalSound {
-    name = TonalLetterTags.k;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialK())
-        .set(TonalSoundTags.stopFinal, new FinalK());
-    initial: Initial = new InitialK();
+    //initial: Initial = new InitialK();
+    constructor() {
+        super()
+        this.name = TonalLetterTags.k;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialK())
+            .set(TonalSoundTags.stopFinal, new FinalK());    
+    }
 }
 
 class PSKK extends PositionalSound {
-    name = TonalLetterTags.kk;
-    map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalKK());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.kk;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalKK());    
+    }
 }
 
 class PSL extends PositionalSound {
-    name = TonalLetterTags.l;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialL());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.l;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialL());    
+    }
 }
 
 class PSM extends PositionalSound {
-    name = TonalLetterTags.m;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialM())
-        .set(TonalSoundTags.medial, new MaterLectionisM())
-        .set(TonalSoundTags.nasalFinal, new FinalM());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.m;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialM())
+            .set(TonalSoundTags.medial, new MaterLectionisM())
+            .set(TonalSoundTags.nasalFinal, new FinalM());    
+    }
 }
 
 class PSN extends PositionalSound {
-    name = TonalLetterTags.n;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialN())
-        .set(TonalSoundTags.medial, new MaterLectionisN())
-        .set(TonalSoundTags.nasalFinal, new FinalN());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.n;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialN())
+            .set(TonalSoundTags.medial, new MaterLectionisN())
+            .set(TonalSoundTags.nasalFinal, new FinalN());    
+    }
 }
 
 class PSNN extends PositionalSound {
-    name = TonalLetterTags.nn;
-    map = new Map<string, Sound>().set(TonalSoundTags.nasalization, new NasalizationNN());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.nn;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.nasalization, new NasalizationNN());    
+    }
 }
 
 class PSNG extends PositionalSound {
-    name = TonalLetterTags.ng;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialNG())
-        .set(TonalSoundTags.medial, new MaterLectionisNG())
-        .set(TonalSoundTags.nasalFinal, new FinalNG());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.ng;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialNG())
+            .set(TonalSoundTags.medial, new MaterLectionisNG())
+            .set(TonalSoundTags.nasalFinal, new FinalNG());    
+    }
 }
 
 class PSO extends PositionalSound {
-    name = TonalLetterTags.o;
-    map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialO());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.o;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialO());    
+    }
 }
 
 class PSP extends PositionalSound {
-    name = TonalLetterTags.p;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialP())
-        .set(TonalSoundTags.stopFinal, new FinalP());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.p;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialP())
+            .set(TonalSoundTags.stopFinal, new FinalP());    
+    }
 }
 
 class PSPP extends PositionalSound {
-    name = TonalLetterTags.pp;
-    map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalPP());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.pp;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalPP());    
+    }
 }
 
 class PSQ extends PositionalSound {
-    name = TonalLetterTags.q;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialQ());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.q;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialQ());    
+    }
 }
 
 class PSH extends PositionalSound {
-    name = TonalLetterTags.h;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialH())
-        .set(TonalSoundTags.stopFinal, new FinalH());
-    initial: Initial = new InitialH();
+    //initial: Initial = new InitialH();
+    constructor() {
+        super()
+        this.name = TonalLetterTags.h;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialH())
+            .set(TonalSoundTags.stopFinal, new FinalH());    
+    }
 }
 
 class PSS extends PositionalSound {
-    name = TonalLetterTags.s;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialS());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.s;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialS());    
+    }
 }
 
 class PSCF extends PositionalSound {
-    name = TonalLetterTags.cf;
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalCF());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.cf;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalCF());    
+    }
 }
 
 class PST extends PositionalSound {
-    name = TonalLetterTags.t;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.initial, new InitialT())
-        .set(TonalSoundTags.stopFinal, new FinalT());
-    initial: Initial = new InitialT();
+    //initial: Initial = new InitialT();
+    constructor() {
+        super()
+        this.name = TonalLetterTags.t;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialT())
+            .set(TonalSoundTags.stopFinal, new FinalT());    
+    }
 }
 
 class PSTT extends PositionalSound {
-    name = TonalLetterTags.tt;
-    map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalTT());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.tt;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalTT());    
+    }
 }
 
 class PSU extends PositionalSound {
-    name = TonalLetterTags.u;
-    map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialU());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.u;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialU());    
+    }
 }
 
 class PSUR extends PositionalSound {
-    name = TonalLetterTags.ur;
-    map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialUR());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.ur;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialUR());    
+    }
 }
 
 class PSV extends PositionalSound {
-    name = TonalLetterTags.v;
-    map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialV());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.v;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialV());    
+    }
 }
 
 class PSW extends PositionalSound {
-    name = TonalLetterTags.w;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.freeTonal, new TonalW())
-        .set(TonalSoundTags.checkedTonal, new CheckedTonalW());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.w;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.freeTonal, new TonalW())
+            .set(TonalSoundTags.checkedTonal, new CheckedTonalW());    
+    }
 }
 
 class PSX extends PositionalSound {
-    name = TonalLetterTags.x;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.freeTonal, new FreeTonalX())
-        .set(TonalSoundTags.checkedTonal, new CheckedTonalX());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.x;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.freeTonal, new FreeTonalX())
+            .set(TonalSoundTags.checkedTonal, new CheckedTonalX());    
+    }
 }
 
 class PSXX extends PositionalSound {
-    name = TonalLetterTags.xx;
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXX());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.xx;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXX());    
+    }
 }
 
 class PSXXX extends PositionalSound {
-    name = TonalLetterTags.xxx;
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXXX());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.xxx;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXXX());    
+    }
 }
 
 class PSY extends PositionalSound {
-    name = TonalLetterTags.y;
-    map = new Map<string, Sound>()
-        .set(TonalSoundTags.freeTonal, new FreeTonalY())
-        .set(TonalSoundTags.checkedTonal, new CheckedTonalY());
-    freeTonal: FreeTonal = new FreeTonalY();
+    //freeTonal: FreeTonal = new FreeTonalY();
+    constructor() {
+        super()
+        this.name = TonalLetterTags.y;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.freeTonal, new FreeTonalY())
+            .set(TonalSoundTags.checkedTonal, new CheckedTonalY());    
+    }
 }
 
 class PSZ extends PositionalSound {
-    name = TonalLetterTags.z;
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZ());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.z;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZ());    
+    }
 }
 
 class PSZX extends PositionalSound {
-    name = TonalLetterTags.zx;
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZX());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.zx;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZX());    
+    }
 }
 
 class PSZero extends PositionalSound {
-    name = TonalLetterTags.zero;
-    map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new ZeroTonal());
+    constructor() {
+        super()
+        this.name = TonalLetterTags.zero;
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new ZeroTonal());    
+    }
 }
 
-//------------------------------------------------------------------------------
-//  Combining Rule
 //------------------------------------------------------------------------------
 
 class CombiningRules {
@@ -892,8 +994,6 @@ class LetterClasses {
 
 export const letterClasses = new LetterClasses();
 
-//------------------------------------------------------------------------------
-//  Allomorph
 //------------------------------------------------------------------------------
 
 export class ZeroAllomorph extends FreeAllomorph {

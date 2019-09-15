@@ -153,8 +153,6 @@ export class ClientOfKanaGenerator {
 }
 
 //------------------------------------------------------------------------------
-//  Alphabet
-//------------------------------------------------------------------------------
 
 enum KanaLetterTags {
     a = 'a',
@@ -219,8 +217,6 @@ export let lowerLettersOfKana = new LettersOfKana([
     KanaLetterTags.n,
 ]);
 
-//------------------------------------------------------------------------------
-//  Sound
 //------------------------------------------------------------------------------
 
 export enum KanaSoundTags {
@@ -463,8 +459,6 @@ export class Hatsuon extends SetOfSounds {
 }
 
 //------------------------------------------------------------------------------
-//  Positional Sound for Romanized Kana
-//------------------------------------------------------------------------------
 
 class PSA extends PositionalSound {
     constructor() {
@@ -475,143 +469,213 @@ class PSA extends PositionalSound {
 }
 
 class PSB extends PositionalSound {
-    name = KanaLetterTags.b;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantB());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.b;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantB());    
+    }
 }
 
 class PSC extends PositionalSound {
-    name = KanaLetterTags.c;
-    map = new Map<string, Sound>()
-        .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantC())
-        .set(KanaSoundTags.initialConsonant, new InitialConsonantC());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.c;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantC())
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantC());    
+    }
 }
 
 class PSCH extends PositionalSound {
-    name = KanaLetterTags.ch;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantCH());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.ch;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantCH());    
+    }
 }
 
 class PSD extends PositionalSound {
-    name = KanaLetterTags.d;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantD());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.d;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantD());    
+    }
 }
 
 class PSE extends PositionalSound {
-    name = KanaLetterTags.e;
-    map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelE());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.e;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelE());    
+    }
 }
 
 class PSF extends PositionalSound {
-    name = KanaLetterTags.f;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantF());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.f;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantF());    
+    }
 }
 
 class PSG extends PositionalSound {
-    name = KanaLetterTags.g;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantG());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.g;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantG());    
+    }
 }
 
 class PSH extends PositionalSound {
-    name = KanaLetterTags.h;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantH());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.h;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantH());    
+    }
 }
 
 class PSI extends PositionalSound {
-    name = KanaLetterTags.i;
-    map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelI());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.i;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelI());    
+    }
 }
 
 class PSJ extends PositionalSound {
-    name = KanaLetterTags.j;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantJ());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.j;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantJ());    
+    }
 }
 
 class PSK extends PositionalSound {
-    name = KanaLetterTags.k;
-    map = new Map<string, Sound>()
-        .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantK())
-        .set(KanaSoundTags.initialConsonant, new InitialConsonantK())
-        .set(KanaSoundTags.finalConsonant, new FinalConsonantK());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.k;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantK())
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantK())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantK());    
+    }
 }
 
 class PSL extends PositionalSound {
-    name = KanaLetterTags.l;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantL());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.l;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantL());    
+    }
 }
 
 class PSM extends PositionalSound {
-    name = KanaLetterTags.m;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantM());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.m;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantM());    
+    }
 }
 
 class PSN extends PositionalSound {
-    name = KanaLetterTags.n;
-    map = new Map<string, Sound>()
-        .set(KanaSoundTags.initialConsonant, new InitialConsonantN())
-        .set(KanaSoundTags.finalConsonant, new FinalConsonantN());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.n;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantN())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantN());    
+    }
 }
 
 class PSO extends PositionalSound {
-    name = KanaLetterTags.o;
-    map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelO());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.o;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelO());    
+    }
 }
 
 class PSP extends PositionalSound {
-    name = KanaLetterTags.p;
-    map = new Map<string, Sound>()
-        .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantP())
-        .set(KanaSoundTags.initialConsonant, new InitialConsonantP())
-        .set(KanaSoundTags.finalConsonant, new FinalConsonantP());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.p;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantP())
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantP())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantP());    
+    }
 }
 
 class PSR extends PositionalSound {
-    name = KanaLetterTags.r;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantR());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.r;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantR());    
+    }
 }
 
 class PSS extends PositionalSound {
-    name = KanaLetterTags.s;
-    map = new Map<string, Sound>()
-        .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantS())
-        .set(KanaSoundTags.initialConsonant, new InitialConsonantS())
-        .set(KanaSoundTags.finalConsonant, new FinalConsonantS());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.s;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantS())
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantS())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantS());    
+    }
 }
 
 class PST extends PositionalSound {
-    name = KanaLetterTags.t;
-    map = new Map<string, Sound>()
-        .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantT())
-        .set(KanaSoundTags.initialConsonant, new InitialConsonantT())
-        .set(KanaSoundTags.finalConsonant, new FinalConsonantT());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.t;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantT())
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantT())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantT());    
+    }
 }
 
 class PSU extends PositionalSound {
-    name = KanaLetterTags.u;
-    map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelU());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.u;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelU());    
+    }
 }
 
 class PSV extends PositionalSound {
-    name = KanaLetterTags.v;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantV());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.v;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantV());    
+    }
 }
 
 class PSW extends PositionalSound {
-    name = KanaLetterTags.w;
-    map = new Map<string, Sound>().set(KanaSoundTags.semivowel, new SemivowelW());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.w;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.semivowel, new SemivowelW());    
+    }
 }
 
 class PSY extends PositionalSound {
-    name = KanaLetterTags.y;
-    map = new Map<string, Sound>().set(KanaSoundTags.semivowel, new SemivowelY());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.y;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.semivowel, new SemivowelY());    
+    }
 }
 
 class PSZ extends PositionalSound {
-    name = KanaLetterTags.z;
-    map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantZ());
+    constructor() {
+        super()
+        this.name = KanaLetterTags.z;
+        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantZ());    
+    }
 }
 
-//------------------------------------------------------------------------------
-//  Letter Class
 //------------------------------------------------------------------------------
 
 export const letterClasses: Map<string, PositionalSound> = new Map()
@@ -641,8 +705,6 @@ export const letterClasses: Map<string, PositionalSound> = new Map()
     .set(KanaLetterTags.y, new PSY())
     .set(KanaLetterTags.z, new PSZ());
 
-//------------------------------------------------------------------------------
-//  Romanized Kana
 //------------------------------------------------------------------------------
 
 export const hiragana_katakana: Map<string, Array<string>> = new Map()
