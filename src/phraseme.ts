@@ -82,7 +82,7 @@ export class TonalPhrasemeMaker {
         // unpack lexemes and take words out from them
         let words: Array<TonalWord> = new Array();
         for (let key in this.lexemes) {
-            words.push(this.lexemes[key].word);
+            words.push(<TonalWord>this.lexemes[key].word);
         }
 
         let tsp = new TonalPhraseme(new TonalPhrase(words));

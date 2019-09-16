@@ -3,7 +3,7 @@ import { POSTags, Tagset } from './symbols';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
-import { ConstructionElement, Demonstrative, PersonalPronoun2To137, Auxiliary } from './keywords';
+import { ConstructionElement, Demonstrative, PersonalPronoun2To137, Auxiliary, PartsOfSpeech } from './keywords';
 import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
 export class RuleBasedTagger {
@@ -16,6 +16,7 @@ export class RuleBasedTagger {
     private match(strs: string[]) {
         const rs = new Rules();
         let buf: string[] = [];
+        let previous: PartsOfSpeech | undefined = undefined
 
         while (strs.length > 0) {
             let s = strs.shift();
@@ -61,16 +62,41 @@ export class RuleBasedTagger {
 
                 buf = [];
             } else {
-                // for key words
+                
                 if (s) {
+                    
                     let kw = rs.matchKeyWords(s);
+                    
                     if (kw) {
+                        // for key words
                         if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
-                        if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
-                        if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
+                        else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
+                        else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
 
                         this.ces.push(kw);
                         buf = [];
+
+                        previous = kw;
+                    } else {
+                        // not a key word nor a matched pattern
+
+                        let ce = new ConstructionElement()
+                        ce.lexeme = tonal_inflextion_analyzer.doAnalysis(
+                            s,
+                            new TonalCombiningForms(),
+                            new TonalInflexion())[0]
+                        
+                        if (previous) {
+                            if(previous.tag === Tagset.AUX) {
+                                ce.pos = POSTags.auxiliary
+                                ce.tag = Tagset.VB;
+                                ce.matchFormFor(s);
+                                this.ces.push(ce);
+                            }
+
+                            
+                        }
+                        
                     }
                 }
             }

@@ -126,7 +126,7 @@ export abstract class LemmatizationLexeme extends Lexeme {
 
 export class TonalLemmatizationLexeme extends LemmatizationLexeme {
     word: TonalWord;
-    lemmata: Array<TonalWord> = new Array();
+    lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
     inflectionalEnding: InflectionalEnding;
     metaplasm: TonalLemmatizingMetaplasm = new TonalZeroLemmatization();
 

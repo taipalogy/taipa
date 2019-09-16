@@ -31,13 +31,13 @@ export class TonalInflexion extends TonalInflectingMetaplasm {
 //------------------------------------------------------------------------------
 
 export class InflexionLexeme extends Lexeme {
-    word: Word = new Word();
+    word: Word = new Word(); // base word
     otherForms: Array<Word> = [];
 }
 
 export class TonalInflexionLexeme extends InflexionLexeme {
-    word: TonalWord;
-    otherForms: Array<TonalWord> = new Array();
+    //word: TonalWord; // base word
+    otherForms: Array<TonalWord> = new Array(); // inflected or may be derived forms
     private tse: TonalSymbolEnding;
 
     constructor(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
@@ -76,7 +76,7 @@ export class TonalInflexionLexeme extends InflexionLexeme {
     }
 
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectingMetaplasm): TonalWord[] {
-        return ti.apply(this.word, ms, this.tse);
+        return ti.apply(<TonalWord>this.word, ms, this.tse);
     }
 }
 
