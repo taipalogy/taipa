@@ -169,21 +169,7 @@ export class NumeralQuantifier extends ConstructionElement {
     }
 }
 
-export class EncliticLe extends ConstructionElement {
-    constructor() {
-        super();
-        this.pos = POSTags.particle;
-    }
-}
-
-export class EncliticE extends ConstructionElement {
-    constructor() {
-        super();
-        this.pos = POSTags.particle;
-    }
-}
-
-class EncliticA extends ConstructionElement {
+export class Enclitic extends ConstructionElement {
     constructor() {
         super();
         this.pos = POSTags.particle;
@@ -329,6 +315,14 @@ export class KeyWords {
         return ret;
     }
 
+    private makeEnclitic(str: string): Enclitic {
+        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining());
+        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
+        let ret = new Enclitic();
+        ret.lexeme = ls[0];
+        return ret;
+    }
+
     private search(str: string) {
         const serialno_i = this.keyword_index[str]
         if(serialno_i >= 0) {
@@ -376,9 +370,19 @@ export class KeyWords {
             this.makeParticle('chit'),
             this.makeParticle('cheh'),
             this.makeParticle('diurh'),
+            this.makeParticle('le'),
+            this.makeParticle('lez'),
+            this.makeParticle('ez'),
+            this.makeParticle('ew'),
+            this.makeParticle('az'),
 
             this.makeParticle('qahf'),
             this.makeParticle('siongw'),
+
+            this.makeEnclitic('a'),
+            this.makeEnclitic('aw'),
+            this.makeEnclitic('e'),
+            this.makeEnclitic('lew'),
         ];
     }
 }

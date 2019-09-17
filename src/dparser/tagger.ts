@@ -54,10 +54,8 @@ export class RuleBasedTagger {
                         cp.elements[0].tag = Tagset.VB;
                         cp.elements[0].matchFormFor(buf[0])
                     }
-                    for (let e of cp.elements) {
-                        //console.log(e.wordForm + ':' + e.lexeme.word.literal + '.' + e.tag)
-                        this.ces.push(e);
-                    }
+                    
+                    this.ces.push(cp.elements[1])
                 }
 
                 buf = [];
@@ -87,16 +85,20 @@ export class RuleBasedTagger {
                             new TonalInflexion())[0]
                         
                         if (previous) {
-                            if(previous.tag === Tagset.AUX) {
-                                ce.pos = POSTags.auxiliary
+                            if(previous.tag === Tagset.AUX || previous.tag === Tagset.PRP) {
+                                // when an auxiliary or personal pronoun is followed by a verb
+                                ce.pos = POSTags.verb
                                 ce.tag = Tagset.VB;
                                 ce.matchFormFor(s);
                                 this.ces.push(ce);
                             }
-
-                            
+                        } else {
+                            // the first word of a sentence is a verb
+                            ce.pos = POSTags.verb
+                            ce.tag = Tagset.VB;
+                            ce.matchFormFor(s);
+                            this.ces.push(ce);
                         }
-                        
                     }
                 }
             }

@@ -12,6 +12,8 @@ import {
     Adjective,
     PartsOfSpeech,
     PhrasalVerbParticleDiurh,
+    Enclitic,
+    TonalZeroCombining,
 } from './keywords';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
@@ -42,6 +44,13 @@ class PhrasalVerb extends VerbPhrase {
     }
 }
 
+class VerbEncliticPair extends VerbPhrase {
+    constructor(arr: Array<ConstructionElement>) {
+        super(arr);
+        this.partOfSpeech = POSTags.verb;
+    }
+}
+
 class SetOfPhrasalVerbs {
     phrasalVerbs: Array<PhrasalVerb> = [];
 
@@ -57,6 +66,23 @@ class SetOfPhrasalVerbs {
 
     private populatePhrasalVerbs() {
         this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]));
+    }
+}
+
+class SetOfVerbEncliticPairs {
+    pairs: Array<VerbEncliticPair> = [];
+    constructor() {
+        this.populatePairs();
+    }
+
+    private makeEnclitic(str: string) {
+        let ret = new Enclitic();
+        ret.lexeme = tonal_inflextion_analyzer.doAnalysis(str, new TonalZeroCombining(), new TonalInflexion())[0];
+        return ret;
+    }
+
+    private populatePairs() {
+        this.pairs.push(new VerbEncliticPair([new Verb(), this.makeEnclitic('aw')]));
     }
 }
 
@@ -93,6 +119,7 @@ export class Rules {
     constructor() {
         this.populatePatterns();
         this.populatePhrasalVerbs();
+        this.populateVerbEncliticPairs();
     }
 
     protected get(str: string) {
@@ -131,6 +158,14 @@ export class Rules {
         for (let pv of s.phrasalVerbs) {
             //console.log(pv.elements[1].lexeme.word.literal)
             this.patterns.push([pv]);
+        }
+    }
+
+    private populateVerbEncliticPairs() {
+        const s = new SetOfVerbEncliticPairs();
+        for (let p of s.pairs) {
+            //console.log(pv.elements[1].lexeme.word.literal)
+            this.patterns.push([p]);
         }
     }
 

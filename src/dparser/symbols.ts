@@ -73,5 +73,5 @@ export enum Tagset {
     sent_end_punc = '.',
 
     AUX = 'AUX', // auxiliary
-    PPV = 'RPPV', // particle of phrasal verb
+    PPV = 'PPV', // particle of phrasal verb
 }
