@@ -3,7 +3,7 @@ import { POSTags, Tagset } from './symbols';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
-import { ConstructionElement, Demonstrative, PersonalPronoun2To137, Auxiliary, PartsOfSpeech } from './keywords';
+import { ConstructionElementInflectional, Demonstrative, PersonalPronoun2To137, Auxiliary, PartsOfSpeech, ConstructionElement } from './keywords';
 import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
 export class RuleBasedTagger {
@@ -16,7 +16,7 @@ export class RuleBasedTagger {
     private match(strs: string[]) {
         const rs = new Rules();
         let buf: string[] = [];
-        let previous: PartsOfSpeech | undefined = undefined
+        let previous: ConstructionElement | undefined = undefined
 
         while (strs.length > 0) {
             let s = strs.shift();
@@ -35,26 +35,21 @@ export class RuleBasedTagger {
 
                         if (
                             cp.elements[cp.elements.length - 1].wordForm !=
-                            cp.elements[cp.elements.length - 1].lexeme.word.literal
+                            (<ConstructionElementInflectional>cp.elements[cp.elements.length - 1]).lexeme.word.literal
                         ) {
                             const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(buf[0]);
-                            cp.elements[0].lexeme = tonal_inflextion_analyzer.doAnalysis(
+                            (<ConstructionElementInflectional>cp.elements[0]).lexeme = tonal_inflextion_analyzer.doAnalysis(
                                 ls[0].lemmata[0].literal,
                                 new TonalCombiningForms(),
                                 new TonalInflexion(),
                             )[0];
                         } else {
-                            cp.elements[0].lexeme = tonal_inflextion_analyzer.doAnalysis(
-                                buf[0],
-                                new TonalCombiningForms(),
-                                new TonalInflexion(),
-                            )[0];
                         }
 
                         cp.elements[0].tag = Tagset.VB;
-                        cp.elements[0].matchFormFor(buf[0])
+                        (<ConstructionElementInflectional>cp.elements[0]).matchFormFor(buf[0])
                     }
-                    
+
                     this.ces.push(cp.elements[1])
                 }
 
@@ -78,7 +73,7 @@ export class RuleBasedTagger {
                     } else {
                         // not a key word nor a matched pattern
 
-                        let ce = new ConstructionElement()
+                        let ce = new ConstructionElementInflectional()
                         ce.lexeme = tonal_inflextion_analyzer.doAnalysis(
                             s,
                             new TonalCombiningForms(),

@@ -1,4 +1,4 @@
-import { ConstructionElement } from './keywords';
+import { ConstructionElement, ConstructionElementInflectional } from './keywords';
 import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration';
 import { Guide } from './guide';
@@ -23,7 +23,7 @@ export class DependencyParser {
         let guide = new Guide();
         let root = new DummyLexeme();
         root.word.literal = 'ROOT';
-        let ce = new ConstructionElement();
+        let ce = new ConstructionElementInflectional();
         ce.lexeme = root;
         ce.wordForm = 'ROOT'
         c.stack.push(ce);

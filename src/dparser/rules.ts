@@ -1,5 +1,5 @@
 import {
-    ConstructionElement,
+    ConstructionElementInflectional,
     Verb,
     PersonalPronoun,
     Copula,
@@ -12,8 +12,11 @@ import {
     Adjective,
     PartsOfSpeech,
     PhrasalVerbParticleDiurh,
-    Enclitic,
+    EncliticSurface,
     TonalZeroCombining,
+    ConstructionElement,
+    VerbSurface,
+    ParticleSurface,
 } from './keywords';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
@@ -21,32 +24,50 @@ import { TonalInflexion } from './lexeme';
 import { Phraseme } from '../phraseme';
 import { POSTags } from './symbols';
 
-export class ConstructionOfPhrase {
-    phraseme: Phraseme = new Phraseme();
+class ConstructionOfPhrase {
     partOfSpeech: string = '';
-    elements: Array<PartsOfSpeech> = new Array();
+    elements: Array<ConstructionElement> = new Array();
+    /*
+    constructor(arr: Array<ConstructionElement>) {
+    }
+*/
+}
 
+export class ConstructionOfPhraseInflectional extends ConstructionOfPhrase {
+    phraseme: Phraseme = new Phraseme();
+    
     constructor(arr: Array<PartsOfSpeech>) {
+        super()
         for (let key in arr) {
             this.elements.push(arr[key]);
         }
     }
 }
 
-class NounPhrase extends ConstructionOfPhrase {}
+class NounPhrase extends ConstructionOfPhraseInflectional {}
 class ParticlePhrase {}
-class VerbPhrase extends ConstructionOfPhrase {}
+class VerbPhrase extends ConstructionOfPhraseInflectional {}
 
 class PhrasalVerb extends VerbPhrase {
-    constructor(arr: Array<ConstructionElement>) {
+    constructor(arr: Array<ConstructionElementInflectional>) {
         super(arr);
         this.partOfSpeech = POSTags.verb;
     }
 }
 
-class VerbEncliticPair extends VerbPhrase {
+class VerbPhraseSurface extends ConstructionOfPhrase {}
+class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
+    constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
+        super();
+        this.elements.push(verb);
+        this.elements.push(particle);
+        this.elements.push(enclitic);
+    }
+}
+
+class VerbWithEnclitic extends VerbPhraseSurface {
     constructor(arr: Array<ConstructionElement>) {
-        super(arr);
+        super();
         this.partOfSpeech = POSTags.verb;
     }
 }
@@ -70,24 +91,23 @@ class SetOfPhrasalVerbs {
 }
 
 class SetOfVerbEncliticPairs {
-    pairs: Array<VerbEncliticPair> = [];
+    pairs: Array<VerbWithEnclitic> = [];
     constructor() {
         this.populatePairs();
     }
 
     private makeEnclitic(str: string) {
-        let ret = new Enclitic();
-        ret.lexeme = tonal_inflextion_analyzer.doAnalysis(str, new TonalZeroCombining(), new TonalInflexion())[0];
+        let ret = new EncliticSurface();
         return ret;
     }
 
     private populatePairs() {
-        this.pairs.push(new VerbEncliticPair([new Verb(), this.makeEnclitic('aw')]));
+        this.pairs.push(new VerbWithEnclitic([new Verb(), this.makeEnclitic('aw')]));
     }
 }
 
 export class Chunk {
-    constructions: Array<ConstructionOfPhrase> = [];
+    constructions: Array<ConstructionOfPhraseInflectional> = [];
 
     constructor() {
         let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms());
@@ -108,7 +128,7 @@ export class Chunk {
         let intransitive = new Verb();
         intransitive.lexeme = ls[0];
 
-        this.constructions.push(new ConstructionOfPhrase([transitive, proceeding, intransitive]));
+        this.constructions.push(new ConstructionOfPhraseInflectional([transitive, proceeding, intransitive]));
     }
 }
 
@@ -124,7 +144,7 @@ export class Rules {
 
     protected get(str: string) {
         const kw = this.keyWords.get(str);
-        if (kw) return kw.clone();
+        if (kw && kw instanceof ConstructionElementInflectional) return kw.clone();
         else return undefined;
     }
 
@@ -133,19 +153,25 @@ export class Rules {
     }
 
     matchPatterns(strs: string[]) {
-        let elems: Array<PartsOfSpeech> = [];
+        let elems: Array<ConstructionElement> = [];
         for (let pat of this.patterns) {
-            for (let i = 0; i < pat.length; i++) {
-                for (let e of pat[i].elements) {
-                    //console.log(e)
+            for (let j = 0; j < pat.length; j++) {
+                for (let e of pat[j].elements) {
+                    //console.log(e.wordForm)
                     elems.push(e);
                 }
             }
 
             for (let i = 0; i < elems.length; i++) {
-                if (elems[i].matchFormFor(strs[i])) {
-                    if (i + 1 === elems.length) {
-                        return pat;
+                if(elems[i] instanceof ConstructionElementInflectional) {
+                    if ((<ConstructionElementInflectional>elems[i]).matchFormFor(strs[i])) {
+                        if(elems[i].wordForm === '' || elems[i].wordForm === strs[i]) {
+                            if (i + 1 === elems.length) {
+                                return pat;
+                            }
+
+                        }
+
                     }
                 }
             }
@@ -172,32 +198,35 @@ export class Rules {
     private populatePatterns() {
         // copula
         this.patterns.push([
-            new ConstructionOfPhrase([new PersonalPronoun()]),
-            new ConstructionOfPhrase([<Copula>this.get('siz')]),
-            new ConstructionOfPhrase([new Noun()]),
+            new ConstructionOfPhraseInflectional([new PersonalPronoun()]),
+            new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
+            new ConstructionOfPhraseInflectional([new Noun()]),
         ]);
 
         this.patterns.push([
-            new ConstructionOfPhrase([<Copula>this.get('siz')]),
-            new ConstructionOfPhrase([new Adjective()]),
+            new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
+            new ConstructionOfPhraseInflectional([new Adjective()]),
         ]);
 
         this.patterns.push([
-            new ConstructionOfPhrase([<PersonalPronoun>this.get('goay')]),
-            new ConstructionOfPhrase([<Copula>this.get('siz')]),
-            new ConstructionOfPhrase([<Noun>this.get('langx')]),
+            new ConstructionOfPhraseInflectional([<PersonalPronoun>this.get('goay')]),
+            new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
+            new ConstructionOfPhraseInflectional([<Noun>this.get('langx')]),
         ]);
 
         // phrasal verb
-        this.patterns.push([new ConstructionOfPhrase([new Verb(), new Particle()])]);
+        this.patterns.push([new ConstructionOfPhraseInflectional([new Verb(), new Particle()])]);
 
         // phrasal copula
         this.patterns.push([
-            new ConstructionOfPhrase([new Verb(), new Particle()]),
-            new ConstructionOfPhrase([new Adjective()]),
+            new ConstructionOfPhraseInflectional([new Verb(), new Particle()]),
+            new ConstructionOfPhraseInflectional([new Adjective()]),
         ]);
 
         // serial verbs
+
+        // phrasal verb with enclitic surface
+        this.patterns.push([new PhrasalVerbWithEncliticSurface(new VerbSurface(), new ParticleSurface('diurh'), new EncliticSurface('aw'))]);
 
         // others
         this.patterns.push([new Chunk().constructions[0]]);

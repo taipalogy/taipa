@@ -16,10 +16,13 @@ import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 
 export class ConstructionElement {
-    lexeme: InflexionLexeme = new InflexionLexeme();
     pos: string = '';
     tag: string = ''
     wordForm: string = ''
+}
+
+export class ConstructionElementInflectional extends ConstructionElement {
+    lexeme: InflexionLexeme = new InflexionLexeme();
 
     matchFormFor(str: string): boolean {
         if (this.lexeme.word.literal === str) {
@@ -37,7 +40,7 @@ export class ConstructionElement {
         return false;
     }
 
-    clone(): ConstructionElement {
+    clone(): ConstructionElementInflectional {
         const clone = Object.create(this);
         return clone;
     }
@@ -105,14 +108,14 @@ export enum PersonalPronouns {
     ThirdPlural = 'in',
 }
 
-export class PersonalPronoun extends ConstructionElement {
+export class PersonalPronoun extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.pronoun;
     }
 }
 
-export class PersonalPronoun2To137 extends ConstructionElement {
+export class PersonalPronoun2To137 extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.pronoun;
@@ -124,7 +127,7 @@ export class PersonalPronoun2To137 extends ConstructionElement {
     }
 }
 
-export class PersonalPronoun1To37 extends ConstructionElement {
+export class PersonalPronoun1To37 extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.pronoun;
@@ -136,21 +139,29 @@ export class PersonalPronoun1To37 extends ConstructionElement {
     }
 }
 
-class Postposition extends ConstructionElement {
+class Postposition extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.adposition;
     }
 }
 
-export class Verb extends ConstructionElement {
+export class Verb extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.verb;
     }
 }
 
-export class Copula extends ConstructionElement {
+export class VerbSurface extends ConstructionElement {
+    constructor(str?: string) {
+        super()
+        if(str) this.wordForm = str;
+        this.pos = POSTags.verb;
+    }
+}
+
+export class Copula extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.verb;
@@ -162,21 +173,22 @@ export class Copula extends ConstructionElement {
     }
 }
 
-export class NumeralQuantifier extends ConstructionElement {
+export class NumeralQuantifier extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.noun;
     }
 }
 
-export class Enclitic extends ConstructionElement {
-    constructor() {
-        super();
+export class EncliticSurface extends ConstructionElement {
+    constructor(str?: string) {
+        super()
+        if(str) this.wordForm = str;
         this.pos = POSTags.particle;
     }
 }
 
-export class Demonstrative extends ConstructionElement {
+export class Demonstrative extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.pronoun;
@@ -188,21 +200,21 @@ export class Demonstrative extends ConstructionElement {
     }
 }
 
-export class Adjective extends ConstructionElement {
+export class Adjective extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.adjective;
     }
 }
 
-class PlainNoun extends ConstructionElement {
+class NounSurface extends ConstructionElement {
     constructor() {
         super();
         this.pos = POSTags.noun;
     }
 }
 
-export class Noun extends ConstructionElement {
+export class Noun extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.noun;
@@ -214,45 +226,48 @@ export class Noun extends ConstructionElement {
     }
 }
 
-export class Auxiliary extends ConstructionElement {
+export class Auxiliary extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.auxiliary;
     }
 }
 
-export class Particle extends ConstructionElement {
+export class Particle extends ConstructionElementInflectional {
     constructor() {
         super();
         this.pos = POSTags.particle;
     }
 }
 
-export class PlainParticle extends ConstructionElement {
-    constructor() {
+export class ParticleSurface extends ConstructionElement {
+    constructor(str: string) {
         super();
         this.pos = POSTags.particle;
+        if(str) this.wordForm = str;
     }
 }
 
 class CaseMarker {}
 
-export type PartsOfSpeech = Copula | Demonstrative | Noun;
+export type PartsOfSpeech = Copula | Demonstrative | Noun | Verb
 
 export class KeyWords {
     private keyword_index: { [surface: string] : number } = {};
-    private keyElems: Array<PartsOfSpeech> = new Array();
+    private keyElems: Array<ConstructionElement> = new Array();
 
     constructor() {
         this.populateKeyElems();
         let i: number = 0;
         for (let entry of this.keyElems) {
-            if(this.keyword_index[entry.lexeme.word.literal] != undefined) console.info('duplicates found')
-            this.keyword_index[entry.lexeme.word.literal] = i;
-            if (entry.lexeme.otherForms.length) {
-                for (let elem of entry.lexeme.otherForms) {
-                    if(this.keyword_index[elem.literal] != undefined) console.info('duplicates found')
-                    this.keyword_index[elem.literal] = i;
+            if(entry instanceof ConstructionElementInflectional) {
+                if(this.keyword_index[entry.lexeme.word.literal] != undefined) console.info('duplicates found')
+                this.keyword_index[entry.lexeme.word.literal] = i;
+                if (entry.lexeme.otherForms.length) {
+                    for (let elem of entry.lexeme.otherForms) {
+                        if(this.keyword_index[elem.literal] != undefined) console.info('duplicates found')
+                        this.keyword_index[elem.literal] = i;
+                    }
                 }
             }
             i++;
@@ -315,11 +330,11 @@ export class KeyWords {
         return ret;
     }
 
-    private makeEnclitic(str: string): Enclitic {
-        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining());
-        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
-        let ret = new Enclitic();
-        ret.lexeme = ls[0];
+    private makeEncliticSurface(str: string): EncliticSurface {
+        //let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining());
+        //let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
+        let ret = new EncliticSurface();
+        //ret.lexeme = ls[0];
         return ret;
     }
 
@@ -338,7 +353,7 @@ export class KeyWords {
         let serialno = this.search(str);
         if (serialno === -1) return undefined;
         const e = this.keyElems[serialno];
-        e.matchFormFor(str);
+        if(e instanceof ConstructionElementInflectional) e.matchFormFor(str);
         return e;
     }
 
@@ -379,10 +394,10 @@ export class KeyWords {
             this.makeParticle('qahf'),
             this.makeParticle('siongw'),
 
-            this.makeEnclitic('a'),
-            this.makeEnclitic('aw'),
-            this.makeEnclitic('e'),
-            this.makeEnclitic('lew'),
+            this.makeEncliticSurface('a'),
+            this.makeEncliticSurface('aw'),
+            this.makeEncliticSurface('e'),
+            this.makeEncliticSurface('lew'),
         ];
     }
 }

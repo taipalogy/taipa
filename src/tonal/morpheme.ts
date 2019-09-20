@@ -164,7 +164,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let mp = new MatchedPattern();
 
     for (let m in list) {
-        let min = Math.min(letters.length - beginOfSyllable, list[m].length);
+        const min = Math.min(letters.length - beginOfSyllable, list[m].length);
         if (list[m].length == min) {
             for (let n = 0; n < min; n++) {
                 if (list[m][n] != undefined) {
