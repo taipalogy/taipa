@@ -85,7 +85,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 //  syllabifyTonal
 //------------------------------------------------------------------------------
 
-export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number/*, syllabary: Syllabary*/) {
+export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
     // get the longest matched syllable pattern
 
     let literal = '';
@@ -151,7 +151,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             const ep = new Epenthesis()
             const rea = new RemovingEpenthesisOfAy()
             const done = rea.applyToString(literal)
-            console.log(done.toString())
+            //console.log(done.toString())
             if(ep.beginWith(ltrs[0]) && list_of_lexical_roots.includes(done)) {    
                 list = cog.generate(ltrs)
             }

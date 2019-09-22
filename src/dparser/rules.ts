@@ -24,7 +24,7 @@ import { TonalInflexion } from './lexeme';
 import { Phraseme } from '../phraseme';
 import { POSTags } from './symbols';
 
-class ConstructionOfPhrase {
+export class ConstructionOfPhrase {
     partOfSpeech: string = '';
     elements: Array<ConstructionElement> = new Array();
     /*
@@ -152,6 +152,35 @@ export class Rules {
         return this.keyWords.get(str)
     }
 
+    matches(sequence: string[]) {
+        let elems: Array<ConstructionElement> = [];
+        for (let pat of this.patterns) {
+            for (let j = 0; j < pat.length; j++) {
+                for (let e of pat[j].elements) {
+                    //console.log(e.wordForm)
+                    elems.push(e);
+                }
+            }
+
+            for (let i = 0; i < elems.length; i++) {
+                if(elems[i] instanceof ConstructionElementInflectional) {
+                    if ((<ConstructionElementInflectional>elems[i]).matchFormFor(sequence[i])) {
+                        if(elems[i].wordForm === '' || elems[i].wordForm === sequence[i]) {
+                            if (i + 1 === elems.length) {
+                                return true;
+                            }
+
+                        }
+
+                    }
+                }
+            }
+            elems = [];
+        }
+
+        return false;
+    }
+
     matchPatterns(strs: string[]) {
         let elems: Array<ConstructionElement> = [];
         for (let pat of this.patterns) {
@@ -226,7 +255,7 @@ export class Rules {
         // serial verbs
 
         // phrasal verb with enclitic surface
-        this.patterns.push([new PhrasalVerbWithEncliticSurface(new VerbSurface(), new ParticleSurface('diurh'), new EncliticSurface('aw'))]);
+        //this.patterns.push([new PhrasalVerbWithEncliticSurface(new VerbSurface(), new ParticleSurface('diurh'), new EncliticSurface('aw'))]);
 
         // others
         this.patterns.push([new Chunk().constructions[0]]);

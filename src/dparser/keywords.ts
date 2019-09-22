@@ -385,19 +385,9 @@ export class KeyWords {
             this.makeParticle('chit'),
             this.makeParticle('cheh'),
             this.makeParticle('diurh'),
-            this.makeParticle('le'),
-            this.makeParticle('lez'),
-            this.makeParticle('ez'),
-            this.makeParticle('ew'),
-            this.makeParticle('az'),
 
             this.makeParticle('qahf'),
             this.makeParticle('siongw'),
-
-            this.makeEncliticSurface('a'),
-            this.makeEncliticSurface('aw'),
-            this.makeEncliticSurface('e'),
-            this.makeEncliticSurface('lew'),
         ];
     }
 }

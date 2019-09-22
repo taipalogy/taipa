@@ -1,10 +1,14 @@
-import { Rules } from './rules';
+import { Rules, ConstructionOfPhrase } from './rules';
 import { POSTags, Tagset } from './symbols';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import { ConstructionElementInflectional, Demonstrative, PersonalPronoun2To137, Auxiliary, PartsOfSpeech, ConstructionElement } from './keywords';
 import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
+
+class MatchedPatternOfWords {
+    strs: Array<string> = new Array();
+}
 
 export class RuleBasedTagger {
     private ces: Array<ConstructionElement> = new Array();
@@ -13,10 +17,64 @@ export class RuleBasedTagger {
         this.match(strs);
     }
 
+    private phrase(strs: string[], beginOfPhrase: number) {
+        const rs = new Rules();
+        let sequence: string[] = []
+        for(let i = beginOfPhrase; i < strs.length; i++) {
+            sequence.push(strs[i])
+            if(rs.matches(sequence)) {
+                //console.log('matched')
+                break;
+            }
+        }
+
+        //console.log(sequence)
+
+        let list: Array<string[]> = new Array();
+        list.push(sequence);
+        let form = Array.from(sequence);
+        form.push('aw');
+        list.push(form);
+
+        //console.log(list);
+
+        let matchedLen = 0;
+        let mp = new MatchedPatternOfWords();
+
+        for (let m in list) {
+            const min = Math.min(strs.length - beginOfPhrase, list[m].length);
+            if (list[m].length == min) {
+                for (let n = 0; n < min; n++) {
+                    if (list[m][n] != undefined) {
+                        if (strs[beginOfPhrase + n] === list[m][n]) {
+                            if (n + 1 == min && min > matchedLen) {
+                                matchedLen = min;
+                                for (let q = 0; q < matchedLen; q++) {
+                                    mp.strs[q] = strs[beginOfPhrase + q];
+                                }
+    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return mp;
+    }
+
     private match(strs: string[]) {
         const rs = new Rules();
         let buf: string[] = [];
         let previous: ConstructionElement | undefined = undefined
+
+        let beginOfPhrase: number = 0;
+        for (let i = 0; i < strs.length; i++) {
+            let mpw: MatchedPatternOfWords = new MatchedPatternOfWords();
+            if (i - beginOfPhrase == 0) {
+                mpw = this.phrase(strs, beginOfPhrase);
+            }
+        }
 
         while (strs.length > 0) {
             let s = strs.shift();

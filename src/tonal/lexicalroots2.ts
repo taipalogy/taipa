@@ -6,7 +6,7 @@ let list_of_new_lexical_roots = [
     
     'dngh',
 	
-    'hoang',
+    'hoang', 'homz',
 
     'jex', 'jek', 'jeng', 'jip',
 	
