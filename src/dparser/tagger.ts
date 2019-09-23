@@ -1,13 +1,13 @@
-import { Rules, ConstructionOfPhrase } from './rules';
+import { Rules, ConstructionOfPhrase, PhrasalVerb, PhrasalVerbWithEncliticSurface } from './rules';
 import { POSTags, Tagset } from './symbols';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
-import { ConstructionElementInflectional, Demonstrative, PersonalPronoun2To137, Auxiliary, PartsOfSpeech, ConstructionElement } from './keywords';
+import { ConstructionElementInflectional, Demonstrative, PersonalPronoun2To137, Auxiliary, PartsOfSpeech, ConstructionElement, EncliticSurface, ParticleSurface, VerbSurface } from './keywords';
 import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
 class MatchedPatternOfWords {
-    strs: Array<string> = new Array();
+    elems: Array<ConstructionElement> = new Array();
 }
 
 export class RuleBasedTagger {
@@ -17,42 +17,86 @@ export class RuleBasedTagger {
         this.match(strs);
     }
 
+    private generate(sequence: string[], patterns: ConstructionOfPhrase[]) {
+        let cps: Array<ConstructionOfPhrase> = new Array();
+
+        if(patterns.length > 0) {
+            for (let pat of patterns) {
+                if (
+                    pat.partOfSpeech === POSTags.verb &&
+                    pat.elements[pat.elements.length - 1].pos === POSTags.particle
+                ) {
+                    pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
+
+                    if (
+                        pat.elements[pat.elements.length - 1].wordForm !=
+                        (<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
+                    ) {
+                        const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(sequence[0]);
+                        (<ConstructionElementInflectional>pat.elements[0]).lexeme = tonal_inflextion_analyzer.doAnalysis(
+                            ls[0].lemmata[0].literal,
+                            new TonalCombiningForms(),
+                            new TonalInflexion(),
+                        )[0];
+                    } else {
+                    }
+
+                    pat.elements[0].tag = Tagset.VB;
+                    (<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0])
+                }
+
+                cps.push(pat)
+
+                if(pat instanceof PhrasalVerb) {
+                    let pvwes = new PhrasalVerbWithEncliticSurface(new VerbSurface(pat.elements[0].wordForm),
+                                                                    new ParticleSurface(pat.elements[1].wordForm),
+                                                                    new EncliticSurface('aw'));
+                    cps.push(pvwes);
+                }
+
+            }
+        } else {
+            
+        }
+
+        //console.log(cps)
+        return cps;
+    }
+
     private phrase(strs: string[], beginOfPhrase: number) {
         const rs = new Rules();
         let sequence: string[] = []
+        let pats;
         for(let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i])
-            if(rs.matches(sequence)) {
-                //console.log('matched')
+            pats = rs.matches(sequence)
+            if(pats) {
                 break;
             }
         }
 
-        //console.log(sequence)
+        let listCP: Array<ConstructionOfPhrase> = new Array();
+        if(pats) listCP = this.generate(sequence, pats);
 
-        let list: Array<string[]> = new Array();
-        list.push(sequence);
-        let form = Array.from(sequence);
-        form.push('aw');
-        list.push(form);
-
-        //console.log(list);
+        //console.log(listCP);
 
         let matchedLen = 0;
         let mp = new MatchedPatternOfWords();
 
-        for (let m in list) {
-            const min = Math.min(strs.length - beginOfPhrase, list[m].length);
-            if (list[m].length == min) {
+        for (let m in listCP) {
+            const min = Math.min(strs.length - beginOfPhrase, listCP[m].elements.length);
+            if (listCP[m].elements.length == min) {
                 for (let n = 0; n < min; n++) {
-                    if (list[m][n] != undefined) {
-                        if (strs[beginOfPhrase + n] === list[m][n]) {
+                    if (listCP[m].elements[n] != undefined) {
+                        if (strs[beginOfPhrase + n] === listCP[m].elements[n].wordForm) {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
                                 for (let q = 0; q < matchedLen; q++) {
-                                    mp.strs[q] = strs[beginOfPhrase + q];
+                                    mp.elems[q] = listCP[m].elements[beginOfPhrase + q];
+                                    if(listCP[m].elements[beginOfPhrase + q].wordForm === '') {
+                                        mp.elems[q].wordForm = strs[beginOfPhrase + q];
+                                    }
                                 }
-    
                             }
                         }
                     }
@@ -69,13 +113,19 @@ export class RuleBasedTagger {
         let previous: ConstructionElement | undefined = undefined
 
         let beginOfPhrase: number = 0;
+        let mpw: MatchedPatternOfWords = new MatchedPatternOfWords();
         for (let i = 0; i < strs.length; i++) {
-            let mpw: MatchedPatternOfWords = new MatchedPatternOfWords();
             if (i - beginOfPhrase == 0) {
                 mpw = this.phrase(strs, beginOfPhrase);
             }
         }
 
+        //console.log(mpw);
+        /*
+        for(let w in mpw.elems) {
+            this.ces.push(mpw.elems[w])
+        }
+*/
         while (strs.length > 0) {
             let s = strs.shift();
             if (s) buf.push(s);
@@ -156,6 +206,7 @@ export class RuleBasedTagger {
                 }
             }
         }
+
     }
 
     getCes() {

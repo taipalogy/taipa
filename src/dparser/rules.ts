@@ -22,7 +22,7 @@ import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import { Phraseme } from '../phraseme';
-import { POSTags } from './symbols';
+import { POSTags, Tagset } from './symbols';
 
 export class ConstructionOfPhrase {
     partOfSpeech: string = '';
@@ -48,7 +48,7 @@ class NounPhrase extends ConstructionOfPhraseInflectional {}
 class ParticlePhrase {}
 class VerbPhrase extends ConstructionOfPhraseInflectional {}
 
-class PhrasalVerb extends VerbPhrase {
+export class PhrasalVerb extends VerbPhrase {
     constructor(arr: Array<ConstructionElementInflectional>) {
         super(arr);
         this.partOfSpeech = POSTags.verb;
@@ -56,11 +56,14 @@ class PhrasalVerb extends VerbPhrase {
 }
 
 class VerbPhraseSurface extends ConstructionOfPhrase {}
-class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
+export class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
     constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
         super();
+        verb.tag = Tagset.VB;
         this.elements.push(verb);
+        particle.tag = Tagset.PPV;
         this.elements.push(particle);
+        enclitic.tag = Tagset.ENC;
         this.elements.push(enclitic);
     }
 }
@@ -167,7 +170,7 @@ export class Rules {
                     if ((<ConstructionElementInflectional>elems[i]).matchFormFor(sequence[i])) {
                         if(elems[i].wordForm === '' || elems[i].wordForm === sequence[i]) {
                             if (i + 1 === elems.length) {
-                                return true;
+                                return pat;
                             }
 
                         }
@@ -178,7 +181,7 @@ export class Rules {
             elems = [];
         }
 
-        return false;
+        return undefined;
     }
 
     matchPatterns(strs: string[]) {
