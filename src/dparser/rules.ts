@@ -27,10 +27,6 @@ import { POSTags, Tagset } from './symbols';
 export class ConstructionOfPhrase {
     partOfSpeech: string = '';
     elements: Array<ConstructionElement> = new Array();
-    /*
-    constructor(arr: Array<ConstructionElement>) {
-    }
-*/
 }
 
 export class ConstructionOfPhraseInflectional extends ConstructionOfPhrase {
@@ -256,9 +252,6 @@ export class Rules {
         ]);
 
         // serial verbs
-
-        // phrasal verb with enclitic surface
-        //this.patterns.push([new PhrasalVerbWithEncliticSurface(new VerbSurface(), new ParticleSurface('diurh'), new EncliticSurface('aw'))]);
 
         // others
         this.patterns.push([new Chunk().constructions[0]]);

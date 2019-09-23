@@ -56,7 +56,6 @@ export class RuleBasedTagger {
 
             }
         } else {
-            
         }
 
         //console.log(cps)
@@ -72,8 +71,23 @@ export class RuleBasedTagger {
             pats = rs.matches(sequence)
             if(pats) {
                 break;
+            } else {
+                //console.log(sequence)
+                let kw = rs.matchKeyWords(sequence[0]);
+                    
+                if (kw) {
+                    if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
+                    else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
+                    else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
+
+                    pats = [new ConstructionOfPhrase()]; // TODO: can keyword be wrapped in something else
+                    pats[0].elements.push(kw);
+                    break;
+                }
             }
         }
+
+        //console.log(pats)
 
         let listCP: Array<ConstructionOfPhrase> = new Array();
         if(pats) listCP = this.generate(sequence, pats);
@@ -92,8 +106,8 @@ export class RuleBasedTagger {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
                                 for (let q = 0; q < matchedLen; q++) {
-                                    mp.elems[q] = listCP[m].elements[beginOfPhrase + q];
-                                    if(listCP[m].elements[beginOfPhrase + q].wordForm === '') {
+                                    mp.elems[q] = listCP[m].elements[q];
+                                    if(listCP[m].elements[q].wordForm === '') {
                                         mp.elems[q].wordForm = strs[beginOfPhrase + q];
                                     }
                                 }
@@ -117,96 +131,16 @@ export class RuleBasedTagger {
         for (let i = 0; i < strs.length; i++) {
             if (i - beginOfPhrase == 0) {
                 mpw = this.phrase(strs, beginOfPhrase);
-            }
-        }
-
-        //console.log(mpw);
-        /*
-        for(let w in mpw.elems) {
-            this.ces.push(mpw.elems[w])
-        }
-*/
-        while (strs.length > 0) {
-            let s = strs.shift();
-            if (s) buf.push(s);
-
-            //console.log(buf)
-            let cps = rs.matchPatterns(buf);
-            if (cps && cps.length > 0) {
-                // for phrases
-                for (let cp of cps) {
-                    if (
-                        cp.partOfSpeech === POSTags.verb &&
-                        cp.elements[cp.elements.length - 1].pos === POSTags.particle
-                    ) {
-                        cp.elements[cp.elements.length - 1].tag = Tagset.PPV;
-
-                        if (
-                            cp.elements[cp.elements.length - 1].wordForm !=
-                            (<ConstructionElementInflectional>cp.elements[cp.elements.length - 1]).lexeme.word.literal
-                        ) {
-                            const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(buf[0]);
-                            (<ConstructionElementInflectional>cp.elements[0]).lexeme = tonal_inflextion_analyzer.doAnalysis(
-                                ls[0].lemmata[0].literal,
-                                new TonalCombiningForms(),
-                                new TonalInflexion(),
-                            )[0];
-                        } else {
-                        }
-
-                        cp.elements[0].tag = Tagset.VB;
-                        (<ConstructionElementInflectional>cp.elements[0]).matchFormFor(buf[0])
+                if(mpw.elems.length) {
+                    beginOfPhrase += mpw.elems.length;
+                    for(let w in mpw.elems) {
+                        this.ces.push(mpw.elems[w])
                     }
-
-                    this.ces.push(cp.elements[1])
-                }
-
-                buf = [];
-            } else {
-                
-                if (s) {
-                    
-                    let kw = rs.matchKeyWords(s);
-                    
-                    if (kw) {
-                        // for key words
-                        if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
-                        else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
-                        else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-
-                        this.ces.push(kw);
-                        buf = [];
-
-                        previous = kw;
-                    } else {
-                        // not a key word nor a matched pattern
-
-                        let ce = new ConstructionElementInflectional()
-                        ce.lexeme = tonal_inflextion_analyzer.doAnalysis(
-                            s,
-                            new TonalCombiningForms(),
-                            new TonalInflexion())[0]
-                        
-                        if (previous) {
-                            if(previous.tag === Tagset.AUX || previous.tag === Tagset.PRP) {
-                                // when an auxiliary or personal pronoun is followed by a verb
-                                ce.pos = POSTags.verb
-                                ce.tag = Tagset.VB;
-                                ce.matchFormFor(s);
-                                this.ces.push(ce);
-                            }
-                        } else {
-                            // the first word of a sentence is a verb
-                            ce.pos = POSTags.verb
-                            ce.tag = Tagset.VB;
-                            ce.matchFormFor(s);
-                            this.ces.push(ce);
-                        }
-                    }
+                    //console.log(mpw);
+                    mpw.elems = []            
                 }
             }
         }
-
     }
 
     getCes() {
