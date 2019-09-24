@@ -45,3 +45,25 @@ describe("Tonal testing", () => {
         expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.cf);
     });
 });
+
+describe("Tonal testing", () => {
+    let cli = new Client()
+    let doc = new Document()
+
+    doc = cli.processTonal('daizoanx');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.x);
+    });
+});
+
+describe("Tonal testing", () => {
+    let cli = new Client()
+    let doc = new Document()
+
+    doc = cli.processTonal('daizoanzoez');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[2][2].getLiteral()).toEqual(TonalLetterTags.z);
+    });
+});

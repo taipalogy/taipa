@@ -55,7 +55,7 @@ export class Client {
         } else {
             tagger = new RuleBasedTagger([]);
         }
-        let ces = tagger.getCes();
+        let ces = tagger.elements;
 
         // dependency parsing
         let dp = new DependencyParser();

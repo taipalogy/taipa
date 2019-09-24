@@ -164,7 +164,7 @@ export class Rules {
             for (let i = 0; i < elems.length; i++) {
                 if(elems[i] instanceof ConstructionElementInflectional) {
                     if ((<ConstructionElementInflectional>elems[i]).matchFormFor(sequence[i])) {
-                        if(elems[i].wordForm === '' || elems[i].wordForm === sequence[i]) {
+                        if(elems[i].surface === '' || elems[i].surface === sequence[i]) {
                             if (i + 1 === elems.length) {
                                 return pat;
                             }
@@ -178,33 +178,6 @@ export class Rules {
         }
 
         return undefined;
-    }
-
-    matchPatterns(strs: string[]) {
-        let elems: Array<ConstructionElement> = [];
-        for (let pat of this.patterns) {
-            for (let j = 0; j < pat.length; j++) {
-                for (let e of pat[j].elements) {
-                    //console.log(e.wordForm)
-                    elems.push(e);
-                }
-            }
-
-            for (let i = 0; i < elems.length; i++) {
-                if(elems[i] instanceof ConstructionElementInflectional) {
-                    if ((<ConstructionElementInflectional>elems[i]).matchFormFor(strs[i])) {
-                        if(elems[i].wordForm === '' || elems[i].wordForm === strs[i]) {
-                            if (i + 1 === elems.length) {
-                                return pat;
-                            }
-
-                        }
-
-                    }
-                }
-            }
-            elems = [];
-        }
     }
 
     private populatePhrasalVerbs() {

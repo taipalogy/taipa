@@ -29,7 +29,7 @@ export class RuleBasedTagger {
                     pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
 
                     if (
-                        pat.elements[pat.elements.length - 1].wordForm !=
+                        pat.elements[pat.elements.length - 1].surface !=
                         (<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
                     ) {
                         const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(sequence[0]);
@@ -48,8 +48,8 @@ export class RuleBasedTagger {
                 cps.push(pat)
 
                 if(pat instanceof PhrasalVerb) {
-                    let pvwes = new PhrasalVerbWithEncliticSurface(new VerbSurface(pat.elements[0].wordForm),
-                                                                    new ParticleSurface(pat.elements[1].wordForm),
+                    let pvwes = new PhrasalVerbWithEncliticSurface(new VerbSurface(pat.elements[0].surface),
+                                                                    new ParticleSurface(pat.elements[1].surface),
                                                                     new EncliticSurface('aw'));
                     cps.push(pvwes);
                 }
@@ -102,13 +102,13 @@ export class RuleBasedTagger {
             if (listCP[m].elements.length == min) {
                 for (let n = 0; n < min; n++) {
                     if (listCP[m].elements[n] != undefined) {
-                        if (strs[beginOfPhrase + n] === listCP[m].elements[n].wordForm) {
+                        if (strs[beginOfPhrase + n] === listCP[m].elements[n].surface) {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
                                 for (let q = 0; q < matchedLen; q++) {
                                     mp.elems[q] = listCP[m].elements[q];
-                                    if(listCP[m].elements[q].wordForm === '') {
-                                        mp.elems[q].wordForm = strs[beginOfPhrase + q];
+                                    if(listCP[m].elements[q].surface === '') {
+                                        mp.elems[q].surface = strs[beginOfPhrase + q];
                                     }
                                 }
                             }
@@ -143,7 +143,7 @@ export class RuleBasedTagger {
         }
     }
 
-    getCes() {
-        return this.ces;
+    get elements() {
+        return this.ces
     }
 }

@@ -18,7 +18,7 @@ import { TonalCombiningForms } from './morpheme';
 export class ConstructionElement {
     pos: string = '';
     tag: string = ''
-    wordForm: string = ''
+    surface: string = ''
 }
 
 export class ConstructionElementInflectional extends ConstructionElement {
@@ -26,13 +26,13 @@ export class ConstructionElementInflectional extends ConstructionElement {
 
     matchFormFor(str: string): boolean {
         if (this.lexeme.word.literal === str) {
-            this.wordForm = str
+            this.surface = str
             return true;
         }
         if (this.lexeme.otherForms.length > 0) {
             for (let i = 0; i < this.lexeme.otherForms.length; i++) {
                 if (this.lexeme.otherForms[i].literal === str) {
-                    this.wordForm = str
+                    this.surface = str
                     return true;
                 }
             }
@@ -156,7 +156,7 @@ export class Verb extends ConstructionElementInflectional {
 export class VerbSurface extends ConstructionElement {
     constructor(str?: string) {
         super()
-        if(str) this.wordForm = str;
+        if(str) this.surface = str;
         this.pos = POSTags.verb;
     }
 }
@@ -183,7 +183,7 @@ export class NumeralQuantifier extends ConstructionElementInflectional {
 export class EncliticSurface extends ConstructionElement {
     constructor(str?: string) {
         super()
-        if(str) this.wordForm = str;
+        if(str) this.surface = str;
         this.pos = POSTags.particle;
     }
 }
@@ -244,7 +244,7 @@ export class ParticleSurface extends ConstructionElement {
     constructor(str: string) {
         super();
         this.pos = POSTags.particle;
-        if(str) this.wordForm = str;
+        if(str) this.surface = str;
     }
 }
 
