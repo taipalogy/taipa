@@ -17,10 +17,10 @@ describe("Tonal testing", () => {
     let cli = new Client()
     let doc = new Document()
 
-    doc = cli.processTonal('binznacfchaiw');
+    doc = cli.processTonal('binznafchaiw');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.cf);
+        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.f);
     });
 });
 
@@ -28,10 +28,10 @@ describe("Tonal testing", () => {
     let cli = new Client()
     let doc = new Document()
 
-    doc = cli.processTonal('qinznacfjitt');
+    doc = cli.processTonal('qinznafjitt');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.cf);
+        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.f);
     });
 });
 
@@ -39,10 +39,10 @@ describe("Tonal testing", () => {
     let cli = new Client()
     let doc = new Document()
 
-    doc = cli.processTonal('chaucfchaeng');
+    doc = cli.processTonal('chaufcheng');
 
     test("check the tonal affix", () => {
-        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.cf);
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.f);
     });
 });
 
@@ -65,5 +65,38 @@ describe("Tonal testing", () => {
 
     test("check the tonal affix", () => {
         expect(doc.soundSequences[2][2].getLiteral()).toEqual(TonalLetterTags.z);
+    });
+});
+
+describe("Tonal testing", () => {
+    let cli = new Client()
+    let doc = new Document()
+
+    doc = cli.processTonal('daizjittwvunfdeyqok');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[2][3].getLiteral()).toEqual(TonalLetterTags.f);
+    });
+});
+
+describe("Tonal testing", () => {
+    let cli = new Client()
+    let doc = new Document()
+
+    doc = cli.processTonal('qurzsa');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.z);
+    });
+});
+
+describe("Tonal testing", () => {
+    let cli = new Client()
+    let doc = new Document()
+
+    doc = cli.processTonal('hongzqun');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.z);
     });
 });

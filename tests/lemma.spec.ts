@@ -85,7 +85,7 @@ describe("Lemma testing", () => {
 
   test("check the lemma", () => {
     expect(doc.lemmata[0].literal).toEqual('siax');
-    expect(doc.lemmata[1].literal).toEqual('siacf');
+    expect(doc.lemmata[1].literal).toEqual('siaf');
     expect(doc.lemmata[2].literal).toEqual('sia');
   });
 });

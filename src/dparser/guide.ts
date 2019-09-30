@@ -60,9 +60,9 @@ export class Guide {
             } else if (this.s2.tag === Tagset.PRP && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.nsubj));
             } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.DT) {
-                c.relations.push(this.rightArc(DependencyLabels.dobj));
+                c.relations.push(this.rightArc(DependencyLabels.obj));
             } else if (this.s2.tag === Tagset.DT && this.s1.tag === Tagset.VB) {
-                c.relations.push(this.leftArc(DependencyLabels.dobj));
+                c.relations.push(this.leftArc(DependencyLabels.obj));
             } else if (this.s2.tag === Tagset.AUX && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.aux));
             } else if (this.isStackEmpty(c)) {

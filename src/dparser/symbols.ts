@@ -28,18 +28,28 @@ export enum DependencyLabels {
       Universal Dependencies
       https://universaldependencies.org/u/dep/all.html
     */
+    acl = 'acl',
+    advcl = 'advcl',
+    amod = 'amod',
+    advmod = 'advmod',
     aux = 'aux',
     aux_caus = 'aux:caus',
-    csubj = 'csubj',
-    ccomp = 'ccomp',
+    ccomp = 'ccomp', // multiword expression
+    compound = 'compound',
     cop = 'cop',
-    dobj = 'dobj',
-    iobj = 'iobj',
+    csubj = 'csubj',
+    dislocated = 'dislocated',
+    fix = 'fix', // multiword expression
+    flat = 'flat', // multiword expression
+    obj = 'obj',
+    iobj = 'iobj', // indirect object
     iobj_agent = 'iobj:agent',
-    mwe = 'mwe',
+    mark = 'mark',
+    nmod = 'nmod',
     nobj = 'nobj',
     nsubj = 'nsubj',
     nsubj_caus = 'nsubj:caus',
+    obl = 'obl', // oblique nominal
     prt = 'prt',
     root = 'root',
     xcomp = 'xcomp',

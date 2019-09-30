@@ -49,7 +49,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the second relation", () => {
-        expect(rs[1].dependency).toEqual('dobj');
+        expect(rs[1].dependency).toEqual('obj');
         expect(rs[1].head.surface).toEqual('koanny');
         expect(rs[1].dependent.surface).toEqual('che');
     });
@@ -91,7 +91,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the second relation", () => {
-        expect(rs[2].dependency).toEqual('dobj');
+        expect(rs[2].dependency).toEqual('obj');
         expect(rs[2].head.surface).toEqual('koannw');
         expect(rs[2].dependent.surface).toEqual('che');
     });

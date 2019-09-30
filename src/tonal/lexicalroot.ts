@@ -30,6 +30,7 @@ export class ClientOfTonalGenerator {
 
     private analyzeAfterStopFinal(ls: string[], sounds: string[], index: number): string[] {
         // base form of checked tone does not have a tonal
+        //console.debug(`checked tonal: ${ls[index]}. is checked tonal: ${this.isCheckedTonal(ls[index])}`)
         if (this.isCheckedTonal(ls[index])) {
             sounds.push(ls[ls.length - 1] + '.' + TonalSoundTags.checkedTonal);
         }
@@ -149,39 +150,6 @@ export class ClientOfTonalGenerator {
         return false;
     }
 
-    private makeCombiningForms(entry: string[]) {
-        let lastElement = entry[entry.length - 1];
-        let n = lastElement.lastIndexOf('.');
-        let key = lastElement.slice(0, n); // tone of base form
-        let tos = combiningRules.get(key); // plural form of to. get tones of combining form
-        let ret: Array<string[]> = new Array();
-
-        if (lastElement.lastIndexOf(TonalSoundTags.freeTonal) > 0) {
-            let e: string[] = [];
-            for (let k in tos) {
-                e = [];
-                e = Object.assign([], entry);
-                e.pop();
-                if (tos[k].getLiteral()) {
-                    // zero-tone-mark for first tone will not be pushed
-                    e.push(tos[k].getLiteral() + '.' + TonalSoundTags.freeTonal);
-                }
-
-                // first tone is still pushed to return
-                ret.push(e);
-            }
-        } else {
-            let e: string[] = [];
-            e = Object.assign([], entry);
-            let to = combiningRules.get('zero');
-            //console.debug(Object.keys(to))
-            e.push(combiningRules.get('zero')[Object.keys(to)[0]].getLiteral() + '.' + TonalSoundTags.freeTonal);
-            ret.push(e);
-        }
-
-        return ret;
-    }
-
     private convert(entry: string[]) {
         // convert strings in an entry to sounds
         // ex: a.medial -> PSA.medial
@@ -208,6 +176,7 @@ export class ClientOfTonalGenerator {
 
         strs.push(ltrs);
 
+        //console.debug(to_s)
         if(to_s) {
             for(let i in to_s) {
                 let syl: string[] = new Array()
@@ -271,7 +240,6 @@ export class ClientOfTonalGenerator {
             arrayOfSounds.push(sounds);
         }
         
-        //let buffer: Array<string[]> = new Array();
         for (let k = 0; k < arrayOfSounds.length; k++) {
             entries.push(this.convert(arrayOfSounds[k]));
         }
