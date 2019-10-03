@@ -184,7 +184,7 @@ export class EncliticSurface extends ConstructionElement {
     constructor(str?: string) {
         super()
         if(str) this.surface = str;
-        this.pos = POSTags.particle;
+        this.pos = POSTags.auxiliary;
     }
 }
 

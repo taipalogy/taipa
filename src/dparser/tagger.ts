@@ -43,6 +43,11 @@ export class RuleBasedTagger {
 
                     pat.elements[0].tag = Tagset.VB;
                     (<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0])
+                } else if (
+                    pat.partOfSpeech === POSTags.verb &&
+                    pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
+                ){
+                    //console.log('hit')
                 }
 
                 cps.push(pat)
@@ -56,6 +61,7 @@ export class RuleBasedTagger {
 
             }
         } else {
+            //console.log(sequence)
         }
 
         //console.log(cps)
@@ -83,6 +89,7 @@ export class RuleBasedTagger {
                     pats = [new ConstructionOfPhrase()]; // TODO: can keyword be wrapped in something else
                     pats[0].elements.push(kw);
                     break;
+                } else {
                 }
             }
         }
@@ -91,6 +98,7 @@ export class RuleBasedTagger {
 
         let listCP: Array<ConstructionOfPhrase> = new Array();
         if(pats) listCP = this.generate(sequence, pats);
+        //else listCP = this.generate(sequence, [])
 
         //console.log(listCP);
 
@@ -122,22 +130,22 @@ export class RuleBasedTagger {
     }
 
     private match(strs: string[]) {
-        const rs = new Rules();
+        //const rs = new Rules();
         let buf: string[] = [];
-        let previous: ConstructionElement | undefined = undefined
+        //let previousWords: ConstructionElement[] = [];
 
         let beginOfPhrase: number = 0;
-        let mpw: MatchedPatternOfWords = new MatchedPatternOfWords();
+        let matchedPW: MatchedPatternOfWords = new MatchedPatternOfWords();
         for (let i = 0; i < strs.length; i++) {
             if (i - beginOfPhrase == 0) {
-                mpw = this.phrase(strs, beginOfPhrase);
-                if(mpw.elems.length) {
-                    beginOfPhrase += mpw.elems.length;
-                    for(let w in mpw.elems) {
-                        this.ces.push(mpw.elems[w])
+                matchedPW = this.phrase(strs, beginOfPhrase);
+                if(matchedPW.elems.length) {
+                    beginOfPhrase += matchedPW.elems.length;
+                    for(let w in matchedPW.elems) {
+                        this.ces.push(matchedPW.elems[w])
                     }
                     //console.log(mpw);
-                    mpw.elems = []            
+                    matchedPW.elems = []            
                 }
             }
         }

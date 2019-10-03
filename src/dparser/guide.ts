@@ -56,7 +56,7 @@ export class Guide {
             if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PPV) {
                 c.relations.push(this.rightArc(DependencyLabels.prt));
             } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.ENC) {
-                c.relations.push(this.rightArc(DependencyLabels.prt));
+                c.relations.push(this.rightArc(DependencyLabels.aux));
             } else if (this.s2.tag === Tagset.PRP && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.nsubj));
             } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.DT) {

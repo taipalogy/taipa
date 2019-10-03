@@ -51,7 +51,13 @@ export class PhrasalVerb extends VerbPhrase {
     }
 }
 
-class VerbPhraseSurface extends ConstructionOfPhrase {}
+class VerbPhraseSurface extends ConstructionOfPhrase {
+    constructor() {
+        super();
+        this.partOfSpeech = POSTags.verb;
+    }
+}
+
 export class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
     constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
         super();
@@ -65,9 +71,12 @@ export class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
 }
 
 class VerbWithEnclitic extends VerbPhraseSurface {
-    constructor(arr: Array<ConstructionElement>) {
+    constructor(verb: VerbSurface, enclitic: EncliticSurface) {
         super();
-        this.partOfSpeech = POSTags.verb;
+        verb.tag = Tagset.VB;
+        this.elements.push(verb);
+        enclitic.tag = Tagset.ENC;
+        this.elements.push(enclitic);
     }
 }
 
@@ -89,19 +98,20 @@ class SetOfPhrasalVerbs {
     }
 }
 
-class SetOfVerbEncliticPairs {
-    pairs: Array<VerbWithEnclitic> = [];
+class SetOfVerbWithEnclitic {
+    verbs: Array<VerbWithEnclitic> = [];
     constructor() {
-        this.populatePairs();
+        this.populateVerbs();
     }
 
     private makeEnclitic(str: string) {
         let ret = new EncliticSurface();
+        ret.surface = str;
         return ret;
     }
 
-    private populatePairs() {
-        this.pairs.push(new VerbWithEnclitic([new Verb(), this.makeEnclitic('aw')]));
+    private populateVerbs() {
+        this.verbs.push(new VerbWithEnclitic(new Verb(), this.makeEnclitic('aw')));
     }
 }
 
@@ -138,7 +148,7 @@ export class Rules {
     constructor() {
         this.populatePatterns();
         this.populatePhrasalVerbs();
-        this.populateVerbEncliticPairs();
+        this.populateVerbWithEnclitics();
     }
 
     protected get(str: string) {
@@ -168,9 +178,11 @@ export class Rules {
                             if (i + 1 === elems.length) {
                                 return pat;
                             }
-
                         }
-
+                    }
+                } else if(elems[i] instanceof ConstructionElement) {
+                    if(i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
+                        return pat;
                     }
                 }
             }
@@ -188,11 +200,11 @@ export class Rules {
         }
     }
 
-    private populateVerbEncliticPairs() {
-        const s = new SetOfVerbEncliticPairs();
-        for (let p of s.pairs) {
-            //console.log(pv.elements[1].lexeme.word.literal)
-            this.patterns.push([p]);
+    private populateVerbWithEnclitics() {
+        const s = new SetOfVerbWithEnclitic();
+        for (let v of s.verbs) {
+            //console.log(s.verbs[0].elements[1])
+            this.patterns.push([v]);
         }
     }
 

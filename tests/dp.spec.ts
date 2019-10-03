@@ -121,7 +121,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the second relation", () => {
-        expect(rs[1].dependency).toEqual('prt');
+        expect(rs[1].dependency).toEqual('aux');
         expect(rs[1].head.surface).toEqual('koannw');
         expect(rs[1].dependent.surface).toEqual('aw');
     });
@@ -130,6 +130,30 @@ describe("Dependency parsing", () => {
         expect(rs[2].dependency).toEqual('root');
         expect(rs[2].head.surface).toEqual('ROOT');
         expect(rs[2].dependent.surface).toEqual('koannw');
+    });
+});
+
+describe("Dependency parsing", () => {
+    let cli = new Client();
+    let doc = new Document();
+
+    doc = cli.process('koannw aw');
+    let rs = doc.relations;
+
+    test("check the number of relations", () => {    
+        expect(rs.length).toEqual(2);
+    });
+
+    test("check the second relation", () => {
+        expect(rs[0].dependency).toEqual('aux');
+        expect(rs[0].head.surface).toEqual('koannw');
+        expect(rs[0].dependent.surface).toEqual('aw');
+    });
+
+    test("check the third relation", () => {
+        expect(rs[1].dependency).toEqual('root');
+        expect(rs[1].head.surface).toEqual('ROOT');
+        expect(rs[1].dependent.surface).toEqual('koannw');
     });
 });
 
@@ -151,7 +175,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the second relation", () => {
-        expect(rs[1].dependency).toEqual('prt');
+        expect(rs[1].dependency).toEqual('aux');
         expect(rs[1].head.surface).toEqual('koannw');
         expect(rs[1].dependent.surface).toEqual('aw');
     });
