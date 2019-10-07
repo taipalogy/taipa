@@ -115,6 +115,8 @@ class SetOfVerbWithEnclitic {
     }
 }
 
+class Span {}
+
 export class Chunk {
     constructions: Array<ConstructionOfPhraseInflectional> = [];
 

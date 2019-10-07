@@ -1,5 +1,5 @@
-import { Client } from '../src/client'
-import { Document } from '../src/document'
+import { Client } from '../src/client';
+import { Document } from '../src/document';
 import { TonalLetterTags } from '../src/tonal/version2';
 
 describe("Epenthesis testing", () => {

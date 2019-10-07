@@ -1,5 +1,5 @@
-import { Client } from '../src/client'
-import { Document } from '../src/document'
+import { Client } from '../src/client';
+import { Document } from '../src/document';
 
 describe("Lemma testing", () => {
     let cli = new Client()

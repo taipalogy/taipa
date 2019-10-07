@@ -1,6 +1,6 @@
-import { characters } from '../src/character'
-import { lowerLettersOfTonal } from '../src/tonal/version2'
-import { list_of_lexical_roots } from '../src/tonal/lexicalroots2'
+import { characters } from '../src/character';
+import { lowerLettersOfTonal } from '../src/tonal/version2';
+import { list_of_lexical_roots } from '../src/tonal/lexicalroots2';
 
 describe("Base testing", () => {
     test("check the number of characters", () => {
