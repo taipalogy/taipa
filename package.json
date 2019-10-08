@@ -4,8 +4,9 @@
   "description": "Taiwanese parsing library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "bin": "bin/taipa.js",
   "scripts": {
-    "build": "./node_modules/.bin/tsc --outDir lib",
+    "build": "tsc --outDir lib",
     "lint": "eslint \"src/**/*.ts\"",
     "test": "jest --env=node --colors --coverage test",
     "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/* -e !.vscode"

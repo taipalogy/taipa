@@ -11,7 +11,8 @@
         "declaration": true,
         "outDir": "./lib",
         "strict": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "declarationMap": false
         //"noUnusedLocals": true,
         //"noUnusedParameters": true
     }
