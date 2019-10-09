@@ -1,4 +1,11 @@
-import { Syllable, Morpheme, MorphemeMaker, MatchedPattern, TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../morpheme';
+import {
+    Syllable,
+    Morpheme,
+    MorphemeMaker,
+    MatchedPattern,
+    TonalCombiningMetaplasm,
+    RemovingEpenthesisOfAy,
+} from '../morpheme';
 import {
     freeAllomorphUncombiningRules,
     checkedAllomorphs,
@@ -91,69 +98,69 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let literal = '';
     let matched = '';
     let begin: number = 0;
-    let ltrs: Array<string> = new Array()
-    let matchedLtrs: Array<string> = new Array()
+    let ltrs: Array<string> = new Array();
+    let matchedLtrs: Array<string> = new Array();
     const sft = new SetOfFreeTonals();
-    const ssf = new SetOfStopFinals()
+    const ssf = new SetOfStopFinals();
     const urs = freeAllomorphUncombiningRules;
 
-    for(let i = beginOfSyllable; i < letters.length; i++) {
+    for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
-        ltrs.push(letters[i].literal)
-        if(list_of_lexical_roots.includes(literal) && sft.beginWith(letters[i].literal)) {
+        ltrs.push(letters[i].literal);
+        if (list_of_lexical_roots.includes(literal) && sft.beginWith(letters[i].literal)) {
             //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}`)
-            if(begin === beginOfSyllable) {
+            if (begin === beginOfSyllable) {
                 matched = literal;
-                Object.assign(matchedLtrs, ltrs)
+                Object.assign(matchedLtrs, ltrs);
             }
             break;
-        } else if(list_of_lexical_roots.includes(literal) && ssf.beginWith(letters[i].literal)) {
+        } else if (list_of_lexical_roots.includes(literal) && ssf.beginWith(letters[i].literal)) {
             //console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
             //console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
-            if(begin === beginOfSyllable) {
+            if (begin === beginOfSyllable) {
                 matched = literal;
-                Object.assign(matchedLtrs, ltrs)
+                Object.assign(matchedLtrs, ltrs);
             }
             break;
         } else {
             //console.log(`i: ${i}, literal: ${literal}`)
-            if(i+1 < letters.length && sft.beginWith(letters[i+1].literal)) {
+            if (i + 1 < letters.length && sft.beginWith(letters[i + 1].literal)) {
                 //console.log(`tone: ${letters[i+1].literal}, rule: ${urs.get(letters[i+1].literal)[0].getLiteral()}`)
-                const ts = urs.get(letters[i+1].literal)
-                for(let t of ts) {
-                    if(list_of_lexical_roots.includes(literal+t.getLiteral())) {
-                        matched = literal + letters[i+1].literal;
+                const ts = urs.get(letters[i + 1].literal);
+                for (let t of ts) {
+                    if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
+                        matched = literal + letters[i + 1].literal;
                         begin = beginOfSyllable + 1;
-                        ltrs.push(letters[i+1].literal)
-                        Object.assign(matchedLtrs, ltrs)
+                        ltrs.push(letters[i + 1].literal);
+                        Object.assign(matchedLtrs, ltrs);
                         break; // once got one match, break the loop
                     }
                 }
-            } else if(list_of_lexical_roots.includes(literal)) {
+            } else if (list_of_lexical_roots.includes(literal)) {
                 matched = literal;
-                Object.assign(matchedLtrs, ltrs)
+                Object.assign(matchedLtrs, ltrs);
                 begin = beginOfSyllable;
             } else {
                 // when there is not matched lexciall roots for this syllable, we still assign begin
-                begin = beginOfSyllable;                    
+                begin = beginOfSyllable;
             }
         }
     }
     //console.log(matchedLtrs)
     //console.log('matched: ' + matched)
-    const cog = new ClientOfTonalGenerator()
+    const cog = new ClientOfTonalGenerator();
     //console.log('matched: ' + matched)
-    let list: Array<Sound[]> = new Array()
+    let list: Array<Sound[]> = new Array();
 
-    if(matched.length > 0) list = cog.generate(matchedLtrs)
+    if (matched.length > 0) list = cog.generate(matchedLtrs);
     else {
-        if(ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
-            const ep = new Epenthesis()
-            const rea = new RemovingEpenthesisOfAy()
-            const done = rea.applyToString(literal)
+        if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
+            const ep = new Epenthesis();
+            const rea = new RemovingEpenthesisOfAy();
+            const done = rea.applyToString(literal);
             //console.log(done.toString())
-            if(ep.beginWith(ltrs[0]) && list_of_lexical_roots.includes(done)) {    
-                list = cog.generate(ltrs)
+            if (ep.beginWith(ltrs[0]) && list_of_lexical_roots.includes(done)) {
+                list = cog.generate(ltrs);
             }
         }
     }

@@ -31,9 +31,9 @@ export class ConstructionOfPhrase {
 
 export class ConstructionOfPhraseInflectional extends ConstructionOfPhrase {
     phraseme: Phraseme = new Phraseme();
-    
+
     constructor(arr: Array<PartsOfSpeech>) {
-        super()
+        super();
         for (let key in arr) {
             this.elements.push(arr[key]);
         }
@@ -160,7 +160,7 @@ export class Rules {
     }
 
     matchKeyWords(str: string) {
-        return this.keyWords.get(str)
+        return this.keyWords.get(str);
     }
 
     matches(sequence: string[]) {
@@ -174,16 +174,16 @@ export class Rules {
             }
 
             for (let i = 0; i < elems.length; i++) {
-                if(elems[i] instanceof ConstructionElementInflectional) {
+                if (elems[i] instanceof ConstructionElementInflectional) {
                     if ((<ConstructionElementInflectional>elems[i]).matchFormFor(sequence[i])) {
-                        if(elems[i].surface === '' || elems[i].surface === sequence[i]) {
+                        if (elems[i].surface === '' || elems[i].surface === sequence[i]) {
                             if (i + 1 === elems.length) {
                                 return pat;
                             }
                         }
                     }
-                } else if(elems[i] instanceof ConstructionElement) {
-                    if(i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
+                } else if (elems[i] instanceof ConstructionElement) {
+                    if (i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
                         return pat;
                     }
                 }

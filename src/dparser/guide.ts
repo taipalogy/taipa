@@ -48,8 +48,7 @@ export class Guide {
             c.relations.push(this.rightArc(DependencyLabels.prt));
         } else if (this.s1.tag === Tagset.PPV && this.b1.tag === Tagset.ENC) {
             c.relations.push(this.rightArc(DependencyLabels.prt));
-        }
-        else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.DT) this.shift();
+        } else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.DT) this.shift();
         else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.ENC) this.shift();
         else if (this.s1.tag === Tagset.AUX && this.b1.tag === Tagset.VB) this.shift();
         else if (this.isQueueEmpty(c)) {

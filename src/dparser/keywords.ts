@@ -17,8 +17,8 @@ import { TonalCombiningForms } from './morpheme';
 
 export class ConstructionElement {
     pos: string = '';
-    tag: string = ''
-    surface: string = ''
+    tag: string = '';
+    surface: string = '';
 }
 
 export class ConstructionElementInflectional extends ConstructionElement {
@@ -26,13 +26,13 @@ export class ConstructionElementInflectional extends ConstructionElement {
 
     matchFormFor(str: string): boolean {
         if (this.lexeme.word.literal === str) {
-            this.surface = str
+            this.surface = str;
             return true;
         }
         if (this.lexeme.otherForms.length > 0) {
             for (let i = 0; i < this.lexeme.otherForms.length; i++) {
                 if (this.lexeme.otherForms[i].literal === str) {
-                    this.surface = str
+                    this.surface = str;
                     return true;
                 }
             }
@@ -155,8 +155,8 @@ export class Verb extends ConstructionElementInflectional {
 
 export class VerbSurface extends ConstructionElement {
     constructor(str?: string) {
-        super()
-        if(str) this.surface = str;
+        super();
+        if (str) this.surface = str;
         this.pos = POSTags.verb;
     }
 }
@@ -182,8 +182,8 @@ export class NumeralQuantifier extends ConstructionElementInflectional {
 
 export class EncliticSurface extends ConstructionElement {
     constructor(str?: string) {
-        super()
-        if(str) this.surface = str;
+        super();
+        if (str) this.surface = str;
         this.pos = POSTags.auxiliary;
     }
 }
@@ -244,28 +244,28 @@ export class ParticleSurface extends ConstructionElement {
     constructor(str: string) {
         super();
         this.pos = POSTags.particle;
-        if(str) this.surface = str;
+        if (str) this.surface = str;
     }
 }
 
 class CaseMarker {}
 
-export type PartsOfSpeech = Copula | Demonstrative | Noun | Verb
+export type PartsOfSpeech = Copula | Demonstrative | Noun | Verb;
 
 export class KeyWords {
-    private keyword_index: { [surface: string] : number } = {};
+    private keyword_index: { [surface: string]: number } = {};
     private keyElems: Array<ConstructionElement> = new Array();
 
     constructor() {
         this.populateKeyElems();
         let i: number = 0;
         for (let entry of this.keyElems) {
-            if(entry instanceof ConstructionElementInflectional) {
-                if(this.keyword_index[entry.lexeme.word.literal] != undefined) console.info('duplicates found')
+            if (entry instanceof ConstructionElementInflectional) {
+                if (this.keyword_index[entry.lexeme.word.literal] != undefined) console.info('duplicates found');
                 this.keyword_index[entry.lexeme.word.literal] = i;
                 if (entry.lexeme.otherForms.length) {
                     for (let elem of entry.lexeme.otherForms) {
-                        if(this.keyword_index[elem.literal] != undefined) console.info('duplicates found')
+                        if (this.keyword_index[elem.literal] != undefined) console.info('duplicates found');
                         this.keyword_index[elem.literal] = i;
                     }
                 }
@@ -339,13 +339,13 @@ export class KeyWords {
     }
 
     private search(str: string) {
-        const serialno_i = this.keyword_index[str]
-        if(serialno_i >= 0) {
+        const serialno_i = this.keyword_index[str];
+        if (serialno_i >= 0) {
             // including index of value 0
-            return serialno_i
+            return serialno_i;
         } else {
             // undefined
-            return -1
+            return -1;
         }
     }
 
@@ -353,7 +353,7 @@ export class KeyWords {
         let serialno = this.search(str);
         if (serialno === -1) return undefined;
         const e = this.keyElems[serialno];
-        if(e instanceof ConstructionElementInflectional) e.matchFormFor(str);
+        if (e instanceof ConstructionElementInflectional) e.matchFormFor(str);
         return e;
     }
 

@@ -4,7 +4,8 @@ import { TonalSyllable } from './tonal/morpheme';
 
 export abstract class CombiningMetaplasm {}
 
-export class TonalCombiningMetaplasm extends CombiningMetaplasm { // TODO: abstraction
+export class TonalCombiningMetaplasm extends CombiningMetaplasm {
+    // TODO: abstraction
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }
@@ -12,11 +13,11 @@ export class TonalCombiningMetaplasm extends CombiningMetaplasm { // TODO: abstr
 
 export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
     applyToLetters(letters: Array<string>) {
-        letters.shift()
-        return letters        
+        letters.shift();
+        return letters;
     }
     applyToString(str: string) {
-        return str.slice(1, 2)
+        return str.slice(1, 2);
     }
 }
 

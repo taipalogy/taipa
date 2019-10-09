@@ -53,12 +53,12 @@ export class ClientOfTonalGenerator {
                     sounds.push(ls[k] + '.' + TonalSoundTags.nasalFinal);
                     if (ls.length > sounds.length) {
                         sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length);
-                    }        
+                    }
                 } else if (this.isStopFinal(ls[k])) {
                     sounds.push(ls[k] + '.' + TonalSoundTags.stopFinal);
                     if (ls.length > sounds.length) {
                         sounds = this.analyzeAfterStopFinal(ls, sounds, sounds.length);
-                    }                            
+                    }
                 }
                 k++;
             }
@@ -171,30 +171,30 @@ export class ClientOfTonalGenerator {
     }
 
     private genChecked(ltrs: string[]) {
-        const to_s = combiningRules.get(ltrs[ltrs.length-1]);
+        const to_s = combiningRules.get(ltrs[ltrs.length - 1]);
         let strs: Array<string[]> = new Array();
 
         strs.push(ltrs);
 
         //console.debug(to_s)
-        if(to_s) {
-            for(let i in to_s) {
-                let syl: string[] = new Array()
-                Object.assign(syl, ltrs)
-                syl.push(to_s[i].getLiteral())
-                strs.push(syl)
+        if (to_s) {
+            for (let i in to_s) {
+                let syl: string[] = new Array();
+                Object.assign(syl, ltrs);
+                syl.push(to_s[i].getLiteral());
+                strs.push(syl);
             }
         }
 
-        return strs
+        return strs;
     }
 
     generate(letters: string[]) {
-        let strs: Array<string[]> = new Array()
+        let strs: Array<string[]> = new Array();
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let entries: Array<Sound[]> = new Array(); // to be returned
 
-        if (this.isStopFinal(letters[letters.length-1])) {
+        if (this.isStopFinal(letters[letters.length - 1])) {
             strs = this.genChecked(letters);
         } else {
             strs.push(letters);
@@ -239,7 +239,7 @@ export class ClientOfTonalGenerator {
 
             arrayOfSounds.push(sounds);
         }
-        
+
         for (let k = 0; k < arrayOfSounds.length; k++) {
             entries.push(this.convert(arrayOfSounds[k]));
         }

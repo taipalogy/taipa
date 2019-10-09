@@ -24,23 +24,23 @@ export class KanaUncombiningMorpheme extends Morpheme {
 //------------------------------------------------------------------------------
 
 function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
-    const cog = new ClientOfKanaGenerator()
+    const cog = new ClientOfKanaGenerator();
     let literal = '';
     let matched = '';
-    let ltrs: Array<string> = new Array()
-    let matchedLtrs: Array<string> = new Array()
+    let ltrs: Array<string> = new Array();
+    let matchedLtrs: Array<string> = new Array();
 
-    for(let i = beginOfSyllable; i < letters.length; i++) {
+    for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
-        ltrs.push(letters[i].literal)
-        if(hiragana_katakana.has(literal)) {
+        ltrs.push(letters[i].literal);
+        if (hiragana_katakana.has(literal)) {
             matched = literal;
-            Object.assign(matchedLtrs, ltrs)
+            Object.assign(matchedLtrs, ltrs);
         }
     }
 
-    let list: Array<Sound[]> = new Array()
-    if(matched.length > 0) list = cog.generate(matchedLtrs);
+    let list: Array<Sound[]> = new Array();
+    if (matched.length > 0) list = cog.generate(matchedLtrs);
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
@@ -151,7 +151,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
             }
         }
     }
-    
+
     return mp;
 }
 

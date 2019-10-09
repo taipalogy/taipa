@@ -8,13 +8,13 @@ let doc = new Document();
 
 let stdin = process.openStdin();
 
-stdin.addListener("data", function(d) {
+stdin.addListener('data', function(d) {
     doc = cli.process(d.toString().trim());
     let rs = doc.relations;
 
-    if(rs.length > 0) {
-        for(let i=0; i<rs.length; i++) {
-            console.log(rs[i].dependency + ' (' + rs[i].head.surface + ', ' + rs[i].dependent.surface + ')')
+    if (rs.length > 0) {
+        for (let i = 0; i < rs.length; i++) {
+            console.log(rs[i].dependency + ' (' + rs[i].head.surface + ', ' + rs[i].dependent.surface + ')');
         }
     }
 });
