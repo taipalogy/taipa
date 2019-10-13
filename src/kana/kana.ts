@@ -417,7 +417,7 @@ export class SetOfGerminatedConsonants extends SetOfSounds {
     }
 }
 
-class SetOfSemivowels extends SetOfSounds {
+export class SetOfSemivowels extends SetOfSounds {
     semivowels: Array<Semivowel> = new Array();
     constructor() {
         super();

@@ -61,7 +61,7 @@ export class Kana extends AnalyzerWrapper {
 
     //getBlocks(ms: KanaUncombiningMorpheme[]) {
     getBlocks(ms: Morpheme[]): string[] {
-        // string one is hiragan, string two is katakana, string 3 is chouon
+        // string one is hiragana, string two is katakana, string 3 is chouon
         let kana_compositions: [string, string, string] = ['', '', ''];
         let previous = '';
 

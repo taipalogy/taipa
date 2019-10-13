@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator, hiragana_katakana } from './kana';
+import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator, hiragana_katakana, SetOfSemivowels } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 
 //------------------------------------------------------------------------------
@@ -137,6 +137,8 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         if (letters.length - beginOfSyllable > arraysOfLetters[longerEntry].length + 1) {
             if (
                 new SetOfVowels().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
+                true ||
+                new SetOfSemivowels().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
                 true
             ) {
                 // return the shorter one
