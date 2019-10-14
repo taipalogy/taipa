@@ -819,3 +819,6 @@ export const hiragana_katakana: Map<string, Array<string>> = new Map()
 export const kogakimoji: Map<string, Array<string>> = new Map().set('chu', ['っ', 'ッ']);
 
 export const hatsuon: Map<string, Array<string>> = new Map().set('n', ['ん', 'ン']);
+
+export const gailaigo: Map<string, Array<string>> = new Map()
+    .set('di', ['でぃ', 'ディ'])

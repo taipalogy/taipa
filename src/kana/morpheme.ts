@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator, hiragana_katakana, SetOfSemivowels } from './kana';
+import { SetOfInitialConsonants, SetOfVowels, Hatsuon, ClientOfKanaGenerator, hiragana_katakana, SetOfSemivowels, gailaigo } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 
 //------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
         ltrs.push(letters[i].literal);
-        if (hiragana_katakana.has(literal)) {
+        if (hiragana_katakana.has(literal) || gailaigo.has(literal)) {
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
         }

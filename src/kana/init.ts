@@ -10,6 +10,7 @@ import {
     SetOfGerminatedConsonants,
     SetOfInitialConsonants,
     hatsuon,
+    gailaigo,
 } from './kana';
 import { Morpheme } from '../morpheme';
 
@@ -59,7 +60,6 @@ export class Kana extends AnalyzerWrapper {
         return false;
     }
 
-    //getBlocks(ms: KanaUncombiningMorpheme[]) {
     getBlocks(ms: Morpheme[]): string[] {
         // string one is hiragana, string two is katakana, string 3 is chouon
         let kana_compositions: [string, string, string] = ['', '', ''];
@@ -67,6 +67,9 @@ export class Kana extends AnalyzerWrapper {
 
         for (let e of ms) {
             let ks = hiragana_katakana.get(e.syllable.literal);
+            if(ks == undefined) {
+                ks = gailaigo.get(e.syllable.literal);
+            }
             if (ks != undefined && ks[0] != undefined) {
                 // in case the kana is absent, we check against ks[0]
                 kana_compositions[0] += ks[0];
