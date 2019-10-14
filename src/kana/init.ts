@@ -60,16 +60,26 @@ export class Kana extends AnalyzerWrapper {
         return false;
     }
 
+    private lookup(str: string) {
+        let results = hiragana_katakana.get(str);
+        if(results == undefined) {
+            results = gailaigo.get(str);
+        }
+        return results;
+    }
+
     getBlocks(ms: Morpheme[]): string[] {
         // string one is hiragana, string two is katakana, string 3 is chouon
         let kana_compositions: [string, string, string] = ['', '', ''];
         let previous = '';
 
         for (let e of ms) {
-            let ks = hiragana_katakana.get(e.syllable.literal);
+            /*let ks = hiragana_katakana.get(e.syllable.literal);
             if(ks == undefined) {
                 ks = gailaigo.get(e.syllable.literal);
             }
+            */
+            let ks = this.lookup(e.syllable.literal);
             if (ks != undefined && ks[0] != undefined) {
                 // in case the kana is absent, we check against ks[0]
                 kana_compositions[0] += ks[0];
@@ -89,7 +99,13 @@ export class Kana extends AnalyzerWrapper {
             } else if (
                 new SetOfFinalConsonants().beginWith(e.syllable.literal[e.syllable.literal.length - 1]) == true
             ) {
+                /*
                 ks = hiragana_katakana.get(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
+                if(ks == undefined) {
+                    ks = gailaigo.get(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
+                }
+                */
+                ks = this.lookup(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
                 if (ks != undefined && ks[0] != undefined) {
                     kana_compositions[0] += ks[0];
                     kana_compositions[1] += ks[1];
