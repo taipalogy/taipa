@@ -32,6 +32,7 @@ export class Kana extends AnalyzerWrapper {
         let duplicates = [];
 
         for (let e of letterClasses.values()) {
+            if(e.no != e.map.size) console.debug(`size unmatched for ${e.name}`);
             arr.push(e.name);
         }
 
@@ -53,7 +54,7 @@ export class Kana extends AnalyzerWrapper {
         }
     }
 
-    checkChouon(previousLetter: string, nextLetter: string): boolean {
+    private checkChouon(previousLetter: string, nextLetter: string): boolean {
         if (previousLetter === nextLetter) return true;
         if (previousLetter === 'e' && nextLetter === 'i') return true;
         if (previousLetter === 'o' && nextLetter === 'u') return true;
@@ -74,11 +75,6 @@ export class Kana extends AnalyzerWrapper {
         let previous = '';
 
         for (let e of ms) {
-            /*let ks = hiragana_katakana.get(e.syllable.literal);
-            if(ks == undefined) {
-                ks = gailaigo.get(e.syllable.literal);
-            }
-            */
             let ks = this.lookup(e.syllable.literal);
             if (ks != undefined && ks[0] != undefined) {
                 // in case the kana is absent, we check against ks[0]
@@ -99,12 +95,6 @@ export class Kana extends AnalyzerWrapper {
             } else if (
                 new SetOfFinalConsonants().beginWith(e.syllable.literal[e.syllable.literal.length - 1]) == true
             ) {
-                /*
-                ks = hiragana_katakana.get(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
-                if(ks == undefined) {
-                    ks = gailaigo.get(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
-                }
-                */
                 ks = this.lookup(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
                 if (ks != undefined && ks[0] != undefined) {
                     kana_compositions[0] += ks[0];

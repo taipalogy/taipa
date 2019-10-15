@@ -225,6 +225,7 @@ interface IPositionalSound {
 export class PositionalSound implements IPositionalSound {
     name: string = '';
     map: Map<string, Sound> = new Map();
+    no: number = 0;
     get(key: string) {
         let snd = this.map.get(key);
         if (snd) return snd;
