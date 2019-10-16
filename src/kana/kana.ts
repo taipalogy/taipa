@@ -85,16 +85,16 @@ export class ClientOfKanaGenerator {
         return ret;
     }
 
-    private genSokuonAndGerminated(ltrs: string[]) {
+    private genSokuonAndGerminated(letters: string[], lookahead: string) {
         let strs: Array<string[]> = new Array();
 
-        strs.push(ltrs);
+        strs.push(letters);
 
         // consonant germination
-        if (new SetOfGerminatedConsonants().beginWith(ltrs[0]) == true) {
+        if (new SetOfGerminatedConsonants().beginWith(letters[0]) == true) {
             let syl: string[] = new Array();
-            syl.push(ltrs[0].charAt(0));
-            for (let e of ltrs) {
+            syl.push(letters[0].charAt(0));
+            for (let e of letters) {
                 syl.push(e);
             }
             strs.push(syl);
@@ -104,20 +104,20 @@ export class ClientOfKanaGenerator {
         let fcs = new SetOfFinalConsonants();
         for (let e of fcs.finalConsonants) {
             let syl: string[] = new Array();
-            Object.assign(syl, ltrs);
+            Object.assign(syl, letters);
             syl.push(e.getLiteral());
-            strs.push(syl);
+            if(e.getLiteral() === lookahead) strs.push(syl);
         }
 
         return strs;
     }
 
-    generate(letters: string[]) {
+    generate(letters: string[], lookahead: string) { // TODO: pass one look-ahead letter for generating the final sound
         let strs: Array<string[]> = new Array();
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let entries: Array<Sound[]> = new Array(); // to be returned
 
-        strs = this.genSokuonAndGerminated(letters);
+        strs = this.genSokuonAndGerminated(letters, lookahead);
 
         for (let i in strs) {
             // generates all needed sounds to be processed

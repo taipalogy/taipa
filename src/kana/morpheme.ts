@@ -27,8 +27,10 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     const cog = new ClientOfKanaGenerator();
     let literal = '';
     let matched = '';
+    let lookahead = '';
     let ltrs: Array<string> = new Array();
     let matchedLtrs: Array<string> = new Array();
+    const sov = new SetOfVowels()
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -36,11 +38,19 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         if (hiragana_katakana.has(literal) || gailaigo.has(literal)) {
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
+            if(i + 1 < letters.length) lookahead = letters[i + 1].literal; // look-ahead
+        } else {
+            if(literal.length == 3 && literal[0] === literal[1] && sov.beginWith(literal[2])) {
+                // for consonant germination of sokuon
+                matched = literal;
+                ltrs.shift(); // shift the germinated consonants
+                Object.assign(matchedLtrs, ltrs);
+            }
         }
     }
 
     let list: Array<Sound[]> = new Array();
-    if (matched.length > 0) list = cog.generate(matchedLtrs);
+    if (matched.length > 0) list = cog.generate(matchedLtrs, lookahead);
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
