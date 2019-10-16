@@ -112,7 +112,7 @@ export class ClientOfKanaGenerator {
         return strs;
     }
 
-    generate(letters: string[], lookahead: string) { // TODO: pass one look-ahead letter for generating the final sound
+    generate(letters: string[], lookahead: string) {
         let strs: Array<string[]> = new Array();
         let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
         let entries: Array<Sound[]> = new Array(); // to be returned
@@ -541,7 +541,7 @@ class PSG extends PositionalSound {
         this.no = 3;
         this.map = new Map<string, Sound>()
             .set(KanaSoundTags.initialConsonant, new InitialConsonantG())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantG()) // TODO: need to check for duplicated keys
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantG())
             .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantG());
     }
 }

@@ -18,7 +18,8 @@ export class Kana extends AnalyzerWrapper {
     constructor() {
         super(new KanaAnalyzer());
         this.checkSize();
-        this.findDuplicates();
+        //this.findDuplicates();
+        this.findDuplicates(letterClasses);
     }
 
     private checkSize() {
@@ -26,7 +27,7 @@ export class Kana extends AnalyzerWrapper {
             console.log('sizes unmatched');
         }
     }
-
+/*
     private findDuplicates() {
         let arr: string[] = [];
         let duplicates = [];
@@ -53,7 +54,7 @@ export class Kana extends AnalyzerWrapper {
             console.log(duplicates);
         }
     }
-
+*/
     private checkChouon(previousLetter: string, nextLetter: string): boolean {
         if (previousLetter === nextLetter) return true;
         if (previousLetter === 'e' && nextLetter === 'i') return true;

@@ -557,6 +557,7 @@ class PSA extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.a;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialA());
     }
 }
@@ -565,6 +566,7 @@ class PSB extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.b;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialB());
     }
 }
@@ -573,6 +575,7 @@ class PSC extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.c;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialC());
     }
 }
@@ -581,6 +584,7 @@ class PSCH extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.ch;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialCH());
     }
 }
@@ -589,6 +593,7 @@ class PSD extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.d;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialD());
     }
 }
@@ -597,6 +602,7 @@ class PSE extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.e;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialE());
     }
 }
@@ -605,9 +611,10 @@ class PSF extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.f;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.checkedTonal, new CheckedTonalF())
-            .set(TonalSoundTags.freeTonal, new TonalF()); // TODO: add tests to check the size of the map
+            .set(TonalSoundTags.freeTonal, new TonalF());
     }
 }
 
@@ -615,6 +622,7 @@ class PSG extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.g;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialG());
     }
 }
@@ -623,6 +631,7 @@ class PSHH extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.hh;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalHH());
     }
 }
@@ -631,6 +640,7 @@ class PSI extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.i;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialI());
     }
 }
@@ -639,6 +649,7 @@ class PSJ extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.j;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialJ());
     }
 }
@@ -647,6 +658,7 @@ class PSK extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.k;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialK())
             .set(TonalSoundTags.stopFinal, new FinalK());
@@ -657,6 +669,7 @@ class PSKK extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.kk;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalKK());
     }
 }
@@ -665,6 +678,7 @@ class PSL extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.l;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialL());
     }
 }
@@ -673,6 +687,7 @@ class PSM extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.m;
+        this.no = 3;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialM())
             .set(TonalSoundTags.medial, new MaterLectionisM())
@@ -684,6 +699,7 @@ class PSN extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.n;
+        this.no = 3;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialN())
             .set(TonalSoundTags.medial, new MaterLectionisN())
@@ -695,6 +711,7 @@ class PSNN extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.nn;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.nasalization, new NasalizationNN());
     }
 }
@@ -703,6 +720,7 @@ class PSNG extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.ng;
+        this.no = 3;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialNG())
             .set(TonalSoundTags.medial, new MaterLectionisNG())
@@ -714,6 +732,7 @@ class PSO extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.o;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialO());
     }
 }
@@ -722,6 +741,7 @@ class PSP extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.p;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialP())
             .set(TonalSoundTags.stopFinal, new FinalP());
@@ -732,6 +752,7 @@ class PSPP extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.pp;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalPP());
     }
 }
@@ -740,6 +761,7 @@ class PSQ extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.q;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialQ());
     }
 }
@@ -748,6 +770,7 @@ class PSH extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.h;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialH())
             .set(TonalSoundTags.stopFinal, new FinalH());
@@ -758,6 +781,7 @@ class PSS extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.s;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialS());
     }
 }
@@ -766,6 +790,7 @@ class PST extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.t;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.initial, new InitialT())
             .set(TonalSoundTags.stopFinal, new FinalT());
@@ -776,6 +801,7 @@ class PSTT extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.tt;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalTT());
     }
 }
@@ -784,6 +810,7 @@ class PSU extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.u;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialU());
     }
 }
@@ -792,6 +819,7 @@ class PSUR extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.ur;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialUR());
     }
 }
@@ -800,6 +828,7 @@ class PSV extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.v;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialV());
     }
 }
@@ -808,6 +837,7 @@ class PSW extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.w;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.freeTonal, new TonalW())
             .set(TonalSoundTags.checkedTonal, new CheckedTonalW());
@@ -818,6 +848,7 @@ class PSX extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.x;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.freeTonal, new FreeTonalX())
             .set(TonalSoundTags.checkedTonal, new CheckedTonalX());
@@ -828,6 +859,7 @@ class PSXX extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.xx;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXX());
     }
 }
@@ -836,6 +868,7 @@ class PSXXX extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.xxx;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXXX());
     }
 }
@@ -844,6 +877,7 @@ class PSY extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.y;
+        this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.freeTonal, new FreeTonalY())
             .set(TonalSoundTags.checkedTonal, new CheckedTonalY());
@@ -854,6 +888,7 @@ class PSZ extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.z;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZ());
     }
 }
@@ -862,6 +897,7 @@ class PSZX extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.zx;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZX());
     }
 }
@@ -870,6 +906,7 @@ class PSZero extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.zero;
+        this.no = 1;
         this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new ZeroTonal());
     }
 }
@@ -927,7 +964,7 @@ class CombiningRules {
 }
 
 export const combiningRules = new CombiningRules();
-
+/*
 class LetterClasses {
     private o: Map<string, PositionalSound> = new Map();
 
@@ -981,6 +1018,44 @@ class LetterClasses {
 }
 
 export const letterClasses = new LetterClasses();
+*/
+export const letterClasses: Map<string, PositionalSound> = new Map()
+    .set(TonalLetterTags.a, new PSA())
+    .set(TonalLetterTags.b, new PSB())
+    .set(TonalLetterTags.c, new PSC())
+    .set(TonalLetterTags.ch, new PSCH())
+    .set(TonalLetterTags.d, new PSD())
+    .set(TonalLetterTags.e, new PSE())
+    .set(TonalLetterTags.f, new PSF())
+    .set(TonalLetterTags.g, new PSG())
+    .set(TonalLetterTags.h, new PSH())
+    .set(TonalLetterTags.hh, new PSHH())
+    .set(TonalLetterTags.i, new PSI())
+    .set(TonalLetterTags.j, new PSJ())
+    .set(TonalLetterTags.k, new PSK())
+    .set(TonalLetterTags.kk, new PSKK())
+    .set(TonalLetterTags.l, new PSL())
+    .set(TonalLetterTags.m, new PSM())
+    .set(TonalLetterTags.n, new PSN())
+    .set(TonalLetterTags.nn, new PSNN())
+    .set(TonalLetterTags.ng, new PSNG())
+    .set(TonalLetterTags.o, new PSO())
+    .set(TonalLetterTags.p, new PSP())
+    .set(TonalLetterTags.pp, new PSPP())
+    .set(TonalLetterTags.q, new PSQ())
+    .set(TonalLetterTags.s, new PSS())
+    .set(TonalLetterTags.t, new PST())
+    .set(TonalLetterTags.tt, new PSTT())
+    .set(TonalLetterTags.u, new PSU())
+    .set(TonalLetterTags.ur, new PSUR())
+    .set(TonalLetterTags.v, new PSV())
+    .set(TonalLetterTags.w, new PSW())
+    .set(TonalLetterTags.x, new PSX())
+    .set(TonalLetterTags.xx, new PSXX())
+    .set(TonalLetterTags.xxx, new PSXXX())
+    .set(TonalLetterTags.y, new PSY())
+    .set(TonalLetterTags.z, new PSZ())
+    .set(TonalLetterTags.zx, new PSZX());
 
 //------------------------------------------------------------------------------
 
