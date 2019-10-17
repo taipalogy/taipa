@@ -322,6 +322,12 @@ class VowelU extends Vowel {
     characters = this.makeCharacters(KanaLetterTags.u);
 }
 
+class FinalConsonantB extends FinalConsonant {
+    characters = this.makeCharacters(KanaLetterTags.b);
+}
+class FinalConsonantD extends FinalConsonant {
+    characters = this.makeCharacters(KanaLetterTags.d);
+}
 class FinalConsonantG extends FinalConsonant {
     characters = this.makeCharacters(KanaLetterTags.g);
 }
@@ -344,8 +350,14 @@ class FinalConsonantT extends FinalConsonant {
     characters = this.makeCharacters(KanaLetterTags.t);
 }
 
+class GerminatedConsonantB extends GerminatedConsonant {
+    characters = this.makeCharacters(KanaLetterTags.b);
+}
 class GerminatedConsonantC extends GerminatedConsonant {
     characters = this.makeCharacters(KanaLetterTags.c);
+}
+class GerminatedConsonantD extends GerminatedConsonant {
+    characters = this.makeCharacters(KanaLetterTags.d);
 }
 class GerminatedConsonantG extends GerminatedConsonant {
     characters = this.makeCharacters(KanaLetterTags.g);
@@ -412,7 +424,9 @@ export class SetOfGerminatedConsonants extends SetOfSounds {
     theGerminated: Array<GerminatedConsonant> = new Array();
     constructor() {
         super();
+        this.theGerminated.push(new GerminatedConsonantB());
         this.theGerminated.push(new GerminatedConsonantC());
+        this.theGerminated.push(new GerminatedConsonantD());
         this.theGerminated.push(new GerminatedConsonantG());
         this.theGerminated.push(new GerminatedConsonantK());
         this.theGerminated.push(new GerminatedConsonantP());
@@ -442,6 +456,8 @@ export class SetOfFinalConsonants extends SetOfSounds {
     finalConsonants: Array<FinalConsonant> = new Array();
     constructor() {
         super();
+        this.finalConsonants.push(new FinalConsonantB());
+        this.finalConsonants.push(new FinalConsonantD());
         this.finalConsonants.push(new FinalConsonantG());
         this.finalConsonants.push(new FinalConsonantK());
         this.finalConsonants.push(new FinalConsonantN());
@@ -482,8 +498,11 @@ class PSB extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.b;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantB());
+        this.no = 3;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantB())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantB())
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantB());
     }
 }
 
@@ -511,8 +530,11 @@ class PSD extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.d;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantD());
+        this.no = 3;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.initialConsonant, new InitialConsonantD())
+            .set(KanaSoundTags.finalConsonant, new FinalConsonantD())
+            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantD());
     }
 }
 

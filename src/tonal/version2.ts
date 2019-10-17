@@ -964,61 +964,7 @@ class CombiningRules {
 }
 
 export const combiningRules = new CombiningRules();
-/*
-class LetterClasses {
-    private o: Map<string, PositionalSound> = new Map();
 
-    constructor() {
-        this.o
-            .set(TonalLetterTags.a, new PSA())
-            .set(TonalLetterTags.b, new PSB())
-            .set(TonalLetterTags.c, new PSC())
-            .set(TonalLetterTags.ch, new PSCH())
-            .set(TonalLetterTags.d, new PSD())
-            .set(TonalLetterTags.e, new PSE())
-            .set(TonalLetterTags.f, new PSF())
-            .set(TonalLetterTags.g, new PSG())
-            .set(TonalLetterTags.h, new PSH())
-            .set(TonalLetterTags.hh, new PSHH())
-            .set(TonalLetterTags.i, new PSI())
-            .set(TonalLetterTags.j, new PSJ())
-            .set(TonalLetterTags.k, new PSK())
-            .set(TonalLetterTags.kk, new PSKK())
-            .set(TonalLetterTags.l, new PSL())
-            .set(TonalLetterTags.m, new PSM())
-            .set(TonalLetterTags.n, new PSN())
-            .set(TonalLetterTags.nn, new PSNN())
-            .set(TonalLetterTags.ng, new PSNG())
-            .set(TonalLetterTags.o, new PSO())
-            .set(TonalLetterTags.p, new PSP())
-            .set(TonalLetterTags.pp, new PSPP())
-            .set(TonalLetterTags.q, new PSQ())
-            .set(TonalLetterTags.s, new PSS())
-            .set(TonalLetterTags.t, new PST())
-            .set(TonalLetterTags.tt, new PSTT())
-            .set(TonalLetterTags.u, new PSU())
-            .set(TonalLetterTags.ur, new PSUR())
-            .set(TonalLetterTags.v, new PSV())
-            .set(TonalLetterTags.w, new PSW())
-            .set(TonalLetterTags.x, new PSX())
-            .set(TonalLetterTags.xx, new PSXX())
-            .set(TonalLetterTags.xxx, new PSXXX())
-            .set(TonalLetterTags.y, new PSY())
-            .set(TonalLetterTags.z, new PSZ())
-            .set(TonalLetterTags.zx, new PSZX());
-    }
-
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return new PositionalSound();
-    }
-}
-
-export const letterClasses = new LetterClasses();
-*/
 export const letterClasses: Map<string, PositionalSound> = new Map()
     .set(TonalLetterTags.a, new PSA())
     .set(TonalLetterTags.b, new PSB())
