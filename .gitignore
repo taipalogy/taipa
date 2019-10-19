@@ -5,6 +5,7 @@ coverage
 lib
 node_modules
 *.js.map
+npxbin.js
 
 # Mac OS X
 .DS_Store
