@@ -388,6 +388,7 @@ export class KeyWords {
 
             this.makeParticle('qahf'),
             this.makeParticle('siongw'),
+            this.makeParticle('long')
         ];
     }
 }

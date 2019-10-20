@@ -95,14 +95,17 @@ export class RuleBasedTagger {
                 let kw = rs.matchKeyWords(sequence[0]);
 
                 if (kw) {
+                    //console.log(kw)
                     if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
                     else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
+                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADPR;
 
                     pats = [new ConstructionOfPhrase()]; // TODO: can keyword be wrapped in something else
                     pats[0].elements.push(kw);
                     break;
                 } else {
+                    //console.log(sequence)
                 }
             }
         }

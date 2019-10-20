@@ -111,7 +111,7 @@ class SetOfVerbWithEnclitic {
     }
 
     private populateVerbs() {
-        this.verbs.push(new VerbWithEnclitic(new Verb(), this.makeEnclitic('aw')));
+        this.verbs.push(new VerbWithEnclitic(new VerbSurface(), this.makeEnclitic('aw')));
     }
 }
 

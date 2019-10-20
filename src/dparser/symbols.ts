@@ -85,4 +85,5 @@ export enum Tagset {
     AUX = 'AUX', // auxiliary
     PPV = 'PPV', // particle of phrasal verb
     ENC = 'ENC', // enclitic
+    ADPR = 'ADPR' // adverbial particle
 }
