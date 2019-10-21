@@ -160,7 +160,10 @@ export class Rules {
     }
 
     matchKeyWords(str: string) {
-        return this.keyWords.get(str);
+        let ret = this.keyWords.get(str); // to be deleted
+        if(ret) return ret; // to be deleted
+        ret = this.keyWords.getSurface(str);
+        return ret;
     }
 
     matches(sequence: string[]) {

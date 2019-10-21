@@ -59,7 +59,7 @@ export class RuleBasedTagger {
                     pat.partOfSpeech === POSTags.verb &&
                     pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
                 ) {
-                    //console.log('hit')
+                    //console.log('something else hit')
                 }
 
                 cps.push(pat);
@@ -99,9 +99,9 @@ export class RuleBasedTagger {
                     if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
                     else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADPR;
+                    else if (kw.pos === POSTags.adposition) kw.tag = Tagset.ADVP;
 
-                    pats = [new ConstructionOfPhrase()]; // TODO: can keyword be wrapped in something else
+                    pats = [new ConstructionOfPhrase()]; // TODO: can keywords be wrapped in something else
                     pats[0].elements.push(kw);
                     break;
                 } else {
@@ -160,7 +160,7 @@ export class RuleBasedTagger {
                     for (let w in matchedPW.elems) {
                         this.ces.push(matchedPW.elems[w]);
                     }
-                    //console.log(mpw);
+                    //console.log(matchedPW);
                     matchedPW.elems = [];
                 }
             }

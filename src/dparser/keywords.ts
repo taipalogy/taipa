@@ -248,6 +248,14 @@ export class ParticleSurface extends ConstructionElement {
     }
 }
 
+export class AdpositionSurface extends ConstructionElement {
+    constructor(str: string) {
+        super();
+        this.pos = POSTags.adposition;
+        if (str) this.surface = str;
+    }
+}
+
 class CaseMarker {}
 
 export type PartsOfSpeech = Copula | Demonstrative | Noun | Verb;
@@ -330,6 +338,11 @@ export class KeyWords {
         return ret;
     }
 
+    private makeAdpositionSurface(str: string): ParticleSurface {
+        let ret = new AdpositionSurface(str);
+        return ret;
+    }
+
     private makeEncliticSurface(str: string): EncliticSurface {
         //let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining());
         //let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
@@ -355,6 +368,10 @@ export class KeyWords {
         const e = this.keyElems[serialno];
         if (e instanceof ConstructionElementInflectional) e.matchFormFor(str);
         return e;
+    }
+
+    getSurface(str: string) {
+        for(let i in this.keyElems) if(this.keyElems[i].surface === str) return this.keyElems[i];
     }
 
     private populateKeyElems() {
@@ -388,7 +405,8 @@ export class KeyWords {
 
             this.makeParticle('qahf'),
             this.makeParticle('siongw'),
-            this.makeParticle('long')
+            //this.makeParticle('long')
+            this.makeAdpositionSurface('long')
         ];
     }
 }

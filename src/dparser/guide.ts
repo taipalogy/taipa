@@ -13,14 +13,14 @@ export class Guide {
         this.transitions.push(new Shift());
     }
 
-    private rightArc(lbl: DependencyLabels) {
+    private rightArc(label: DependencyLabels) {
         this.transitions.push(new RightArc());
-        return new Relation(lbl, this.s2, this.s1);
+        return new Relation(label, this.s2, this.s1);
     }
 
-    private leftArc(lbl: DependencyLabels) {
+    private leftArc(label: DependencyLabels) {
         this.transitions.push(new LeftArc());
-        return new Relation(lbl, this.s1, this.s2);
+        return new Relation(label, this.s1, this.s2);
     }
 
     private isQueueEmpty(c: Configuration<ConstructionElement>) {
@@ -49,8 +49,9 @@ export class Guide {
         else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.DT) this.shift();
         else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.ENC) this.shift();
         else if (this.s1.tag === Tagset.AUX && this.b1.tag === Tagset.VB) this.shift();
+        //else if (this.s1.tag === Tagset.ADVP && this.b1.tag === Tagset.VB) this.shift();
         
-        else if (this.b1.tag === Tagset.ADPR) this.shift();
+        else if (this.b1.tag === Tagset.ADVP) this.shift();
         
         else if (this.isQueueEmpty(c)) {
             if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PPV) {
@@ -65,8 +66,8 @@ export class Guide {
                 c.relations.push(this.leftArc(DependencyLabels.obj));
             } else if (this.s2.tag === Tagset.AUX && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.aux));
-            } else if (this.s2.tag === Tagset.ADPR && this.s1.tag === Tagset.VB) {
-                c.relations.push(this.leftArc(DependencyLabels.advmod));
+            } else if (this.s2.tag === Tagset.ADVP && this.s1.tag === Tagset.VB) {
+                c.relations.push(this.leftArc(DependencyLabels.case));
             } else if (this.isStackEmpty(c)) {
                 c.relations.push(this.rightArc(DependencyLabels.root));
             }
