@@ -99,7 +99,7 @@ export class RuleBasedTagger {
                     if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
                     else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-                    else if (kw.pos === POSTags.adposition) kw.tag = Tagset.ADVP;
+                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADVP;
 
                     pats = [new ConstructionOfPhrase()]; // TODO: can keywords be wrapped in something else
                     pats[0].elements.push(kw);
