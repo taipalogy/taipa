@@ -200,6 +200,14 @@ export class Demonstrative extends ConstructionElementInflectional {
     }
 }
 
+export class DemonstrativeSurface extends ConstructionElement {
+    constructor(str?: string) {
+        super();
+        if (str) this.surface = str;
+        this.pos = POSTags.determiner;
+    }
+}
+
 export class Adjective extends ConstructionElementInflectional {
     constructor() {
         super();
@@ -290,6 +298,11 @@ export class KeyWords {
         return ret;
     }
 
+    private makeDemonstrativeSurface(str: string): DemonstrativeSurface {
+        let ret = new DemonstrativeSurface(str);
+        return ret;
+    }
+
     private makeVerb(str: string): Verb {
         let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalCombiningForms());
         let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
@@ -368,15 +381,16 @@ export class KeyWords {
 
     private populateKeyElems() {
         this.keyElems = [
-            this.makeDemonstrative('che'),
-            this.makeDemonstrative('he'),
+            //this.makeDemonstrative('che'),
+            this.makeDemonstrativeSurface('che'),
+//            this.makeDemonstrative('he'),
 
             this.makePersonalPronoun(PersonalPronouns.FirstSingular),
 
             this.makeCopula('siz'),
 
             this.makeNoun('langx'),
-
+/*
             this.makeVerb('kiw'),
 
             this.makeAuxiliary('qaz'),
@@ -394,7 +408,7 @@ export class KeyWords {
             this.makeParticle('chit'),
             this.makeParticle('cheh'),
             this.makeParticle('diurh'),
-
+*/
             this.makeParticle('qahf'),
             this.makeParticle('siongw'),
             //this.makeParticle('long')

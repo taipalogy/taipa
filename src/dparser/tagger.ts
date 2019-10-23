@@ -13,6 +13,7 @@ import {
     EncliticSurface,
     ParticleSurface,
     VerbSurface,
+    DemonstrativeSurface,
 } from './keywords';
 import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
@@ -96,8 +97,8 @@ export class RuleBasedTagger {
 
                 if (kw) {
                     //console.log(kw)
-                    if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
-                    else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
+                    if (kw.pos === POSTags.pronoun) kw.tag = Tagset.PRP;
+                    else if (kw.pos === POSTags.determiner) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADVP;
 

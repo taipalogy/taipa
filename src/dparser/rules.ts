@@ -162,6 +162,7 @@ export class Rules {
     matchKeyWords(str: string) {
         let ret = this.keyWords.get(str); // to be deleted
         if(ret) return ret; // to be deleted
+        
         ret = this.keyWords.getSurface(str);
         return ret;
     }

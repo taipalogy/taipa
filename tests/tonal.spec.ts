@@ -72,7 +72,7 @@ describe("Tonal testing", () => {
     let cli = new Client()
     let doc = new Document()
 
-    doc = cli.processTonal('daizjittwvunfdeyqok');
+    doc = cli.processTonal('daiwjittwvunfdeyqok');
 
     test("check the tonal affix", () => {
         expect(doc.soundSequences[2][3].getLiteral()).toEqual(TonalLetterTags.f);
