@@ -127,6 +127,14 @@ export class PersonalPronoun2To137 extends ConstructionElementInflectional {
     }
 }
 
+class PersonalPronounSurface extends ConstructionElement {
+    constructor(str?: string) {
+        super();
+        if (str) this.surface = str;
+        this.pos = POSTags.pronoun;
+    }
+}
+
 export class PersonalPronoun1To37 extends ConstructionElementInflectional {
     constructor() {
         super();
@@ -290,6 +298,11 @@ export class KeyWords {
         return ret;
     }
 
+    private makePersonalPronounSurface(str: string) {
+        let ret = new PersonalPronounSurface(str);
+        return ret;
+    }
+
     private makeDemonstrative(str: string): Demonstrative {
         let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(str, new TonalZeroCombining());
         let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
@@ -385,11 +398,13 @@ export class KeyWords {
             this.makeDemonstrativeSurface('che'),
 //            this.makeDemonstrative('he'),
 
-            this.makePersonalPronoun(PersonalPronouns.FirstSingular),
-
+            //this.makePersonalPronoun(PersonalPronouns.FirstSingular),
+            this.makePersonalPronounSurface('goa'),
+/*
             this.makeCopula('siz'),
 
             this.makeNoun('langx'),
+*/
 /*
             this.makeVerb('kiw'),
 

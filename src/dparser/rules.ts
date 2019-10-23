@@ -1,5 +1,5 @@
 import {
-    ConstructionElementInflectional,
+    //ConstructionElementInflectional,
     Verb,
     PersonalPronoun,
     Copula,
@@ -24,15 +24,15 @@ import { TonalInflexion } from './lexeme';
 import { Phraseme } from '../phraseme';
 import { POSTags, Tagset } from './symbols';
 
-export class ConstructionOfPhrase {
+export class ConstructionOfSpeech {
     partOfSpeech: string = '';
     elements: Array<ConstructionElement> = new Array();
 }
 
-export class ConstructionOfPhraseInflectional extends ConstructionOfPhrase {
-    phraseme: Phraseme = new Phraseme();
+export class ConstructionOfPhraseInflectional extends ConstructionOfSpeech {
+    //phraseme: Phraseme = new Phraseme();
 
-    constructor(arr: Array<PartsOfSpeech>) {
+    constructor(arr: Array<ConstructionElement>) {
         super();
         for (let key in arr) {
             this.elements.push(arr[key]);
@@ -45,13 +45,13 @@ class ParticlePhrase {}
 class VerbPhrase extends ConstructionOfPhraseInflectional {}
 
 export class PhrasalVerb extends VerbPhrase {
-    constructor(arr: Array<ConstructionElementInflectional>) {
+    constructor(arr: Array<ConstructionElement>) {
         super(arr);
         this.partOfSpeech = POSTags.verb;
     }
 }
 
-class VerbPhraseSurface extends ConstructionOfPhrase {
+class VerbPhraseSurface extends ConstructionOfSpeech {
     constructor() {
         super();
         this.partOfSpeech = POSTags.verb;
@@ -94,7 +94,9 @@ class SetOfPhrasalVerbs {
     }
 
     private populatePhrasalVerbs() {
-        this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]));
+        //this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]));
+        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koannw'), new ParticleSurface('diurh')]))
+        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koanny'), new ParticleSurface('diurhhw')]))
     }
 }
 
@@ -118,6 +120,7 @@ class SetOfVerbWithEnclitic {
 class Span {}
 
 export class Chunk {
+    /*
     constructions: Array<ConstructionOfPhraseInflectional> = [];
 
     constructor() {
@@ -141,10 +144,11 @@ export class Chunk {
 
         this.constructions.push(new ConstructionOfPhraseInflectional([transitive, proceeding, intransitive]));
     }
+    */
 }
 
 export class Rules {
-    private patterns: Array<ConstructionOfPhrase[]> = new Array();
+    private patterns: Array<ConstructionOfSpeech[]> = new Array();
     protected keyWords: KeyWords = new KeyWords();
 
     constructor() {
@@ -152,19 +156,19 @@ export class Rules {
         this.populatePhrasalVerbs();
         this.populateVerbWithEnclitics();
     }
-
+/*
     protected get(str: string) {
         const kw = this.keyWords.get(str);
         if (kw && kw instanceof ConstructionElementInflectional) return kw.clone();
         else return undefined;
     }
-
+*/
     matchKeyWords(str: string) {
-        let ret = this.keyWords.get(str); // to be deleted
-        if(ret) return ret; // to be deleted
+        //let ret = this.keyWords.get(str); // to be deleted
+        //if(ret) return ret; // to be deleted
         
-        ret = this.keyWords.getSurface(str);
-        return ret;
+        let ret2 = this.keyWords.getSurface(str);
+        return ret2;
     }
 
     matches(sequence: string[]) {
@@ -178,6 +182,7 @@ export class Rules {
             }
 
             for (let i = 0; i < elems.length; i++) {
+                /*
                 if (elems[i] instanceof ConstructionElementInflectional) {
                     if ((<ConstructionElementInflectional>elems[i]).matchFormFor(sequence[i])) {
                         if (elems[i].surface === '' || elems[i].surface === sequence[i]) {
@@ -186,7 +191,8 @@ export class Rules {
                             }
                         }
                     }
-                } else if (elems[i] instanceof ConstructionElement) {
+                } else */
+                if (elems[i] instanceof ConstructionElement) {
                     if (i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
                         return pat;
                     }
@@ -216,12 +222,14 @@ export class Rules {
 
     private populatePatterns() {
         // copula
+        /*
         this.patterns.push([
             new ConstructionOfPhraseInflectional([new PersonalPronoun()]),
             new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
             new ConstructionOfPhraseInflectional([new Noun()]),
         ]);
-
+        */
+/*
         this.patterns.push([
             new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
             new ConstructionOfPhraseInflectional([new Adjective()]),
@@ -232,8 +240,9 @@ export class Rules {
             new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
             new ConstructionOfPhraseInflectional([<Noun>this.get('langx')]),
         ]);
-
+*/
         // phrasal verb
+        /*
         this.patterns.push([new ConstructionOfPhraseInflectional([new Verb(), new Particle()])]);
 
         // phrasal copula
@@ -241,10 +250,10 @@ export class Rules {
             new ConstructionOfPhraseInflectional([new Verb(), new Particle()]),
             new ConstructionOfPhraseInflectional([new Adjective()]),
         ]);
-
+*/
         // serial verbs
 
         // others
-        this.patterns.push([new Chunk().constructions[0]]);
+        //this.patterns.push([new Chunk().constructions[0]]);
     }
 }

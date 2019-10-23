@@ -1,4 +1,4 @@
-import { Rules, ConstructionOfPhrase, PhrasalVerb, PhrasalVerbWithEncliticSurface } from './rules';
+import { Rules, ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEncliticSurface } from './rules';
 import { POSTags, Tagset } from './symbols';
 import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
@@ -28,8 +28,8 @@ export class RuleBasedTagger {
         this.match(strs);
     }
 
-    private generate(sequence: string[], patterns: ConstructionOfPhrase[]) {
-        let cps: Array<ConstructionOfPhrase> = new Array();
+    private generate(sequence: string[], patterns: ConstructionOfSpeech[]) {
+        let cps: Array<ConstructionOfSpeech> = new Array();
 
         if (patterns.length > 0) {
             for (let pat of patterns) {
@@ -41,7 +41,8 @@ export class RuleBasedTagger {
 
                     if (
                         pat.elements[pat.elements.length - 1].surface !=
-                        (<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
+                        //(<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
+                        pat.elements[pat.elements.length - 1].pos
                     ) {
                         const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(sequence[0]);
                         (<ConstructionElementInflectional>(
@@ -55,7 +56,7 @@ export class RuleBasedTagger {
                     }
 
                     pat.elements[0].tag = Tagset.VB;
-                    (<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0]);
+                    //(<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0]);
                 } else if (
                     pat.partOfSpeech === POSTags.verb &&
                     pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
@@ -102,7 +103,7 @@ export class RuleBasedTagger {
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADVP;
 
-                    pats = [new ConstructionOfPhrase()]; // TODO: can keywords be wrapped in something else
+                    pats = [new ConstructionOfSpeech()]; // TODO: can keywords be wrapped in something else
                     pats[0].elements.push(kw);
                     break;
                 } else {
@@ -113,7 +114,7 @@ export class RuleBasedTagger {
 
         //console.log(pats)
 
-        let listCP: Array<ConstructionOfPhrase> = new Array();
+        let listCP: Array<ConstructionOfSpeech> = new Array();
         if (pats) listCP = this.generate(sequence, pats);
         //else listCP = this.generate(sequence, [])
 
