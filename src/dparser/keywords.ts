@@ -75,9 +75,9 @@ class PersonalPronounSurface extends ConstructionElement {
 }
 
 export class VerbSurface extends ConstructionElement {
-    constructor(str?: string) {
+    constructor(str: string) {
         super();
-        if (str) this.surface = str;
+        this.surface = str;
         this.pos = POSTags.verb;
     }
 }

@@ -5,9 +5,12 @@ import {
     VerbSurface,
     ParticleSurface,
     Auxiliary,
+    PhrasalVerbParticleDiurh,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { Phraseme } from '../phraseme';
+import { TonalInflexion } from './lexeme';
+import { tonal_inflextion_analyzer } from './analyzer';
 
 export class ConstructionOfSpeech {
     partOfSpeech: string = '';
@@ -69,35 +72,18 @@ class SetOfPhrasalVerbs {
     }
 
     private makeParticle(str: string) {
-        //let ret = new Particle();
-        //ret.lexeme = tonal_inflextion_analyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
-        //return ret;
+        let lexeme = tonal_inflextion_analyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
+        let ret = new ParticleSurface(lexeme.otherForms[0].literal);
+        return ret;
     }
 
     private populatePhrasalVerbs() {
         //this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]));
-        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koannw'), new ParticleSurface('diurh')]));
-        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koanny'), new ParticleSurface('diurhhw')]));
+        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface('diurh')]));
+        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), this.makeParticle('diurh')]));
     }
 }
-/*
-class SetOfVerbWithEnclitic {
-    verbs: Array<VerbWithEnclitic> = [];
-    constructor() {
-        this.populateVerbs();
-    }
 
-    private makeEnclitic(str: string) {
-        let ret = new EncliticSurface();
-        ret.surface = str;
-        return ret;
-    }
-
-    private populateVerbs() {
-        this.verbs.push(new VerbWithEnclitic(new VerbSurface(), this.makeEnclitic('aw')));
-    }
-}
-*/
 class Span {}
 
 export class Chunk {
@@ -172,15 +158,7 @@ export class Rules {
             this.patterns.push([pv]);
         }
     }
-/*
-    private populateVerbWithEnclitics() {
-        const s = new SetOfVerbWithEnclitic();
-        for (let v of s.verbs) {
-            //console.log(s.verbs[0].elements[1])
-            this.patterns.push([v]);
-        }
-    }
-*/
+
     private populatePatterns() {
         // copula
         /*
