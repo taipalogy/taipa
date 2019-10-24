@@ -4,11 +4,11 @@ import { tonal_inflextion_analyzer } from './analyzer';
 import { TonalCombiningForms } from './morpheme';
 import { TonalInflexion } from './lexeme';
 import {
-    ConstructionElementInflectional,
-    Demonstrative,
-    PersonalPronoun2To137,
-    Auxiliary,
-    PartsOfSpeech,
+    //ConstructionElementInflectional,
+    //Demonstrative,
+    //PersonalPronoun2To137,
+    //Auxiliary,
+    //PartsOfSpeech,
     ConstructionElement,
     EncliticSurface,
     ParticleSurface,
@@ -38,7 +38,7 @@ export class RuleBasedTagger {
                     pat.elements[pat.elements.length - 1].pos === POSTags.particle
                 ) {
                     pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
-
+/*
                     if (
                         pat.elements[pat.elements.length - 1].surface !=
                         //(<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
@@ -54,6 +54,7 @@ export class RuleBasedTagger {
                         )[0];
                     } else {
                     }
+                    */
 
                     pat.elements[0].tag = Tagset.VB;
                     //(<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0]);

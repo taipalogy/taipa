@@ -1,27 +1,10 @@
 import {
-    //ConstructionElementInflectional,
-    Verb,
-    PersonalPronoun,
-    Copula,
-    PersonalPronouns,
-    FromTone2ToTone137,
-    PersonalPronoun2To137,
-    Particle,
     KeyWords,
-    Noun,
-    Adjective,
-    PartsOfSpeech,
-    PhrasalVerbParticleDiurh,
     EncliticSurface,
-    TonalZeroCombining,
     ConstructionElement,
     VerbSurface,
     ParticleSurface,
 } from './keywords';
-import { tonal_inflextion_analyzer } from './analyzer';
-import { TonalCombiningForms } from './morpheme';
-import { TonalInflexion } from './lexeme';
-import { Phraseme } from '../phraseme';
 import { POSTags, Tagset } from './symbols';
 
 export class ConstructionOfSpeech {
@@ -29,7 +12,7 @@ export class ConstructionOfSpeech {
     elements: Array<ConstructionElement> = new Array();
 }
 
-export class ConstructionOfPhraseInflectional extends ConstructionOfSpeech {
+export class ConstructionOfPhrase extends ConstructionOfSpeech {
     //phraseme: Phraseme = new Phraseme();
 
     constructor(arr: Array<ConstructionElement>) {
@@ -39,10 +22,11 @@ export class ConstructionOfPhraseInflectional extends ConstructionOfSpeech {
         }
     }
 }
-
+/*
 class NounPhrase extends ConstructionOfPhraseInflectional {}
 class ParticlePhrase {}
-class VerbPhrase extends ConstructionOfPhraseInflectional {}
+*/
+class VerbPhrase extends ConstructionOfPhrase {}
 
 export class PhrasalVerb extends VerbPhrase {
     constructor(arr: Array<ConstructionElement>) {
@@ -88,9 +72,9 @@ class SetOfPhrasalVerbs {
     }
 
     private makeParticle(str: string) {
-        let ret = new Particle();
-        ret.lexeme = tonal_inflextion_analyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
-        return ret;
+        //let ret = new Particle();
+        //ret.lexeme = tonal_inflextion_analyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
+        //return ret;
     }
 
     private populatePhrasalVerbs() {
@@ -156,17 +140,8 @@ export class Rules {
         this.populatePhrasalVerbs();
         this.populateVerbWithEnclitics();
     }
-/*
-    protected get(str: string) {
-        const kw = this.keyWords.get(str);
-        if (kw && kw instanceof ConstructionElementInflectional) return kw.clone();
-        else return undefined;
-    }
-*/
-    matchKeyWords(str: string) {
-        //let ret = this.keyWords.get(str); // to be deleted
-        //if(ret) return ret; // to be deleted
-        
+
+    matchKeyWords(str: string) {        
         let ret2 = this.keyWords.getSurface(str);
         return ret2;
     }
@@ -182,16 +157,6 @@ export class Rules {
             }
 
             for (let i = 0; i < elems.length; i++) {
-                /*
-                if (elems[i] instanceof ConstructionElementInflectional) {
-                    if ((<ConstructionElementInflectional>elems[i]).matchFormFor(sequence[i])) {
-                        if (elems[i].surface === '' || elems[i].surface === sequence[i]) {
-                            if (i + 1 === elems.length) {
-                                return pat;
-                            }
-                        }
-                    }
-                } else */
                 if (elems[i] instanceof ConstructionElement) {
                     if (i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
                         return pat;

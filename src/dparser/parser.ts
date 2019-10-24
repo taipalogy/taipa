@@ -1,8 +1,7 @@
-import { ConstructionElement, ConstructionElementInflectional } from './keywords';
+import { ConstructionElement } from './keywords';
 import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration';
 import { Guide } from './guide';
-import { DummyLexeme } from './lexeme';
 
 export class DependencyParser {
     getInitialConfiguration<T>() {
@@ -21,11 +20,7 @@ export class DependencyParser {
         }
 
         let guide = new Guide();
-        //let root = new DummyLexeme();
-        //root.word.literal = 'ROOT';
-        //let ce = new ConstructionElementInflectional();
         let ce = new ConstructionElement();
-        //ce.lexeme = root;
         ce.surface = 'ROOT';
         c.stack.push(ce);
 
