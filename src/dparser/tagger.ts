@@ -1,21 +1,11 @@
-import { Rules, ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEncliticSurface } from './rules';
+import { ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEnclitic, rules, VerbWithEnclitic } from './rules';
 import { POSTags, Tagset } from './symbols';
-import { tonal_inflextion_analyzer } from './analyzer';
-import { TonalCombiningForms } from './morpheme';
-import { TonalInflexion } from './lexeme';
 import {
-    //ConstructionElementInflectional,
-    //Demonstrative,
-    //PersonalPronoun2To137,
-    //Auxiliary,
-    //PartsOfSpeech,
     ConstructionElement,
     EncliticSurface,
     ParticleSurface,
     VerbSurface,
-    DemonstrativeSurface,
 } from './keywords';
-import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
 
 class MatchedPatternOfWords {
     elems: Array<ConstructionElement> = new Array();
@@ -38,26 +28,8 @@ export class RuleBasedTagger {
                     pat.elements[pat.elements.length - 1].pos === POSTags.particle
                 ) {
                     pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
-/*
-                    if (
-                        pat.elements[pat.elements.length - 1].surface !=
-                        //(<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
-                        pat.elements[pat.elements.length - 1].pos
-                    ) {
-                        const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(sequence[0]);
-                        (<ConstructionElementInflectional>(
-                            pat.elements[0]
-                        )).lexeme = tonal_inflextion_analyzer.doAnalysis(
-                            ls[0].lemmata[0].literal,
-                            new TonalCombiningForms(),
-                            new TonalInflexion(),
-                        )[0];
-                    } else {
-                    }
-                    */
 
                     pat.elements[0].tag = Tagset.VB;
-                    //(<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0]);
                 } else if (
                     pat.partOfSpeech === POSTags.verb &&
                     pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
@@ -68,7 +40,7 @@ export class RuleBasedTagger {
                 cps.push(pat);
 
                 if (pat instanceof PhrasalVerb) {
-                    let pvwes = new PhrasalVerbWithEncliticSurface(
+                    let pvwes = new PhrasalVerbWithEnclitic(
                         new VerbSurface(pat.elements[0].surface),
                         new ParticleSurface(pat.elements[1].surface),
                         new EncliticSurface('aw'),
@@ -78,6 +50,11 @@ export class RuleBasedTagger {
             }
         } else {
             //console.log(sequence)
+            let vwe = new VerbWithEnclitic(
+                new VerbSurface(sequence[0]),
+                new EncliticSurface('aw'),
+            );
+            cps.push(vwe);
         }
 
         //console.log(cps)
@@ -85,17 +62,17 @@ export class RuleBasedTagger {
     }
 
     private phrase(strs: string[], beginOfPhrase: number) {
-        const rs = new Rules();
+        //const rs = new Rules();
         let sequence: string[] = [];
         let pats;
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
-            pats = rs.matches(sequence);
+            pats = rules.matches(sequence);
             if (pats) {
                 break;
             } else {
                 //console.log(sequence)
-                let kw = rs.matchKeyWords(sequence[0]);
+                let kw = rules.matchKeyWords(sequence[0]);
 
                 if (kw) {
                     //console.log(kw)
@@ -104,7 +81,7 @@ export class RuleBasedTagger {
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADVP;
 
-                    pats = [new ConstructionOfSpeech()]; // TODO: can keywords be wrapped in something else
+                    pats = [new ConstructionOfSpeech()];
                     pats[0].elements.push(kw);
                     break;
                 } else {
@@ -117,7 +94,7 @@ export class RuleBasedTagger {
 
         let listCP: Array<ConstructionOfSpeech> = new Array();
         if (pats) listCP = this.generate(sequence, pats);
-        //else listCP = this.generate(sequence, [])
+        else listCP = this.generate(sequence, [])
 
         //console.log(listCP);
 

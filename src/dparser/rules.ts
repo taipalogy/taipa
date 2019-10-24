@@ -4,8 +4,10 @@ import {
     ConstructionElement,
     VerbSurface,
     ParticleSurface,
+    Auxiliary,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
+import { Phraseme } from '../phraseme';
 
 export class ConstructionOfSpeech {
     partOfSpeech: string = '';
@@ -13,8 +15,6 @@ export class ConstructionOfSpeech {
 }
 
 export class ConstructionOfPhrase extends ConstructionOfSpeech {
-    //phraseme: Phraseme = new Phraseme();
-
     constructor(arr: Array<ConstructionElement>) {
         super();
         for (let key in arr) {
@@ -22,10 +22,7 @@ export class ConstructionOfPhrase extends ConstructionOfSpeech {
         }
     }
 }
-/*
-class NounPhrase extends ConstructionOfPhraseInflectional {}
-class ParticlePhrase {}
-*/
+
 class VerbPhrase extends ConstructionOfPhrase {}
 
 export class PhrasalVerb extends VerbPhrase {
@@ -42,7 +39,7 @@ class VerbPhraseSurface extends ConstructionOfSpeech {
     }
 }
 
-export class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
+export class PhrasalVerbWithEnclitic extends VerbPhraseSurface {
     constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
         super();
         verb.tag = Tagset.VB;
@@ -54,7 +51,7 @@ export class PhrasalVerbWithEncliticSurface extends VerbPhraseSurface {
     }
 }
 
-class VerbWithEnclitic extends VerbPhraseSurface {
+export class VerbWithEnclitic extends VerbPhraseSurface {
     constructor(verb: VerbSurface, enclitic: EncliticSurface) {
         super();
         verb.tag = Tagset.VB;
@@ -79,11 +76,11 @@ class SetOfPhrasalVerbs {
 
     private populatePhrasalVerbs() {
         //this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]));
-        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koannw'), new ParticleSurface('diurh')]))
-        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koanny'), new ParticleSurface('diurhhw')]))
+        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koannw'), new ParticleSurface('diurh')]));
+        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface('koanny'), new ParticleSurface('diurhhw')]));
     }
 }
-
+/*
 class SetOfVerbWithEnclitic {
     verbs: Array<VerbWithEnclitic> = [];
     constructor() {
@@ -100,7 +97,7 @@ class SetOfVerbWithEnclitic {
         this.verbs.push(new VerbWithEnclitic(new VerbSurface(), this.makeEnclitic('aw')));
     }
 }
-
+*/
 class Span {}
 
 export class Chunk {
@@ -138,12 +135,11 @@ export class Rules {
     constructor() {
         this.populatePatterns();
         this.populatePhrasalVerbs();
-        this.populateVerbWithEnclitics();
+        //this.populateVerbWithEnclitics();
     }
 
-    matchKeyWords(str: string) {        
-        let ret2 = this.keyWords.getSurface(str);
-        return ret2;
+    matchKeyWords(str: string) {
+        return this.keyWords.getSurface(str);
     }
 
     matches(sequence: string[]) {
@@ -176,7 +172,7 @@ export class Rules {
             this.patterns.push([pv]);
         }
     }
-
+/*
     private populateVerbWithEnclitics() {
         const s = new SetOfVerbWithEnclitic();
         for (let v of s.verbs) {
@@ -184,7 +180,7 @@ export class Rules {
             this.patterns.push([v]);
         }
     }
-
+*/
     private populatePatterns() {
         // copula
         /*
@@ -222,3 +218,5 @@ export class Rules {
         //this.patterns.push([new Chunk().constructions[0]]);
     }
 }
+
+export const rules = new Rules();

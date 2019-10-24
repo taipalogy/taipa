@@ -115,7 +115,7 @@ export class ParticleSurface extends ConstructionElement {
 
 class CaseMarker {}
 
-class Auxiliary extends ConstructionElement {
+export class Auxiliary extends ConstructionElement {
     constructor(str: string) {
         super();
         this.pos = POSTags.auxiliary;
@@ -154,18 +154,7 @@ export class KeyWords {
     private makeAuxiliary(str: string): ParticleSurface {
         return new Auxiliary(str);
     }
-/*
-    private search(str: string) {
-        const serialno_i = this.keyword_index[str];
-        if (serialno_i >= 0) {
-            // including index of value 0
-            return serialno_i;
-        } else {
-            // undefined
-            return -1;
-        }
-    }
-*/
+
     getSurface(str: string) {
         for(let i in this.keyElems) if(this.keyElems[i].surface === str) return this.keyElems[i];
     }
