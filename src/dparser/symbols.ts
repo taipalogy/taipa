@@ -57,34 +57,34 @@ export enum DependencyLabels {
 }
 
 export enum Tagset {
-    CC = 'CC', // coordinating conjunction
-    CD = 'CD', // cardinal number
     DT = 'DT', // determiner
-    FW = 'FW', // foreign word
-    IN = 'IN', // preposition. subordinate conjunction
-    JJ = 'JJ', // adjective
-    JJR = 'JJR',
-    JJS = 'JJS',
-    MD = 'MD', // modal
+    ENC = 'ENC', // enclitic
+
+    AUX = 'AUX', // auxiliary verb
+    ADJ = 'ADJ', // adjective
+    ADNOM = 'ADNOM', // adnominal adjective
+    ADV = 'ADV', // adverb
+    CL = 'CL', // classifier
+    CONJ = 'CONJ', // conjunction
+    FIL = 'FIL', // filler
+    INTJ = 'INTJ', // interjection
     NN = 'NN', // noun
     NNP = 'NNP', // proper noun
-    PDT = 'PDT', // predeterminer
-    PRP = 'PRP', // personal pronoun
-    PRPS = 'PRPS', // possessive pronoun
-    RB = 'RB', // adverb
-    RBR = 'RBR',
-    RBS = 'RBS',
-    RP = 'RP', // particle
-    SYM = 'SYM', // symbol
-    UH = 'UH', // interjection
-    VB = 'VB', // verb base form
-    VBG = 'VBG', // verb gerund
-
-    comma = ',',
-    sent_end_punc = '.',
-
-    AUX = 'AUX', // auxiliary
+    NPR = 'NPR', // pronoun
+    NUM = 'NUM', // numeral
+    NV = 'NV', // verbal noun
+    NADJ = 'NADJ', // adjective noun
+    NADV = 'NADV', // adverbial noun
+    PAR = 'PAR', // parenthesis
+    PCS = 'PCS', // case particle
+    PCO = 'PCO', // parallel particle
+    PCJ = 'PCJ', // conjunctive particle
+    PEND = 'PEND', // sentence-ending particle
+    PADV = 'PADV', // adverbial particle
     PPV = 'PPV', // particle of phrasal verb
-    ENC = 'ENC', // enclitic
-    ADVP = 'ADVP' // adverbial particle
-}
+    PNC = 'PNC', // punctuation
+    PX = 'PX', // prefix
+    SX = 'SX', // suffix
+    SYM = 'SYM', // symbol
+    VB = 'VB', // verb base form
+  }

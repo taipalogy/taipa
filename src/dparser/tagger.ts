@@ -76,10 +76,10 @@ export class RuleBasedTagger {
 
                 if (kw) {
                     //console.log(kw)
-                    if (kw.pos === POSTags.pronoun) kw.tag = Tagset.PRP;
+                    if (kw.pos === POSTags.pronoun) kw.tag = Tagset.NPR;
                     else if (kw.pos === POSTags.determiner) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADVP;
+                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
 
                     pats = [new ConstructionOfSpeech()];
                     pats[0].elements.push(kw);
