@@ -49,7 +49,7 @@ export class PhrasalVerbWithEnclitic extends VerbPhraseSurface {
         this.elements.push(verb);
         particle.tag = Tagset.PPV;
         this.elements.push(particle);
-        enclitic.tag = Tagset.ENC;
+        enclitic.tag = Tagset.AXEN;
         this.elements.push(enclitic);
     }
 }
@@ -59,7 +59,7 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
         super();
         verb.tag = Tagset.VB;
         this.elements.push(verb);
-        enclitic.tag = Tagset.ENC;
+        enclitic.tag = Tagset.AXEN;
         this.elements.push(enclitic);
     }
 }

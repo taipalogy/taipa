@@ -46,16 +46,16 @@ export class Guide {
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.VB) this.shift();
             else if (this.s1.tag === Tagset.DT && this.b1.tag === Tagset.NPR) this.shift();
             else if (this.s1.tag === Tagset.PPV && this.b1.tag === Tagset.DT) c.relations.push(this.rightArc(DependencyLabels.prt));
-            else if (this.s1.tag === Tagset.PPV && this.b1.tag === Tagset.ENC) c.relations.push(this.rightArc(DependencyLabels.prt));
+            else if (this.s1.tag === Tagset.PPV && this.b1.tag === Tagset.AXEN) c.relations.push(this.rightArc(DependencyLabels.prt));
             else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.DT) this.shift();
-            else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.ENC) this.shift();
+            else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.AXEN) this.shift();
             else if (this.s1.tag === Tagset.AUX && this.b1.tag === Tagset.VB) this.shift();
             else if (this.s1.tag === Tagset.PADV && this.b1.tag === Tagset.VB) this.shift();
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.PADV) this.shift();
         } else if (this.isQueueEmpty(c)) {
             if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PPV) {
                 c.relations.push(this.rightArc(DependencyLabels.prt));
-            } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.ENC) {
+            } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.AXEN) {
                 c.relations.push(this.rightArc(DependencyLabels.aux));
             } else if (this.s2.tag === Tagset.NPR && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.nsubj));

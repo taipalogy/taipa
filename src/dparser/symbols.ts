@@ -58,9 +58,10 @@ export enum DependencyLabels {
 
 export enum Tagset {
     DT = 'DT', // determiner
-    ENC = 'ENC', // enclitic
 
     AUX = 'AUX', // auxiliary verb
+    AXEN = 'AXEN', // enclitic as auxiliary verb
+    AXAP = 'AXAP', // active, passive auxiliary verb
     ADJ = 'ADJ', // adjective
     ADNOM = 'ADNOM', // adnominal adjective
     ADV = 'ADV', // adverb

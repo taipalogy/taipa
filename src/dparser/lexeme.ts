@@ -5,8 +5,6 @@ import { TonalSyllable } from '../tonal/morpheme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2';
 
 //------------------------------------------------------------------------------
-//  Tonal Metaplasm
-//------------------------------------------------------------------------------
 
 export class TonalInflexion extends TonalInflectingMetaplasm {
     apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
@@ -27,16 +25,9 @@ export class TonalInflexion extends TonalInflectingMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Inflection Lexeme
-//------------------------------------------------------------------------------
 
-export class InflexionLexeme extends Lexeme {
-    word: Word = new Word(); // base word
-    otherForms: Array<Word> = [];
-}
-
-export class TonalInflexionLexeme extends InflexionLexeme {
-    //word: TonalWord; // base word
+export class TonalInflexionLexeme extends Lexeme {
+    word: TonalWord; // base word
     otherForms: Array<TonalWord> = new Array(); // inflected or may be derived forms
     private tse: TonalSymbolEnding;
 
@@ -80,16 +71,6 @@ export class TonalInflexionLexeme extends InflexionLexeme {
     }
 }
 
-export class DummyLexeme extends InflexionLexeme {
-    word: Word = new Word();
-    otherForms = [];
-    constructor() {
-        super();
-    }
-}
-
-//------------------------------------------------------------------------------
-//  Tonal Inflexion Lexeme Maker
 //------------------------------------------------------------------------------
 
 export class TonalInflexionLexemeMaker extends LexemeMaker {
@@ -124,14 +105,5 @@ export class TonalInflexionLexemeMaker extends LexemeMaker {
         lexemes.push(tl);
 
         return lexemes;
-    }
-}
-
-export class DummyLexemeMaker {
-    makeLexeme(str: string) {
-        let l = new DummyLexeme();
-        l.word = new Word();
-        l.word.literal = str;
-        return l;
     }
 }
