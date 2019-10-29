@@ -11,6 +11,7 @@ import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
+import { Token } from './token';
 
 export class Client {
     processKana(str: string) {
@@ -45,13 +46,20 @@ export class Client {
     }
 
     process(str: string): Document {
+        let doc: Document = new Document();
+
         // tokenization
         let tokens = str.match(/\w+/g);
+        if(tokens)
+            for(let i = 0; i < tokens.length; i++) {
+                if(tokens[i].length)
+                    doc.tokens.push(new Token(tokens[i]));
+            }
 
         // tagging
         let tagger;
-        if (tokens != null && tokens.length > 0) {
-            tagger = new RuleBasedTagger(tokens);
+        if (doc.tokens.length > 0) {
+            tagger = new RuleBasedTagger(doc.tokens);
         } else {
             tagger = new RuleBasedTagger([]);
         }
@@ -59,7 +67,6 @@ export class Client {
 
         // dependency parsing
         let dp = new DependencyParser();
-        let doc: Document = new Document();
         doc.relations = dp.parseCE(ces);
         return doc;
     }

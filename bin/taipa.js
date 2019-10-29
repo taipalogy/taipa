@@ -11,7 +11,7 @@ stdin.addListener('data', function (d) {
     let rs = doc.relations;
     if (rs.length > 0) {
         for (let i = 0; i < rs.length; i++) {
-            console.log(rs[i].dependency + ' (' + rs[i].head.surface + ', ' + rs[i].dependent.surface + ')');
+            console.info(rs[i].dependency + ' (' + rs[i].head.surface + ', ' + rs[i].dependent.surface + ')');
         }
     }
 });

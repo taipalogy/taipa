@@ -6,6 +6,7 @@ import {
     ParticleSurface,
     VerbSurface,
 } from './keywords';
+import { Token } from '../token';
 
 class MatchedPatternOfWords {
     elems: Array<ConstructionElement> = new Array();
@@ -14,8 +15,9 @@ class MatchedPatternOfWords {
 export class RuleBasedTagger {
     private ces: Array<ConstructionElement> = new Array();
 
-    constructor(strs: string[]) {
-        this.match(strs);
+    //constructor(strs: string[]) {
+    constructor(tokens: Token[]) {
+        this.match(tokens);
     }
 
     private generate(sequence: string[], patterns: ConstructionOfSpeech[]) {
@@ -125,10 +127,10 @@ export class RuleBasedTagger {
         return mp;
     }
 
-    private match(strs: string[]) {
-        //const rs = new Rules();
-        let buf: string[] = [];
-        //let previousWords: ConstructionElement[] = [];
+    private match(tokens: Token[]) {
+        let strs: string[] = [];
+        for(let i in tokens)
+            strs.push(tokens[i].text);
 
         let beginOfPhrase: number = 0;
         let matchedPW: MatchedPatternOfWords = new MatchedPatternOfWords();
