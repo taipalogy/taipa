@@ -13,9 +13,9 @@ import {
 import { AlphabeticLetter } from '../grapheme';
 
 export class ConstructionElement {
+    surface: string = '';
     pos: string = '';
     tag: string = '';
-    surface: string = '';
 }
 
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}

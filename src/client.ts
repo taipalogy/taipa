@@ -49,7 +49,7 @@ export class Client {
         let doc: Document = new Document();
 
         // tokenization
-        let tokens = str.match(/\w+/g);
+        const tokens = str.match(/\w+/g);
         if(tokens)
             for(let i = 0; i < tokens.length; i++) {
                 if(tokens[i].length)
@@ -57,17 +57,12 @@ export class Client {
             }
 
         // tagging
-        let tagger;
-        if (doc.tokens.length > 0) {
-            tagger = new RuleBasedTagger(doc.tokens);
-        } else {
-            tagger = new RuleBasedTagger([]);
-        }
-        let ces = tagger.elements;
+        const tggr = new RuleBasedTagger([]);
+        tggr.tag(doc.tokens);
 
         // dependency parsing
         let dp = new DependencyParser();
-        doc.relations = dp.parseCE(ces);
+        doc.relations = dp.parse(doc.tokens);
         return doc;
     }
 }

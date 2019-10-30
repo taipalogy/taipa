@@ -14,7 +14,7 @@ stdin.addListener('data', function(d) {
 
     if (rs.length > 0) {
         for (let i = 0; i < rs.length; i++) {
-            console.info(rs[i].dependency + ' (' + rs[i].head.surface + ', ' + rs[i].dependent.surface + ')');
+            console.info(rs[i].dependency + ' (' + rs[i].head.text + ', ' + rs[i].dependent.text + ')');
         }
     }
 });

@@ -1,11 +1,12 @@
 import { Relation } from './relation';
+import { Token } from '../token';
 
-export abstract class Transition<T> {
-    abstract do(c: Configuration<T>): Configuration<T>;
+export abstract class Transition {
+    abstract do(c: Configuration): Configuration;
 }
 
-export class Shift<T> extends Transition<T> {
-    do(c: Configuration<T>) {
+export class Shift extends Transition {
+    do(c: Configuration) {
         let s = c.queue.shift();
         if (s != undefined) {
             c.stack.push(s);
@@ -14,15 +15,15 @@ export class Shift<T> extends Transition<T> {
     }
 }
 
-export class RightArc<T> extends Transition<T> {
-    do(c: Configuration<T>) {
+export class RightArc extends Transition {
+    do(c: Configuration) {
         c.stack.pop();
         return c;
     }
 }
 
-export class LeftArc<T> extends Transition<T> {
-    do(c: Configuration<T>) {
+export class LeftArc extends Transition {
+    do(c: Configuration) {
         const top = c.stack.pop();
         c.stack.pop();
         if (top) c.stack.push(top);
@@ -30,9 +31,9 @@ export class LeftArc<T> extends Transition<T> {
     }
 }
 
-export class Configuration<T> {
-    queue: Array<T> = new Array();
-    stack: Array<T> = new Array();
+export class Configuration {
+    queue: Array<Token> = new Array();
+    stack: Array<Token> = new Array();
     relations: Array<Relation> = new Array();
 
     getGraph() {

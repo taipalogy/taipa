@@ -15,7 +15,6 @@ class MatchedPatternOfWords {
 export class RuleBasedTagger {
     private ces: Array<ConstructionElement> = new Array();
 
-    //constructor(strs: string[]) {
     constructor(tokens: Token[]) {
         this.match(tokens);
     }
@@ -149,7 +148,13 @@ export class RuleBasedTagger {
         }
     }
 
-    get elements() {
-        return this.ces;
+    tag(tokens: Token[]) {
+        this.match(tokens);
+        for(let i = 0; i < this.ces.length; i++) {
+            if(tokens[i].text === this.ces[i].surface) {
+                tokens[i].pos = this.ces[i].pos;
+                tokens[i].tag = this.ces[i].tag;
+            }
+        }
     }
 }

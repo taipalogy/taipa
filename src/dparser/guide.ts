@@ -1,13 +1,13 @@
 import { Configuration, Transition, Shift, LeftArc, RightArc } from './configuration';
-import { ConstructionElement } from './keywords';
 import { DependencyLabels, Tagset } from './symbols';
 import { Relation } from './relation';
+import { Token } from '../token';
 
 export class Guide {
-    transitions: Array<Transition<ConstructionElement>> = new Array();
-    private s1: ConstructionElement = new ConstructionElement();
-    private s2: ConstructionElement = new ConstructionElement();
-    private b1: ConstructionElement = new ConstructionElement();
+    transitions: Array<Transition> = new Array();
+    private s1: Token = new Token('');
+    private s2: Token = new Token('');
+    private b1: Token = new Token('');
 
     private shift(): void {
         this.transitions.push(new Shift());
@@ -23,22 +23,22 @@ export class Guide {
         return new Relation(label, this.s1, this.s2);
     }
 
-    private isQueueEmpty(c: Configuration<ConstructionElement>) {
+    private isQueueEmpty(c: Configuration) {
         if (c.queue.length === 0) return true;
         return false;
     }
 
-    private isStackEmpty(c: Configuration<ConstructionElement>) {
+    private isStackEmpty(c: Configuration) {
         if (c.stack.length === 2) return true;
         return false;
     }
 
-    getNextTransition(c: Configuration<ConstructionElement>) {
-        this.s1 = new ConstructionElement();
+    getNextTransition(c: Configuration) {
+        this.s1 = new Token('');
         if (c.stack.length > 0) this.s1 = c.stack[c.stack.length - 1];
-        this.s2 = new ConstructionElement();
+        this.s2 = new Token('');
         if (c.stack.length > 1) this.s2 = c.stack[c.stack.length - 2];
-        this.b1 = new ConstructionElement();
+        this.b1 = new Token('');
         if (c.queue.length > 0) this.b1 = c.queue[0];
 
         if(this.s1.tag != '' && this.b1.tag != '') {

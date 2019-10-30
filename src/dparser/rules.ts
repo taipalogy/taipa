@@ -84,8 +84,6 @@ class SetOfPhrasalVerbs {
     }
 }
 
-class Span {}
-
 export class Chunk {
     /*
     constructions: Array<ConstructionOfPhraseInflectional> = [];

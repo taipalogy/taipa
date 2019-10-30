@@ -1,8 +1,8 @@
 export class Token {
     text: string = '';
-    lemma: string = '';
-    tag: string = '';
     pos: string = '';
+    tag: string = '';
+    lemma: string = '';
     dep: string = '';
 
     constructor(text: string) {
