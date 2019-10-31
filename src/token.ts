@@ -4,6 +4,7 @@ export class Token {
     tag: string = '';
     lemma: string = '';
     dep: string = '';
+    head: any
 
     constructor(text: string) {
         this.text = text;

@@ -8,10 +8,11 @@ let doc = new document_1.Document();
 let stdin = process.openStdin();
 stdin.addListener('data', function (d) {
     doc = cli.process(d.toString().trim());
-    let rs = doc.relations;
+    const rs = doc.relations;
+    const ts = doc.tokens;
     if (rs.length > 0) {
         for (let i = 0; i < rs.length; i++) {
-            console.info(rs[i].dependency + ' (' + rs[i].head.text + ', ' + rs[i].dependent.text + ')');
+            console.info(ts[i].text + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + ts[i].head.text);
         }
     }
 });
