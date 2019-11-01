@@ -16,7 +16,7 @@ export class Guide {
     private rightArc(label: DependencyLabels) {
         this.transitions.push(new RightArc());
         this.s1.dep = label;
-        this.s1.head = Object.assign({}, this.s2);
+        this.s1.head = Object.assign(this.s2);
         return new Relation(label, this.s2, this.s1);
     }
 

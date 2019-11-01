@@ -1,9 +1,9 @@
 import { Client } from '../src/client';
-import { Document } from '../src/document';
+import { TokenAnalysis } from '../src/token';
 
 describe("Lemma testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('chitt')
 
@@ -14,7 +14,7 @@ describe("Lemma testing", () => {
 
 describe("Lemma testing", () => {
   let cli = new Client()
-  let doc = new Document()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('suzjippwhoatf');
 
@@ -29,7 +29,7 @@ describe("Lemma testing", () => {
 
 describe("Lemma testing", () => {
   let cli = new Client()
-  let doc = new Document()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('sia');
 
@@ -44,7 +44,7 @@ describe("Lemma testing", () => {
 
 describe("Lemma testing", () => {
   let cli = new Client()
-  let doc = new Document()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siay');
 
@@ -59,7 +59,7 @@ describe("Lemma testing", () => {
 
 describe("Lemma testing", () => {
   let cli = new Client()
-  let doc = new Document()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siaw');
 
@@ -75,7 +75,7 @@ describe("Lemma testing", () => {
 
 describe("Lemma testing", () => {
   let cli = new Client()
-  let doc = new Document()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siaz');
 
@@ -92,7 +92,7 @@ describe("Lemma testing", () => {
 
 describe("Lemma testing", () => {
   let cli = new Client()
-  let doc = new Document()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siax');
 

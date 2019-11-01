@@ -1,10 +1,10 @@
 import { Client } from '../src/client';
-import { Document } from '../src/document';
 import { TonalLetterTags } from '../src/tonal/version2';
+import { TokenAnalysis } from '../src/token';
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('damwvurhhxoay');
 
@@ -15,7 +15,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('binznafchaiw');
 
@@ -26,7 +26,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('qinznafjitt');
 
@@ -37,7 +37,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('chaufcheng');
 
@@ -48,7 +48,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('daizoanx');
 
@@ -59,7 +59,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('daizoanzoez');
 
@@ -70,7 +70,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('daiwjittwvunfdeyqok');
 
@@ -81,7 +81,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('qurzsa');
 
@@ -92,7 +92,7 @@ describe("Tonal testing", () => {
 
 describe("Tonal testing", () => {
     let cli = new Client()
-    let doc = new Document()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('hongzqun');
 

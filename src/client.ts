@@ -11,7 +11,7 @@ import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
-import { Token } from './token';
+import { Token, TokenAnalysis } from './token';
 
 export class Client {
     processKana(str: string) {
@@ -19,9 +19,9 @@ export class Client {
         let aw = new Kana();
         let ka = <KanaAnalyzer>aw.analyzer;
         let morphemes: KanaUncombiningMorpheme[] = ka.doMorphologicalAnalysis(str);
-        let doc: Document = new Document();
-        doc.blockSequences = aw.getBlocks(morphemes);
-        return doc;
+        let ta: TokenAnalysis = new TokenAnalysis();
+        ta.blockSequences = aw.getBlocks(morphemes);
+        return ta;
     }
 
     processTonal(str: string) {
@@ -29,20 +29,21 @@ export class Client {
         let tokens = str.match(/\w+/g);
         let aw = new TonalInflective();
         let tla = <TonalLemmatizationAnalyzer>aw.analyzer;
-        let doc: Document = new Document();
+        let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
             let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0]);
             let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes);
-            doc.word = lexemes[0].word;
-            doc.lemmata = lexemes[0].getLemmata();
-            doc.inflectionalEnding = lexemes[0].getInflectionalEnding();
+            ta.word = lexemes[0].word;
+            ta.lemmata = lexemes[0].getLemmata();
+            ta.inflectionalEnding = lexemes[0].getInflectionalEnding();
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             for (let m of morphemes) {
-                doc.soundSequences.push(m.sounds);
+                ta.soundSequences.push(m.sounds);
             }
         }
-        return doc;
+        //return doc;
+        return ta;
     }
 
     process(str: string): Document {
@@ -57,12 +58,12 @@ export class Client {
             }
 
         // tagging
-        const tggr = new RuleBasedTagger([]);
-        tggr.tag(doc.tokens);
+        const tggr = new RuleBasedTagger();
+        doc = tggr.tag(doc);
 
         // dependency parsing
-        let dp = new DependencyParser();
-        doc.relations = dp.parse(doc.tokens);
+        const dpsr = new DependencyParser();
+        doc = dpsr.parse(doc);
         return doc;
     }
 }

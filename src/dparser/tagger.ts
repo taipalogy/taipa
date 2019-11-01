@@ -7,6 +7,7 @@ import {
     VerbSurface,
 } from './keywords';
 import { Token } from '../token';
+import { Document } from '../document';
 
 class MatchedPatternOfWords {
     elems: Array<ConstructionElement> = new Array();
@@ -14,10 +15,6 @@ class MatchedPatternOfWords {
 
 export class RuleBasedTagger {
     private ces: Array<ConstructionElement> = new Array();
-
-    constructor(tokens: Token[]) {
-        this.match(tokens);
-    }
 
     private generate(sequence: string[], patterns: ConstructionOfSpeech[]) {
         let cps: Array<ConstructionOfSpeech> = new Array();
@@ -148,13 +145,14 @@ export class RuleBasedTagger {
         }
     }
 
-    tag(tokens: Token[]) {
-        this.match(tokens);
+    tag(doc: Document) {
+        this.match(doc.tokens);
         for(let i = 0; i < this.ces.length; i++) {
-            if(tokens[i].text === this.ces[i].surface) {
-                tokens[i].pos = this.ces[i].pos;
-                tokens[i].tag = this.ces[i].tag;
+            if(doc.tokens[i].text === this.ces[i].surface) {
+                doc.tokens[i].pos = this.ces[i].pos;
+                doc.tokens[i].tag = this.ces[i].tag;
             }
         }
+        return doc;
     }
 }

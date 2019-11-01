@@ -1,10 +1,10 @@
 import { Client } from '../src/client';
-import { Document } from '../src/document';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
+import { TokenAnalysis } from '../src/token';
 
 describe("Inflectional ending testing", () => {
     let cli = new Client();
-    let doc = new Document();
+    let doc = new TokenAnalysis();
 
     doc = cli.processTonal('gengzchiapf');
 
@@ -29,7 +29,7 @@ describe("Inflectional ending testing", () => {
 
 describe("Inflectional ending testing", () => {
     let cli = new Client();
-    let doc = new Document();
+    let doc = new TokenAnalysis();
 
     doc = cli.processTonal('piauzpietf');
 
@@ -54,7 +54,7 @@ describe("Inflectional ending testing", () => {
 
 describe("Inflectional ending testing", () => {
     let cli = new Client();
-    let doc = new Document();
+    let doc = new TokenAnalysis();
 
     doc = cli.processTonal('tengzsekf');
 
@@ -79,7 +79,7 @@ describe("Inflectional ending testing", () => {
 
 describe("Inflectional ending testing", () => {
     let cli = new Client();
-    let doc = new Document();
+    let doc = new TokenAnalysis();
 
     doc = cli.processTonal('sekfhappw');
 
@@ -108,7 +108,7 @@ describe("Inflectional ending testing", () => {
 
 describe("Inflectional ending testing", () => {
     let cli = new Client();
-    let doc = new Document();
+    let doc = new TokenAnalysis();
 
     doc = cli.processTonal('kakfsittw');
 
@@ -137,7 +137,7 @@ describe("Inflectional ending testing", () => {
 
 describe("Inflectional ending testing", () => {
     let cli = new Client();
-    let doc = new Document();
+    let doc = new TokenAnalysis();
 
     doc = cli.processTonal('qeysiokkw');
 

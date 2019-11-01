@@ -1,8 +1,7 @@
-import { ConstructionElement } from './keywords';
-import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration';
 import { Guide } from './guide';
 import { Token } from '../token';
+import { Document } from '../document';
 
 export class DependencyParser {
     getInitialConfiguration() {
@@ -13,9 +12,9 @@ export class DependencyParser {
         return t.do(c);
     }
 
-    parse(tokens: Token[]): Relation[] {
+    parse(doc: Document): Document {
         let c: Configuration = this.getInitialConfiguration();
-        for (let t of tokens) {
+        for (let t of doc.tokens) {
             c.queue.push(t);
         }
 
@@ -35,6 +34,7 @@ export class DependencyParser {
             c = this.apply(t, c);
         }
 
-        return c.relations;
+        doc.relations = c.relations;
+        return doc;
     }
 }
