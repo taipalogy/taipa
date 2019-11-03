@@ -6,6 +6,8 @@ import {
     ParticleSurface,
     Auxiliary,
     PhrasalVerbParticleDiurh,
+    DemonstrativeSurface,
+    PersonalPronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { Phraseme } from '../phraseme';
@@ -26,6 +28,7 @@ export class ConstructionOfPhrase extends ConstructionOfSpeech {
     }
 }
 
+class NounPhrase extends ConstructionOfPhrase {}
 class VerbPhrase extends ConstructionOfPhrase {}
 
 export class PhrasalVerb extends VerbPhrase {
@@ -78,48 +81,52 @@ class SetOfPhrasalVerbs {
     }
 
     private populatePhrasalVerbs() {
-        //this.phrasalVerbs.push(new PhrasalVerb([new Verb(), this.makeParticle('diurh')]));
         this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface('diurh')]));
         this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), this.makeParticle('diurh')]));
     }
 }
 
-export class Chunk {
-    /*
-    constructions: Array<ConstructionOfPhraseInflectional> = [];
+class PhrasalTransitive extends VerbPhraseSurface {
+    constructor(verb: VerbSurface, particle: ParticleSurface, demonstrative: DemonstrativeSurface) {
+        super();
+        verb.tag = Tagset.VB;
+        this.elements.push(verb);
+        particle.tag = Tagset.PADV;
+        this.elements.push(particle);
+        demonstrative.tag = Tagset.DT; // TODO: pronType
+        this.elements.push(demonstrative);
+    }
+}
+
+class SmallClause extends VerbPhraseSurface {
+    constructor(verb1: VerbSurface, pronoun: PersonalPronounSurface, verb2: VerbSurface) {
+        super();
+        verb1.tag = Tagset.VB;
+        this.elements.push(verb1);
+        pronoun.tag = Tagset.NPR;
+        this.elements.push(pronoun);
+        verb2.tag = Tagset.VB;
+        this.elements.push(verb2);
+    }
+}
+
+export class SetOfSmallClauses {
+    
+    constructions: Array<ConstructionOfSpeech> = [];
 
     constructor() {
-        let ms = tonal_inflextion_analyzer.doMorphologicalAnalysis('oannz', new TonalCombiningForms());
-        let ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
-        let transitive = new Verb();
-        transitive.lexeme = ls[0];
-
-        ms = tonal_inflextion_analyzer.doMorphologicalAnalysis(
-            PersonalPronouns.FirstSingular,
-            new FromTone2ToTone137(),
-        );
-        ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
-        let proceeding = new PersonalPronoun2To137();
-        proceeding.lexeme = ls[0];
-
-        ms = tonal_inflextion_analyzer.doMorphologicalAnalysis('churw', new TonalCombiningForms());
-        ls = tonal_inflextion_analyzer.doLexicalAnalysis(ms, new TonalInflexion());
-        let intransitive = new Verb();
-        intransitive.lexeme = ls[0];
-
-        this.constructions.push(new ConstructionOfPhraseInflectional([transitive, proceeding, intransitive]));
-    }
-    */
+        const sc = new SmallClause(new VerbSurface('oannw'), new PersonalPronounSurface('goa'), new VerbSurface('churw'))
+        this.constructions.push(sc);
+    }   
 }
 
 export class Rules {
-    private patterns: Array<ConstructionOfSpeech[]> = new Array();
+    private phrases: Array<ConstructionOfSpeech[]> = new Array();
     protected keyWords: KeyWords = new KeyWords();
 
     constructor() {
         this.populatePatterns();
         this.populatePhrasalVerbs();
-        //this.populateVerbWithEnclitics();
     }
 
     matchKeyWords(str: string) {
@@ -128,7 +135,7 @@ export class Rules {
 
     matches(sequence: string[]) {
         let elems: Array<ConstructionElement> = [];
-        for (let pat of this.patterns) {
+        for (let pat of this.phrases) {
             for (let j = 0; j < pat.length; j++) {
                 for (let e of pat[j].elements) {
                     //console.log(e.wordForm)
@@ -153,45 +160,12 @@ export class Rules {
         const s = new SetOfPhrasalVerbs();
         for (let pv of s.phrasalVerbs) {
             //console.log(pv.elements[1].lexeme.word.literal)
-            this.patterns.push([pv]);
+            this.phrases.push([pv]);
         }
     }
 
     private populatePatterns() {
-        // copula
-        /*
-        this.patterns.push([
-            new ConstructionOfPhraseInflectional([new PersonalPronoun()]),
-            new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
-            new ConstructionOfPhraseInflectional([new Noun()]),
-        ]);
-        */
-/*
-        this.patterns.push([
-            new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
-            new ConstructionOfPhraseInflectional([new Adjective()]),
-        ]);
-
-        this.patterns.push([
-            new ConstructionOfPhraseInflectional([<PersonalPronoun>this.get('goay')]),
-            new ConstructionOfPhraseInflectional([<Copula>this.get('siz')]),
-            new ConstructionOfPhraseInflectional([<Noun>this.get('langx')]),
-        ]);
-*/
-        // phrasal verb
-        /*
-        this.patterns.push([new ConstructionOfPhraseInflectional([new Verb(), new Particle()])]);
-
-        // phrasal copula
-        this.patterns.push([
-            new ConstructionOfPhraseInflectional([new Verb(), new Particle()]),
-            new ConstructionOfPhraseInflectional([new Adjective()]),
-        ]);
-*/
-        // serial verbs
-
-        // others
-        //this.patterns.push([new Chunk().constructions[0]]);
+        this.phrases.push([new SetOfSmallClauses().constructions[0]]);
     }
 }
 

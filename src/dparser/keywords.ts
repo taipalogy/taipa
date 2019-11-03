@@ -66,7 +66,7 @@ export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
     }
 }
 
-class PersonalPronounSurface extends ConstructionElement {
+export class PersonalPronounSurface extends ConstructionElement {
     constructor(str?: string) {
         super();
         if (str) this.surface = str;
