@@ -5,8 +5,6 @@ import { lowerLettersOfTonal } from './version2';
 import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
-//  Tonal Analyzer
-//------------------------------------------------------------------------------
 
 export class TonalLemmatizationAnalyzer extends Analyzer {
     doGraphemicAnalysis(str: string) {
@@ -44,6 +42,11 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         // Lexeme Maker
         let tllm = new TonalLemmatizationLexemeMaker(morphemes);
         return tllm.makeLexemes();
+    }
+
+    analyze(str: string) {
+        const tilm = new TonalLemmatizationLexemeMaker(this.doMorphologicalAnalysis(str));
+        return tilm.makeLexemes();
     }
 }
 

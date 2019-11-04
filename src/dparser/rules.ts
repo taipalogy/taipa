@@ -10,9 +10,10 @@ import {
     PersonalPronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
-import { Phraseme } from '../phraseme';
 import { TonalInflexion } from './lexeme';
-import { tonal_inflextion_analyzer } from './analyzer';
+import { tonal_inflextion_analyzer, PhrasalVerbAnalyzer } from './analyzer';
+import { TonalWord } from '../tonal/lexeme';
+import { TonalCombiningForms } from './morpheme';
 
 export class ConstructionOfSpeech {
     partOfSpeech: string = '';
@@ -69,20 +70,34 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
 
 class SetOfPhrasalVerbs {
     phrasalVerbs: Array<PhrasalVerb> = [];
+    baseForms: Array<PhrasalVerb> = new Array();
+    sandhiForm1s: Array<PhrasalVerb> = new Array();
 
     constructor() {
         this.populatePhrasalVerbs();
     }
 
     private makeParticle(str: string) {
-        let lexeme = tonal_inflextion_analyzer.doAnalysis(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
+        let lexeme = tonal_inflextion_analyzer.analyze(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
         let ret = new ParticleSurface(lexeme.otherForms[0].literal);
         return ret;
     }
 
+    private makeVerb(str: string) {
+        let lexeme = tonal_inflextion_analyzer.analyze(str, new TonalCombiningForms(), new TonalInflexion())[0];
+        let ret = new VerbSurface(lexeme.otherForms[0].literal);
+        return ret;
+    }
+    
     private populatePhrasalVerbs() {
         this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface('diurh')]));
         this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), this.makeParticle('diurh')]));
+
+        const pva = new PhrasalVerbAnalyzer();
+        const phrasemes = pva.analyze('longw', 'diurh');
+
+        this.baseForms.push(new PhrasalVerb([new VerbSurface(phrasemes[0].phrase.words[0].literal), new ParticleSurface(phrasemes[0].phrase.words[1].literal)]));
+        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(phrasemes[0].sandhiForm.words[0].literal), new ParticleSurface(phrasemes[0].sandhiForm.words[1].literal)]));
     }
 }
 

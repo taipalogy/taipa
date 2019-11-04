@@ -14,19 +14,6 @@ class ToneSandhiGroup extends ToneGroup {}
 
 export class Phraseme {}
 
-export class TonalPhraseme extends Phraseme {
-    phrase: TonalPhrase;
-
-    constructor(phrase: TonalPhrase) {
-        super();
-        this.phrase = phrase;
-    }
-
-    assignToneGroup(InflectionalEnding: InflectionalEnding) {}
-
-    getBaseForm() {}
-}
-
 // -----------------------------------------------------------------------------
 
 class Phrase {
@@ -42,6 +29,7 @@ export class TonalPhrase extends Phrase {
         if (words != undefined) {
             let len = words.length;
             for (var i = 0; i < len; i++) {
+                if(i > 0) this.literal += ' ';
                 this.pushWord(words[i]);
             }
         }
@@ -56,44 +44,7 @@ export class TonalPhrase extends Phrase {
     }
 
     pushWord(w: TonalWord) {
-        // push the word
         this.words.push(w);
-        // concatenate a white space and the new word
-        if (this.words.length > 0) {
-            this.literal += ' ';
-        }
         this.literal += w.literal;
-    }
-}
-
-// -----------------------------------------------------------------------------
-
-export class TonalPhrasemeMaker {
-    lexemes: Array<TonalInflexionLexeme>;
-
-    constructor(lexemes: Array<TonalInflexionLexeme>) {
-        this.lexemes = new Array();
-        this.lexemes = lexemes;
-    }
-
-    makePhrasemes() {
-        let phrasemes: Array<TonalPhraseme> = new Array();
-
-        // unpack lexemes and take words out from them
-        let words: Array<TonalWord> = new Array();
-        for (let key in this.lexemes) {
-            words.push(<TonalWord>this.lexemes[key].word);
-        }
-
-        let tsp = new TonalPhraseme(new TonalPhrase(words));
-        if (this.lexemes.length > 0) {
-            let tg = new ToneGroup();
-            for (let k in this.lexemes) {
-            }
-        }
-
-        phrasemes.push(tsp);
-
-        return phrasemes;
     }
 }

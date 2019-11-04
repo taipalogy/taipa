@@ -1,4 +1,4 @@
-import { TonalLemmatizationLexeme } from './tonal/lexeme';
+import { TonalLemmatizationLexeme, TonalWord } from './tonal/lexeme';
 import { TonalInflective } from './tonal/init';
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
@@ -42,8 +42,22 @@ export class Client {
                 ta.soundSequences.push(m.sounds);
             }
         }
-        //return doc;
         return ta;
+    }
+
+    getTonalLemmas(str: string) {
+        const tokens = str.match(/\w+/g);
+        const aw = new TonalInflective();
+        const tla = <TonalLemmatizationAnalyzer>aw.analyzer;
+        let lemmas: TonalWord[] = [];
+        if (tokens != null && tokens.length > 0) {
+            lemmas = tla.analyze(tokens[0])[0].getLemmata();
+        }
+        let ret: string [] = [];
+        for(let i in lemmas) {
+            ret.push(lemmas[i].literal)
+        }
+        return ret;
     }
 
     process(str: string): Document {

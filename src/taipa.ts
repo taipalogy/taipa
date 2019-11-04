@@ -10,11 +10,10 @@ let stdin = process.openStdin();
 
 stdin.addListener('data', function(d) {
     doc = cli.process(d.toString().trim());
-    const rs = doc.relations;
     const ts = doc.tokens;
 
-    if (rs.length > 0) {
-        for (let i = 0; i < rs.length; i++) {
+    if (ts.length > 0) {
+        for (let i = 0; i < ts.length; i++) {
             console.info(ts[i].text + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + ts[i].head.text);
         }
     }
