@@ -49,5 +49,3 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return tilm.makeLexemes();
     }
 }
-
-export const tonal_lemmatization_analyzer = new TonalLemmatizationAnalyzer();

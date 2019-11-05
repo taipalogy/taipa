@@ -46,12 +46,11 @@ export class TonalInflextionAnalyzer extends Analyzer {
     }
 }
 
-export const tonal_inflextion_analyzer = new TonalInflextionAnalyzer();
-
 export class PhrasalVerbAnalyzer {
+    tia = new TonalInflextionAnalyzer();
     analyze(verb: string, particle: string) {
-        const lexemeV = tonal_inflextion_analyzer.analyze(verb, new TonalCombiningForms(), new TonalInflexion());
-        const lexemeP = tonal_inflextion_analyzer.analyze(particle, new PhrasalVerbParticleDiurh(), new TonalInflexion());
+        const lexemeV = this.tia.analyze(verb, new TonalCombiningForms(), new TonalInflexion());
+        const lexemeP = this.tia.analyze(particle, new PhrasalVerbParticleDiurh(), new TonalInflexion());
         const p = new TonalInflexionPhrasemeMaker(lexemeV, lexemeP);
         return p.makePhrasemes();
     }

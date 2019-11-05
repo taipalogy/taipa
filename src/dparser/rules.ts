@@ -4,16 +4,11 @@ import {
     ConstructionElement,
     VerbSurface,
     ParticleSurface,
-    Auxiliary,
-    PhrasalVerbParticleDiurh,
     DemonstrativeSurface,
     PersonalPronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
-import { TonalInflexion } from './lexeme';
-import { tonal_inflextion_analyzer, PhrasalVerbAnalyzer } from './analyzer';
-import { TonalWord } from '../tonal/lexeme';
-import { TonalCombiningForms } from './morpheme';
+import { PhrasalVerbAnalyzer } from './analyzer';
 
 export class ConstructionOfSpeech {
     partOfSpeech: string = '';
@@ -69,7 +64,6 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
 }
 
 class SetOfPhrasalVerbs {
-    phrasalVerbs: Array<PhrasalVerb> = [];
     baseForms: Array<PhrasalVerb> = new Array();
     sandhiForm1s: Array<PhrasalVerb> = new Array();
 
@@ -77,27 +71,15 @@ class SetOfPhrasalVerbs {
         this.populatePhrasalVerbs();
     }
 
-    private makeParticle(str: string) {
-        let lexeme = tonal_inflextion_analyzer.analyze(str, new PhrasalVerbParticleDiurh(), new TonalInflexion());
-        let ret = new ParticleSurface(lexeme.otherForms[0].literal);
-        return ret;
-    }
-
-    private makeVerb(str: string) {
-        let lexeme = tonal_inflextion_analyzer.analyze(str, new TonalCombiningForms(), new TonalInflexion());
-        let ret = new VerbSurface(lexeme.otherForms[0].literal);
-        return ret;
-    }
-    
     private populatePhrasalVerbs() {
-        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface('diurh')]));
-        this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), this.makeParticle('diurh')]));
-
         const pva = new PhrasalVerbAnalyzer();
-        const phraseme = pva.analyze('longw', 'diurh');
+        const ph = pva.analyze('longw', 'diurh');
 
-        this.baseForms.push(new PhrasalVerb([new VerbSurface(phraseme.phrase.words[0].literal), new ParticleSurface(phraseme.phrase.words[1].literal)]));
-        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(phraseme.sandhiForm.words[0].literal), new ParticleSurface(phraseme.sandhiForm.words[1].literal)]));
+        this.baseForms.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.phrase.words[1].literal)]));
+        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.sandhiForm.words[1].literal)]));
+
+        this.baseForms.push(new PhrasalVerb([new VerbSurface(ph.phrase.words[0].literal), new ParticleSurface(ph.phrase.words[1].literal)]));
+        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new ParticleSurface(ph.sandhiForm.words[1].literal)]));
     }
 }
 
@@ -173,9 +155,10 @@ export class Rules {
 
     private populatePhrasalVerbs() {
         const s = new SetOfPhrasalVerbs();
-        for (let pv of s.phrasalVerbs) {
-            //console.log(pv.elements[1].lexeme.word.literal)
-            this.phrases.push([pv]);
+
+        for(let i = 0; i < s.baseForms.length; i++) {
+            this.phrases.push([s.baseForms[i]]);
+            this.phrases.push([s.sandhiForm1s[i]]);
         }
     }
 
