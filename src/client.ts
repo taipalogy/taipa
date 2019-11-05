@@ -14,25 +14,27 @@ import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
 
 export class Client {
+    readonly kana_aw = Kana.getInstance();
+    readonly tonal_inflective_aw = TonalInflective.getInstance();
+
     processKana(str: string): TokenAnalysis {
         // kana
-        let aw = new Kana();
-        let ka = <KanaAnalyzer>aw.analyzer;
-        let morphemes: KanaUncombiningMorpheme[] = ka.doMorphologicalAnalysis(str);
+        const ka = <KanaAnalyzer>this.kana_aw.analyzer;
+        const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
         let ta: TokenAnalysis = new TokenAnalysis();
-        ta.blockSequences = aw.getBlocks(morphemes);
+        ta.blockSequences = this.kana_aw.getBlocks(morphemes);
         return ta;
     }
 
     processTonal(str: string): TokenAnalysis {
         // tonal
         let tokens = str.match(/\w+/g);
-        let aw = new TonalInflective();
-        let tla = <TonalLemmatizationAnalyzer>aw.analyzer;
+        
+        const tla = <TonalLemmatizationAnalyzer>this.tonal_inflective_aw.analyzer;
         let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
-            let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0]);
-            let lexemes: TonalLemmatizationLexeme = tla.doLexicalAnalysis(morphemes);
+            const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(tokens[0]);
+            const lexemes: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
             ta.word = lexemes.word;
             ta.lemmata = lexemes.getLemmata();
             ta.inflectionalEnding = lexemes.getInflectionalEnding();
@@ -47,8 +49,7 @@ export class Client {
 
     getTonalLemmas(str: string): string[] {
         const tokens = str.match(/\w+/g);
-        const aw = new TonalInflective();
-        const tla = <TonalLemmatizationAnalyzer>aw.analyzer;
+        const tla = new TonalLemmatizationAnalyzer();
         let lemmas: TonalWord[] = [];
         if (tokens != null && tokens.length > 0) {
             lemmas = tla.analyze(tokens[0]).getLemmata();

@@ -14,6 +14,7 @@ stdin.addListener('data', function(d) {
 
     if (ts.length > 0) {
         for (let i = 0; i < ts.length; i++) {
+            //console.log(cli.getTonalLemmas(ts[i].text))
             console.info(ts[i].text + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + ts[i].head.text);
         }
     }

@@ -11,37 +11,38 @@ import { TonalInflexionPhrasemeMaker } from './phraseme';
 //------------------------------------------------------------------------------
 
 export class TonalInflextionAnalyzer extends Analyzer {
-    doGraphemicAnalysis(str: string): AlphabeticGrapheme[] {
-        // Grapheme Maker
+    graphAnalyze(str: string): AlphabeticGrapheme[] {
+        // graphemic analysis
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
     }
 
-    doMorphologicalAnalysis(str: string, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[];
-    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[];
-    doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm) {
+    morphAnalyze(str: string, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[];
+    morphAnalyze(gs: Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[];
+    morphAnalyze(x: string | Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm) {
+        // morphological analysis
         let graphemes: AlphabeticGrapheme[] = [];
         if (typeof x == 'object') {
             graphemes = x;
         } else if (typeof x == 'string') {
-            graphemes = this.doGraphemicAnalysis(x);
+            graphemes = this.graphAnalyze(x);
         }
 
-        // Morpheme Maker
         let tmm = new TonalCombiningMorphemeMaker(graphemes, tcm);
         return tmm.makeMorphemes();
     }
 
-    doLexicalAnalysis(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme {
+    lexAnalyze(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme {
+        // lexical analysis
+        // TODO: redundant method?
         let morphemes: Array<TonalCombiningMorpheme> = ms;
 
-        // Lexeme Maker
         let tllm = new TonalInflexionLexemeMaker(morphemes, tim);
         return tllm.makeLexemes();
     }
 
     analyze(str: string, tcm: TonalCombiningMetaplasm, tim: TonalInflectingMetaplasm) {
-        const tilm = new TonalInflexionLexemeMaker(this.doMorphologicalAnalysis(str, tcm), tim);
+        const tilm = new TonalInflexionLexemeMaker(this.morphAnalyze(str, tcm), tim);
         return tilm.makeLexemes();
     }
 }

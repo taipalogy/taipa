@@ -15,10 +15,20 @@ import {
 import { Morpheme } from '../morpheme';
 
 export class Kana extends AnalyzerWrapper {
-    constructor() {
+    private static singleton: Kana;
+    
+    private constructor() {
         super(new KanaAnalyzer());
         this.checkSize();
         this.findDuplicates(letterClasses);
+    }
+
+    public static getInstance(): Kana {
+        if (!Kana.singleton) {
+            Kana.singleton = new Kana();
+        }
+
+        return Kana.singleton;
     }
 
     private checkSize() {
