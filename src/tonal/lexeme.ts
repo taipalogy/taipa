@@ -188,18 +188,10 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     }
 
     makeLexemes() {
-        return this.postprocess(this.make(this.preprocess()));
+        return this.make(this.preprocess());
     }
 
     make(syllables: Array<TonalSyllable>) {
         return new TonalLemmatizationLexeme(new TonalWord(syllables), this.morphemes, new TonalLemmatization());
-    }
-
-    postprocess(tl: TonalLemmatizationLexeme) {
-        let lexemes: Array<TonalLemmatizationLexeme> = new Array();
-
-        lexemes.push(tl);
-
-        return lexemes;
     }
 }

@@ -30,18 +30,10 @@ export class TonalInflexionPhrasemeMaker {
     }
 
     makePhrasemes() {
-        return this.postprocess(this.make(this.preprocess()));
+        return this.make(this.preprocess());
     }
 
     make(words: Array<TonalWord>) {
         return new TonalInflexionPhraseme(new TonalPhrase(words), this.lexemeVerb, this.lexemeParticle);
-    }
-
-    postprocess(tl: TonalInflexionPhraseme) {
-        let phrasemes: Array<TonalInflexionPhraseme> = new Array();
-
-        phrasemes.push(tl);
-
-        return phrasemes;
     }
 }

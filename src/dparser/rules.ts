@@ -78,13 +78,13 @@ class SetOfPhrasalVerbs {
     }
 
     private makeParticle(str: string) {
-        let lexeme = tonal_inflextion_analyzer.analyze(str, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
+        let lexeme = tonal_inflextion_analyzer.analyze(str, new PhrasalVerbParticleDiurh(), new TonalInflexion());
         let ret = new ParticleSurface(lexeme.otherForms[0].literal);
         return ret;
     }
 
     private makeVerb(str: string) {
-        let lexeme = tonal_inflextion_analyzer.analyze(str, new TonalCombiningForms(), new TonalInflexion())[0];
+        let lexeme = tonal_inflextion_analyzer.analyze(str, new TonalCombiningForms(), new TonalInflexion());
         let ret = new VerbSurface(lexeme.otherForms[0].literal);
         return ret;
     }
@@ -94,10 +94,10 @@ class SetOfPhrasalVerbs {
         this.phrasalVerbs.push(new PhrasalVerb([new VerbSurface(''), this.makeParticle('diurh')]));
 
         const pva = new PhrasalVerbAnalyzer();
-        const phrasemes = pva.analyze('longw', 'diurh');
+        const phraseme = pva.analyze('longw', 'diurh');
 
-        this.baseForms.push(new PhrasalVerb([new VerbSurface(phrasemes[0].phrase.words[0].literal), new ParticleSurface(phrasemes[0].phrase.words[1].literal)]));
-        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(phrasemes[0].sandhiForm.words[0].literal), new ParticleSurface(phrasemes[0].sandhiForm.words[1].literal)]));
+        this.baseForms.push(new PhrasalVerb([new VerbSurface(phraseme.phrase.words[0].literal), new ParticleSurface(phraseme.phrase.words[1].literal)]));
+        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(phraseme.sandhiForm.words[0].literal), new ParticleSurface(phraseme.sandhiForm.words[1].literal)]));
     }
 }
 

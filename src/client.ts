@@ -14,7 +14,7 @@ import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
 
 export class Client {
-    processKana(str: string) {
+    processKana(str: string): TokenAnalysis {
         // kana
         let aw = new Kana();
         let ka = <KanaAnalyzer>aw.analyzer;
@@ -24,7 +24,7 @@ export class Client {
         return ta;
     }
 
-    processTonal(str: string) {
+    processTonal(str: string): TokenAnalysis {
         // tonal
         let tokens = str.match(/\w+/g);
         let aw = new TonalInflective();
@@ -32,10 +32,10 @@ export class Client {
         let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
             let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0]);
-            let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes);
-            ta.word = lexemes[0].word;
-            ta.lemmata = lexemes[0].getLemmata();
-            ta.inflectionalEnding = lexemes[0].getInflectionalEnding();
+            let lexemes: TonalLemmatizationLexeme = tla.doLexicalAnalysis(morphemes);
+            ta.word = lexemes.word;
+            ta.lemmata = lexemes.getLemmata();
+            ta.inflectionalEnding = lexemes.getInflectionalEnding();
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             for (let m of morphemes) {
@@ -45,13 +45,13 @@ export class Client {
         return ta;
     }
 
-    getTonalLemmas(str: string) {
+    getTonalLemmas(str: string): string[] {
         const tokens = str.match(/\w+/g);
         const aw = new TonalInflective();
         const tla = <TonalLemmatizationAnalyzer>aw.analyzer;
         let lemmas: TonalWord[] = [];
         if (tokens != null && tokens.length > 0) {
-            lemmas = tla.analyze(tokens[0])[0].getLemmata();
+            lemmas = tla.analyze(tokens[0]).getLemmata();
         }
         let ret: string [] = [];
         for(let i in lemmas) {

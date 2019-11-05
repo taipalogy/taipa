@@ -11,7 +11,7 @@ import { TonalInflexionPhrasemeMaker } from './phraseme';
 //------------------------------------------------------------------------------
 
 export class TonalInflextionAnalyzer extends Analyzer {
-    doGraphemicAnalysis(str: string) {
+    doGraphemicAnalysis(str: string): AlphabeticGrapheme[] {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
@@ -32,7 +32,7 @@ export class TonalInflextionAnalyzer extends Analyzer {
         return tmm.makeMorphemes();
     }
 
-    doLexicalAnalysis(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme[] {
+    doLexicalAnalysis(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme {
         let morphemes: Array<TonalCombiningMorpheme> = ms;
 
         // Lexeme Maker
@@ -50,8 +50,8 @@ export const tonal_inflextion_analyzer = new TonalInflextionAnalyzer();
 
 export class PhrasalVerbAnalyzer {
     analyze(verb: string, particle: string) {
-        const lexemeV = tonal_inflextion_analyzer.analyze(verb, new TonalCombiningForms(), new TonalInflexion())[0];
-        const lexemeP = tonal_inflextion_analyzer.analyze(particle, new PhrasalVerbParticleDiurh(), new TonalInflexion())[0];
+        const lexemeV = tonal_inflextion_analyzer.analyze(verb, new TonalCombiningForms(), new TonalInflexion());
+        const lexemeP = tonal_inflextion_analyzer.analyze(particle, new PhrasalVerbParticleDiurh(), new TonalInflexion());
         const p = new TonalInflexionPhrasemeMaker(lexemeV, lexemeP);
         return p.makePhrasemes();
     }

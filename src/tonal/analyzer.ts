@@ -7,7 +7,7 @@ import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningM
 //------------------------------------------------------------------------------
 
 export class TonalLemmatizationAnalyzer extends Analyzer {
-    doGraphemicAnalysis(str: string) {
+    doGraphemicAnalysis(str: string): AlphabeticGrapheme[] {
         // Grapheme Maker
         let gm = new GraphemeMaker(str, lowerLettersOfTonal);
         return gm.makeGraphemes();
@@ -29,9 +29,9 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return tmm.makeMorphemes();
     }
 
-    doLexicalAnalysis(str: string): TonalLemmatizationLexeme[];
-    doLexicalAnalysis(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme[];
-    doLexicalAnalysis(x: string | Array<TonalUncombiningMorpheme>) {
+    doLexicalAnalysis(str: string): TonalLemmatizationLexeme;
+    doLexicalAnalysis(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme;
+    doLexicalAnalysis(x: string | Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme {
         let morphemes: Array<TonalUncombiningMorpheme> = [];
         if (typeof x == 'object') {
             morphemes = x;
