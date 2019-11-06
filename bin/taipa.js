@@ -11,8 +11,15 @@ stdin.addListener('data', function (d) {
     const ts = doc.tokens;
     if (ts.length > 0) {
         for (let i = 0; i < ts.length; i++) {
-            //console.log(cli.getTonalLemmas(ts[i].text))
-            console.info(ts[i].text + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + ts[i].head.text);
+            let lemma = '*';
+            if (ts[i].lemma != '')
+                lemma = ts[i].lemma;
+            console.info(ts[i].text
+                + ',' + lemma
+                + ',' + ts[i].pos
+                + ',' + ts[i].tag
+                + ',' + ts[i].dep
+                + ',' + ts[i].head.text);
         }
     }
 });

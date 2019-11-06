@@ -12,25 +12,24 @@ import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
+import { Tagset } from './dparser/symbols';
 
 export class Client {
-    readonly kana_aw = Kana.getInstance();
-    readonly tonal_inflective_aw = TonalInflective.getInstance();
-
     processKana(str: string): TokenAnalysis {
         // kana
-        const ka = <KanaAnalyzer>this.kana_aw.analyzer;
+        const kana_aw = Kana.getInstance();
+        const ka = <KanaAnalyzer>kana_aw.analyzer;
         const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
         let ta: TokenAnalysis = new TokenAnalysis();
-        ta.blockSequences = this.kana_aw.getBlocks(morphemes);
+        ta.blockSequences = kana_aw.getBlocks(morphemes);
         return ta;
     }
 
     processTonal(str: string): TokenAnalysis {
         // tonal
         let tokens = str.match(/\w+/g);
-        
-        const tla = <TonalLemmatizationAnalyzer>this.tonal_inflective_aw.analyzer;
+        const tonal_inflective_aw = TonalInflective.getInstance();        
+        const tla = <TonalLemmatizationAnalyzer>tonal_inflective_aw.analyzer;
         let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
             const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(tokens[0]);
@@ -47,18 +46,19 @@ export class Client {
         return ta;
     }
 
-    getTonalLemmas(str: string): string[] {
-        const tokens = str.match(/\w+/g);
+    getTonalLemmas(doc: Document): Document {
         const tla = new TonalLemmatizationAnalyzer();
-        let lemmas: TonalWord[] = [];
-        if (tokens != null && tokens.length > 0) {
-            lemmas = tla.analyze(tokens[0]).getLemmata();
+
+        for(let i = 0; i < doc.tokens.length; i++) {
+            if(doc.tokens[i].text === 'che' || doc.tokens[i].text === 'he') continue; // defective
+            if(doc.tokens[i].tag === Tagset.AUXN) continue;
+            if(doc.tokens[i].tag === Tagset.VB) continue;
+            let lemmas: TonalWord[] = [];
+            lemmas = tla.analyze(doc.tokens[i].text).getLemmata();
+            if(lemmas.length > 0)
+                doc.tokens[i].lemma = lemmas[0].literal;
         }
-        let ret: string [] = [];
-        for(let i in lemmas) {
-            ret.push(lemmas[i].literal)
-        }
-        return ret;
+        return doc;
     }
 
     process(str: string): Document {
@@ -75,6 +75,9 @@ export class Client {
         // tagging
         const tggr = new RuleBasedTagger();
         doc = tggr.tag(doc);
+
+        // lemmatization
+        doc = this.getTonalLemmas(doc);
 
         // dependency parsing
         const dpsr = new DependencyParser();
