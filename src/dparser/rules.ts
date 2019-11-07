@@ -11,7 +11,7 @@ import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
 
 export class ConstructionOfSpeech {
-    partOfSpeech: string = '';
+    pos: string = '';
     elements: Array<ConstructionElement> = new Array();
 }
 
@@ -25,19 +25,21 @@ export class ConstructionOfPhrase extends ConstructionOfSpeech {
 }
 
 class NounPhrase extends ConstructionOfPhrase {}
-class VerbPhrase extends ConstructionOfPhrase {}
+class VerbPhrase extends ConstructionOfPhrase {
+    transitive: boolean = false;
+}
 
 export class PhrasalVerb extends VerbPhrase {
     constructor(arr: Array<ConstructionElement>) {
         super(arr);
-        this.partOfSpeech = POSTags.verb;
+        this.pos = POSTags.verb;
     }
 }
 
 class VerbPhraseSurface extends ConstructionOfSpeech {
     constructor() {
         super();
-        this.partOfSpeech = POSTags.verb;
+        this.pos = POSTags.verb;
     }
 }
 

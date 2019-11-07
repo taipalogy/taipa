@@ -9,12 +9,8 @@ import {
 import { Token } from '../token';
 import { Document } from '../document';
 
-class MatchedPatternOfWords {
-    elems: Array<ConstructionElement> = new Array();
-}
-
 export class RuleBasedTagger {
-    private ces: Array<ConstructionElement> = new Array();
+    private speeches: Array<ConstructionOfSpeech> = new Array();
 
     private generate(sequence: string[], patterns: ConstructionOfSpeech[]) {
         let cps: Array<ConstructionOfSpeech> = new Array();
@@ -22,14 +18,13 @@ export class RuleBasedTagger {
         if (patterns.length > 0) {
             for (let pat of patterns) {
                 if (
-                    pat.partOfSpeech === POSTags.verb &&
+                    pat.pos === POSTags.verb &&
                     pat.elements[pat.elements.length - 1].pos === POSTags.particle
                 ) {
-                    pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
-
                     pat.elements[0].tag = Tagset.VB;
+                    pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
                 } else if (
-                    pat.partOfSpeech === POSTags.verb &&
+                    pat.pos === POSTags.verb &&
                     pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
                 ) {
                     //console.log('something else hit')
@@ -97,7 +92,7 @@ export class RuleBasedTagger {
         //console.log(listCP);
 
         let matchedLen = 0;
-        let mp = new MatchedPatternOfWords();
+        let mp = new ConstructionOfSpeech();
 
         for (let m in listCP) {
             const min = Math.min(strs.length - beginOfPhrase, listCP[m].elements.length);
@@ -108,9 +103,9 @@ export class RuleBasedTagger {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
                                 for (let q = 0; q < matchedLen; q++) {
-                                    mp.elems[q] = listCP[m].elements[q];
+                                    mp.elements[q] = listCP[m].elements[q];
                                     if (listCP[m].elements[q].surface === '') {
-                                        mp.elems[q].surface = strs[beginOfPhrase + q];
+                                        mp.elements[q].surface = strs[beginOfPhrase + q];
                                     }
                                 }
                             }
@@ -123,23 +118,22 @@ export class RuleBasedTagger {
         return mp;
     }
 
+    private tagSpeeches() {}
+
     private match(tokens: Token[]) {
         let strs: string[] = [];
         for(let i in tokens)
             strs.push(tokens[i].text);
 
         let beginOfPhrase: number = 0;
-        let matchedPW: MatchedPatternOfWords = new MatchedPatternOfWords();
+        let matched: ConstructionOfSpeech = new ConstructionOfSpeech();
         for (let i = 0; i < strs.length; i++) {
             if (i - beginOfPhrase == 0) {
-                matchedPW = this.phrase(strs, beginOfPhrase);
-                if (matchedPW.elems.length) {
-                    beginOfPhrase += matchedPW.elems.length;
-                    for (let w in matchedPW.elems) {
-                        this.ces.push(matchedPW.elems[w]);
-                    }
-                    //console.log(matchedPW);
-                    matchedPW.elems = [];
+                matched = this.phrase(strs, beginOfPhrase);
+                if (matched.elements.length) {
+                    beginOfPhrase += matched.elements.length;
+                    this.speeches.push(matched);
+                    this.tagSpeeches();
                 }
             }
         }
@@ -147,10 +141,18 @@ export class RuleBasedTagger {
 
     tag(doc: Document) {
         this.match(doc.tokens);
-        for(let i = 0; i < this.ces.length; i++) {
-            if(doc.tokens[i].text === this.ces[i].surface) {
-                doc.tokens[i].pos = this.ces[i].pos;
-                doc.tokens[i].tag = this.ces[i].tag;
+
+        let ces: Array<ConstructionElement> = new Array();
+        for(let i in this.speeches) {
+            for (let j in this.speeches[i].elements) {
+                ces.push(this.speeches[i].elements[j]);
+            }
+        }
+
+        for(let i = 0; i < ces.length; i++) {
+            if(doc.tokens[i].text === ces[i].surface) {
+                doc.tokens[i].pos = ces[i].pos;
+                doc.tokens[i].tag = ces[i].tag;
             }
         }
         return doc;
