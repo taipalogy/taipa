@@ -16,12 +16,14 @@ stdin.addListener('data', function(d) {
         for (let i = 0; i < ts.length; i++) {
             let lemma = '*';
             if(ts[i].lemma != '') lemma = ts[i].lemma;
+            let text = '*';
+            if(ts[i].head) text = ts[i].head.text;
             console.info(ts[i].text
                 + ',' + lemma
                 + ',' + ts[i].pos
                 + ',' + ts[i].tag
                 + ',' + ts[i].dep
-                + ',' + ts[i].head.text);
+                + ',' + text);
         }
     }
 });
