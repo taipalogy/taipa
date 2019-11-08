@@ -134,19 +134,19 @@ export class Rules {
 
     matches(sequence: string[]) {
         let elems: Array<ConstructionElement> = [];
+        //console.log(this.phrases.length)
         for (let pat of this.phrases) {
             for (let j = 0; j < pat.length; j++) {
+                //console.log(pat[j].elements)
                 for (let e of pat[j].elements) {
-                    //console.log(e.wordForm)
                     elems.push(e);
                 }
             }
 
-            for (let i = 0; i < elems.length; i++) {
-                if (elems[i] instanceof ConstructionElement) {
-                    if (i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
-                        return pat;
-                    }
+            for (let i = 0; i < elems.length; i++) {                    
+                if (i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
+                    //console.log(elems)
+                    return pat;
                 }
             }
             elems = [];
@@ -168,5 +168,3 @@ export class Rules {
         this.phrases.push([new SetOfSmallClauses().constructions[0]]);
     }
 }
-
-export const rules = new Rules();

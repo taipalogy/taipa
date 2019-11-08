@@ -1,4 +1,4 @@
-import { ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEnclitic, rules, VerbWithEnclitic } from './rules';
+import { ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEnclitic, VerbWithEnclitic, Rules } from './rules';
 import { POSTags, Tagset } from './symbols';
 import {
     ConstructionElement,
@@ -32,6 +32,8 @@ export class RuleBasedTagger {
 
                 cps.push(pat);
 
+                //console.log(pat.elements)
+
                 if (pat instanceof PhrasalVerb) {
                     let pvwes = new PhrasalVerbWithEnclitic(
                         new VerbSurface(pat.elements[0].surface),
@@ -58,6 +60,7 @@ export class RuleBasedTagger {
         //const rs = new Rules();
         let sequence: string[] = [];
         let pats;
+        const rules = new Rules();
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
             pats = rules.matches(sequence);
@@ -83,7 +86,7 @@ export class RuleBasedTagger {
             }
         }
 
-        //console.log(pats)
+        //if(pats) console.log(pats[0].elements)
 
         let listCP: Array<ConstructionOfSpeech> = new Array();
         if (pats) listCP = this.generate(sequence, pats);
@@ -118,7 +121,10 @@ export class RuleBasedTagger {
         return mp;
     }
 
-    private tagSpeeches() {}
+    private tagSpeeches() {
+        //for(let s of this.speeches)
+            //console.log(s.elements)
+    }
 
     private match(tokens: Token[]) {
         let strs: string[] = [];
@@ -143,6 +149,7 @@ export class RuleBasedTagger {
         this.match(doc.tokens);
 
         let ces: Array<ConstructionElement> = new Array();
+        
         for(let i in this.speeches) {
             for (let j in this.speeches[i].elements) {
                 ces.push(this.speeches[i].elements[j]);
@@ -155,6 +162,7 @@ export class RuleBasedTagger {
                 doc.tokens[i].tag = ces[i].tag;
             }
         }
+
         return doc;
     }
 }
