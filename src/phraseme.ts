@@ -1,6 +1,5 @@
 import { InflectionalEnding } from './tonal/lexeme';
 import { TonalWord } from './tonal/lexeme';
-import { TonalInflexionLexeme } from './dparser/lexeme';
 
 // -----------------------------------------------------------------------------
 

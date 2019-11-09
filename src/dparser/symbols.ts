@@ -64,7 +64,7 @@ export enum Tagset {
     ADJ = 'ADJ', // adjective
     ADNOM = 'ADNOM', // adnominal adjective
     ADV = 'ADV', // adverb
-    APPO = 'APPO', // postposition
+    APPR = 'APPR', // preposition
     CL = 'CL', // classifier
     CONJ = 'CONJ', // conjunction
     FIL = 'FIL', // filler

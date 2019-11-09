@@ -5,26 +5,30 @@ import { TonalPhrase, Phraseme } from "../phraseme";
 export class TonalInflexionPhraseme extends Phraseme {
     phrase: TonalPhrase;
     sandhiForm: TonalPhrase;
-    constructor(phrase: TonalPhrase, lexemeVerb: TonalInflexionLexeme, lexemeParticle: TonalInflexionLexeme) {
+    constructor(phrase: TonalPhrase, lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
         super();
         this.phrase = phrase;
-        this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.otherForms[0]])
+        if(lexemeSubsidiary.otherForms.length > 0) {
+            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.otherForms[0]])
+        } else {
+            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.word]);
+        }
     }
 }
 
 export class TonalInflexionPhrasemeMaker {
     lexemeVerb: TonalInflexionLexeme;
-    lexemeParticle: TonalInflexionLexeme;
+    lexemeSubsidiary: TonalInflexionLexeme;
 
-    constructor(lexemeVerb: TonalInflexionLexeme, lexemeParticle: TonalInflexionLexeme) {
+    constructor(lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
         this.lexemeVerb = lexemeVerb;
-        this.lexemeParticle = lexemeParticle;
+        this.lexemeSubsidiary = lexemeSubsidiary;
     }
 
     preprocess() {
         let words: Array<TonalWord> = new Array();
         words.push(this.lexemeVerb.word);
-        words.push(this.lexemeParticle.word);
+        words.push(this.lexemeSubsidiary.word);
 
         return words;
     }
@@ -34,6 +38,6 @@ export class TonalInflexionPhrasemeMaker {
     }
 
     make(words: Array<TonalWord>) {
-        return new TonalInflexionPhraseme(new TonalPhrase(words), this.lexemeVerb, this.lexemeParticle);
+        return new TonalInflexionPhraseme(new TonalPhrase(words), this.lexemeVerb, this.lexemeSubsidiary);
     }
 }

@@ -5,7 +5,7 @@ import { lowerLettersOfTonal } from '../tonal/version2';
 import { TonalInflexionLexemeMaker, TonalInflexionLexeme, TonalInflexion } from './lexeme';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
-import { VerbSurface, PhrasalVerbParticleDiurh, ParticleSurface } from './keywords';
+import { TonalZeroCombining } from './keywords';
 import { TonalInflexionPhrasemeMaker } from './phraseme';
 
 //------------------------------------------------------------------------------
@@ -49,10 +49,10 @@ export class TonalInflextionAnalyzer extends Analyzer {
 
 export class PhrasalVerbAnalyzer {
     tia = new TonalInflextionAnalyzer();
-    analyze(verb: string, particle: string) {
-        const lexemeV = this.tia.analyze(verb, new TonalCombiningForms(), new TonalInflexion());
-        const lexemeP = this.tia.analyze(particle, new PhrasalVerbParticleDiurh(), new TonalInflexion());
-        const p = new TonalInflexionPhrasemeMaker(lexemeV, lexemeP);
+    analyze(verb: string, subsidiary: string) {
+        const lexemeVerb = this.tia.analyze(verb, new TonalCombiningForms(), new TonalInflexion());
+        const lexemeSubsidiary = this.tia.analyze(subsidiary, new TonalZeroCombining(), new TonalInflexion());
+        const p = new TonalInflexionPhrasemeMaker(lexemeVerb, lexemeSubsidiary);
         return p.makePhrasemes();
     }
 }

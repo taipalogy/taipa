@@ -23,7 +23,12 @@ export class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
 }
 
-export class TonalZeroCombining extends TonalCombiningMetaplasm {}
+export class TonalZeroCombining extends TonalCombiningMetaplasm {
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+        return [];
+    }
+}
+
 export class FromTone2ToTone137 extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {

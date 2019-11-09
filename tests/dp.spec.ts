@@ -35,7 +35,7 @@ describe("Dependency parsing", () => {
     let cli = new Client();
     let doc = new Document();
 
-    doc = cli.process('goa koanny diurhhw che');
+    doc = cli.process('goa koanny diurh che');
     let rs = doc.relations;
 
     test("check the number of relations", () => {    
@@ -45,7 +45,7 @@ describe("Dependency parsing", () => {
     test("check the first relation", () => {
         expect(rs[0].dependency).toEqual('prt');
         expect(rs[0].head.text).toEqual('koanny');
-        expect(rs[0].dependent.text).toEqual('diurhhw');
+        expect(rs[0].dependent.text).toEqual('diurh');
     });
 
     test("check the second relation", () => {

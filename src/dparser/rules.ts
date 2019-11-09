@@ -66,8 +66,7 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
 }
 
 class SetOfPhrasalVerbs {
-    baseForms: Array<PhrasalVerb> = new Array();
-    sandhiForm1s: Array<PhrasalVerb> = new Array();
+    phvs: Array<PhrasalVerb> = new Array();
 
     constructor() {
         this.populatePhrasalVerbs();
@@ -77,11 +76,9 @@ class SetOfPhrasalVerbs {
         const pva = new PhrasalVerbAnalyzer();
         const ph = pva.analyze('longw', 'diurh');
 
-        this.baseForms.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.phrase.words[1].literal)]));
-        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.sandhiForm.words[1].literal)]));
-
-        this.baseForms.push(new PhrasalVerb([new VerbSurface(ph.phrase.words[0].literal), new ParticleSurface(ph.phrase.words[1].literal)]));
-        this.sandhiForm1s.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new ParticleSurface(ph.sandhiForm.words[1].literal)]));
+        this.phvs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.phrase.words[1].literal)]));
+        this.phvs.push(new PhrasalVerb([new VerbSurface(ph.phrase.words[0].literal), new ParticleSurface(ph.phrase.words[1].literal)]));
+        this.phvs.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new ParticleSurface(ph.sandhiForm.words[1].literal)]));
     }
 }
 
@@ -158,9 +155,8 @@ export class Rules {
     private populatePhrasalVerbs() {
         const s = new SetOfPhrasalVerbs();
 
-        for(let i = 0; i < s.baseForms.length; i++) {
-            this.phrases.push([s.baseForms[i]]);
-            this.phrases.push([s.sandhiForm1s[i]]);
+        for(let i = 0; i < s.phvs.length; i++) {
+            this.phrases.push([s.phvs[i]])
         }
     }
 
