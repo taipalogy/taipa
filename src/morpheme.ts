@@ -4,8 +4,7 @@ import { TonalSyllable } from './tonal/morpheme';
 
 export abstract class CombiningMetaplasm {}
 
-export class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    // TODO: abstraction
+export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }

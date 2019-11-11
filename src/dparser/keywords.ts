@@ -95,7 +95,7 @@ export class EncliticSurface extends ConstructionElement {
     }
 }
 
-export class DemonstrativeSurface extends ConstructionElement {
+export class DemonstrativePronounSurface extends ConstructionElement {
     constructor(str?: string) {
         super();
         if (str) this.surface = str;
@@ -120,7 +120,7 @@ export class ParticleSurface extends ConstructionElement {
 
 class CaseMarker {}
 
-export class Auxiliary extends ConstructionElement {
+export class AuxiliarySurface extends ConstructionElement {
     constructor(str: string) {
         super();
         this.pos = POSTags.auxiliary;
@@ -137,27 +137,23 @@ export class KeyWords {
     }
 
     private makePersonalPronounSurface(str: string) {
-        let ret = new PersonalPronounSurface(str);
-        return ret;
+        return new PersonalPronounSurface(str);
     }
 
-    private makeDemonstrativeSurface(str: string): DemonstrativeSurface {
-        let ret = new DemonstrativeSurface(str);
-        return ret;
+    private makeDemonstrativePronounSurface(str: string): DemonstrativePronounSurface {
+        return new DemonstrativePronounSurface(str);
     }
 
     private makeParticleSurface(str: string): ParticleSurface {
-        let ret = new ParticleSurface(str);
-        return ret;
+        return new ParticleSurface(str);
     }
 
     private makeEncliticSurface(str: string): EncliticSurface {
-        let ret = new EncliticSurface();
-        return ret;
+        return new EncliticSurface();
     }
 
-    private makeAuxiliary(str: string): ParticleSurface {
-        return new Auxiliary(str);
+    private makeAuxiliarySurface(str: string): ParticleSurface {
+        return new AuxiliarySurface(str);
     }
 
     getSurface(str: string) {
@@ -166,9 +162,9 @@ export class KeyWords {
 
     private populateKeyElems() {
         this.keyElems = [
-            this.makeDemonstrativeSurface('che'),
+            this.makeDemonstrativePronounSurface('che'),
             this.makePersonalPronounSurface('goa'),
-            this.makeAuxiliary('qaz'),
+            this.makeAuxiliarySurface('qaz'),
             this.makeParticleSurface('long')
         ];
     }

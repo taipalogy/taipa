@@ -12,35 +12,35 @@ import { Document } from '../document';
 export class RuleBasedTagger {
     private speeches: Array<ConstructionOfSpeech> = new Array();
 
-    private generate(sequence: string[], patterns: ConstructionOfSpeech[]) {
+    private generate(sequence: string[], phrases: ConstructionOfSpeech[]) {
         let cps: Array<ConstructionOfSpeech> = new Array();
 
-        if (patterns.length > 0) {
-            for (let pat of patterns) {
+        if (phrases.length > 0) {
+            for (let ph of phrases) {
                 if (
-                    pat.pos === POSTags.verb &&
-                    pat.elements[pat.elements.length - 1].pos === POSTags.particle
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.particle
                 ) {
-                    pat.elements[0].tag = Tagset.VB;
-                    pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
+                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
                 } else if (
-                    pat.pos === POSTags.verb &&
-                    pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary
                 ) {
                     //console.log('something else hit')
                 }
 
-                cps.push(pat);
+                cps.push(ph);
 
                 //console.log(pat.elements)
 
-                if (pat instanceof PhrasalVerb) {
-                    let pvwes = new PhrasalVerbWithEnclitic(
-                        new VerbSurface(pat.elements[0].surface),
-                        new ParticleSurface(pat.elements[1].surface),
+                if (ph instanceof PhrasalVerb) {
+                    let pvwe = new PhrasalVerbWithEnclitic(
+                        new VerbSurface(ph.elements[0].surface),
+                        new ParticleSurface(ph.elements[1].surface),
                         new EncliticSurface('aw'),
                     );
-                    cps.push(pvwes);
+                    cps.push(pvwe);
                 }
             }
         } else {
@@ -59,12 +59,12 @@ export class RuleBasedTagger {
     private phrase(strs: string[], beginOfPhrase: number) {
         //const rs = new Rules();
         let sequence: string[] = [];
-        let pats;
+        let phrs;
         const rules = new Rules();
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
-            pats = rules.matches(sequence);
-            if (pats) {
+            phrs = rules.matches(sequence);
+            if (phrs) {
                 break;
             } else {
                 //console.log(sequence)
@@ -77,8 +77,8 @@ export class RuleBasedTagger {
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
 
-                    pats = [new ConstructionOfSpeech()];
-                    pats[0].elements.push(kw);
+                    phrs = [new ConstructionOfSpeech()];
+                    phrs[0].elements.push(kw);
                     break;
                 } else {
                     //console.log(sequence)
@@ -89,7 +89,7 @@ export class RuleBasedTagger {
         //if(pats) console.log(pats[0].elements)
 
         let listCP: Array<ConstructionOfSpeech> = new Array();
-        if (pats) listCP = this.generate(sequence, pats);
+        if (phrs) listCP = this.generate(sequence, phrs);
         else listCP = this.generate(sequence, [])
 
         //console.log(listCP);
@@ -105,12 +105,14 @@ export class RuleBasedTagger {
                         if (strs[beginOfPhrase + n] === listCP[m].elements[n].surface) {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
+                                
                                 for (let q = 0; q < matchedLen; q++) {
                                     mp.elements[q] = listCP[m].elements[q];
                                     if (listCP[m].elements[q].surface === '') {
                                         mp.elements[q].surface = strs[beginOfPhrase + q];
                                     }
                                 }
+                                mp.pos = listCP[m].pos;
                             }
                         }
                     }
@@ -122,8 +124,10 @@ export class RuleBasedTagger {
     }
 
     private tagSpeeches() {
-        //for(let s of this.speeches)
+        for(let s of this.speeches) {
+            //console.log(s)
             //console.log(s.elements)
+        }
     }
 
     private match(tokens: Token[]) {

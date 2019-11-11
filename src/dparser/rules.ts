@@ -4,7 +4,7 @@ import {
     ConstructionElement,
     VerbSurface,
     ParticleSurface,
-    DemonstrativeSurface,
+    DemonstrativePronounSurface,
     PersonalPronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
@@ -25,9 +25,7 @@ export class ConstructionOfPhrase extends ConstructionOfSpeech {
 }
 
 class NounPhrase extends ConstructionOfPhrase {}
-class VerbPhrase extends ConstructionOfPhrase {
-    transitive: boolean = false;
-}
+class VerbPhrase extends ConstructionOfPhrase {}
 
 export class PhrasalVerb extends VerbPhrase {
     constructor(arr: Array<ConstructionElement>) {
@@ -83,12 +81,12 @@ class SetOfPhrasalVerbs {
 }
 
 class PhrasalTransitive extends VerbPhraseSurface {
-    constructor(verb: VerbSurface, particle: ParticleSurface, demonstrative: DemonstrativeSurface) {
+    constructor(verb: VerbSurface, preposition: ParticleSurface, demonstrative: DemonstrativePronounSurface) {
         super();
         verb.tag = Tagset.VB;
         this.elements.push(verb);
-        particle.tag = Tagset.PADV;
-        this.elements.push(particle);
+        preposition.tag = Tagset.PADV;
+        this.elements.push(preposition);
         demonstrative.tag = Tagset.DT; // TODO: pronType
         this.elements.push(demonstrative);
     }
