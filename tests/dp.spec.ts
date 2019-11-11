@@ -43,8 +43,8 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual('prt');
-        expect(rs[0].head.text).toEqual('koanny');
+        expect(rs[0].dependency).toEqual('case');
+        expect(rs[0].head.text).toEqual('che');
         expect(rs[0].dependent.text).toEqual('diurh');
     });
 

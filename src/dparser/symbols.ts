@@ -89,3 +89,7 @@ export enum Tagset {
     SYM = 'SYM', // symbol
     VB = 'VB', // verb base form
 }
+
+export enum PronType {
+  DEM = 'Dem',
+}

@@ -5,6 +5,7 @@ import {
     EncliticSurface,
     ParticleSurface,
     VerbSurface,
+    DemonstrativePronounSurface,
 } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
@@ -72,7 +73,13 @@ export class RuleBasedTagger {
 
                 if (kw) {
                     //console.log(kw)
-                    if (kw.pos === POSTags.pronoun) kw.tag = Tagset.NPR;
+                    if (kw.pos === POSTags.pronoun) {
+                        if(kw instanceof DemonstrativePronounSurface) {
+                            if(kw.pronType === 'Dem') kw.tag = Tagset.DT;
+                        } else {
+                            kw.tag = Tagset.NPR;
+                        }
+                    }
                     else if (kw.pos === POSTags.determiner) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
@@ -125,6 +132,23 @@ export class RuleBasedTagger {
 
     private tagSpeeches() {
         for(let s of this.speeches) {
+
+            if(s.elements.length == 1 && s.elements[0].pos == POSTags.pronoun) s.pos = POSTags.pronoun;
+
+            if(this.speeches.length == 3) {
+                if(this.speeches[0].pos == POSTags.pronoun 
+                    && this.speeches[1].pos == POSTags.verb 
+                    && this.speeches[2].pos == POSTags.pronoun) {
+                        
+                    if(this.speeches[1].elements.length == 2
+                        && this.speeches[1].elements[0].pos == POSTags.verb
+                        && this.speeches[1].elements[1].pos == POSTags.particle) {
+                        this.speeches[1].elements[1].pos = POSTags.adposition;
+                        this.speeches[1].elements[1].tag = Tagset.APPR;
+                    }
+                }
+            }
+
             //console.log(s)
             //console.log(s.elements)
         }
