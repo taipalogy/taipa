@@ -6,6 +6,7 @@ import {
     ParticleSurface,
     DemonstrativePronounSurface,
     PersonalPronounSurface,
+    PrepositionSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
@@ -75,8 +76,9 @@ class SetOfPhrasalVerbs {
         const ph = pva.analyze('longw', 'diurh');
 
         this.phvs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.phrase.words[1].literal)]));
+
         this.phvs.push(new PhrasalVerb([new VerbSurface(ph.phrase.words[0].literal), new ParticleSurface(ph.phrase.words[1].literal)]));
-        this.phvs.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new ParticleSurface(ph.sandhiForm.words[1].literal)]));
+        this.phvs.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new PrepositionSurface(ph.sandhiForm.words[1].literal)]));
     }
 }
 
@@ -139,9 +141,12 @@ export class Rules {
             }
 
             for (let i = 0; i < elems.length; i++) {                    
-                if (i === 1 && elems[i].surface === sequence[i] && i + 1 === elems.length) {
-                    //console.log(elems)
-                    return pat;
+                if (i === 1  && i + 1 === elems.length) {
+                    if(elems[0].surface === sequence[0] && elems[1].surface === sequence[1]) {
+                        return pat;
+                    } else if(elems[0].surface === '' && elems[1].surface === sequence[1]) { 
+                        return pat;
+                    }
                 }
             }
             elems = [];

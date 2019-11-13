@@ -29,6 +29,12 @@ export class RuleBasedTagger {
                     ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary
                 ) {
                     //console.log('something else hit')
+                } else if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.adposition
+                ) {
+                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
                 }
 
                 cps.push(ph);
@@ -66,6 +72,7 @@ export class RuleBasedTagger {
             sequence.push(strs[i]);
             phrs = rules.matches(sequence);
             if (phrs) {
+                //console.log(phrs[0].elements)
                 break;
             } else {
                 //console.log(sequence)

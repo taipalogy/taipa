@@ -97,9 +97,9 @@ export class EncliticSurface extends ConstructionElement {
 
 export class DemonstrativePronounSurface extends ConstructionElement {
     pronType: string;
-    constructor(str?: string) {
+    constructor(str: string) {
         super();
-        if (str) this.surface = str;
+        this.surface = str;
         this.pos = POSTags.pronoun;//POSTags.determiner;
         this.pronType = 'Dem';
     }
@@ -117,6 +117,14 @@ export class ParticleSurface extends ConstructionElement {
         super();
         this.pos = POSTags.particle;
         if (str) this.surface = str;
+    }
+}
+
+export class PrepositionSurface extends ConstructionElement {
+    constructor(str: string) {
+        super();
+        this.pos = POSTags.adposition;
+        this.surface = str;
     }
 }
 
