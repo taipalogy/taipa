@@ -65,7 +65,7 @@ export class Guide {
             } else if (this.s2.tag === Tagset.NPR && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.nsubj));
             } else if (this.s2.tag === Tagset.DT && this.s1.tag === Tagset.VB) {
-                c.relations.push(this.leftArc(DependencyLabels.obj));
+                c.relations.push(this.leftArc(DependencyLabels.dislocated));
             } else if (this.s2.tag === Tagset.AUX && this.s1.tag === Tagset.VB) {
                 c.relations.push(this.leftArc(DependencyLabels.aux));
             } else if (this.s2.tag === Tagset.PADV && this.s1.tag === Tagset.VB) {

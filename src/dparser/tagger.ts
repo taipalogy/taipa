@@ -153,20 +153,6 @@ export class RuleBasedTagger {
 
             if(s.elements.length == 1 && s.elements[0].pos == POSTags.pronoun) s.pos = POSTags.pronoun;
 
-            if(this.speeches.length == 3) {
-                if(this.speeches[0].pos == POSTags.pronoun 
-                    && this.speeches[1].pos == POSTags.verb 
-                    && this.speeches[2].pos == POSTags.pronoun) {
-                        
-                    if(this.speeches[1].elements.length == 2
-                        && this.speeches[1].elements[0].pos == POSTags.verb
-                        && this.speeches[1].elements[1].pos == POSTags.particle) {
-                        this.speeches[1].elements[1].pos = POSTags.adposition;
-                        this.speeches[1].elements[1].tag = Tagset.APPR;
-                    }
-                }
-            }
-
             //console.log(s)
             //console.log(s.elements)
         }

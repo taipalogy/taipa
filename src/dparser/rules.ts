@@ -73,12 +73,14 @@ class SetOfPhrasalVerbs {
 
     private populatePhrasalVerbs() {
         const pva = new PhrasalVerbAnalyzer();
+
         const ph = pva.analyze('longw', 'diurh');
-
-        this.phvs.push(new PhrasalVerb([new VerbSurface(''), new ParticleSurface(ph.phrase.words[1].literal)]));
-
         this.phvs.push(new PhrasalVerb([new VerbSurface(ph.phrase.words[0].literal), new ParticleSurface(ph.phrase.words[1].literal)]));
         this.phvs.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new PrepositionSurface(ph.sandhiForm.words[1].literal)]));
+
+        const ph2 = pva.analyze('koannww', 'diurh');
+        this.phvs.push(new PhrasalVerb([new VerbSurface(ph2.phrase.words[0].literal), new ParticleSurface(ph2.phrase.words[1].literal)]));
+        this.phvs.push(new PhrasalVerb([new VerbSurface(ph2.sandhiForm.words[0].literal), new PrepositionSurface(ph2.sandhiForm.words[1].literal)]));
     }
 }
 
@@ -111,6 +113,7 @@ export class SetOfSmallClauses {
     constructions: Array<ConstructionOfSpeech> = [];
 
     constructor() {
+        // obj. xcomp.
         const sc = new SmallClause(new VerbSurface('oannw'), new PersonalPronounSurface('goa'), new VerbSurface('churw'))
         this.constructions.push(sc);
     }   
@@ -143,8 +146,6 @@ export class Rules {
             for (let i = 0; i < elems.length; i++) {                    
                 if (i === 1  && i + 1 === elems.length) {
                     if(elems[0].surface === sequence[0] && elems[1].surface === sequence[1]) {
-                        return pat;
-                    } else if(elems[0].surface === '' && elems[1].surface === sequence[1]) { 
                         return pat;
                     }
                 }

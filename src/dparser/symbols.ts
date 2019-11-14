@@ -91,5 +91,10 @@ export enum Tagset {
 }
 
 export enum PronType {
-  DEM = 'Dem',
+    /*
+      pronominal types
+      https://universaldependencies.org/u/feat/PronType.html
+    */
+
+    DEM = 'Dem',
 }
