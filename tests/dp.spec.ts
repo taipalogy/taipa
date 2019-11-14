@@ -2,7 +2,7 @@ import { Client } from '../src/client';
 import { Document } from '../src/document';
 
 describe("Dependency parsing", () => {
-    let cli = new Client();
+    const cli = new Client();
     let doc = new Document();
 
     doc = cli.process('goa koannw diurh');
@@ -32,7 +32,7 @@ describe("Dependency parsing", () => {
 });
 
 describe("Dependency parsing", () => {
-    let cli = new Client();
+    const cli = new Client();
     let doc = new Document();
 
     doc = cli.process('goa koanny diurh che');
@@ -68,7 +68,7 @@ describe("Dependency parsing", () => {
 });
 
 describe("Dependency parsing", () => {
-    let cli = new Client();
+    const cli = new Client();
     let doc = new Document();
 
     doc = cli.process('che goa koannw diurh');
@@ -104,7 +104,7 @@ describe("Dependency parsing", () => {
 });
 
 describe("Dependency parsing", () => {
-    let cli = new Client();
+    const cli = new Client();
     let doc = new Document();
 
     doc = cli.process('koannw diurh aw');
@@ -134,7 +134,7 @@ describe("Dependency parsing", () => {
 });
 
 describe("Dependency parsing", () => {
-    let cli = new Client();
+    const cli = new Client();
     let doc = new Document();
 
     doc = cli.process('koannw aw');
@@ -158,7 +158,7 @@ describe("Dependency parsing", () => {
 });
 
 describe("Dependency parsing", () => {
-    let cli = new Client();
+    const cli = new Client();
     let doc = new Document();
 
     doc = cli.process('goa koannw diurh aw');

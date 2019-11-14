@@ -3,7 +3,7 @@ import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 
 describe("Epenthesis testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('sutflay');

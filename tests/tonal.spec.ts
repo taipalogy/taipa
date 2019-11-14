@@ -3,7 +3,7 @@ import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('damwvurhhxoay');
@@ -14,7 +14,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('binznafchaiw');
@@ -25,7 +25,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('qinznafjitt');
@@ -36,7 +36,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('chaufcheng');
@@ -47,7 +47,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('daizoanx');
@@ -58,7 +58,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('daizoanzoez');
@@ -69,7 +69,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('daiwjittwvunfdeyqok');
@@ -80,7 +80,7 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('qurzsa');
@@ -91,12 +91,78 @@ describe("Tonal testing", () => {
 });
 
 describe("Tonal testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processTonal('hongzqun');
 
     test("check the tonal affix", () => {
         expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.z);
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('siappwjipp');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][4].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('qazvi');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.z);
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('mihhwqiannz');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('bakkwchiu');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('ginfnay');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.f);
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('kazcng');
+
+    test("check the tonal affix", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.z);
     });
 });

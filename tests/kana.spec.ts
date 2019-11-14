@@ -2,7 +2,7 @@ import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('forumosa')
@@ -14,7 +14,7 @@ describe("Kana testing", () => {
 });
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('takasago')
@@ -26,7 +26,7 @@ describe("Kana testing", () => {
 });
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('taiwankun')
@@ -38,7 +38,7 @@ describe("Kana testing", () => {
 });
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('taggu')
@@ -50,7 +50,7 @@ describe("Kana testing", () => {
 });
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('ggu')
@@ -62,7 +62,7 @@ describe("Kana testing", () => {
 });
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('paddo')
@@ -74,7 +74,7 @@ describe("Kana testing", () => {
 });
 
 describe("Kana testing", () => {
-    let cli = new Client()
+    const cli = new Client()
     let doc = new TokenAnalysis()
 
     doc = cli.processKana('ddo')
