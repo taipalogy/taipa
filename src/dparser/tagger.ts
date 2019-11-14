@@ -18,25 +18,6 @@ export class RuleBasedTagger {
 
         if (phrases.length > 0) {
             for (let ph of phrases) {
-                if (
-                    ph.pos === POSTags.verb &&
-                    ph.elements[ph.elements.length - 1].pos === POSTags.particle
-                ) {
-                    ph.elements[0].tag = Tagset.VB;
-                    ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
-                } else if (
-                    ph.pos === POSTags.verb &&
-                    ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary
-                ) {
-                    //console.log('something else hit')
-                } else if (
-                    ph.pos === POSTags.verb &&
-                    ph.elements[ph.elements.length - 1].pos === POSTags.adposition
-                ) {
-                    ph.elements[0].tag = Tagset.VB;
-                    ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
-                }
-
                 cps.push(ph);
 
                 //console.log(pat.elements)
@@ -61,6 +42,34 @@ export class RuleBasedTagger {
 
         //console.log(cps)
         return cps;
+    }
+
+    private tagPhrases(phrases: ConstructionOfSpeech[]) {
+        if (phrases.length > 0) {
+            for (let ph of phrases) {
+                if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.particle
+                ) {
+                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
+                } else if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary
+                ) {
+                    //console.log('something else hit')
+                } else if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.adposition
+                ) {
+                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
+                }
+
+            }
+        }
+
+        return phrases;
     }
 
     private phrase(strs: string[], beginOfPhrase: number) {
@@ -101,6 +110,8 @@ export class RuleBasedTagger {
         }
 
         //if(pats) console.log(pats[0].elements)
+
+        if(phrs) phrs = this.tagPhrases(phrs);
 
         let listCP: Array<ConstructionOfSpeech> = new Array();
         if (phrs) listCP = this.generate(sequence, phrs);
