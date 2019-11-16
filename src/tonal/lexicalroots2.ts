@@ -23,7 +23,7 @@ let list_of_new_lexical_roots = [
 
     'mnghh',
 
-    'n',
+    'n', 'na',
 
     'virt',
 ]

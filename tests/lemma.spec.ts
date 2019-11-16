@@ -100,3 +100,18 @@ describe("Lemma testing", () => {
     expect(doc.lemmata.length).toEqual(0);
   });
 });
+
+describe("Lemma testing", () => {
+  const cli = new Client()
+  let doc = new TokenAnalysis()
+
+  doc = cli.processTonal('goa');
+
+  test("check the number of lemmata", () => {
+    expect(doc.lemmata.length).toEqual(1);
+  });
+
+  test("check the lemma", () => {
+    expect(doc.lemmata[0].literal).toEqual('goay');
+  });
+});

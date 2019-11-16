@@ -144,7 +144,7 @@ export abstract class MorphemeMaker {
                     for (let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    morphemes.push(this.createMorpheme(msp, this.metaplasm)); //morphemes.push(tsm);
+                    morphemes.push(this.createMorpheme(msp, this.metaplasm));
                 }
 
                 beginOfSyllable += msp.matchedLength;
