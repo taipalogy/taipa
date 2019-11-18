@@ -1,4 +1,4 @@
-import { TonalLemmatizationLexeme, TonalWord } from './tonal/lexeme';
+import { TonalLemmatizationLexeme } from './tonal/lexeme';
 import { TonalInflective } from './tonal/init';
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
@@ -12,7 +12,7 @@ import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
-import { Tagset } from './dparser/symbols';
+import { Lemmatizer } from './lemmatizer';
 
 export class Client {
     processKana(str: string): TokenAnalysis {
@@ -46,21 +46,6 @@ export class Client {
         return ta;
     }
 
-    getTonalLemmas(doc: Document): Document {
-        const tla = new TonalLemmatizationAnalyzer();
-
-        for(let i = 0; i < doc.tokens.length; i++) {
-            if(doc.tokens[i].text === 'che' || doc.tokens[i].text === 'he') continue; // defective
-            if(doc.tokens[i].tag === Tagset.AUXN) continue;
-            if(doc.tokens[i].tag === Tagset.VB) continue;
-            let lemmas: TonalWord[] = [];
-            lemmas = tla.analyze(doc.tokens[i].text).getLemmata();
-            if(lemmas.length > 0)
-                doc.tokens[i].lemma = lemmas[0].literal;
-        }
-        return doc;
-    }
-
     process(str: string): Document {
         let doc: Document = new Document();
 
@@ -77,7 +62,8 @@ export class Client {
         doc = tggr.tag(doc);
 
         // lemmatization
-        doc = this.getTonalLemmas(doc);
+        const lmtzr = new Lemmatizer();
+        doc = lmtzr.getTonalLemmas(doc);
 
         // dependency parsing
         const dpsr = new DependencyParser();

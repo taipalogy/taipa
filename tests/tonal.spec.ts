@@ -166,3 +166,14 @@ describe("Tonal testing", () => {
         expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.z);
     });
 });
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('ax');
+
+    test("check the tonal affix", () => {
+        expect(doc.word.literal).toEqual('');
+    });
+});
