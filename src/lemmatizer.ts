@@ -8,11 +8,11 @@ export class Lemmatizer {
         const tla = new TonalLemmatizationAnalyzer();
 
         for(let i = 0; i < doc.tokens.length; i++) {
-            if(doc.tokens[i].text === 'che' || doc.tokens[i].text === 'he') continue; // defective
+            if(doc.tokens[i].orth === 'che' || doc.tokens[i].orth === 'he') continue; // defective
             if(doc.tokens[i].tag === Tagset.AUXN) continue;
             if(doc.tokens[i].tag === Tagset.VB) continue;
             let lemmas: TonalWord[] = [];
-            lemmas = tla.analyze(doc.tokens[i].text).getLemmata();
+            lemmas = tla.analyze(doc.tokens[i].orth).getLemmata();
             if(lemmas.length > 0)
                 doc.tokens[i].lemma = lemmas[0].literal;
         }

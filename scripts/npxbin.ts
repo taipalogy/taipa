@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as readline from 'readline';
 
-let path = './taipa.js'
+let path = './app.js'
 
 const readInterface = readline.createInterface(
-    fs.createReadStream("../lib/taipa.js")
+    fs.createReadStream("../lib/app.js")
 );
 
 fs.appendFileSync(path, '', {

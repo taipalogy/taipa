@@ -14,16 +14,16 @@ stdin.addListener('data', function (d) {
             let lemma = '*';
             if (ts[i].lemma != '')
                 lemma = ts[i].lemma;
-            let text = '*';
+            let orth = '*';
             if (ts[i].head)
-                text = ts[i].head.text;
-            console.info(ts[i].text
+                orth = ts[i].head.orth;
+            console.info(ts[i].orth
                 + ',' + lemma
                 + ',' + ts[i].pos
                 + ',' + ts[i].tag
                 + ',' + ts[i].dep
-                + ',' + text);
+                + ',' + orth);
         }
     }
 });
-//# sourceMappingURL=taipa.js.map
+//# sourceMappingURL=app.js.map

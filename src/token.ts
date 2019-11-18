@@ -8,7 +8,7 @@ export class Token {
     dep: string = '';
     head: any;
 
-    constructor(public text: string) {}
+    constructor(public orth: string) {}
 }
 
 export class TokenAnalysis {

@@ -4,7 +4,7 @@
   "description": "Taiwanese parsing library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "bin": "bin/taipa.js",
+  "bin": "bin/app.js",
   "scripts": {
     "build": "tsc --outDir lib",
     "lint": "eslint \"src/**/*.ts\"",

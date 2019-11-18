@@ -95,13 +95,11 @@ export class EncliticSurface extends ConstructionElement {
     }
 }
 
-export class DemonstrativePronounSurface extends ConstructionElement {
-    pronType: string;
+export class PronounSurface extends ConstructionElement {
     constructor(str: string) {
         super();
         this.surface = str;
-        this.pos = POSTags.pronoun;//POSTags.determiner;
-        this.pronType = 'Dem';
+        this.pos = POSTags.pronoun;
     }
 }
 
@@ -150,8 +148,8 @@ export class KeyWords {
         return new PersonalPronounSurface(str);
     }
 
-    private makeDemonstrativePronounSurface(str: string): DemonstrativePronounSurface {
-        return new DemonstrativePronounSurface(str);
+    private makePronounSurface(str: string): PronounSurface {
+        return new PronounSurface(str);
     }
 
     private makeParticleSurface(str: string): ParticleSurface {
@@ -172,7 +170,7 @@ export class KeyWords {
 
     private populateKeyElems() {
         this.keyElems = [
-            this.makeDemonstrativePronounSurface('che'),
+            this.makePronounSurface('che'),
             this.makePersonalPronounSurface('goa'),
             this.makeAuxiliarySurface('qaz'),
             this.makeParticleSurface('long')

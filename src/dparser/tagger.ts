@@ -5,7 +5,6 @@ import {
     EncliticSurface,
     ParticleSurface,
     VerbSurface,
-    DemonstrativePronounSurface,
 } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
@@ -90,11 +89,7 @@ export class RuleBasedTagger {
                 if (kw) {
                     //console.log(kw)
                     if (kw.pos === POSTags.pronoun) {
-                        if(kw instanceof DemonstrativePronounSurface) {
-                            if(kw.pronType === 'Dem') kw.tag = Tagset.DT;
-                        } else {
-                            kw.tag = Tagset.NPR;
-                        }
+                        kw.tag = Tagset.NPR;
                     }
                     else if (kw.pos === POSTags.determiner) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
@@ -161,7 +156,7 @@ export class RuleBasedTagger {
     private match(tokens: Token[]) {
         let strs: string[] = [];
         for(let i in tokens)
-            strs.push(tokens[i].text);
+            strs.push(tokens[i].orth);
 
         let beginOfPhrase: number = 0;
         let matched: ConstructionOfSpeech = new ConstructionOfSpeech();
@@ -189,7 +184,7 @@ export class RuleBasedTagger {
         }
 
         for(let i = 0; i < ces.length; i++) {
-            if(doc.tokens[i].text === ces[i].surface) {
+            if(doc.tokens[i].orth === ces[i].surface) {
                 doc.tokens[i].pos = ces[i].pos;
                 doc.tokens[i].tag = ces[i].tag;
             }

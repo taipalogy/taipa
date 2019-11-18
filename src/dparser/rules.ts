@@ -4,9 +4,9 @@ import {
     ConstructionElement,
     VerbSurface,
     ParticleSurface,
-    DemonstrativePronounSurface,
     PersonalPronounSurface,
     PrepositionSurface,
+    PronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
@@ -85,7 +85,7 @@ class SetOfPhrasalVerbs {
 }
 
 class PhrasalTransitive extends VerbPhraseSurface {
-    constructor(verb: VerbSurface, preposition: ParticleSurface, demonstrative: DemonstrativePronounSurface) {
+    constructor(verb: VerbSurface, preposition: ParticleSurface, demonstrative: PronounSurface) {
         super();
         verb.tag = Tagset.VB;
         this.elements.push(verb);
