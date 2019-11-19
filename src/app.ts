@@ -16,15 +16,12 @@ stdin.addListener('data', function(d) {
     if (ts.length > 0) {
         for (let i = 0; i < ts.length; i++) {
             let lemma = '*';
-            if(ts[i].lemma != '') lemma = ts[i].lemma;
+            if (ts[i].lemma != '') lemma = ts[i].lemma;
             let orthOfHead = '*';
-            if(ts[i].head) orthOfHead = (<Token>ts[i].head).orth;
-            console.info(ts[i].orth
-                + ',' + lemma
-                + ',' + ts[i].pos
-                + ',' + ts[i].tag
-                + ',' + ts[i].dep
-                + ',' + orthOfHead);
+            if (ts[i].head) orthOfHead = (<Token>ts[i].head).orth;
+            console.info(
+                ts[i].orth + ',' + lemma + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + orthOfHead,
+            );
         }
     }
 });

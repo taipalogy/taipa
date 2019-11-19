@@ -1,4 +1,4 @@
-import { PositionalSound } from "./grapheme";
+import { PositionalSound } from './grapheme';
 
 export abstract class Analyzer {}
 
@@ -14,7 +14,7 @@ export class AnalyzerWrapper {
         let duplicates = [];
 
         for (let e of map.values()) {
-            if(e.no != e.map.size) console.debug(`size unmatched for ${e.name}`);
+            if (e.no != e.map.size) console.debug(`size unmatched for ${e.name}`);
             arr.push(e.name);
         }
 

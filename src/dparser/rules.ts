@@ -75,9 +75,19 @@ export class SetOfPhrasalVerbs {
     }
 
     private populatePhrasalVerbs() {
-        for(let i in this.phrms) {
-            this.phvs.push(new PhrasalVerb([new VerbSurface(this.phrms[i].phrase.words[0].literal), new ParticleSurface(this.phrms[i].phrase.words[1].literal)]));
-            this.phvs.push(new PhrasalVerb([new VerbSurface(this.phrms[i].sandhiForm.words[0].literal), new PrepositionSurface(this.phrms[i].sandhiForm.words[1].literal)]))
+        for (let i in this.phrms) {
+            this.phvs.push(
+                new PhrasalVerb([
+                    new VerbSurface(this.phrms[i].phrase.words[0].literal),
+                    new ParticleSurface(this.phrms[i].phrase.words[1].literal),
+                ]),
+            );
+            this.phvs.push(
+                new PhrasalVerb([
+                    new VerbSurface(this.phrms[i].sandhiForm.words[0].literal),
+                    new PrepositionSurface(this.phrms[i].sandhiForm.words[1].literal),
+                ]),
+            );
         }
     }
 
@@ -113,14 +123,17 @@ class SmallClause extends VerbPhraseSurface {
 }
 
 export class SetOfSmallClauses {
-    
     constructions: Array<ConstructionOfSpeech> = [];
 
     constructor() {
         // obj. xcomp.
-        const sc = new SmallClause(new VerbSurface('oannw'), new PersonalPronounSurface('goa'), new VerbSurface('churw'))
+        const sc = new SmallClause(
+            new VerbSurface('oannw'),
+            new PersonalPronounSurface('goa'),
+            new VerbSurface('churw'),
+        );
         this.constructions.push(sc);
-    }   
+    }
 }
 
 export class Rules {
@@ -147,9 +160,9 @@ export class Rules {
                 }
             }
 
-            for (let i = 0; i < elems.length; i++) {                    
-                if (i === 1  && i + 1 === elems.length) {
-                    if(elems[0].surface === sequence[0] && elems[1].surface === sequence[1]) {
+            for (let i = 0; i < elems.length; i++) {
+                if (i === 1 && i + 1 === elems.length) {
+                    if (elems[0].surface === sequence[0] && elems[1].surface === sequence[1]) {
                         return pat;
                     }
                 }
@@ -163,8 +176,8 @@ export class Rules {
     private populatePhrasalVerbs() {
         const s = new SetOfPhrasalVerbs();
 
-        for(let i = 0; i < s.phvs.length; i++) {
-            this.phrases.push([s.phvs[i]])
+        for (let i = 0; i < s.phvs.length; i++) {
+            this.phrases.push([s.phvs[i]]);
         }
     }
 

@@ -1,6 +1,6 @@
-import { TonalInflexionLexeme } from "./lexeme";
-import { TonalWord } from "../tonal/lexeme";
-import { TonalPhrase, Phraseme } from "../phraseme";
+import { TonalInflexionLexeme } from './lexeme';
+import { TonalWord } from '../tonal/lexeme';
+import { TonalPhrase, Phraseme } from '../phraseme';
 
 export class TonalInflexionPhraseme extends Phraseme {
     phrase: TonalPhrase;
@@ -8,8 +8,8 @@ export class TonalInflexionPhraseme extends Phraseme {
     constructor(phrase: TonalPhrase, lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
         super();
         this.phrase = phrase;
-        if(lexemeSubsidiary.otherForms.length > 0) {
-            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.otherForms[0]])
+        if (lexemeSubsidiary.otherForms.length > 0) {
+            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.otherForms[0]]);
         } else {
             this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.word]);
         }

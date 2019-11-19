@@ -45,12 +45,13 @@ export class Guide {
         this.b1 = new Token('');
         if (c.queue.length > 0) this.b1 = c.queue[0];
 
-        if(this.s1.tag != '' && this.b1.tag != '') {
+        if (this.s1.tag != '' && this.b1.tag != '') {
             if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.PPV) this.shift();
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.VB) this.shift();
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.NPR) this.shift();
             else if (this.s1.tag === Tagset.APPR && this.b1.tag === Tagset.NPR) this.shift();
-            else if (this.s1.tag === Tagset.PPV && this.b1.tag === Tagset.AUXN) c.relations.push(this.rightArc(DependencyLabels.prt));
+            else if (this.s1.tag === Tagset.PPV && this.b1.tag === Tagset.AUXN)
+                c.relations.push(this.rightArc(DependencyLabels.prt));
             else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.NPR) this.shift();
             else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.AUXN) this.shift();
             else if (this.s1.tag === Tagset.AUX && this.b1.tag === Tagset.VB) this.shift();
@@ -64,13 +65,13 @@ export class Guide {
                 c.relations.push(this.rightArc(DependencyLabels.aux));
             } else if (this.s2.tag === Tagset.NPR && this.s1.tag === Tagset.VB) {
                 let isHit: boolean = false;
-                for(let i in c.relations) {
-                    if(c.relations[i].dependency === DependencyLabels.nsubj) {
+                for (let i in c.relations) {
+                    if (c.relations[i].dependency === DependencyLabels.nsubj) {
                         isHit = true;
                         break;
                     }
                 }
-                if(isHit) {
+                if (isHit) {
                     c.relations.push(this.leftArc(DependencyLabels.dislocated));
                 } else {
                     c.relations.push(this.leftArc(DependencyLabels.nsubj));

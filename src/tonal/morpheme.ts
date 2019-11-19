@@ -131,12 +131,12 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 //console.log('i: %d', i)
                 const ts = urs.get(letters[i].literal);
                 //console.log(ts)
-                if(ts.length > 0) {
+                if (ts.length > 0) {
                     for (let t of ts) {
-                        const slicedLetters = letters.slice(beginOfSyllable, i)
+                        const slicedLetters = letters.slice(beginOfSyllable, i);
                         let lit = '';
-                        for(let i in slicedLetters) {
-                            lit = lit + slicedLetters[i].literal
+                        for (let i in slicedLetters) {
+                            lit = lit + slicedLetters[i].literal;
                         }
                         //console.log(lit + t.getLiteral())
                         if (list_of_lexical_roots.includes(lit + t.getLiteral())) {
@@ -146,21 +146,19 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                             break;
                         }
                     }
-                    if(matched.length > 0 && matchedLtrs.length > 0) break;
+                    if (matched.length > 0 && matchedLtrs.length > 0) break;
                 } else {
                     matched = '';
                     matchedLtrs = [];
                 }
-            }
-
-            else if (list_of_lexical_roots.includes(literal)) {
+            } else if (list_of_lexical_roots.includes(literal)) {
                 matched = literal;
                 Object.assign(matchedLtrs, ltrs);
                 begin = beginOfSyllable;
                 //console.log(matched)
             } else {
                 //console.log('no matched for syllabifyTonal:' + ltrs)
-                if(!sft.beginWith(letters[i].literal)) {
+                if (!sft.beginWith(letters[i].literal)) {
                     // free first tone without a free tonal
                     const ts = urs.get(TonalLetterTags.zero);
                     for (let t of ts) {
@@ -170,7 +168,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                             Object.assign(matchedLtrs, ltrs);
                             break;
                         }
-                    }    
+                    }
                 }
                 // when there is no matched lexcial roots for this syllable, we still assign begin
                 begin = beginOfSyllable;

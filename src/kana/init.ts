@@ -16,7 +16,7 @@ import { Morpheme } from '../morpheme';
 
 export class Kana extends AnalyzerWrapper {
     private static singleton: Kana;
-    
+
     private constructor() {
         super(new KanaAnalyzer());
         this.checkSize();
@@ -46,7 +46,7 @@ export class Kana extends AnalyzerWrapper {
 
     private lookup(str: string) {
         let results = hiragana_katakana.get(str);
-        if(results == undefined) {
+        if (results == undefined) {
             results = gailaigo.get(str);
         }
         return results;

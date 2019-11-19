@@ -28,7 +28,7 @@ export class TonalPhrase extends Phrase {
         if (words != undefined) {
             let len = words.length;
             for (var i = 0; i < len; i++) {
-                if(i > 0) this.literal += ' ';
+                if (i > 0) this.literal += ' ';
                 this.pushWord(words[i]);
             }
         }

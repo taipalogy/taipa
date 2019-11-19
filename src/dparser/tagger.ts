@@ -1,11 +1,6 @@
 import { ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEnclitic, VerbWithEnclitic, Rules } from './rules';
 import { POSTags, Tagset } from './symbols';
-import {
-    ConstructionElement,
-    EncliticSurface,
-    ParticleSurface,
-    VerbSurface,
-} from './keywords';
+import { ConstructionElement, EncliticSurface, ParticleSurface, VerbSurface } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
 
@@ -32,10 +27,7 @@ export class RuleBasedTagger {
             }
         } else {
             //console.log(sequence)
-            let vwe = new VerbWithEnclitic(
-                new VerbSurface(sequence[0]),
-                new EncliticSurface('aw'),
-            );
+            let vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
             cps.push(vwe);
         }
 
@@ -46,25 +38,15 @@ export class RuleBasedTagger {
     private tagPhrases(phrases: ConstructionOfSpeech[]) {
         if (phrases.length > 0) {
             for (let ph of phrases) {
-                if (
-                    ph.pos === POSTags.verb &&
-                    ph.elements[ph.elements.length - 1].pos === POSTags.particle
-                ) {
+                if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.particle) {
                     ph.elements[0].tag = Tagset.VB;
                     ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
-                } else if (
-                    ph.pos === POSTags.verb &&
-                    ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary
-                ) {
+                } else if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary) {
                     //console.log('something else hit')
-                } else if (
-                    ph.pos === POSTags.verb &&
-                    ph.elements[ph.elements.length - 1].pos === POSTags.adposition
-                ) {
+                } else if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.adposition) {
                     ph.elements[0].tag = Tagset.VB;
                     ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
                 }
-
             }
         }
 
@@ -90,8 +72,7 @@ export class RuleBasedTagger {
                     //console.log(kw)
                     if (kw.pos === POSTags.pronoun) {
                         kw.tag = Tagset.NPR;
-                    }
-                    else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
+                    } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
 
                     phrs = [new ConstructionOfSpeech()];
@@ -105,11 +86,11 @@ export class RuleBasedTagger {
 
         //if(pats) console.log(pats[0].elements)
 
-        if(phrs) phrs = this.tagPhrases(phrs);
+        if (phrs) phrs = this.tagPhrases(phrs);
 
         let listCP: Array<ConstructionOfSpeech> = new Array();
         if (phrs) listCP = this.generate(sequence, phrs);
-        else listCP = this.generate(sequence, [])
+        else listCP = this.generate(sequence, []);
 
         //console.log(listCP);
 
@@ -124,7 +105,7 @@ export class RuleBasedTagger {
                         if (strs[beginOfPhrase + n] === listCP[m].elements[n].surface) {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
-                                
+
                                 for (let q = 0; q < matchedLen; q++) {
                                     mp.elements[q] = listCP[m].elements[q];
                                     if (listCP[m].elements[q].surface === '') {
@@ -143,9 +124,8 @@ export class RuleBasedTagger {
     }
 
     private tagSpeeches() {
-        for(let s of this.speeches) {
-
-            if(s.elements.length == 1 && s.elements[0].pos == POSTags.pronoun) s.pos = POSTags.pronoun;
+        for (let s of this.speeches) {
+            if (s.elements.length == 1 && s.elements[0].pos == POSTags.pronoun) s.pos = POSTags.pronoun;
 
             //console.log(s)
             //console.log(s.elements)
@@ -154,8 +134,7 @@ export class RuleBasedTagger {
 
     private match(tokens: Token[]) {
         let strs: string[] = [];
-        for(let i in tokens)
-            strs.push(tokens[i].orth);
+        for (let i in tokens) strs.push(tokens[i].orth);
 
         let beginOfPhrase: number = 0;
         let matched: ConstructionOfSpeech = new ConstructionOfSpeech();
@@ -175,15 +154,15 @@ export class RuleBasedTagger {
         this.match(doc.tokens);
 
         let ces: Array<ConstructionElement> = new Array();
-        
-        for(let i in this.speeches) {
+
+        for (let i in this.speeches) {
             for (let j in this.speeches[i].elements) {
                 ces.push(this.speeches[i].elements[j]);
             }
         }
 
-        for(let i = 0; i < ces.length; i++) {
-            if(doc.tokens[i].orth === ces[i].surface) {
+        for (let i = 0; i < ces.length; i++) {
+            if (doc.tokens[i].orth === ces[i].surface) {
                 doc.tokens[i].pos = ces[i].pos;
                 doc.tokens[i].tag = ces[i].tag;
             }

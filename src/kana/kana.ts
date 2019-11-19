@@ -106,7 +106,7 @@ export class ClientOfKanaGenerator {
             let syl: string[] = new Array();
             Object.assign(syl, letters);
             syl.push(e.getLiteral());
-            if(e.getLiteral() === lookahead) strs.push(syl);
+            if (e.getLiteral() === lookahead) strs.push(syl);
         }
 
         return strs;
@@ -879,5 +879,4 @@ export const kogakimoji: Map<string, Array<string>> = new Map().set('chu', ['っ
 
 export const hatsuon: Map<string, Array<string>> = new Map().set('n', ['ん', 'ン']);
 
-export const gailaigo: Map<string, Array<string>> = new Map()
-    .set('di', ['でぃ', 'ディ'])
+export const gailaigo: Map<string, Array<string>> = new Map().set('di', ['でぃ', 'ディ']);

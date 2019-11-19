@@ -1,5 +1,5 @@
-import { Word } from "./lexeme";
-import { Sound } from "./grapheme";
+import { Word } from './lexeme';
+import { Sound } from './grapheme';
 
 export class Token {
     pos: string = '';

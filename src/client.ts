@@ -28,7 +28,7 @@ export class Client {
     processTonal(str: string): TokenAnalysis {
         // tonal
         let tokens = str.match(/\w+/g);
-        const tonal_inflective_aw = TonalInflective.getInstance();        
+        const tonal_inflective_aw = TonalInflective.getInstance();
         const tla = <TonalLemmatizationAnalyzer>tonal_inflective_aw.analyzer;
         let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
@@ -51,10 +51,9 @@ export class Client {
 
         // tokenization
         const tokens = str.match(/\w+/g);
-        if(tokens)
-            for(let i = 0; i < tokens.length; i++) {
-                if(tokens[i].length)
-                    doc.tokens.push(new Token(tokens[i]));
+        if (tokens)
+            for (let i = 0; i < tokens.length; i++) {
+                if (tokens[i].length) doc.tokens.push(new Token(tokens[i]));
             }
 
         // tagging

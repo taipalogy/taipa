@@ -165,7 +165,7 @@ export class KeyWords {
     }
 
     getSurface(str: string) {
-        for(let i in this.keyElems) if(this.keyElems[i].surface === str) return this.keyElems[i];
+        for (let i in this.keyElems) if (this.keyElems[i].surface === str) return this.keyElems[i];
     }
 
     private populateKeyElems() {
@@ -173,7 +173,7 @@ export class KeyWords {
             this.makePronounSurface('che'),
             this.makePersonalPronounSurface('goa'),
             this.makeAuxiliarySurface('qaz'),
-            this.makeParticleSurface('long')
+            this.makeParticleSurface('long'),
         ];
     }
 }
