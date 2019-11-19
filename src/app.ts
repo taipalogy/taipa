@@ -2,6 +2,7 @@
 
 import { Client } from './client';
 import { Document } from './document';
+import { Token } from './token';
 
 let cli = new Client();
 let doc = new Document();
@@ -16,14 +17,14 @@ stdin.addListener('data', function(d) {
         for (let i = 0; i < ts.length; i++) {
             let lemma = '*';
             if(ts[i].lemma != '') lemma = ts[i].lemma;
-            let orth = '*';
-            if(ts[i].head) orth = ts[i].head.orth;
+            let orthOfHead = '*';
+            if(ts[i].head) orthOfHead = (<Token>ts[i].head).orth;
             console.info(ts[i].orth
                 + ',' + lemma
                 + ',' + ts[i].pos
                 + ',' + ts[i].tag
                 + ',' + ts[i].dep
-                + ',' + orth);
+                + ',' + orthOfHead);
         }
     }
 });

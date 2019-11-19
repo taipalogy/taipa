@@ -39,6 +39,7 @@ export enum DependencyLabels {
     compound = 'compound',
     cop = 'cop',
     csubj = 'csubj',
+    det = 'det',
     dislocated = 'dislocated',
     fix = 'fix', // multiword expression
     flat = 'flat', // multiword expression
@@ -57,8 +58,6 @@ export enum DependencyLabels {
 }
 
 export enum Tagset {
-    DT = 'DT', // determiner
-
     AUX = 'AUX', // auxiliary verb
     AUXN = 'AUXN', // auxiliary verb as enclitic
     ADJ = 'ADJ', // adjective

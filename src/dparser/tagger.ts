@@ -91,7 +91,6 @@ export class RuleBasedTagger {
                     if (kw.pos === POSTags.pronoun) {
                         kw.tag = Tagset.NPR;
                     }
-                    else if (kw.pos === POSTags.determiner) kw.tag = Tagset.DT;
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
                     else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
 

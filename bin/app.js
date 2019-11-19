@@ -14,15 +14,15 @@ stdin.addListener('data', function (d) {
             let lemma = '*';
             if (ts[i].lemma != '')
                 lemma = ts[i].lemma;
-            let orth = '*';
+            let orthOfHead = '*';
             if (ts[i].head)
-                orth = ts[i].head.orth;
+                orthOfHead = ts[i].head.orth;
             console.info(ts[i].orth
                 + ',' + lemma
                 + ',' + ts[i].pos
                 + ',' + ts[i].tag
                 + ',' + ts[i].dep
-                + ',' + orth);
+                + ',' + orthOfHead);
         }
     }
 });

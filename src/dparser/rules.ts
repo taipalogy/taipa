@@ -10,6 +10,7 @@ import {
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
+import { TonalInflexionPhraseme } from './phraseme';
 
 export class ConstructionOfSpeech {
     pos: string = '';
@@ -64,35 +65,38 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
     }
 }
 
-class SetOfPhrasalVerbs {
+export class SetOfPhrasalVerbs {
+    phrms: Array<TonalInflexionPhraseme> = new Array();
     phvs: Array<PhrasalVerb> = new Array();
 
     constructor() {
+        this.populatePhrasemes();
         this.populatePhrasalVerbs();
     }
 
     private populatePhrasalVerbs() {
+        for(let i in this.phrms) {
+            this.phvs.push(new PhrasalVerb([new VerbSurface(this.phrms[i].phrase.words[0].literal), new ParticleSurface(this.phrms[i].phrase.words[1].literal)]));
+            this.phvs.push(new PhrasalVerb([new VerbSurface(this.phrms[i].sandhiForm.words[0].literal), new PrepositionSurface(this.phrms[i].sandhiForm.words[1].literal)]))
+        }
+    }
+
+    private populatePhrasemes() {
         const pva = new PhrasalVerbAnalyzer();
-
-        const ph = pva.analyze('longw', 'diurh');
-        this.phvs.push(new PhrasalVerb([new VerbSurface(ph.phrase.words[0].literal), new ParticleSurface(ph.phrase.words[1].literal)]));
-        this.phvs.push(new PhrasalVerb([new VerbSurface(ph.sandhiForm.words[0].literal), new PrepositionSurface(ph.sandhiForm.words[1].literal)]));
-
-        const ph2 = pva.analyze('koannww', 'diurh');
-        this.phvs.push(new PhrasalVerb([new VerbSurface(ph2.phrase.words[0].literal), new ParticleSurface(ph2.phrase.words[1].literal)]));
-        this.phvs.push(new PhrasalVerb([new VerbSurface(ph2.sandhiForm.words[0].literal), new PrepositionSurface(ph2.sandhiForm.words[1].literal)]));
+        this.phrms.push(pva.analyze('longw', 'diurh'));
+        this.phrms.push(pva.analyze('koannww', 'diurh'));
     }
 }
 
 class PhrasalTransitive extends VerbPhraseSurface {
-    constructor(verb: VerbSurface, preposition: ParticleSurface, demonstrative: PronounSurface) {
+    constructor(verb: VerbSurface, preposition: ParticleSurface, pronoun: PronounSurface) {
         super();
         verb.tag = Tagset.VB;
         this.elements.push(verb);
         preposition.tag = Tagset.PADV;
         this.elements.push(preposition);
-        demonstrative.tag = Tagset.DT; // TODO: pronType
-        this.elements.push(demonstrative);
+        pronoun.tag = Tagset.NPR; // TODO: pronType
+        this.elements.push(pronoun);
     }
 }
 
