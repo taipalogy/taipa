@@ -69,8 +69,6 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-//  Inflectional Ending
-//------------------------------------------------------------------------------
 
 class Ending {}
 
@@ -99,8 +97,6 @@ export class FreeTonalEnding extends TonalSymbolEnding {}
 export class CheckedTonalEnding extends TonalSymbolEnding {}
 
 //------------------------------------------------------------------------------
-//  Tonal Word
-//------------------------------------------------------------------------------
 
 export class TonalWord extends Word {
     syllables: Array<TonalSyllable>;
@@ -117,14 +113,8 @@ export class TonalWord extends Word {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Lexeme
-//------------------------------------------------------------------------------
 
-export abstract class LemmatizationLexeme extends Lexeme {
-    abstract word: Word;
-}
-
-export class TonalLemmatizationLexeme extends LemmatizationLexeme {
+export class TonalLemmatizationLexeme extends Lexeme {
     word: TonalWord;
     lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
     inflectionalEnding: InflectionalEnding;
@@ -178,8 +168,6 @@ export class TonalLemmatizationLexeme extends LemmatizationLexeme {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Lexeme Maker
-//------------------------------------------------------------------------------
 
 export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     morphemes: Array<TonalUncombiningMorpheme>;
@@ -200,18 +188,10 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     }
 
     makeLexemes() {
-        return this.postprocess(this.make(this.preprocess()));
+        return this.make(this.preprocess());
     }
 
     make(syllables: Array<TonalSyllable>) {
         return new TonalLemmatizationLexeme(new TonalWord(syllables), this.morphemes, new TonalLemmatization());
-    }
-
-    postprocess(tl: TonalLemmatizationLexeme) {
-        let lexemes: Array<TonalLemmatizationLexeme> = new Array();
-
-        lexemes.push(tl);
-
-        return lexemes;
     }
 }

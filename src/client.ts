@@ -11,56 +11,63 @@ import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
+import { Token, TokenAnalysis } from './token';
+import { Lemmatizer } from './lemmatizer';
 
 export class Client {
-    processKana(str: string) {
+    processKana(str: string): TokenAnalysis {
         // kana
-        let aw = new Kana();
-        let ka = <KanaAnalyzer>aw.analyzer;
-        let morphemes: KanaUncombiningMorpheme[] = ka.doMorphologicalAnalysis(str);
-        let doc: Document = new Document();
-        doc.blockSequences = aw.getBlocks(morphemes);
-        return doc;
+        const kana_aw = Kana.getInstance();
+        const ka = <KanaAnalyzer>kana_aw.analyzer;
+        const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
+        let ta: TokenAnalysis = new TokenAnalysis();
+        ta.blockSequences = kana_aw.getBlocks(morphemes);
+        return ta;
     }
 
-    processTonal(str: string) {
+    processTonal(str: string): TokenAnalysis {
         // tonal
         let tokens = str.match(/\w+/g);
-        let aw = new TonalInflective();
-        let tla = <TonalLemmatizationAnalyzer>aw.analyzer;
-        let doc: Document = new Document();
+        const tonal_inflective_aw = TonalInflective.getInstance();        
+        const tla = <TonalLemmatizationAnalyzer>tonal_inflective_aw.analyzer;
+        let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
-            let morphemes: TonalUncombiningMorpheme[] = tla.doMorphologicalAnalysis(tokens[0]);
-            let lexemes: TonalLemmatizationLexeme[] = tla.doLexicalAnalysis(morphemes);
-            doc.word = lexemes[0].word;
-            doc.lemmata = lexemes[0].getLemmata();
-            doc.inflectionalEnding = lexemes[0].getInflectionalEnding();
+            const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(tokens[0]);
+            const lexemes: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
+            ta.word = lexemes.word;
+            ta.lemmata = lexemes.getLemmata();
+            ta.inflectionalEnding = lexemes.getInflectionalEnding();
 
             // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             for (let m of morphemes) {
-                doc.soundSequences.push(m.sounds);
+                ta.soundSequences.push(m.sounds);
             }
         }
-        return doc;
+        return ta;
     }
 
     process(str: string): Document {
+        let doc: Document = new Document();
+
         // tokenization
-        let tokens = str.match(/\w+/g);
+        const tokens = str.match(/\w+/g);
+        if(tokens)
+            for(let i = 0; i < tokens.length; i++) {
+                if(tokens[i].length)
+                    doc.tokens.push(new Token(tokens[i]));
+            }
 
         // tagging
-        let tagger;
-        if (tokens != null && tokens.length > 0) {
-            tagger = new RuleBasedTagger(tokens);
-        } else {
-            tagger = new RuleBasedTagger([]);
-        }
-        let ces = tagger.elements;
+        const tggr = new RuleBasedTagger();
+        doc = tggr.tag(doc);
+
+        // lemmatization
+        const lmtzr = new Lemmatizer();
+        doc = lmtzr.getTonalLemmas(doc);
 
         // dependency parsing
-        let dp = new DependencyParser();
-        let doc: Document = new Document();
-        doc.relations = dp.parseCE(ces);
+        const dpsr = new DependencyParser();
+        doc = dpsr.parse(doc);
         return doc;
     }
 }

@@ -1,9 +1,9 @@
 import { Client } from '../src/client';
-import { Document } from '../src/document';
+import { TokenAnalysis } from '../src/token';
 
 describe("Lemma testing", () => {
-    let cli = new Client()
-    let doc = new Document()
+    const cli = new Client()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('chitt')
 
@@ -13,8 +13,8 @@ describe("Lemma testing", () => {
 });
 
 describe("Lemma testing", () => {
-  let cli = new Client()
-  let doc = new Document()
+  const cli = new Client()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('suzjippwhoatf');
 
@@ -28,8 +28,8 @@ describe("Lemma testing", () => {
 });
 
 describe("Lemma testing", () => {
-  let cli = new Client()
-  let doc = new Document()
+  const cli = new Client()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('sia');
 
@@ -43,8 +43,8 @@ describe("Lemma testing", () => {
 });
 
 describe("Lemma testing", () => {
-  let cli = new Client()
-  let doc = new Document()
+  const cli = new Client()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siay');
 
@@ -58,8 +58,8 @@ describe("Lemma testing", () => {
 });
 
 describe("Lemma testing", () => {
-  let cli = new Client()
-  let doc = new Document()
+  const cli = new Client()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siaw');
 
@@ -74,8 +74,8 @@ describe("Lemma testing", () => {
 });
 
 describe("Lemma testing", () => {
-  let cli = new Client()
-  let doc = new Document()
+  const cli = new Client()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siaz');
 
@@ -91,12 +91,27 @@ describe("Lemma testing", () => {
 });
 
 describe("Lemma testing", () => {
-  let cli = new Client()
-  let doc = new Document()
+  const cli = new Client()
+  let doc = new TokenAnalysis()
 
   doc = cli.processTonal('siax');
 
   test("check the number of lemmata", () => {
     expect(doc.lemmata.length).toEqual(0);
+  });
+});
+
+describe("Lemma testing", () => {
+  const cli = new Client()
+  let doc = new TokenAnalysis()
+
+  doc = cli.processTonal('goa');
+
+  test("check the number of lemmata", () => {
+    expect(doc.lemmata.length).toEqual(1);
+  });
+
+  test("check the lemma", () => {
+    expect(doc.lemmata[0].literal).toEqual('goay');
   });
 });

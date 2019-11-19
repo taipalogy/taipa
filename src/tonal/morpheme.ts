@@ -15,6 +15,7 @@ import {
     SetOfFreeTonals,
     SetOfStopFinals,
     Epenthesis,
+    TonalLetterTags,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -82,7 +83,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             // member variable allomorph is null
             // this syllable is already in base form
             // is this block redundant
-            return [new TonalSyllable(syllable.letters)];
+            //return [new TonalSyllable(syllable.letters)];
         }
         return []; // return empty array
     }
@@ -107,6 +108,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
         ltrs.push(letters[i].literal);
+        //console.log('begining of the loop:' + ltrs)
         if (list_of_lexical_roots.includes(literal) && sft.beginWith(letters[i].literal)) {
             //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}`)
             if (begin === beginOfSyllable) {
@@ -124,24 +126,53 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             break;
         } else {
             //console.log(`i: ${i}, literal: ${literal}`)
-            if (i + 1 < letters.length && sft.beginWith(letters[i + 1].literal)) {
-                //console.log(`tone: ${letters[i+1].literal}, rule: ${urs.get(letters[i+1].literal)[0].getLiteral()}`)
-                const ts = urs.get(letters[i + 1].literal);
-                for (let t of ts) {
-                    if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
-                        matched = literal + letters[i + 1].literal;
-                        begin = beginOfSyllable + 1;
-                        ltrs.push(letters[i + 1].literal);
-                        Object.assign(matchedLtrs, ltrs);
-                        break; // once got one match, break the loop
+
+            if (i < letters.length && sft.beginWith(letters[i].literal)) {
+                //console.log('i: %d', i)
+                const ts = urs.get(letters[i].literal);
+                //console.log(ts)
+                if(ts.length > 0) {
+                    for (let t of ts) {
+                        const slicedLetters = letters.slice(beginOfSyllable, i)
+                        let lit = '';
+                        for(let i in slicedLetters) {
+                            lit = lit + slicedLetters[i].literal
+                        }
+                        //console.log(lit + t.getLiteral())
+                        if (list_of_lexical_roots.includes(lit + t.getLiteral())) {
+                            matched = literal;
+                            begin = beginOfSyllable;
+                            Object.assign(matchedLtrs, ltrs);
+                            break;
+                        }
                     }
+                    if(matched.length > 0 && matchedLtrs.length > 0) break;
+                } else {
+                    matched = '';
+                    matchedLtrs = [];
                 }
-            } else if (list_of_lexical_roots.includes(literal)) {
+            }
+
+            else if (list_of_lexical_roots.includes(literal)) {
                 matched = literal;
                 Object.assign(matchedLtrs, ltrs);
                 begin = beginOfSyllable;
+                //console.log(matched)
             } else {
-                // when there is not matched lexciall roots for this syllable, we still assign begin
+                //console.log('no matched for syllabifyTonal:' + ltrs)
+                if(!sft.beginWith(letters[i].literal)) {
+                    // free first tone without a free tonal
+                    const ts = urs.get(TonalLetterTags.zero);
+                    for (let t of ts) {
+                        // append second tonal letter
+                        if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
+                            // if the free first tone's lemma is included
+                            Object.assign(matchedLtrs, ltrs);
+                            break;
+                        }
+                    }    
+                }
+                // when there is no matched lexcial roots for this syllable, we still assign begin
                 begin = beginOfSyllable;
             }
         }
@@ -153,7 +184,10 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let list: Array<Sound[]> = new Array();
 
     if (matched.length > 0) list = cog.generate(matchedLtrs);
-    else {
+    else if (matched.length == 0 && matchedLtrs.length > 0) {
+        // free first tone without a free tonal
+        list = cog.generate(matchedLtrs);
+    } else {
         if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
             const ep = new Epenthesis();
             const rea = new RemovingEpenthesisOfAy();
@@ -243,7 +277,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         this.sounds = new Array();
     }
 
-    apply(): any {
+    apply(): TonalSyllable[] {
         return this.metaplasm.apply(this.syllable, this.allomorph);
     }
 

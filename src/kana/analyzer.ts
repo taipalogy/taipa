@@ -10,23 +10,23 @@ import { KanaCombiningMetaplasm } from '../morpheme';
 //------------------------------------------------------------------------------
 
 export class KanaAnalyzer extends Analyzer {
-    doGraphemicAnalysis(str: string) {
-        // Grapheme Maker
+    graphAnalyze(str: string) {
+        // graphemic analysis
         let gm = new GraphemeMaker(str, lowerLettersOfKana);
         return gm.makeGraphemes();
     }
 
-    doMorphologicalAnalysis(str: string): KanaUncombiningMorpheme[];
-    doMorphologicalAnalysis(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[];
-    doMorphologicalAnalysis(x: string | Array<AlphabeticGrapheme>) {
+    morphAnalyze(str: string): KanaUncombiningMorpheme[];
+    morphAnalyze(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[];
+    morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
+        // morphological analysis
         let graphemes: Array<AlphabeticGrapheme> = [];
         if (typeof x == 'object') {
             graphemes = x;
         } else if (typeof x == 'string') {
-            graphemes = this.doGraphemicAnalysis(x);
+            graphemes = this.graphAnalyze(x);
         }
 
-        // Morpheme Maker
         let kimm = new KanaUncombiningMorphemeMaker(graphemes, new KanaCombiningMetaplasm());
         return kimm.makeInputingMorphemes();
     }

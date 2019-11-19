@@ -13,8 +13,6 @@ import {
 import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme';
 
 //------------------------------------------------------------------------------
-//  Tonal Combining Forms
-//------------------------------------------------------------------------------
 
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
@@ -58,8 +56,6 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Tonal Inflexion Morpheme
 //------------------------------------------------------------------------------
 
 export class TonalCombiningMorpheme extends Morpheme {

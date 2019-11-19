@@ -1,10 +1,10 @@
 import { Client } from '../src/client';
-import { Document } from '../src/document';
 import { TonalLetterTags } from '../src/tonal/version2';
+import { TokenAnalysis } from '../src/token';
 
 describe("Epenthesis testing", () => {
-    let cli = new Client()
-    let doc = new Document()
+    const cli = new Client()
+    let doc = new TokenAnalysis()
 
     doc = cli.processTonal('sutflay');
 

@@ -1,108 +1,101 @@
-import { Rules, ConstructionOfPhrase, PhrasalVerb, PhrasalVerbWithEncliticSurface } from './rules';
+import { ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEnclitic, VerbWithEnclitic, Rules } from './rules';
 import { POSTags, Tagset } from './symbols';
-import { tonal_inflextion_analyzer } from './analyzer';
-import { TonalCombiningForms } from './morpheme';
-import { TonalInflexion } from './lexeme';
 import {
-    ConstructionElementInflectional,
-    Demonstrative,
-    PersonalPronoun2To137,
-    Auxiliary,
-    PartsOfSpeech,
     ConstructionElement,
     EncliticSurface,
     ParticleSurface,
     VerbSurface,
 } from './keywords';
-import { tonal_lemmatization_analyzer } from '../tonal/analyzer';
-
-class MatchedPatternOfWords {
-    elems: Array<ConstructionElement> = new Array();
-}
+import { Token } from '../token';
+import { Document } from '../document';
 
 export class RuleBasedTagger {
-    private ces: Array<ConstructionElement> = new Array();
+    private speeches: Array<ConstructionOfSpeech> = new Array();
 
-    constructor(strs: string[]) {
-        this.match(strs);
-    }
+    private generate(sequence: string[], phrases: ConstructionOfSpeech[]) {
+        let cps: Array<ConstructionOfSpeech> = new Array();
 
-    private generate(sequence: string[], patterns: ConstructionOfPhrase[]) {
-        let cps: Array<ConstructionOfPhrase> = new Array();
+        if (phrases.length > 0) {
+            for (let ph of phrases) {
+                cps.push(ph);
 
-        if (patterns.length > 0) {
-            for (let pat of patterns) {
-                if (
-                    pat.partOfSpeech === POSTags.verb &&
-                    pat.elements[pat.elements.length - 1].pos === POSTags.particle
-                ) {
-                    pat.elements[pat.elements.length - 1].tag = Tagset.PPV;
+                //console.log(pat.elements)
 
-                    if (
-                        pat.elements[pat.elements.length - 1].surface !=
-                        (<ConstructionElementInflectional>pat.elements[pat.elements.length - 1]).lexeme.word.literal
-                    ) {
-                        const ls = tonal_lemmatization_analyzer.doLexicalAnalysis(sequence[0]);
-                        (<ConstructionElementInflectional>(
-                            pat.elements[0]
-                        )).lexeme = tonal_inflextion_analyzer.doAnalysis(
-                            ls[0].lemmata[0].literal,
-                            new TonalCombiningForms(),
-                            new TonalInflexion(),
-                        )[0];
-                    } else {
-                    }
-
-                    pat.elements[0].tag = Tagset.VB;
-                    (<ConstructionElementInflectional>pat.elements[0]).matchFormFor(sequence[0]);
-                } else if (
-                    pat.partOfSpeech === POSTags.verb &&
-                    pat.elements[pat.elements.length - 1].pos === POSTags.auxiliary
-                ) {
-                    //console.log('hit')
-                }
-
-                cps.push(pat);
-
-                if (pat instanceof PhrasalVerb) {
-                    let pvwes = new PhrasalVerbWithEncliticSurface(
-                        new VerbSurface(pat.elements[0].surface),
-                        new ParticleSurface(pat.elements[1].surface),
+                if (ph instanceof PhrasalVerb) {
+                    let pvwe = new PhrasalVerbWithEnclitic(
+                        new VerbSurface(ph.elements[0].surface),
+                        new ParticleSurface(ph.elements[1].surface),
                         new EncliticSurface('aw'),
                     );
-                    cps.push(pvwes);
+                    cps.push(pvwe);
                 }
             }
         } else {
             //console.log(sequence)
+            let vwe = new VerbWithEnclitic(
+                new VerbSurface(sequence[0]),
+                new EncliticSurface('aw'),
+            );
+            cps.push(vwe);
         }
 
         //console.log(cps)
         return cps;
     }
 
+    private tagPhrases(phrases: ConstructionOfSpeech[]) {
+        if (phrases.length > 0) {
+            for (let ph of phrases) {
+                if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.particle
+                ) {
+                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
+                } else if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary
+                ) {
+                    //console.log('something else hit')
+                } else if (
+                    ph.pos === POSTags.verb &&
+                    ph.elements[ph.elements.length - 1].pos === POSTags.adposition
+                ) {
+                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
+                }
+
+            }
+        }
+
+        return phrases;
+    }
+
     private phrase(strs: string[], beginOfPhrase: number) {
-        const rs = new Rules();
+        //const rs = new Rules();
         let sequence: string[] = [];
-        let pats;
+        let phrs;
+        const rules = new Rules();
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
-            pats = rs.matches(sequence);
-            if (pats) {
+            phrs = rules.matches(sequence);
+            if (phrs) {
+                //console.log(phrs[0].elements)
                 break;
             } else {
                 //console.log(sequence)
-                let kw = rs.matchKeyWords(sequence[0]);
+                let kw = rules.matchKeyWords(sequence[0]);
 
                 if (kw) {
                     //console.log(kw)
-                    if (kw.pos === POSTags.pronoun && kw instanceof PersonalPronoun2To137) kw.tag = Tagset.PRP;
-                    else if (kw.pos === POSTags.pronoun && kw instanceof Demonstrative) kw.tag = Tagset.DT;
+                    if (kw.pos === POSTags.pronoun) {
+                        kw.tag = Tagset.NPR;
+                    }
                     else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.ADPR;
+                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
 
-                    pats = [new ConstructionOfPhrase()]; // TODO: can keyword be wrapped in something else
-                    pats[0].elements.push(kw);
+                    phrs = [new ConstructionOfSpeech()];
+                    phrs[0].elements.push(kw);
                     break;
                 } else {
                     //console.log(sequence)
@@ -110,16 +103,18 @@ export class RuleBasedTagger {
             }
         }
 
-        //console.log(pats)
+        //if(pats) console.log(pats[0].elements)
 
-        let listCP: Array<ConstructionOfPhrase> = new Array();
-        if (pats) listCP = this.generate(sequence, pats);
-        //else listCP = this.generate(sequence, [])
+        if(phrs) phrs = this.tagPhrases(phrs);
+
+        let listCP: Array<ConstructionOfSpeech> = new Array();
+        if (phrs) listCP = this.generate(sequence, phrs);
+        else listCP = this.generate(sequence, [])
 
         //console.log(listCP);
 
         let matchedLen = 0;
-        let mp = new MatchedPatternOfWords();
+        let mp = new ConstructionOfSpeech();
 
         for (let m in listCP) {
             const min = Math.min(strs.length - beginOfPhrase, listCP[m].elements.length);
@@ -129,12 +124,14 @@ export class RuleBasedTagger {
                         if (strs[beginOfPhrase + n] === listCP[m].elements[n].surface) {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
+                                
                                 for (let q = 0; q < matchedLen; q++) {
-                                    mp.elems[q] = listCP[m].elements[q];
+                                    mp.elements[q] = listCP[m].elements[q];
                                     if (listCP[m].elements[q].surface === '') {
-                                        mp.elems[q].surface = strs[beginOfPhrase + q];
+                                        mp.elements[q].surface = strs[beginOfPhrase + q];
                                     }
                                 }
+                                mp.pos = listCP[m].pos;
                             }
                         }
                     }
@@ -145,29 +142,53 @@ export class RuleBasedTagger {
         return mp;
     }
 
-    private match(strs: string[]) {
-        //const rs = new Rules();
-        let buf: string[] = [];
-        //let previousWords: ConstructionElement[] = [];
+    private tagSpeeches() {
+        for(let s of this.speeches) {
+
+            if(s.elements.length == 1 && s.elements[0].pos == POSTags.pronoun) s.pos = POSTags.pronoun;
+
+            //console.log(s)
+            //console.log(s.elements)
+        }
+    }
+
+    private match(tokens: Token[]) {
+        let strs: string[] = [];
+        for(let i in tokens)
+            strs.push(tokens[i].orth);
 
         let beginOfPhrase: number = 0;
-        let matchedPW: MatchedPatternOfWords = new MatchedPatternOfWords();
+        let matched: ConstructionOfSpeech = new ConstructionOfSpeech();
         for (let i = 0; i < strs.length; i++) {
             if (i - beginOfPhrase == 0) {
-                matchedPW = this.phrase(strs, beginOfPhrase);
-                if (matchedPW.elems.length) {
-                    beginOfPhrase += matchedPW.elems.length;
-                    for (let w in matchedPW.elems) {
-                        this.ces.push(matchedPW.elems[w]);
-                    }
-                    //console.log(mpw);
-                    matchedPW.elems = [];
+                matched = this.phrase(strs, beginOfPhrase);
+                if (matched.elements.length) {
+                    beginOfPhrase += matched.elements.length;
+                    this.speeches.push(matched);
+                    this.tagSpeeches();
                 }
             }
         }
     }
 
-    get elements() {
-        return this.ces;
+    tag(doc: Document) {
+        this.match(doc.tokens);
+
+        let ces: Array<ConstructionElement> = new Array();
+        
+        for(let i in this.speeches) {
+            for (let j in this.speeches[i].elements) {
+                ces.push(this.speeches[i].elements[j]);
+            }
+        }
+
+        for(let i = 0; i < ces.length; i++) {
+            if(doc.tokens[i].orth === ces[i].surface) {
+                doc.tokens[i].pos = ces[i].pos;
+                doc.tokens[i].tag = ces[i].tag;
+            }
+        }
+
+        return doc;
     }
 }

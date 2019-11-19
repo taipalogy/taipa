@@ -31,8 +31,8 @@ export class AnalyzerWrapper {
         duplicates = Object.keys(uniq).filter(a => uniq[a] > 1);
 
         if (duplicates.length > 0) {
-            console.log('number of duplicates found: %d', duplicates.length);
-            console.log(duplicates);
+            console.info('number of duplicates found: %d', duplicates.length);
+            console.info(duplicates);
         }
     }
 }

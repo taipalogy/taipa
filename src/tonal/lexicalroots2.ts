@@ -1,6 +1,8 @@
 // prettier-ignore
 let to_be_verified = [
     'hioh',
+
+    'jirnx', 'jirtt',
 ]
 
 // prettier-ignore
@@ -21,7 +23,9 @@ let list_of_new_lexical_roots = [
 
     'mnghh',
 
-    'n',
+    'n', 'na',
+
+    'virt',
 ]
 
 // prettier-ignore

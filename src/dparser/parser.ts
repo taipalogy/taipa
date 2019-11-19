@@ -1,45 +1,40 @@
-import { ConstructionElement, ConstructionElementInflectional } from './keywords';
-import { Relation } from './relation';
 import { Configuration, Transition, Shift } from './configuration';
 import { Guide } from './guide';
-import { DummyLexeme } from './lexeme';
+import { Token } from '../token';
+import { Document } from '../document';
 
 export class DependencyParser {
-    getInitialConfiguration<T>() {
-        return new Configuration<T>();
+    getInitialConfiguration() {
+        return new Configuration();
     }
 
-    apply<T>(t: Transition<T>, c: Configuration<T>) {
+    apply(t: Transition, c: Configuration) {
         return t.do(c);
     }
 
-    parseCE(ces: ConstructionElement[]): Relation[] {
-        let c: Configuration<ConstructionElement> = this.getInitialConfiguration<ConstructionElement>();
-        for (let ce of ces) {
-            //console.log(ce.wordForm)
-            c.queue.push(ce);
+    parse(doc: Document): Document {
+        let c: Configuration = this.getInitialConfiguration();
+        for (let t of doc.tokens) {
+            c.queue.push(t);
         }
 
         let guide = new Guide();
-        let root = new DummyLexeme();
-        root.word.literal = 'ROOT';
-        let ce = new ConstructionElementInflectional();
-        ce.lexeme = root;
-        ce.surface = 'ROOT';
-        c.stack.push(ce);
+        let rt = new Token('ROOT');
+        c.stack.push(rt);
 
         if (c.stack.length == 1 && c.queue.length > 0) {
             // initial configuration
             // shift the first lexeme from queue to stack
-            guide.transitions.push(new Shift<ConstructionElement>());
+            guide.transitions.push(new Shift());
         }
 
         while (!c.isTerminalConfiguration()) {
             let t = guide.getNextTransition(c);
             if (t == null || t == undefined) break;
-            c = this.apply<ConstructionElement>(t, c);
+            c = this.apply(t, c);
         }
 
-        return c.relations;
+        doc.relations = c.relations;
+        return doc;
     }
 }

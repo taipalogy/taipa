@@ -4,8 +4,7 @@ import { TonalSyllable } from './tonal/morpheme';
 
 export abstract class CombiningMetaplasm {}
 
-export class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    // TODO: abstraction
+export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }
@@ -145,7 +144,7 @@ export abstract class MorphemeMaker {
                     for (let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    morphemes.push(this.createMorpheme(msp, this.metaplasm)); //morphemes.push(tsm);
+                    morphemes.push(this.createMorpheme(msp, this.metaplasm));
                 }
 
                 beginOfSyllable += msp.matchedLength;
