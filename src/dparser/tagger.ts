@@ -3,6 +3,7 @@ import { POSTags, Tagset } from './symbols';
 import { ConstructionElement, EncliticSurface, ParticleSurface, VerbSurface } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
+import { Dictionary } from './dictionary';
 
 export class RuleBasedTagger {
     private speeches: Array<ConstructionOfSpeech> = new Array();
@@ -17,17 +18,20 @@ export class RuleBasedTagger {
                 //console.log(pat.elements)
 
                 if (ph instanceof PhrasalVerb) {
-                    let pvwe = new PhrasalVerbWithEnclitic(
+                    const pvwe = new PhrasalVerbWithEnclitic(
                         new VerbSurface(ph.elements[0].surface),
                         new ParticleSurface(ph.elements[1].surface),
                         new EncliticSurface('aw'),
                     );
                     cps.push(pvwe);
+                } else if(ph.pos === POSTags.verb) {
+                    const vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
+                    cps.push(vwe);        
                 }
             }
         } else {
             //console.log(sequence)
-            let vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
+            const vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
             cps.push(vwe);
         }
 
@@ -58,6 +62,7 @@ export class RuleBasedTagger {
         let sequence: string[] = [];
         let phrs;
         const rules = new Rules();
+        const dic = new Dictionary();
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
             phrs = rules.matches(sequence);
@@ -80,6 +85,16 @@ export class RuleBasedTagger {
                     break;
                 } else {
                     //console.log(sequence)
+                    
+                    let entry = dic.lookup(sequence[0]);
+                    if(entry) {
+                        if(entry.pos === POSTags.verb) entry.tag = Tagset.VB;
+                        phrs = [new ConstructionOfSpeech()];
+                        phrs[0].elements.push(entry);
+                        phrs[0].pos = POSTags.verb;
+                        break;    
+                    }
+                    
                 }
             }
         }
@@ -141,6 +156,7 @@ export class RuleBasedTagger {
         for (let i = 0; i < strs.length; i++) {
             if (i - beginOfPhrase == 0) {
                 matched = this.phrase(strs, beginOfPhrase);
+                //console.log(matched)
                 if (matched.elements.length) {
                     beginOfPhrase += matched.elements.length;
                     this.speeches.push(matched);

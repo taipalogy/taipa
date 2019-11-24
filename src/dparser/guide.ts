@@ -58,6 +58,7 @@ export class Guide {
             else if (this.s1.tag === Tagset.PADV && this.b1.tag === Tagset.VB) this.shift();
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.PADV) this.shift();
             else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.APPR) this.shift();
+            else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.AUX) this.shift();
         } else if (this.isQueueEmpty(c)) {
             if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PPV) {
                 c.relations.push(this.rightArc(DependencyLabels.prt));
