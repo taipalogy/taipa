@@ -96,4 +96,6 @@ export enum PronType {
     */
 
     DEM = 'Dem',
+    PRS = 'Prs',
+    REL = 'Rel',
 }

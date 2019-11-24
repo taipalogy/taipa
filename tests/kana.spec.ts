@@ -84,3 +84,15 @@ describe("Kana testing", () => {
         expect(doc.blockSequences[1]).toEqual('ッド');
     });
 });
+
+describe("Kana testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processKana('di')
+
+    test("kanas", () => {
+        expect(doc.blockSequences[0]).toEqual('でぃ');
+        expect(doc.blockSequences[1]).toEqual('ディ');
+    });
+});

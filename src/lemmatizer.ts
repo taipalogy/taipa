@@ -10,8 +10,14 @@ export class Lemmatizer {
         const sophv = new SetOfPhrasalVerbs();
 
         for (let i = 0; i < doc.tokens.length; i++) {
-            if (doc.tokens[i].orth === 'che' || doc.tokens[i].orth === 'he') continue; // defective
-            if (doc.tokens[i].tag === Tagset.AUXN) continue;
+            if (doc.tokens[i].orth === 'che' || doc.tokens[i].orth === 'he') {
+                doc.tokens[i].lemma = doc.tokens[i].orth;
+                continue; // defective
+            }
+            if (doc.tokens[i].tag === Tagset.AUXN || doc.tokens[i].tag === Tagset.AUX) {
+                doc.tokens[i].lemma = doc.tokens[i].orth;
+                continue;
+            }
             if (doc.tokens[i].tag === Tagset.VB && i + 1 < doc.tokens.length) {
                 if (doc.tokens[i + 1].tag === Tagset.PPV || doc.tokens[i + 1].tag === Tagset.APPR) {
                     for (let j in sophv.phrms) {
@@ -34,6 +40,11 @@ export class Lemmatizer {
                         }
                     }
                     continue;
+                }
+            }
+            if(doc.tokens[i].tag === Tagset.VB && i > 0) {
+                if(i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.AUXN) {
+                    doc.tokens[i].lemma = doc.tokens[i].orth;
                 }
             }
             let lemmas: TonalWord[] = [];

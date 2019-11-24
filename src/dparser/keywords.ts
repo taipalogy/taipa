@@ -1,4 +1,4 @@
-import { POSTags } from './symbols';
+import { POSTags, PronType } from './symbols';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
@@ -72,9 +72,9 @@ export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
 }
 
 export class PersonalPronounSurface extends ConstructionElement {
-    constructor(str?: string) {
+    constructor(str: string) {
         super();
-        if (str) this.surface = str;
+        this.surface = str;
         this.pos = POSTags.pronoun;
     }
 }
@@ -88,7 +88,7 @@ export class VerbSurface extends ConstructionElement {
 }
 
 export class EncliticSurface extends ConstructionElement {
-    constructor(str?: string) {
+    constructor(str: string) {
         super();
         if (str) this.surface = str;
         this.pos = POSTags.auxiliary;
@@ -155,11 +155,11 @@ export class KeyWords {
     private makeParticleSurface(str: string): ParticleSurface {
         return new ParticleSurface(str);
     }
-
+/*
     private makeEncliticSurface(str: string): EncliticSurface {
-        return new EncliticSurface();
+        return new EncliticSurface(str);
     }
-
+*/
     private makeAuxiliarySurface(str: string): ParticleSurface {
         return new AuxiliarySurface(str);
     }

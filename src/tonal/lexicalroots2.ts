@@ -2,7 +2,7 @@
 let to_be_verified = [
     'hioh',
 
-    'jirnx', 'jirtt',
+    'jih', 'jirnx', 'jirtt',
 ]
 
 // prettier-ignore
