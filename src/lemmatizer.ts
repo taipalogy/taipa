@@ -42,9 +42,10 @@ export class Lemmatizer {
                     continue;
                 }
             }
-            if(doc.tokens[i].tag === Tagset.VB && i > 0) {
+            if(doc.tokens[i].tag === Tagset.VB) {
                 if(i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.AUXN) {
                     doc.tokens[i].lemma = doc.tokens[i].orth;
+                    continue;
                 }
             }
             let lemmas: TonalWord[] = [];

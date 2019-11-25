@@ -3,7 +3,6 @@ import { POSTags, Tagset } from './symbols';
 import { ConstructionElement, EncliticSurface, ParticleSurface, VerbSurface } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
-import { Dictionary } from './dictionary';
 
 export class RuleBasedTagger {
     private speeches: Array<ConstructionOfSpeech> = new Array();
@@ -62,40 +61,24 @@ export class RuleBasedTagger {
         let sequence: string[] = [];
         let phrs;
         const rules = new Rules();
-        const dic = new Dictionary();
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
-            phrs = rules.matches(sequence);
-            if (phrs) {
-                //console.log(phrs[0].elements)
-                break;
-            } else {
-                //console.log(sequence)
-                let kw = rules.matchKeyWords(sequence[0]);
+        }
 
-                if (kw) {
-                    //console.log(kw)
-                    if (kw.pos === POSTags.pronoun) {
-                        kw.tag = Tagset.NPR;
-                    } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-                    else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
+        phrs = rules.matches(sequence);
+        if(!phrs) {
+            //console.log(sequence)
+            let kw = rules.matchKeyWords(sequence[0]);
 
-                    phrs = [new ConstructionOfSpeech()];
-                    phrs[0].elements.push(kw);
-                    break;
-                } else {
-                    //console.log(sequence)
-                    
-                    let entry = dic.lookup(sequence[0]);
-                    if(entry) {
-                        if(entry.pos === POSTags.verb) entry.tag = Tagset.VB;
-                        phrs = [new ConstructionOfSpeech()];
-                        phrs[0].elements.push(entry);
-                        phrs[0].pos = POSTags.verb;
-                        break;    
-                    }
-                    
-                }
+            if (kw) {
+                //console.log(kw)
+                if (kw.pos === POSTags.pronoun) {
+                    kw.tag = Tagset.NPR;
+                } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
+                else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
+
+                phrs = [new ConstructionOfSpeech()];
+                phrs[0].elements.push(kw);
             }
         }
 

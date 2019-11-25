@@ -11,6 +11,7 @@ import {
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
 import { TonalInflexionPhraseme } from './phraseme';
+import { Dictionary } from './dictionary';
 
 export class ConstructionOfSpeech {
     pos: string = '';
@@ -138,20 +139,30 @@ export class SetOfSmallClauses {
 
 export class Rules {
     private phrases: Array<ConstructionOfSpeech[]> = new Array();
-    protected keyWords: KeyWords = new KeyWords();
+    private keyWords: KeyWords = new KeyWords();
 
     constructor() {
         this.populatePatterns();
         this.populatePhrasalVerbs();
     }
 
-    matchKeyWords(str: string) {
-        return this.keyWords.getSurface(str);
+    private lookupDictionary(str: string) {
+        const dic = new Dictionary();
+        const entry = dic.lookup(str);
+        let phr;
+        if(entry) {
+            if(entry.pos === POSTags.verb) entry.tag = Tagset.VB;
+            phr = [new ConstructionOfSpeech()];
+            phr[0].elements.push(entry);
+            phr[0].pos = POSTags.verb;
+            return phr;
+        }
+
+        return undefined;
     }
 
-    matches(sequence: string[]) {
+    private lookupRules(sequence: string[]) {
         let elems: Array<ConstructionElement> = [];
-        //console.log(this.phrases.length)
         for (let pat of this.phrases) {
             for (let j = 0; j < pat.length; j++) {
                 //console.log(pat[j].elements)
@@ -169,7 +180,17 @@ export class Rules {
             }
             elems = [];
         }
+    }
 
+    matchKeyWords(str: string) {
+        return this.keyWords.getSurface(str);
+    }
+
+    matches(sequence: string[]) {
+        const phrD = this.lookupDictionary(sequence[0]);
+        const phrR = this.lookupRules(sequence);
+        if(phrR) return phrR;
+        else if(phrD) return phrD;
         return undefined;
     }
 
