@@ -1,12 +1,12 @@
 // prettier-ignore
-let to_be_verified = [
+const to_be_verified = [
     'hioh',
 
     'jih', 'jirnx', 'jirtt',
 ]
 
 // prettier-ignore
-let list_of_new_lexical_roots = [
+const list_of_new_lexical_roots = [
     'coaih',
 
     'choa',
@@ -29,7 +29,7 @@ let list_of_new_lexical_roots = [
 ]
 
 // prettier-ignore
-let list_of_addon_lexical_roots = [
+const list_of_addon_lexical_roots = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
     'berh', 'berhh', 'berx', 'bery', 'berz',
@@ -76,7 +76,7 @@ let list_of_addon_lexical_roots = [
 ]
 
 // prettier-ignore
-export let list_of_lexical_roots = [
+export const list_of_lexical_roots = [
     'a', 'ay', 'az', 'ah', 'ahh', 'ai', 'aiy', 'aiw', 'ainnz', 'ak', 'am', 'amy', 'amw', 'amx', 'amz', 'an', 'any', 'anw', 'anx',
     'anz', 'ang', 'angw', 'angx', 'angz', 'annw', 'annx', 'annz', 'ap', 'app', 'at', 'au', 'auy', 'auw', 'aux', 'auz',
 

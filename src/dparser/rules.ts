@@ -11,7 +11,7 @@ import {
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
 import { TonalInflexionPhraseme } from './phraseme';
-import { Dictionary } from './dictionary';
+import { dict_of_verbs, dict_of_phrasal_verbs } from './dictionary';
 
 export class ConstructionOfSpeech {
     pos: string = '';
@@ -94,8 +94,9 @@ export class SetOfPhrasalVerbs {
 
     private populatePhrasemes() {
         const pva = new PhrasalVerbAnalyzer();
-        this.phrms.push(pva.analyze('longw', 'diurh'));
-        this.phrms.push(pva.analyze('koannww', 'diurh'));
+        for(let i in dict_of_phrasal_verbs) {
+            this.phrms.push(pva.analyze(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
+        }
     }
 }
 
@@ -147,13 +148,12 @@ export class Rules {
     }
 
     private lookupDictionary(str: string) {
-        const dic = new Dictionary();
-        const entry = dic.lookup(str);
         let phr;
-        if(entry) {
-            if(entry.pos === POSTags.verb) entry.tag = Tagset.VB;
+        if(dict_of_verbs.includes(str)) {
+            let vs: VerbSurface = new VerbSurface(str);
+            if(vs.pos === POSTags.verb) vs.tag = Tagset.VB;
             phr = [new ConstructionOfSpeech()];
-            phr[0].elements.push(entry);
+            phr[0].elements.push(vs);
             phr[0].pos = POSTags.verb;
             return phr;
         }

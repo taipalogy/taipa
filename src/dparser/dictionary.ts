@@ -1,8 +1,12 @@
-import { VerbSurface } from "./keywords";
+// prettier-ignore
+export const dict_of_verbs = [
+    'koannw',
 
-export class Dictionary {
-    lookup(str: string) {
-        if(str === 'pah') return new VerbSurface(str);
-        if(str === 'koannw') return new VerbSurface(str);
-    }
-}
+    'pah',
+];
+
+// prettier-ignore
+export const dict_of_phrasal_verbs = [
+    ['koannw', 'diurh'],
+    ['longw', 'diurh'],
+];
