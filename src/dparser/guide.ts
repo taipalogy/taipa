@@ -58,6 +58,7 @@ export class Guide {
             else if (this.s1.tag === Tagset.PADV && this.b1.tag === Tagset.VB) this.shift();
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.PADV) this.shift();
             else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.APPR) this.shift();
+            else if (this.s1.tag === Tagset.VB && this.b1.tag === Tagset.PADV) this.shift();
             else if (this.s1.tag === Tagset.NPR && this.b1.tag === Tagset.AUX) this.shift();
         } else if (this.isQueueEmpty(c)) {
             if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.PPV) {
@@ -83,6 +84,8 @@ export class Guide {
                 c.relations.push(this.leftArc(DependencyLabels.advmod));
             } else if (this.s2.tag === Tagset.APPR && this.s1.tag === Tagset.NPR) {
                 c.relations.push(this.leftArc(DependencyLabels.case));
+            } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.VB) {
+                c.relations.push(this.rightArc(DependencyLabels.compound));
             } else if (this.s2.tag === Tagset.VB && this.s1.tag === Tagset.NPR) {
                 c.relations.push(this.rightArc(DependencyLabels.obj));
             } else if (this.isStackEmpty(c)) {

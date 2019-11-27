@@ -174,6 +174,7 @@ export class KeyWords {
             this.makePersonalPronounSurface('goa'),
             this.makeAuxiliarySurface('qaz'),
             this.makeParticleSurface('long'),
+            this.makeParticleSurface('bew'),
         ];
     }
 }

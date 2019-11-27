@@ -11,7 +11,9 @@ import {
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
 import { TonalInflexionPhraseme } from './phraseme';
-import { dict_of_verbs, dict_of_phrasal_verbs } from './dictionary';
+import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperable_vv_compounds } from './dictionary';
+import { TonalLemmatizationAnalyzer } from '../tonal/analyzer';
+import { TonalWord } from '../tonal/lexeme';
 
 export class ConstructionOfSpeech {
     pos: string = '';
@@ -184,6 +186,18 @@ export class Rules {
 
     matchKeyWords(str: string) {
         return this.keyWords.getSurface(str);
+    }
+
+    seperableMatches(str: string) {
+        let lemma: string = '';
+        const tla = new TonalLemmatizationAnalyzer();
+        let lemmas: TonalWord[] = [];
+        lemmas = tla.analyze(str).getLemmata();
+        if (lemmas.length > 0) lemma = lemmas[0].literal;
+        const ptcls = dict_of_seperable_vv_compounds[lemma];
+        if(ptcls) {
+            return ptcls[0];
+        }
     }
 
     matches(sequence: string[]) {

@@ -6,6 +6,7 @@ import { Document } from '../document';
 
 export class RuleBasedTagger {
     private speeches: Array<ConstructionOfSpeech> = new Array();
+    private readonly rules = new Rules();
 
     private generate(sequence: string[], phrases: ConstructionOfSpeech[]) {
         let cps: Array<ConstructionOfSpeech> = new Array();
@@ -38,6 +39,40 @@ export class RuleBasedTagger {
         return cps;
     }
 
+    private tagKeyWord(kw: ConstructionElement) {
+        if (kw.pos === POSTags.pronoun) {
+            kw.tag = Tagset.NPR;
+        } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
+        else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
+    }
+
+    private matchSeperables(sequence: string[], particle: string) {
+        let phrase: ConstructionOfSpeech = new ConstructionOfSpeech();
+        let vs: VerbSurface = new VerbSurface(sequence[0]);
+        vs.tag = Tagset.VB;
+        phrase.elements.push(vs);
+        phrase.pos = POSTags.verb;
+
+        if(sequence.length > 1) {
+            for(let i = 1; i < sequence.length; i++) {
+                // skip the first array element
+                
+                let kw = this.rules.matchKeyWords(sequence[i]);
+                if(kw) {
+                    this.tagKeyWord(kw);
+                    phrase.elements.push(kw);
+                }
+
+                if(sequence[i] === particle){
+                    let ps: VerbSurface = new VerbSurface(sequence[i]);
+                    ps.tag = Tagset.VB;
+                    phrase.elements.push(ps);
+                    return phrase;
+                }
+            }
+        }
+    }
+    
     private tagPhrases(phrases: ConstructionOfSpeech[]) {
         if (phrases.length > 0) {
             for (let ph of phrases) {
@@ -57,37 +92,43 @@ export class RuleBasedTagger {
     }
 
     private phrase(strs: string[], beginOfPhrase: number) {
-        //const rs = new Rules();
         let sequence: string[] = [];
-        let phrs;
-        const rules = new Rules();
+        let phrss;
+        
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
         }
 
-        phrs = rules.matches(sequence);
-        if(!phrs) {
+        phrss = this.rules.matches(sequence);
+
+        const ptcl = this.rules.seperableMatches(sequence[0]);
+        if(ptcl) {
+            const sep = this.matchSeperables(sequence, ptcl);
+            if(sep) {
+                phrss = [];
+                phrss = [sep];
+            }
+        }
+
+        if(!phrss) {
             //console.log(sequence)
-            let kw = rules.matchKeyWords(sequence[0]);
+            let kw = this.rules.matchKeyWords(sequence[0]);
 
             if (kw) {
                 //console.log(kw)
-                if (kw.pos === POSTags.pronoun) {
-                    kw.tag = Tagset.NPR;
-                } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-                else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
+                this.tagKeyWord(kw);
 
-                phrs = [new ConstructionOfSpeech()];
-                phrs[0].elements.push(kw);
+                phrss = [new ConstructionOfSpeech()];
+                phrss[0].elements.push(kw);
             }
         }
 
         //if(pats) console.log(pats[0].elements)
 
-        if (phrs) phrs = this.tagPhrases(phrs);
+        if (phrss) phrss = this.tagPhrases(phrss);
 
         let listCP: Array<ConstructionOfSpeech> = new Array();
-        if (phrs) listCP = this.generate(sequence, phrs);
+        if (phrss) listCP = this.generate(sequence, phrss);
         else listCP = this.generate(sequence, []);
 
         //console.log(listCP);

@@ -3,6 +3,8 @@ const to_be_verified = [
     'hioh',
 
     'jih', 'jirnx', 'jirtt',
+
+    'na',
 ]
 
 // prettier-ignore
@@ -11,7 +13,7 @@ const list_of_new_lexical_roots = [
 
     'choa',
     
-    'dngh',
+    'dngh', 'dom',
 	
     'hoang', 'homz',
 
@@ -23,7 +25,9 @@ const list_of_new_lexical_roots = [
 
     'mnghh',
 
-    'n', 'na',
+    'n',
+
+    'tom', 'tomz',
 
     'virt',
 ]
