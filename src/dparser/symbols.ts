@@ -37,6 +37,7 @@ export enum DependencyLabels {
     case = 'case',
     ccomp = 'ccomp', // multiword expression
     compound = 'compound',
+    compound_prt = 'compound:prt',
     cop = 'cop',
     csubj = 'csubj',
     det = 'det',

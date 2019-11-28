@@ -14,7 +14,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.prt);
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
         expect(rs[0].head.orth).toEqual('koannw');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });
@@ -44,8 +44,8 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.case);
-        expect(rs[0].head.orth).toEqual('che');
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
+        expect(rs[0].head.orth).toEqual('koanny');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });
 
@@ -80,8 +80,8 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.case);
-        expect(rs[0].head.orth).toEqual('che');
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
+        expect(rs[0].head.orth).toEqual('longy');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });
 
@@ -116,7 +116,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.prt);
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
         expect(rs[0].head.orth).toEqual('koannw');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });
@@ -152,7 +152,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.prt);
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
         expect(rs[0].head.orth).toEqual('koannw');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });
@@ -230,7 +230,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.prt);
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
         expect(rs[0].head.orth).toEqual('koannw');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });
@@ -290,7 +290,7 @@ describe("Dependency parsing", () => {
     });
 
     test("check the first relation", () => {
-        expect(rs[0].dependency).toEqual(DependencyLabels.prt);
+        expect(rs[0].dependency).toEqual(DependencyLabels.compound_prt);
         expect(rs[0].head.orth).toEqual('longw');
         expect(rs[0].dependent.orth).toEqual('diurh');
     });

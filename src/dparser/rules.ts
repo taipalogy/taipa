@@ -88,7 +88,7 @@ export class SetOfPhrasalVerbs {
             this.phvs.push(
                 new PhrasalVerb([
                     new VerbSurface(this.phrms[i].sandhiForm.words[0].literal),
-                    new PrepositionSurface(this.phrms[i].sandhiForm.words[1].literal),
+                    new ParticleSurface(this.phrms[i].sandhiForm.words[1].literal),
                 ]),
             );
         }
