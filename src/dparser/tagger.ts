@@ -196,6 +196,7 @@ export class RuleBasedTagger {
         let ces: Array<ConstructionElement> = new Array();
 
         for (let i in this.speeches) {
+            doc.speeches.push(this.speeches[i]);
             for (let j in this.speeches[i].elements) {
                 ces.push(this.speeches[i].elements[j]);
             }

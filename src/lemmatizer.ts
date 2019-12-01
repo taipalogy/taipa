@@ -8,8 +8,22 @@ export class Lemmatizer {
     getTonalLemmas(doc: Document): Document {
         const tla = new TonalLemmatizationAnalyzer();
         const sophv = new SetOfPhrasalVerbs();
+        let j: number = 0;
+        let k: number = 0;
+        let len: number = 0;
 
         for (let i = 0; i < doc.tokens.length; i++) {
+            if(len == i) {
+                // loop over the doc.speeches sequence
+                if(j < doc.speeches.length) {
+                    len += doc.speeches[j].elements.length;
+                    if(j + 1 < doc.speeches.length) j++;
+                    k = 0;
+                }
+            } else {
+                k++;
+            }
+
             if (doc.tokens[i].orth === 'che' || doc.tokens[i].orth === 'he') {
                 doc.tokens[i].lemma = doc.tokens[i].orth;
                 continue; // defective
@@ -44,10 +58,17 @@ export class Lemmatizer {
             }
             if(doc.tokens[i].tag === Tagset.VB) {
                 if(i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.AUXN) {
-                    doc.tokens[i].lemma = doc.tokens[i].orth;
+                    doc.tokens[i].lemma = doc.tokens[i].orth; // copy the base form
                     continue;
                 }
             }
+            if(k + 1 == doc.speeches[j].elements.length) {
+                // at the end of a speech
+                // need to further check if the speech is a noun chunk or verb phrase
+                doc.tokens[i].lemma = doc.tokens[i].orth; // copy the base form
+                continue;
+            }
+
             let lemmas: TonalWord[] = [];
             lemmas = tla.analyze(doc.tokens[i].orth).getLemmata();
             if (lemmas.length > 0) doc.tokens[i].lemma = lemmas[0].literal;
