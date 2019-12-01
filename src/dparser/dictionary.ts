@@ -14,7 +14,8 @@ export const dict_of_phrasal_verbs = [
 interface IDictionary {
     readonly [index: string]: string[]
 }
+
 // prettier-ignore
 export const dict_of_seperable_vv_compounds: IDictionary = {
-    siamy: ['qoew'],
+    siam: ['qoew'],
 };

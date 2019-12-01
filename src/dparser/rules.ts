@@ -189,12 +189,7 @@ export class Rules {
     }
 
     seperableMatches(str: string) {
-        let lemma: string = '';
-        const tla = new TonalLemmatizationAnalyzer();
-        let lemmas: TonalWord[] = [];
-        lemmas = tla.analyze(str).getLemmata();
-        if (lemmas.length > 0) lemma = lemmas[0].literal;
-        const ptcls = dict_of_seperable_vv_compounds[lemma];
+        const ptcls = dict_of_seperable_vv_compounds[str];
         if(ptcls) {
             return ptcls[0];
         }
