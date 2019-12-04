@@ -18,6 +18,10 @@ export class ConstructionElement {
     tag: string = '';
 }
 
+function createInstance<T extends ConstructionElement>(c: new (str: string) => T, str: string): T {
+    return new c(str);
+}
+
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
 export class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
@@ -90,16 +94,16 @@ export class VerbSurface extends ConstructionElement {
 export class EncliticSurface extends ConstructionElement {
     constructor(str: string) {
         super();
-        if (str) this.surface = str;
         this.pos = POSTags.auxiliary;
+        this.surface = str;
     }
 }
 
 export class PronounSurface extends ConstructionElement {
     constructor(str: string) {
         super();
-        this.surface = str;
         this.pos = POSTags.pronoun;
+        this.surface = str;
     }
 }
 
@@ -114,7 +118,7 @@ export class ParticleSurface extends ConstructionElement {
     constructor(str: string) {
         super();
         this.pos = POSTags.particle;
-        if (str) this.surface = str;
+        this.surface = str;
     }
 }
 
@@ -132,36 +136,15 @@ export class AuxiliarySurface extends ConstructionElement {
     constructor(str: string) {
         super();
         this.pos = POSTags.auxiliary;
-        if (str) this.surface = str;
+        this.surface = str;
     }
 }
 
 export class KeyWords {
-    private keyword_index: { [surface: string]: number } = {};
     private keyElems: Array<ConstructionElement> = new Array();
 
     constructor() {
         this.populateKeyElems();
-    }
-
-    private makePersonalPronounSurface(str: string) {
-        return new PersonalPronounSurface(str);
-    }
-
-    private makePronounSurface(str: string): PronounSurface {
-        return new PronounSurface(str);
-    }
-
-    private makeParticleSurface(str: string): ParticleSurface {
-        return new ParticleSurface(str);
-    }
-/*
-    private makeEncliticSurface(str: string): EncliticSurface {
-        return new EncliticSurface(str);
-    }
-*/
-    private makeAuxiliarySurface(str: string): ParticleSurface {
-        return new AuxiliarySurface(str);
     }
 
     getSurface(str: string) {
@@ -170,11 +153,11 @@ export class KeyWords {
 
     private populateKeyElems() {
         this.keyElems = [
-            this.makePronounSurface('che'),
-            this.makePersonalPronounSurface('goa'),
-            this.makeAuxiliarySurface('qaz'),
-            this.makeParticleSurface('long'),
-            this.makeParticleSurface('bew'),
+            createInstance(PronounSurface, 'che'),
+            createInstance(PersonalPronounSurface, 'goa'),
+            createInstance(AuxiliarySurface, 'qaz'),
+            createInstance(ParticleSurface, 'long'),
+            createInstance(ParticleSurface, 'bew'),
         ];
     }
 }
