@@ -18,10 +18,6 @@ export class ConstructionElement {
     tag: string = '';
 }
 
-function createInstance<T extends ConstructionElement>(c: new (str: string) => T, str: string): T {
-    return new c(str);
-}
-
 export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
 export class TonalZeroInflexion extends TonalInflectingMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
@@ -140,6 +136,24 @@ export class AuxiliarySurface extends ConstructionElement {
     }
 }
 
+type Class = { new(...args: any[]): any; };
+
+const objectFactory = function(name: Class, str: string) {
+    const set = new Set<Class>()
+        .add(PronounSurface)
+        .add(ParticleSurface)
+        .add(AuxiliarySurface)
+        .add(PersonalPronounSurface);
+
+    const createInstance = function <T extends ConstructionElement>(c: new (str: string) => T, str: string): T {
+        return new c(str);
+    }
+
+    if(set.has(name)) {
+        return createInstance(name, str);
+    }
+}
+
 export class KeyWords {
     private keyElems: Array<ConstructionElement> = new Array();
 
@@ -153,11 +167,11 @@ export class KeyWords {
 
     private populateKeyElems() {
         this.keyElems = [
-            createInstance(PronounSurface, 'che'),
-            createInstance(PersonalPronounSurface, 'goa'),
-            createInstance(AuxiliarySurface, 'qaz'),
-            createInstance(ParticleSurface, 'long'),
-            createInstance(ParticleSurface, 'bew'),
+            objectFactory(PronounSurface, 'che'),
+            objectFactory(PersonalPronounSurface, 'goa'),
+            objectFactory(AuxiliarySurface, 'qaz'),
+            objectFactory(ParticleSurface, 'long'),
+            objectFactory(ParticleSurface, 'bew'),
         ];
     }
 }
