@@ -6,7 +6,7 @@ export class Token {
     tag: string = '';
     lemma: string = '';
     dep: string = '';
-    head: any;
+    head: Token | null = null;
 
     constructor(public orth: string) {}
 }
