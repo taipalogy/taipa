@@ -16,6 +16,6 @@ interface IDictionary {
 }
 
 // prettier-ignore
-export const dict_of_seperable_vv_compounds: IDictionary = {
+export const dict_of_seperate_vv_compounds: IDictionary = {
     siam: ['qoew'],
 };

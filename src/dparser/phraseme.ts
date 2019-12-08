@@ -5,39 +5,30 @@ import { TonalPhrase, Phraseme } from '../phraseme';
 export class TonalInflexionPhraseme extends Phraseme {
     phrase: TonalPhrase;
     sandhiForm: TonalPhrase;
-    constructor(phrase: TonalPhrase, lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
+    constructor(phrase: TonalPhrase, lexemeVerb: TonalInflexionLexeme, lexemeParticle: TonalInflexionLexeme) {
         super();
         this.phrase = phrase;
-        if (lexemeSubsidiary.otherForms.length > 0) {
-            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.otherForms[0]]);
+        if (lexemeParticle.otherForms.length > 0) {
+            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.otherForms[0]]);
         } else {
-            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeSubsidiary.word]);
+            this.sandhiForm = new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.word]);
         }
     }
 }
 
 export class TonalInflexionPhrasemeMaker {
-    lexemeVerb: TonalInflexionLexeme;
-    lexemeSubsidiary: TonalInflexionLexeme;
-
-    constructor(lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
-        this.lexemeVerb = lexemeVerb;
-        this.lexemeSubsidiary = lexemeSubsidiary;
+    constructor() {
     }
 
-    preprocess() {
-        let words: Array<TonalWord> = new Array();
-        words.push(this.lexemeVerb.word);
-        words.push(this.lexemeSubsidiary.word);
-
-        return words;
+    makePhrasemes(lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
+        return this.make(lexemeVerb, lexemeSubsidiary);
     }
 
-    makePhrasemes() {
-        return this.make(this.preprocess());
-    }
+    make(lexemeVerb: TonalInflexionLexeme, lexemeParticle: TonalInflexionLexeme) {
+        const words: Array<TonalWord> = new Array();
+        words.push(lexemeVerb.word);
+        words.push(lexemeParticle.word);
 
-    make(words: Array<TonalWord>) {
-        return new TonalInflexionPhraseme(new TonalPhrase(words), this.lexemeVerb, this.lexemeSubsidiary);
+        return new TonalInflexionPhraseme(new TonalPhrase(words), lexemeVerb, lexemeParticle);
     }
 }

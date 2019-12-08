@@ -11,7 +11,7 @@ import {
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
 import { TonalInflexionPhraseme } from './phraseme';
-import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperable_vv_compounds } from './dictionary';
+import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperate_vv_compounds } from './dictionary';
 import { TonalLemmatizationAnalyzer } from '../tonal/analyzer';
 import { TonalWord } from '../tonal/lexeme';
 
@@ -188,8 +188,8 @@ export class Rules {
         return this.keyWords.getSurface(str);
     }
 
-    seperableMatches(str: string) {
-        const ptcls = dict_of_seperable_vv_compounds[str];
+    seperateMatches(str: string) {
+        const ptcls = dict_of_seperate_vv_compounds[str];
         if(ptcls) {
             return ptcls[0];
         }

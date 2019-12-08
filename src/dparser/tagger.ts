@@ -46,7 +46,7 @@ export class RuleBasedTagger {
         else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
     }
 
-    private matchSeperables(sequence: string[], particle: string) {
+    private matchSeperates(sequence: string[], particle: string) {
         let phrase: ConstructionOfSpeech = new ConstructionOfSpeech();
         let vs: VerbSurface = new VerbSurface(sequence[0]);
         vs.tag = Tagset.VB;
@@ -101,9 +101,9 @@ export class RuleBasedTagger {
 
         phrss = this.rules.matches(sequence);
 
-        const ptcl = this.rules.seperableMatches(sequence[0]);
+        const ptcl = this.rules.seperateMatches(sequence[0]);
         if(ptcl) {
-            const sep = this.matchSeperables(sequence, ptcl);
+            const sep = this.matchSeperates(sequence, ptcl);
             if(sep) {
                 phrss = [];
                 phrss = [sep];
