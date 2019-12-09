@@ -173,7 +173,7 @@ export class RuleBasedTagger {
 
     private match(tokens: Token[]) {
         let strs: string[] = [];
-        for (let i in tokens) strs.push(tokens[i].orth);
+        for (let i in tokens) strs.push(tokens[i].text);
 
         let beginOfPhrase: number = 0;
         let matched: ConstructionOfSpeech = new ConstructionOfSpeech();
@@ -203,7 +203,7 @@ export class RuleBasedTagger {
         }
 
         for (let i = 0; i < ces.length; i++) {
-            if (doc.tokens[i].orth === ces[i].surface) {
+            if (doc.tokens[i].text === ces[i].surface) {
                 doc.tokens[i].pos = ces[i].pos;
                 doc.tokens[i].tag = ces[i].tag;
             }

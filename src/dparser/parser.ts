@@ -4,9 +4,11 @@ import { Token } from '../token';
 import { Document } from '../document';
 import { DependencyLabels, Tagset } from './symbols';
 import { Relation } from './relation';
+//import { FeatureLabel, Feature } from './feature';
 
 export class DependencyParser {
     private c: Configuration = this.getInitialConfiguration();
+    private triggered: boolean = false;
 
     private s1: Token = new Token('');
     private s2: Token = new Token('');
@@ -86,25 +88,8 @@ export class DependencyParser {
         }
     }
 
-    private find(label: DependencyLabels): boolean {
-        for (let i in this.c.relations) {
-            if (this.c.relations[i].dependency === label) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private _nsubj = () => {
-        if (this.find(DependencyLabels.nsubj)) {
-            this.c.relations.push(this.leftRelation(DependencyLabels.dislocated));
-        } else {
-            this.c.relations.push(this.leftRelation(DependencyLabels.nsubj));
-        }
-    }
-            
-    private s2_s1_left_ops = new Map<string, () => void>()
-        .set(Tagset.NPR + Tagset.VB, this._nsubj)
+    private s2_s1_left_features = new Map<string, DependencyLabels[]>()
+        .set(Tagset.NPR + Tagset.VB, [DependencyLabels.nsubj, DependencyLabels.dislocated]);
 
     private set_s2_s1_relation(t: Transition) {
         if(t instanceof RightArc) {
@@ -116,16 +101,23 @@ export class DependencyParser {
             } else if (this.isStackEmpty()) {
                 this.c.relations.push(this.rightRelation(DependencyLabels.root));
             }
-            
         } else if(t instanceof LeftArc) {
             if(this.s2_s1_left_relations.has(this.s2.tag + this.s1.tag)) {
                 const rel = this.s2_s1_left_relations.get(this.s2.tag + this.s1.tag);
                 if(rel) {
                     this.c.relations.push(this.leftRelation(rel));
                 }
-            } else if(this.s2_s1_left_ops.has(this.s2.tag + this.s1.tag)) {
-                const f = this.s2_s1_left_ops.get(this.s2.tag + this.s1.tag)
-                if(f) f();
+            } else if(this.s2_s1_left_features.has(this.s2.tag + this.s1.tag)) {
+                const labels = this.s2_s1_left_features.get(this.s2.tag + this.s1.tag);
+                if(labels) {
+                    if(this.triggered == false) {
+                        this.c.relations.push(this.leftRelation(labels[0]));
+                        this.triggered = true;
+                    } else {
+                        this.c.relations.push(this.leftRelation(labels[1]));
+                    }
+
+                }
             }
         }
     }

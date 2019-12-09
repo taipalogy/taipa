@@ -16,13 +16,8 @@ stdin.addListener('data', function (d) {
                 lemma = ts[i].lemma;
             let orthOfHead = '*';
             if (ts[i].head)
-                orthOfHead = ts[i].head.orth;
-            console.info(ts[i].orth
-                + ',' + lemma
-                + ',' + ts[i].pos
-                + ',' + ts[i].tag
-                + ',' + ts[i].dep
-                + ',' + orthOfHead);
+                orthOfHead = ts[i].head.text;
+            console.info(ts[i].text + ',' + lemma + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + orthOfHead);
         }
     }
 });

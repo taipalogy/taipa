@@ -18,9 +18,9 @@ stdin.addListener('data', function(d) {
             let lemma = '*';
             if (ts[i].lemma != '') lemma = ts[i].lemma;
             let orthOfHead = '*';
-            if (ts[i].head) orthOfHead = (<Token>ts[i].head).orth;
+            if (ts[i].head) orthOfHead = (<Token>ts[i].head).text;
             console.info(
-                ts[i].orth + ',' + lemma + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + orthOfHead,
+                ts[i].text + ',' + lemma + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + orthOfHead,
             );
         }
     }

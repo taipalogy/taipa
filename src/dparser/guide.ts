@@ -1,6 +1,5 @@
 import { Configuration, Transition, Shift, LeftArc, RightArc } from './configuration';
-import { DependencyLabels, Tagset } from './symbols';
-import { Relation } from './relation';
+import { Tagset } from './symbols';
 import { Token } from '../token';
 
 export class Guide {
