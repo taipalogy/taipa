@@ -90,6 +90,12 @@ export enum TonalLetterTags {
     tt = 'tt',
     hh = 'hh',
 
+    bb = 'bb',
+    gg = 'gg',
+    jj = 'jj',
+    ll = 'll',
+    ss = 'ss',
+
     f = 'f',
 
     h = 'h',
@@ -99,7 +105,7 @@ export enum TonalLetterTags {
 
 export class LettersOfTonal extends Letters {}
 
-export let lowerLettersOfTonal = new LettersOfTonal([
+export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.a,
     TonalLetterTags.e,
     TonalLetterTags.i,
@@ -134,6 +140,11 @@ export let lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.pp,
     TonalLetterTags.tt,
     TonalLetterTags.hh,
+    TonalLetterTags.bb,
+    TonalLetterTags.gg,
+    TonalLetterTags.jj,
+    TonalLetterTags.ll,
+    TonalLetterTags.ss,
     TonalLetterTags.f,
     TonalLetterTags.h,
 ]);
@@ -344,6 +355,46 @@ export class FinalHH extends StopFinal {
     characters = this.makeCharacters(TonalLetterTags.hh);
 }
 
+class FinalB extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.b);
+}
+
+class FinalL extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.l);
+}
+
+class FinalG extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.g);
+}
+
+class FinalJ extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.j);
+}
+
+class FinalS extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.s);
+}
+
+class FinalBB extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.bb);
+}
+
+class FinalLL extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.ll);
+}
+
+class FinalGG extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.gg);
+}
+
+class FinalJJ extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.jj);
+}
+
+class FinalSS extends StopFinal {
+    characters = this.makeCharacters(TonalLetterTags.ss);
+}
+
 class FinalM extends NasalFinal {
     characters = this.makeCharacters(TonalLetterTags.m);
 }
@@ -359,7 +410,7 @@ class NasalizationNN extends Nasal {
 }
 
 export class SetOfNasalizations extends SetOfSounds {
-    nasals: Array<Nasal> = new Array();
+    nasals = new Array<Nasal>();
     constructor() {
         super();
         this.nasals.push(new NasalizationNN());
@@ -371,7 +422,7 @@ export class SetOfNasalizations extends SetOfSounds {
 }
 
 export class SetOfNasalFinals extends SetOfSounds {
-    nasalFinals: Array<Final> = new Array();
+    nasalFinals = new Array<Final>();
     constructor() {
         super();
         this.nasalFinals.push(new FinalM());
@@ -385,10 +436,11 @@ export class SetOfNasalFinals extends SetOfSounds {
 }
 
 export class SetOfNeutralFinals extends SetOfSounds {
-    neutralFinals: Array<Final> = new Array();
+    neutralFinals = new Array<Final>();
     constructor() {
         super();
         this.neutralFinals.push(new FinalH());
+        this.neutralFinals.push(new FinalHH());
     }
 
     toString() {
@@ -397,7 +449,7 @@ export class SetOfNeutralFinals extends SetOfSounds {
 }
 
 export class SetOfMedials extends SetOfSounds {
-    medials: Array<Medial> = new Array();
+    medials = new Array<Medial>();
     constructor() {
         super();
         this.medials.push(new MedialA());
@@ -414,7 +466,7 @@ export class SetOfMedials extends SetOfSounds {
 }
 
 export class SetOfMaterLectionis extends SetOfSounds {
-    materLectionis: Array<Medial> = new Array();
+    materLectionis = new Array<Medial>();
     constructor() {
         super();
         this.materLectionis.push(new MaterLectionisM());
@@ -428,7 +480,7 @@ export class SetOfMaterLectionis extends SetOfSounds {
 }
 
 export class SetOfInitials extends SetOfSounds {
-    initials: Array<Initial> = new Array();
+    initials = new Array<Initial>();
     constructor() {
         super();
         this.initials.push(new InitialP());
@@ -459,7 +511,7 @@ export class SetOfInitials extends SetOfSounds {
 }
 
 export class SetOfFreeTonals extends SetOfSounds {
-    freeTonals: Array<FreeTonal> = new Array();
+    freeTonals = new Array<FreeTonal>();
     constructor() {
         super();
         this.freeTonals.push(new TonalZ());
@@ -479,7 +531,7 @@ export class SetOfFreeTonals extends SetOfSounds {
 }
 
 export class SetOfCheckedTonals extends SetOfSounds {
-    checkedTonals: Array<FreeTonal> = new Array();
+    checkedTonals = new Array<CheckedTonal>();
     constructor() {
         super();
         this.checkedTonals.push(new CheckedTonalF());
@@ -494,7 +546,7 @@ export class SetOfCheckedTonals extends SetOfSounds {
 }
 
 export class SetOfFinals extends SetOfSounds {
-    finals: Array<Final> = new Array();
+    finals = new Array<Final>();
     constructor() {
         super();
         this.finals.push(new FinalP());
@@ -517,7 +569,7 @@ export class SetOfFinals extends SetOfSounds {
 }
 
 export class SetOfStopFinals extends SetOfSounds {
-    stopFinals: Array<Final> = new Array();
+    stopFinals = new Array<Final>();
     constructor() {
         super();
         this.stopFinals.push(new FinalP());
@@ -536,7 +588,7 @@ export class SetOfStopFinals extends SetOfSounds {
 }
 
 export class Epenthesis extends SetOfSounds {
-    letters: Array<Initial> = new Array();
+    letters = new Array<Initial>();
     constructor() {
         super();
         this.letters.push(new InitialB());
@@ -548,6 +600,67 @@ export class Epenthesis extends SetOfSounds {
 
     toString() {
         return super.toRegexString(this.letters);
+    }
+}
+
+export class EuphonicFinalT extends SetOfSounds {
+    finals = new Array<Final>();
+    constructor() {
+        super();
+        this.finals.push(new FinalK());
+        this.finals.push(new FinalL());
+        this.finals.push(new FinalS());
+        this.finals.push(new FinalP());
+        this.finals.push(new FinalG());
+        this.finals.push(new FinalJ());
+        this.finals.push(new FinalB());
+    }
+
+    toString() {
+        return super.toRegexString(this.finals);
+    }
+}
+
+export class EuphonicFinalTT extends SetOfSounds {
+    finals = new Array<Final>();
+    constructor() {
+        super();
+        this.finals.push(new FinalKK());
+        this.finals.push(new FinalLL());
+        this.finals.push(new FinalSS());
+        this.finals.push(new FinalPP());
+        this.finals.push(new FinalGG());
+        this.finals.push(new FinalJJ());
+        this.finals.push(new FinalBB());
+    }
+
+    toString() {
+        return super.toRegexString(this.finals);
+    }
+}
+
+export class EuphonicTonalF extends SetOfSounds {
+    checkedTonal = new Array<CheckedTonal>();
+    constructor() {
+        super();
+        this.checkedTonal.push(new CheckedTonalF());
+    }
+    
+    toString() {
+        return super.toRegexString(this.checkedTonal);
+    }
+}
+
+export class EuphonicTonalWX extends SetOfSounds {
+    checkedTonal = new Array<CheckedTonal>();
+    constructor() {
+        super();
+        this.checkedTonal.push(new CheckedTonalW());
+        this.checkedTonal.push(new CheckedTonalX());
+    }
+    
+    toString() {
+        return super.toRegexString(this.checkedTonal);
     }
 }
 
@@ -566,8 +679,19 @@ class PSB extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.b;
+        this.no = 2;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialB())
+            .set(TonalSoundTags.stopFinal, new FinalB());
+    }
+}
+
+class PS_BB extends PositionalSound {
+    constructor() {
+        super();
+        this.name = TonalLetterTags.bb;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialB());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalBB());
     }
 }
 
@@ -622,8 +746,19 @@ class PSG extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.g;
+        this.no = 2;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialG())
+            .set(TonalSoundTags.stopFinal, new FinalG());
+    }
+}
+
+class PS_GG extends PositionalSound {
+    constructor() {
+        super();
+        this.name = TonalLetterTags.gg;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialG());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalGG());
     }
 }
 
@@ -649,8 +784,19 @@ class PSJ extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.j;
+        this.no = 2;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialJ())
+            .set(TonalSoundTags.stopFinal, new FinalJ());
+    }
+}
+
+class PS_JJ extends PositionalSound {
+    constructor() {
+        super();
+        this.name = TonalLetterTags.jj;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialJ());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalJJ());
     }
 }
 
@@ -678,8 +824,19 @@ class PSL extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.l;
+        this.no = 2;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialL())
+            .set(TonalSoundTags.stopFinal, new FinalL());;
+    }
+}
+
+class PS_LL extends PositionalSound {
+    constructor() {
+        super();
+        this.name = TonalLetterTags.ll;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialL());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalLL());
     }
 }
 
@@ -781,8 +938,19 @@ class PSS extends PositionalSound {
     constructor() {
         super();
         this.name = TonalLetterTags.s;
+        this.no = 2;
+        this.map = new Map<string, Sound>()
+            .set(TonalSoundTags.initial, new InitialS())
+            .set(TonalSoundTags.stopFinal, new FinalS());
+    }
+}
+
+class PS_SS extends PositionalSound {
+    constructor() {
+        super();
+        this.name = TonalLetterTags.ss;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialS());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalSS());
     }
 }
 
@@ -965,22 +1133,26 @@ class CombiningRules {
 
 export const combiningRules = new CombiningRules();
 
-export const letterClasses: Map<string, PositionalSound> = new Map()
+export const letterClasses = new Map<string, PositionalSound>()
     .set(TonalLetterTags.a, new PSA())
     .set(TonalLetterTags.b, new PSB())
+    .set(TonalLetterTags.bb, new PS_BB())
     .set(TonalLetterTags.c, new PSC())
     .set(TonalLetterTags.ch, new PSCH())
     .set(TonalLetterTags.d, new PSD())
     .set(TonalLetterTags.e, new PSE())
     .set(TonalLetterTags.f, new PSF())
     .set(TonalLetterTags.g, new PSG())
+    .set(TonalLetterTags.gg, new PS_GG())
     .set(TonalLetterTags.h, new PSH())
     .set(TonalLetterTags.hh, new PSHH())
     .set(TonalLetterTags.i, new PSI())
     .set(TonalLetterTags.j, new PSJ())
+    .set(TonalLetterTags.jj, new PS_JJ())
     .set(TonalLetterTags.k, new PSK())
     .set(TonalLetterTags.kk, new PSKK())
     .set(TonalLetterTags.l, new PSL())
+    .set(TonalLetterTags.ll, new PS_LL())
     .set(TonalLetterTags.m, new PSM())
     .set(TonalLetterTags.n, new PSN())
     .set(TonalLetterTags.nn, new PSNN())
@@ -990,6 +1162,7 @@ export const letterClasses: Map<string, PositionalSound> = new Map()
     .set(TonalLetterTags.pp, new PSPP())
     .set(TonalLetterTags.q, new PSQ())
     .set(TonalLetterTags.s, new PSS())
+    .set(TonalLetterTags.ss, new PS_SS())
     .set(TonalLetterTags.t, new PST())
     .set(TonalLetterTags.tt, new PSTT())
     .set(TonalLetterTags.u, new PSU())

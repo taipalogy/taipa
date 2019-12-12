@@ -16,6 +16,10 @@ import {
     SetOfStopFinals,
     Epenthesis,
     TonalLetterTags,
+    EuphonicFinalT,
+    EuphonicFinalTT,
+    EuphonicTonalF,
+    EuphonicTonalWX,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -83,7 +87,6 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             // member variable allomorph is null
             // this syllable is already in base form
             // is this block redundant
-            //return [new TonalSyllable(syllable.letters)];
         }
         return []; // return empty array
     }
@@ -103,6 +106,10 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals();
+    const ef_t = new EuphonicFinalT();
+    const et_f = new EuphonicTonalF();
+    const ef_tt = new EuphonicFinalTT();
+    const et_wx = new EuphonicTonalWX();
     const urs = freeAllomorphUncombiningRules;
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
@@ -110,7 +117,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         ltrs.push(letters[i].literal);
         //console.log('begining of the loop:' + ltrs)
         if (list_of_lexical_roots.includes(literal) && sft.beginWith(letters[i].literal)) {
-            //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}`)
+            //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
             if (begin === beginOfSyllable) {
                 matched = literal;
                 Object.assign(matchedLtrs, ltrs);
@@ -125,10 +132,20 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
             break;
         } else {
-            //console.log(`i: ${i}, literal: ${literal}`)
+            //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
             if (i < letters.length && sft.beginWith(letters[i].literal)) {
                 //console.log('i: %d', i)
+
+                if(ef_t.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
+                    || ef_tt.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)) {
+                    // euphonic change of t and tt
+                    matched = literal;
+                    begin = beginOfSyllable;
+                    Object.assign(matchedLtrs, ltrs);
+                    break;
+                }
+
                 const ts = urs.get(letters[i].literal);
                 //console.log(ts)
                 if (ts.length > 0) {

@@ -24,7 +24,7 @@ export class TonalInflexionPhrasemeMaker {
         return this.make(lexemeVerb, lexemeSubsidiary);
     }
 
-    make(lexemeVerb: TonalInflexionLexeme, lexemeParticle: TonalInflexionLexeme) {
+    private make(lexemeVerb: TonalInflexionLexeme, lexemeParticle: TonalInflexionLexeme) {
         const words: Array<TonalWord> = new Array();
         words.push(lexemeVerb.word);
         words.push(lexemeParticle.word);

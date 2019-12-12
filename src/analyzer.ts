@@ -13,6 +13,7 @@ export class AnalyzerWrapper {
         let arr: string[] = [];
         let duplicates = [];
 
+        // find duplicates of PositionalSound.name
         for (let e of map.values()) {
             if (e.no != e.map.size) console.debug(`size unmatched for ${e.name}`);
             arr.push(e.name);

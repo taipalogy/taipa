@@ -13,6 +13,10 @@ import {
     SetOfNasalFinals,
     TonalSoundTags,
     SetOfCheckedTonals,
+    EuphonicFinalT,
+    EuphonicTonalF,
+    EuphonicFinalTT,
+    EuphonicTonalWX,
 } from './version2';
 
 export class ClientOfTonalGenerator {
@@ -38,6 +42,14 @@ export class ClientOfTonalGenerator {
         return sounds;
     }
 
+    private analyzeAfterStopFinalEuphonicT(ls: string[], sounds: string[], index: number): string[] {
+        if (this.isCheckedTonalEuphonicF(ls[index])) {
+            sounds.push(ls[ls.length - 1] + '.' + TonalSoundTags.checkedTonal);
+        }
+
+        return sounds;
+    }
+
     private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
         if (this.isFreeTonal(ls[index])) {
             sounds.push(ls[ls.length - 1] + '.' + TonalSoundTags.freeTonal);
@@ -47,22 +59,27 @@ export class ClientOfTonalGenerator {
                 sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length);
             }
         } else if (this.isFinalConsonant(ls[index])) {
-            let k = index;
-            while (k < ls.length) {
-                if (this.isNasalFinal(ls[k])) {
-                    sounds.push(ls[k] + '.' + TonalSoundTags.nasalFinal);
+            //let k = index;
+            //while (k < ls.length) {
+                if (this.isNasalFinal(ls[index])) {
+                    sounds.push(ls[index] + '.' + TonalSoundTags.nasalFinal);
                     if (ls.length > sounds.length) {
                         sounds = this.analyzeAfterNasalFinalsOrNasalization(ls, sounds, sounds.length);
                     }
-                } else if (this.isStopFinal(ls[k])) {
-                    sounds.push(ls[k] + '.' + TonalSoundTags.stopFinal);
+                } else if (this.isStopFinal(ls[index])) {
+                    sounds.push(ls[index] + '.' + TonalSoundTags.stopFinal);
                     if (ls.length > sounds.length) {
                         sounds = this.analyzeAfterStopFinal(ls, sounds, sounds.length);
                     }
                 }
-                k++;
+                //k++;
+            //}
+        } else if(this.isStopFinalEuphonicT(ls[index])) {
+            sounds.push(ls[index] + '.' + TonalSoundTags.stopFinal);
+            if (ls.length > sounds.length) {
+                sounds = this.analyzeAfterStopFinalEuphonicT(ls, sounds, sounds.length);
             }
-        }
+        } 
 
         return sounds;
     }
@@ -146,6 +163,20 @@ export class ClientOfTonalGenerator {
 
     private isNeutralFinal(str: string) {
         if (new SetOfNeutralFinals().beginWith(str) == true) return true;
+
+        return false;
+    }
+
+    private isStopFinalEuphonicT(str: string) {
+        if (new EuphonicFinalT().beginWith(str)
+            || new EuphonicFinalTT().beginWith(str)) return true;
+
+        return false;
+    }
+
+    private isCheckedTonalEuphonicF(str: string) {
+        if (new EuphonicTonalF().beginWith(str)
+            || new EuphonicTonalWX().beginWith(str)) return true;
 
         return false;
     }
