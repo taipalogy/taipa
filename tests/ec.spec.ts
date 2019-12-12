@@ -136,3 +136,48 @@ describe("Euphonic change testing", () => {
         expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.w);
     });
 });
+
+describe("Euphonic change testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('abbxbay');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][1].getLiteral()).toEqual(TonalLetterTags.bb);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.x);
+    });
+});
+
+describe("Euphonic change testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('caggxgay');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.gg);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.x);
+    });
+});
+
+describe("Euphonic change testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('callxlay');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.ll);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.x);
+    });
+});

@@ -192,7 +192,16 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
         }
     }
+
+    //console.log(`literal: ${literal}. matched: ${matched}`)
+    if(matched.length > 0 && literal.length > matched.length) {
+        // when ~ay is longer than ~a by one letter y
+        // for those first tone lexcial roots that are present
+        matched = '';
+        matchedLtrs = [];
+    }
     //console.log(matchedLtrs)
+
     //console.log('matched: ' + matched)
     const cog = new ClientOfTonalGenerator();
     //console.log('matched: ' + matched)
