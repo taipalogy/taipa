@@ -603,17 +603,17 @@ export class Epenthesis extends SetOfSounds {
     }
 }
 
-export class EuphonicFinalT extends SetOfSounds {
+export class EuphonicFinalsBGJKLPS extends SetOfSounds {
     finals = new Array<Final>();
     constructor() {
         super();
-        this.finals.push(new FinalK());
-        this.finals.push(new FinalL());
-        this.finals.push(new FinalS());
-        this.finals.push(new FinalP());
+        this.finals.push(new FinalB());
         this.finals.push(new FinalG());
         this.finals.push(new FinalJ());
-        this.finals.push(new FinalB());
+        this.finals.push(new FinalK());
+        this.finals.push(new FinalL());
+        this.finals.push(new FinalP());
+        this.finals.push(new FinalS());
     }
 
     toString() {
@@ -621,17 +621,17 @@ export class EuphonicFinalT extends SetOfSounds {
     }
 }
 
-export class EuphonicFinalTT extends SetOfSounds {
+export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds {
     finals = new Array<Final>();
     constructor() {
         super();
-        this.finals.push(new FinalKK());
-        this.finals.push(new FinalLL());
-        this.finals.push(new FinalSS());
-        this.finals.push(new FinalPP());
+        this.finals.push(new FinalBB());
         this.finals.push(new FinalGG());
         this.finals.push(new FinalJJ());
-        this.finals.push(new FinalBB());
+        this.finals.push(new FinalKK());
+        this.finals.push(new FinalLL());
+        this.finals.push(new FinalPP());
+        this.finals.push(new FinalSS());
     }
 
     toString() {
@@ -651,7 +651,7 @@ export class EuphonicTonalF extends SetOfSounds {
     }
 }
 
-export class EuphonicTonalWX extends SetOfSounds {
+export class EuphonicTonalWAndX extends SetOfSounds {
     checkedTonal = new Array<CheckedTonal>();
     constructor() {
         super();
@@ -661,6 +661,30 @@ export class EuphonicTonalWX extends SetOfSounds {
     
     toString() {
         return super.toRegexString(this.checkedTonal);
+    }
+}
+
+export class NeutralFinalH extends SetOfSounds {
+    final = new Array<StopFinal>();
+    constructor() {
+        super();
+        this.final.push(new FinalH());
+    }
+    
+    toString() {
+        return super.toRegexString(this.final);
+    }
+}
+
+export class NeutralFinalHH extends SetOfSounds {
+    final = new Array<StopFinal>();
+    constructor() {
+        super();
+        this.final.push(new FinalHH());
+    }
+    
+    toString() {
+        return super.toRegexString(this.final);
     }
 }
 

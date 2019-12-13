@@ -16,10 +16,14 @@ import {
     SetOfStopFinals,
     Epenthesis,
     TonalLetterTags,
-    EuphonicFinalT,
-    EuphonicFinalTT,
+    EuphonicFinalsBGJKLPS,
+    EuphonicFinalsBBGGJJKKLLPPSS,
     EuphonicTonalF,
-    EuphonicTonalWX,
+    EuphonicTonalWAndX,
+    SetOfNeutralFinals,
+    SetOfNasalFinals,
+    NeutralFinalH,
+    NeutralFinalHH,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -106,16 +110,19 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals();
-    const ef_t = new EuphonicFinalT();
+    const efs_bgjklps = new EuphonicFinalsBGJKLPS();
     const et_f = new EuphonicTonalF();
-    const ef_tt = new EuphonicFinalTT();
-    const et_wx = new EuphonicTonalWX();
+    const efs_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
+    const et_wx = new EuphonicTonalWAndX();
+    const nf_h = new NeutralFinalH();
+    const nf_hh = new NeutralFinalHH();
+    const nfs = new SetOfNasalFinals();
     const urs = freeAllomorphUncombiningRules;
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
         ltrs.push(letters[i].literal);
-        //console.log('begining of the loop:' + ltrs)
+        //console.log(`begining of the loop: ${literal}. ${ltrs}`)
         if (list_of_lexical_roots.includes(literal) && sft.beginWith(letters[i].literal)) {
             //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
             if (begin === beginOfSyllable) {
@@ -137,19 +144,29 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             if (i < letters.length && sft.beginWith(letters[i].literal)) {
                 //console.log('i: %d', i)
 
-                if(ef_t.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
-                    || ef_tt.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)) {
+                if(efs_bgjklps.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
+                    || efs_bbggjjkkllppss.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)
+                    ) {
                     // euphonic change of t and tt
                     matched = literal;
                     begin = beginOfSyllable;
                     Object.assign(matchedLtrs, ltrs);
                     break;
+                } else if(literal.length > 2) {
+                    if(nfs.beginWith(letters[i-2].literal) && nf_h.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
+                    || nfs.beginWith(letters[i-2].literal) && nf_hh.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)) {
+                        // euphonic change of t and tt
+                        matched = literal;
+                        begin = beginOfSyllable;
+                        Object.assign(matchedLtrs, ltrs);    
+                    }
                 }
 
                 const ts = urs.get(letters[i].literal);
                 //console.log(ts)
                 if (ts.length > 0) {
                     for (let t of ts) {
+                        // check the lemmas
                         const slicedLetters = letters.slice(beginOfSyllable, i);
                         let lit = '';
                         for (let i in slicedLetters) {
@@ -194,13 +211,14 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     }
 
     //console.log(`literal: ${literal}. matched: ${matched}`)
+    //console.log(matchedLtrs)
+
     if(matched.length > 0 && literal.length > matched.length) {
         // when ~ay is longer than ~a by one letter y
         // for those first tone lexcial roots that are present
         matched = '';
         matchedLtrs = [];
     }
-    //console.log(matchedLtrs)
 
     //console.log('matched: ' + matched)
     const cog = new ClientOfTonalGenerator();

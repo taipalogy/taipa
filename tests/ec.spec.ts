@@ -2,7 +2,7 @@ import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -17,7 +17,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -32,7 +32,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -47,7 +47,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -62,7 +62,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -77,7 +77,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -92,7 +92,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -107,7 +107,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -122,7 +122,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -137,7 +137,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -152,7 +152,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -167,7 +167,7 @@ describe("Euphonic change testing", () => {
     });
 });
 
-describe("Euphonic change testing", () => {
+describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
@@ -179,5 +179,160 @@ describe("Euphonic change testing", () => {
 
     test("check the tonal", () => {
         expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.x);
+    });
+});
+
+describe("Euphonic change testing, stop final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('chikfqi');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.k);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.f);
+    });
+});
+
+describe("Euphonic change testing, stop final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('vukkwqong');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.kk);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Euphonic change testing, stop final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('cupfpoaw');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.p);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.f);
+    });
+});
+
+describe("Euphonic change testing, stop final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('bippwpang');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.pp);
+    });
+
+    test("check the tonal", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Euphonic change testing, nasal final, neutral final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('chimhhwmix');
+
+    test("check the nasal final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.m);
+    });
+
+    test("check the neutral final", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.hh);
+    });
+
+    test("check the checked tonal", () => {
+        expect(doc.soundSequences[0][4].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Euphonic change testing, nasal final, neutral final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('binhhwngx');
+
+    test("check the nasal final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.n);
+    });
+
+    test("check the neutral final", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.hh);
+    });
+
+    test("check the checked tonal", () => {
+        expect(doc.soundSequences[0][4].getLiteral()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe("Euphonic change testing, nasal final, neutral final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('vimhfmngx');
+
+    test("check the nasal final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.m);
+    });
+
+    test("check the neutral final", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.h);
+    });
+
+    test("check the checked tonal", () => {
+        expect(doc.soundSequences[0][4].getLiteral()).toEqual(TonalLetterTags.f);
+    });
+});
+
+describe("Euphonic change testing, nasal final, neutral final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('hinhfnix');
+
+    test("check the nasal final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.n);
+    });
+
+    test("check the neutral final", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.h);
+    });
+
+    test("check the checked tonal", () => {
+        expect(doc.soundSequences[0][4].getLiteral()).toEqual(TonalLetterTags.f);
+    });
+});
+
+describe("Euphonic change testing, nasal final, neutral final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('vunghfngay');
+
+    test("check the nasal final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.ng);
+    });
+
+    test("check the neutral final", () => {
+        expect(doc.soundSequences[0][3].getLiteral()).toEqual(TonalLetterTags.h);
+    });
+
+    test("check the checked tonal", () => {
+        expect(doc.soundSequences[0][4].getLiteral()).toEqual(TonalLetterTags.f);
     });
 });
