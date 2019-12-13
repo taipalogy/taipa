@@ -262,13 +262,14 @@ export class Sound {
     }
 }
 
-export class SetOfSounds {
+export class SetOfSounds<T extends Sound> {
+    sounds = new Array<T>();
     beginWith(str: string) {
         if (str.search(new RegExp(this.toString())) == 0) return true;
         return false;
     }
 
-    toRegexString(elements: Array<Sound>) {
+    private toRegexString(elements: Array<Sound>) {
         let str = '';
         for (let i = 0; i < elements.length; i++) {
             if (i + 1 < elements.length) {
@@ -283,5 +284,9 @@ export class SetOfSounds {
             }
         }
         return str;
+    }
+
+    toString() {
+        return this.toRegexString(this.sounds);
     }
 }

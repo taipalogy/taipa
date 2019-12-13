@@ -102,7 +102,7 @@ export class ClientOfKanaGenerator {
 
         // sokuon
         let fcs = new SetOfFinalConsonants();
-        for (let e of fcs.finalConsonants) {
+        for (let e of fcs.sounds) {
             let syl: string[] = new Array();
             Object.assign(syl, letters);
             syl.push(e.getLiteral());
@@ -375,111 +375,81 @@ class GerminatedConsonantT extends GerminatedConsonant {
     characters = this.makeCharacters(KanaLetterTags.t);
 }
 
-export class SetOfInitialConsonants extends SetOfSounds {
-    initialConsonants: Array<InitialConsonant> = new Array();
+export class SetOfInitialConsonants extends SetOfSounds<InitialConsonant> {
     constructor() {
         super();
-        this.initialConsonants.push(new InitialConsonantB());
-        this.initialConsonants.push(new InitialConsonantC());
-        this.initialConsonants.push(new InitialConsonantCH());
-        this.initialConsonants.push(new InitialConsonantD());
-        this.initialConsonants.push(new InitialConsonantF());
-        this.initialConsonants.push(new InitialConsonantG());
-        this.initialConsonants.push(new InitialConsonantH());
-        this.initialConsonants.push(new InitialConsonantJ());
-        this.initialConsonants.push(new InitialConsonantK());
-        this.initialConsonants.push(new InitialConsonantL());
-        this.initialConsonants.push(new InitialConsonantM());
-        this.initialConsonants.push(new InitialConsonantN());
-        this.initialConsonants.push(new InitialConsonantP());
-        this.initialConsonants.push(new InitialConsonantR());
-        this.initialConsonants.push(new InitialConsonantS());
-        this.initialConsonants.push(new InitialConsonantT());
-        this.initialConsonants.push(new InitialConsonantV());
-        this.initialConsonants.push(new InitialConsonantZ());
-    }
-
-    toString() {
-        return super.toRegexString(this.initialConsonants);
+        this.sounds.push(new InitialConsonantB());
+        this.sounds.push(new InitialConsonantC());
+        this.sounds.push(new InitialConsonantCH());
+        this.sounds.push(new InitialConsonantD());
+        this.sounds.push(new InitialConsonantF());
+        this.sounds.push(new InitialConsonantG());
+        this.sounds.push(new InitialConsonantH());
+        this.sounds.push(new InitialConsonantJ());
+        this.sounds.push(new InitialConsonantK());
+        this.sounds.push(new InitialConsonantL());
+        this.sounds.push(new InitialConsonantM());
+        this.sounds.push(new InitialConsonantN());
+        this.sounds.push(new InitialConsonantP());
+        this.sounds.push(new InitialConsonantR());
+        this.sounds.push(new InitialConsonantS());
+        this.sounds.push(new InitialConsonantT());
+        this.sounds.push(new InitialConsonantV());
+        this.sounds.push(new InitialConsonantZ());
     }
 }
 
-export class SetOfVowels extends SetOfSounds {
-    vowels: Array<Vowel> = new Array();
+export class SetOfVowels extends SetOfSounds<Vowel> {
     constructor() {
         super();
-        this.vowels.push(new VowelA());
-        this.vowels.push(new VowelI());
-        this.vowels.push(new VowelU());
-        this.vowels.push(new VowelE());
-        this.vowels.push(new VowelO());
-    }
-
-    toString() {
-        return super.toRegexString(this.vowels);
+        this.sounds.push(new VowelA());
+        this.sounds.push(new VowelI());
+        this.sounds.push(new VowelU());
+        this.sounds.push(new VowelE());
+        this.sounds.push(new VowelO());
     }
 }
 
-export class SetOfGerminatedConsonants extends SetOfSounds {
-    theGerminated: Array<GerminatedConsonant> = new Array();
+export class SetOfGerminatedConsonants extends SetOfSounds<GerminatedConsonant> {
     constructor() {
         super();
-        this.theGerminated.push(new GerminatedConsonantB());
-        this.theGerminated.push(new GerminatedConsonantC());
-        this.theGerminated.push(new GerminatedConsonantD());
-        this.theGerminated.push(new GerminatedConsonantG());
-        this.theGerminated.push(new GerminatedConsonantK());
-        this.theGerminated.push(new GerminatedConsonantP());
-        this.theGerminated.push(new GerminatedConsonantS());
-        this.theGerminated.push(new GerminatedConsonantT());
-    }
-
-    toString() {
-        return super.toRegexString(this.theGerminated);
+        this.sounds.push(new GerminatedConsonantB());
+        this.sounds.push(new GerminatedConsonantC());
+        this.sounds.push(new GerminatedConsonantD());
+        this.sounds.push(new GerminatedConsonantG());
+        this.sounds.push(new GerminatedConsonantK());
+        this.sounds.push(new GerminatedConsonantP());
+        this.sounds.push(new GerminatedConsonantS());
+        this.sounds.push(new GerminatedConsonantT());
     }
 }
 
-export class SetOfSemivowels extends SetOfSounds {
-    semivowels: Array<Semivowel> = new Array();
+export class SetOfSemivowels extends SetOfSounds<Semivowel> {
     constructor() {
         super();
-        this.semivowels.push(new SemivowelW());
-        this.semivowels.push(new SemivowelY());
-    }
-
-    toString() {
-        return super.toRegexString(this.semivowels);
+        this.sounds.push(new SemivowelW());
+        this.sounds.push(new SemivowelY());
     }
 }
 
-export class SetOfFinalConsonants extends SetOfSounds {
-    finalConsonants: Array<FinalConsonant> = new Array();
+export class SetOfFinalConsonants extends SetOfSounds<FinalConsonant> {
     constructor() {
         super();
-        this.finalConsonants.push(new FinalConsonantB());
-        this.finalConsonants.push(new FinalConsonantD());
-        this.finalConsonants.push(new FinalConsonantG());
-        this.finalConsonants.push(new FinalConsonantK());
-        this.finalConsonants.push(new FinalConsonantN());
-        this.finalConsonants.push(new FinalConsonantP());
-        this.finalConsonants.push(new FinalConsonantS());
-        this.finalConsonants.push(new FinalConsonantT());
-    }
-
-    toString() {
-        return super.toRegexString(this.finalConsonants);
+        this.sounds.push(new FinalConsonantB());
+        this.sounds.push(new FinalConsonantD());
+        this.sounds.push(new FinalConsonantG());
+        this.sounds.push(new FinalConsonantK());
+        this.sounds.push(new FinalConsonantN());
+        this.sounds.push(new FinalConsonantP());
+        this.sounds.push(new FinalConsonantS());
+        this.sounds.push(new FinalConsonantT());
     }
 }
 
-export class Hatsuon extends SetOfSounds {
-    hatsuon: Array<FinalConsonant> = new Array();
+export class Hatsuon extends SetOfSounds<FinalConsonant> {
     constructor() {
         super();
-        this.hatsuon.push(new FinalConsonantN());
-    }
-
-    toString() {
-        return super.toRegexString(this.hatsuon);
+        this.sounds.push(new FinalConsonantN());
     }
 }
 

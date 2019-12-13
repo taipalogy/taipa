@@ -174,7 +174,7 @@ export class Medial extends Sound {
 export class Final extends Sound {
     name = TonalSoundTags.final;
 }
-export class Nasal extends Sound {
+export class Nasalization extends Sound {
     name = TonalSoundTags.nasalization;
 }
 export class Tonal extends Sound {
@@ -405,286 +405,201 @@ class FinalNG extends NasalFinal {
     characters = this.makeCharacters(TonalLetterTags.ng);
 }
 
-class NasalizationNN extends Nasal {
+class NasalizationNN extends Nasalization {
     characters = this.makeCharacters(TonalLetterTags.nn);
 }
 
-export class SetOfNasalizations extends SetOfSounds {
-    nasals = new Array<Nasal>();
+export class SetOfNasalizations extends SetOfSounds<Nasalization> {
     constructor() {
         super();
-        this.nasals.push(new NasalizationNN());
-    }
-
-    toString() {
-        return super.toRegexString(this.nasals);
+        this.sounds.push(new NasalizationNN());
     }
 }
 
-export class SetOfNasalFinals extends SetOfSounds {
-    nasalFinals = new Array<Final>();
+export class SetOfNasalFinals extends SetOfSounds<Final> {
     constructor() {
         super();
-        this.nasalFinals.push(new FinalM());
-        this.nasalFinals.push(new FinalN());
-        this.nasalFinals.push(new FinalNG());
-    }
-
-    toString() {
-        return super.toRegexString(this.nasalFinals);
+        this.sounds.push(new FinalM());
+        this.sounds.push(new FinalN());
+        this.sounds.push(new FinalNG());
     }
 }
 
-export class SetOfNeutralFinals extends SetOfSounds {
-    neutralFinals = new Array<Final>();
+export class SetOfNeutralFinals extends SetOfSounds<Final> {
     constructor() {
         super();
-        this.neutralFinals.push(new FinalH());
-        this.neutralFinals.push(new FinalHH());
-    }
-
-    toString() {
-        return super.toRegexString(this.neutralFinals);
+        this.sounds.push(new FinalH());
+        this.sounds.push(new FinalHH());
     }
 }
 
-export class SetOfMedials extends SetOfSounds {
-    medials = new Array<Medial>();
+export class SetOfMedials extends SetOfSounds<Medial> {
     constructor() {
         super();
-        this.medials.push(new MedialA());
-        this.medials.push(new MedialE());
-        this.medials.push(new MedialI());
-        this.medials.push(new MedialO());
-        this.medials.push(new MedialU());
-        this.medials.push(new MedialUR());
-    }
-
-    toString() {
-        return super.toRegexString(this.medials);
+        this.sounds.push(new MedialA());
+        this.sounds.push(new MedialE());
+        this.sounds.push(new MedialI());
+        this.sounds.push(new MedialO());
+        this.sounds.push(new MedialU());
+        this.sounds.push(new MedialUR());
     }
 }
 
-export class SetOfMaterLectionis extends SetOfSounds {
-    materLectionis = new Array<Medial>();
+export class SetOfMaterLectionis extends SetOfSounds<Medial> {
     constructor() {
         super();
-        this.materLectionis.push(new MaterLectionisM());
-        this.materLectionis.push(new MaterLectionisN());
-        this.materLectionis.push(new MaterLectionisNG());
-    }
-
-    toString() {
-        return super.toRegexString(this.materLectionis);
+        this.sounds.push(new MaterLectionisM());
+        this.sounds.push(new MaterLectionisN());
+        this.sounds.push(new MaterLectionisNG());
     }
 }
 
-export class SetOfInitials extends SetOfSounds {
-    initials = new Array<Initial>();
+export class SetOfInitials extends SetOfSounds<Initial> {
     constructor() {
         super();
-        this.initials.push(new InitialP());
-        this.initials.push(new InitialT());
-        this.initials.push(new InitialK());
-        this.initials.push(new InitialB());
-        this.initials.push(new InitialD());
-        this.initials.push(new InitialG());
+        this.sounds.push(new InitialP());
+        this.sounds.push(new InitialT());
+        this.sounds.push(new InitialK());
+        this.sounds.push(new InitialB());
+        this.sounds.push(new InitialD());
+        this.sounds.push(new InitialG());
 
-        this.initials.push(new InitialH());
+        this.sounds.push(new InitialH());
 
-        this.initials.push(new InitialC());
-        this.initials.push(new InitialCH());
-        this.initials.push(new InitialJ());
-        this.initials.push(new InitialL());
-        this.initials.push(new InitialQ());
-        this.initials.push(new InitialS());
-        this.initials.push(new InitialV());
+        this.sounds.push(new InitialC());
+        this.sounds.push(new InitialCH());
+        this.sounds.push(new InitialJ());
+        this.sounds.push(new InitialL());
+        this.sounds.push(new InitialQ());
+        this.sounds.push(new InitialS());
+        this.sounds.push(new InitialV());
 
-        this.initials.push(new InitialM());
-        this.initials.push(new InitialN());
-        this.initials.push(new InitialNG());
-    }
-
-    toString() {
-        return super.toRegexString(this.initials);
+        this.sounds.push(new InitialM());
+        this.sounds.push(new InitialN());
+        this.sounds.push(new InitialNG());
     }
 }
 
-export class SetOfFreeTonals extends SetOfSounds {
-    freeTonals = new Array<FreeTonal>();
+export class SetOfFreeTonals extends SetOfSounds<FreeTonal> {
     constructor() {
         super();
-        this.freeTonals.push(new TonalZ());
-        this.freeTonals.push(new TonalW());
-        this.freeTonals.push(new TonalXX());
-        this.freeTonals.push(new TonalXXX());
-        this.freeTonals.push(new TonalF());
-        this.freeTonals.push(new TonalZX());
+        this.sounds.push(new TonalZ());
+        this.sounds.push(new TonalW());
+        this.sounds.push(new TonalXX());
+        this.sounds.push(new TonalXXX());
+        this.sounds.push(new TonalF());
+        this.sounds.push(new TonalZX());
 
-        this.freeTonals.push(new FreeTonalX());
-        this.freeTonals.push(new FreeTonalY());
-    }
-
-    toString() {
-        return super.toRegexString(this.freeTonals);
+        this.sounds.push(new FreeTonalX());
+        this.sounds.push(new FreeTonalY());
     }
 }
 
-export class SetOfCheckedTonals extends SetOfSounds {
-    checkedTonals = new Array<CheckedTonal>();
+export class SetOfCheckedTonals extends SetOfSounds<CheckedTonal> {
     constructor() {
         super();
-        this.checkedTonals.push(new CheckedTonalF());
-        this.checkedTonals.push(new CheckedTonalY());
-        this.checkedTonals.push(new CheckedTonalW());
-        this.checkedTonals.push(new CheckedTonalX());
-    }
-
-    toString() {
-        return super.toRegexString(this.checkedTonals);
+        this.sounds.push(new CheckedTonalF());
+        this.sounds.push(new CheckedTonalY());
+        this.sounds.push(new CheckedTonalW());
+        this.sounds.push(new CheckedTonalX());
     }
 }
 
-export class SetOfFinals extends SetOfSounds {
-    finals = new Array<Final>();
+export class SetOfFinals extends SetOfSounds<Final> {
     constructor() {
         super();
-        this.finals.push(new FinalP());
-        this.finals.push(new FinalT());
-        this.finals.push(new FinalK());
-        this.finals.push(new FinalH());
-        this.finals.push(new FinalPP());
-        this.finals.push(new FinalTT());
-        this.finals.push(new FinalKK());
-        this.finals.push(new FinalHH());
+        this.sounds.push(new FinalP());
+        this.sounds.push(new FinalT());
+        this.sounds.push(new FinalK());
+        this.sounds.push(new FinalH());
+        this.sounds.push(new FinalPP());
+        this.sounds.push(new FinalTT());
+        this.sounds.push(new FinalKK());
+        this.sounds.push(new FinalHH());
 
-        this.finals.push(new FinalM());
-        this.finals.push(new FinalN());
-        this.finals.push(new FinalNG());
-    }
-
-    toString() {
-        return super.toRegexString(this.finals);
+        this.sounds.push(new FinalM());
+        this.sounds.push(new FinalN());
+        this.sounds.push(new FinalNG());
     }
 }
 
-export class SetOfStopFinals extends SetOfSounds {
-    stopFinals = new Array<Final>();
+export class SetOfStopFinals extends SetOfSounds<Final> {
     constructor() {
         super();
-        this.stopFinals.push(new FinalP());
-        this.stopFinals.push(new FinalT());
-        this.stopFinals.push(new FinalK());
-        this.stopFinals.push(new FinalH());
-        this.stopFinals.push(new FinalPP());
-        this.stopFinals.push(new FinalTT());
-        this.stopFinals.push(new FinalKK());
-        this.stopFinals.push(new FinalHH());
-    }
-
-    toString() {
-        return super.toRegexString(this.stopFinals);
+        this.sounds.push(new FinalP());
+        this.sounds.push(new FinalT());
+        this.sounds.push(new FinalK());
+        this.sounds.push(new FinalH());
+        this.sounds.push(new FinalPP());
+        this.sounds.push(new FinalTT());
+        this.sounds.push(new FinalKK());
+        this.sounds.push(new FinalHH());
     }
 }
 
-export class Epenthesis extends SetOfSounds {
-    letters = new Array<Initial>();
+export class Epenthesis extends SetOfSounds<Initial> {
     constructor() {
         super();
-        this.letters.push(new InitialB());
-        this.letters.push(new InitialL());
-        this.letters.push(new InitialG());
-        this.letters.push(new InitialM());
-        this.letters.push(new InitialN());
-    }
-
-    toString() {
-        return super.toRegexString(this.letters);
+        this.sounds.push(new InitialB());
+        this.sounds.push(new InitialL());
+        this.sounds.push(new InitialG());
+        this.sounds.push(new InitialM());
+        this.sounds.push(new InitialN());
     }
 }
 
-export class EuphonicFinalsBGJKLPS extends SetOfSounds {
-    finals = new Array<Final>();
+export class EuphonicFinalsBGJKLPS extends SetOfSounds<Final> {
     constructor() {
         super();
-        this.finals.push(new FinalB());
-        this.finals.push(new FinalG());
-        this.finals.push(new FinalJ());
-        this.finals.push(new FinalK());
-        this.finals.push(new FinalL());
-        this.finals.push(new FinalP());
-        this.finals.push(new FinalS());
-    }
-
-    toString() {
-        return super.toRegexString(this.finals);
+        this.sounds.push(new FinalB());
+        this.sounds.push(new FinalG());
+        this.sounds.push(new FinalJ());
+        this.sounds.push(new FinalK());
+        this.sounds.push(new FinalL());
+        this.sounds.push(new FinalP());
+        this.sounds.push(new FinalS());
     }
 }
 
-export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds {
-    finals = new Array<Final>();
+export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds<Final> {
     constructor() {
         super();
-        this.finals.push(new FinalBB());
-        this.finals.push(new FinalGG());
-        this.finals.push(new FinalJJ());
-        this.finals.push(new FinalKK());
-        this.finals.push(new FinalLL());
-        this.finals.push(new FinalPP());
-        this.finals.push(new FinalSS());
-    }
-
-    toString() {
-        return super.toRegexString(this.finals);
+        this.sounds.push(new FinalBB());
+        this.sounds.push(new FinalGG());
+        this.sounds.push(new FinalJJ());
+        this.sounds.push(new FinalKK());
+        this.sounds.push(new FinalLL());
+        this.sounds.push(new FinalPP());
+        this.sounds.push(new FinalSS());
     }
 }
 
-export class EuphonicTonalF extends SetOfSounds {
-    checkedTonal = new Array<CheckedTonal>();
+export class EuphonicTonalF extends SetOfSounds<CheckedTonal> {
     constructor() {
         super();
-        this.checkedTonal.push(new CheckedTonalF());
-    }
-    
-    toString() {
-        return super.toRegexString(this.checkedTonal);
+        this.sounds.push(new CheckedTonalF());
     }
 }
 
-export class EuphonicTonalWAndX extends SetOfSounds {
-    checkedTonal = new Array<CheckedTonal>();
+export class EuphonicTonalWAndX extends SetOfSounds<CheckedTonal> {
     constructor() {
         super();
-        this.checkedTonal.push(new CheckedTonalW());
-        this.checkedTonal.push(new CheckedTonalX());
-    }
-    
-    toString() {
-        return super.toRegexString(this.checkedTonal);
+        this.sounds.push(new CheckedTonalW());
+        this.sounds.push(new CheckedTonalX());
     }
 }
 
-export class NeutralFinalH extends SetOfSounds {
-    final = new Array<StopFinal>();
+export class NeutralFinalH extends SetOfSounds<StopFinal> {
     constructor() {
         super();
-        this.final.push(new FinalH());
-    }
-    
-    toString() {
-        return super.toRegexString(this.final);
+        this.sounds.push(new FinalH());
     }
 }
 
-export class NeutralFinalHH extends SetOfSounds {
-    final = new Array<StopFinal>();
+export class NeutralFinalHH extends SetOfSounds<StopFinal> {
     constructor() {
         super();
-        this.final.push(new FinalHH());
-    }
-    
-    toString() {
-        return super.toRegexString(this.final);
+        this.sounds.push(new FinalHH());
     }
 }
 
