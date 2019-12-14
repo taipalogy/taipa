@@ -24,6 +24,7 @@ import {
     SetOfNasalFinals,
     NeutralFinalH,
     NeutralFinalHH,
+    SetOfMedials,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -117,7 +118,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const nf_h = new NeutralFinalH();
     const nf_hh = new NeutralFinalHH();
     const nfs = new SetOfNasalFinals();
-    const urs = freeAllomorphUncombiningRules;
+    const faurs = freeAllomorphUncombiningRules;
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -138,76 +139,81 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 Object.assign(matchedLtrs, ltrs);
             }
             break;
-        } else {
-            //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
+        } else if (sft.beginWith(letters[i].literal)) {
+            //console.log('i: %d', i)
 
-            if (i < letters.length && sft.beginWith(letters[i].literal)) {
-                //console.log('i: %d', i)
-
-                if(efs_bgjklps.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
-                    || efs_bbggjjkkllppss.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)
-                    ) {
+            if(efs_bgjklps.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
+                || efs_bbggjjkkllppss.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)
+                ) {
+                // euphonic change of t and tt
+                matched = literal;
+                begin = beginOfSyllable;
+                Object.assign(matchedLtrs, ltrs);
+                break;
+            } else if(literal.length > 2) {
+                if(nfs.beginWith(letters[i-2].literal) && nf_h.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
+                || nfs.beginWith(letters[i-2].literal) && nf_hh.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)) {
                     // euphonic change of t and tt
                     matched = literal;
                     begin = beginOfSyllable;
                     Object.assign(matchedLtrs, ltrs);
                     break;
-                } else if(literal.length > 2) {
-                    if(nfs.beginWith(letters[i-2].literal) && nf_h.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
-                    || nfs.beginWith(letters[i-2].literal) && nf_hh.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)) {
-                        // euphonic change of t and tt
+                }
+            }
+
+            const ts = faurs.get(letters[i].literal);
+            //console.log(ts)
+            if (ts.length > 0) {
+                for (let t of ts) {
+                    // check the lemmas
+                    const slicedLetters = letters.slice(beginOfSyllable, i);
+                    let lit = '';
+                    for (let i in slicedLetters) {
+                        lit = lit + slicedLetters[i].literal;
+                    }
+                    //console.log(lit + t.getLiteral())
+                    if (list_of_lexical_roots.includes(lit + t.getLiteral())) {
                         matched = literal;
                         begin = beginOfSyllable;
-                        Object.assign(matchedLtrs, ltrs);    
+                        Object.assign(matchedLtrs, ltrs);
+                        break;
                     }
                 }
-
-                const ts = urs.get(letters[i].literal);
-                //console.log(ts)
-                if (ts.length > 0) {
-                    for (let t of ts) {
-                        // check the lemmas
-                        const slicedLetters = letters.slice(beginOfSyllable, i);
-                        let lit = '';
-                        for (let i in slicedLetters) {
-                            lit = lit + slicedLetters[i].literal;
-                        }
-                        //console.log(lit + t.getLiteral())
-                        if (list_of_lexical_roots.includes(lit + t.getLiteral())) {
-                            matched = literal;
-                            begin = beginOfSyllable;
-                            Object.assign(matchedLtrs, ltrs);
-                            break;
-                        }
-                    }
-                    if (matched.length > 0 && matchedLtrs.length > 0) break;
-                } else {
-                    matched = '';
-                    matchedLtrs = [];
-                }
-            } else if (list_of_lexical_roots.includes(literal)) {
-                matched = literal;
-                Object.assign(matchedLtrs, ltrs);
-                begin = beginOfSyllable;
-                //console.log(matched)
+                if (matched.length > 0 && matchedLtrs.length > 0) break;
             } else {
-                //console.log('no matched for syllabifyTonal:' + ltrs)
-                if (!sft.beginWith(letters[i].literal)) {
-                    // free first tone without a free tonal
-                    const ts = urs.get(TonalLetterTags.zero);
-                    for (let t of ts) {
-                        // append second tonal letter
-                        if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
-                            // if the free first tone's lemma is included
-                            Object.assign(matchedLtrs, ltrs);
-                            break;
-                        }
+                matched = '';
+                matchedLtrs = [];
+            }
+        } else if (list_of_lexical_roots.includes(literal)) {
+            matched = literal;
+            Object.assign(matchedLtrs, ltrs);
+            begin = beginOfSyllable;
+            //console.log(matched)
+        } else {
+            //console.log('no matched for syllabifyTonal:' + ltrs)
+            if (!sft.beginWith(letters[i].literal)) {
+                // free first tone without a free tonal
+                const ts = faurs.get(TonalLetterTags.zero);
+                for (let t of ts) {
+                    // append second tonal letter
+                    // check the lemmas
+                    if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
+                        // if the free first tone's lemma is included
+                        Object.assign(matchedLtrs, ltrs);
+                        break;
                     }
                 }
-                // when there is no matched lexcial roots for this syllable, we still assign begin
-                begin = beginOfSyllable;
             }
+            // when there is no matched lexcial roots for this syllable, we still assign begin
+            begin = beginOfSyllable;
         }
+
+        /*
+        else {
+            //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
+
+        }
+        */
     }
 
     //console.log(`literal: ${literal}. matched: ${matched}`)

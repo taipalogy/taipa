@@ -289,22 +289,22 @@ export class ZeroTonal extends Tonal {
     characters = [];
 }
 
-export class TonalZ extends FreeTonal {
+export class FreeTonalZ extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.z);
 }
-export class TonalW extends FreeTonal {
+export class FreeTonalW extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.w);
 }
-export class TonalF extends FreeTonal {
+export class FreeTonalF extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.f);
 }
-export class TonalXX extends FreeTonal {
+export class FreeTonalXX extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.xx);
 }
-export class TonalXXX extends FreeTonal {
+export class FreeTonalXXX extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.xxx);
 }
-export class TonalZX extends FreeTonal {
+export class FreeTonalZX extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.zx);
 }
 
@@ -483,12 +483,12 @@ export class SetOfInitials extends SetOfSounds<Initial> {
 export class SetOfFreeTonals extends SetOfSounds<FreeTonal> {
     constructor() {
         super();
-        this.sounds.push(new TonalZ());
-        this.sounds.push(new TonalW());
-        this.sounds.push(new TonalXX());
-        this.sounds.push(new TonalXXX());
-        this.sounds.push(new TonalF());
-        this.sounds.push(new TonalZX());
+        this.sounds.push(new FreeTonalZ());
+        this.sounds.push(new FreeTonalW());
+        this.sounds.push(new FreeTonalXX());
+        this.sounds.push(new FreeTonalXXX());
+        this.sounds.push(new FreeTonalF());
+        this.sounds.push(new FreeTonalZX());
 
         this.sounds.push(new FreeTonalX());
         this.sounds.push(new FreeTonalY());
@@ -677,7 +677,7 @@ class PS_F extends PositionalSound {
         this.no = 2;
         this.map = new Map<string, Sound>()
             .set(TonalSoundTags.checkedTonal, new CheckedTonalF())
-            .set(TonalSoundTags.freeTonal, new TonalF());
+            .set(TonalSoundTags.freeTonal, new FreeTonalF());
     }
 }
 
@@ -946,7 +946,7 @@ class PS_W extends PositionalSound {
         this.name = TonalLetterTags.w;
         this.no = 2;
         this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.freeTonal, new TonalW())
+            .set(TonalSoundTags.freeTonal, new FreeTonalW())
             .set(TonalSoundTags.checkedTonal, new CheckedTonalW());
     }
 }
@@ -967,7 +967,7 @@ class PS_XX extends PositionalSound {
         super();
         this.name = TonalLetterTags.xx;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXX());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalXX());
     }
 }
 
@@ -976,7 +976,7 @@ class PS_XXX extends PositionalSound {
         super();
         this.name = TonalLetterTags.xxx;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalXXX());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalXXX());
     }
 }
 
@@ -996,7 +996,7 @@ class PS_Z extends PositionalSound {
         super();
         this.name = TonalLetterTags.z;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZ());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalZ());
     }
 }
 
@@ -1005,7 +1005,7 @@ class PS_ZX extends PositionalSound {
         super();
         this.name = TonalLetterTags.zx;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new TonalZX());
+        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalZX());
     }
 }
 
@@ -1122,11 +1122,11 @@ export class ZeroAllomorph extends FreeAllomorph {
 }
 
 class AllomorphF extends FreeAllomorph {
-    tonal = new TonalF();
+    tonal = new FreeTonalF();
 }
 
 class AllomorphZ extends FreeAllomorph {
-    tonal = new TonalZ();
+    tonal = new FreeTonalZ();
 }
 
 export class AllomorphY extends FreeAllomorph {
@@ -1134,7 +1134,7 @@ export class AllomorphY extends FreeAllomorph {
 }
 
 export class AllomorphW extends FreeAllomorph {
-    tonal = new TonalW();
+    tonal = new FreeTonalW();
 }
 
 export class AllomorphX extends FreeAllomorph {
@@ -1142,15 +1142,15 @@ export class AllomorphX extends FreeAllomorph {
 }
 
 class AllomorphXX extends FreeAllomorph {
-    tonal = new TonalXX();
+    tonal = new FreeTonalXX();
 }
 
 class AllomorphXXX extends FreeAllomorph {
-    tonal = new TonalXXX();
+    tonal = new FreeTonalXXX();
 }
 
 class AllomorphZX extends FreeAllomorph {
-    tonal = new TonalZX();
+    tonal = new FreeTonalZX();
 }
 
 class FreeAllomorphs {
@@ -1437,17 +1437,17 @@ class FreeAllomorphUncombiningRules {
     constructor() {
         this.o
             .set(new PS_F().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalY()])
-            .set(new PS_W().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new FreeTonalX()])
-            .set(new PS_XX().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new TonalF(), new FreeTonalX()])
-            .set(new PS_XXX().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalZ(), new TonalF(), new FreeTonalX()])
+            .set(new PS_W().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalX()])
+            .set(new PS_XX().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+            .set(new PS_XXX().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
             .set(new PS_Z().get(TonalSoundTags.freeTonal).getLiteral(), [
                 new FreeTonalX(),
-                new TonalF(),
+                new FreeTonalF(),
                 new ZeroTonal(),
             ])
             .set(new PS_ZX().get(TonalSoundTags.freeTonal).getLiteral(), [])
             .set(new PS_X().get(TonalSoundTags.freeTonal).getLiteral(), [])
-            .set(new PS_Y().get(TonalSoundTags.freeTonal).getLiteral(), [new TonalW()])
+            .set(new PS_Y().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalW()])
             .set(TonalLetterTags.zero, [new FreeTonalY()]);
     }
 
