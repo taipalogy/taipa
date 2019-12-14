@@ -67,7 +67,7 @@ export class ClientOfKanaGenerator {
 
     private convert(entry: string[]) {
         // convert strings in an entry to sounds
-        // ex: a.medial -> PSA.medial
+        // ex: a.medial -> PS_A.medial
         let ret: Array<Sound> = new Array();
         for (let i in entry) {
             let n = entry[i].lastIndexOf('.');
@@ -455,7 +455,7 @@ export class Hatsuon extends SetOfSounds<FinalConsonant> {
 
 //------------------------------------------------------------------------------
 
-class PSA extends PositionalSound {
+class PS_A extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.a;
@@ -464,7 +464,7 @@ class PSA extends PositionalSound {
     }
 }
 
-class PSB extends PositionalSound {
+class PS_B extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.b;
@@ -476,7 +476,7 @@ class PSB extends PositionalSound {
     }
 }
 
-class PSC extends PositionalSound {
+class PS_C extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.c;
@@ -487,7 +487,7 @@ class PSC extends PositionalSound {
     }
 }
 
-class PSCH extends PositionalSound {
+class PS_CH extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.ch;
@@ -496,7 +496,7 @@ class PSCH extends PositionalSound {
     }
 }
 
-class PSD extends PositionalSound {
+class PS_D extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.d;
@@ -508,7 +508,7 @@ class PSD extends PositionalSound {
     }
 }
 
-class PSE extends PositionalSound {
+class PS_E extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.e;
@@ -517,7 +517,7 @@ class PSE extends PositionalSound {
     }
 }
 
-class PSF extends PositionalSound {
+class PS_F extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.f;
@@ -526,7 +526,7 @@ class PSF extends PositionalSound {
     }
 }
 
-class PSG extends PositionalSound {
+class PS_G extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.g;
@@ -538,7 +538,7 @@ class PSG extends PositionalSound {
     }
 }
 
-class PSH extends PositionalSound {
+class PS_H extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.h;
@@ -547,7 +547,7 @@ class PSH extends PositionalSound {
     }
 }
 
-class PSI extends PositionalSound {
+class PS_I extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.i;
@@ -556,7 +556,7 @@ class PSI extends PositionalSound {
     }
 }
 
-class PSJ extends PositionalSound {
+class PS_J extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.j;
@@ -565,7 +565,7 @@ class PSJ extends PositionalSound {
     }
 }
 
-class PSK extends PositionalSound {
+class PS_K extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.k;
@@ -577,7 +577,7 @@ class PSK extends PositionalSound {
     }
 }
 
-class PSL extends PositionalSound {
+class PS_L extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.l;
@@ -586,7 +586,7 @@ class PSL extends PositionalSound {
     }
 }
 
-class PSM extends PositionalSound {
+class PS_M extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.m;
@@ -595,7 +595,7 @@ class PSM extends PositionalSound {
     }
 }
 
-class PSN extends PositionalSound {
+class PS_N extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.n;
@@ -606,7 +606,7 @@ class PSN extends PositionalSound {
     }
 }
 
-class PSO extends PositionalSound {
+class PS_O extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.o;
@@ -615,7 +615,7 @@ class PSO extends PositionalSound {
     }
 }
 
-class PSP extends PositionalSound {
+class PS_P extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.p;
@@ -627,7 +627,7 @@ class PSP extends PositionalSound {
     }
 }
 
-class PSR extends PositionalSound {
+class PS_R extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.r;
@@ -636,7 +636,7 @@ class PSR extends PositionalSound {
     }
 }
 
-class PSS extends PositionalSound {
+class PS_S extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.s;
@@ -648,7 +648,7 @@ class PSS extends PositionalSound {
     }
 }
 
-class PST extends PositionalSound {
+class PS_T extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.t;
@@ -660,7 +660,7 @@ class PST extends PositionalSound {
     }
 }
 
-class PSU extends PositionalSound {
+class PS_U extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.u;
@@ -669,7 +669,7 @@ class PSU extends PositionalSound {
     }
 }
 
-class PSV extends PositionalSound {
+class PS_V extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.v;
@@ -678,7 +678,7 @@ class PSV extends PositionalSound {
     }
 }
 
-class PSW extends PositionalSound {
+class PS_W extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.w;
@@ -687,7 +687,7 @@ class PSW extends PositionalSound {
     }
 }
 
-class PSY extends PositionalSound {
+class PS_Y extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.y;
@@ -696,7 +696,7 @@ class PSY extends PositionalSound {
     }
 }
 
-class PSZ extends PositionalSound {
+class PS_Z extends PositionalSound {
     constructor() {
         super();
         this.name = KanaLetterTags.z;
@@ -708,31 +708,31 @@ class PSZ extends PositionalSound {
 //------------------------------------------------------------------------------
 
 export const letterClasses: Map<string, PositionalSound> = new Map()
-    .set(KanaLetterTags.a, new PSA())
-    .set(KanaLetterTags.b, new PSB())
-    .set(KanaLetterTags.c, new PSC())
-    .set(KanaLetterTags.ch, new PSCH())
-    .set(KanaLetterTags.d, new PSD())
-    .set(KanaLetterTags.e, new PSE())
-    .set(KanaLetterTags.f, new PSF())
-    .set(KanaLetterTags.g, new PSG())
-    .set(KanaLetterTags.h, new PSH())
-    .set(KanaLetterTags.i, new PSI())
-    .set(KanaLetterTags.j, new PSJ())
-    .set(KanaLetterTags.k, new PSK())
-    .set(KanaLetterTags.l, new PSL())
-    .set(KanaLetterTags.m, new PSM())
-    .set(KanaLetterTags.n, new PSN())
-    .set(KanaLetterTags.o, new PSO())
-    .set(KanaLetterTags.p, new PSP())
-    .set(KanaLetterTags.r, new PSR())
-    .set(KanaLetterTags.s, new PSS())
-    .set(KanaLetterTags.t, new PST())
-    .set(KanaLetterTags.u, new PSU())
-    .set(KanaLetterTags.v, new PSV())
-    .set(KanaLetterTags.w, new PSW())
-    .set(KanaLetterTags.y, new PSY())
-    .set(KanaLetterTags.z, new PSZ());
+    .set(KanaLetterTags.a, new PS_A())
+    .set(KanaLetterTags.b, new PS_B())
+    .set(KanaLetterTags.c, new PS_C())
+    .set(KanaLetterTags.ch, new PS_CH())
+    .set(KanaLetterTags.d, new PS_D())
+    .set(KanaLetterTags.e, new PS_E())
+    .set(KanaLetterTags.f, new PS_F())
+    .set(KanaLetterTags.g, new PS_G())
+    .set(KanaLetterTags.h, new PS_H())
+    .set(KanaLetterTags.i, new PS_I())
+    .set(KanaLetterTags.j, new PS_J())
+    .set(KanaLetterTags.k, new PS_K())
+    .set(KanaLetterTags.l, new PS_L())
+    .set(KanaLetterTags.m, new PS_M())
+    .set(KanaLetterTags.n, new PS_N())
+    .set(KanaLetterTags.o, new PS_O())
+    .set(KanaLetterTags.p, new PS_P())
+    .set(KanaLetterTags.r, new PS_R())
+    .set(KanaLetterTags.s, new PS_S())
+    .set(KanaLetterTags.t, new PS_T())
+    .set(KanaLetterTags.u, new PS_U())
+    .set(KanaLetterTags.v, new PS_V())
+    .set(KanaLetterTags.w, new PS_W())
+    .set(KanaLetterTags.y, new PS_Y())
+    .set(KanaLetterTags.z, new PS_Z());
 
 //------------------------------------------------------------------------------
 
