@@ -139,33 +139,31 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 Object.assign(matchedLtrs, ltrs);
             }
             break;
-        } else if (sft.beginWith(letters[i].literal)) {
+        } else if(et_f.beginWith(letters[i].literal) && efs_bgjklps.beginWith(letters[i-1].literal)
+                || et_wx.beginWith(letters[i].literal) && efs_bbggjjkkllppss.beginWith(letters[i-1].literal)
+        ) {
+            // for euphonic change of t and tt.
+            // this combining form is not present in the pool.
+            matched = literal;
+            begin = beginOfSyllable;
+            Object.assign(matchedLtrs, ltrs);
+            break;
+        } else if(literal.length > 2 && et_f.beginWith(letters[i].literal) && nf_h.beginWith(letters[i-1].literal) && nfs.beginWith(letters[i-2].literal)
+                || literal.length > 2 && et_wx.beginWith(letters[i].literal) && nf_hh.beginWith(letters[i-1].literal) && nfs.beginWith(letters[i-2].literal)) {
+            // for euphonic change of t and tt.
+            // this combining form is not present in the pool.
+            matched = literal;
+            begin = beginOfSyllable;
+            Object.assign(matchedLtrs, ltrs);
+            break;
+        } if (sft.beginWith(letters[i].literal)) {
             //console.log('i: %d', i)
-
-            if(efs_bgjklps.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
-                || efs_bbggjjkkllppss.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)
-                ) {
-                // euphonic change of t and tt
-                matched = literal;
-                begin = beginOfSyllable;
-                Object.assign(matchedLtrs, ltrs);
-                break;
-            } else if(literal.length > 2) {
-                if(nfs.beginWith(letters[i-2].literal) && nf_h.beginWith(letters[i-1].literal) && et_f.beginWith(letters[i].literal)
-                || nfs.beginWith(letters[i-2].literal) && nf_hh.beginWith(letters[i-1].literal) && et_wx.beginWith(letters[i].literal)) {
-                    // euphonic change of t and tt
-                    matched = literal;
-                    begin = beginOfSyllable;
-                    Object.assign(matchedLtrs, ltrs);
-                    break;
-                }
-            }
+            //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
             const ts = faurs.get(letters[i].literal);
             //console.log(ts)
             if (ts.length > 0) {
                 for (let t of ts) {
-                    // check the lemmas
                     const slicedLetters = letters.slice(beginOfSyllable, i);
                     let lit = '';
                     for (let i in slicedLetters) {
@@ -173,6 +171,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                     }
                     //console.log(lit + t.getLiteral())
                     if (list_of_lexical_roots.includes(lit + t.getLiteral())) {
+                        // this combining form is not present in the pool,
+                        // but its uncombining forms are. e.g. aw.
                         matched = literal;
                         begin = beginOfSyllable;
                         Object.assign(matchedLtrs, ltrs);
@@ -181,6 +181,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 }
                 if (matched.length > 0 && matchedLtrs.length > 0) break;
             } else {
+                // no uncombining forms for this combining form. e.g. ax.
                 matched = '';
                 matchedLtrs = [];
             }
@@ -196,7 +197,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 const ts = faurs.get(TonalLetterTags.zero);
                 for (let t of ts) {
                     // append second tonal letter
-                    // check the lemmas
+                    // check the uncombining forms
                     if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
                         // if the free first tone's lemma is included
                         Object.assign(matchedLtrs, ltrs);
@@ -208,12 +209,6 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             begin = beginOfSyllable;
         }
 
-        /*
-        else {
-            //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
-
-        }
-        */
     }
 
     //console.log(`literal: ${literal}. matched: ${matched}`)
