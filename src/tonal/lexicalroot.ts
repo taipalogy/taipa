@@ -1,4 +1,4 @@
-import { Sound } from '../grapheme';
+import { Sound, SetOfSounds } from '../grapheme';
 import {
     SetOfMaterLectionis,
     SetOfMedials,
@@ -18,6 +18,139 @@ import {
     EuphonicFinalsBBGGJJKKLLPPSS,
     EuphonicTonalWAndX,
 } from './version2';
+
+const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
+
+class SoundGeneration {
+    letters: string[] = [];
+    sounds = new Array<Sound>();
+}
+
+function initialConsonant(sg: SoundGeneration) {
+    const sis = new SetOfInitials();
+
+    if(sis.beginWith(sg.letters[sg.sounds.length])) {
+        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        if(ps) {
+            const s = ps.map.get(TonalSoundTags.initial);
+            if(s)
+                sg.sounds.push(s)
+        }
+    }
+
+    return sg;
+}
+
+function stopFinalConsonant(sg: SoundGeneration) {
+    const ssfcs = new SetOfStopFinals();
+
+    if(ssfcs.beginWith(sg.letters[sg.sounds.length])) {
+        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        if(ps) {
+            const s = ps.map.get(TonalSoundTags.stopFinal);
+            if(s)
+                sg.sounds.push(s)
+        }
+    }
+
+    return sg;
+}
+
+function vowel(sg: SoundGeneration) {
+    const sms = new SetOfMedials();
+
+    for(let i = 0 + sg.sounds.length; i < sg.letters.length; i++) {
+        if(sms.beginWith(sg.letters[i])) {
+            const ps = letterClasses.get(sg.letters[i]);
+            if(ps) {
+                const s = ps.map.get(TonalSoundTags.medial);
+                if(s)
+                    sg.sounds.push(s)
+            }
+        } else break;
+    }
+        
+    return sg;
+}
+
+function materLectionis(sg: SoundGeneration) {
+    const sml = new SetOfMaterLectionis();
+
+    if(sml.beginWith(sg.letters[sg.sounds.length])) {
+        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        if(ps) {
+            const s = ps.map.get(TonalSoundTags.medial);
+            if(s)
+                sg.sounds.push(s)
+        }
+    }
+
+    return sg;
+}
+
+function nasalization(sg: SoundGeneration) {
+    const sns = new SetOfNasalizations();
+
+    if(sns.beginWith(sg.letters[sg.sounds.length])) {
+        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        if(ps) {
+            const s = ps.map.get(TonalSoundTags.nasalization);
+            if(s)
+                sg.sounds.push(s)
+        }
+    }
+
+    return sg;
+}
+
+function tone(sg: SoundGeneration) {
+    const sfts = new SetOfFreeTonals();
+
+    if(sfts.beginWith(sg.letters[sg.sounds.length])) {
+        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        if(ps) {
+            const s = ps.map.get(TonalSoundTags.freeTonal);
+            if(s)
+                sg.sounds.push(s)
+        }
+    }
+
+    return sg;
+}
+
+
+const sc_v = pipe(vowel);
+const sc_cv = pipe(initialConsonant, vowel);
+const sc_m = pipe(materLectionis);
+const sc_mt = pipe(materLectionis, tone);
+const sc_cvt = pipe(initialConsonant, vowel, tone);
+const sc_cvct = pipe(initialConsonant, vowel, stopFinalConsonant, tone);
+/*
+const _oai = new SoundGeneration();
+_oai.letters = ['o', 'a', 'i'];
+const _qoai = new SoundGeneration();
+_qoai.letters = ['q', 'o', 'a', 'i'];
+const _qoaiw = new SoundGeneration();
+_qoaiw.letters = ['q', 'o', 'a', 'i', 'w'];
+
+sc_v(_oai);
+sc_cv(_qoai);
+sc_cvt(_qoaiw);
+*/
+export class TonalSoundGenerator {
+    generate(letters: string[]): Sound[][] {
+        let strs: Array<string[]> = new Array();
+        let sequences: Array<Sound[]> = new Array(); // to be returned
+
+        let sg = new SoundGeneration();
+        sg.letters = letters;
+        sg = sc_cvt(sg);
+        sequences.push(sg.sounds);
+
+        //console.log(sequences)
+        return sequences;
+    }
+}
 
 export class ClientOfTonalGenerator {
     private analyzeAfterNasalFinalsOrNasalization(ls: string[], sounds: string[], index: number): string[] {

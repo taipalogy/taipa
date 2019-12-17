@@ -28,7 +28,7 @@ import {
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
-import { ClientOfTonalGenerator } from './lexicalroot';
+import { ClientOfTonalGenerator, TonalSoundGenerator } from './lexicalroot';
 import { list_of_lexical_roots } from './lexicalroots2';
 
 //------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             begin = beginOfSyllable;
             Object.assign(matchedLtrs, ltrs);
             break;
-        } if (sft.beginWith(letters[i].literal)) {
+        } else if (sft.beginWith(letters[i].literal)) {
             //console.log('i: %d', i)
             //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
@@ -223,11 +223,14 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
 
     //console.log('matched: ' + matched)
     const cog = new ClientOfTonalGenerator();
+    //const tsg = new TonalSoundGenerator();
     //console.log('matched: ' + matched)
     let list: Array<Sound[]> = new Array();
 
-    if (matched.length > 0) list = cog.generate(matchedLtrs);
-    else if (matched.length == 0 && matchedLtrs.length > 0) {
+    if (matched.length > 0) {
+        list = cog.generate(matchedLtrs);
+        //list = tsg.generate(matchedLtrs);
+    } else if (matched.length == 0 && matchedLtrs.length > 0) {
         // free first tone without a free tonal
         list = cog.generate(matchedLtrs);
     } else {
