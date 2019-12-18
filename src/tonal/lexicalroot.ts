@@ -24,6 +24,7 @@ const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: So
 class SoundGeneration {
     letters: string[] = [];
     sounds = new Array<Sound>();
+    bool: boolean = true;
 }
 
 function initialConsonant(sg: SoundGeneration) {
@@ -36,7 +37,7 @@ function initialConsonant(sg: SoundGeneration) {
             if(s)
                 sg.sounds.push(s)
         }
-    }
+    } else sg.bool = false;
 
     return sg;
 }
@@ -59,15 +60,20 @@ function stopFinalConsonant(sg: SoundGeneration) {
 function vowel(sg: SoundGeneration) {
     const sms = new SetOfMedials();
 
-    for(let i = 0 + sg.sounds.length; i < sg.letters.length; i++) {
+    let matches: number = 0;
+    for(let i = sg.sounds.length; i < sg.letters.length; i++) {
         if(sms.beginWith(sg.letters[i])) {
             const ps = letterClasses.get(sg.letters[i]);
             if(ps) {
                 const s = ps.map.get(TonalSoundTags.medial);
+                matches++;
                 if(s)
                     sg.sounds.push(s)
             }
-        } else break;
+        } else {
+            if(matches == 0) sg.bool = false;
+            break;
+        }
     }
         
     return sg;
@@ -103,7 +109,7 @@ function nasalization(sg: SoundGeneration) {
     return sg;
 }
 
-function tone(sg: SoundGeneration) {
+function freeTone(sg: SoundGeneration) {
     const sfts = new SetOfFreeTonals();
 
     if(sfts.beginWith(sg.letters[sg.sounds.length])) {
@@ -118,36 +124,51 @@ function tone(sg: SoundGeneration) {
     return sg;
 }
 
+function checkedTone(sg: SoundGeneration) {
+    const scts = new SetOfCheckedTonals();
+
+    if(scts.beginWith(sg.letters[sg.sounds.length])) {
+        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        if(ps) {
+            const s = ps.map.get(TonalSoundTags.checkedTonal);
+            if(s)
+                sg.sounds.push(s)
+        }
+    }
+
+    return sg;
+}
 
 const sc_v = pipe(vowel);
-const sc_cv = pipe(initialConsonant, vowel);
 const sc_m = pipe(materLectionis);
-const sc_mt = pipe(materLectionis, tone);
-const sc_cvt = pipe(initialConsonant, vowel, tone);
-const sc_cvct = pipe(initialConsonant, vowel, stopFinalConsonant, tone);
-/*
-const _oai = new SoundGeneration();
-_oai.letters = ['o', 'a', 'i'];
-const _qoai = new SoundGeneration();
-_qoai.letters = ['q', 'o', 'a', 'i'];
-const _qoaiw = new SoundGeneration();
-_qoaiw.letters = ['q', 'o', 'a', 'i', 'w'];
 
-sc_v(_oai);
-sc_cv(_qoai);
-sc_cvt(_qoaiw);
-*/
+const sc_vt = pipe(vowel, freeTone);
+const sc_cv = pipe(initialConsonant, vowel);
+const sc_mt = pipe(materLectionis, freeTone);
+
+const sc_cvt = pipe(initialConsonant, vowel, freeTone);
+const sc_cvc = pipe(initialConsonant, vowel, stopFinalConsonant);
+
+const sc_cvct = pipe(initialConsonant, vowel, stopFinalConsonant, checkedTone);
+
 export class TonalSoundGenerator {
+    readonly sylCompositions = [sc_v, sc_m, sc_cv, sc_vt, sc_mt, sc_cvt, sc_cvc];
     generate(letters: string[]): Sound[][] {
         let strs: Array<string[]> = new Array();
         let sequences: Array<Sound[]> = new Array(); // to be returned
 
-        let sg = new SoundGeneration();
-        sg.letters = letters;
-        sg = sc_cvt(sg);
-        sequences.push(sg.sounds);
+        for(let i = 0; i < this.sylCompositions.length; i++) {
+            let sg = new SoundGeneration();
+            sg.letters = letters;    
+            console.log(`i: ${i}`)
+            sg = this.sylCompositions[i](sg);
+            if(sg.letters.length == sg.sounds.length && sg.bool == true) {
+                sequences.push(sg.sounds);
+                break;
+            }
+        }
 
-        //console.log(sequences)
+        console.log(sequences)
         return sequences;
     }
 }
