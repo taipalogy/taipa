@@ -20,11 +20,9 @@ import {
     EuphonicFinalsBBGGJJKKLLPPSS,
     EuphonicTonalF,
     EuphonicTonalsWAndX,
-    SetOfNeutralFinals,
     SetOfNasalFinals,
     NeutralFinalH,
     NeutralFinalHH,
-    SetOfMedials,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -101,6 +99,15 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 //  syllabifyTonal
 //------------------------------------------------------------------------------
 
+function slice(letters: Array<AlphabeticLetter>, beginOfSyllable: number, i: number) {
+    const slicedLetters = letters.slice(beginOfSyllable, i);
+    let lit = '';
+    for (let i in slicedLetters) {
+        lit = lit + slicedLetters[i].literal;
+    }
+    return lit;
+}
+
 export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
     // get the longest matched syllable pattern
 
@@ -111,7 +118,6 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals();
-    const sm = new SetOfMedials();
     const efs_bgjklps = new EuphonicFinalsBGJKLPS();
     const et_f = new EuphonicTonalF();
     const efs_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
@@ -145,7 +151,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             // for euphonic change of t and tt.
             // this combining form is not present in the pool.
             matched = literal;
-            begin = beginOfSyllable;
+            //begin = beginOfSyllable;
             Object.assign(matchedLtrs, ltrs);
             break;
         } else if(literal.length > 2 && et_f.beginWith(letters[i].literal) && nf_h.beginWith(letters[i-1].literal) && nfs.beginWith(letters[i-2].literal)
@@ -153,7 +159,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             // for euphonic change of t and tt.
             // this combining form is not present in the pool.
             matched = literal;
-            begin = beginOfSyllable;
+            //begin = beginOfSyllable;
             Object.assign(matchedLtrs, ltrs);
             break;
         } else if (sft.beginWith(letters[i].literal)) {
@@ -164,17 +170,13 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             //console.log(ts)
             if (ts.length > 0) {
                 for (let t of ts) {
-                    const slicedLetters = letters.slice(beginOfSyllable, i);
-                    let lit = '';
-                    for (let i in slicedLetters) {
-                        lit = lit + slicedLetters[i].literal;
-                    }
+                    const sliced = slice(letters, beginOfSyllable, i);
                     //console.log(lit + t.getLiteral())
-                    if (list_of_lexical_roots.includes(lit + t.getLiteral())) {
+                    if (list_of_lexical_roots.includes(sliced + t.getLiteral())) {
                         // this combining form is not present in the pool,
                         // but its uncombining forms are. e.g. aw.
                         matched = literal;
-                        begin = beginOfSyllable;
+                        //begin = beginOfSyllable;
                         Object.assign(matchedLtrs, ltrs);
                         break;
                     }
@@ -192,7 +194,16 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             //console.log(matched)
         } else {
             //console.log('no matched for syllabifyTonal:' + ltrs)
+            
+            const sliced = slice(letters, beginOfSyllable, i);
 
+            if(efs_bgjklps.beginWith(letters[i].literal) && list_of_lexical_roots.includes(sliced + TonalLetterTags.t)
+                || efs_bbggjjkkllppss.beginWith(letters[i].literal) && list_of_lexical_roots.includes(sliced + TonalLetterTags.tt)) {
+                // for euphonic change of t and tt.
+                // this combining form is not present in the pool.
+                matched = literal;
+                Object.assign(matchedLtrs, ltrs);
+            } else 
             if (!sft.beginWith(letters[i].literal)) {
                 // free first tone without a free tonal
                 const ts = faurs.get(TonalLetterTags.zero);
@@ -201,6 +212,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                     // check the uncombining forms
                     if (list_of_lexical_roots.includes(literal + t.getLiteral())) {
                         // if the free first tone's lemma is included
+                        matched = literal;
                         Object.assign(matchedLtrs, ltrs);
                         break;
                     }
@@ -224,15 +236,11 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     }
 
     //console.log('matched: ' + matched)
-    //const cog = new ClientOfTonalGenerator();
     const tsg = new TonalSoundGenerator();
     //console.log('matched: ' + matched)
     let list: Array<Sound[]> = new Array();
 
     if (matched.length > 0) {
-        list = tsg.generate(matchedLtrs);
-    } else if (matched.length == 0 && matchedLtrs.length > 0) {
-        // free first tone without a free tonal
         list = tsg.generate(matchedLtrs);
     } else {
         if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {

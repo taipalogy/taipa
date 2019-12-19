@@ -446,17 +446,6 @@ describe("Tonal testing", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
-    doc = cli.processTonal('ennhhw');
-
-    test("check the syllable composition. vnct.", () => {
-        expect(doc.word.literal).toEqual('ennhhw');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
     doc = cli.processTonal('hiannh');
 
     test("check the syllable composition. cvnc.", () => {

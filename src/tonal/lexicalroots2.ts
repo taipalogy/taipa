@@ -6,6 +6,8 @@ const to_be_verified = [
 
     'jih', 'jirnx', 'jirtt',
 
+    'langh',
+
     'na',
 ]
 
@@ -23,7 +25,7 @@ const list_of_new_lexical_roots = [
 	
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+    'laih', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mnghh',
 
@@ -31,7 +33,7 @@ const list_of_new_lexical_roots = [
 
     'oehh',
 
-    'simh',
+    'sangh', 'simh',
 
     'tom', 'tomz',
 

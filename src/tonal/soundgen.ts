@@ -214,14 +214,14 @@ const sc_vnt = pipe(vowel, nasalization, freeTone);
 const sc_cvn = pipe(initialConsonant, vowel, nasalization);
 const sc_cvnt = pipe(initialConsonant, vowel, nasalization, freeTone);
 //const sc_vnc = pipe(vowel, nasalization, neutralFinalConsonant);
-const sc_vnct = pipe(vowel, nasalization, neutralFinalConsonant, checkedTone);
+//const sc_vnct = pipe(vowel, nasalization, neutralFinalConsonant, checkedTone);
 const sc_cvnc = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant);
 const sc_cvnct = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant, checkedTone);
 
 // euphonic syllables
-//const sc_vc3 = pipe(vowel, euphonicFinalConsonant);
+const sc_vc3 = pipe(vowel, euphonicFinalConsonant);
 const sc_vct3 = pipe(vowel, euphonicFinalConsonant, checkedTone);
-//const sc_cvc3 = pipe(initialConsonant, vowel, euphonicFinalConsonant);
+const sc_cvc3 = pipe(initialConsonant, vowel, euphonicFinalConsonant);
 const sc_cvct3 = pipe(initialConsonant, vowel, euphonicFinalConsonant, checkedTone);
 const sc_cvcct = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
 
@@ -229,8 +229,8 @@ export class TonalSoundGenerator {
     // syllable compositions
     readonly sylCompositions = [sc_v, sc_m, sc_vt, sc_mt, sc_cv, sc_vc1, sc_vc2, sc_vct1, sc_vct2, sc_cvt, sc_cvc1, sc_cvc2, sc_cvct1, sc_cvct2,
                                 sc_cc, sc_cct, sc_ccc, sc_ccct,
-                                sc_vn, sc_vnt, sc_cvn, sc_cvnt, sc_vnct, sc_cvnc, sc_cvnct,
-                                sc_vct3, sc_cvct3, sc_cvcct];
+                                sc_vn, sc_vnt, sc_cvn, sc_cvnt, sc_cvnc, sc_cvnct,
+                                sc_vc3, sc_vct3, sc_cvc3, sc_cvct3, sc_cvcct];
 
     private isStopFinal(str: string) {
         if (new SetOfStopFinals().beginWith(str)) return true;

@@ -265,28 +265,10 @@ export class Sound {
 export class SetOfSounds<T extends Sound> {
     sounds = new Array<T>();
     beginWith(str: string) {
-        if (str.search(new RegExp(this.toString())) == 0) return true;
-        return false;
-    }
-
-    private toRegexString(elements: Array<Sound>) {
-        let str = '';
-        for (let i = 0; i < elements.length; i++) {
-            if (i + 1 < elements.length) {
-                for (let k in elements[i].characters) {
-                    str += elements[i].characters[k].character;
-                }
-                str += '|';
-            } else if (i + 1 == elements.length) {
-                for (let k in elements[i].characters) {
-                    str += elements[i].characters[k].character;
-                }
-            }
+        for(let i in this.sounds) {
+            if (str.search(this.sounds[i].getLiteral()) == 0 
+                && str.length == this.sounds[i].getLiteral().length) return true;
         }
-        return str;
-    }
-
-    toString() {
-        return this.toRegexString(this.sounds);
+        return false;
     }
 }
