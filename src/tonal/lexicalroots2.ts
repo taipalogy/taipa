@@ -23,11 +23,15 @@ const list_of_new_lexical_roots = [
 	
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'lirey', 'lih', 'lit', 'loaih', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mnghh',
 
     'n',
+
+    'oehh',
+
+    'simh',
 
     'tom', 'tomz',
 

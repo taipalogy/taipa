@@ -19,7 +19,7 @@ import {
     EuphonicFinalsBGJKLPS,
     EuphonicFinalsBBGGJJKKLLPPSS,
     EuphonicTonalF,
-    EuphonicTonalWAndX,
+    EuphonicTonalsWAndX,
     SetOfNeutralFinals,
     SetOfNasalFinals,
     NeutralFinalH,
@@ -28,7 +28,7 @@ import {
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
-import { ClientOfTonalGenerator, TonalSoundGenerator } from './lexicalroot';
+import { TonalSoundGenerator } from './soundgen';
 import { list_of_lexical_roots } from './lexicalroots2';
 
 //------------------------------------------------------------------------------
@@ -111,10 +111,11 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals();
+    const sm = new SetOfMedials();
     const efs_bgjklps = new EuphonicFinalsBGJKLPS();
     const et_f = new EuphonicTonalF();
     const efs_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
-    const et_wx = new EuphonicTonalWAndX();
+    const et_wx = new EuphonicTonalsWAndX();
     const nf_h = new NeutralFinalH();
     const nf_hh = new NeutralFinalHH();
     const nfs = new SetOfNasalFinals();
@@ -140,8 +141,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
             break;
         } else if(et_f.beginWith(letters[i].literal) && efs_bgjklps.beginWith(letters[i-1].literal)
-                || et_wx.beginWith(letters[i].literal) && efs_bbggjjkkllppss.beginWith(letters[i-1].literal)
-        ) {
+                || et_wx.beginWith(letters[i].literal) && efs_bbggjjkkllppss.beginWith(letters[i-1].literal)) {
             // for euphonic change of t and tt.
             // this combining form is not present in the pool.
             matched = literal;
@@ -192,6 +192,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             //console.log(matched)
         } else {
             //console.log('no matched for syllabifyTonal:' + ltrs)
+
             if (!sft.beginWith(letters[i].literal)) {
                 // free first tone without a free tonal
                 const ts = faurs.get(TonalLetterTags.zero);
@@ -205,6 +206,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                     }
                 }
             }
+
             // when there is no matched lexcial roots for this syllable, we still assign begin
             begin = beginOfSyllable;
         }
@@ -222,17 +224,16 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     }
 
     //console.log('matched: ' + matched)
-    const cog = new ClientOfTonalGenerator();
-    //const tsg = new TonalSoundGenerator();
+    //const cog = new ClientOfTonalGenerator();
+    const tsg = new TonalSoundGenerator();
     //console.log('matched: ' + matched)
     let list: Array<Sound[]> = new Array();
 
     if (matched.length > 0) {
-        list = cog.generate(matchedLtrs);
-        //list = tsg.generate(matchedLtrs);
+        list = tsg.generate(matchedLtrs);
     } else if (matched.length == 0 && matchedLtrs.length > 0) {
         // free first tone without a free tonal
-        list = cog.generate(matchedLtrs);
+        list = tsg.generate(matchedLtrs);
     } else {
         if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
             const ep = new Epenthesis();
@@ -240,7 +241,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             const done = rea.applyToString(literal);
             //console.log(done.toString())
             if (ep.beginWith(ltrs[0]) && list_of_lexical_roots.includes(done)) {
-                list = cog.generate(ltrs);
+                list = tsg.generate(ltrs);
             }
         }
     }

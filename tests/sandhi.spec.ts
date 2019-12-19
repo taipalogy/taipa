@@ -17,7 +17,7 @@ describe("Epenthesis testing", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
-    doc = cli.processTonal('jioggxgay');
+    doc = cli.processTonal('jiokkxgay');
 
     test("check the consonant", () => {
         expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.g);
@@ -28,7 +28,7 @@ describe("Epenthesis testing", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
-    doc = cli.processTonal('qabfbay');
+    doc = cli.processTonal('qapfbay');
 
     test("check the consonant", () => {
         expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.b);

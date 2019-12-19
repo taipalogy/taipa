@@ -581,7 +581,7 @@ export class EuphonicTonalF extends SetOfSounds<CheckedTonal> {
     }
 }
 
-export class EuphonicTonalWAndX extends SetOfSounds<CheckedTonal> {
+export class EuphonicTonalsWAndX extends SetOfSounds<CheckedTonal> {
     constructor() {
         super();
         this.sounds.push(new CheckedTonalW());
