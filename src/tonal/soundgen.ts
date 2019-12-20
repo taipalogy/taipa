@@ -40,6 +40,8 @@ function initialConsonant(sg: SoundGeneration) {
 }
 
 function stopFinalConsonant(sg: SoundGeneration) {
+    if(!sg.bool) return sg;
+
     const ssfs = new SetOfStopFinals();
 
     if(ssfs.beginWith(sg.letters[sg.sounds.length])) {
@@ -70,6 +72,8 @@ function neutralFinalConsonant(sg: SoundGeneration) {
 }
 
 function nasalFinalConsonant(sg: SoundGeneration) {
+    if(!sg.bool) return sg;
+
     const snfs = new SetOfNasalFinals();
 
     if(snfs.beginWith(sg.letters[sg.sounds.length])) {
@@ -116,12 +120,14 @@ function materLectionis(sg: SoundGeneration) {
             if(s)
                 sg.sounds.push(s)
         }
-    }
+    } else sg.bool = false;
 
     return sg;
 }
 
 function nasalization(sg: SoundGeneration) {
+    if(!sg.bool) return sg;
+
     const sns = new SetOfNasalizations();
 
     if(sns.beginWith(sg.letters[sg.sounds.length])) {
@@ -154,6 +160,8 @@ function freeTone(sg: SoundGeneration) {
 }
 
 function checkedTone(sg: SoundGeneration) {
+    if(!sg.bool) return sg;
+
     const scts = new SetOfCheckedTonals();
 
     if(scts.beginWith(sg.letters[sg.sounds.length])) {
@@ -169,6 +177,8 @@ function checkedTone(sg: SoundGeneration) {
 }
 
 function euphonicFinalConsonant(sg: SoundGeneration) {
+    if(!sg.bool) return sg;
+
     const ef_bgjklps = new EuphonicFinalsBGJKLPS();
     const ef_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
 
@@ -190,6 +200,7 @@ const sc_v = pipe(vowel);
 const sc_m = pipe(materLectionis);
 const sc_vt = pipe(vowel, freeTone);
 const sc_mt = pipe(materLectionis, freeTone);
+//const sc_mc = pipe(materLectionis, neutralFinalConsonant);
 const sc_cv = pipe(initialConsonant, vowel);
 const sc_vc1 = pipe(vowel, stopFinalConsonant);
 const sc_vc2 = pipe(vowel, nasalFinalConsonant);

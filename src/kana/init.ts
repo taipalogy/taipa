@@ -69,7 +69,7 @@ export class Kana extends AnalyzerWrapper {
                         previous[previous.length - 1],
                         e.syllable.literal[e.syllable.literal.length - 1],
                     ) &&
-                    new SetOfInitialConsonants().beginWith(e.syllable.literal) == false
+                    new SetOfInitialConsonants().beginWith(e.syllable.literal.slice(0, e.syllable.literal.length-1)) == false
                 ) {
                     kana_compositions[2] += 'ー';
                 } else {
