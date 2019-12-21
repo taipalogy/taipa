@@ -27,13 +27,15 @@ const list_of_new_lexical_roots = [
 
     'laih', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
-    'mnghh',
+    'mah', 'mnghh',
 
     'n',
 
+    'qanh', 'qngh',
+
     'oehh',
 
-    'sangh', 'simh',
+    'sangh', 'sennh', 'sienh', 'simh', 'sinnh',
 
     'tom', 'tomz',
 
@@ -228,7 +230,7 @@ export const list_of_lexical_roots = [
     'quiz', 'qun', 'quny', 'qunw', 'qunx', 'qunz', 'qut', 'qutt',
 
     'sa', 'say', 'saw', 'sah', 'sahh', 'sai', 'saiy', 'saiw', 'saix', 'saiz', 'sak', 'sam', 'samy', 'samw', 'samx', 'san', 'sany',
-    'sanw', 'sang', 'sangy', 'sangw', 'sann', 'sannh', 'sap', 'sat', 'sau', 'sauy', 'se', 'sey', 'sew', 'sex', 'seh', 'sehh', 'senn',
+    'sanw', 'sang', 'sangy', 'sangw', 'sann', 'sannh', 'sap', 'sat', 'sau', 'sauw', 'se', 'sey', 'sew', 'sex', 'seh', 'sehh', 'senn',
     'senny', 'sennw', 'si', 'siy', 'siw', 'six', 'siz', 'sia', 'siay', 'siaw', 'siax', 'siaz', 'siah', 'siahh', 'siak', 'siam',
     'siamy', 'siamw', 'siamx', 'sien', 'sieny', 'sienw', 'sienx', 'sienz', 'siang', 'siangy', 'siangw', 'siangx', 'siangz',
     'siann', 'sianny', 'siannw', 'siannx', 'siannz', 'siap', 'siapp', 'siet', 'siett', 'siau', 'siauy', 'siauw', 'siaux', 'siauz',

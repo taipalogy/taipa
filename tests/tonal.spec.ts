@@ -173,7 +173,18 @@ describe("Tonal testing", () => {
 
     doc = cli.processTonal('ax');
 
-    test("check the tonal affix", () => {
+    test("check if it is present", () => {
+        expect(doc.word.literal).toEqual('');
+    });
+});
+
+describe("Tonal testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processTonal('soaiw');
+
+    test("check if it is present. 5 letters in length", () => {
         expect(doc.word.literal).toEqual('');
     });
 });

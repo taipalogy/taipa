@@ -574,14 +574,14 @@ export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds<Final> {
     }
 }
 
-export class EuphonicTonalF extends SetOfSounds<CheckedTonal> {
+export class FirstTonalF extends SetOfSounds<CheckedTonal> {
     constructor() {
         super();
         this.sounds.push(new CheckedTonalF());
     }
 }
 
-export class EuphonicTonalsWAndX extends SetOfSounds<CheckedTonal> {
+export class ThirdFifthTonalsWX extends SetOfSounds<CheckedTonal> {
     constructor() {
         super();
         this.sounds.push(new CheckedTonalW());

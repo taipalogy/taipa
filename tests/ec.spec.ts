@@ -171,6 +171,17 @@ describe("Euphonic change testing, stop final, checked tonal", () => {
     const cli = new Client()
     let doc = new TokenAnalysis()
 
+    doc = cli.processTonal('chigg');
+
+    test("check the stop final", () => {
+        expect(doc.soundSequences[0][2].getLiteral()).toEqual(TonalLetterTags.gg);
+    });
+});
+
+describe("Euphonic change testing, stop final, checked tonal", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
     doc = cli.processTonal('callxlay');
 
     test("check the stop final", () => {
