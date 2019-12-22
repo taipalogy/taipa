@@ -73,7 +73,7 @@ export class ClientOfKanaGenerator {
             let n = entry[i].lastIndexOf('.');
             let clasName = entry[i].slice(0, n);
             let position = entry[i].slice(n + 1);
-            let ps = letterClasses.get(clasName);
+            let ps = kanaPositionalSound.get(clasName);
             if (ps) {
                 let snd = ps.map.get(position);
                 if (snd) {
@@ -295,6 +295,11 @@ class InitialConsonantT extends InitialConsonant {
 class InitialConsonantV extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.v);
 }
+/*
+class InitialConsonantW extends InitialConsonant {
+    characters = this.makeCharacters(KanaLetterTags.w);
+}
+*/
 class InitialConsonantZ extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.z);
 }
@@ -395,6 +400,7 @@ export class SetOfInitialConsonants extends SetOfSounds<InitialConsonant> {
         this.sounds.push(new InitialConsonantS());
         this.sounds.push(new InitialConsonantT());
         this.sounds.push(new InitialConsonantV());
+        //this.sounds.push(new InitialConsonantW());
         this.sounds.push(new InitialConsonantZ());
     }
 }
@@ -683,7 +689,10 @@ class PS_W extends PositionalSound {
         super();
         this.name = KanaLetterTags.w;
         this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.semivowel, new SemivowelW());
+        //this.no = 2;
+        this.map = new Map<string, Sound>()
+            .set(KanaSoundTags.semivowel, new SemivowelW())
+            //.set(KanaSoundTags.initialConsonant, new InitialConsonantW());
     }
 }
 
@@ -707,7 +716,7 @@ class PS_Z extends PositionalSound {
 
 //------------------------------------------------------------------------------
 
-export const letterClasses: Map<string, PositionalSound> = new Map()
+export const kanaPositionalSound: Map<string, PositionalSound> = new Map()
     .set(KanaLetterTags.a, new PS_A())
     .set(KanaLetterTags.b, new PS_B())
     .set(KanaLetterTags.c, new PS_C())

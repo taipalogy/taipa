@@ -1072,7 +1072,7 @@ class CombiningRules {
 
 export const combiningRules = new CombiningRules();
 
-export const letterClasses = new Map<string, PositionalSound>()
+export const tonalPositionalSound = new Map<string, PositionalSound>()
     .set(TonalLetterTags.a, new PS_A())
     .set(TonalLetterTags.b, new PS_B())
     .set(TonalLetterTags.bb, new PS_BB())

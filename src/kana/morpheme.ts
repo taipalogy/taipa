@@ -11,6 +11,7 @@ import {
     gailaigo,
 } from './kana';
 import { AlphabeticLetter } from '../grapheme';
+import { KanaSoundGenerator } from './soundgen';
 
 //------------------------------------------------------------------------------
 
@@ -58,7 +59,12 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     }
 
     let list: Array<Sound[]> = new Array();
-    if (matched.length > 0) list = cog.generate(matchedLtrs, lookahead);
+    if (matched.length > 0) {
+        list = cog.generate(matchedLtrs, lookahead);
+        // const ksg = new KanaSoundGenerator();
+        // list = ksg.generate(matchedLtrs, lookahead);
+        // console.log(list)
+    }
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 

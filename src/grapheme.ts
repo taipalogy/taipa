@@ -272,3 +272,14 @@ export class SetOfSounds<T extends Sound> {
         return false;
     }
 }
+
+//------------------------------------------------------------------------------
+
+
+export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
+
+export class SoundGeneration {
+    letters: string[] = [];
+    sounds = new Array<Sound>();
+    bool: boolean = true;
+}

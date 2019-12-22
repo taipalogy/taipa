@@ -1,7 +1,5 @@
 // prettier-ignore
 const to_be_verified = [
-    'chieh',
-
     'hioh',
 
     'jih', 'jirnx', 'jirtt',

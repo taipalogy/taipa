@@ -1,13 +1,13 @@
 import { TonalLemmatizationAnalyzer } from './analyzer';
 import { AnalyzerWrapper } from '../analyzer';
-import { letterClasses } from './version2';
+import { tonalPositionalSound } from './version2';
 
 export class TonalInflective extends AnalyzerWrapper {
     private static singleton: TonalInflective;
 
     private constructor() {
         super(new TonalLemmatizationAnalyzer());
-        this.findDuplicates(letterClasses);
+        this.findDuplicates(tonalPositionalSound);
     }
 
     public static getInstance(): TonalInflective {

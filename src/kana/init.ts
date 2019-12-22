@@ -1,7 +1,7 @@
 import { AnalyzerWrapper } from '../analyzer';
 import { KanaAnalyzer } from './analyzer';
 import {
-    letterClasses,
+    kanaPositionalSound,
     lowerLettersOfKana,
     Hatsuon,
     kogakimoji,
@@ -20,7 +20,7 @@ export class Kana extends AnalyzerWrapper {
     private constructor() {
         super(new KanaAnalyzer());
         this.checkSize();
-        this.findDuplicates(letterClasses);
+        this.findDuplicates(kanaPositionalSound);
     }
 
     public static getInstance(): Kana {
@@ -32,7 +32,7 @@ export class Kana extends AnalyzerWrapper {
     }
 
     private checkSize() {
-        if (letterClasses.size !== lowerLettersOfKana.size) {
+        if (kanaPositionalSound.size !== lowerLettersOfKana.size) {
             console.log('sizes unmatched');
         }
     }

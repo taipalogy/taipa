@@ -1,4 +1,4 @@
-import { Sound } from '../grapheme';
+import { Sound, SoundGeneration, pipe } from '../grapheme';
 import {
     SetOfMaterLectionis,
     SetOfMedials,
@@ -8,7 +8,7 @@ import {
     SetOfNasalizations,
     SetOfStopFinals,
     combiningRules,
-    letterClasses,
+    tonalPositionalSound,
     SetOfNasalFinals,
     TonalSoundTags,
     SetOfCheckedTonals,
@@ -16,19 +16,11 @@ import {
     EuphonicFinalsBBGGJJKKLLPPSS,
 } from './version2';
 
-const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
-
-class SoundGeneration {
-    letters: string[] = [];
-    sounds = new Array<Sound>();
-    bool: boolean = true;
-}
-
 function initialConsonant(sg: SoundGeneration) {
     const sis = new SetOfInitials();
 
     if(sis.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.initial);
             if(s)
@@ -45,7 +37,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
     const ssfs = new SetOfStopFinals();
 
     if(ssfs.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.stopFinal);
             if(s)
@@ -60,7 +52,7 @@ function neutralFinalConsonant(sg: SoundGeneration) {
     const snfs = new SetOfNeutralFinals();
 
     if(snfs.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.stopFinal);
             if(s)
@@ -77,7 +69,7 @@ function nasalFinalConsonant(sg: SoundGeneration) {
     const snfs = new SetOfNasalFinals();
 
     if(snfs.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.nasalFinal);
             if(s)
@@ -94,7 +86,7 @@ function vowel(sg: SoundGeneration) {
     let matches: number = 0;
     for(let i = sg.sounds.length; i < sg.letters.length; i++) {
         if(sms.beginWith(sg.letters[i])) {
-            const ps = letterClasses.get(sg.letters[i]);
+            const ps = tonalPositionalSound.get(sg.letters[i]);
             if(ps) {
                 const s = ps.map.get(TonalSoundTags.medial);
                 matches++;
@@ -114,7 +106,7 @@ function materLectionis(sg: SoundGeneration) {
     const sml = new SetOfMaterLectionis();
 
     if(sml.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.medial);
             if(s)
@@ -131,7 +123,7 @@ function nasalization(sg: SoundGeneration) {
     const sns = new SetOfNasalizations();
 
     if(sns.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.nasalization);
             if(s)
@@ -148,7 +140,7 @@ function freeTone(sg: SoundGeneration) {
     const sfts = new SetOfFreeTonals();
 
     if(sfts.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.freeTonal);
             if(s)
@@ -165,7 +157,7 @@ function checkedTone(sg: SoundGeneration) {
     const scts = new SetOfCheckedTonals();
 
     if(scts.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.checkedTonal);
             if(s)
@@ -184,7 +176,7 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
 
     if(ef_bgjklps.beginWith(sg.letters[sg.sounds.length])
         || ef_bbggjjkkllppss.beginWith(sg.letters[sg.sounds.length])) {
-        const ps = letterClasses.get(sg.letters[sg.sounds.length]);
+        const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
             const s = ps.map.get(TonalSoundTags.stopFinal);
             if(s)

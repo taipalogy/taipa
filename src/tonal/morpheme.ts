@@ -16,13 +16,6 @@ import {
     SetOfStopFinals,
     Epenthesis,
     TonalLetterTags,
-    EuphonicFinalsBGJKLPS,
-    EuphonicFinalsBBGGJJKKLLPPSS,
-    FirstTonalF,
-    ThirdFifthTonalsWX,
-    SetOfNasalFinals,
-    NeutralFinalH,
-    NeutralFinalHH,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound, Letters } from '../grapheme';
@@ -108,13 +101,6 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals();
-    const efs_bgjklps = new EuphonicFinalsBGJKLPS();
-    const et_f = new FirstTonalF();
-    const efs_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
-    const et_wx = new ThirdFifthTonalsWX();
-    const nf_h = new NeutralFinalH();
-    const nf_hh = new NeutralFinalHH();
-    const nfs = new SetOfNasalFinals();
     const faurs = freeAllomorphUncombiningRules;
 
     const slicer = function (letters: Array<AlphabeticLetter>, beginOfSyllable: number, i: number) {

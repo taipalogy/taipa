@@ -34,7 +34,6 @@ export class TonalInflextionAnalyzer extends Analyzer {
 
     lexAnalyze(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme {
         // lexical analysis
-        // TODO: redundant method?
         let morphemes: Array<TonalCombiningMorpheme> = ms;
 
         let tllm = new TonalInflexionLexemeMaker(morphemes, tim);
