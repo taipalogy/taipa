@@ -1,157 +1,4 @@
-import { Sound, SetOfSounds, Letters, PositionalSound } from '../grapheme';
-
-export class ClientOfKanaGenerator {
-    private analyzeAfterVowels(ls: string[], sounds: string[], index: number): string[] {
-        if (this.isFinalConsonant(ls[index])) {
-            sounds.push(ls[index] + '.' + KanaSoundTags.finalConsonant);
-        }
-        return sounds;
-    }
-
-    private analyzeAfterInitialConsonants(ls: string[], sounds: string[], index: number): string[] {
-        let sbool = this.isSemivowel(ls[index]);
-        let vbool = this.isVowel(ls[index]);
-        if (sbool) {
-            sounds.push(ls[index] + '.' + KanaSoundTags.semivowel);
-            if (this.isVowel(ls[index + 1])) {
-                sounds.push(ls[index + 1] + '.' + KanaSoundTags.vowel);
-            }
-        } else if (vbool) {
-            let k = index;
-            while (k < ls.length) {
-                if (this.isVowel(ls[k])) {
-                    sounds.push(ls[k] + '.' + KanaSoundTags.vowel);
-                }
-                k++;
-            }
-        }
-
-        if (sbool || vbool) {
-            if (ls.length > sounds.length) {
-                sounds = this.analyzeAfterVowels(ls, sounds, sounds.length);
-            }
-        }
-
-        return sounds;
-    }
-
-    private isInitialConsonant(str: string) {
-        if (new SetOfInitialConsonants().beginWith(str) == true) return true;
-
-        return false;
-    }
-
-    private isSemivowel(str: string) {
-        if (new SetOfSemivowels().beginWith(str) == true) return true;
-
-        return false;
-    }
-
-    private isVowel(str: string) {
-        if (new SetOfVowels().beginWith(str) == true) return true;
-
-        return false;
-    }
-
-    private isGerminatedConsonant(str: string) {
-        if (new SetOfGerminatedConsonants().beginWith(str) == true) return true;
-
-        return false;
-    }
-
-    private isFinalConsonant(str: string) {
-        if (new SetOfFinalConsonants().beginWith(str) == true) return true;
-
-        return false;
-    }
-
-    private convert(entry: string[]) {
-        // convert strings in an entry to sounds
-        // ex: a.medial -> PS_A.medial
-        let ret: Array<Sound> = new Array();
-        for (let i in entry) {
-            let n = entry[i].lastIndexOf('.');
-            let clasName = entry[i].slice(0, n);
-            let position = entry[i].slice(n + 1);
-            let ps = kanaPositionalSound.get(clasName);
-            if (ps) {
-                let snd = ps.map.get(position);
-                if (snd) {
-                    ret.push(snd);
-                }
-            }
-        }
-
-        return ret;
-    }
-
-    private genSokuonAndGerminated(letters: string[], lookahead: string) {
-        let strs: Array<string[]> = new Array();
-
-        strs.push(letters);
-
-        // consonant germination
-        if (new SetOfGerminatedConsonants().beginWith(letters[0]) == true) {
-            let syl: string[] = new Array();
-            syl.push(letters[0].charAt(0));
-            for (let e of letters) {
-                syl.push(e);
-            }
-            strs.push(syl);
-        }
-
-        // sokuon
-        let fcs = new SetOfFinalConsonants();
-        for (let e of fcs.sounds) {
-            let syl: string[] = new Array();
-            Object.assign(syl, letters);
-            syl.push(e.getLiteral());
-            if (e.getLiteral() === lookahead) strs.push(syl);
-        }
-
-        return strs;
-    }
-
-    generate(letters: string[], lookahead: string) {
-        let strs: Array<string[]> = new Array();
-        let arrayOfSounds: Array<string[]> = new Array(); // collecting all sounds to be processed
-        let entries: Array<Sound[]> = new Array(); // to be returned
-
-        strs = this.genSokuonAndGerminated(letters, lookahead);
-
-        for (let i in strs) {
-            // generates all needed sounds to be processed
-            let ls: string[] = strs[i];
-
-            let sounds: string[] = [];
-
-            // analyze vowels which have no leading consonants
-            // pass 0 as index to indicate it has no leading consonants
-            sounds = this.analyzeAfterInitialConsonants(ls, sounds, 0);
-
-            if ((this.isInitialConsonant(ls[0]) || this.isGerminatedConsonant(ls[0])) && ls.length > 1) {
-                if (this.isVowel(ls[1]) || this.isSemivowel(ls[1])) {
-                    // analyze initial consonants
-                    sounds.push(ls[0] + '.' + KanaSoundTags.initialConsonant);
-                    // consonants followed by vowels
-                    sounds = this.analyzeAfterInitialConsonants(ls, sounds, sounds.length);
-                } else if (this.isInitialConsonant(ls[1])) {
-                    sounds.push(ls[0] + '.' + KanaSoundTags.germinatedConsonant);
-                    sounds.push(ls[1] + '.' + KanaSoundTags.initialConsonant);
-                    if (ls.length > 2) sounds = this.analyzeAfterInitialConsonants(ls, sounds, 2);
-                }
-            }
-
-            arrayOfSounds.push(sounds);
-        }
-
-        for (let k = 0; k < arrayOfSounds.length; k++) {
-            entries.push(this.convert(arrayOfSounds[k]));
-        }
-
-        return entries;
-    }
-}
+import { Sound, SetOfSounds, Letters } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
@@ -295,11 +142,12 @@ class InitialConsonantT extends InitialConsonant {
 class InitialConsonantV extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.v);
 }
-/*
 class InitialConsonantW extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.w);
 }
-*/
+class InitialConsonantY extends InitialConsonant {
+    characters = this.makeCharacters(KanaLetterTags.y);
+}
 class InitialConsonantZ extends InitialConsonant {
     characters = this.makeCharacters(KanaLetterTags.z);
 }
@@ -400,7 +248,8 @@ export class SetOfInitialConsonants extends SetOfSounds<InitialConsonant> {
         this.sounds.push(new InitialConsonantS());
         this.sounds.push(new InitialConsonantT());
         this.sounds.push(new InitialConsonantV());
-        //this.sounds.push(new InitialConsonantW());
+        this.sounds.push(new InitialConsonantW());
+        this.sounds.push(new InitialConsonantY());
         this.sounds.push(new InitialConsonantZ());
     }
 }
@@ -461,401 +310,181 @@ export class Hatsuon extends SetOfSounds<FinalConsonant> {
 
 //------------------------------------------------------------------------------
 
-class PS_A extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.a;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelA());
+function positional(sounds: Sound[]) {
+    return (t: KanaSoundTags) => {
+        for(let i in sounds) {
+            if(sounds[i].name === t) return sounds[i];
+        }
+        return new Sound();
     }
 }
 
-class PS_B extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.b;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantB())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantB())
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantB());
-    }
-}
+const ps_a = positional([new VowelA()]);
+const ps_b = positional([new InitialConsonantB(), new FinalConsonantB(), new GerminatedConsonantB()]);
+const ps_c = positional([new InitialConsonantC(), new GerminatedConsonantC()]);
+const ps_ch = positional([new InitialConsonantCH()]);
+const ps_d = positional([new InitialConsonantD(), new FinalConsonantD(), new GerminatedConsonantD()]);
+const ps_e = positional([new VowelE()]);
+const ps_f = positional([new InitialConsonantF()]);
+const ps_g = positional([new InitialConsonantG(), new FinalConsonantG(), new GerminatedConsonantG()]);
+const ps_h = positional([new InitialConsonantH()]);
+const ps_i = positional([new VowelI()]);
+const ps_j = positional([new InitialConsonantJ()]);
+const ps_k = positional([new InitialConsonantK(), new FinalConsonantK(), new GerminatedConsonantK()]);
+const ps_m = positional([new InitialConsonantM()]);
+const ps_n = positional([new InitialConsonantN(), new FinalConsonantN()]);
+const ps_o = positional([new VowelO()]);
+const ps_p = positional([new InitialConsonantP(), new FinalConsonantP(), new GerminatedConsonantP()]);
+const ps_r = positional([new InitialConsonantR()]);
+const ps_s = positional([new InitialConsonantS(), new FinalConsonantS(), new GerminatedConsonantS()]);
+const ps_t = positional([new InitialConsonantT(), new FinalConsonantT(), new GerminatedConsonantT()]);
+const ps_u = positional([new VowelU()]);
+const ps_w = positional([new InitialConsonantW(), new SemivowelW()]);
+const ps_y = positional([new InitialConsonantY(), new SemivowelY()]);
+const ps_z = positional([new InitialConsonantZ()]);
 
-class PS_C extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.c;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantC())
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantC());
-    }
-}
-
-class PS_CH extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.ch;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantCH());
-    }
-}
-
-class PS_D extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.d;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantD())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantD())
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantD());
-    }
-}
-
-class PS_E extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.e;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelE());
-    }
-}
-
-class PS_F extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.f;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantF());
-    }
-}
-
-class PS_G extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.g;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantG())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantG())
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantG());
-    }
-}
-
-class PS_H extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.h;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantH());
-    }
-}
-
-class PS_I extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.i;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelI());
-    }
-}
-
-class PS_J extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.j;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantJ());
-    }
-}
-
-class PS_K extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.k;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantK())
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantK())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantK());
-    }
-}
-
-class PS_L extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.l;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantL());
-    }
-}
-
-class PS_M extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.m;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantM());
-    }
-}
-
-class PS_N extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.n;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantN())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantN());
-    }
-}
-
-class PS_O extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.o;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelO());
-    }
-}
-
-class PS_P extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.p;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantP())
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantP())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantP());
-    }
-}
-
-class PS_R extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.r;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantR());
-    }
-}
-
-class PS_S extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.s;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantS())
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantS())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantS());
-    }
-}
-
-class PS_T extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.t;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.germinatedConsonant, new GerminatedConsonantT())
-            .set(KanaSoundTags.initialConsonant, new InitialConsonantT())
-            .set(KanaSoundTags.finalConsonant, new FinalConsonantT());
-    }
-}
-
-class PS_U extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.u;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.vowel, new VowelU());
-    }
-}
-
-class PS_V extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.v;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantV());
-    }
-}
-
-class PS_W extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.w;
-        this.no = 1;
-        //this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(KanaSoundTags.semivowel, new SemivowelW())
-            //.set(KanaSoundTags.initialConsonant, new InitialConsonantW());
-    }
-}
-
-class PS_Y extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.y;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.semivowel, new SemivowelY());
-    }
-}
-
-class PS_Z extends PositionalSound {
-    constructor() {
-        super();
-        this.name = KanaLetterTags.z;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(KanaSoundTags.initialConsonant, new InitialConsonantZ());
-    }
-}
+//------------------------------------------------------------------------------
+export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>()
+    .set(KanaLetterTags.a, ps_a)
+    .set(KanaLetterTags.b, ps_b)
+    .set(KanaLetterTags.c, ps_c)
+    .set(KanaLetterTags.ch, ps_ch)
+    .set(KanaLetterTags.d, ps_d)
+    .set(KanaLetterTags.e, ps_e)
+    .set(KanaLetterTags.f, ps_f)
+    .set(KanaLetterTags.g, ps_g)
+    .set(KanaLetterTags.h, ps_h)
+    .set(KanaLetterTags.i, ps_i)
+    .set(KanaLetterTags.j, ps_j)
+    .set(KanaLetterTags.k, ps_k)
+    .set(KanaLetterTags.m, ps_m)
+    .set(KanaLetterTags.n, ps_n)
+    .set(KanaLetterTags.o, ps_o)
+    .set(KanaLetterTags.p, ps_p)
+    .set(KanaLetterTags.r, ps_r)
+    .set(KanaLetterTags.s, ps_s)
+    .set(KanaLetterTags.t, ps_t)
+    .set(KanaLetterTags.u, ps_u)
+    .set(KanaLetterTags.w, ps_w)
+    .set(KanaLetterTags.y, ps_y)
+    .set(KanaLetterTags.z, ps_z);
 
 //------------------------------------------------------------------------------
 
-export const kanaPositionalSound: Map<string, PositionalSound> = new Map()
-    .set(KanaLetterTags.a, new PS_A())
-    .set(KanaLetterTags.b, new PS_B())
-    .set(KanaLetterTags.c, new PS_C())
-    .set(KanaLetterTags.ch, new PS_CH())
-    .set(KanaLetterTags.d, new PS_D())
-    .set(KanaLetterTags.e, new PS_E())
-    .set(KanaLetterTags.f, new PS_F())
-    .set(KanaLetterTags.g, new PS_G())
-    .set(KanaLetterTags.h, new PS_H())
-    .set(KanaLetterTags.i, new PS_I())
-    .set(KanaLetterTags.j, new PS_J())
-    .set(KanaLetterTags.k, new PS_K())
-    .set(KanaLetterTags.l, new PS_L())
-    .set(KanaLetterTags.m, new PS_M())
-    .set(KanaLetterTags.n, new PS_N())
-    .set(KanaLetterTags.o, new PS_O())
-    .set(KanaLetterTags.p, new PS_P())
-    .set(KanaLetterTags.r, new PS_R())
-    .set(KanaLetterTags.s, new PS_S())
-    .set(KanaLetterTags.t, new PS_T())
-    .set(KanaLetterTags.u, new PS_U())
-    .set(KanaLetterTags.v, new PS_V())
-    .set(KanaLetterTags.w, new PS_W())
-    .set(KanaLetterTags.y, new PS_Y())
-    .set(KanaLetterTags.z, new PS_Z());
+export const hiragana_katakana = new Map<string, Array<string>>()
+    .set(ps_a(KanaSoundTags.vowel).getLiteral(), ['あ', 'ア'])
+    .set(ps_i(KanaSoundTags.vowel).getLiteral(), ['い', 'イ'])
+    .set(ps_u(KanaSoundTags.vowel).getLiteral(), ['う', 'ウ'])
+    .set(ps_e(KanaSoundTags.vowel).getLiteral(), ['え', 'エ'])
+    .set(ps_o(KanaSoundTags.vowel).getLiteral(), ['お', 'オ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['か', 'カ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['き', 'キ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['く', 'ク'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['け', 'ケ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['こ', 'コ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['さ', 'サ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['し', 'シ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['す', 'ス'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['せ', 'セ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['そ', 'ソ'])
+    .set(ps_t(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['た', 'タ'])
+    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ち', 'チ'])
+    .set(ps_ch(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['つ', 'ツ'])
+    .set(ps_t(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['て', 'テ'])
+    .set(ps_t(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['と', 'ト'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['な', 'ナ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['に', 'ニ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぬ', 'ヌ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ね', 'ネ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['の', 'ノ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['は', 'ハ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ひ', 'ヒ'])
+    .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ふ', 'フ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['へ', 'ヘ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ほ', 'ホ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ま', 'マ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['み', 'ミ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['む', 'ム'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['め', 'メ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['も', 'モ'])
+    .set(ps_y(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['や', 'ヤ'])
+    .set(ps_y(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ゆ', 'ユ'])
+    .set(ps_y(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['よ', 'ヨ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ら', 'ラ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['り', 'リ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['る', 'ル'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['れ', 'レ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ろ', 'ロ'])
+    .set(ps_w(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['わ', 'ワ'])
+    .set(ps_w(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ゐ', 'ヰ'])
+    .set(ps_w(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ゑ', 'ヱ'])
+    .set(ps_w(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['を', 'ヲ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['が', 'ガ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ぎ', 'ギ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぐ', 'グ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['げ', 'ゲ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ご', 'ゴ'])
+    .set(ps_z(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ざ', 'ザ'])
+    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['じ', 'ジ'])
+    .set(ps_z(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ず', 'ズ'])
+    .set(ps_z(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ぜ', 'ゼ'])
+    .set(ps_z(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぞ', 'ゾ'])
+    .set(ps_d(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['だ', 'ダ'])
+    .set(ps_d(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['で', 'デ'])
+    .set(ps_d(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ど', 'ド'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ば', 'バ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['び', 'ビ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぶ', 'ブ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['べ', 'ベ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぼ', 'ボ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ぱ', 'パ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ぴ', 'ピ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぷ', 'プ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ぺ', 'ペ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぽ', 'ポ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['きゃ', 'キャ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['きゅ', 'キュ'])
+    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['きょ', 'キョ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['しゃ', 'シャ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['しゅ', 'シュ'])
+    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['しょ', 'ショ'])
+    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ちゃ', 'チャ'])
+    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ちゅ', 'チュ'])
+    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ちょ', 'チョ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['にゃ', 'ニャ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['にゅ', 'ニュ'])
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['にょ', 'ニョ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ひゃ', 'ヒャ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ひゅ', 'ヒュ'])
+    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ひょ', 'ヒョ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['みゃ', 'ミャ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['みゅ', 'みょ'])
+    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ミュ', 'ミョ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['りゃ', 'リャ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['りゅ', 'リュ'])
+    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['りょ', 'リョ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ぎゃ', 'ギャ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぎゅ', 'ギュ'])
+    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぎょ', 'ギョ'])
+    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['じゃ', 'ジャ'])
+    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['じゅ', 'ジュ'])
+    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['じょ', 'ジョ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['びゃ', 'ビャ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['びゅ', 'ビュ'])
+    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['びょ', 'ビョ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ぴゃ', 'ピャ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぴゅ', 'ピュ'])
+    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぴょ', 'ピョ'])
+    .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ふぁ', 'ファ'])
+    .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ふぃ', 'フィ'])
+    .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ふぇ', 'フェ'])
+    .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ふぉ', 'フォ']);
 
-//------------------------------------------------------------------------------
+export const kogakimoji = new Map<string, Array<string>>()
+    .set(ps_ch(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['っ', 'ッ']);
 
-export const hiragana_katakana: Map<string, Array<string>> = new Map()
-    .set('a', ['あ', 'ア'])
-    .set('i', ['い', 'イ'])
-    .set('u', ['う', 'ウ'])
-    .set('e', ['え', 'エ'])
-    .set('o', ['お', 'オ'])
-    .set('ka', ['か', 'カ'])
-    .set('ki', ['き', 'キ'])
-    .set('ku', ['く', 'ク'])
-    .set('ke', ['け', 'ケ'])
-    .set('ko', ['こ', 'コ'])
-    .set('sa', ['さ', 'サ'])
-    .set('si', ['し', 'シ'])
-    .set('su', ['す', 'ス'])
-    .set('se', ['せ', 'セ'])
-    .set('so', ['そ', 'ソ'])
-    .set('ta', ['た', 'タ'])
-    .set('ci', ['ち', 'チ'])
-    .set('chu', ['つ', 'ツ'])
-    .set('te', ['て', 'テ'])
-    .set('to', ['と', 'ト'])
-    .set('na', ['な', 'ナ'])
-    .set('ni', ['に', 'ニ'])
-    .set('nu', ['ぬ', 'ヌ'])
-    .set('ne', ['ね', 'ネ'])
-    .set('no', ['の', 'ノ'])
-    .set('ha', ['は', 'ハ'])
-    .set('hi', ['ひ', 'ヒ'])
-    .set('fu', ['ふ', 'フ'])
-    .set('he', ['へ', 'ヘ'])
-    .set('ho', ['ほ', 'ホ'])
-    .set('ma', ['ま', 'マ'])
-    .set('mi', ['み', 'ミ'])
-    .set('mu', ['む', 'ム'])
-    .set('me', ['め', 'メ'])
-    .set('mo', ['も', 'モ'])
-    .set('ya', ['や', 'ヤ'])
-    .set('yu', ['ゆ', 'ユ'])
-    .set('yo', ['よ', 'ヨ'])
-    .set('ra', ['ら', 'ラ'])
-    .set('ri', ['り', 'リ'])
-    .set('ru', ['る', 'ル'])
-    .set('re', ['れ', 'レ'])
-    .set('ro', ['ろ', 'ロ'])
-    .set('wa', ['わ', 'ワ'])
-    .set('wi', ['ゐ', 'ヰ'])
-    .set('we', ['ゑ', 'ヱ'])
-    .set('wo', ['を', 'ヲ'])
-    .set('ga', ['が', 'ガ'])
-    .set('gi', ['ぎ', 'ギ'])
-    .set('gu', ['ぐ', 'グ'])
-    .set('ge', ['げ', 'ゲ'])
-    .set('go', ['ご', 'ゴ'])
-    .set('za', ['ざ', 'ザ'])
-    .set('ji', ['じ', 'ジ'])
-    .set('zu', ['ず', 'ズ'])
-    .set('ze', ['ぜ', 'ゼ'])
-    .set('zo', ['ぞ', 'ゾ'])
-    .set('da', ['だ', 'ダ'])
-    .set('de', ['で', 'デ'])
-    .set('do', ['ど', 'ド'])
-    .set('ba', ['ば', 'バ'])
-    .set('bi', ['び', 'ビ'])
-    .set('bu', ['ぶ', 'ブ'])
-    .set('be', ['べ', 'ベ'])
-    .set('bo', ['ぼ', 'ボ'])
-    .set('pa', ['ぱ', 'パ'])
-    .set('pi', ['ぴ', 'ピ'])
-    .set('pu', ['ぷ', 'プ'])
-    .set('pe', ['ぺ', 'ペ'])
-    .set('po', ['ぽ', 'ポ'])
-    .set('kya', ['きゃ', 'キャ'])
-    .set('kyu', ['きゅ', 'キュ'])
-    .set('kyo', ['きょ', 'キョ'])
-    .set('sya', ['しゃ', 'シャ'])
-    .set('syu', ['しゅ', 'シュ'])
-    .set('syo', ['しょ', 'ショ'])
-    .set('cya', ['ちゃ', 'チャ'])
-    .set('cyu', ['ちゅ', 'チュ'])
-    .set('cyo', ['ちょ', 'チョ'])
-    .set('nya', ['にゃ', 'ニャ'])
-    .set('nyu', ['にゅ', 'ニュ'])
-    .set('nyo', ['にょ', 'ニョ'])
-    .set('hya', ['ひゃ', 'ヒャ'])
-    .set('hyu', ['ひゅ', 'ヒュ'])
-    .set('hyo', ['ひょ', 'ヒョ'])
-    .set('mya', ['みゃ', 'ミャ'])
-    .set('myu', ['みゅ', 'みょ'])
-    .set('myo', ['ミュ', 'ミョ'])
-    .set('rya', ['りゃ', 'リャ'])
-    .set('ryu', ['りゅ', 'リュ'])
-    .set('ryo', ['りょ', 'リョ'])
-    .set('gya', ['ぎゃ', 'ギャ'])
-    .set('gyu', ['ぎゅ', 'ギュ'])
-    .set('gyo', ['ぎょ', 'ギョ'])
-    .set('jya', ['じゃ', 'ジャ'])
-    .set('jyu', ['じゅ', 'ジュ'])
-    .set('jyo', ['じょ', 'ジョ'])
-    .set('bya', ['びゃ', 'ビャ'])
-    .set('byu', ['びゅ', 'ビュ'])
-    .set('byo', ['びょ', 'ビョ'])
-    .set('pya', ['ぴゃ', 'ピャ'])
-    .set('pyu', ['ぴゅ', 'ピュ'])
-    .set('pyo', ['ぴょ', 'ピョ'])
-    .set('fa', ['ふぁ', 'ファ'])
-    .set('fi', ['ふぃ', 'フィ'])
-    .set('fe', ['ふぇ', 'フェ'])
-    .set('fo', ['ふぉ', 'フォ']);
+export const hatsuon = new Map<string, Array<string>>()
+    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral(), ['ん', 'ン']);
 
-export const kogakimoji: Map<string, Array<string>> = new Map().set('chu', ['っ', 'ッ']);
-
-export const hatsuon: Map<string, Array<string>> = new Map().set('n', ['ん', 'ン']);
-
-export const gailaigo: Map<string, Array<string>> = new Map().set('di', ['でぃ', 'ディ']);
+export const gailaigo = new Map<string, Array<string>>()
+    .set(ps_d(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['でぃ', 'ディ']);

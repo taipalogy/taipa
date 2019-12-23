@@ -1,8 +1,6 @@
 import { AnalyzerWrapper } from '../analyzer';
 import { KanaAnalyzer } from './analyzer';
 import {
-    kanaPositionalSound,
-    lowerLettersOfKana,
     Hatsuon,
     kogakimoji,
     hiragana_katakana,
@@ -19,8 +17,6 @@ export class Kana extends AnalyzerWrapper {
 
     private constructor() {
         super(new KanaAnalyzer());
-        this.checkSize();
-        this.findDuplicates(kanaPositionalSound);
     }
 
     public static getInstance(): Kana {
@@ -29,12 +25,6 @@ export class Kana extends AnalyzerWrapper {
         }
 
         return Kana.singleton;
-    }
-
-    private checkSize() {
-        if (kanaPositionalSound.size !== lowerLettersOfKana.size) {
-            console.log('sizes unmatched');
-        }
     }
 
     private checkChouon(previousLetter: string, nextLetter: string): boolean {

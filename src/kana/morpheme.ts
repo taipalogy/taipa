@@ -5,7 +5,6 @@ import {
     SetOfInitialConsonants,
     SetOfVowels,
     Hatsuon,
-    ClientOfKanaGenerator,
     hiragana_katakana,
     SetOfSemivowels,
     gailaigo,
@@ -33,7 +32,6 @@ export class KanaUncombiningMorpheme extends Morpheme {
 //------------------------------------------------------------------------------
 
 function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number) {
-    const cog = new ClientOfKanaGenerator();
     let literal = '';
     let matched = '';
     let lookahead = '';
@@ -60,9 +58,9 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 
     let list: Array<Sound[]> = new Array();
     if (matched.length > 0) {
-        list = cog.generate(matchedLtrs, lookahead);
-        // const ksg = new KanaSoundGenerator();
-        // list = ksg.generate(matchedLtrs, lookahead);
+        //console.log(matchedLtrs, lookahead)
+        const ksg = new KanaSoundGenerator();
+        list = ksg.generate(matchedLtrs, lookahead);
         // console.log(list)
     }
 

@@ -1,5 +1,5 @@
 import { Sound, SoundGeneration, pipe } from '../grapheme';
-import { SetOfInitialConsonants, KanaSoundTags, kanaPositionalSound, SetOfVowels, SetOfGerminatedConsonants, SetOfFinalConsonants, SetOfSemivowels } from './kana';
+import { SetOfInitialConsonants, KanaSoundTags, SetOfVowels, SetOfGerminatedConsonants, SetOfFinalConsonants, SetOfSemivowels, kanaPositionalSound } from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
     const sics = new SetOfInitialConsonants();
@@ -7,7 +7,7 @@ function initialConsonant(sg: SoundGeneration) {
     if(sics.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(KanaSoundTags.initialConsonant);
+            const s = ps(KanaSoundTags.initialConsonant);
             if(s)
                 sg.sounds.push(s)
         }
@@ -22,7 +22,7 @@ function semivowel(sg: SoundGeneration) {
     if(ssvs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(KanaSoundTags.semivowel);
+            const s = ps(KanaSoundTags.semivowel);
             if(s)
                 sg.sounds.push(s)
         }
@@ -37,7 +37,7 @@ function vowel(sg: SoundGeneration) {
     if(svs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(KanaSoundTags.vowel);
+            const s = ps(KanaSoundTags.vowel);
             if(s)
                 sg.sounds.push(s)
         }
@@ -46,14 +46,13 @@ function vowel(sg: SoundGeneration) {
     return sg;
 }
 
-
 function finalConsonant(sg: SoundGeneration) {
     const sfcs = new SetOfFinalConsonants();
 
     if(sfcs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(KanaSoundTags.finalConsonant);
+            const s = ps(KanaSoundTags.finalConsonant);
             if(s)
                 sg.sounds.push(s)
         }
@@ -68,7 +67,7 @@ function germinatedConsonant(sg: SoundGeneration) {
     if(sgcs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(KanaSoundTags.germinatedConsonant);
+            const s = ps(KanaSoundTags.germinatedConsonant);
             if(s)
                 sg.sounds.push(s)
         }

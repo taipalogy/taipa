@@ -109,3 +109,27 @@ describe("Kana testing", () => {
         expect(doc.blockSequences[2]).toEqual('ニュース');
     });
 });
+
+describe("Kana testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processKana('yayuyo')
+
+    test("kanas", () => {
+        expect(doc.blockSequences[0]).toEqual('やゆよ');
+        expect(doc.blockSequences[1]).toEqual('ヤユヨ');
+    });
+});
+
+describe("Kana testing", () => {
+    const cli = new Client()
+    let doc = new TokenAnalysis()
+
+    doc = cli.processKana('wawiwewo')
+
+    test("kanas", () => {
+        expect(doc.blockSequences[0]).toEqual('わゐゑを');
+        expect(doc.blockSequences[1]).toEqual('ワヰヱヲ');
+    });
+});
