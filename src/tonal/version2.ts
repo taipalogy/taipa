@@ -1,4 +1,4 @@
-import { Letters, Sound, PositionalSound, SetOfSounds } from '../grapheme';
+import { Letters, Sound, SetOfSounds } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
@@ -605,418 +605,57 @@ export class NeutralFinalHH extends SetOfSounds<StopFinal> {
 
 //------------------------------------------------------------------------------
 
-class PS_A extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.a;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialA());
+export function positionalSound(sounds: Sound[]) {
+    return (t: TonalSoundTags) => {
+        for(let i in sounds) {
+            if(sounds[i].name === t) return sounds[i];
+        }
+        return new Sound();
     }
 }
 
-class PS_B extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.b;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialB())
-            .set(TonalSoundTags.stopFinal, new FinalB());
-    }
-}
-
-class PS_BB extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.bb;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalBB());
-    }
-}
-
-class PS_C extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.c;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialC());
-    }
-}
-
-class PS_CH extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.ch;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialCH());
-    }
-}
-
-class PS_D extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.d;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialD());
-    }
-}
-
-class PS_E extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.e;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialE());
-    }
-}
-
-class PS_F extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.f;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.checkedTonal, new CheckedTonalF())
-            .set(TonalSoundTags.freeTonal, new FreeTonalF());
-    }
-}
-
-class PS_G extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.g;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialG())
-            .set(TonalSoundTags.stopFinal, new FinalG());
-    }
-}
-
-class PS_GG extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.gg;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalGG());
-    }
-}
-
-class PS_HH extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.hh;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalHH());
-    }
-}
-
-class PS_I extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.i;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialI());
-    }
-}
-
-class PS_J extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.j;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialJ())
-            .set(TonalSoundTags.stopFinal, new FinalJ());
-    }
-}
-
-class PS_JJ extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.jj;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalJJ());
-    }
-}
-
-class PS_K extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.k;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialK())
-            .set(TonalSoundTags.stopFinal, new FinalK());
-    }
-}
-
-class PS_KK extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.kk;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalKK());
-    }
-}
-
-class PS_L extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.l;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialL())
-            .set(TonalSoundTags.stopFinal, new FinalL());;
-    }
-}
-
-class PS_LL extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.ll;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalLL());
-    }
-}
-
-class PS_M extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.m;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialM())
-            .set(TonalSoundTags.medial, new MaterLectionisM())
-            .set(TonalSoundTags.nasalFinal, new FinalM());
-    }
-}
-
-class PS_N extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.n;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialN())
-            .set(TonalSoundTags.medial, new MaterLectionisN())
-            .set(TonalSoundTags.nasalFinal, new FinalN());
-    }
-}
-
-class PS_NN extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.nn;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.nasalization, new NasalizationNN());
-    }
-}
-
-class PS_NG extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.ng;
-        this.no = 3;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialNG())
-            .set(TonalSoundTags.medial, new MaterLectionisNG())
-            .set(TonalSoundTags.nasalFinal, new FinalNG());
-    }
-}
-
-class PS_O extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.o;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialO());
-    }
-}
-
-class PS_P extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.p;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialP())
-            .set(TonalSoundTags.stopFinal, new FinalP());
-    }
-}
-
-class PS_PP extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.pp;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalPP());
-    }
-}
-
-class PS_Q extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.q;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialQ());
-    }
-}
-
-class PS_H extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.h;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialH())
-            .set(TonalSoundTags.stopFinal, new FinalH());
-    }
-}
-
-class PS_S extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.s;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialS())
-            .set(TonalSoundTags.stopFinal, new FinalS());
-    }
-}
-
-class PS_SS extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.ss;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalSS());
-    }
-}
-
-class PS_T extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.t;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.initial, new InitialT())
-            .set(TonalSoundTags.stopFinal, new FinalT());
-    }
-}
-
-class PS_TT extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.tt;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.stopFinal, new FinalTT());
-    }
-}
-
-class PS_U extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.u;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialU());
-    }
-}
-
-class PS_UR extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.ur;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.medial, new MedialUR());
-    }
-}
-
-class PS_V extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.v;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.initial, new InitialV());
-    }
-}
-
-class PS_W extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.w;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.freeTonal, new FreeTonalW())
-            .set(TonalSoundTags.checkedTonal, new CheckedTonalW());
-    }
-}
-
-class PS_X extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.x;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.freeTonal, new FreeTonalX())
-            .set(TonalSoundTags.checkedTonal, new CheckedTonalX());
-    }
-}
-
-class PS_XX extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.xx;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalXX());
-    }
-}
-
-class PS_XXX extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.xxx;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalXXX());
-    }
-}
-
-class PS_Y extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.y;
-        this.no = 2;
-        this.map = new Map<string, Sound>()
-            .set(TonalSoundTags.freeTonal, new FreeTonalY())
-            .set(TonalSoundTags.checkedTonal, new CheckedTonalY());
-    }
-}
-
-class PS_Z extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.z;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalZ());
-    }
-}
-
-class PS_ZX extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.zx;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new FreeTonalZX());
-    }
-}
-
-class PS_Zero extends PositionalSound {
-    constructor() {
-        super();
-        this.name = TonalLetterTags.zero;
-        this.no = 1;
-        this.map = new Map<string, Sound>().set(TonalSoundTags.freeTonal, new ZeroTonal());
-    }
-}
+const ps_a = positionalSound([new MedialA()]);
+const ps_b = positionalSound([new InitialB(), new FinalB()]);
+const ps_bb = positionalSound([new FinalBB()]);
+const ps_c = positionalSound([new InitialC()]);
+const ps_ch = positionalSound([new InitialCH()]);
+const ps_d = positionalSound([new InitialD()]);
+const ps_e = positionalSound([new MedialE()]);
+const ps_f = positionalSound([new FreeTonalF(), new CheckedTonalF()]);
+const ps_g = positionalSound([new InitialG(), new FinalG()]);
+const ps_gg = positionalSound([new FinalGG()]);
+const ps_h = positionalSound([new InitialH(), new FinalH()]);
+const ps_hh = positionalSound([new FinalHH()]);
+const ps_i = positionalSound([new MedialI()]);
+const ps_j = positionalSound([new InitialJ(), new FinalJ()]);
+const ps_jj = positionalSound([new FinalJJ()]);
+const ps_k = positionalSound([new InitialK(), new FinalK()]);
+const ps_kk = positionalSound([new FinalKK()]);
+const ps_l = positionalSound([new InitialL(), new FinalL()]);
+const ps_ll = positionalSound([new FinalLL()]);
+const ps_m = positionalSound([new InitialM(), new MaterLectionisM(), new FinalM()]);
+const ps_n = positionalSound([new InitialN(), new MaterLectionisN(), new FinalN()]);
+const ps_nn = positionalSound([new NasalizationNN()]);
+const ps_ng = positionalSound([new InitialNG(), new MaterLectionisNG(), new FinalNG()]);
+const ps_o = positionalSound([new MedialO()]);
+const ps_p = positionalSound([new InitialP(), new FinalP()]);
+const ps_pp = positionalSound([new FinalPP()]);
+const ps_q = positionalSound([new InitialQ()]);
+const ps_s = positionalSound([new InitialS(), new FinalS()]);
+const ps_ss = positionalSound([new FinalSS()]);
+const ps_t = positionalSound([new InitialT(), new FinalT()]);
+const ps_tt = positionalSound([new FinalTT()]);
+const ps_u = positionalSound([new MedialU()]);
+const ps_ur = positionalSound([new MedialUR()]);
+const ps_v = positionalSound([new InitialV()]);
+const ps_w = positionalSound([new FreeTonalW(), new CheckedTonalW()]);
+const ps_x = positionalSound([new FreeTonalX(), new CheckedTonalX()]);
+const ps_xx = positionalSound([new FreeTonalXX()]);
+const ps_xxx = positionalSound([new FreeTonalXXX()]);
+const ps_y = positionalSound([new FreeTonalY(), new CheckedTonalY()]);
+const ps_z = positionalSound([new FreeTonalZ()]);
+const ps_zx = positionalSound([new FreeTonalZX()]);
+const ps_zero = positionalSound([new ZeroTonal()]);
 
 //------------------------------------------------------------------------------
 
@@ -1025,39 +664,39 @@ class CombiningRules {
 
     constructor() {
         this.o
-            .set(TonalLetterTags.zero, { z: new PS_Z().get(TonalSoundTags.freeTonal) })
+            .set(TonalLetterTags.zero, { z: ps_z(TonalSoundTags.freeTonal) })
             .set(TonalLetterTags.y, {
-                zero: new PS_Zero().get(TonalSoundTags.freeTonal),
-                f: new PS_F().get(TonalSoundTags.freeTonal),
+                zero: ps_zero(TonalSoundTags.freeTonal),
+                f: ps_f(TonalSoundTags.freeTonal),
             })
-            .set(TonalLetterTags.w, { y: new PS_Y().get(TonalSoundTags.freeTonal) })
+            .set(TonalLetterTags.w, { y: ps_y(TonalSoundTags.freeTonal) })
             .set(TonalLetterTags.x, {
-                z: new PS_Z().get(TonalSoundTags.freeTonal),
-                w: new PS_W().get(TonalSoundTags.freeTonal),
+                z: ps_z(TonalSoundTags.freeTonal),
+                w: ps_w(TonalSoundTags.freeTonal),
             })
-            .set(TonalLetterTags.z, { w: new PS_W().get(TonalSoundTags.freeTonal) })
-            .set(TonalLetterTags.p, { f: new PS_F().get(TonalSoundTags.checkedTonal) })
-            .set(TonalLetterTags.t, { f: new PS_F().get(TonalSoundTags.checkedTonal) })
-            .set(TonalLetterTags.k, { f: new PS_F().get(TonalSoundTags.checkedTonal) })
+            .set(TonalLetterTags.z, { w: ps_w(TonalSoundTags.freeTonal) })
+            .set(TonalLetterTags.p, { f: ps_f(TonalSoundTags.checkedTonal) })
+            .set(TonalLetterTags.t, { f: ps_f(TonalSoundTags.checkedTonal) })
+            .set(TonalLetterTags.k, { f: ps_f(TonalSoundTags.checkedTonal) })
             .set(TonalLetterTags.h, {
-                f: new PS_F().get(TonalSoundTags.checkedTonal),
-                y: new PS_Y().get(TonalSoundTags.checkedTonal),
+                f: ps_f(TonalSoundTags.checkedTonal),
+                y: ps_y(TonalSoundTags.checkedTonal),
             })
             .set(TonalLetterTags.pp, {
-                w: new PS_W().get(TonalSoundTags.checkedTonal),
-                x: new PS_X().get(TonalSoundTags.checkedTonal),
+                w: ps_w(TonalSoundTags.checkedTonal),
+                x: ps_x(TonalSoundTags.checkedTonal),
             })
             .set(TonalLetterTags.tt, {
-                w: new PS_W().get(TonalSoundTags.checkedTonal),
-                x: new PS_X().get(TonalSoundTags.checkedTonal),
+                w: ps_w(TonalSoundTags.checkedTonal),
+                x: ps_x(TonalSoundTags.checkedTonal),
             })
             .set(TonalLetterTags.kk, {
-                w: new PS_W().get(TonalSoundTags.checkedTonal),
-                x: new PS_X().get(TonalSoundTags.checkedTonal),
+                w: ps_w(TonalSoundTags.checkedTonal),
+                x: ps_x(TonalSoundTags.checkedTonal),
             })
             .set(TonalLetterTags.hh, {
-                w: new PS_W().get(TonalSoundTags.checkedTonal),
-                x: new PS_X().get(TonalSoundTags.checkedTonal),
+                w: ps_w(TonalSoundTags.checkedTonal),
+                x: ps_x(TonalSoundTags.checkedTonal),
             });
     }
 
@@ -1072,48 +711,48 @@ class CombiningRules {
 
 export const combiningRules = new CombiningRules();
 
-export const tonalPositionalSound = new Map<string, PositionalSound>()
-    .set(TonalLetterTags.a, new PS_A())
-    .set(TonalLetterTags.b, new PS_B())
-    .set(TonalLetterTags.bb, new PS_BB())
-    .set(TonalLetterTags.c, new PS_C())
-    .set(TonalLetterTags.ch, new PS_CH())
-    .set(TonalLetterTags.d, new PS_D())
-    .set(TonalLetterTags.e, new PS_E())
-    .set(TonalLetterTags.f, new PS_F())
-    .set(TonalLetterTags.g, new PS_G())
-    .set(TonalLetterTags.gg, new PS_GG())
-    .set(TonalLetterTags.h, new PS_H())
-    .set(TonalLetterTags.hh, new PS_HH())
-    .set(TonalLetterTags.i, new PS_I())
-    .set(TonalLetterTags.j, new PS_J())
-    .set(TonalLetterTags.jj, new PS_JJ())
-    .set(TonalLetterTags.k, new PS_K())
-    .set(TonalLetterTags.kk, new PS_KK())
-    .set(TonalLetterTags.l, new PS_L())
-    .set(TonalLetterTags.ll, new PS_LL())
-    .set(TonalLetterTags.m, new PS_M())
-    .set(TonalLetterTags.n, new PS_N())
-    .set(TonalLetterTags.nn, new PS_NN())
-    .set(TonalLetterTags.ng, new PS_NG())
-    .set(TonalLetterTags.o, new PS_O())
-    .set(TonalLetterTags.p, new PS_P())
-    .set(TonalLetterTags.pp, new PS_PP())
-    .set(TonalLetterTags.q, new PS_Q())
-    .set(TonalLetterTags.s, new PS_S())
-    .set(TonalLetterTags.ss, new PS_SS())
-    .set(TonalLetterTags.t, new PS_T())
-    .set(TonalLetterTags.tt, new PS_TT())
-    .set(TonalLetterTags.u, new PS_U())
-    .set(TonalLetterTags.ur, new PS_UR())
-    .set(TonalLetterTags.v, new PS_V())
-    .set(TonalLetterTags.w, new PS_W())
-    .set(TonalLetterTags.x, new PS_X())
-    .set(TonalLetterTags.xx, new PS_XX())
-    .set(TonalLetterTags.xxx, new PS_XXX())
-    .set(TonalLetterTags.y, new PS_Y())
-    .set(TonalLetterTags.z, new PS_Z())
-    .set(TonalLetterTags.zx, new PS_ZX());
+export const tonalPositionalSound = new Map<string, (t: TonalSoundTags) => Sound>()
+    .set(TonalLetterTags.a, ps_a)
+    .set(TonalLetterTags.b, ps_b)
+    .set(TonalLetterTags.bb, ps_bb)
+    .set(TonalLetterTags.c, ps_c)
+    .set(TonalLetterTags.ch, ps_ch)
+    .set(TonalLetterTags.d, ps_d)
+    .set(TonalLetterTags.e, ps_e)
+    .set(TonalLetterTags.f, ps_f)
+    .set(TonalLetterTags.g, ps_g)
+    .set(TonalLetterTags.gg, ps_gg)
+    .set(TonalLetterTags.h, ps_h)
+    .set(TonalLetterTags.hh, ps_hh)
+    .set(TonalLetterTags.i, ps_i)
+    .set(TonalLetterTags.j, ps_j)
+    .set(TonalLetterTags.jj, ps_jj)
+    .set(TonalLetterTags.k, ps_k)
+    .set(TonalLetterTags.kk, ps_kk)
+    .set(TonalLetterTags.l, ps_l)
+    .set(TonalLetterTags.ll, ps_ll)
+    .set(TonalLetterTags.m, ps_m)
+    .set(TonalLetterTags.n, ps_n)
+    .set(TonalLetterTags.nn, ps_nn)
+    .set(TonalLetterTags.ng, ps_ng)
+    .set(TonalLetterTags.o, ps_o)
+    .set(TonalLetterTags.p, ps_p)
+    .set(TonalLetterTags.pp, ps_pp)
+    .set(TonalLetterTags.q, ps_q)
+    .set(TonalLetterTags.s, ps_s)
+    .set(TonalLetterTags.ss, ps_ss)
+    .set(TonalLetterTags.t, ps_t)
+    .set(TonalLetterTags.tt, ps_tt)
+    .set(TonalLetterTags.u, ps_u)
+    .set(TonalLetterTags.ur, ps_ur)
+    .set(TonalLetterTags.v, ps_v)
+    .set(TonalLetterTags.w, ps_w)
+    .set(TonalLetterTags.x, ps_x)
+    .set(TonalLetterTags.xx, ps_xx)
+    .set(TonalLetterTags.xxx, ps_xxx)
+    .set(TonalLetterTags.y, ps_y)
+    .set(TonalLetterTags.z, ps_z)
+    .set(TonalLetterTags.zx, ps_zx);
 
 //------------------------------------------------------------------------------
 
@@ -1285,77 +924,77 @@ class CheckedAllomorphs {
 
     constructor() {
         this.o
-            .set(new PS_P().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphP())
-            .set(new PS_T().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphT())
-            .set(new PS_K().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphK())
-            .set(new PS_H().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphH())
-            .set(new PS_PP().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphPP())
-            .set(new PS_TT().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphTT())
-            .set(new PS_KK().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphKK())
-            .set(new PS_HH().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphHH())
+            .set(ps_p(TonalSoundTags.stopFinal).getLiteral(), new AllomorphP())
+            .set(ps_t(TonalSoundTags.stopFinal).getLiteral(), new AllomorphT())
+            .set(ps_k(TonalSoundTags.stopFinal).getLiteral(), new AllomorphK())
+            .set(ps_h(TonalSoundTags.stopFinal).getLiteral(), new AllomorphH())
+            .set(ps_pp(TonalSoundTags.stopFinal).getLiteral(), new AllomorphPP())
+            .set(ps_tt(TonalSoundTags.stopFinal).getLiteral(), new AllomorphTT())
+            .set(ps_kk(TonalSoundTags.stopFinal).getLiteral(), new AllomorphKK())
+            .set(ps_hh(TonalSoundTags.stopFinal).getLiteral(), new AllomorphHH())
             .set(
-                new PS_P().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_F().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_p(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_f(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphPF(),
             )
             .set(
-                new PS_T().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_F().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_t(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_f(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphTF(),
             )
             .set(
-                new PS_K().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_F().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_k(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_f(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphKF(),
             )
             .set(
-                new PS_H().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_F().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_h(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_f(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphHF(),
             )
             .set(
-                new PS_PP().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_W().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_pp(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_w(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphPPW(),
             )
             .set(
-                new PS_TT().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_W().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_tt(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_w(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphTTW(),
             )
             .set(
-                new PS_KK().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_W().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_kk(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_w(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphKKW(),
             )
             .set(
-                new PS_HH().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_W().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_hh(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_w(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphHHW(),
             )
             .set(
-                new PS_H().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_Y().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_h(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_y(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphHY(),
             )
             .set(
-                new PS_PP().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_X().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_pp(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_x(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphPPX(),
             )
             .set(
-                new PS_TT().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_X().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_tt(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_x(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphTTX(),
             )
             .set(
-                new PS_KK().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_X().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_kk(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_x(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphKKX(),
             )
             .set(
-                new PS_HH().get(TonalSoundTags.stopFinal).getLiteral() +
-                    new PS_X().get(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_hh(TonalSoundTags.stopFinal).getLiteral() +
+                    ps_x(TonalSoundTags.checkedTonal).getLiteral(),
                 new AllomorphHHX(),
             );
     }
@@ -1380,10 +1019,10 @@ class UncombinedFreeAllomorphs {
 
     constructor() {
         this.o
-            .set(new PS_W().get(TonalSoundTags.freeTonal).getLiteral(), new AllomorphW())
-            .set(new PS_Z().get(TonalSoundTags.freeTonal).getLiteral(), new AllomorphZ())
-            .set(new PS_X().get(TonalSoundTags.freeTonal).getLiteral(), new AllomorphX())
-            .set(new PS_Y().get(TonalSoundTags.freeTonal).getLiteral(), new AllomorphY());
+            .set(ps_w(TonalSoundTags.freeTonal).getLiteral(), new AllomorphW())
+            .set(ps_z(TonalSoundTags.freeTonal).getLiteral(), new AllomorphZ())
+            .set(ps_x(TonalSoundTags.freeTonal).getLiteral(), new AllomorphX())
+            .set(ps_y(TonalSoundTags.freeTonal).getLiteral(), new AllomorphY());
     }
 
     has(key: string) {
@@ -1406,14 +1045,14 @@ class UncombinedCheckedAllomorphs {
 
     constructor() {
         this.o
-            .set(new PS_P().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphP())
-            .set(new PS_T().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphT())
-            .set(new PS_K().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphK())
-            .set(new PS_H().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphH())
-            .set(new PS_PP().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphPP())
-            .set(new PS_TT().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphTT())
-            .set(new PS_KK().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphKK())
-            .set(new PS_HH().get(TonalSoundTags.stopFinal).getLiteral(), new AllomorphHH());
+            .set(ps_p(TonalSoundTags.stopFinal).getLiteral(), new AllomorphP())
+            .set(ps_t(TonalSoundTags.stopFinal).getLiteral(), new AllomorphT())
+            .set(ps_k(TonalSoundTags.stopFinal).getLiteral(), new AllomorphK())
+            .set(ps_h(TonalSoundTags.stopFinal).getLiteral(), new AllomorphH())
+            .set(ps_pp(TonalSoundTags.stopFinal).getLiteral(), new AllomorphPP())
+            .set(ps_tt(TonalSoundTags.stopFinal).getLiteral(), new AllomorphTT())
+            .set(ps_kk(TonalSoundTags.stopFinal).getLiteral(), new AllomorphKK())
+            .set(ps_hh(TonalSoundTags.stopFinal).getLiteral(), new AllomorphHH());
     }
 
     get(key: string) {
@@ -1436,18 +1075,18 @@ class FreeAllomorphUncombiningRules {
 
     constructor() {
         this.o
-            .set(new PS_F().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalY()])
-            .set(new PS_W().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalX()])
-            .set(new PS_XX().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-            .set(new PS_XXX().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-            .set(new PS_Z().get(TonalSoundTags.freeTonal).getLiteral(), [
+            .set(ps_f(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalY()])
+            .set(ps_w(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalX()])
+            .set(ps_xx(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+            .set(ps_xxx(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+            .set(ps_z(TonalSoundTags.freeTonal).getLiteral(), [
                 new FreeTonalX(),
                 new FreeTonalF(),
                 new ZeroTonal(),
             ])
-            .set(new PS_ZX().get(TonalSoundTags.freeTonal).getLiteral(), [])
-            .set(new PS_X().get(TonalSoundTags.freeTonal).getLiteral(), [])
-            .set(new PS_Y().get(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalW()])
+            .set(ps_zx(TonalSoundTags.freeTonal).getLiteral(), [])
+            .set(ps_x(TonalSoundTags.freeTonal).getLiteral(), [])
+            .set(ps_y(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalW()])
             .set(TonalLetterTags.zero, [new FreeTonalY()]);
     }
 
@@ -1468,13 +1107,13 @@ class DeclensionRules {
     constructor() {
         this.o
             .set(TonalLetterTags.y, {
-                zero: new PS_Zero().get(TonalSoundTags.freeTonal),
-                w: new PS_W().get(TonalSoundTags.freeTonal),
-                z: new PS_Z().get(TonalSoundTags.freeTonal),
+                zero: ps_zero(TonalSoundTags.freeTonal),
+                w: ps_w(TonalSoundTags.freeTonal),
+                z: ps_z(TonalSoundTags.freeTonal),
             })
             .set(TonalLetterTags.zero, {
-                w: new PS_W().get(TonalSoundTags.freeTonal),
-                z: new PS_Z().get(TonalSoundTags.freeTonal),
+                w: ps_w(TonalSoundTags.freeTonal),
+                z: ps_z(TonalSoundTags.freeTonal),
             });
     }
 

@@ -310,7 +310,7 @@ export class Hatsuon extends SetOfSounds<FinalConsonant> {
 
 //------------------------------------------------------------------------------
 
-function positional(sounds: Sound[]) {
+export function positionalSound(sounds: Sound[]) {
     return (t: KanaSoundTags) => {
         for(let i in sounds) {
             if(sounds[i].name === t) return sounds[i];
@@ -319,29 +319,31 @@ function positional(sounds: Sound[]) {
     }
 }
 
-const ps_a = positional([new VowelA()]);
-const ps_b = positional([new InitialConsonantB(), new FinalConsonantB(), new GerminatedConsonantB()]);
-const ps_c = positional([new InitialConsonantC(), new GerminatedConsonantC()]);
-const ps_ch = positional([new InitialConsonantCH()]);
-const ps_d = positional([new InitialConsonantD(), new FinalConsonantD(), new GerminatedConsonantD()]);
-const ps_e = positional([new VowelE()]);
-const ps_f = positional([new InitialConsonantF()]);
-const ps_g = positional([new InitialConsonantG(), new FinalConsonantG(), new GerminatedConsonantG()]);
-const ps_h = positional([new InitialConsonantH()]);
-const ps_i = positional([new VowelI()]);
-const ps_j = positional([new InitialConsonantJ()]);
-const ps_k = positional([new InitialConsonantK(), new FinalConsonantK(), new GerminatedConsonantK()]);
-const ps_m = positional([new InitialConsonantM()]);
-const ps_n = positional([new InitialConsonantN(), new FinalConsonantN()]);
-const ps_o = positional([new VowelO()]);
-const ps_p = positional([new InitialConsonantP(), new FinalConsonantP(), new GerminatedConsonantP()]);
-const ps_r = positional([new InitialConsonantR()]);
-const ps_s = positional([new InitialConsonantS(), new FinalConsonantS(), new GerminatedConsonantS()]);
-const ps_t = positional([new InitialConsonantT(), new FinalConsonantT(), new GerminatedConsonantT()]);
-const ps_u = positional([new VowelU()]);
-const ps_w = positional([new InitialConsonantW(), new SemivowelW()]);
-const ps_y = positional([new InitialConsonantY(), new SemivowelY()]);
-const ps_z = positional([new InitialConsonantZ()]);
+const ps_a = positionalSound([new VowelA()]);
+const ps_b = positionalSound([new InitialConsonantB(), new FinalConsonantB(), new GerminatedConsonantB()]);
+const ps_c = positionalSound([new InitialConsonantC(), new GerminatedConsonantC()]);
+const ps_ch = positionalSound([new InitialConsonantCH()]);
+const ps_d = positionalSound([new InitialConsonantD(), new FinalConsonantD(), new GerminatedConsonantD()]);
+const ps_e = positionalSound([new VowelE()]);
+const ps_f = positionalSound([new InitialConsonantF()]);
+const ps_g = positionalSound([new InitialConsonantG(), new FinalConsonantG(), new GerminatedConsonantG()]);
+const ps_h = positionalSound([new InitialConsonantH()]);
+const ps_i = positionalSound([new VowelI()]);
+const ps_j = positionalSound([new InitialConsonantJ()]);
+const ps_k = positionalSound([new InitialConsonantK(), new FinalConsonantK(), new GerminatedConsonantK()]);
+const ps_l = positionalSound([new InitialConsonantL()]);
+const ps_m = positionalSound([new InitialConsonantM()]);
+const ps_n = positionalSound([new InitialConsonantN(), new FinalConsonantN()]);
+const ps_o = positionalSound([new VowelO()]);
+const ps_p = positionalSound([new InitialConsonantP(), new FinalConsonantP(), new GerminatedConsonantP()]);
+const ps_r = positionalSound([new InitialConsonantR()]);
+const ps_s = positionalSound([new InitialConsonantS(), new FinalConsonantS(), new GerminatedConsonantS()]);
+const ps_t = positionalSound([new InitialConsonantT(), new FinalConsonantT(), new GerminatedConsonantT()]);
+const ps_u = positionalSound([new VowelU()]);
+const ps_v = positionalSound([new InitialConsonantV()]);
+const ps_w = positionalSound([new InitialConsonantW(), new SemivowelW()]);
+const ps_y = positionalSound([new InitialConsonantY(), new SemivowelY()]);
+const ps_z = positionalSound([new InitialConsonantZ()]);
 
 //------------------------------------------------------------------------------
 export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>()
@@ -357,6 +359,7 @@ export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>(
     .set(KanaLetterTags.i, ps_i)
     .set(KanaLetterTags.j, ps_j)
     .set(KanaLetterTags.k, ps_k)
+    .set(KanaLetterTags.l, ps_l)
     .set(KanaLetterTags.m, ps_m)
     .set(KanaLetterTags.n, ps_n)
     .set(KanaLetterTags.o, ps_o)
@@ -365,6 +368,7 @@ export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>(
     .set(KanaLetterTags.s, ps_s)
     .set(KanaLetterTags.t, ps_t)
     .set(KanaLetterTags.u, ps_u)
+    .set(KanaLetterTags.v, ps_v)
     .set(KanaLetterTags.w, ps_w)
     .set(KanaLetterTags.y, ps_y)
     .set(KanaLetterTags.z, ps_z);

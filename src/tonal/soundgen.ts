@@ -20,9 +20,11 @@ function initialConsonant(sg: SoundGeneration) {
     const sis = new SetOfInitials();
 
     if(sis.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.initial);
+            // const s = ps.map.get(TonalSoundTags.initial);
+            const s = ps(TonalSoundTags.initial);
             if(s)
                 sg.sounds.push(s)
         }
@@ -37,9 +39,11 @@ function stopFinalConsonant(sg: SoundGeneration) {
     const ssfs = new SetOfStopFinals();
 
     if(ssfs.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.stopFinal);
+            // const s = ps.map.get(TonalSoundTags.stopFinal);
+            const s = ps(TonalSoundTags.stopFinal);
             if(s)
                 sg.sounds.push(s)
         }
@@ -52,9 +56,11 @@ function neutralFinalConsonant(sg: SoundGeneration) {
     const snfs = new SetOfNeutralFinals();
 
     if(snfs.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.stopFinal);
+            // const s = ps.map.get(TonalSoundTags.stopFinal);
+            const s = ps(TonalSoundTags.stopFinal);
             if(s)
                 sg.sounds.push(s)
         }
@@ -69,9 +75,11 @@ function nasalFinalConsonant(sg: SoundGeneration) {
     const snfs = new SetOfNasalFinals();
 
     if(snfs.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.nasalFinal);
+            // const s = ps.map.get(TonalSoundTags.nasalFinal);
+            const s = ps(TonalSoundTags.nasalFinal);
             if(s)
                 sg.sounds.push(s)
         }
@@ -86,9 +94,11 @@ function vowel(sg: SoundGeneration) {
     let matches: number = 0;
     for(let i = sg.sounds.length; i < sg.letters.length; i++) {
         if(sms.beginWith(sg.letters[i])) {
+            // const ps = tonalPositionalSound.get(sg.letters[i]);
             const ps = tonalPositionalSound.get(sg.letters[i]);
             if(ps) {
-                const s = ps.map.get(TonalSoundTags.medial);
+                // const s = ps.map.get(TonalSoundTags.medial);
+                const s = ps(TonalSoundTags.medial);
                 matches++;
                 if(s)
                     sg.sounds.push(s)
@@ -106,9 +116,11 @@ function materLectionis(sg: SoundGeneration) {
     const sml = new SetOfMaterLectionis();
 
     if(sml.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.medial);
+            // const s = ps.map.get(TonalSoundTags.medial);
+            const s = ps(TonalSoundTags.medial);
             if(s)
                 sg.sounds.push(s)
         }
@@ -123,9 +135,11 @@ function nasalization(sg: SoundGeneration) {
     const sns = new SetOfNasalizations();
 
     if(sns.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.nasalization);
+            // const s = ps.map.get(TonalSoundTags.nasalization);
+            const s = ps(TonalSoundTags.nasalization);
             if(s)
                 sg.sounds.push(s)
         }
@@ -140,9 +154,11 @@ function freeTone(sg: SoundGeneration) {
     const sfts = new SetOfFreeTonals();
 
     if(sfts.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.freeTonal);
+            // const s = ps.map.get(TonalSoundTags.freeTonal);
+            const s = ps(TonalSoundTags.freeTonal);
             if(s)
                 sg.sounds.push(s)
         }
@@ -157,9 +173,11 @@ function checkedTone(sg: SoundGeneration) {
     const scts = new SetOfCheckedTonals();
 
     if(scts.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.checkedTonal);
+            // const s = ps.map.get(TonalSoundTags.checkedTonal);
+            const s = ps(TonalSoundTags.checkedTonal);
             if(s)
                 sg.sounds.push(s)
         }
@@ -176,9 +194,11 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
 
     if(ef_bgjklps.beginWith(sg.letters[sg.sounds.length])
         || ef_bbggjjkkllppss.beginWith(sg.letters[sg.sounds.length])) {
+        // const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if(ps) {
-            const s = ps.map.get(TonalSoundTags.stopFinal);
+            // const s = ps.map.get(TonalSoundTags.stopFinal);
+            const s = ps(TonalSoundTags.stopFinal);
             if(s)
                 sg.sounds.push(s)
         }
