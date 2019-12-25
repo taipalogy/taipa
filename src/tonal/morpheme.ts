@@ -136,8 +136,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
             // when there are tonals
-            if(sm_bgjklps_f(letters[i-1].literal, letters[i].literal)
-                || sm_bbggjjkkllppss_wx(letters[i-1].literal, letters[i].literal)) {
+            if(literal.length > 1 && sm_bgjklps_f(letters[i-1].literal, letters[i].literal)
+                || literal.length > 1 && sm_bbggjjkkllppss_wx(letters[i-1].literal, letters[i].literal)) {
                 // for euphonic change of t and tt.
                 // this combining form is not present in the pool.
                 matched = literal;
@@ -298,8 +298,6 @@ export class TonalSyllable extends Syllable {
 }
 
 //------------------------------------------------------------------------------
-//  Tonal Uncombining Morpheme
-//------------------------------------------------------------------------------
 
 export class TonalUncombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
@@ -378,8 +376,6 @@ export class TonalUncombiningMorpheme extends Morpheme {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Tonal Lemmatization Morpheme Maker
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {

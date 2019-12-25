@@ -25,14 +25,10 @@ export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
 
 //------------------------------------------------------------------------------
-//  Tone Morpheme
-//------------------------------------------------------------------------------
 
 class PluralMorpheme {}
 class TonalMorpheme {}
 
-//------------------------------------------------------------------------------
-//  Root
 //------------------------------------------------------------------------------
 
 class LexicalRoot {
@@ -56,15 +52,11 @@ class GrammaticalSuffix {
 }
 
 //------------------------------------------------------------------------------
-//  Tone Sandhi Morpheme
-//------------------------------------------------------------------------------
 
 export abstract class Morpheme {
     abstract syllable: Syllable;
 }
 
-//------------------------------------------------------------------------------
-//  Syllable Patterns
 //------------------------------------------------------------------------------
 
 export class MatchedPattern {
@@ -75,8 +67,6 @@ export class MatchedPattern {
     } // length of pattern can be optionally returned
 }
 
-//------------------------------------------------------------------------------
-//  Syllable
 //------------------------------------------------------------------------------
 
 export class Syllable {
@@ -100,8 +90,6 @@ export class Syllable {
     }
 }
 
-//------------------------------------------------------------------------------
-//  Lexeme Maker
 //------------------------------------------------------------------------------
 
 export abstract class MorphemeMaker {
