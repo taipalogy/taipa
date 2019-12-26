@@ -1,14 +1,7 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import {
-    SetOfInitialConsonants,
-    SetOfVowels,
-    Hatsuon,
-    hiragana_katakana,
-    SetOfSemivowels,
-    gailaigo,
-} from './kana';
+import { SetOfInitialConsonants, SetOfVowels, Hatsuon, hiragana_katakana, SetOfSemivowels, gailaigo } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 import { KanaSoundGenerator } from './soundgen';
 

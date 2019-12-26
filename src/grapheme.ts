@@ -249,9 +249,9 @@ export class Sound {
 export class SetOfSounds<T extends Sound> {
     sounds = new Array<T>();
     beginWith(str: string) {
-        for(let i in this.sounds) {
-            if (str.search(this.sounds[i].getLiteral()) == 0 
-                && str.length == this.sounds[i].getLiteral().length) return true;
+        for (let i in this.sounds) {
+            if (str.search(this.sounds[i].getLiteral()) == 0 && str.length == this.sounds[i].getLiteral().length)
+                return true;
         }
         return false;
     }
@@ -259,8 +259,8 @@ export class SetOfSounds<T extends Sound> {
 
 //------------------------------------------------------------------------------
 
-
-export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
+export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) =>
+    fns.reduce((v, f) => f(v), x);
 
 export class SoundGeneration {
     letters: string[] = [];

@@ -172,6 +172,8 @@ export const list_of_lexical_roots = [
 
     'e', 'ey', 'ew', 'ex', 'ez', 'eh', 'ehh', 'enn', 'ennx',
 
+    'ek', 'ekk', 'eng', 'engy', 'engw', 'engx', 'engz',
+
     'gax', 'gaz', 'gaix', 'gaiz', 'gakk', 'gamy', 'gamx', 'gamz', 'gany',
     'ganw', 'ganx', 'ganz', 'gangz', 'gaux', 'gew', 'gex', 'gez', 'giy', 'gix',
     'giz', 'giax','giah', 'giahh', 'giamy', 'giamx', 'giamz', 'gieny', 'gienw',
@@ -208,12 +210,11 @@ export const list_of_lexical_roots = [
     'i', 'iy', 'iw', 'ix', 'iz', 'ia', 'iay', 'iaw', 'iax', 'iaz', 'iah',
     'iahh', 'iam', 'iamy', 'iamx', 'iamz', 'ien', 'ieny', 'ienw', 'ienx',
     'iang', 'iangz', 'iann', 'ianny', 'iannw', 'iannx', 'iannz', 'iap', 'iapp',
-    'iet', 'iett', 'iau', 'iauy', 'iauw', 'iaux', 'iauz', 'iaunn', 'ek', 'ekk',
-    'im', 'imy', 'imw', 'imx', 'in', 'iny', 'inw', 'inx', 'inz', 'eng', 'engy',
-    'engw', 'engx', 'engz', 'inn', 'inny', 'innw', 'innx', 'innz', 'iur',
-    'iury', 'iurx', 'iurh', 'iurhh', 'iok', 'iokk', 'iong', 'iongy', 'iongw',
-    'iongx', 'iongz', 'ip', 'it', 'itt', 'iu', 'iuy', 'iuw', 'iux', 'iuz',
-    'iunn', 'iunny', 'iunnx', 'iunnz',
+    'iet', 'iett', 'iau', 'iauy', 'iauw', 'iaux', 'iauz', 'iaunn', 'im', 'imy',
+    'imw', 'imx', 'in', 'iny', 'inw', 'inx', 'inz', 'inn', 'inny', 'innw',
+    'innx', 'innz', 'iur', 'iury', 'iurx', 'iurh', 'iurhh', 'iok', 'iokk',
+    'iong', 'iongy', 'iongw', 'iongx', 'iongz', 'ip', 'it', 'itt', 'iu', 'iuy',
+    'iuw', 'iux', 'iuz', 'iunn', 'iunny', 'iunnx', 'iunnz',
 
     'jiy', 'jix', 'jiz', 'jia', 'jiay', 'jiamy', 'jienx', 'jiangy', 'jiapp',
     'jiett', 'jiauy', 'jiauw', 'jiaux', 'jimy', 'jimx', 'jimz', 'jinx', 'jinz',

@@ -136,7 +136,7 @@ export class AuxiliarySurface extends ConstructionElement {
     }
 }
 
-type Class = { new(...args: any[]): any; };
+type Class = { new (...args: any[]): any };
 
 const objectFactory = function(name: Class, str: string) {
     const set = new Set<Class>()
@@ -145,14 +145,14 @@ const objectFactory = function(name: Class, str: string) {
         .add(AuxiliarySurface)
         .add(PersonalPronounSurface);
 
-    const createInstance = function <T extends ConstructionElement>(c: new (str: string) => T, str: string): T {
+    const createInstance = function<T extends ConstructionElement>(c: new (str: string) => T, str: string): T {
         return new c(str);
-    }
+    };
 
-    if(set.has(name)) {
+    if (set.has(name)) {
         return createInstance(name, str);
     }
-}
+};
 
 export class KeyWords {
     private keyElems: Array<ConstructionElement> = new Array();

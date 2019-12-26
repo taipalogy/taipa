@@ -1,15 +1,22 @@
 import { Sound, SoundGeneration, pipe } from '../grapheme';
-import { SetOfInitialConsonants, KanaSoundTags, SetOfVowels, SetOfGerminatedConsonants, SetOfFinalConsonants, SetOfSemivowels, kanaPositionalSound } from './kana';
+import {
+    SetOfInitialConsonants,
+    KanaSoundTags,
+    SetOfVowels,
+    SetOfGerminatedConsonants,
+    SetOfFinalConsonants,
+    SetOfSemivowels,
+    kanaPositionalSound,
+} from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
     const sics = new SetOfInitialConsonants();
 
-    if(sics.beginWith(sg.letters[sg.sounds.length])) {
+    if (sics.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if(ps) {
+        if (ps) {
             const s = ps(KanaSoundTags.initialConsonant);
-            if(s)
-                sg.sounds.push(s)
+            if (s) sg.sounds.push(s);
         }
     } else sg.bool = false;
 
@@ -19,42 +26,39 @@ function initialConsonant(sg: SoundGeneration) {
 function semivowel(sg: SoundGeneration) {
     const ssvs = new SetOfSemivowels();
 
-    if(ssvs.beginWith(sg.letters[sg.sounds.length])) {
+    if (ssvs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if(ps) {
+        if (ps) {
             const s = ps(KanaSoundTags.semivowel);
-            if(s)
-                sg.sounds.push(s)
+            if (s) sg.sounds.push(s);
         }
     }
-        
+
     return sg;
 }
 
 function vowel(sg: SoundGeneration) {
     const svs = new SetOfVowels();
 
-    if(svs.beginWith(sg.letters[sg.sounds.length])) {
+    if (svs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if(ps) {
+        if (ps) {
             const s = ps(KanaSoundTags.vowel);
-            if(s)
-                sg.sounds.push(s)
+            if (s) sg.sounds.push(s);
         }
     }
-        
+
     return sg;
 }
 
 function finalConsonant(sg: SoundGeneration) {
     const sfcs = new SetOfFinalConsonants();
 
-    if(sfcs.beginWith(sg.letters[sg.sounds.length])) {
+    if (sfcs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if(ps) {
+        if (ps) {
             const s = ps(KanaSoundTags.finalConsonant);
-            if(s)
-                sg.sounds.push(s)
+            if (s) sg.sounds.push(s);
         }
     }
 
@@ -64,12 +68,11 @@ function finalConsonant(sg: SoundGeneration) {
 function germinatedConsonant(sg: SoundGeneration) {
     const sgcs = new SetOfGerminatedConsonants();
 
-    if(sgcs.beginWith(sg.letters[sg.sounds.length])) {
+    if (sgcs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if(ps) {
+        if (ps) {
             const s = ps(KanaSoundTags.germinatedConsonant);
-            if(s)
-                sg.sounds.push(s)
+            if (s) sg.sounds.push(s);
         }
     }
 
@@ -77,14 +80,29 @@ function germinatedConsonant(sg: SoundGeneration) {
 }
 
 const sc_v = pipe(vowel);
-const sc_cv = pipe(initialConsonant, vowel);
-const sc_cvc = pipe(initialConsonant, vowel, finalConsonant);
-const sc_csv = pipe(initialConsonant, semivowel, vowel);
-const sc_ccv = pipe(germinatedConsonant, initialConsonant, vowel);
+const sc_cv = pipe(
+    initialConsonant,
+    vowel,
+);
+const sc_cvc = pipe(
+    initialConsonant,
+    vowel,
+    finalConsonant,
+);
+const sc_csv = pipe(
+    initialConsonant,
+    semivowel,
+    vowel,
+);
+const sc_ccv = pipe(
+    germinatedConsonant,
+    initialConsonant,
+    vowel,
+);
 
 export class KanaSoundGenerator {
     readonly sylCompositions = [sc_v, sc_cv, sc_cvc, sc_csv, sc_ccv];
-    
+
     private genSokuonAndGerminated(letters: string[], lookahead: string) {
         let strs: Array<string[]> = new Array();
 
@@ -122,12 +140,12 @@ export class KanaSoundGenerator {
         for (let i in strs) {
             // generates all needed sounds to be processed
 
-            for(let j = 0; j < this.sylCompositions.length; j++) {
+            for (let j = 0; j < this.sylCompositions.length; j++) {
                 let sg = new SoundGeneration();
                 sg.letters = strs[i];
                 //console.log(`j: ${j}`)
                 sg = this.sylCompositions[j](sg);
-                if(sg.letters.length == sg.sounds.length && sg.bool == true) {
+                if (sg.letters.length == sg.sounds.length && sg.bool == true) {
                     sequences.push(sg.sounds);
                     break;
                 }

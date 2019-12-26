@@ -21,7 +21,14 @@ import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound, Letters } from '../grapheme';
 import { TonalSoundGenerator } from './soundgen';
 import { list_of_lexical_roots } from './lexicalroots2';
-import { sm_mnng_h_f, sm_mnng_hh_wx, sm_bgjklps_f, sm_bbggjjkkllppss_wx, sm_bgjklps, sm_bbggjjkkllppss } from './matcher';
+import {
+    sm_mnng_h_f,
+    sm_mnng_hh_wx,
+    sm_bgjklps_f,
+    sm_bbggjjkkllppss_wx,
+    sm_bgjklps,
+    sm_bbggjjkkllppss,
+} from './matcher';
 
 //------------------------------------------------------------------------------
 
@@ -103,14 +110,14 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const ssf = new SetOfStopFinals();
     const faurs = freeAllomorphUncombiningRules;
 
-    const slicer = function (letters: Array<AlphabeticLetter>, beginOfSyllable: number, i: number) {
+    const slicer = function(letters: Array<AlphabeticLetter>, beginOfSyllable: number, i: number) {
         const slicedLetters = letters.slice(beginOfSyllable, i);
         let lit = '';
         for (let i in slicedLetters) {
             lit = lit + slicedLetters[i].literal;
         }
         return lit;
-    }
+    };
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -136,16 +143,22 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             //console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
             // when there are tonals
-            if(literal.length > 1 && sm_bgjklps_f(letters[i-1].literal, letters[i].literal)
-                || literal.length > 1 && sm_bbggjjkkllppss_wx(letters[i-1].literal, letters[i].literal)) {
+            if (
+                (literal.length > 1 && sm_bgjklps_f(letters[i - 1].literal, letters[i].literal)) ||
+                (literal.length > 1 && sm_bbggjjkkllppss_wx(letters[i - 1].literal, letters[i].literal))
+            ) {
                 // for euphonic change of t and tt.
                 // this combining form is not present in the pool.
                 matched = literal;
                 //begin = beginOfSyllable;
                 Object.assign(matchedLtrs, ltrs);
                 break;
-            } else if(literal.length > 2 && sm_mnng_h_f(letters[i-2].literal, letters[i-1].literal, letters[i].literal)
-                || literal.length > 2 && sm_mnng_hh_wx(letters[i-2].literal, letters[i-1].literal, letters[i].literal)) {
+            } else if (
+                (literal.length > 2 &&
+                    sm_mnng_h_f(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal)) ||
+                (literal.length > 2 &&
+                    sm_mnng_hh_wx(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal))
+            ) {
                 // for euphonic change of t and tt.
                 // this combining form is not present in the pool.
                 matched = literal;
@@ -183,8 +196,12 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             //console.log('no matched for syllabifyTonal:' + ltrs)
 
             // when there are no tonals
-            if(sm_bgjklps(letters[i].literal) && list_of_lexical_roots.includes(slicer(letters, beginOfSyllable, i) + TonalLetterTags.t)
-                || sm_bbggjjkkllppss(letters[i].literal) && list_of_lexical_roots.includes(slicer(letters, beginOfSyllable, i) + TonalLetterTags.tt)) {
+            if (
+                (sm_bgjklps(letters[i].literal) &&
+                    list_of_lexical_roots.includes(slicer(letters, beginOfSyllable, i) + TonalLetterTags.t)) ||
+                (sm_bbggjjkkllppss(letters[i].literal) &&
+                    list_of_lexical_roots.includes(slicer(letters, beginOfSyllable, i) + TonalLetterTags.tt))
+            ) {
                 // for euphonic change of t and tt.
                 // this combining form is not present in the pool.
                 matched = literal;
@@ -207,13 +224,12 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             // when there is no matched lexcial roots for this syllable, we still assign begin
             begin = beginOfSyllable;
         }
-
     }
 
     //console.log(`literal: ${literal}. matched: ${matched}`)
     //console.log(matchedLtrs)
 
-    if(matched.length > 0 && literal.length > matched.length) {
+    if (matched.length > 0 && literal.length > matched.length) {
         // when ~ay is longer than ~a by one letter y
         // for those first tone lexcial roots that are present
         matched = '';

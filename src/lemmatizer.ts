@@ -13,11 +13,11 @@ export class Lemmatizer {
         let len: number = 0;
 
         for (let i = 0; i < doc.tokens.length; i++) {
-            if(len == i) {
+            if (len == i) {
                 // loop over the doc.speeches sequence
-                if(j < doc.speeches.length) {
+                if (j < doc.speeches.length) {
                     len += doc.speeches[j].elements.length;
-                    if(j + 1 < doc.speeches.length) j++;
+                    if (j + 1 < doc.speeches.length) j++;
                     k = 0;
                 }
             } else {
@@ -56,13 +56,13 @@ export class Lemmatizer {
                     continue;
                 }
             }
-            if(doc.tokens[i].tag === Tagset.VB) {
-                if(i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.AUXN) {
+            if (doc.tokens[i].tag === Tagset.VB) {
+                if (i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.AUXN) {
                     doc.tokens[i].lemma = doc.tokens[i].text; // copy the base form
                     continue;
                 }
             }
-            if(k + 1 == doc.speeches[j].elements.length) {
+            if (k + 1 == doc.speeches[j].elements.length) {
                 // at the end of a speech
                 // need to further check if the speech is a noun chunk or verb phrase
                 doc.tokens[i].lemma = doc.tokens[i].text; // copy the base form

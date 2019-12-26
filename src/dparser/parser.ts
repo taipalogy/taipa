@@ -21,11 +21,11 @@ export class DependencyParser {
     private s1_b1_left_relations = new Map<string, DependencyLabels>();
 
     private s2_s1_right_relations = new Map<string, DependencyLabels>()
-        .set(Tagset.VB + Tagset.PPV,  DependencyLabels.compound_prt)
+        .set(Tagset.VB + Tagset.PPV, DependencyLabels.compound_prt)
         .set(Tagset.VB + Tagset.AUXN, DependencyLabels.aux)
         .set(Tagset.VB + Tagset.VB, DependencyLabels.compound)
         .set(Tagset.VB + Tagset.NPR, DependencyLabels.obj);
-    
+
     private s2_s1_left_relations = new Map<string, DependencyLabels>()
         .set(Tagset.AUX + Tagset.VB, DependencyLabels.aux)
         .set(Tagset.PADV + Tagset.VB, DependencyLabels.advmod)
@@ -60,7 +60,7 @@ export class DependencyParser {
         this.s2.head = this.s1;
         return new Relation(label, this.s1, this.s2);
     }
-    
+
     private set_s1_s2_b1() {
         this.s1 = new Token('');
         if (this.c.stack.length > 0) this.s1 = this.c.stack[this.c.stack.length - 1];
@@ -71,52 +71,53 @@ export class DependencyParser {
     }
 
     private set_s1_b1_relation(t: Transition) {
-        if(t instanceof RightArc) {
-            if(this.s1_b1_right_relations.has(this.s1.tag + this.b1.tag)) {
+        if (t instanceof RightArc) {
+            if (this.s1_b1_right_relations.has(this.s1.tag + this.b1.tag)) {
                 const rel = this.s1_b1_right_relations.get(this.s1.tag + this.b1.tag);
-                if(rel) {
+                if (rel) {
                     this.c.relations.push(this.rightRelation(rel));
                 }
             }
-        } else if(t instanceof LeftArc) {
-            if(this.s1_b1_left_relations.has(this.s1.tag + this.b1.tag)) {
+        } else if (t instanceof LeftArc) {
+            if (this.s1_b1_left_relations.has(this.s1.tag + this.b1.tag)) {
                 const rel = this.s1_b1_left_relations.get(this.s1.tag + this.b1.tag);
-                if(rel) {
+                if (rel) {
                     this.c.relations.push(this.leftRelation(rel));
                 }
             }
         }
     }
 
-    private s2_s1_left_features = new Map<string, DependencyLabels[]>()
-        .set(Tagset.NPR + Tagset.VB, [DependencyLabels.nsubj, DependencyLabels.dislocated]);
+    private s2_s1_left_features = new Map<string, DependencyLabels[]>().set(Tagset.NPR + Tagset.VB, [
+        DependencyLabels.nsubj,
+        DependencyLabels.dislocated,
+    ]);
 
     private set_s2_s1_relation(t: Transition) {
-        if(t instanceof RightArc) {
-            if(this.s2_s1_right_relations.has(this.s2.tag + this.s1.tag)) {
+        if (t instanceof RightArc) {
+            if (this.s2_s1_right_relations.has(this.s2.tag + this.s1.tag)) {
                 const rel = this.s2_s1_right_relations.get(this.s2.tag + this.s1.tag);
-                if(rel) {
+                if (rel) {
                     this.c.relations.push(this.rightRelation(rel));
                 }
             } else if (this.isStackEmpty()) {
                 this.c.relations.push(this.rightRelation(DependencyLabels.root));
             }
-        } else if(t instanceof LeftArc) {
-            if(this.s2_s1_left_relations.has(this.s2.tag + this.s1.tag)) {
+        } else if (t instanceof LeftArc) {
+            if (this.s2_s1_left_relations.has(this.s2.tag + this.s1.tag)) {
                 const rel = this.s2_s1_left_relations.get(this.s2.tag + this.s1.tag);
-                if(rel) {
+                if (rel) {
                     this.c.relations.push(this.leftRelation(rel));
                 }
-            } else if(this.s2_s1_left_features.has(this.s2.tag + this.s1.tag)) {
+            } else if (this.s2_s1_left_features.has(this.s2.tag + this.s1.tag)) {
                 const labels = this.s2_s1_left_features.get(this.s2.tag + this.s1.tag);
-                if(labels) {
-                    if(this.triggered == false) {
+                if (labels) {
+                    if (this.triggered == false) {
                         this.c.relations.push(this.leftRelation(labels[0]));
                         this.triggered = true;
                     } else {
                         this.c.relations.push(this.leftRelation(labels[1]));
                     }
-
                 }
             }
         }
@@ -140,7 +141,7 @@ export class DependencyParser {
         while (!this.c.isTerminalConfiguration()) {
             let t = guide.getNextTransition(this.c);
             if (t == null || t == undefined) break;
-    
+
             this.set_s1_s2_b1();
             if (this.s1.tag != '' && this.b1.tag != '') {
                 this.set_s1_b1_relation(t);

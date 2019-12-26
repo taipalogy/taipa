@@ -12,7 +12,7 @@ export const dict_of_phrasal_verbs = [
 ];
 
 interface IDictionary {
-    readonly [index: string]: string[]
+    readonly [index: string]: string[];
 }
 
 // prettier-ignore

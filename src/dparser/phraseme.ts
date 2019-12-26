@@ -17,8 +17,7 @@ export class TonalInflexionPhraseme extends Phraseme {
 }
 
 export class TonalInflexionPhrasemeMaker {
-    constructor() {
-    }
+    constructor() {}
 
     makePhrasemes(lexemeVerb: TonalInflexionLexeme, lexemeSubsidiary: TonalInflexionLexeme) {
         return this.make(lexemeVerb, lexemeSubsidiary);

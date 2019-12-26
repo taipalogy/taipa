@@ -312,11 +312,11 @@ export class Hatsuon extends SetOfSounds<FinalConsonant> {
 
 export function positionalSound(sounds: Sound[]) {
     return (t: KanaSoundTags) => {
-        for(let i in sounds) {
-            if(sounds[i].name === t) return sounds[i];
+        for (let i in sounds) {
+            if (sounds[i].name === t) return sounds[i];
         }
         return new Sound();
-    }
+    };
 }
 
 const ps_a = positionalSound([new VowelA()]);
@@ -446,49 +446,220 @@ export const hiragana_katakana = new Map<string, Array<string>>()
     .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぷ', 'プ'])
     .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ぺ', 'ペ'])
     .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぽ', 'ポ'])
-    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['きゃ', 'キャ'])
-    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['きゅ', 'キュ'])
-    .set(ps_k(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['きょ', 'キョ'])
-    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['しゃ', 'シャ'])
-    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['しゅ', 'シュ'])
-    .set(ps_s(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['しょ', 'ショ'])
-    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ちゃ', 'チャ'])
-    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ちゅ', 'チュ'])
-    .set(ps_c(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ちょ', 'チョ'])
-    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['にゃ', 'ニャ'])
-    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['にゅ', 'ニュ'])
-    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['にょ', 'ニョ'])
-    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ひゃ', 'ヒャ'])
-    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ひゅ', 'ヒュ'])
-    .set(ps_h(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ひょ', 'ヒョ'])
-    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['みゃ', 'ミャ'])
-    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['みゅ', 'みょ'])
-    .set(ps_m(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ミュ', 'ミョ'])
-    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['りゃ', 'リャ'])
-    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['りゅ', 'リュ'])
-    .set(ps_r(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['りょ', 'リョ'])
-    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ぎゃ', 'ギャ'])
-    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぎゅ', 'ギュ'])
-    .set(ps_g(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぎょ', 'ギョ'])
-    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['じゃ', 'ジャ'])
-    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['じゅ', 'ジュ'])
-    .set(ps_j(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['じょ', 'ジョ'])
-    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['びゃ', 'ビャ'])
-    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['びゅ', 'ビュ'])
-    .set(ps_b(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['びょ', 'ビョ'])
-    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ぴゃ', 'ピャ'])
-    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['ぴゅ', 'ピュ'])
-    .set(ps_p(KanaSoundTags.initialConsonant).getLiteral() + ps_y(KanaSoundTags.semivowel).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ぴょ', 'ピョ'])
+    .set(
+        ps_k(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['きゃ', 'キャ'],
+    )
+    .set(
+        ps_k(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['きゅ', 'キュ'],
+    )
+    .set(
+        ps_k(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['きょ', 'キョ'],
+    )
+    .set(
+        ps_s(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['しゃ', 'シャ'],
+    )
+    .set(
+        ps_s(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['しゅ', 'シュ'],
+    )
+    .set(
+        ps_s(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['しょ', 'ショ'],
+    )
+    .set(
+        ps_c(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['ちゃ', 'チャ'],
+    )
+    .set(
+        ps_c(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['ちゅ', 'チュ'],
+    )
+    .set(
+        ps_c(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['ちょ', 'チョ'],
+    )
+    .set(
+        ps_n(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['にゃ', 'ニャ'],
+    )
+    .set(
+        ps_n(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['にゅ', 'ニュ'],
+    )
+    .set(
+        ps_n(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['にょ', 'ニョ'],
+    )
+    .set(
+        ps_h(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['ひゃ', 'ヒャ'],
+    )
+    .set(
+        ps_h(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['ひゅ', 'ヒュ'],
+    )
+    .set(
+        ps_h(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['ひょ', 'ヒョ'],
+    )
+    .set(
+        ps_m(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['みゃ', 'ミャ'],
+    )
+    .set(
+        ps_m(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['みゅ', 'みょ'],
+    )
+    .set(
+        ps_m(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['ミュ', 'ミョ'],
+    )
+    .set(
+        ps_r(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['りゃ', 'リャ'],
+    )
+    .set(
+        ps_r(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['りゅ', 'リュ'],
+    )
+    .set(
+        ps_r(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['りょ', 'リョ'],
+    )
+    .set(
+        ps_g(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['ぎゃ', 'ギャ'],
+    )
+    .set(
+        ps_g(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['ぎゅ', 'ギュ'],
+    )
+    .set(
+        ps_g(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['ぎょ', 'ギョ'],
+    )
+    .set(
+        ps_j(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['じゃ', 'ジャ'],
+    )
+    .set(
+        ps_j(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['じゅ', 'ジュ'],
+    )
+    .set(
+        ps_j(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['じょ', 'ジョ'],
+    )
+    .set(
+        ps_b(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['びゃ', 'ビャ'],
+    )
+    .set(
+        ps_b(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['びゅ', 'ビュ'],
+    )
+    .set(
+        ps_b(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['びょ', 'ビョ'],
+    )
+    .set(
+        ps_p(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_a(KanaSoundTags.vowel).getLiteral(),
+        ['ぴゃ', 'ピャ'],
+    )
+    .set(
+        ps_p(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_u(KanaSoundTags.vowel).getLiteral(),
+        ['ぴゅ', 'ピュ'],
+    )
+    .set(
+        ps_p(KanaSoundTags.initialConsonant).getLiteral() +
+            ps_y(KanaSoundTags.semivowel).getLiteral() +
+            ps_o(KanaSoundTags.vowel).getLiteral(),
+        ['ぴょ', 'ピョ'],
+    )
     .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_a(KanaSoundTags.vowel).getLiteral(), ['ふぁ', 'ファ'])
     .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['ふぃ', 'フィ'])
     .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_e(KanaSoundTags.vowel).getLiteral(), ['ふぇ', 'フェ'])
     .set(ps_f(KanaSoundTags.initialConsonant).getLiteral() + ps_o(KanaSoundTags.vowel).getLiteral(), ['ふぉ', 'フォ']);
 
-export const kogakimoji = new Map<string, Array<string>>()
-    .set(ps_ch(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(), ['っ', 'ッ']);
+export const kogakimoji = new Map<string, Array<string>>().set(
+    ps_ch(KanaSoundTags.initialConsonant).getLiteral() + ps_u(KanaSoundTags.vowel).getLiteral(),
+    ['っ', 'ッ'],
+);
 
-export const hatsuon = new Map<string, Array<string>>()
-    .set(ps_n(KanaSoundTags.initialConsonant).getLiteral(), ['ん', 'ン']);
+export const hatsuon = new Map<string, Array<string>>().set(ps_n(KanaSoundTags.initialConsonant).getLiteral(), [
+    'ん',
+    'ン',
+]);
 
-export const gailaigo = new Map<string, Array<string>>()
-    .set(ps_d(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(), ['でぃ', 'ディ']);
+export const gailaigo = new Map<string, Array<string>>().set(
+    ps_d(KanaSoundTags.initialConsonant).getLiteral() + ps_i(KanaSoundTags.vowel).getLiteral(),
+    ['でぃ', 'ディ'],
+);

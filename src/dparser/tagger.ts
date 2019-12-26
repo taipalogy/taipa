@@ -24,9 +24,9 @@ export class RuleBasedTagger {
                         new EncliticSurface('aw'),
                     );
                     cps.push(pvwe);
-                } else if(ph.pos === POSTags.verb) {
+                } else if (ph.pos === POSTags.verb) {
                     const vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
-                    cps.push(vwe);        
+                    cps.push(vwe);
                 }
             }
         } else {
@@ -53,17 +53,17 @@ export class RuleBasedTagger {
         phrase.elements.push(vs);
         phrase.pos = POSTags.verb;
 
-        if(sequence.length > 1) {
-            for(let i = 1; i < sequence.length; i++) {
+        if (sequence.length > 1) {
+            for (let i = 1; i < sequence.length; i++) {
                 // skip the first array element
-                
+
                 let kw = this.rules.matchKeyWords(sequence[i]);
-                if(kw) {
+                if (kw) {
                     this.tagKeyWord(kw);
                     phrase.elements.push(kw);
                 }
 
-                if(sequence[i] === particle){
+                if (sequence[i] === particle) {
                     let ps: VerbSurface = new VerbSurface(sequence[i]);
                     ps.tag = Tagset.VB;
                     phrase.elements.push(ps);
@@ -72,7 +72,7 @@ export class RuleBasedTagger {
             }
         }
     }
-    
+
     private tagPhrases(phrases: ConstructionOfSpeech[]) {
         if (phrases.length > 0) {
             for (let ph of phrases) {
@@ -94,7 +94,7 @@ export class RuleBasedTagger {
     private phrase(strs: string[], beginOfPhrase: number) {
         let sequence: string[] = [];
         let phrss;
-        
+
         for (let i = beginOfPhrase; i < strs.length; i++) {
             sequence.push(strs[i]);
         }
@@ -102,15 +102,15 @@ export class RuleBasedTagger {
         phrss = this.rules.matches(sequence);
 
         const ptcl = this.rules.seperateMatches(sequence[0]);
-        if(ptcl) {
+        if (ptcl) {
             const sep = this.matchSeperates(sequence, ptcl);
-            if(sep) {
+            if (sep) {
                 phrss = [];
                 phrss = [sep];
             }
         }
 
-        if(!phrss) {
+        if (!phrss) {
             //console.log(sequence)
             let kw = this.rules.matchKeyWords(sequence[0]);
 

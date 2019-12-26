@@ -96,7 +96,7 @@ export class SetOfPhrasalVerbs {
 
     private populatePhrasemes() {
         const pva = new PhrasalVerbAnalyzer();
-        for(let i in dict_of_phrasal_verbs) {
+        for (let i in dict_of_phrasal_verbs) {
             this.phrms.push(pva.analyze(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
         }
     }
@@ -151,9 +151,9 @@ export class Rules {
 
     private lookupDictionary(str: string) {
         let phr;
-        if(dict_of_verbs.includes(str)) {
+        if (dict_of_verbs.includes(str)) {
             let vs: VerbSurface = new VerbSurface(str);
-            if(vs.pos === POSTags.verb) vs.tag = Tagset.VB;
+            if (vs.pos === POSTags.verb) vs.tag = Tagset.VB;
             phr = [new ConstructionOfSpeech()];
             phr[0].elements.push(vs);
             phr[0].pos = POSTags.verb;
@@ -190,7 +190,7 @@ export class Rules {
 
     seperateMatches(str: string) {
         const ptcls = dict_of_seperate_vv_compounds[str];
-        if(ptcls) {
+        if (ptcls) {
             return ptcls[0];
         }
     }
@@ -198,8 +198,8 @@ export class Rules {
     matches(sequence: string[]) {
         const phrD = this.lookupDictionary(sequence[0]);
         const phrR = this.lookupRules(sequence);
-        if(phrR) return phrR;
-        else if(phrD) return phrD;
+        if (phrR) return phrR;
+        else if (phrD) return phrD;
         return undefined;
     }
 
