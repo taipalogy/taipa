@@ -16,6 +16,7 @@ import {
     SetOfStopFinals,
     Epenthesis,
     TonalLetterTags,
+    lowerLettersOfTonal,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound, Letters } from '../grapheme';
@@ -29,6 +30,7 @@ import {
     sm_bgjklps,
     sm_bbggjjkkllppss,
 } from './matcher';
+import { Character } from '../character';
 
 //------------------------------------------------------------------------------
 
@@ -416,6 +418,44 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return tsm;
     }
 
+    private toStr(letters: Array<AlphabeticLetter>) {
+        let lit = '';
+        for (let i in letters) {
+            lit = lit + letters[i].literal;
+        }
+        return lit;
+    };
+
+    private replacedVoicedFinal(letters: Array<AlphabeticLetter>) {
+        const slicedLetters = letters.slice(0, letters.length-1);
+        const ltrs = this.toStr(slicedLetters);
+        if((sm_bgjklps(letters[letters.length-1].literal) && list_of_lexical_roots.includes(ltrs + TonalLetterTags.t))) {
+            let ls = letters.slice(0, letters.length-1);
+            ls.push(lowerLettersOfTonal.get(TonalLetterTags.t));
+            return ls;
+        }
+        return [];
+    }
+
+    private replaceMedial() {
+        return [];
+    }
+
+    preprocess(): AlphabeticLetter[] {
+        let letters = new Array<AlphabeticLetter>();
+
+        for(let i in this.graphemes) {
+            letters.push(this.graphemes[i].letter);
+        }
+
+        let ltrs = new Array<AlphabeticLetter>();
+
+        ltrs = this.replacedVoicedFinal(letters);
+
+        //return ltrs;
+        return letters;
+    }
+    
     makeMorphemes() {
         return this.make(this.preprocess(), syllabifyTonal);
     }

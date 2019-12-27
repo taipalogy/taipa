@@ -67,15 +67,14 @@ export enum TonalLetterTags {
 
     nn = 'nn',
 
-    cf = 'cf',
+    f = 'f',
     w = 'w',
+    x = 'x',
     xx = 'xx',
     xxx = 'xxx',
+    y = 'y',
     z = 'z',
     zx = 'zx',
-
-    x = 'x',
-    y = 'y',
 
     b = 'b',
     g = 'g',
@@ -96,11 +95,13 @@ export enum TonalLetterTags {
     ll = 'll',
     ss = 'ss',
 
-    f = 'f',
-
     h = 'h',
 
     zero = 'zero',
+
+    er = 'er',
+    ir = 'ir',
+    or = 'or',
 }
 
 export class LettersOfTonal extends Letters {}
@@ -147,9 +148,10 @@ export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.ss,
     TonalLetterTags.f,
     TonalLetterTags.h,
+    TonalLetterTags.er,
+    TonalLetterTags.ir,
+    TonalLetterTags.or,
 ]);
-
-export let vowelLettersOfTonal = new LettersOfTonal(['or', 'er', 'ir']);
 
 //------------------------------------------------------------------------------
 
@@ -218,6 +220,15 @@ class MedialU extends Medial {
 }
 class MedialUR extends Medial {
     characters = this.makeCharacters(TonalLetterTags.ur);
+}
+class MedialER extends Medial {
+    characters = this.makeCharacters(TonalLetterTags.er);
+}
+class MedialIR extends Medial {
+    characters = this.makeCharacters(TonalLetterTags.ir);
+}
+class MedialOR extends Medial {
+    characters = this.makeCharacters(TonalLetterTags.or);
 }
 
 class MaterLectionisM extends Medial {
@@ -621,12 +632,14 @@ const ps_c = positionalSound([new InitialC()]);
 const ps_ch = positionalSound([new InitialCH()]);
 const ps_d = positionalSound([new InitialD()]);
 const ps_e = positionalSound([new MedialE()]);
+const ps_er = positionalSound([new MedialER()]);
 const ps_f = positionalSound([new FreeTonalF(), new CheckedTonalF()]);
 const ps_g = positionalSound([new InitialG(), new FinalG()]);
 const ps_gg = positionalSound([new FinalGG()]);
 const ps_h = positionalSound([new InitialH(), new FinalH()]);
 const ps_hh = positionalSound([new FinalHH()]);
 const ps_i = positionalSound([new MedialI()]);
+const ps_ir = positionalSound([new MedialIR()]);
 const ps_j = positionalSound([new InitialJ(), new FinalJ()]);
 const ps_jj = positionalSound([new FinalJJ()]);
 const ps_k = positionalSound([new InitialK(), new FinalK()]);
@@ -638,6 +651,7 @@ const ps_n = positionalSound([new InitialN(), new MaterLectionisN(), new FinalN(
 const ps_nn = positionalSound([new NasalizationNN()]);
 const ps_ng = positionalSound([new InitialNG(), new MaterLectionisNG(), new FinalNG()]);
 const ps_o = positionalSound([new MedialO()]);
+const ps_or = positionalSound([new MedialOR()]);
 const ps_p = positionalSound([new InitialP(), new FinalP()]);
 const ps_pp = positionalSound([new FinalPP()]);
 const ps_q = positionalSound([new InitialQ()]);
@@ -719,12 +733,14 @@ export const tonalPositionalSound = new Map<string, (t: TonalSoundTags) => Sound
     .set(TonalLetterTags.ch, ps_ch)
     .set(TonalLetterTags.d, ps_d)
     .set(TonalLetterTags.e, ps_e)
+    .set(TonalLetterTags.er, ps_er)
     .set(TonalLetterTags.f, ps_f)
     .set(TonalLetterTags.g, ps_g)
     .set(TonalLetterTags.gg, ps_gg)
     .set(TonalLetterTags.h, ps_h)
     .set(TonalLetterTags.hh, ps_hh)
     .set(TonalLetterTags.i, ps_i)
+    .set(TonalLetterTags.ir, ps_ir)
     .set(TonalLetterTags.j, ps_j)
     .set(TonalLetterTags.jj, ps_jj)
     .set(TonalLetterTags.k, ps_k)
@@ -736,6 +752,7 @@ export const tonalPositionalSound = new Map<string, (t: TonalSoundTags) => Sound
     .set(TonalLetterTags.nn, ps_nn)
     .set(TonalLetterTags.ng, ps_ng)
     .set(TonalLetterTags.o, ps_o)
+    .set(TonalLetterTags.or, ps_or)
     .set(TonalLetterTags.p, ps_p)
     .set(TonalLetterTags.pp, ps_pp)
     .set(TonalLetterTags.q, ps_q)
