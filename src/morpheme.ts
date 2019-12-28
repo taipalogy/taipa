@@ -112,8 +112,10 @@ export abstract class MorphemeMaker {
     make(
         letters: Array<AlphabeticLetter>,
         syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number) => MatchedPattern,
-    ): Morpheme[] {
-        let morphemes = this.createMorphemes();
+    // ): Morpheme[] {
+    ): MatchedPattern[] {
+        // let morphemes = this.createMorphemes();
+        let patterns = new Array<MatchedPattern>();
         let beginOfSyllable: number = 0;
         for (let i = 0; i < letters.length; i++) {
             let msp: MatchedPattern = new MatchedPattern();
@@ -132,15 +134,18 @@ export abstract class MorphemeMaker {
                     for (let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    morphemes.push(this.createMorpheme(msp, this.metaplasm));
+                    // morphemes.push(this.createMorpheme(msp, this.metaplasm));
+                    patterns.push(msp);
                 }
 
                 beginOfSyllable += msp.matchedLength;
             }
 
-            if (morphemes.length == 0) {
+            // if (morphemes.length == 0) {
+            if (patterns.length == 0) {
                 //console.log('nothing matched')
-            } else if (morphemes.length >= 1) {
+            // } else if (morphemes.length >= 1) {
+            } else if (patterns.length >= 1) {
                 if (msp == undefined) break;
 
                 if (msp.matchedLength > 0) {
@@ -149,6 +154,7 @@ export abstract class MorphemeMaker {
             }
         }
 
-        return morphemes;
+        // return morphemes;
+        return patterns;
     }
 }

@@ -194,7 +194,20 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
         return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), kcm);
     }
 
+    private postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
+        let morphemes = this.createMorphemes();
+        for(let i in patterns) {
+            morphemes.push(this.createMorpheme(patterns[i], this.metaplasm));
+        }
+        return morphemes;
+    }
+
     makeInputingMorphemes() {
-        return this.make(this.preprocess(), syllabifyKana);
+        const ltrs = this.preprocess();
+        const ptrns = this.make(ltrs, syllabifyKana);
+        const ms = this.postprocess(ptrns);
+
+        // return ptrns;
+        return ms;
     }
 }
