@@ -108,14 +108,6 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
         return new TonalCombiningMorpheme(new TonalSyllable(msp.letters), tcm);
     }
 
-    private postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
-        let morphemes = this.createMorphemes();
-        for(let i in patterns) {
-            morphemes.push(this.createMorpheme(patterns[i], this.metaplasm));
-        }
-        return morphemes;
-    }
-
     makeMorphemes() {
         const ltrs = this.preprocess();
         const ptrns = this.make(ltrs, syllabifyTonal);

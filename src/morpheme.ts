@@ -96,13 +96,21 @@ export abstract class MorphemeMaker {
     abstract graphemes: Array<AlphabeticGrapheme>;
     abstract metaplasm: CombiningMetaplasm;
 
-    preprocess() {
+    protected preprocess() {
         // unpack graphemes and get letters from them
         let letters: Array<AlphabeticLetter> = new Array();
         for (let key in this.graphemes) {
             letters.push(this.graphemes[key].letter);
         }
         return letters;
+    }
+
+    protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
+        let morphemes = this.createMorphemes();
+        for(let i in patterns) {
+            morphemes.push(this.createMorpheme(patterns[i], this.metaplasm));
+        }
+        return morphemes;
     }
 
     abstract createMorphemes(): Morpheme[];
@@ -112,9 +120,7 @@ export abstract class MorphemeMaker {
     make(
         letters: Array<AlphabeticLetter>,
         syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number) => MatchedPattern,
-    // ): Morpheme[] {
     ): MatchedPattern[] {
-        // let morphemes = this.createMorphemes();
         let patterns = new Array<MatchedPattern>();
         let beginOfSyllable: number = 0;
         for (let i = 0; i < letters.length; i++) {
@@ -134,17 +140,14 @@ export abstract class MorphemeMaker {
                     for (let j in msp.letters) {
                         //console.log("msp.letters: %s", msp.letters[j].literal)
                     }
-                    // morphemes.push(this.createMorpheme(msp, this.metaplasm));
                     patterns.push(msp);
                 }
 
                 beginOfSyllable += msp.matchedLength;
             }
 
-            // if (morphemes.length == 0) {
             if (patterns.length == 0) {
                 //console.log('nothing matched')
-            // } else if (morphemes.length >= 1) {
             } else if (patterns.length >= 1) {
                 if (msp == undefined) break;
 
@@ -154,7 +157,6 @@ export abstract class MorphemeMaker {
             }
         }
 
-        // return morphemes;
         return patterns;
     }
 }
