@@ -29,6 +29,8 @@ export const sm_mnng_hh_wx = function(nasalFinal: string, neutralFinalHH: string
     return false;
 };
 
+export const regex_js_f = /[j|s]f/g;
+
 export const sm_bgjklps_f = function(euphonicFinalBGJKLPS: string, firstTonalF: string) {
     const efs = new EuphonicFinalsBGJKLPS();
     const ft_f = new FirstTonalF();
