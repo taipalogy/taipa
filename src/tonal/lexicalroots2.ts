@@ -99,7 +99,7 @@ export const list_of_lexical_roots = [
     'bauy', 'bauz', 'bey', 'bex', 'bez', 'beh', 'behh', 'biy', 'bix', 'biz',
     'bieny', 'bienx', 'bienz','biett', 'biauy', 'biaux', 'biauz', 'bih',
     'bihh', 'bekk', 'biny', 'binx', 'binz', 'bengy', 'bengx', 'bengz', 'biury',
-    'biurx','biurz', 'bit', 'biuz', 'bury', 'burx', 'burz', 'bok', 'bokk',
+    'biurx','biurz', 'bitt', 'biuz', 'bury', 'burx', 'burz', 'bok', 'bokk',
     'bong', 'bongy', 'bongw', 'bongx', 'bongz', 'boy', 'box', 'boz', 'buy',
     'bux', 'buz', 'boax', 'boah', 'boahh', 'boany', 'boatt', 'boey', 'boex',
     'boez', 'boehh', 'bui', 'buny', 'bunw', 'bunx', 'bunz', 'but', 'butt',

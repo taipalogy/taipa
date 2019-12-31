@@ -559,6 +559,25 @@ export class Epenthesis extends SetOfSounds<Initial> {
     }
 }
 
+export class EuphonicFinalsJLS extends SetOfSounds<Final> {
+    constructor() {
+        super();
+        this.sounds.push(new FinalJ());
+        this.sounds.push(new FinalL());
+        this.sounds.push(new FinalS());
+    }
+}
+
+export class EuphonicFinalsBGKP extends SetOfSounds<Final> {
+    constructor() {
+        super();
+        this.sounds.push(new FinalB());
+        this.sounds.push(new FinalG());
+        this.sounds.push(new FinalK());
+        this.sounds.push(new FinalP());
+    }
+}
+
 export class EuphonicFinalsBGJKLPS extends SetOfSounds<Final> {
     constructor() {
         super();
@@ -569,6 +588,25 @@ export class EuphonicFinalsBGJKLPS extends SetOfSounds<Final> {
         this.sounds.push(new FinalL());
         this.sounds.push(new FinalP());
         this.sounds.push(new FinalS());
+    }
+}
+
+export class EuphonicFinalsJJLLSS extends SetOfSounds<Final> {
+    constructor() {
+        super();
+        this.sounds.push(new FinalJJ());
+        this.sounds.push(new FinalLL());
+        this.sounds.push(new FinalSS());
+    }
+}
+
+export class EuphonicFinalsBBGGKKPP extends SetOfSounds<Final> {
+    constructor() {
+        super();
+        this.sounds.push(new FinalBB());
+        this.sounds.push(new FinalGG());
+        this.sounds.push(new FinalKK());
+        this.sounds.push(new FinalPP());
     }
 }
 
