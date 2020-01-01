@@ -23,7 +23,7 @@ import {
     ThirdFifthTonalsWX,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
-import { AlphabeticLetter, AlphabeticGrapheme, Sound, Letters } from '../grapheme';
+import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 import { TonalSoundGenerator } from './soundgen';
 import { list_of_lexical_roots } from './lexicalroots2';
 import {
@@ -39,6 +39,7 @@ import {
     sm_jls_f,
     sm_jjllss_wx,
 } from './matcher';
+import { SetOfInitialConsonants } from '../kana/kana';
 
 //------------------------------------------------------------------------------
 
@@ -461,6 +462,10 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                 const sub1 = literal.substring(0, idxl);
                 const sub2 = literal.substring(idxl + arr[i].length);
 
+                // in case of hmhhw or hmhhwhmhhw
+                // check if the previous letter is a consonant
+                if(new SetOfInitialConsonants().beginWith(sub1)) return letters;
+
                 let fnl
                 if(new FirstTonalF().beginWith(arr[i].charAt(arr[i].length-1))) {
                     literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);                
@@ -519,8 +524,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_mnng_h_f, 2);
             return ls;
         } else if (literal.length > 2 && regex_mnng_hh_wx.test(literal)) {
-            // in case of hmhhw whose base form is hmhh
-            if(list_of_lexical_roots.includes(literal.slice(0, literal.length-1))) return letters;
             const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_mnng_hh_wx, 2);
             return ls;
         }
