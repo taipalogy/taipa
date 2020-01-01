@@ -4,8 +4,6 @@ import {
     FirstTonalF,
     NeutralFinalHH,
     ThirdFifthTonalsWX,
-    EuphonicFinalsBGJKLPS,
-    EuphonicFinalsBBGGJJKKLLPPSS,
     TonalLetterTags,
     EuphonicFinalsJLS,
     EuphonicFinalsBGKP,
@@ -13,7 +11,7 @@ import {
     EuphonicFinalsBBGGKKPP,
 } from './version2';
 
-export const regex_mnng_h_f = /[m|n|ng]hf/g;
+export const regex_mnng_h_f = /(m|ng?)hf/g;
 
 export const sm_mnng_h_f = function(nasalFinal: string, neutralFinalH: string, firstTonalF: string) {
     const snfs = new SetOfNasalFinals();
@@ -25,7 +23,7 @@ export const sm_mnng_h_f = function(nasalFinal: string, neutralFinalH: string, f
     return false;
 };
 
-export const regex_mnng_hh_wx = /[m|n|ng]hh[w|x]/g;
+export const regex_mnng_hh_wx = /(m|ng?)hh(w|x)/g;
 
 export const sm_m_hh_w = function(nasalFinal: string, neutralFinalHH: string, thirdTonalW: string) {
     if (nasalFinal === TonalLetterTags.m && neutralFinalHH === TonalLetterTags.hh && thirdTonalW === TonalLetterTags.w)
@@ -45,27 +43,7 @@ export const sm_mnng_hh_wx = function(nasalFinal: string, neutralFinalHH: string
     return false;
 };
 
-export const regex_jls_f = /[j|l|s]f/g;
-
-export const sm_bgjklps_f = function(euphonicFinalBGJKLPS: string, firstTonalF: string) {
-    const efs = new EuphonicFinalsBGJKLPS();
-    const ft_f = new FirstTonalF();
-
-    if (efs.beginWith(euphonicFinalBGJKLPS) && ft_f.beginWith(firstTonalF)) return true;
-
-    return false;
-};
-
-export const regex_jjllss_wx = /[jj|ll|ss][w|x]/g;
-
-export const sm_bbggjjkkllppss_wx = function(euphonicFinalBBGGJJKKLLPPSS: string, thirdFifthTonalWX: string) {
-    const efs = new EuphonicFinalsBBGGJJKKLLPPSS();
-    const fts_wx = new ThirdFifthTonalsWX();
-
-    if (efs.beginWith(euphonicFinalBBGGJJKKLLPPSS) && fts_wx.beginWith(thirdFifthTonalWX)) return true;
-
-    return false;
-};
+export const regex_jls_f = /(j|l|s)f/g;
 
 export const sm_jls_f = function(euphonicFinalJLS: string, firstTonalF: string) {
     const efs = new EuphonicFinalsJLS();
@@ -85,6 +63,8 @@ export const sm_bgkp_f = function(euphonicFinalBGJKLPS: string, firstTonalF: str
     return false;
 };
 
+export const regex_jjllss_wx = /(jj|ll|ss)(w|x)/g;
+
 export const sm_jjllss_wx = function(euphonicFinalJJLLSS: string, thirdFifthTonalWX: string) {
     const efs = new EuphonicFinalsJJLLSS();
     const fts_wx = new ThirdFifthTonalsWX();
@@ -99,22 +79,6 @@ export const sm_bbggkkpp_wx = function(euphonicFinalBBGGJJKKLLPPSS: string, thir
     const fts_wx = new ThirdFifthTonalsWX();
 
     if (efs.beginWith(euphonicFinalBBGGJJKKLLPPSS) && fts_wx.beginWith(thirdFifthTonalWX)) return true;
-
-    return false;
-};
-
-export const sm_bgjklps = function(euphonicFinalBGJKLPS: string) {
-    const efs = new EuphonicFinalsBGJKLPS();
-
-    if (efs.beginWith(euphonicFinalBGJKLPS)) return true;
-
-    return false;
-};
-
-export const sm_bbggjjkkllppss = function(euphonicFinalBBGGJJKKLLPPSS: string) {
-    const efs = new EuphonicFinalsBBGGJJKKLLPPSS();
-
-    if (efs.beginWith(euphonicFinalBBGGJJKKLLPPSS)) return true;
 
     return false;
 };
