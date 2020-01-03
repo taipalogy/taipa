@@ -8,7 +8,6 @@ describe("Kana testing", () => {
     doc = cli.processKana('forumosa')
 
     test("kanas", () => {
-        expect(doc.blockSequences[0]).toEqual('ふぉるもさ');  
         expect(doc.blockSequences[1]).toEqual('フォルモサ');
     });
 });
@@ -92,7 +91,6 @@ describe("Kana testing", () => {
     doc = cli.processKana('di')
 
     test("kanas", () => {
-        expect(doc.blockSequences[0]).toEqual('でぃ');
         expect(doc.blockSequences[1]).toEqual('ディ');
     });
 });
