@@ -31,9 +31,9 @@ export class TonalInflexionLexeme extends Lexeme {
     otherForms: Array<TonalWord> = new Array(); // inflected or may be derived forms
     private tse: TonalSymbolEnding;
 
-    constructor(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
+    constructor(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
         super();
-        this.word = word;
+        this.word = new TonalWord(ms.map(it => it.syllable));
 
         if (ms.length > 0) {
             if (ms[ms.length - 1].allomorph) {
@@ -74,28 +74,15 @@ export class TonalInflexionLexeme extends Lexeme {
 //------------------------------------------------------------------------------
 
 export class TonalInflexionLexemeMaker extends LexemeMaker {
-    morphemes: Array<TonalCombiningMorpheme>;
-
-    constructor(morphemes: Array<TonalCombiningMorpheme>, private tim: TonalInflectingMetaplasm) {
+    constructor(private tim: TonalInflectingMetaplasm) {
         super();
-        this.morphemes = new Array();
-        this.morphemes = morphemes;
     }
 
-    preprocess() {
-        let syllables: Array<TonalSyllable> = new Array();
-        for (let key in this.morphemes) {
-            syllables.push(this.morphemes[key].syllable);
-        }
-
-        return syllables;
+    makeLexemes(ms: Array<TonalCombiningMorpheme>) {
+        return this.make(ms);
     }
 
-    makeLexemes() {
-        return this.make(this.preprocess());
-    }
-
-    make(syllables: Array<TonalSyllable>) {
-        return new TonalInflexionLexeme(new TonalWord(syllables), this.morphemes, this.tim);
+    protected make(ms: Array<TonalCombiningMorpheme>) {
+        return new TonalInflexionLexeme(ms, this.tim);
     }
 }

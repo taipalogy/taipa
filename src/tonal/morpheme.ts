@@ -397,15 +397,12 @@ export class TonalUncombiningMorpheme extends Morpheme {
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
-    graphemes: Array<AlphabeticGrapheme>;
     metaplasm: TonalCombiningMetaplasm;
     private euphonicFinals = new Array<AlphabeticLetter>();
     private euphonicFinalTonals = new Array<{ index: number, letters: AlphabeticLetter[] }>();
 
-    constructor(gs: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
+    constructor(tsm: TonalCombiningMetaplasm) {
         super();
-        this.graphemes = new Array();
-        this.graphemes = gs;
         this.metaplasm = tsm;
     }
 
@@ -539,12 +536,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return [];
     }
 
-    protected preprocess(): AlphabeticLetter[] {
-        let letters = new Array<AlphabeticLetter>();
-
-        for(let i in this.graphemes) {
-            letters.push(this.graphemes[i].letter);
-        }
+    protected preprocess(gs: Array<AlphabeticGrapheme>): AlphabeticLetter[] {
+        let letters = gs.map(it => it.letter);
 
         let ltrs = new Array<AlphabeticLetter>();
 
@@ -597,8 +590,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return morphemes;
     }
     
-    makeMorphemes() {
-        const ltrs = this.preprocess();
+    makeMorphemes(gs: Array<AlphabeticGrapheme>) {
+        const ltrs = this.preprocess(gs);
         const ptrns = this.make(ltrs, syllabifyTonal);
         const ms = this.postprocess(ptrns);
 

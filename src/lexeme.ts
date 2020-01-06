@@ -55,9 +55,5 @@ export class Word {
 //------------------------------------------------------------------------------
 
 export abstract class LexemeMaker {
-    abstract morphemes: Array<Morpheme>;
-
-    abstract preprocess(): Syllable[];
-
-    abstract make(syllables: Array<Syllable>): Lexeme;
+    protected abstract make(ms: Array<Morpheme>): Lexeme;
 }

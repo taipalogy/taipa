@@ -176,13 +176,10 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 //------------------------------------------------------------------------------
 
 export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
-    graphemes: Array<AlphabeticGrapheme>;
     metaplasm: KanaCombiningMetaplasm;
 
-    constructor(gs: Array<AlphabeticGrapheme>, kcm: KanaCombiningMetaplasm) {
+    constructor(kcm: KanaCombiningMetaplasm) {
         super();
-        this.graphemes = new Array();
-        this.graphemes = gs;
         this.metaplasm = kcm;
     }
 
@@ -194,12 +191,11 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
         return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), kcm);
     }
 
-    makeInputingMorphemes() {
-        const ltrs = this.preprocess();
+    makeInputingMorphemes(gs: Array<AlphabeticGrapheme>) {
+        const ltrs = gs.map(it => it.letter);
         const ptrns = this.make(ltrs, syllabifyKana);
         const ms = this.postprocess(ptrns);
 
-        // return ptrns;
         return ms;
     }
 }

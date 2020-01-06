@@ -94,29 +94,26 @@ export class Letters {
 //------------------------------------------------------------------------------
 
 export class GraphemeMaker {
-    characters: Array<Character>;
-    list: Array<AlphabeticLetter>;
+    private list: Array<AlphabeticLetter>;
 
-    constructor(l: string, lowerLetters: Letters) {
-        this.characters = new Array();
-        let len = l.length;
-        for (var i = 0; i < len; i++) {
-            if (l.charAt(i) != '\0') {
-                this.characters.push(new Character(l.charAt(i)));
-            }
-        }
-
+    constructor(lowerLetters: Letters) {
         this.list = new Array();
-
         this.list = Array.from(lowerLetters.values);
     }
 
-    makeGraphemes() {
-        let graphemes = this.make(this.characters);
+    makeGraphemes(str: string) {
+        const characters = new Array();
+        for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) != '\0') {
+                characters.push(new Character(str.charAt(i)));
+            }
+        }
+
+        let graphemes = this.make(characters);
         return graphemes;
     }
 
-    getMatchedSequence(characters: Array<Character>, beginOfLetter: number, candidates: Array<AlphabeticLetter>) {
+    private getMatchedSequence(characters: Array<Character>, beginOfLetter: number, candidates: Array<AlphabeticLetter>) {
         let ms = new MatchedSequence();
         let matchedLen = 0;
 
@@ -163,7 +160,7 @@ export class GraphemeMaker {
         return ms;
     }
 
-    make(characters: Array<Character>) {
+    private make(characters: Array<Character>) {
         let graphemes: Array<AlphabeticGrapheme> = new Array();
         //console.log("metadata letter array length %d. ", letters.length);
         let beginOfLetter: number = 0;

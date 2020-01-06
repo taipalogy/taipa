@@ -12,8 +12,8 @@ import { KanaCombiningMetaplasm } from '../morpheme';
 export class KanaAnalyzer extends Analyzer {
     graphAnalyze(str: string) {
         // graphemic analysis
-        let gm = new GraphemeMaker(str, lowerLettersOfKana);
-        return gm.makeGraphemes();
+        const gm = new GraphemeMaker(lowerLettersOfKana);
+        return gm.makeGraphemes(str);
     }
 
     morphAnalyze(str: string): KanaUncombiningMorpheme[];
@@ -27,7 +27,7 @@ export class KanaAnalyzer extends Analyzer {
             graphemes = this.graphAnalyze(x);
         }
 
-        let kimm = new KanaUncombiningMorphemeMaker(graphemes, new KanaCombiningMetaplasm());
-        return kimm.makeInputingMorphemes();
+        const mm = new KanaUncombiningMorphemeMaker(new KanaCombiningMetaplasm());
+        return mm.makeInputingMorphemes(graphemes);
     }
 }

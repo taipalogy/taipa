@@ -93,17 +93,7 @@ export class Syllable {
 //------------------------------------------------------------------------------
 
 export abstract class MorphemeMaker {
-    abstract graphemes: Array<AlphabeticGrapheme>;
     abstract metaplasm: CombiningMetaplasm;
-
-    protected preprocess() {
-        // unpack graphemes and get letters from them
-        let letters: Array<AlphabeticLetter> = new Array();
-        for (let key in this.graphemes) {
-            letters.push(this.graphemes[key].letter);
-        }
-        return letters;
-    }
 
     protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
         let morphemes = this.createMorphemes();

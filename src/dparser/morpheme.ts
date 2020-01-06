@@ -90,13 +90,10 @@ export class TonalCombiningMorpheme extends Morpheme {
 }
 
 export class TonalCombiningMorphemeMaker extends MorphemeMaker {
-    graphemes: Array<AlphabeticGrapheme>;
     metaplasm: TonalCombiningMetaplasm;
 
-    constructor(graphemes: Array<AlphabeticGrapheme>, tsm: TonalCombiningMetaplasm) {
+    constructor(tsm: TonalCombiningMetaplasm) {
         super();
-        this.graphemes = new Array();
-        this.graphemes = graphemes;
         this.metaplasm = tsm;
     }
 
@@ -108,12 +105,11 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
         return new TonalCombiningMorpheme(new TonalSyllable(msp.letters), tcm);
     }
 
-    makeMorphemes() {
-        const ltrs = this.preprocess();
+    makeMorphemes(gs: Array<AlphabeticGrapheme>) {
+        const ltrs = gs.map(it => it.letter);
         const ptrns = this.make(ltrs, syllabifyTonal);
         const ms = this.postprocess(ptrns);
         
-        // return ptrns;
         return ms;
     }
 }

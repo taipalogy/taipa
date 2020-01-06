@@ -13,8 +13,8 @@ import { TonalInflexionPhrasemeMaker } from './phraseme';
 export class TonalInflextionAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
-        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        return gm.makeGraphemes();
+        const gm = new GraphemeMaker(lowerLettersOfTonal);
+        return gm.makeGraphemes(str);
     }
 
     morphAnalyze(str: string, tcm: TonalCombiningMetaplasm): TonalCombiningMorpheme[];
@@ -28,21 +28,21 @@ export class TonalInflextionAnalyzer extends Analyzer {
             graphemes = this.graphAnalyze(x);
         }
 
-        let tmm = new TonalCombiningMorphemeMaker(graphemes, tcm);
-        return tmm.makeMorphemes();
+        const mm = new TonalCombiningMorphemeMaker(tcm);
+        return mm.makeMorphemes(graphemes);
     }
 
     lexAnalyze(ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm): TonalInflexionLexeme {
         // lexical analysis
         let morphemes: Array<TonalCombiningMorpheme> = ms;
 
-        let tllm = new TonalInflexionLexemeMaker(morphemes, tim);
-        return tllm.makeLexemes();
+        const lm = new TonalInflexionLexemeMaker(tim);
+        return lm.makeLexemes(morphemes);
     }
 
     analyze(str: string, tcm: TonalCombiningMetaplasm, tim: TonalInflectingMetaplasm) {
-        const tilm = new TonalInflexionLexemeMaker(this.morphAnalyze(str, tcm), tim);
-        return tilm.makeLexemes();
+        const lm = new TonalInflexionLexemeMaker(tim);
+        return lm.makeLexemes(this.morphAnalyze(str, tcm));
     }
 }
 

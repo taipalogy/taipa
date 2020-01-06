@@ -9,8 +9,8 @@ import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningM
 export class TonalLemmatizationAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
-        let gm = new GraphemeMaker(str, lowerLettersOfTonal);
-        return gm.makeGraphemes();
+        const gm = new GraphemeMaker(lowerLettersOfTonal);
+        return gm.makeGraphemes(str);
     }
 
     morphAnalyze(str: string): TonalUncombiningMorpheme[];
@@ -24,8 +24,8 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
             graphemes = this.graphAnalyze(x);
         }
 
-        let tmm = new TonalUncombiningMorphemeMaker(graphemes, new TonalUncombiningForms());
-        return tmm.makeMorphemes();
+        const mm = new TonalUncombiningMorphemeMaker(new TonalUncombiningForms());
+        return mm.makeMorphemes(graphemes);
     }
 
     lexAnalyze(str: string): TonalLemmatizationLexeme;
@@ -39,12 +39,12 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
             morphemes = this.morphAnalyze(x);
         }
 
-        let tllm = new TonalLemmatizationLexemeMaker(morphemes);
-        return tllm.makeLexemes();
+        const lm = new TonalLemmatizationLexemeMaker();
+        return lm.makeLexemes(morphemes);
     }
 
     analyze(str: string) {
-        const tilm = new TonalLemmatizationLexemeMaker(this.morphAnalyze(str));
-        return tilm.makeLexemes();
+        const lm = new TonalLemmatizationLexemeMaker();
+        return lm.makeLexemes(this.morphAnalyze(str));
     }
 }
