@@ -417,14 +417,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return tsm;
     }
 
-    private toStr(letters: Array<AlphabeticLetter>) {
-        let lit = '';
-        for (let i in letters) {
-            lit = lit + letters[i].literal;
-        }
-        return lit;
-    };
-
     private preprocessEuphonicFinal(letters: Array<AlphabeticLetter>) {
         this.euphonicFinals.push(letters[letters.length-1]);
         return letters.slice(0, letters.length-1);
@@ -491,8 +483,9 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     private replaceEuphonicFinal(letters: Array<AlphabeticLetter>) {
         const slicedLetters = letters.slice(0, letters.length-1);
-        const literal = this.toStr(slicedLetters);
-        if(letters[letters.length-1].literal === TonalLetterTags.gg 
+        const literal = slicedLetters.map(it => it.literal).join("");
+        if(letters.length > 0
+            && letters[letters.length-1].literal === TonalLetterTags.gg 
             && list_of_lexical_roots.includes(literal + TonalLetterTags.tt)
             && !list_of_lexical_roots.includes(literal + TonalLetterTags.kk)
             ) {
@@ -537,11 +530,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected preprocess(gs: Array<AlphabeticGrapheme>): AlphabeticLetter[] {
-        let letters = gs.map(it => it.letter);
-
         let ltrs = new Array<AlphabeticLetter>();
 
-        ltrs = this.replaceEuphonicFinal(letters);
+        ltrs = gs.map(it => it.letter);
+
+        ltrs = this.replaceEuphonicFinal(ltrs);
 
         ltrs = this.replaceEuphonicFinalTonal(ltrs);
 

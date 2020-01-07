@@ -44,27 +44,27 @@ const list_of_new_lexical_roots = [
 const list_of_addon_lexical_roots = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
-    'berh', 'berhh', 'berx', 'bery', 'berz',
+    'borh', 'borhh', 'borx', 'bory', 'borz',
 
-    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coanny', 'coannw', 'coannz', 'cuinn', 'cuinny', 'cuinnw',
+    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cor', 'corh', 'corw', 'corx', 'cory', 'corz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'coanny', 'coannw', 'coannz', 'cuinn', 'cuinny', 'cuinnw',
 
-    'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'cher', 'chereh', 'cherehh', 'cherew', 'cherex', 'cherez', 'cherh', 'cherhh', 'cherw', 'cherz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
+    'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'chor', 'choreh', 'chorehh', 'chorew', 'chorex', 'chorez', 'chorh', 'chorhh', 'chorw', 'chorz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
 
-    'dainyy', 'dainnw', 'dainnx', 'dainnz', 'dainnhh', 'denny', 'dennx', 'derex', 'derey', 'derez', 'derh', 'derhh', 'derw', 'dery', 'derz', 'diann', 'diannw', 'dinnh', 'dinnw', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'dirng', 'doanny', 'duinny', 'duinnw', 'duinnx', 'duinnz',
+    'dainyy', 'dainnw', 'dainnx', 'dainnz', 'dainnhh', 'denny', 'dennx', 'dorex', 'dorey', 'dorez', 'dorh', 'dorhh', 'dorw', 'dory', 'dorz', 'diann', 'diannw', 'dinnh', 'dinnw', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'dirng', 'doanny', 'duinny', 'duinnw', 'duinnx', 'duinnz',
 
-    'enny', 'ennh', 'ennz', 'ennhh', 'er', 'ere', 'erehh', 'erex', 'erey', 'erez', 'erh', 'erw', 'erx', 'erz', 'erehh',
+    'enny', 'ennh', 'ennz', 'ennhh', 'or', 'ore', 'orehh', 'orex', 'orey', 'orez', 'orh', 'orw', 'orx', 'orz', 'orehh',
 
-    'gereh', 'gerehh', 'gerhh', 'gerex', 'gerez', 'gerx', 'giauh', 'girnx', 'girnz', 'girt', 'girx', 'giry', 'girz',
+    'goreh', 'gorehh', 'gorhh', 'gorex', 'gorez', 'gorx', 'giauh', 'girnx', 'girnz', 'girt', 'girx', 'giry', 'girz',
 	
-    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'her', 'herez', 'herw', 'herx', 'hery', 'herz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hio', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'hoainnh', 'hoannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
+    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'hor', 'horez', 'horw', 'horx', 'hory', 'horz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hio', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'hoainnh', 'hoannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
 
     'ionn', 'innh', 'innhh', 'ir', 'irinnx', 'irn', 'irny', 'irpp', 'irw', 'irx', 'iry', 'irz',
 
-    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jiry', 'jirx', 'jerx',
+    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jiry', 'jirx', 'jorx',
 	
-	'kannx', 'kainnh', 'kainnw', 'kaunnhh', 'kennh', 'kennx', 'ker', 'kere', 'kereh', 'kerew', 'kerw', 'kerh', 'kerx', 'kiann', 'kiannw', 'kinn', 'kir', 'kirnx', 'kirny', 'kirw', 'kngz', 'koainn', 'koainnw', 'konny', 'kuinnw',
+	'kannx', 'kainnh', 'kainnw', 'kaunnhh', 'kennh', 'kennx', 'kor', 'kore', 'koreh', 'korew', 'korw', 'korh', 'korx', 'kiann', 'kiannw', 'kinn', 'kir', 'kirnx', 'kirny', 'kirw', 'kngz', 'koainn', 'koainnw', 'konny', 'kuinnw',
 
-    'lerehh', 'lerex', 'lerh', 'lerx', 'liry', 'lirx', 'lirz',
+    'lorehh', 'lorex', 'lorh', 'lorx', 'liry', 'lirx', 'lirz',
 
     'maix', 'mih', 'mihh', 'mng', 'moaix', 'moaiz', 'moex', 'moez', 'mui', 'muiz',
 
@@ -74,17 +74,17 @@ const list_of_addon_lexical_roots = [
 
     'oainn', 'oainnh', 'oainnz', 'oainnhh', 'oannx',
 
-    'painn', 'pennw', 'per', 'perhh', 'perw', 'perx', 'perz', 'pinny', 'pinnhh', 'png', 'pngy', 'pngw', 'pngz', 'pnghh', 'poannx', 'ponn', 'puinn', 'puinnw', 'puinnx',
+    'painn', 'pennw', 'por', 'porhh', 'porw', 'porx', 'porz', 'pinny', 'pinnhh', 'png', 'pngy', 'pngw', 'pngz', 'pnghh', 'poannx', 'ponn', 'puinn', 'puinnw', 'puinnx',
 	
-	'qainny', 'qainnw', 'qainnz', 'qannhh', 'qere', 'qereh', 'qerew', 'qerex', 'qerey', 'qerez', 'qerh', 'qerw', 'qery', 'qiaunnhh', 'qinny', 'qinnh', 'qinnhh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnz', 'qirw', 'qirx', 'qiry', 'qirz', 'qiunnx', 'qiunnz', 'qnghh', 'qoainnw', 'qoainnx', 'qoainnhh', 'qoannw', 'qoenny', 'qonnz', 'quinn', 'quinny', 'quinnw',
+	'qainny', 'qainnw', 'qainnz', 'qannhh', 'qore', 'qoreh', 'qorew', 'qorex', 'qorey', 'qorez', 'qorh', 'qorw', 'qory', 'qiaunnhh', 'qinny', 'qinnh', 'qinnhh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnz', 'qirw', 'qirx', 'qiry', 'qirz', 'qiunnx', 'qiunnz', 'qnghh', 'qoainnw', 'qoainnx', 'qoainnhh', 'qoannw', 'qoenny', 'qonnz', 'quinn', 'quinny', 'quinnw',
 
-    'sainn', 'sanny', 'sannw', 'sannx', 'sere', 'serew', 'serew', 'serh', 'serhh', 'serx', 'serw', 'serz', 'sinnx', 'sinnhh', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm', 'smw', 'smh', 'snghh', 'soainn', 'soainnh', 'soainnx', 'soainnhh', 'soenn', 'soenny', 'soennw', 'suinn', 'suinny', 'suinnw',
+    'sainn', 'sanny', 'sannw', 'sannx', 'sore', 'sorew', 'sorew', 'sorh', 'sorhh', 'sorx', 'sorw', 'sorz', 'sinnx', 'sinnhh', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm', 'smw', 'smh', 'snghh', 'soainn', 'soainnh', 'soainnx', 'soainnhh', 'soenn', 'soenny', 'soennw', 'suinn', 'suinny', 'suinnw',
 
-    'tainnw', 'tainnz', 'tannx', 'tannz', 'tenn', 'ter', 'tere', 'terehh', 'terew', 'terhh', 'terw', 'tinnw', 'tinnx', 'tirx', 'tiry', 'tiunny', 'toannx', 'tuinnw', 'tuinnx', 'tuinnz',
+    'tainnw', 'tainnz', 'tannx', 'tannz', 'tenn', 'tor', 'tore', 'torehh', 'torew', 'torhh', 'torw', 'tinnw', 'tinnx', 'tirx', 'tiry', 'tiunny', 'toannx', 'tuinnw', 'tuinnx', 'tuinnz',
 
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
-    'vainny', 'vainnx', 'vainnz', 'ver', 'very', 'verw', 'verx', 'verz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
+    'vainny', 'vainnx', 'vainnz', 'vor', 'vory', 'vorw', 'vorx', 'vorz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
 ]
 
 // prettier-ignore
