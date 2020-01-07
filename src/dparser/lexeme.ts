@@ -2,15 +2,15 @@ import { TonalInflectingMetaplasm, Lexeme, Word, LexemeMaker } from '../lexeme';
 import { TonalCombiningMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { TonalSyllable } from '../tonal/morpheme';
-import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2';
+import { Allomorph, FreeAllomorph, CheckedAllomorph, AllomorphZ } from '../tonal/version2';
 
 //------------------------------------------------------------------------------
 
 export class TonalInflexion extends TonalInflectingMetaplasm {
     apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         if (tse) {
-            let last = ms[ms.length - 1];
-            let slbs = last.getForms();
+            const last = ms[ms.length - 1];
+            const slbs = last.getForms();
             let rets = [];
             for (let i in slbs) {
                 let wd = new TonalWord(word.syllables);

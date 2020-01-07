@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme';
-import { TonalInflective } from './tonal/init';
+import { Lurzmafjiz } from './tonal/init';
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
 
@@ -15,21 +15,22 @@ import { Token, TokenAnalysis } from './token';
 import { Lemmatizer } from './lemmatizer';
 
 export class Client {
+    private readonly lurzmafjiz_aw = Lurzmafjiz.getInstance();
+    private readonly kana_aw = Kana.getInstance();
+
     processKana(str: string): TokenAnalysis {
         // kana
-        const kana_aw = Kana.getInstance();
-        const ka = <KanaAnalyzer>kana_aw.analyzer;
+        const ka = <KanaAnalyzer>this.kana_aw.analyzer;
         const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
         let ta: TokenAnalysis = new TokenAnalysis();
-        ta.blockSequences = kana_aw.getBlocks(morphemes);
+        ta.blockSequences = this.kana_aw.getBlocks(morphemes);
         return ta;
     }
 
     processTonal(str: string): TokenAnalysis {
-        // tonal
+        // tonal lurzmafjiz
         let tokens = str.match(/\w+/g);
-        const tonal_inflective_aw = TonalInflective.getInstance();
-        const tla = <TonalLemmatizationAnalyzer>tonal_inflective_aw.analyzer;
+        const tla = <TonalLemmatizationAnalyzer>this.lurzmafjiz_aw.analyzer;
         let ta: TokenAnalysis = new TokenAnalysis();
         if (tokens != null && tokens.length > 0) {
             const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(tokens[0]);

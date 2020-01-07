@@ -9,6 +9,7 @@ import {
     CheckedAllomorph,
     uncombinedFreeAllomorphs,
     uncombinedCheckedAllomorphs,
+    TonalLetterTags,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme';
 
@@ -20,7 +21,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(syllable.letters);
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
-                    let cfs = combiningRules.get(allomorph.tonal.getLiteral());
+                    const cfs = combiningRules.get(TonalLetterTags.zero);
                     for (let k in cfs) {
                         // it should loop only once
                         s.pushLetter(new AlphabeticLetter(cfs[k].characters));
@@ -31,7 +32,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                     return [s];
                 } else {
                     s.popLetter();
-                    let crs = combiningRules.get(allomorph.tonal.getLiteral());
+                    let crs = combiningRules.get(allomorph.tonal.toString());
                     let rets = [];
                     for (let k in crs) {
                         s.pushLetter(new AlphabeticLetter(crs[k].characters));
@@ -42,7 +43,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                 }
             } else if (allomorph instanceof CheckedAllomorph) {
                 // nothing to pop here
-                let cfs = combiningRules.get(allomorph.tonal.getLiteral());
+                let cfs = combiningRules.get(allomorph.tonal.toString());
                 let rets = [];
                 for (let k in cfs) {
                     s.pushLetter(new AlphabeticLetter(cfs[k].characters));

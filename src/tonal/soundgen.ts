@@ -381,7 +381,7 @@ export class TonalSoundGenerator {
             for (let i in to_s) {
                 let syl: string[] = new Array();
                 Object.assign(syl, ltrs);
-                syl.push(to_s[i].getLiteral());
+                syl.push(to_s[i].toString());
                 strs.push(syl);
             }
         }

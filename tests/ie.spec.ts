@@ -1,6 +1,9 @@
 import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
+import { TonalInflextionAnalyzer } from '../src/dparser/analyzer';
+import { TonalInflexion } from '../src/dparser/lexeme';
+import { TonalCombiningForms } from '../src/dparser/morpheme';
 
 describe("Inflectional ending testing", () => {
     const cli = new Client();
@@ -19,7 +22,7 @@ describe("Inflectional ending testing", () => {
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSequences[1][4].getLiteral()).toEqual(TonalLetterTags.f);
+        expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
     });
 
     test("check the name of checked tonal", () => {
@@ -44,7 +47,7 @@ describe("Inflectional ending testing", () => {
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSequences[1][4].getLiteral()).toEqual(TonalLetterTags.f);
+        expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
     });
 
     test("check the name of checked tonal", () => {
@@ -69,7 +72,7 @@ describe("Inflectional ending testing", () => {
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.f);
+        expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.f);
     });
 
     test("check the name of checked tonal", () => {
@@ -94,7 +97,7 @@ describe("Inflectional ending testing", () => {
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.w);
+        expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
     });
 
     test("check the name of checked tonal", () => {
@@ -123,7 +126,7 @@ describe("Inflectional ending testing", () => {
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSequences[1][3].getLiteral()).toEqual(TonalLetterTags.w);
+        expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
     });
 
     test("check the name of checked tonal", () => {
@@ -152,10 +155,20 @@ describe("Inflectional ending testing", () => {
     });
 
     test("check the sound of inflectional ending", () => {
-        expect(doc.soundSequences[1][4].getLiteral()).toEqual(TonalLetterTags.w);
+        expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.w);
     });
 
     test("check the name of checked tonal", () => {
         expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+    });
+});
+
+describe("Inflection testing", () => {
+    const tia = new TonalInflextionAnalyzer();
+
+    const tw = tia.analyze('guzleng', new TonalCombiningForms(), new TonalInflexion());
+
+    test("check the inflected form", () => {
+        expect(tw.otherForms[0].literal).toEqual('guzlengz');
     });
 });

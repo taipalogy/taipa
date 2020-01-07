@@ -42,7 +42,7 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
                     return ret;
                 }
             } else if (inflectionalEnding instanceof CheckedInflectionalEnding) {
-                if (inflectionalEnding.affix.tonal.getLiteral() === '') return [];
+                if (inflectionalEnding.affix.tonal.toString() === '') return [];
                 return [this.replaceLastSyllable(word, morphemes)];
             }
         }
@@ -74,8 +74,8 @@ class Ending {}
 
 export class InflectionalEnding extends Ending {
     affix: TonalAffix = new TonalAffix();
-    getLiteral() {
-        return this.affix.getLiteral();
+    toString() {
+        return this.affix.toString();
     }
 }
 
@@ -87,8 +87,8 @@ export class CheckedInflectionalEnding extends InflectionalEnding {}
 
 export class TonalSymbolEnding extends Ending {
     allomorph: Allomorph = new Allomorph();
-    getLiteral() {
-        return this.allomorph.getLiteral();
+    toString() {
+        return this.allomorph.toString();
     }
 }
 
@@ -142,7 +142,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
     }
 
     getInflectionalEnding() {
-        if (this.inflectionalEnding) return this.inflectionalEnding.getLiteral();
+        if (this.inflectionalEnding) return this.inflectionalEnding.toString();
         return '';
     }
 
@@ -152,9 +152,9 @@ export class TonalLemmatizationLexeme extends Lexeme {
         if (allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
             fie.affix.tonal = allomorph.tonal;
-            for (let key in freeAllomorphUncombiningRules.get(allomorph.getLiteral())) {
+            for (let key in freeAllomorphUncombiningRules.get(allomorph.toString())) {
                 let a = new TonalAffix();
-                a.tonal = freeAllomorphUncombiningRules.get(allomorph.getLiteral())[key];
+                a.tonal = freeAllomorphUncombiningRules.get(allomorph.toString())[key];
                 fie.baseAffixes.push(a);
             }
             infe = fie;

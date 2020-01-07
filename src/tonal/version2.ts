@@ -9,11 +9,11 @@ export class Morph {}
 export class Allomorph extends Morph {
     tonal: Tonal = new Tonal();
 
-    getLiteral() {
-        if (this.tonal.getLiteral().length == 0) {
+    toString() {
+        if (this.tonal.toString().length == 0) {
             // return string 'zero' for first tone. member variable characters of graph is still null.
             return TonalLetterTags.zero;
-        } else return this.tonal.getLiteral();
+        } else return this.tonal.toString();
     }
 }
 
@@ -22,18 +22,18 @@ export class FreeAllomorph extends Allomorph {}
 export class CheckedAllomorph extends Allomorph {
     final: Final = new Final();
 
-    getLiteral() {
-        if (this.tonal.getLiteral()) {
-            return this.final.getLiteral() + this.tonal.getLiteral();
+    toString() {
+        if (this.tonal.toString()) {
+            return this.final.toString() + this.tonal.toString();
         }
-        return this.final.getLiteral();
+        return this.final.toString();
     }
 }
 
 export class TonalAffix extends Morph {
     tonal: Tonal = new Tonal();
-    getLiteral() {
-        return this.tonal.getLiteral();
+    toString() {
+        return this.tonal.toString();
     }
 }
 
@@ -182,7 +182,7 @@ export class Nasalization extends Sound {
 export class Tonal extends Sound {
     name = TonalSoundTags.tonal;
     isEqualToTonal(tonal: Tonal) {
-        if (this.getLiteral() === tonal.getLiteral()) {
+        if (this.toString() === tonal.toString()) {
             return true;
         }
         return false;
@@ -819,7 +819,7 @@ class AllomorphF extends FreeAllomorph {
     tonal = new FreeTonalF();
 }
 
-class AllomorphZ extends FreeAllomorph {
+export class AllomorphZ extends FreeAllomorph {
     tonal = new FreeTonalZ();
 }
 
@@ -979,64 +979,64 @@ class CheckedAllomorphs {
 
     constructor() {
         this.o
-            .set(ps_p(TonalSoundTags.stopFinal).getLiteral(), new AllomorphP())
-            .set(ps_t(TonalSoundTags.stopFinal).getLiteral(), new AllomorphT())
-            .set(ps_k(TonalSoundTags.stopFinal).getLiteral(), new AllomorphK())
-            .set(ps_h(TonalSoundTags.stopFinal).getLiteral(), new AllomorphH())
-            .set(ps_pp(TonalSoundTags.stopFinal).getLiteral(), new AllomorphPP())
-            .set(ps_tt(TonalSoundTags.stopFinal).getLiteral(), new AllomorphTT())
-            .set(ps_kk(TonalSoundTags.stopFinal).getLiteral(), new AllomorphKK())
-            .set(ps_hh(TonalSoundTags.stopFinal).getLiteral(), new AllomorphHH())
+            .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
+            .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
+            .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
+            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
+            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
+            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
+            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
+            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH())
             .set(
-                ps_p(TonalSoundTags.stopFinal).getLiteral() + ps_f(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_p(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphPF(),
             )
             .set(
-                ps_t(TonalSoundTags.stopFinal).getLiteral() + ps_f(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_t(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphTF(),
             )
             .set(
-                ps_k(TonalSoundTags.stopFinal).getLiteral() + ps_f(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_k(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphKF(),
             )
             .set(
-                ps_h(TonalSoundTags.stopFinal).getLiteral() + ps_f(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_h(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphHF(),
             )
             .set(
-                ps_pp(TonalSoundTags.stopFinal).getLiteral() + ps_w(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_pp(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphPPW(),
             )
             .set(
-                ps_tt(TonalSoundTags.stopFinal).getLiteral() + ps_w(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_tt(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphTTW(),
             )
             .set(
-                ps_kk(TonalSoundTags.stopFinal).getLiteral() + ps_w(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_kk(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphKKW(),
             )
             .set(
-                ps_hh(TonalSoundTags.stopFinal).getLiteral() + ps_w(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_hh(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphHHW(),
             )
             .set(
-                ps_h(TonalSoundTags.stopFinal).getLiteral() + ps_y(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_h(TonalSoundTags.stopFinal).toString() + ps_y(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphHY(),
             )
             .set(
-                ps_pp(TonalSoundTags.stopFinal).getLiteral() + ps_x(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_pp(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphPPX(),
             )
             .set(
-                ps_tt(TonalSoundTags.stopFinal).getLiteral() + ps_x(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_tt(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphTTX(),
             )
             .set(
-                ps_kk(TonalSoundTags.stopFinal).getLiteral() + ps_x(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_kk(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphKKX(),
             )
             .set(
-                ps_hh(TonalSoundTags.stopFinal).getLiteral() + ps_x(TonalSoundTags.checkedTonal).getLiteral(),
+                ps_hh(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
                 new AllomorphHHX(),
             );
     }
@@ -1061,10 +1061,10 @@ class UncombinedFreeAllomorphs {
 
     constructor() {
         this.o
-            .set(ps_w(TonalSoundTags.freeTonal).getLiteral(), new AllomorphW())
-            .set(ps_z(TonalSoundTags.freeTonal).getLiteral(), new AllomorphZ())
-            .set(ps_x(TonalSoundTags.freeTonal).getLiteral(), new AllomorphX())
-            .set(ps_y(TonalSoundTags.freeTonal).getLiteral(), new AllomorphY());
+            .set(ps_w(TonalSoundTags.freeTonal).toString(), new AllomorphW())
+            .set(ps_z(TonalSoundTags.freeTonal).toString(), new AllomorphZ())
+            .set(ps_x(TonalSoundTags.freeTonal).toString(), new AllomorphX())
+            .set(ps_y(TonalSoundTags.freeTonal).toString(), new AllomorphY());
     }
 
     has(key: string) {
@@ -1087,14 +1087,14 @@ class UncombinedCheckedAllomorphs {
 
     constructor() {
         this.o
-            .set(ps_p(TonalSoundTags.stopFinal).getLiteral(), new AllomorphP())
-            .set(ps_t(TonalSoundTags.stopFinal).getLiteral(), new AllomorphT())
-            .set(ps_k(TonalSoundTags.stopFinal).getLiteral(), new AllomorphK())
-            .set(ps_h(TonalSoundTags.stopFinal).getLiteral(), new AllomorphH())
-            .set(ps_pp(TonalSoundTags.stopFinal).getLiteral(), new AllomorphPP())
-            .set(ps_tt(TonalSoundTags.stopFinal).getLiteral(), new AllomorphTT())
-            .set(ps_kk(TonalSoundTags.stopFinal).getLiteral(), new AllomorphKK())
-            .set(ps_hh(TonalSoundTags.stopFinal).getLiteral(), new AllomorphHH());
+            .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
+            .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
+            .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
+            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
+            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
+            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
+            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
+            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH());
     }
 
     get(key: string) {
@@ -1117,14 +1117,14 @@ class FreeAllomorphUncombiningRules {
 
     constructor() {
         this.o
-            .set(ps_f(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalY()])
-            .set(ps_w(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalX()])
-            .set(ps_xx(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-            .set(ps_xxx(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-            .set(ps_z(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
-            .set(ps_zx(TonalSoundTags.freeTonal).getLiteral(), [])
-            .set(ps_x(TonalSoundTags.freeTonal).getLiteral(), [])
-            .set(ps_y(TonalSoundTags.freeTonal).getLiteral(), [new FreeTonalW()])
+            .set(ps_f(TonalSoundTags.freeTonal).toString(), [new FreeTonalY()])
+            .set(ps_w(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalX()])
+            .set(ps_xx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+            .set(ps_xxx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+            .set(ps_z(TonalSoundTags.freeTonal).toString(), [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
+            .set(ps_zx(TonalSoundTags.freeTonal).toString(), [])
+            .set(ps_x(TonalSoundTags.freeTonal).toString(), [])
+            .set(ps_y(TonalSoundTags.freeTonal).toString(), [new FreeTonalW()])
             .set(TonalLetterTags.zero, [new FreeTonalY()]);
     }
 

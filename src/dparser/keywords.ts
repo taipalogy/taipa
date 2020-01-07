@@ -35,12 +35,12 @@ export class FromTone2ToTone137 extends TonalCombiningMetaplasm {
             //let rets = []
             if (allomorph instanceof FreeAllomorph) {
                 // get tone1, tone3, tone7 from tone2
-                let ds = declensionRules.get(allomorph.tonal.getLiteral());
+                let ds = declensionRules.get(allomorph.tonal.toString());
                 let rets = [];
                 for (let k in ds) {
                     let s: TonalSyllable = new TonalSyllable(syllable.letters);
                     s.popLetter();
-                    if (ds[k].getLiteral()) {
+                    if (ds[k].toString()) {
                         s.pushLetter(new AlphabeticLetter(ds[k].characters));
                         rets.push(new TonalSyllable(s.letters));
                     } else {

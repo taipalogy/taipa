@@ -123,8 +123,8 @@ export class KanaSoundGenerator {
         for (let e of fcs.sounds) {
             let syl: string[] = new Array();
             Object.assign(syl, letters);
-            syl.push(e.getLiteral());
-            if (e.getLiteral() === lookahead) strs.push(syl);
+            syl.push(e.toString());
+            if (e.toString() === lookahead) strs.push(syl);
         }
 
         return strs;

@@ -221,7 +221,7 @@ export class Sound {
 
     // we still need a method for combinning characters from each character objects.
     // this is different from an array of character objects. it is a string.
-    getLiteral() {
+    toString() {
         let l: string = '';
         // there is no characters for 1st tone
         if (this.characters != null) {
@@ -247,7 +247,7 @@ export class SetOfSounds<T extends Sound> {
     sounds = new Array<T>();
     beginWith(str: string) {
         for (let i in this.sounds) {
-            if (str.search(this.sounds[i].getLiteral()) == 0 && str.length == this.sounds[i].getLiteral().length)
+            if (str.search(this.sounds[i].toString()) == 0 && str.length == this.sounds[i].toString().length)
                 return true;
         }
         return false;

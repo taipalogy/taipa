@@ -9,7 +9,7 @@ describe("Epenthesis testing", () => {
     doc = cli.processTonal('sutflay');
 
     test("check the consonant", () => {
-        expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.l);
+        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
     });
 });
 
@@ -20,7 +20,7 @@ describe("Epenthesis testing", () => {
     doc = cli.processTonal('jiokkxgay');
 
     test("check the consonant", () => {
-        expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.g);
+        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
     });
 });
 
@@ -31,7 +31,7 @@ describe("Epenthesis testing", () => {
     doc = cli.processTonal('qapfbay');
 
     test("check the consonant", () => {
-        expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.b);
+        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
     });
 });
 
@@ -42,7 +42,7 @@ describe("Epenthesis testing", () => {
     doc = cli.processTonal('qamxmay');
 
     test("check the consonant", () => {
-        expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.m);
+        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
     });
 });
 
@@ -53,6 +53,6 @@ describe("Epenthesis testing", () => {
     doc = cli.processTonal('soanfnay');
 
     test("check the consonant", () => {
-        expect(doc.soundSequences[1][0].getLiteral()).toEqual(TonalLetterTags.n);
+        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
     });
 });

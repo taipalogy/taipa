@@ -64,7 +64,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         if (list[m].length == min) {
             for (let n = 0; n < min; n++) {
                 if (list[m][n] != undefined) {
-                    if (letters[beginOfSyllable + n].literal === list[m][n].getLiteral()) {
+                    if (letters[beginOfSyllable + n].literal === list[m][n].toString()) {
                         if (n + 1 == min) {
                             // copy the matched letters
                             let arr: AlphabeticLetter[] = new Array();

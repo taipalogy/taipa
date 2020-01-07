@@ -9,7 +9,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('sutflay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -20,7 +20,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('sutfay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][1].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -31,7 +31,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('chimfmay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -42,7 +42,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('chimxmay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -53,7 +53,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('appxbay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -64,7 +64,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('appxay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][1].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -75,7 +75,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('dekkxgay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -86,7 +86,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('dekkxay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][1].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -97,7 +97,7 @@ describe("Ay testing", () => {
     doc = cli.processTonal('cattxlay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][2].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
     });
 });
 
@@ -108,6 +108,6 @@ describe("Ay testing", () => {
     doc = cli.processTonal('cattxay');
 
     test("check the free tonal y", () => {
-        expect(doc.soundSequences[1][1].getLiteral()).toEqual(TonalLetterTags.y);
+        expect(doc.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
     });
 });
