@@ -80,14 +80,6 @@ export class Syllable {
 //------------------------------------------------------------------------------
 
 export abstract class MorphemeMaker {
-    protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
-        let morphemes = this.createMorphemes();
-        for(let i in patterns) {
-            morphemes.push(this.createMorpheme(patterns[i]));
-        }
-        return morphemes;
-    }
-
     protected abstract createMorphemes(): Morpheme[];
 
     protected abstract createMorpheme(msp: MatchedPattern): Morpheme;
