@@ -32,8 +32,8 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                     return [s];
                 } else {
                     s.popLetter();
-                    let crs = combiningRules.get(allomorph.tonal.toString());
-                    let rets = [];
+                    const crs = combiningRules.get(allomorph.tonal.toString());
+                    const rets = [];
                     for (let k in crs) {
                         s.pushLetter(new AlphabeticLetter(crs[k].characters));
                         rets.push(new TonalSyllable(s.letters));
@@ -43,8 +43,8 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                 }
             } else if (allomorph instanceof CheckedAllomorph) {
                 // nothing to pop here
-                let cfs = combiningRules.get(allomorph.tonal.toString());
-                let rets = [];
+                const cfs = combiningRules.get(allomorph.tonal.toString());
+                const rets = [];
                 for (let k in cfs) {
                     s.pushLetter(new AlphabeticLetter(cfs[k].characters));
                     rets.push(new TonalSyllable(s.letters));
@@ -64,17 +64,20 @@ export class TonalCombiningMorpheme extends Morpheme {
     allomorph: Allomorph; // required to populate stems
     metaplasm: TonalCombiningMetaplasm;
 
-    constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
+    constructor(syllable: TonalSyllable, tcf: TonalCombiningMetaplasm) {
         super();
         this.syllable = syllable;
-        this.metaplasm = tsm;
+        this.metaplasm = tcf;
 
         // assign allomorph for each syllable
         this.allomorph = this.assignAllomorph(this.syllable);
     }
 
     getForms(): TonalSyllable[] {
-        return this.metaplasm.apply(this.syllable, this.allomorph);
+        if(this.metaplasm instanceof TonalCombiningForms) {
+            return this.metaplasm.apply(this.syllable, this.allomorph);
+        }
+        return [];
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
@@ -98,12 +101,12 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
         this.metaplasm = tsm;
     }
 
-    createMorphemes() {
+    protected createMorphemes() {
         return new Array<TonalCombiningMorpheme>();
     }
 
-    createMorpheme(msp: MatchedPattern, tcm: TonalCombiningMetaplasm) {
-        return new TonalCombiningMorpheme(new TonalSyllable(msp.letters), tcm);
+    protected createMorpheme(msp: MatchedPattern) {
+        return new TonalCombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
     }
 
     makeMorphemes(gs: Array<AlphabeticGrapheme>) {

@@ -323,10 +323,10 @@ export class TonalUncombiningMorpheme extends Morpheme {
     metaplasm: TonalCombiningMetaplasm;
     sounds: Array<Sound>; // populated in MorphemeMaker.make
 
-    constructor(syllable: TonalSyllable, tsm: TonalCombiningMetaplasm) {
+    constructor(syllable: TonalSyllable, tcm: TonalCombiningMetaplasm) {
         super();
         this.syllable = syllable;
-        this.metaplasm = tsm;
+        this.metaplasm = tcm;
 
         // assign allomorph for each syllable
         this.allomorph = this.assignAllomorph(this.syllable);
@@ -334,7 +334,10 @@ export class TonalUncombiningMorpheme extends Morpheme {
     }
 
     apply(): TonalSyllable[] {
-        return this.metaplasm.apply(this.syllable, this.allomorph);
+        if(this.metaplasm instanceof TonalUncombiningForms) {
+            return this.metaplasm.apply(this.syllable, this.allomorph);
+        }
+        return [];
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
@@ -401,18 +404,18 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     private euphonicFinals = new Array<AlphabeticLetter>();
     private euphonicFinalTonals = new Array<{ index: number, letters: AlphabeticLetter[] }>();
 
-    constructor(tsm: TonalCombiningMetaplasm) {
+    constructor(tcm: TonalCombiningMetaplasm) {
         super();
-        this.metaplasm = tsm;
+        this.metaplasm = tcm;
     }
 
-    createMorphemes() {
+    protected createMorphemes() {
         return new Array<TonalUncombiningMorpheme>();
     }
 
-    createMorpheme(msp: MatchedPattern, tcm: TonalCombiningMetaplasm) {
+    protected createMorpheme(msp: MatchedPattern) {
         let tsm: TonalUncombiningMorpheme;
-        tsm = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), tcm);
+        tsm = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
         tsm.sounds = msp.pattern;
         return tsm;
     }
@@ -578,7 +581,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         for(let i in patterns) {
             const pat = this.postprocess_euphonic_t_or_tt(patterns[i])
             
-            morphemes.push(this.createMorpheme(pat, this.metaplasm));
+            morphemes.push(this.createMorpheme(pat));
         }
         return morphemes;
     }

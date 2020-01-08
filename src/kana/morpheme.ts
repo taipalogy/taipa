@@ -183,12 +183,12 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
         this.metaplasm = kcm;
     }
 
-    createMorphemes() {
+    protected createMorphemes() {
         return new Array<KanaUncombiningMorpheme>();
     }
 
-    createMorpheme(msp: MatchedPattern, kcm: KanaCombiningMetaplasm) {
-        return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), kcm);
+    protected createMorpheme(msp: MatchedPattern) {
+        return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), this.metaplasm);
     }
 
     makeInputingMorphemes(gs: Array<AlphabeticGrapheme>) {

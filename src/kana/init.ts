@@ -13,6 +13,7 @@ import {
     gailaigo,
 } from './kana';
 import { Morpheme } from '../morpheme';
+import { KanaUncombiningMorpheme } from './morpheme';
 
 export class Kana extends AnalyzerWrapper {
     private static singleton: Kana;
@@ -51,7 +52,7 @@ export class Kana extends AnalyzerWrapper {
         return results;
     }
 
-    getBlocks(ms: Morpheme[]): string[] {
+    getBlocks(ms: KanaUncombiningMorpheme[]): string[] {
         // string one is hiragana, string two is katakana, string 3 is chouon
         let kana_compositions: [string, string, string] = ['', '', ''];
         let previous = '';

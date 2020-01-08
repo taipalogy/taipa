@@ -1,14 +1,8 @@
-import { AlphabeticLetter, Sound, AlphabeticGrapheme } from './grapheme';
-import { Allomorph, Epenthesis } from './tonal/version2';
-import { TonalSyllable } from './tonal/morpheme';
+import { AlphabeticLetter, Sound } from './grapheme';
 
 export abstract class CombiningMetaplasm {}
 
-export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
-        return [];
-    }
-}
+export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {}
 
 export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
     applyToLetters(letters: Array<string>) {
@@ -23,11 +17,6 @@ export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
 export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 
 export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
-
-//------------------------------------------------------------------------------
-
-class PluralMorpheme {}
-class TonalMorpheme {}
 
 //------------------------------------------------------------------------------
 
@@ -53,9 +42,7 @@ class GrammaticalSuffix {
 
 //------------------------------------------------------------------------------
 
-export abstract class Morpheme {
-    abstract syllable: Syllable;
-}
+export class Morpheme {}
 
 //------------------------------------------------------------------------------
 
@@ -93,21 +80,19 @@ export class Syllable {
 //------------------------------------------------------------------------------
 
 export abstract class MorphemeMaker {
-    abstract metaplasm: CombiningMetaplasm;
-
     protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
         let morphemes = this.createMorphemes();
         for(let i in patterns) {
-            morphemes.push(this.createMorpheme(patterns[i], this.metaplasm));
+            morphemes.push(this.createMorpheme(patterns[i]));
         }
         return morphemes;
     }
 
-    abstract createMorphemes(): Morpheme[];
+    protected abstract createMorphemes(): Morpheme[];
 
-    abstract createMorpheme(msp: MatchedPattern, tcm: CombiningMetaplasm): Morpheme;
+    protected abstract createMorpheme(msp: MatchedPattern): Morpheme;
 
-    make(
+    protected make(
         letters: Array<AlphabeticLetter>,
         syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number) => MatchedPattern,
     ): MatchedPattern[] {

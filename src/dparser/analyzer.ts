@@ -55,7 +55,7 @@ export class PhrasalVerbAnalyzer {
         return this.p.makePhrasemes(lexemeVerb, lexemeParticle);
     }
 
-    analyzeTerminal2(verb: string, particle: string) {
+    analyzeTerminalForm(verb: string, particle: string) {
         const lexemeVerb = this.tia.analyze(verb, new TonalZeroCombining(), new TonalInflexion());
         const lexemeParticle = this.tia.analyze(particle, new TonalZeroCombining(), new TonalInflexion());
         return this.p.makePhrasemes(lexemeVerb, lexemeParticle);
