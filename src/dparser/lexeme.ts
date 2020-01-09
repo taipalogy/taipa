@@ -6,7 +6,7 @@ import { Allomorph, FreeAllomorph, CheckedAllomorph, AllomorphZ } from '../tonal
 
 //------------------------------------------------------------------------------
 
-export class TonalInflexion extends TonalInflectingMetaplasm {
+export class TonalDesinenceInflexion extends TonalInflectingMetaplasm {
     apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         if (tse) {
             const last = ms[ms.length - 1];
@@ -21,6 +21,22 @@ export class TonalInflexion extends TonalInflectingMetaplasm {
             return rets;
         }
         return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class TransfixInflexion extends TonalInflectingMetaplasm {
+    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+        let rets = [];
+        let tw = new TonalWord(word.syllables);
+
+        for(let i = 0; i < ms.length; i++) {
+            tw.replaceSyllable(i, ms[i].getForms()[0])
+        }
+        rets.push(tw);
+
+        return rets;
     }
 }
 
@@ -67,7 +83,7 @@ export class TonalInflexionLexeme extends Lexeme {
     }
 
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectingMetaplasm): TonalWord[] {
-        return ti.apply(<TonalWord>this.word, ms, this.tse);
+        return ti.apply(this.word, ms, this.tse);
     }
 }
 

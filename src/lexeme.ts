@@ -34,21 +34,24 @@ export class Word {
     }
 
     popSyllable() {
-        // trim the literal
-        let tmp = this.literal.substr(
-            0,
-            this.literal.length - this.syllables[this.syllables.length - 1].literal.length,
-        );
-        // assign the new literal to this.literal
-        this.literal = tmp;
-        // get rid off the last syllable from array
         this.syllables = this.syllables.slice(0, this.syllables.length - 1);
+        this.concat();
     }
 
-    pushSyllable(tss: Syllable) {
-        this.syllables.push(tss);
-        // concatenate the new syllable
-        this.literal += tss.literal;
+    pushSyllable(syl: Syllable) {
+        this.syllables.push(syl);
+        this.concat();
+    }
+
+    replaceSyllable(i: number, syl: Syllable) {
+        if(i < this.syllables.length) {
+            this.syllables.splice(i, 1, syl);
+        }
+        this.concat();
+    }
+
+    private concat() {
+        this.literal = this.syllables.map(x => x.literal).join("");
     }
 }
 

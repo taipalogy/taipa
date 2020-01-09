@@ -2,8 +2,8 @@ import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflextionAnalyzer } from '../src/dparser/analyzer';
-import { TonalInflexion } from '../src/dparser/lexeme';
-import { TonalCombiningForms } from '../src/dparser/morpheme';
+import { TonalDesinenceInflexion, TransfixInflexion } from '../src/dparser/lexeme';
+import { TonalCombiningForms, ThirdCombiningForm } from '../src/dparser/morpheme';
 
 describe("Inflectional ending testing", () => {
     const cli = new Client();
@@ -166,9 +166,19 @@ describe("Inflectional ending testing", () => {
 describe("Inflection testing", () => {
     const tia = new TonalInflextionAnalyzer();
 
-    const tw = tia.analyze('guzleng', new TonalCombiningForms(), new TonalInflexion());
+    const tw = tia.analyze('guzleng', new TonalCombiningForms(), new TonalDesinenceInflexion());
 
     test("check the inflected form", () => {
         expect(tw.otherForms[0].literal).toEqual('guzlengz');
+    });
+});
+
+describe("Inflection testing", () => {
+    const tia = new TonalInflextionAnalyzer();
+
+    const tw = tia.analyze('damwvurhhxoay', new ThirdCombiningForm(), new TransfixInflexion());
+
+    test("check the inflected form", () => {
+        expect(tw.otherForms[0].literal).toEqual('damwvurhhwoaw');
     });
 });

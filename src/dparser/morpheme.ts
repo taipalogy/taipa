@@ -10,8 +10,10 @@ import {
     uncombinedFreeAllomorphs,
     uncombinedCheckedAllomorphs,
     TonalLetterTags,
+    tonalPositionalSound,
+    TonalSoundTags
 } from '../tonal/version2';
-import { AlphabeticLetter, AlphabeticGrapheme } from '../grapheme';
+import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
@@ -43,7 +45,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                 }
             } else if (allomorph instanceof CheckedAllomorph) {
                 // nothing to pop here
-                const cfs = combiningRules.get(allomorph.tonal.toString());
+                const cfs = combiningRules.get(allomorph.final.toString());
                 const rets = [];
                 for (let k in cfs) {
                     s.pushLetter(new AlphabeticLetter(cfs[k].characters));
@@ -57,6 +59,37 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
     }
 }
 
+//------------------------------------------------------------------------------
+
+export class ThirdCombiningForm extends TonalCombiningMetaplasm {
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+        if(allomorph) {
+            let s: TonalSyllable = new TonalSyllable(syllable.letters);
+            const ps = tonalPositionalSound.get(TonalLetterTags.w);
+            let snd = new Sound();
+
+            if (allomorph instanceof FreeAllomorph) {
+                if(ps) snd = ps(TonalSoundTags.freeTonal);
+                if (allomorph instanceof ZeroAllomorph) {
+                    s.pushLetter(new AlphabeticLetter(snd.characters));
+                } else {
+                    s.popLetter();
+                    s.pushLetter(new AlphabeticLetter(snd.characters));
+                }
+            } else if(allomorph instanceof CheckedAllomorph) {
+                if(ps) snd = ps(TonalSoundTags.checkedTonal);
+                if(allomorph.tonal.toString()) {
+                    s.popLetter();
+                    s.pushLetter(new AlphabeticLetter(snd.characters));
+                } else {
+                    s.pushLetter(new AlphabeticLetter(snd.characters));
+                }
+            }
+            return [s];
+        }
+        return [];
+    }
+}
 //------------------------------------------------------------------------------
 
 export class TonalCombiningMorpheme extends Morpheme {
@@ -74,10 +107,7 @@ export class TonalCombiningMorpheme extends Morpheme {
     }
 
     getForms(): TonalSyllable[] {
-        if(this.metaplasm instanceof TonalCombiningForms) {
-            return this.metaplasm.apply(this.syllable, this.allomorph);
-        }
-        return [];
+        return this.metaplasm.apply(this.syllable, this.allomorph);
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {

@@ -334,10 +334,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     }
 
     apply(): TonalSyllable[] {
-        if(this.metaplasm instanceof TonalUncombiningForms) {
-            return this.metaplasm.apply(this.syllable, this.allomorph);
-        }
-        return [];
+        return this.metaplasm.apply(this.syllable, this.allomorph);
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {

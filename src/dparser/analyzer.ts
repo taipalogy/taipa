@@ -2,7 +2,7 @@ import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
 import { Analyzer } from '../analyzer';
 import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
-import { TonalInflexionLexemeMaker, TonalInflexionLexeme, TonalInflexion } from './lexeme';
+import { TonalInflexionLexemeMaker, TonalInflexionLexeme, TonalDesinenceInflexion } from './lexeme';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalZeroCombining } from './keywords';
@@ -50,14 +50,14 @@ export class PhrasalVerbAnalyzer {
     private readonly tia = new TonalInflextionAnalyzer();
     private readonly p = new TonalInflexionPhrasemeMaker();
     analyze(verb: string, particle: string) {
-        const lexemeVerb = this.tia.analyze(verb, new TonalCombiningForms(), new TonalInflexion());
-        const lexemeParticle = this.tia.analyze(particle, new TonalZeroCombining(), new TonalInflexion());
+        const lexemeVerb = this.tia.analyze(verb, new TonalCombiningForms(), new TonalDesinenceInflexion());
+        const lexemeParticle = this.tia.analyze(particle, new TonalZeroCombining(), new TonalDesinenceInflexion());
         return this.p.makePhrasemes(lexemeVerb, lexemeParticle);
     }
 
     analyzeTerminalForm(verb: string, particle: string) {
-        const lexemeVerb = this.tia.analyze(verb, new TonalZeroCombining(), new TonalInflexion());
-        const lexemeParticle = this.tia.analyze(particle, new TonalZeroCombining(), new TonalInflexion());
+        const lexemeVerb = this.tia.analyze(verb, new TonalZeroCombining(), new TonalDesinenceInflexion());
+        const lexemeParticle = this.tia.analyze(particle, new TonalZeroCombining(), new TonalDesinenceInflexion());
         return this.p.makePhrasemes(lexemeVerb, lexemeParticle);
     }
 }
