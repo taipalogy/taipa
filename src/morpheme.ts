@@ -24,28 +24,6 @@ export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
 
 //------------------------------------------------------------------------------
 
-class LexicalRoot {
-    //stem: LexicalStem
-    //affix: TonalAffix
-}
-
-export class LexicalStem {
-    //sounds: Array<Sound>;
-}
-
-class VowelStem extends LexicalStem {}
-class ConsonantStem extends LexicalStem {}
-
-class DerivationalAffix {
-    // lexical ending
-}
-
-class GrammaticalSuffix {
-    // desinence
-}
-
-//------------------------------------------------------------------------------
-
 export class Morpheme {}
 
 //------------------------------------------------------------------------------
@@ -77,7 +55,21 @@ export class Syllable {
 
     pushLetter(l: AlphabeticLetter) {
         this.letters.push(l);
-        this.literal += l.literal;
+        this.concat();
+    }
+
+    replaceLetter(i: number, l: AlphabeticLetter) {
+        this.letters.splice(i, 1, l);
+        this.concat();
+    }
+
+    insertLetter(i: number, l: AlphabeticLetter) {
+        this.letters.splice(i, 0, l);
+        this.concat();
+    }
+
+    protected concat() {
+        this.literal = this.letters.map(x => x.literal).join("");
     }
 }
 

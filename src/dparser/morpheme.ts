@@ -90,6 +90,7 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
         return [];
     }
 }
+
 //------------------------------------------------------------------------------
 
 export class TonalCombiningMorpheme extends Morpheme {

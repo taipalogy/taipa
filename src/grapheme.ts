@@ -55,7 +55,7 @@ export class MatchedSequence {
 
 export class Letters {
     larr: string[];
-    protected o: Map<string, AlphabeticLetter> = new Map();
+    protected o = new Map<string, AlphabeticLetter>();
 
     constructor(larr: string[]) {
         this.larr = larr;
@@ -63,6 +63,7 @@ export class Letters {
             this.assign(this.larr[i]);
         }
     }
+    
     protected assign(e: string) {
         let carr: Character[] = [];
         for (let i = 0; i < e.length; i++) {

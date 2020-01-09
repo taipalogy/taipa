@@ -298,10 +298,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
 
 export class TonalSyllable extends Syllable {
     popLetter() {
-        let tmp = this.literal.substr(0, this.literal.length - this.letters[this.letters.length - 1].literal.length);
-        this.literal = '';
-        this.literal = tmp;
         this.letters = this.letters.slice(0, this.letters.length - 1);
+        this.concat();
     }
 
     get lastLetter() {
