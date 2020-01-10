@@ -1,8 +1,7 @@
-import { TonalInflectingMetaplasm, Lexeme, Word, LexemeMaker } from '../lexeme';
+import { TonalInflectingMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
 import { TonalCombiningMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
-import { TonalSyllable } from '../tonal/morpheme';
-import { Allomorph, FreeAllomorph, CheckedAllomorph, AllomorphZ } from '../tonal/version2';
+import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2';
 
 //------------------------------------------------------------------------------
 
@@ -34,6 +33,23 @@ export class TransfixInflexion extends TonalInflectingMetaplasm {
         for(let i = 0; i < ms.length; i++) {
             tw.replaceSyllable(i, ms[i].getForms()[0])
         }
+        rets.push(tw);
+
+        return rets;
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class FinalSoundChange extends TonalInflectingMetaplasm {
+    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+        let rets = [];
+        let tw = new TonalWord(word.syllables);
+
+        for(let i = 0; i < ms.length; i++) {
+            if(ms[i].getForms().length) tw.replaceSyllable(i, ms[i].getForms()[0])
+        }
+
         rets.push(tw);
 
         return rets;

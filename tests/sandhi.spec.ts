@@ -1,6 +1,9 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
+import { TonalInflextionAnalyzer } from '../src/dparser/analyzer';
+import { VoicedFinalForm } from '../src/dparser/morpheme';
+import { FinalSoundChange } from '../src/dparser/lexeme';
 
 describe("Epenthesis testing", () => {
     const cli = new Client()
@@ -54,5 +57,14 @@ describe("Epenthesis testing", () => {
 
     test("check the consonant", () => {
         expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
+    });
+});
+
+describe("Voiced final testing", () => {
+    const tia = new TonalInflextionAnalyzer();
+    const l = tia.analyze('lakkwex', new VoicedFinalForm(), new FinalSoundChange())
+
+    test("chech the surface form", () => {
+        expect(l.otherForms[0].literal).toEqual('laggwex');
     });
 });

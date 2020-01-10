@@ -712,7 +712,7 @@ const ps_zero = positionalSound([new ZeroTonal()]);
 //------------------------------------------------------------------------------
 
 class CombiningRules {
-    private o: Map<string, { [key: string]: Sound }> = new Map();
+    private o = new Map<string, { [key: string]: Sound }>();
 
     constructor() {
         this.o
@@ -848,7 +848,7 @@ class AllomorphZX extends FreeAllomorph {
 }
 
 class FreeAllomorphs {
-    private o: Map<string, Allomorph> = new Map();
+    private o = new Map<string, Allomorph>();
 
     constructor() {
         this.o
@@ -975,7 +975,7 @@ class AllomorphHHX extends CheckedAllomorph {
 }
 
 class CheckedAllomorphs {
-    private o: Map<string, Allomorph> = new Map();
+    private o = new Map<string, Allomorph>();
 
     constructor() {
         this.o
@@ -1057,7 +1057,7 @@ class CheckedAllomorphs {
 export const checkedAllomorphs = new CheckedAllomorphs();
 
 class UncombinedFreeAllomorphs {
-    private o: Map<string, Allomorph> = new Map();
+    private o = new Map<string, Allomorph>();
 
     constructor() {
         this.o
@@ -1083,7 +1083,7 @@ class UncombinedFreeAllomorphs {
 export const uncombinedFreeAllomorphs = new UncombinedFreeAllomorphs();
 
 class UncombinedCheckedAllomorphs {
-    private o: Map<string, Allomorph> = new Map();
+    private o = new Map<string, Allomorph>();
 
     constructor() {
         this.o
@@ -1112,8 +1112,43 @@ class UncombinedCheckedAllomorphs {
 
 export const uncombinedCheckedAllomorphs = new UncombinedCheckedAllomorphs();
 
+class CombinedCheckedAllomorphs {
+    private o = new Map<string, Allomorph>();
+
+    constructor() {
+        this.o
+            .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphPF())
+            .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphTF())
+            .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphKF())
+            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphHF())
+            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphHY())
+            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPPW())
+            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTTW())
+            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKKW())
+            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHHW())
+            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPPX())
+            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTTX())
+            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKKX())
+            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHHX());
+    }
+
+    get(key: string) {
+        let value = this.o.get(key);
+        if (value) {
+            return value;
+        }
+        return new Allomorph();
+    }
+
+    has(key: string) {
+        return this.o.has(key);
+    }
+}
+
+export const combinedCheckedAllomorphs = new CombinedCheckedAllomorphs();
+
 class FreeAllomorphUncombiningRules {
-    private o: Map<string, Tonal[]> = new Map();
+    private o = new Map<string, Tonal[]>();
 
     constructor() {
         this.o
@@ -1140,7 +1175,7 @@ class FreeAllomorphUncombiningRules {
 export const freeAllomorphUncombiningRules = new FreeAllomorphUncombiningRules();
 
 class DeclensionRules {
-    private o: Map<string, { [key: string]: Sound }> = new Map();
+    private o = new Map<string, { [key: string]: Sound }>();
 
     constructor() {
         this.o
@@ -1170,3 +1205,17 @@ class DeclensionRules {
 }
 
 export const declensionRules = new DeclensionRules();
+
+export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
+    .set(TonalLetterTags.k, TonalLetterTags.g)
+    .set(TonalLetterTags.p, TonalLetterTags.b)
+    .set(TonalLetterTags.t, TonalLetterTags.l)
+    .set(TonalLetterTags.kk, TonalLetterTags.gg)
+    .set(TonalLetterTags.pp, TonalLetterTags.bb)
+    .set(TonalLetterTags.tt, TonalLetterTags.ll)
+    .set(TonalLetterTags.g, TonalLetterTags.k)
+    .set(TonalLetterTags.b, TonalLetterTags.p)
+    .set(TonalLetterTags.l, TonalLetterTags.t)
+    .set(TonalLetterTags.gg, TonalLetterTags.kk)
+    .set(TonalLetterTags.bb, TonalLetterTags.pp)
+    .set(TonalLetterTags.ll, TonalLetterTags.tt)

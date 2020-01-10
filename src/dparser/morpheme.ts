@@ -11,7 +11,11 @@ import {
     uncombinedCheckedAllomorphs,
     TonalLetterTags,
     tonalPositionalSound,
-    TonalSoundTags
+    TonalSoundTags,
+    lowerLettersOfTonal,
+    SetOfCheckedTonals,
+    voiceless_voiced_finals,
+    combinedCheckedAllomorphs
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
@@ -83,6 +87,32 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
                     s.pushLetter(new AlphabeticLetter(snd.characters));
                 } else {
                     s.pushLetter(new AlphabeticLetter(snd.characters));
+                    console.log(s)
+                }
+            }
+            return [s];
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class VoicedFinalForm extends TonalCombiningMetaplasm {
+    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+        if(allomorph) {
+            let s: TonalSyllable = new TonalSyllable(syllable.letters);
+            let snd = new Sound();
+            
+            if(allomorph instanceof CheckedAllomorph) {
+                const fnl = voiceless_voiced_finals.get(allomorph.final.toString());
+                if(fnl) {
+                    const ps = tonalPositionalSound.get(fnl);
+                    if(ps) snd = ps(TonalSoundTags.stopFinal);
+                
+                    if(s.lastSecondLetter.literal === allomorph.final.toString()) {
+                        s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters));
+                    }    
                 }
             }
             return [s];
@@ -114,6 +144,11 @@ export class TonalCombiningMorpheme extends Morpheme {
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
         if (uncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
             return uncombinedCheckedAllomorphs.get(syllable.lastLetter.literal);
+        }
+
+        if (new SetOfCheckedTonals().beginWith(syllable.lastLetter.literal) 
+            && uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)) {
+            return combinedCheckedAllomorphs.get(syllable.lastSecondLetter.literal);
         }
 
         if (uncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
