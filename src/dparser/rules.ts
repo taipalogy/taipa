@@ -5,15 +5,12 @@ import {
     VerbSurface,
     ParticleSurface,
     PersonalPronounSurface,
-    PrepositionSurface,
     PronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { PhrasalVerbAnalyzer } from './analyzer';
-import { TonalInflexionPhraseme } from './phraseme';
+import { TonalTransitivePhraseme } from './phraseme';
 import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperate_vv_compounds } from './dictionary';
-import { TonalLemmatizationAnalyzer } from '../tonal/analyzer';
-import { TonalWord } from '../tonal/lexeme';
 
 export class ConstructionOfSpeech {
     pos: string = '';
@@ -69,7 +66,7 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
 }
 
 export class SetOfPhrasalVerbs {
-    phrms: Array<TonalInflexionPhraseme> = new Array();
+    phrms: Array<TonalTransitivePhraseme> = new Array();
     phvs: Array<PhrasalVerb> = new Array();
 
     constructor() {
@@ -97,7 +94,7 @@ export class SetOfPhrasalVerbs {
     private populatePhrasemes() {
         const pva = new PhrasalVerbAnalyzer();
         for (let i in dict_of_phrasal_verbs) {
-            this.phrms.push(pva.analyze(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
+            this.phrms.push(pva.analyzeTransitive(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
         }
     }
 }
