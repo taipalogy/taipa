@@ -2,17 +2,18 @@ import { TonalInflectingMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
 import { TonalCombiningMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2';
+import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
 
 export class TonalDesinenceInflexion extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+    apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         if (tse) {
             const last = ms[ms.length - 1];
             const slbs = last.getForms();
             let rets = [];
             for (let i in slbs) {
-                let wd = new TonalWord(word.syllables);
+                let wd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
                 wd.popSyllable();
                 wd.pushSyllable(slbs[i]);
                 rets.push(wd);
@@ -26,9 +27,9 @@ export class TonalDesinenceInflexion extends TonalInflectingMetaplasm {
 //------------------------------------------------------------------------------
 
 export class TransfixInflexion extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+    apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         let rets = [];
-        let tw = new TonalWord(word.syllables);
+        let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
         for(let i = 0; i < ms.length; i++) {
             tw.replaceSyllable(i, ms[i].getForms()[0])
@@ -42,9 +43,9 @@ export class TransfixInflexion extends TonalInflectingMetaplasm {
 //------------------------------------------------------------------------------
 
 export class FinalSoundChange extends TonalInflectingMetaplasm {
-    apply(word: TonalWord, ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+    apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         let rets = [];
-        let tw = new TonalWord(word.syllables);
+        let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
         for(let i = 0; i < ms.length; i++) {
             if(ms[i].getForms().length) tw.replaceSyllable(i, ms[i].getForms()[0])
@@ -99,7 +100,7 @@ export class TonalInflexionLexeme extends Lexeme {
     }
 
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectingMetaplasm): TonalWord[] {
-        return ti.apply(this.word, ms, this.tse);
+        return ti.apply(ms, this.tse);
     }
 }
 

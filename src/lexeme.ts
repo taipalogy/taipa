@@ -6,13 +6,12 @@ import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme
 export abstract class Metaplasm {}
 
 export class TonalInflectingMetaplasm extends Metaplasm {
-    apply(word: TonalWord, morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] {
-        return [];
-    }
+    // TODO: abstraction
+    apply(morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] { return []; }
 }
 
 export class TonalLemmatizingMetaplasm extends Metaplasm {
-    apply(word: TonalWord, morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
+    apply(morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
 }
 
 //------------------------------------------------------------------------------

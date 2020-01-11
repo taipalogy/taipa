@@ -44,7 +44,7 @@ import { SetOfInitialConsonants } from '../kana/kana';
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         // get base forms as strings
         if (allomorph) {
             // member variable allomorph is not null
@@ -54,7 +54,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     // push letter to make tone 2
                     // the base tone of the first tone is the second tone
                     // 1 to 2
-                    let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                    let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                     s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
                     //console.log(this.syllable)
                     return [s];
@@ -64,7 +64,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     for (let i in freeAllomorphUncombiningRules.get(allomorph.toString())) {
                         // pop letter
                         // push letter
-                        let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                        let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                         if (!(freeAllomorphUncombiningRules.get(allomorph.toString())[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
@@ -93,15 +93,11 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                 // pop the last letter
                 // no need to push letter
                 // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
-                let s: TonalSyllable = new TonalSyllable(syllable.letters);
+                let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                 s.popLetter();
                 //console.log(s.literal)
                 return [s];
             }
-        } else {
-            // member variable allomorph is null
-            // this syllable is already in base form
-            // is this block redundant
         }
         return []; // return empty array
     }
@@ -317,9 +313,9 @@ export class TonalSyllable extends Syllable {
 
 export class TonalUncombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
-    allomorph: Allomorph; // required to populate stems
-    metaplasm: TonalCombiningMetaplasm;
-    sounds: Array<Sound>; // populated in MorphemeMaker.make
+    allomorph: Allomorph;
+    private metaplasm: TonalCombiningMetaplasm;
+    sounds: Array<Sound>;
 
     constructor(syllable: TonalSyllable, tcm: TonalCombiningMetaplasm) {
         super();
@@ -332,7 +328,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     }
 
     apply(): TonalSyllable[] {
-        return this.metaplasm.apply(this.syllable, this.allomorph);
+        return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
@@ -395,7 +391,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
-    metaplasm: TonalCombiningMetaplasm;
+    private metaplasm: TonalCombiningMetaplasm;
     private euphonicFinals = new Array<AlphabeticLetter>();
     private euphonicFinalTonals = new Array<{ index: number, letters: AlphabeticLetter[] }>();
 
@@ -409,10 +405,9 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected createMorpheme(msp: MatchedPattern) {
-        let tsm: TonalUncombiningMorpheme;
-        tsm = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
-        tsm.sounds = msp.pattern;
-        return tsm;
+        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
+        tum.sounds = msp.pattern;
+        return tum;
     }
 
     private preprocessEuphonicFinal(letters: Array<AlphabeticLetter>) {

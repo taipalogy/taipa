@@ -1,16 +1,11 @@
-import { POSTags, PronType } from './symbols';
+import { POSTags } from './symbols';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
 import {
     Allomorph,
-    FreeAllomorph,
-    declensionRules,
-    AllomorphH,
-    TonalLetterTags,
-    lowerLettersOfTonal,
 } from '../tonal/version2';
-import { AlphabeticLetter } from '../grapheme';
+import { Sound } from '../grapheme';
 
 export class ConstructionElement {
     surface: string = '';
@@ -24,36 +19,11 @@ export class TonalZeroInflexion extends TonalInflectingMetaplasm {
 }
 
 export class TonalZeroCombining extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }
 }
-
-export class FromTone2ToTone137 extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
-        if (allomorph) {
-            //let rets = []
-            if (allomorph instanceof FreeAllomorph) {
-                // get tone1, tone3, tone7 from tone2
-                let ds = declensionRules.get(allomorph.tonal.toString());
-                let rets = [];
-                for (let k in ds) {
-                    let s: TonalSyllable = new TonalSyllable(syllable.letters);
-                    s.popLetter();
-                    if (ds[k].toString()) {
-                        s.pushLetter(new AlphabeticLetter(ds[k].characters));
-                        rets.push(new TonalSyllable(s.letters));
-                    } else {
-                        rets.push(new TonalSyllable(s.letters));
-                    }
-                }
-                return rets;
-            }
-        }
-        return [];
-    }
-}
-
+/*
 export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
@@ -70,7 +40,7 @@ export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
         return [];
     }
 }
-
+*/
 export class PersonalPronounSurface extends ConstructionElement {
     constructor(str: string) {
         super();

@@ -1174,38 +1174,6 @@ class FreeAllomorphUncombiningRules {
 
 export const freeAllomorphUncombiningRules = new FreeAllomorphUncombiningRules();
 
-class DeclensionRules {
-    private o = new Map<string, { [key: string]: Sound }>();
-
-    constructor() {
-        this.o
-            .set(TonalLetterTags.y, {
-                zero: ps_zero(TonalSoundTags.freeTonal),
-                w: ps_w(TonalSoundTags.freeTonal),
-                z: ps_z(TonalSoundTags.freeTonal),
-            })
-            .set(TonalLetterTags.zero, {
-                w: ps_w(TonalSoundTags.freeTonal),
-                z: ps_z(TonalSoundTags.freeTonal),
-            });
-    }
-
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return {};
-    }
-
-    get keys() {
-        let obj = this.o.get(TonalLetterTags.y);
-        if (obj) return Object.keys(obj);
-    }
-}
-
-export const declensionRules = new DeclensionRules();
-
 export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.k, TonalLetterTags.g)
     .set(TonalLetterTags.p, TonalLetterTags.b)

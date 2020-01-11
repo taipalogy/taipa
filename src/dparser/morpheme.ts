@@ -12,7 +12,6 @@ import {
     TonalLetterTags,
     tonalPositionalSound,
     TonalSoundTags,
-    lowerLettersOfTonal,
     SetOfCheckedTonals,
     voiceless_voiced_finals,
     combinedCheckedAllomorphs
@@ -22,9 +21,9 @@ import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 //------------------------------------------------------------------------------
 
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
-            let s: TonalSyllable = new TonalSyllable(syllable.letters);
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
                     const cfs = combiningRules.get(TonalLetterTags.zero);
@@ -66,9 +65,9 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
 //------------------------------------------------------------------------------
 
 export class ThirdCombiningForm extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if(allomorph) {
-            let s: TonalSyllable = new TonalSyllable(syllable.letters);
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             const ps = tonalPositionalSound.get(TonalLetterTags.w);
             let snd = new Sound();
 
@@ -87,7 +86,6 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
                     s.pushLetter(new AlphabeticLetter(snd.characters));
                 } else {
                     s.pushLetter(new AlphabeticLetter(snd.characters));
-                    console.log(s)
                 }
             }
             return [s];
@@ -99,20 +97,18 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 //------------------------------------------------------------------------------
 
 export class VoicedFinalForm extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
+    apply(sounds: Sound[], allomorph: Allomorph): Array<TonalSyllable> {
+        if(sounds[sounds.length-2].name != TonalSoundTags.stopFinal) return [];
+
         if(allomorph) {
-            let s: TonalSyllable = new TonalSyllable(syllable.letters);
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
-            
             if(allomorph instanceof CheckedAllomorph) {
                 const fnl = voiceless_voiced_finals.get(allomorph.final.toString());
                 if(fnl) {
                     const ps = tonalPositionalSound.get(fnl);
                     if(ps) snd = ps(TonalSoundTags.stopFinal);
-                
-                    if(s.lastSecondLetter.literal === allomorph.final.toString()) {
-                        s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters));
-                    }    
+                    s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters));
                 }
             }
             return [s];
@@ -126,7 +122,8 @@ export class VoicedFinalForm extends TonalCombiningMetaplasm {
 export class TonalCombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph; // required to populate stems
-    metaplasm: TonalCombiningMetaplasm;
+    private metaplasm: TonalCombiningMetaplasm;
+    sounds: Array<Sound>;
 
     constructor(syllable: TonalSyllable, tcf: TonalCombiningMetaplasm) {
         super();
@@ -135,10 +132,11 @@ export class TonalCombiningMorpheme extends Morpheme {
 
         // assign allomorph for each syllable
         this.allomorph = this.assignAllomorph(this.syllable);
+        this.sounds = new Array();
     }
 
     getForms(): TonalSyllable[] {
-        return this.metaplasm.apply(this.syllable, this.allomorph);
+        return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
@@ -172,7 +170,9 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected createMorpheme(msp: MatchedPattern) {
-        return new TonalCombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
+        const tcm = new TonalCombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
+        tcm.sounds =  msp.pattern;
+        return tcm;
     }
 
     private postprocess(patterns: MatchedPattern[]): Array<TonalCombiningMorpheme> {
