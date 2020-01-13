@@ -1,7 +1,7 @@
 import { TonalInflectingMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
 import { TonalCombiningMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
-import { Allomorph, FreeAllomorph, CheckedAllomorph } from '../tonal/version2';
+import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
@@ -42,15 +42,25 @@ export class TransfixInflexion extends TonalInflectingMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class FinalSoundChange extends TonalInflectingMetaplasm {
+export class RegressiveAssimilation extends TonalInflectingMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
         let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
-        for(let i = 0; i < ms.length; i++) {
-            if(ms[i].getForms().length) tw.replaceSyllable(i, ms[i].getForms()[0])
+        if(ms.length > 1) {
+            for(let i = 1; i < ms.length; i++) {
+                if(ms[i].sounds[0].name === TonalSoundTags.initial
+                    && (ms[i-1].sounds[ms[i-1].sounds.length-2].toString() === TonalLetterTags.t
+                        || ms[i-1].sounds[ms[i-1].sounds.length-2].toString() === TonalLetterTags.tt)) {
+                    tw.replaceSyllable(i-1, ms[i-1].getForms(ms[i].sounds[0])[0]);
+                } else {
+                    // console.log(ms[i-1])
+                    const syls = ms[i-1].getForms(ms[i].sounds[0]);
+                    if(syls.length)
+                        tw.replaceSyllable(i-1, syls[0]);
+                }
+            }
         }
-
         rets.push(tw);
 
         return rets;

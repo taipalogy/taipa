@@ -13,7 +13,7 @@ export class KanaSyllable extends Syllable {}
 
 export class KanaUncombiningMorpheme extends Morpheme {
     syllable: KanaSyllable;
-    metaplasm: KanaCombiningMetaplasm;
+    private metaplasm: KanaCombiningMetaplasm;
 
     constructor(syllable: KanaSyllable, kcm: KanaCombiningMetaplasm) {
         super();
@@ -176,7 +176,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 //------------------------------------------------------------------------------
 
 export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
-    metaplasm: KanaCombiningMetaplasm;
+    private metaplasm: KanaCombiningMetaplasm;
 
     constructor(kcm: KanaCombiningMetaplasm) {
         super();

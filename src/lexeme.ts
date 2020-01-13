@@ -6,7 +6,6 @@ import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme
 export abstract class Metaplasm {}
 
 export class TonalInflectingMetaplasm extends Metaplasm {
-    // TODO: abstraction
     apply(morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] { return []; }
 }
 
@@ -50,7 +49,7 @@ export class Word {
     }
 
     private concat() {
-        this.literal = this.syllables.map(x => x.literal).join("");
+        this.literal = this.syllables.map(x => x ? x.literal : "").join("");
     }
 }
 

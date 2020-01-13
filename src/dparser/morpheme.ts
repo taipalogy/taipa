@@ -14,7 +14,9 @@ import {
     TonalSoundTags,
     SetOfCheckedTonals,
     voiceless_voiced_finals,
-    combinedCheckedAllomorphs
+    combinedCheckedAllomorphs,
+    InitialsForAssimilation,
+    assimilatedFinals,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
@@ -96,23 +98,47 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class VoicedFinalForm extends TonalCombiningMetaplasm {
-    apply(sounds: Sound[], allomorph: Allomorph): Array<TonalSyllable> {
-        if(sounds[sounds.length-2].name != TonalSoundTags.stopFinal) return [];
-
-        if(allomorph) {
+export class AssimilatedFinalForm extends TonalCombiningMetaplasm {
+    private voicedFinal(sounds: Sound[]) {
+        const fnl = voiceless_voiced_finals.get(sounds[sounds.length-2].toString());
+        if(fnl) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
-            if(allomorph instanceof CheckedAllomorph) {
-                const fnl = voiceless_voiced_finals.get(allomorph.final.toString());
-                if(fnl) {
-                    const ps = tonalPositionalSound.get(fnl);
-                    if(ps) snd = ps(TonalSoundTags.stopFinal);
-                    s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters));
-                }
-            }
+            const ps = tonalPositionalSound.get(fnl);
+            if(ps) snd = ps(TonalSoundTags.stopFinal);
+            s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters));
             return [s];
         }
+    }
+
+    applyAssimilation(sounds: Sound[], initialNextSyllable: Sound): Array<TonalSyllable> {
+        if(initialNextSyllable.name != TonalSoundTags.initial) {
+            const tss = this.voicedFinal(sounds);
+            if(tss) return tss;
+            return [];
+        }
+
+        if(sounds[sounds.length-2].name != TonalSoundTags.stopFinal) return [];
+
+        if((sounds[sounds.length-2].toString() === TonalLetterTags.tt
+            || sounds[sounds.length-2].toString() === TonalLetterTags.t)
+            && new InitialsForAssimilation().beginWith(initialNextSyllable.toString())) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            let snd = new Sound();
+
+            const af = assimilatedFinals.get(sounds[sounds.length-2].toString() + initialNextSyllable.toString());
+            if(af) {
+                const ps = tonalPositionalSound.get(af);
+                if(ps) snd = ps(TonalSoundTags.stopFinal);
+                s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters));
+
+                return [s];
+            }
+        } else {
+            const tss = this.voicedFinal(sounds);
+            if(tss) return tss;
+        }
+        
         return [];
     }
 }
@@ -135,7 +161,8 @@ export class TonalCombiningMorpheme extends Morpheme {
         this.sounds = new Array();
     }
 
-    getForms(): TonalSyllable[] {
+    getForms(sound?: Sound): TonalSyllable[] {
+        if(sound) return this.metaplasm.applyAssimilation(this.sounds, sound);
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
@@ -158,7 +185,7 @@ export class TonalCombiningMorpheme extends Morpheme {
 }
 
 export class TonalCombiningMorphemeMaker extends MorphemeMaker {
-    metaplasm: TonalCombiningMetaplasm;
+    private metaplasm: TonalCombiningMetaplasm;
 
     constructor(tsm: TonalCombiningMetaplasm) {
         super();

@@ -2,8 +2,8 @@ import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflextionAnalyzer } from '../src/dparser/analyzer';
-import { VoicedFinalForm } from '../src/dparser/morpheme';
-import { FinalSoundChange } from '../src/dparser/lexeme';
+import { AssimilatedFinalForm } from '../src/dparser/morpheme';
+import { RegressiveAssimilation } from '../src/dparser/lexeme';
 
 describe("Epenthesis testing", () => {
     const cli = new Client()
@@ -62,7 +62,7 @@ describe("Epenthesis testing", () => {
 
 describe("Voiced final testing", () => {
     const tia = new TonalInflextionAnalyzer();
-    const l = tia.analyze('lakkwex', new VoicedFinalForm(), new FinalSoundChange())
+    const l = tia.analyze('lakkwex', new AssimilatedFinalForm(), new RegressiveAssimilation())
 
     test("chech the surface form", () => {
         expect(l.otherForms[0].literal).toEqual('laggwex');
