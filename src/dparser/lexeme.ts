@@ -52,10 +52,9 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
                 if(ms[i].sounds[0].name === TonalSoundTags.initial
                     && (ms[i-1].sounds[ms[i-1].sounds.length-2].toString() === TonalLetterTags.t
                         || ms[i-1].sounds[ms[i-1].sounds.length-2].toString() === TonalLetterTags.tt)) {
-                    tw.replaceSyllable(i-1, ms[i-1].getForms(ms[i].sounds[0])[0]);
+                    tw.replaceSyllable(i-1, ms[i-1].getSoundChangeForm(ms[i].sounds[0])[0]);
                 } else {
-                    // console.log(ms[i-1])
-                    const syls = ms[i-1].getForms(ms[i].sounds[0]);
+                    const syls = ms[i-1].getSoundChangeForm(ms[i].sounds[0]);
                     if(syls.length)
                         tw.replaceSyllable(i-1, syls[0]);
                 }

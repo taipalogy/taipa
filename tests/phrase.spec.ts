@@ -9,8 +9,8 @@ describe("Phrasal verb testing, transitive", () => {
         expect(ph.phrase.literal).toEqual('koannw diurh');
     });
 
-    test("check the sandhi form", () => {
-        expect(ph.sandhiForm.literal).toEqual('koanny diurh');
+    test("check the proceeding form", () => {
+        expect(ph.proceedingForms[0].literal).toEqual('koanny diurh');
     });
 });
 
@@ -21,6 +21,17 @@ describe("Phrasal verb testing, transitive", () => {
     
     test("check the base form", () => {
         expect(ph.phrase.literal).toEqual('laix leh');
+    });
+
+});
+
+describe("Adjective testing, transitive", () => {
+    const phva = new PhrasalVerbAnalyzer();
+    
+    const ph = phva.analyzeAdjective('sin', 'e');
+    
+    test("check the proceeding form", () => {
+        expect(ph.proceedingForms[0].literal).toEqual('sin ez');
     });
 
 });

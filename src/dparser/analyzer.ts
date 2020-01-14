@@ -61,4 +61,10 @@ export class PhrasalVerbAnalyzer {
         const lexemeParticle = this.tia.analyze(particle, new TonalZeroCombining(), new TonalDesinenceInflexion());
         return this.p.makeIntransitivePhrasemes(lexemeVerb, lexemeParticle);
     }
+
+    analyzeAdjective(adjective: string, e: string) {
+        const lexemeAdjective = this.tia.analyze(adjective, new TonalZeroCombining(), new TonalDesinenceInflexion());
+        const lexemeE = this.tia.analyze(e, new TonalCombiningForms(), new TonalDesinenceInflexion());
+        return this.p.makeAdjectivePhrasemes(lexemeAdjective, lexemeE);
+    }
 }

@@ -161,9 +161,13 @@ export class TonalCombiningMorpheme extends Morpheme {
         this.sounds = new Array();
     }
 
-    getForms(sound?: Sound): TonalSyllable[] {
-        if(sound) return this.metaplasm.applyAssimilation(this.sounds, sound);
+    getForms(): TonalSyllable[] {
         return this.metaplasm.apply(this.sounds, this.allomorph);
+    }
+
+    getSoundChangeForm(sound: Sound): TonalSyllable[] {
+        if(sound) return this.metaplasm.applyAssimilation(this.sounds, sound);
+        return [];
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
