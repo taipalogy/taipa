@@ -166,7 +166,17 @@ export class TonalCombiningMorpheme extends Morpheme {
     }
 
     getSoundChangeForm(sound: Sound): TonalSyllable[] {
-        if(sound) return this.metaplasm.applyAssimilation(this.sounds, sound);
+        if(sound) {
+            if(sound.name == TonalSoundTags.nasalFinal) {
+                // external sandhi
+                const snds = this.sounds;
+                snds.splice(0, 0, sound);
+                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
+            }
+            
+            // internal sandhi
+            return this.metaplasm.applyAssimilation(this.sounds, sound);
+        }
         return [];
     }
 

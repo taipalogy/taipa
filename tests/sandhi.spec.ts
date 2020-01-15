@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { TonalInflextionAnalyzer } from '../src/dparser/analyzer';
+import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { AssimilatedFinalForm } from '../src/dparser/morpheme';
 import { RegressiveAssimilation } from '../src/dparser/lexeme';
 
@@ -61,7 +61,7 @@ describe("Epenthesis testing", () => {
 });
 
 describe("Voiced final testing", () => {
-    const tia = new TonalInflextionAnalyzer();
+    const tia = new TonalInflectionAnalyzer();
     const l = tia.analyze('lakkwex', new AssimilatedFinalForm(), new RegressiveAssimilation())
 
     test("chech the surface form", () => {
