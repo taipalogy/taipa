@@ -14,11 +14,14 @@ export class KanaSyllable extends Syllable {}
 export class KanaUncombiningMorpheme extends Morpheme {
     syllable: KanaSyllable;
     private metaplasm: KanaCombiningMetaplasm;
+    sounds: Array<Sound>;
 
-    constructor(syllable: KanaSyllable, kcm: KanaCombiningMetaplasm) {
+    constructor(syllable: KanaSyllable, sounds: Array<Sound>, kcm: KanaCombiningMetaplasm) {
         super();
         this.syllable = syllable;
         this.metaplasm = kcm;
+        this.sounds = new Array();
+        this.sounds = sounds;
     }
 }
 
@@ -59,6 +62,9 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
 
     let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
+    let mp = new MatchedPattern();
+    let sounds = new Array<Sound>();
+
     for (let m in list) {
         let min = Math.min(letters.length - beginOfSyllable, list[m].length);
         if (list[m].length == min) {
@@ -72,6 +78,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
                                 arr[q] = letters[beginOfSyllable + q];
                             }
                             arraysOfLetters.push(arr);
+                            sounds = list[m]
                         }
                     } else {
                         break;
@@ -81,12 +88,12 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         }
     }
 
-    let mp = new MatchedPattern();
     if (arraysOfLetters.length == 1) {
         // only one matched
         // copy the matched letters
         for (let q = 0; q < arraysOfLetters[0].length; q++) {
             mp.letters[q] = letters[beginOfSyllable + q];
+            mp.pattern[q] = sounds[q];
         }
         return mp;
     }
@@ -116,12 +123,14 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
                 // return the longer one
                 for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable + q];
+                    mp.pattern[q] = sounds[q];
                 }
                 return mp;
             }
             // return the shorter one
             for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
                 mp.letters[q] = letters[beginOfSyllable + q];
+                mp.pattern[q] = sounds[q];
             }
             return mp;
         }
@@ -137,12 +146,14 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
                 // return the longer one
                 for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable + q];
+                    mp.pattern[q] = sounds[q];
                 }
             } else {
                 // vowel ending
                 // return the shorter one
                 for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable + q];
+                    mp.pattern[q] = sounds[q];
                 }
             }
             return mp;
@@ -160,12 +171,14 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
                 // return the shorter one
                 for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable + q];
+                    mp.pattern[q] = sounds[q];
                 }
                 return mp;
             }
             // return the longer one
             for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
                 mp.letters[q] = letters[beginOfSyllable + q];
+                mp.pattern[q] = sounds[q];
             }
         }
     }
@@ -188,7 +201,7 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected createMorpheme(msp: MatchedPattern) {
-        return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), this.metaplasm);
+        return new KanaUncombiningMorpheme(new KanaSyllable(msp.letters), msp.pattern, this.metaplasm);
     }
 
     protected postprocess(patterns: MatchedPattern[]): Array<KanaUncombiningMorpheme> {

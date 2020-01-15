@@ -24,6 +24,11 @@ export class Client {
         const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
         let ta: TokenAnalysis = new TokenAnalysis();
         ta.blockSequences = this.kana_aw.getBlocks(morphemes);
+
+        for (let m of morphemes) {
+            ta.soundSequences.push(m.sounds);
+        }
+
         return ta;
     }
 
@@ -39,7 +44,6 @@ export class Client {
             ta.lemmata = lexemes.getLemmata();
             ta.inflectionalEnding = lexemes.getInflectionalEnding();
 
-            // the array of sounds is promoted to the lexeme and enclosed. also needs to be output.
             for (let m of morphemes) {
                 ta.soundSequences.push(m.sounds);
             }

@@ -317,7 +317,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     private metaplasm: TonalCombiningMetaplasm;
     sounds: Array<Sound>;
 
-    constructor(syllable: TonalSyllable, tcm: TonalCombiningMetaplasm) {
+    constructor(syllable: TonalSyllable, sounds: Array<Sound>,  tcm: TonalCombiningMetaplasm) {
         super();
         this.syllable = syllable;
         this.metaplasm = tcm;
@@ -325,6 +325,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         // assign allomorph for each syllable
         this.allomorph = this.assignAllomorph(this.syllable);
         this.sounds = new Array();
+        this.sounds = sounds;
     }
 
     apply(): TonalSyllable[] {
@@ -405,8 +406,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected createMorpheme(msp: MatchedPattern) {
-        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
-        tum.sounds = msp.pattern;
+        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), msp.pattern, this.metaplasm);
         return tum;
     }
 
