@@ -20,13 +20,15 @@ export class Client {
 
     processKana(str: string): TokenAnalysis {
         // kana
-        const ka = <KanaAnalyzer>this.kana_aw.analyzer;
-        const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
         let ta: TokenAnalysis = new TokenAnalysis();
-        ta.blockSequences = this.kana_aw.getBlocks(morphemes);
+        if(str) {
+            const ka = <KanaAnalyzer>this.kana_aw.analyzer;
+            const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
+            ta.blockSequences = this.kana_aw.getBlocks(morphemes);
 
-        for (let m of morphemes) {
-            ta.soundSequences.push(m.sounds);
+            for (let m of morphemes) {
+                ta.soundSequences.push(m.sounds);
+            }
         }
 
         return ta;
@@ -34,11 +36,10 @@ export class Client {
 
     processTonal(str: string): TokenAnalysis {
         // tonal lurzmafjiz
-        let tokens = str.match(/\w+/g);
-        const tla = <TonalLemmatizationAnalyzer>this.lurzmafjiz_aw.analyzer;
         let ta: TokenAnalysis = new TokenAnalysis();
-        if (tokens != null && tokens.length > 0) {
-            const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(tokens[0]);
+        if(str) {
+            const tla = <TonalLemmatizationAnalyzer>this.lurzmafjiz_aw.analyzer;
+            const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(str);
             const lexemes: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
             ta.word = lexemes.word;
             ta.lemmata = lexemes.getLemmata();
@@ -48,6 +49,7 @@ export class Client {
                 ta.soundSequences.push(m.sounds);
             }
         }
+
         return ta;
     }
 
@@ -55,23 +57,26 @@ export class Client {
         let doc: Document = new Document();
 
         // tokenization
-        const tokens = str.match(/\w+/g);
-        if (tokens)
-            for (let i = 0; i < tokens.length; i++) {
-                if (tokens[i].length) doc.tokens.push(new Token(tokens[i]));
-            }
+        if(str) {
+            const tokens = str.match(/\w+/g);
+            if (tokens)
+                for (let i = 0; i < tokens.length; i++) {
+                    if (tokens[i].length) doc.tokens.push(new Token(tokens[i]));
+                }
 
-        // tagging
-        const tggr = new RuleBasedTagger();
-        doc = tggr.tag(doc);
+            // tagging
+            const tggr = new RuleBasedTagger();
+            doc = tggr.tag(doc);
 
-        // lemmatization
-        const lmtzr = new Lemmatizer();
-        doc = lmtzr.getTonalLemmas(doc);
+            // lemmatization
+            const lmtzr = new Lemmatizer();
+            doc = lmtzr.getTonalLemmas(doc);
 
-        // dependency parsing
-        const dpsr = new DependencyParser();
-        doc = dpsr.parse(doc);
+            // dependency parsing
+            const dpsr = new DependencyParser();
+            doc = dpsr.parse(doc);
+        }
+        
         return doc;
     }
 }

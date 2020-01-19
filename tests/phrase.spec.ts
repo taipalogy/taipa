@@ -1,8 +1,8 @@
-import { PhrasalVerbAnalyzer } from '../src/dparser/analyzer'
+import { PhrasalInflectionAnalyzer } from '../src/dparser/analyzer'
 import { Adnominal, Assimilation } from '../src/dparser/phraseme';
 
 describe("Phrasal verb testing, transitive", () => {
-    const phva = new PhrasalVerbAnalyzer();
+    const phva = new PhrasalInflectionAnalyzer();
 
     const ph = phva.analyzeTransitive('koannw', 'diurh')
 
@@ -16,7 +16,7 @@ describe("Phrasal verb testing, transitive", () => {
 });
 
 describe("Phrasal verb testing, transitive", () => {
-    const phva = new PhrasalVerbAnalyzer();
+    const phva = new PhrasalInflectionAnalyzer();
     
     const ph = phva.analyzeIntransitive('laix', 'leh');
     
@@ -27,7 +27,7 @@ describe("Phrasal verb testing, transitive", () => {
 });
 
 describe("Adjective testing, transitive", () => {
-    const phva = new PhrasalVerbAnalyzer();
+    const phva = new PhrasalInflectionAnalyzer();
     
     const ph = phva.analyzeAdjective('sin', 'e', new Adnominal());
     

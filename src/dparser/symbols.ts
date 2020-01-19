@@ -83,6 +83,7 @@ export enum Tagset {
     PEND = 'PEND', // sentence-ending particle
     PADV = 'PADV', // adverbial particle
     PPV = 'PPV', // particle of phrasal verb
+    PSUB = 'PSUB', // subsidiary
     PNC = 'PNC', // punctuation
     PX = 'PX', // prefix
     SX = 'SX', // suffix

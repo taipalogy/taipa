@@ -47,7 +47,7 @@ export class TonalInflectionAnalyzer extends Analyzer {
     }
 }
 
-export class PhrasalVerbAnalyzer {
+export class PhrasalInflectionAnalyzer {
     private readonly tia = new TonalInflectionAnalyzer();
     private readonly p = new TonalInflexionPhrasemeMaker();
 

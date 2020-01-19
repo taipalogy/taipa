@@ -6,8 +6,6 @@ import { AlphabeticGrapheme } from '../grapheme';
 import { KanaCombiningMetaplasm } from '../morpheme';
 
 //------------------------------------------------------------------------------
-//  Kana Analyxer
-//------------------------------------------------------------------------------
 
 export class KanaAnalyzer extends Analyzer {
     graphAnalyze(str: string) {

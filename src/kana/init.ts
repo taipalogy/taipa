@@ -12,7 +12,6 @@ import {
     hatsuon,
     gailaigo,
 } from './kana';
-import { Morpheme } from '../morpheme';
 import { KanaUncombiningMorpheme } from './morpheme';
 
 export class Kana extends AnalyzerWrapper {

@@ -111,9 +111,9 @@ export class TonalWord extends Word {
 
 export class TonalLemmatizationLexeme extends Lexeme {
     word: TonalWord;
-    lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
-    inflectionalEnding: InflectionalEnding;
-    metaplasm: TonalLemmatizingMetaplasm = new TonalZeroLemmatization();
+    private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
+    private inflectionalEnding: InflectionalEnding;
+    // private metaplasm: TonalLemmatizingMetaplasm = new TonalZeroLemmatization();
 
     constructor(ms: Array<TonalUncombiningMorpheme>, tl: TonalLemmatization) {
         super();

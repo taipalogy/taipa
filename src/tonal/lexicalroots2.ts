@@ -4,9 +4,9 @@ const to_be_verified = [
 
     'jih', 'jirnx', 'jirtt',
 
-    'langh',
-
     'na',
+
+    'pangh',
 ]
 
 // prettier-ignore
@@ -23,7 +23,7 @@ const list_of_new_lexical_roots = [
 	
 	'kiaih', 'kuih',
 
-    'laih', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mah', 'mnghh',
 

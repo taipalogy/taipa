@@ -7,7 +7,7 @@ A library for analyzing and processing Taiwanese language. This library consists
 * morpheme-based morphological analyzing
 * graphemic analysis
 
-## API
+## Client
 
 * Client.processTonal
 * Client.processKana
