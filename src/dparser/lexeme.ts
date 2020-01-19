@@ -31,8 +31,8 @@ export class TransfixInflection extends TonalInflectingMetaplasm {
         let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
-        for(let i = 0; i < ms.length; i++) {
-            tw.replaceSyllable(i, ms[i].getForms()[0])
+        for (let i = 0; i < ms.length; i++) {
+            tw.replaceSyllable(i, ms[i].getForms()[0]);
         }
         rets.push(tw);
 
@@ -47,16 +47,17 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
         let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
-        if(ms.length > 1) {
-            for(let i = 1; i < ms.length; i++) {
-                if(ms[i].sounds[0].name === TonalSoundTags.initial
-                    && (ms[i-1].sounds[ms[i-1].sounds.length-2].toString() === TonalLetterTags.t
-                        || ms[i-1].sounds[ms[i-1].sounds.length-2].toString() === TonalLetterTags.tt)) {
-                    tw.replaceSyllable(i-1, ms[i-1].getSoundChangeForm(ms[i].sounds[0])[0]);
+        if (ms.length > 1) {
+            for (let i = 1; i < ms.length; i++) {
+                if (
+                    ms[i].sounds[0].name === TonalSoundTags.initial &&
+                    (ms[i - 1].sounds[ms[i - 1].sounds.length - 2].toString() === TonalLetterTags.t ||
+                        ms[i - 1].sounds[ms[i - 1].sounds.length - 2].toString() === TonalLetterTags.tt)
+                ) {
+                    tw.replaceSyllable(i - 1, ms[i - 1].getSoundChangeForm(ms[i].sounds[0])[0]);
                 } else {
-                    const syls = ms[i-1].getSoundChangeForm(ms[i].sounds[0]);
-                    if(syls.length)
-                        tw.replaceSyllable(i-1, syls[0]);
+                    const syls = ms[i - 1].getSoundChangeForm(ms[i].sounds[0]);
+                    if (syls.length) tw.replaceSyllable(i - 1, syls[0]);
                 }
             }
         }
@@ -119,12 +120,12 @@ export class TonalInflectionLexeme extends Lexeme {
 
     assimilate(til: TonalInflectionLexeme) {
         const ms = til.getMorphemes();
-        const other_snds = ms[ms.length-1].sounds;
-        if(other_snds[other_snds.length-1].name === TonalSoundTags.nasalFinal) {
+        const other_snds = ms[ms.length - 1].sounds;
+        if (other_snds[other_snds.length - 1].name === TonalSoundTags.nasalFinal) {
             let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
 
-            const s = other_snds[other_snds.length-1]
-            const syls = this.ms[this.ms.length-1].getSoundChangeForm(s);
+            const s = other_snds[other_snds.length - 1];
+            const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s);
 
             wrd.popSyllable();
             wrd.pushSyllable(syls[0]);

@@ -63,7 +63,7 @@ export class Letters {
             this.assign(this.larr[i]);
         }
     }
-    
+
     protected assign(e: string) {
         let carr: Character[] = [];
         for (let i = 0; i < e.length; i++) {
@@ -114,7 +114,11 @@ export class GraphemeMaker {
         return graphemes;
     }
 
-    private getMatchedSequence(characters: Array<Character>, beginOfLetter: number, candidates: Array<AlphabeticLetter>) {
+    private getMatchedSequence(
+        characters: Array<Character>,
+        beginOfLetter: number,
+        candidates: Array<AlphabeticLetter>,
+    ) {
         let ms = new MatchedSequence();
         let matchedLen = 0;
 

@@ -385,15 +385,9 @@ export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>(
 
 //------------------------------------------------------------------------------
 
-export const kogakimoji = new Map<string, Array<string>>().set(
-    KanaLetterTags.ch + KanaLetterTags.u,
-    ['っ', 'ッ'],
-);
+export const kogakimoji = new Map<string, Array<string>>().set(KanaLetterTags.ch + KanaLetterTags.u, ['っ', 'ッ']);
 
-export const hatsuon = new Map<string, Array<string>>().set(KanaLetterTags.n, [
-    'ん',
-    'ン',
-]);
+export const hatsuon = new Map<string, Array<string>>().set(KanaLetterTags.n, ['ん', 'ン']);
 
 export const others = new Map<string, Array<string>>()
     .set(KanaLetterTags.a, ['ぁ', 'ァ'])
@@ -423,7 +417,7 @@ export const others = new Map<string, Array<string>>()
     .set(KanaLetterTags.y + KanaLetterTags.a, ['ゃ', 'ャ'])
     .set(KanaLetterTags.y + KanaLetterTags.u, ['ゅ', 'ュ'])
     .set(KanaLetterTags.y + KanaLetterTags.o, ['ょ', 'ョ'])
-    .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ'])
+    .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ']);
 
 export const hiragana_katakana = new Map<string, Array<string>>()
     .set(KanaLetterTags.a, ['あ', 'ア'])
@@ -497,186 +491,41 @@ export const hiragana_katakana = new Map<string, Array<string>>()
     .set(KanaLetterTags.p + KanaLetterTags.e, ['ぺ', 'ペ'])
     .set(KanaLetterTags.p + KanaLetterTags.o, ['ぽ', 'ポ'])
     .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.a, ['きゃ', 'キャ'])
-    .set(
-        KanaLetterTags.k +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['きゅ', 'キュ'],
-    )
-    .set(
-        KanaLetterTags.k +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['きょ', 'キョ'],
-    )
-    .set(
-        KanaLetterTags.s +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['しゃ', 'シャ'],
-    )
-    .set(
-        KanaLetterTags.s +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['しゅ', 'シュ'],
-    )
-    .set(
-        KanaLetterTags.s +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['しょ', 'ショ'],
-    )
-    .set(
-        KanaLetterTags.c +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['ちゃ', 'チャ'],
-    )
-    .set(
-        KanaLetterTags.c +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['ちゅ', 'チュ'],
-    )
-    .set(
-        KanaLetterTags.c +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['ちょ', 'チョ'],
-    )
-    .set(
-        KanaLetterTags.n +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['にゃ', 'ニャ'],
-    )
-    .set(
-        KanaLetterTags.n +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['にゅ', 'ニュ'],
-    )
-    .set(
-        KanaLetterTags.n +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['にょ', 'ニョ'],
-    )
-    .set(
-        KanaLetterTags.h +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['ひゃ', 'ヒャ'],
-    )
-    .set(
-        KanaLetterTags.h +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['ひゅ', 'ヒュ'],
-    )
-    .set(
-        KanaLetterTags.h +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['ひょ', 'ヒョ'],
-    )
-    .set(
-        KanaLetterTags.m +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['みゃ', 'ミャ'],
-    )
-    .set(
-        KanaLetterTags.m +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['みゅ', 'みょ'],
-    )
-    .set(
-        KanaLetterTags.m +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['ミュ', 'ミョ'],
-    )
-    .set(
-        KanaLetterTags.r +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['りゃ', 'リャ'],
-    )
-    .set(
-        KanaLetterTags.r +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['りゅ', 'リュ'],
-    )
-    .set(
-        KanaLetterTags.r +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['りょ', 'リョ'],
-    )
-    .set(
-        KanaLetterTags.g +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['ぎゃ', 'ギャ'],
-    )
-    .set(
-        KanaLetterTags.g +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['ぎゅ', 'ギュ'],
-    )
-    .set(
-        KanaLetterTags.g +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['ぎょ', 'ギョ'],
-    )
+    .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.u, ['きゅ', 'キュ'])
+    .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.o, ['きょ', 'キョ'])
+    .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.a, ['しゃ', 'シャ'])
+    .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.u, ['しゅ', 'シュ'])
+    .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.o, ['しょ', 'ショ'])
+    .set(KanaLetterTags.c + KanaLetterTags.y + KanaLetterTags.a, ['ちゃ', 'チャ'])
+    .set(KanaLetterTags.c + KanaLetterTags.y + KanaLetterTags.u, ['ちゅ', 'チュ'])
+    .set(KanaLetterTags.c + KanaLetterTags.y + KanaLetterTags.o, ['ちょ', 'チョ'])
+    .set(KanaLetterTags.n + KanaLetterTags.y + KanaLetterTags.a, ['にゃ', 'ニャ'])
+    .set(KanaLetterTags.n + KanaLetterTags.y + KanaLetterTags.u, ['にゅ', 'ニュ'])
+    .set(KanaLetterTags.n + KanaLetterTags.y + KanaLetterTags.o, ['にょ', 'ニョ'])
+    .set(KanaLetterTags.h + KanaLetterTags.y + KanaLetterTags.a, ['ひゃ', 'ヒャ'])
+    .set(KanaLetterTags.h + KanaLetterTags.y + KanaLetterTags.u, ['ひゅ', 'ヒュ'])
+    .set(KanaLetterTags.h + KanaLetterTags.y + KanaLetterTags.o, ['ひょ', 'ヒョ'])
+    .set(KanaLetterTags.m + KanaLetterTags.y + KanaLetterTags.a, ['みゃ', 'ミャ'])
+    .set(KanaLetterTags.m + KanaLetterTags.y + KanaLetterTags.u, ['みゅ', 'みょ'])
+    .set(KanaLetterTags.m + KanaLetterTags.y + KanaLetterTags.o, ['ミュ', 'ミョ'])
+    .set(KanaLetterTags.r + KanaLetterTags.y + KanaLetterTags.a, ['りゃ', 'リャ'])
+    .set(KanaLetterTags.r + KanaLetterTags.y + KanaLetterTags.u, ['りゅ', 'リュ'])
+    .set(KanaLetterTags.r + KanaLetterTags.y + KanaLetterTags.o, ['りょ', 'リョ'])
+    .set(KanaLetterTags.g + KanaLetterTags.y + KanaLetterTags.a, ['ぎゃ', 'ギャ'])
+    .set(KanaLetterTags.g + KanaLetterTags.y + KanaLetterTags.u, ['ぎゅ', 'ギュ'])
+    .set(KanaLetterTags.g + KanaLetterTags.y + KanaLetterTags.o, ['ぎょ', 'ギョ'])
     .set(KanaLetterTags.j + KanaLetterTags.a, ['じゃ', 'ジャ'])
     .set(KanaLetterTags.j + KanaLetterTags.u, ['じゅ', 'ジュ'])
     .set(KanaLetterTags.j + KanaLetterTags.o, ['じょ', 'ジョ'])
     .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.a, ['ぢゃ', 'ヂャ'])
     .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.u, ['ぢ゙ゅ', 'ヂュ'])
     .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.o, ['ぢ゙ょ', 'ヂョ'])
-    .set(
-        KanaLetterTags.b +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['びゃ', 'ビャ'],
-    )
-    .set(
-        KanaLetterTags.b +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['びゅ', 'ビュ'],
-    )
-    .set(
-        KanaLetterTags.b +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['びょ', 'ビョ'],
-    )
-    .set(
-        KanaLetterTags.p +
-            KanaLetterTags.y +
-            KanaLetterTags.a,
-        ['ぴゃ', 'ピャ'],
-    )
-    .set(
-        KanaLetterTags.p +
-            KanaLetterTags.y +
-            KanaLetterTags.u,
-        ['ぴゅ', 'ピュ'],
-    )
-    .set(
-        KanaLetterTags.p +
-            KanaLetterTags.y +
-            KanaLetterTags.o,
-        ['ぴょ', 'ピョ'],
-    );
+    .set(KanaLetterTags.b + KanaLetterTags.y + KanaLetterTags.a, ['びゃ', 'ビャ'])
+    .set(KanaLetterTags.b + KanaLetterTags.y + KanaLetterTags.u, ['びゅ', 'ビュ'])
+    .set(KanaLetterTags.b + KanaLetterTags.y + KanaLetterTags.o, ['びょ', 'ビョ'])
+    .set(KanaLetterTags.p + KanaLetterTags.y + KanaLetterTags.a, ['ぴゃ', 'ピャ'])
+    .set(KanaLetterTags.p + KanaLetterTags.y + KanaLetterTags.u, ['ぴゅ', 'ピュ'])
+    .set(KanaLetterTags.p + KanaLetterTags.y + KanaLetterTags.o, ['ぴょ', 'ピョ']);
 
 export const gailaigo = new Map<string, Array<string>>()
     .set(KanaLetterTags.s + KanaLetterTags.i, ['', 'スィ'])
@@ -715,7 +564,7 @@ export const gailaigo = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.i, ['', 'ヴィ'])
     .set(KanaLetterTags.v + KanaLetterTags.u, ['', 'ヴ'])
     .set(KanaLetterTags.v + KanaLetterTags.e, ['', 'ヴェ'])
-    .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヴォ'])
+    .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヴォ']);
 
 export const gailaigo_y = new Map<string, Array<string>>()
     .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.i, ['', 'キィ'])
@@ -758,7 +607,7 @@ export const gailaigo_y = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.a, ['', 'ヴャ'])
     .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.u, ['', 'ヴュ'])
     .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.e, ['', 'ヴィェ'])
-    .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヴョ'])
+    .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヴョ']);
 
 export const gailaigo_w = new Map<string, Array<string>>()
     .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.a, ['', 'クァ'])
@@ -803,7 +652,7 @@ export const gailaigo_w = new Map<string, Array<string>>()
     .set(KanaLetterTags.r + KanaLetterTags.w + KanaLetterTags.a, ['', 'ルァ'])
     .set(KanaLetterTags.r + KanaLetterTags.w + KanaLetterTags.i, ['', 'ルィ'])
     .set(KanaLetterTags.r + KanaLetterTags.w + KanaLetterTags.e, ['', 'ルェ'])
-    .set(KanaLetterTags.r + KanaLetterTags.w + KanaLetterTags.o, ['', 'ルォ'])
+    .set(KanaLetterTags.r + KanaLetterTags.w + KanaLetterTags.o, ['', 'ルォ']);
 
 export const special = new Map<string, Array<string>>()
     .set(KanaLetterTags.ng + KanaLetterTags.a, ['', 'カ゚'])
@@ -830,7 +679,7 @@ export const special = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.a, ['', 'ヷ'])
     .set(KanaLetterTags.v + KanaLetterTags.i, ['', 'ヸ'])
     .set(KanaLetterTags.v + KanaLetterTags.e, ['', 'ヹ'])
-    .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヺ'])
+    .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヺ']);
 
 export const special_y = new Map<string, Array<string>>()
     .set(KanaLetterTags.ng + KanaLetterTags.y + KanaLetterTags.a, ['', 'キ゚ャ'])
@@ -847,7 +696,7 @@ export const special_y = new Map<string, Array<string>>()
     .set(KanaLetterTags.l + KanaLetterTags.y + KanaLetterTags.o, ['', 'リ゚ョ'])
     .set(KanaLetterTags.w + KanaLetterTags.y + KanaLetterTags.a, ['', 'ヰャ'])
     .set(KanaLetterTags.w + KanaLetterTags.y + KanaLetterTags.u, ['', 'ヰュ'])
-    .set(KanaLetterTags.w + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヰョ'])
+    .set(KanaLetterTags.w + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヰョ']);
 
 export const special_w = new Map<string, Array<string>>()
     .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.a, ['', 'クヮ'])
@@ -880,7 +729,7 @@ export const special_w = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.i, ['', 'ヴゥィ'])
     .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.u, ['', 'ヴゥゥ'])
     .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.e, ['', 'ヴゥェ'])
-    .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.o, ['', 'ヴゥォ'])
+    .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.o, ['', 'ヴゥォ']);
 
 export const special_h = new Map<string, Array<string>>()
     .set(KanaLetterTags.t + KanaLetterTags.h + KanaLetterTags.a, ['', 'テァ'])
@@ -888,5 +737,4 @@ export const special_h = new Map<string, Array<string>>()
     .set(KanaLetterTags.t + KanaLetterTags.h + KanaLetterTags.o, ['', 'テォ'])
     .set(KanaLetterTags.d + KanaLetterTags.h + KanaLetterTags.a, ['', 'デァ'])
     .set(KanaLetterTags.d + KanaLetterTags.h + KanaLetterTags.u, ['', 'デゥ'])
-    .set(KanaLetterTags.d + KanaLetterTags.h + KanaLetterTags.o, ['', 'デォ'])
-
+    .set(KanaLetterTags.d + KanaLetterTags.h + KanaLetterTags.o, ['', 'デォ']);

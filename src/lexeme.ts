@@ -6,7 +6,9 @@ import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme
 export abstract class Metaplasm {}
 
 export class TonalInflectingMetaplasm extends Metaplasm {
-    apply(morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] { return []; }
+    apply(morphemes: Array<Morpheme>, tonalSymbolEnding: TonalSymbolEnding): TonalWord[] {
+        return [];
+    }
 }
 
 export class TonalLemmatizingMetaplasm extends Metaplasm {
@@ -42,14 +44,14 @@ export class Word {
     }
 
     replaceSyllable(i: number, syl: Syllable) {
-        if(i < this.syllables.length) {
+        if (i < this.syllables.length) {
             this.syllables.splice(i, 1, syl);
         }
         this.concat();
     }
 
     private concat() {
-        this.literal = this.syllables.map(x => x ? x.literal : "").join("");
+        this.literal = this.syllables.map(x => (x ? x.literal : '')).join('');
     }
 }
 

@@ -64,7 +64,11 @@ export class PhrasalInflectionAnalyzer {
     }
 
     analyzeAdjective(adjectivalNoun: string, e: string, metaplasm: TonalPhrasalInflectingMetaplasm) {
-        const lexemeAdjective = this.tia.analyze(adjectivalNoun, new TonalZeroCombining(), new TonalDesinenceInflection());
+        const lexemeAdjective = this.tia.analyze(
+            adjectivalNoun,
+            new TonalZeroCombining(),
+            new TonalDesinenceInflection(),
+        );
         const lexemeE = this.tia.analyze(e, new TonalCombiningForms(), new TonalDesinenceInflection());
         return this.p.makeAdjectivePhrasemes(lexemeAdjective, lexemeE, metaplasm);
     }

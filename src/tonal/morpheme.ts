@@ -160,7 +160,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 Object.assign(matchedLtrs, ltrs);
                 break;
             } else if (
-                (literal.length > 2 && sm_m_hh_w(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal))
+                literal.length > 2 &&
+                sm_m_hh_w(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal)
             ) {
                 // for lexical roots end with ~mhhw.
                 matched = literal;
@@ -198,9 +199,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
 
             // when there are no tonals
 
-            if (
-                letters[i].literal === TonalLetterTags.gg
-            ) {
+            if (letters[i].literal === TonalLetterTags.gg) {
                 // for surface form gg whose underlying form could be tt or kk.
                 matched = literal;
                 Object.assign(matchedLtrs, ltrs);
@@ -317,7 +316,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     private metaplasm: TonalCombiningMetaplasm;
     sounds: Array<Sound>;
 
-    constructor(syllable: TonalSyllable, sounds: Array<Sound>,  tcm: TonalCombiningMetaplasm) {
+    constructor(syllable: TonalSyllable, sounds: Array<Sound>, tcm: TonalCombiningMetaplasm) {
         super();
         this.syllable = syllable;
         this.metaplasm = tcm;
@@ -394,7 +393,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     private metaplasm: TonalCombiningMetaplasm;
     private euphonicFinals = new Array<AlphabeticLetter>();
-    private euphonicFinalTonals = new Array<{ index: number, letters: AlphabeticLetter[] }>();
+    private euphonicFinalTonals = new Array<{ index: number; letters: AlphabeticLetter[] }>();
 
     constructor(tcm: TonalCombiningMetaplasm) {
         super();
@@ -406,66 +405,77 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected createMorpheme(msp: MatchedPattern) {
-        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(new TonalSyllable(msp.letters), msp.pattern, this.metaplasm);
+        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
+            new TonalSyllable(msp.letters),
+            msp.pattern,
+            this.metaplasm,
+        );
         return tum;
     }
 
     private preprocessEuphonicFinal(letters: Array<AlphabeticLetter>) {
-        this.euphonicFinals.push(letters[letters.length-1]);
-        return letters.slice(0, letters.length-1);
+        this.euphonicFinals.push(letters[letters.length - 1]);
+        return letters.slice(0, letters.length - 1);
     }
 
-    private preprocessEuphonicFinalTonal(letters: Array<AlphabeticLetter>, literal: string, regex: RegExp, len: number) {
+    private preprocessEuphonicFinalTonal(
+        letters: Array<AlphabeticLetter>,
+        literal: string,
+        regex: RegExp,
+        len: number,
+    ) {
         const arr = literal.match(regex);
         // console.log(arr)
 
         let indx = -1;
-        if(len == 1) {
-            for(let i = 0; i < letters.length-1; i++) {
-                if(sm_jls_f(letters[i].literal, letters[i+1].literal)
-                    || sm_jjllss_wx(letters[i].literal, letters[i+1].literal)) {
+        if (len == 1) {
+            for (let i = 0; i < letters.length - 1; i++) {
+                if (
+                    sm_jls_f(letters[i].literal, letters[i + 1].literal) ||
+                    sm_jjllss_wx(letters[i].literal, letters[i + 1].literal)
+                ) {
                     indx = i;
                     break;
                 }
-            }            
-        } else if(len == 2) {
-            for(let i = 0; i < letters.length-2; i++) {
-                if(sm_mnng_h_f(letters[i].literal, letters[i+1].literal, letters[i+2].literal)
-                    || sm_mnng_hh_wx(letters[i].literal, letters[i+1].literal, letters[i+2].literal)) {
+            }
+        } else if (len == 2) {
+            for (let i = 0; i < letters.length - 2; i++) {
+                if (
+                    sm_mnng_h_f(letters[i].literal, letters[i + 1].literal, letters[i + 2].literal) ||
+                    sm_mnng_hh_wx(letters[i].literal, letters[i + 1].literal, letters[i + 2].literal)
+                ) {
                     indx = i;
                     break;
                 }
             }
         }
-        
-        if(arr) {
-            for(let i in arr) {
+
+        if (arr) {
+            for (let i in arr) {
                 const idxl = literal.search(arr[i]);
                 const sub1 = literal.substring(0, idxl);
                 const sub2 = literal.substring(idxl + arr[i].length);
 
                 // in case of hmhhw or hmhhwhmhhw
                 // check if the previous letter is a consonant
-                if(new SetOfInitialConsonants().beginWith(sub1)) return letters;
+                if (new SetOfInitialConsonants().beginWith(sub1)) return letters;
 
-                let fnl
-                if(new FirstTonalF().beginWith(arr[i].charAt(arr[i].length-1))) {
-                    literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);                
+                let fnl;
+                if (new FirstTonalF().beginWith(arr[i].charAt(arr[i].length - 1))) {
+                    literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);
                     fnl = letters.splice(indx, len, lowerLettersOfTonal.get(TonalLetterTags.t));
-                } else if(new ThirdFifthTonalsWX().beginWith(arr[i].charAt(arr[i].length-1))) {
-                    if(arr[i].charAt(arr[i].length-1) === TonalLetterTags.w)
-                        literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.w, sub2);                
-                    else if(arr[i].charAt(arr[i].length-1) === TonalLetterTags.x)
+                } else if (new ThirdFifthTonalsWX().beginWith(arr[i].charAt(arr[i].length - 1))) {
+                    if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.w)
+                        literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.w, sub2);
+                    else if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.x)
                         literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.x, sub2);
                     fnl = letters.splice(indx, len, lowerLettersOfTonal.get(TonalLetterTags.tt));
                 }
 
                 // console.log(literal)
 
-                if(fnl && len == 1)
-                    this.euphonicFinalTonals.push({ index: indx, letters: [fnl[0]] });
-                else if(fnl && len == 2)
-                    this.euphonicFinalTonals.push({ index: indx, letters: [fnl[0], fnl[1]] });
+                if (fnl && len == 1) this.euphonicFinalTonals.push({ index: indx, letters: [fnl[0]] });
+                else if (fnl && len == 2) this.euphonicFinalTonals.push({ index: indx, letters: [fnl[0], fnl[1]] });
             }
 
             // console.log(this.euphonicFinalTonals[0].letters)
@@ -475,13 +485,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     private replaceEuphonicFinal(letters: Array<AlphabeticLetter>) {
-        const slicedLetters = letters.slice(0, letters.length-1);
-        const literal = slicedLetters.map(it => it.literal).join("");
-        if(letters.length > 0
-            && letters[letters.length-1].literal === TonalLetterTags.gg 
-            && list_of_lexical_roots.includes(literal + TonalLetterTags.tt)
-            && !list_of_lexical_roots.includes(literal + TonalLetterTags.kk)
-            ) {
+        const slicedLetters = letters.slice(0, letters.length - 1);
+        const literal = slicedLetters.map(it => it.literal).join('');
+        if (
+            letters.length > 0 &&
+            letters[letters.length - 1].literal === TonalLetterTags.gg &&
+            list_of_lexical_roots.includes(literal + TonalLetterTags.tt) &&
+            !list_of_lexical_roots.includes(literal + TonalLetterTags.kk)
+        ) {
             // for surface form gg whose underlying form is tt but not kk
             const ls = this.preprocessEuphonicFinal(letters);
             ls.push(lowerLettersOfTonal.get(TonalLetterTags.tt));
@@ -491,19 +502,15 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     private replaceEuphonicFinalTonal(letters: Array<AlphabeticLetter>) {
-        let literal = letters.map(x => x.literal).join("");
+        let literal = letters.map(x => x.literal).join('');
 
-        if (
-            (literal.length > 1 && regex_jls_f.test(literal))
-        ) {
+        if (literal.length > 1 && regex_jls_f.test(literal)) {
             const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_jls_f, 1);
             return ls;
-        } else if(literal.length > 1 && regex_jjllss_wx.test(literal)) {
+        } else if (literal.length > 1 && regex_jjllss_wx.test(literal)) {
             const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_jjllss_wx, 1);
             return ls;
-        } else if (
-            (literal.length > 2 && regex_mnng_h_f.test(literal))
-        ) {
+        } else if (literal.length > 2 && regex_mnng_h_f.test(literal)) {
             const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_mnng_h_f, 2);
             return ls;
         } else if (literal.length > 2 && regex_mnng_hh_wx.test(literal)) {
@@ -535,30 +542,38 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     private postprocess_euphonic_t_or_tt(pattern: MatchedPattern) {
-        if((pattern.letters[pattern.letters.length-1].literal === TonalLetterTags.t ||
-            pattern.letters[pattern.letters.length-1].literal === TonalLetterTags.tt)
-            && this.euphonicFinals.length > 0) {
-                pattern.letters.pop();
-                pattern.pattern.pop();
-                const fnl = this.euphonicFinals.pop();
-                if(fnl) {
-                    pattern.letters.push(fnl);
-                    const snd = tonalPositionalSound.get(fnl.literal);
-                    if(snd) pattern.pattern.push(snd(TonalSoundTags.stopFinal))
-                }
-        } else if(this.euphonicFinalTonals.length > 0) {
+        if (
+            (pattern.letters[pattern.letters.length - 1].literal === TonalLetterTags.t ||
+                pattern.letters[pattern.letters.length - 1].literal === TonalLetterTags.tt) &&
+            this.euphonicFinals.length > 0
+        ) {
+            pattern.letters.pop();
+            pattern.pattern.pop();
+            const fnl = this.euphonicFinals.pop();
+            if (fnl) {
+                pattern.letters.push(fnl);
+                const snd = tonalPositionalSound.get(fnl.literal);
+                if (snd) pattern.pattern.push(snd(TonalSoundTags.stopFinal));
+            }
+        } else if (this.euphonicFinalTonals.length > 0) {
             const fnl = this.euphonicFinalTonals.pop();
-            if(fnl) {
-                if(fnl.letters.length == 1) {
+            if (fnl) {
+                if (fnl.letters.length == 1) {
                     pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
-                    const snd = tonalPositionalSound.get(fnl.letters[0].literal)
-                    if(snd) pattern.pattern.splice(fnl.index, 1, snd(TonalSoundTags.stopFinal));
-                } else if(fnl.letters.length == 2) {
+                    const snd = tonalPositionalSound.get(fnl.letters[0].literal);
+                    if (snd) pattern.pattern.splice(fnl.index, 1, snd(TonalSoundTags.stopFinal));
+                } else if (fnl.letters.length == 2) {
                     // console.log(pattern)
                     pattern.letters.splice(fnl.index, 1, fnl.letters[0], fnl.letters[1]);
-                    const snd1 = tonalPositionalSound.get(fnl.letters[0].literal)
-                    const snd2 = tonalPositionalSound.get(fnl.letters[1].literal)
-                    if(snd1 && snd2) pattern.pattern.splice(fnl.index, 1, snd1(TonalSoundTags.nasalFinal), snd2(TonalSoundTags.stopFinal));
+                    const snd1 = tonalPositionalSound.get(fnl.letters[0].literal);
+                    const snd2 = tonalPositionalSound.get(fnl.letters[1].literal);
+                    if (snd1 && snd2)
+                        pattern.pattern.splice(
+                            fnl.index,
+                            1,
+                            snd1(TonalSoundTags.nasalFinal),
+                            snd2(TonalSoundTags.stopFinal),
+                        );
                     // console.log(pattern)
                 }
             }
@@ -568,14 +583,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
         let morphemes = this.createMorphemes();
-        for(let i in patterns) {
-            const pat = this.postprocess_euphonic_t_or_tt(patterns[i])
-            
+        for (let i in patterns) {
+            const pat = this.postprocess_euphonic_t_or_tt(patterns[i]);
+
             morphemes.push(this.createMorpheme(pat));
         }
         return morphemes;
     }
-    
+
     makeMorphemes(gs: Array<AlphabeticGrapheme>) {
         const ltrs = this.preprocess(gs);
         const ptrns = this.make(ltrs, syllabifyTonal);

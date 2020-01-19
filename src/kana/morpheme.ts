@@ -78,7 +78,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
                                 arr[q] = letters[beginOfSyllable + q];
                             }
                             arraysOfLetters.push(arr);
-                            sounds = list[m]
+                            sounds = list[m];
                         }
                     } else {
                         break;
@@ -206,7 +206,7 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
 
     protected postprocess(patterns: MatchedPattern[]): Array<KanaUncombiningMorpheme> {
         let morphemes = this.createMorphemes();
-        for(let i in patterns) {
+        for (let i in patterns) {
             morphemes.push(this.createMorpheme(patterns[i]));
         }
         return morphemes;

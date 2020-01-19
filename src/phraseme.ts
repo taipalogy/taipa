@@ -5,7 +5,9 @@ import { TonalInflectionLexeme } from './dparser/lexeme';
 export abstract class PhrasalMetaplasm {}
 
 export class TonalPhrasalInflectingMetaplasm extends PhrasalMetaplasm {
-    apply(lexemeOne: TonalInflectionLexeme, lexemeTwo: TonalInflectionLexeme): TonalPhrase[] { return []; }
+    apply(lexemeOne: TonalInflectionLexeme, lexemeTwo: TonalInflectionLexeme): TonalPhrase[] {
+        return [];
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +60,6 @@ export class TonalPhrase extends Phrase {
     }
 
     private concat() {
-        this.literal = this.words.map(x => x.literal).join(" ")
+        this.literal = this.words.map(x => x.literal).join(' ');
     }
 }

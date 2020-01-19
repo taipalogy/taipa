@@ -5,8 +5,12 @@ import { TonalSyllable } from './tonal/morpheme';
 export abstract class CombiningMetaplasm {}
 
 export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
-    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> { return []; }
-    applyAssimilation(sounds: Sound[], initialNextSyllable: Sound): Array<TonalSyllable> { return [];}
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        return [];
+    }
+    applyAssimilation(sounds: Sound[], initialNextSyllable: Sound): Array<TonalSyllable> {
+        return [];
+    }
 }
 
 export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
@@ -70,7 +74,7 @@ export class Syllable {
     }
 
     protected concat() {
-        this.literal = this.letters.map(x => x.literal).join("");
+        this.literal = this.letters.map(x => x.literal).join('');
     }
 }
 

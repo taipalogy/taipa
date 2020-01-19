@@ -21,7 +21,7 @@ export class Client {
     processKana(str: string): TokenAnalysis {
         // kana
         let ta: TokenAnalysis = new TokenAnalysis();
-        if(str) {
+        if (str) {
             const ka = <KanaAnalyzer>this.kana_aw.analyzer;
             const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
             ta.blockSequences = this.kana_aw.getBlocks(morphemes);
@@ -37,7 +37,7 @@ export class Client {
     processTonal(str: string): TokenAnalysis {
         // tonal lurzmafjiz
         let ta: TokenAnalysis = new TokenAnalysis();
-        if(str) {
+        if (str) {
             const tla = <TonalLemmatizationAnalyzer>this.lurzmafjiz_aw.analyzer;
             const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(str);
             const lexemes: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
@@ -57,7 +57,7 @@ export class Client {
         let doc: Document = new Document();
 
         // tokenization
-        if(str) {
+        if (str) {
             const tokens = str.match(/\w+/g);
             if (tokens)
                 for (let i = 0; i < tokens.length; i++) {
@@ -76,7 +76,7 @@ export class Client {
             const dpsr = new DependencyParser();
             doc = dpsr.parse(doc);
         }
-        
+
         return doc;
     }
 }

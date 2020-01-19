@@ -1,4 +1,4 @@
-import { Tonal } from "./version2";
+import { Tonal } from './version2';
 
 interface Tonals {
     tonals: Array<Tonal>;
@@ -12,4 +12,4 @@ export class TwoTonals implements Tonals {
     }
 }
 
-export type TwoTonalSpelling = { pos: [number, number], patterns: TwoTonals[] };
+export type TwoTonalSpelling = { pos: [number, number]; patterns: TwoTonals[] };

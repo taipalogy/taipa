@@ -1206,10 +1206,10 @@ export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.l, TonalLetterTags.t)
     .set(TonalLetterTags.gg, TonalLetterTags.kk)
     .set(TonalLetterTags.bb, TonalLetterTags.pp)
-    .set(TonalLetterTags.ll, TonalLetterTags.tt)
+    .set(TonalLetterTags.ll, TonalLetterTags.tt);
 
 export const assimilatedFinals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.tt + TonalLetterTags.p, TonalLetterTags.pp)
     .set(TonalLetterTags.tt + TonalLetterTags.v, TonalLetterTags.pp)
     .set(TonalLetterTags.tt + TonalLetterTags.k, TonalLetterTags.kk)
-    .set(TonalLetterTags.tt + TonalLetterTags.q, TonalLetterTags.kk)
+    .set(TonalLetterTags.tt + TonalLetterTags.q, TonalLetterTags.kk);

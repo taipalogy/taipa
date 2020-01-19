@@ -46,10 +46,7 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
         return [];
     }
 
-    private populateLemmata(
-        morphemes: Array<TonalUncombiningMorpheme>,
-        inflectionalEnding: InflectionalEnding,
-    ) {
+    private populateLemmata(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         let lemmata: Array<TonalWord> = new Array();
 
         // turn morphemes into lemmas

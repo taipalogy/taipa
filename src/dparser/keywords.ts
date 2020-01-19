@@ -2,9 +2,7 @@ import { POSTags } from './symbols';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalSyllable } from '../tonal/morpheme';
-import {
-    Allomorph,
-} from '../tonal/version2';
+import { Allomorph } from '../tonal/version2';
 import { Sound } from '../grapheme';
 
 export class ConstructionElement {

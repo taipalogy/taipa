@@ -80,25 +80,10 @@ function germinatedConsonant(sg: SoundGeneration) {
 }
 
 const sc_v = pipe(vowel);
-const sc_cv = pipe(
-    initialConsonant,
-    vowel,
-);
-const sc_cvc = pipe(
-    initialConsonant,
-    vowel,
-    finalConsonant,
-);
-const sc_csv = pipe(
-    initialConsonant,
-    semivowel,
-    vowel,
-);
-const sc_ccv = pipe(
-    germinatedConsonant,
-    initialConsonant,
-    vowel,
-);
+const sc_cv = pipe(initialConsonant, vowel);
+const sc_cvc = pipe(initialConsonant, vowel, finalConsonant);
+const sc_csv = pipe(initialConsonant, semivowel, vowel);
+const sc_ccv = pipe(germinatedConsonant, initialConsonant, vowel);
 
 export class KanaSoundGenerator {
     readonly sylCompositions = [sc_v, sc_cv, sc_cvc, sc_csv, sc_ccv];
