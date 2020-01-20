@@ -182,3 +182,31 @@ describe("Inflection testing", () => {
         expect(tw.otherForms[0].literal).toEqual('damwvurhhwoaw');
     });
 });
+
+describe("Inflection testing, an empty word", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const tw = tia.analyze('', new TonalCombiningForms(), new TonalDesinenceInflection());
+
+    test("check the word", () => {
+        expect(tw.word.literal).toEqual('');
+    });
+
+    test("check the number of inflected forms", () => {
+        expect(tw.otherForms.length).toEqual(0);
+    });
+});
+
+describe("Inflection testing, an empty word", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const tw = tia.analyze('', new ThirdCombiningForm(), new TransfixInflection());
+
+    test("check the word", () => {
+        expect(tw.word.literal).toEqual('');
+    });
+
+    test("check the number of inflected forms", () => {
+        expect(tw.otherForms.length).toEqual(0);
+    });
+});

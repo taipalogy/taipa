@@ -28,13 +28,15 @@ export class TonalDesinenceInflection extends TonalInflectingMetaplasm {
 
 export class TransfixInflection extends TonalInflectingMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
-        let rets = [];
-        let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
+        const rets = [];
+        if(ms.length > 0) {
+            const tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
-        for (let i = 0; i < ms.length; i++) {
-            tw.replaceSyllable(i, ms[i].getForms()[0]);
+            for (let i = 0; i < ms.length; i++) {
+                tw.replaceSyllable(i, ms[i].getForms()[0]);
+            }
+            rets.push(tw);
         }
-        rets.push(tw);
 
         return rets;
     }
@@ -125,17 +127,19 @@ export class TonalInflectionLexeme extends Lexeme {
 
     assimilate(til: TonalInflectionLexeme) {
         const ms = til.getMorphemes();
-        const other_snds = ms[ms.length - 1].sounds;
-        if (other_snds[other_snds.length - 1].name === TonalSoundTags.nasalFinal) {
-            let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
+        if(ms.length > 0) {
+            const other_snds = ms[ms.length - 1].sounds;
+            if (other_snds[other_snds.length - 1].name === TonalSoundTags.nasalFinal) {
+                let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
 
-            const s = other_snds[other_snds.length - 1];
-            const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s);
+                const s = other_snds[other_snds.length - 1];
+                const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s);
 
-            wrd.popSyllable();
-            wrd.pushSyllable(syls[0]);
+                wrd.popSyllable();
+                wrd.pushSyllable(syls[0]);
 
-            return wrd;
+                return wrd;
+            }
         }
     }
 }

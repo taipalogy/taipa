@@ -74,7 +74,7 @@ export class Syllable {
     }
 
     protected concat() {
-        this.literal = this.letters.map(x => x.literal).join('');
+        this.literal = this.letters.map(x => (x ? x.literal : '')).join('');
     }
 }
 

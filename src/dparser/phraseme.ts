@@ -3,6 +3,7 @@ import { TonalPhrase, Phraseme, TonalPhrasalInflectingMetaplasm } from '../phras
 
 class Transitive extends TonalPhrasalInflectingMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+        if(lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
         if (lexemeParticle.otherForms.length > 0) {
             return [new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.otherForms[0]])];
         } else {
@@ -13,6 +14,7 @@ class Transitive extends TonalPhrasalInflectingMetaplasm {
 
 export class Adnominal extends TonalPhrasalInflectingMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
+        if(lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
         if (lexemeE.otherForms.length > 0) {
             return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.otherForms[0]])];
         } else {

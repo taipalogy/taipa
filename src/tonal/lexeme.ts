@@ -1,6 +1,6 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme';
-import { freeAllomorphUncombiningRules, ZeroTonal } from './version2';
+// import { freeAllomorphUncombiningRules, ZeroTonal, lowerLettersOfTonal, TonalLetterTags } from './version2';
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2';
 import { TonalAffix } from './version2';
 
@@ -9,38 +9,41 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         return this.populateLemmata(morphemes, inflectionalEnding);
     }
-
+/*
     private replaceLastSyllable(morphemes: Array<TonalUncombiningMorpheme>) {
         let wd = new TonalWord(morphemes.map(x => x.syllable));
         wd.popSyllable();
         wd.pushSyllable(morphemes[morphemes.length - 1].getForms()[0]);
         return wd;
     }
-
+*/
     private getLemmas(
         morphemes: Array<TonalUncombiningMorpheme>,
         inflectionalEnding: InflectionalEnding,
     ): Array<TonalWord> {
         if (inflectionalEnding) {
+
             if (inflectionalEnding instanceof FreeInflectionalEnding) {
-                if (inflectionalEnding.baseAffixes.length == 1) {
-                    return [this.replaceLastSyllable(morphemes)];
-                } else if (inflectionalEnding.baseAffixes.length > 1) {
-                    let ret = [];
-                    let arr = morphemes[morphemes.length - 1].getForms();
-                    //console.log(arr)
-                    for (let key in arr) {
-                        let wd = new TonalWord(morphemes.map(x => x.syllable));
-                        wd.popSyllable();
-                        wd.pushSyllable(arr[key]);
-                        ret.push(wd);
-                    }
-                    return ret;
+                const ret = [];
+                const arr = morphemes[morphemes.length - 1].getForms();
+                
+                for (let key in arr) {
+                    const wrd = new TonalWord(morphemes.map(x => x.syllable));
+                    wrd.popSyllable();
+                    wrd.pushSyllable(arr[key]);
+                    ret.push(wrd);
                 }
+                return ret;
+    
             } else if (inflectionalEnding instanceof CheckedInflectionalEnding) {
-                if (inflectionalEnding.affix.tonal.toString() === '') return [];
-                return [this.replaceLastSyllable(morphemes)];
+                if(morphemes[morphemes.length-1].getForms().length == 0) return [];
+                const wrd = new TonalWord(morphemes.map(x => x.syllable));
+                wrd.popSyllable();
+                wrd.pushSyllable(morphemes[morphemes.length - 1].getForms()[0]);
+                return [wrd];
+                // return [this.replaceLastSyllable(morphemes)];
             }
+
         }
 
         return [];
@@ -71,16 +74,9 @@ export class InflectionalEnding extends Ending {
     }
 }
 
-export class FreeInflectionalEnding extends InflectionalEnding {
-    // TODO: affixes may be redundant, since we can do the same with getForms()
-    // TODO: rename baseAffixes to affixes
-    // TODO: this class may be redundant
-    baseAffixes: Array<TonalAffix> = new Array();
-}
+export class FreeInflectionalEnding extends InflectionalEnding {}
 
-export class CheckedInflectionalEnding extends InflectionalEnding {
-    // TODO: this class may be redundant
-}
+export class CheckedInflectionalEnding extends InflectionalEnding {}
 
 export class TonalSymbolEnding extends Ending {
     allomorph: Allomorph = new Allomorph();
@@ -148,12 +144,6 @@ export class TonalLemmatizationLexeme extends Lexeme {
         if (allomorph instanceof FreeAllomorph) {
             let fie = new FreeInflectionalEnding();
             fie.affix.tonal = allomorph.tonal;
-            const tnls = freeAllomorphUncombiningRules.get(allomorph.toString());
-            for (let key in tnls) {
-                let a = new TonalAffix();
-                a.tonal = tnls[key];
-                fie.baseAffixes.push(a);
-            }
             infe = fie;
         } else if (allomorph instanceof CheckedAllomorph) {
             let cie = new CheckedInflectionalEnding();

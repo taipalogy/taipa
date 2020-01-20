@@ -54,13 +54,13 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     // push letter to make tone 2
                     // the base tone of the first tone is the second tone
                     // 1 to 2
-                    let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+                    const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                     s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
-                    //console.log(this.syllable)
+                    // console.log(s)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
-                    let ret = [];
+                    const ret = [];
                     for (let i in freeAllomorphUncombiningRules.get(allomorph.toString())) {
                         // pop letter
                         // push letter
@@ -93,7 +93,8 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                 // pop the last letter
                 // no need to push letter
                 // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
-                let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+                if(allomorph.tonal.toString() === '') return [];
+                const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                 s.popLetter();
                 //console.log(s.literal)
                 return [s];

@@ -1,5 +1,6 @@
 import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
+import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 
 describe("Lemma testing", () => {
     const cli = new Client()
@@ -113,5 +114,19 @@ describe("Lemma testing", () => {
 
   test("check the lemma", () => {
     expect(doc.lemmata[0].literal).toEqual('goay');
+  });
+});
+
+describe("Lemma testing, empty string as an argument", () => {
+  const tla = new TonalLemmatizationAnalyzer();
+
+  const tw = tla.analyze('');
+
+  test("check the word", () => {
+    expect(tw.word.literal).toEqual('');
+  });
+
+  test("check the lemma", () => {
+    expect(tw.getLemmata.length).toEqual(0);
   });
 });

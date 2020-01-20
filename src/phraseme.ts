@@ -45,9 +45,6 @@ export class TonalPhrase extends Phrase {
     }
 
     popWord() {
-        // trim the literal
-        // let tmp = this.literal.substr(0, this.literal.length - this.words[this.words.length - 1].literal.length);
-        // this.literal = tmp;
         // get rid off the last word from array
         this.words = this.words.slice(0, this.words.length - 1);
         this.concat();
@@ -55,11 +52,14 @@ export class TonalPhrase extends Phrase {
 
     pushWord(w: TonalWord) {
         this.words.push(w);
-        // this.literal += w.literal;
         this.concat();
     }
 
     private concat() {
-        this.literal = this.words.map(x => x.literal).join(' ');
+        if(this.words.length > 0) {
+            if(this.words.filter(x => (x && x.literal.length > 0)).length == 0) {
+                this.literal = '';
+            } else this.literal = this.words.map(x => (x ? x.literal : '')).join(' ');
+        }
     }
 }
