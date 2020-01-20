@@ -1,9 +1,9 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme';
-import { Lurzmafjiz } from './tonal/init';
+import { checkLetterSizeTonal } from './tonal/init';
 import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
 
-import { Kana } from './kana/init';
+import { getKanaBlocks, checkLetterSizeKana } from './kana/init';
 import { KanaUncombiningMorpheme } from './kana/morpheme';
 import { KanaAnalyzer } from './kana/analyzer';
 
@@ -15,16 +15,14 @@ import { Token, TokenAnalysis } from './token';
 import { Lemmatizer } from './lemmatizer';
 
 export class Client {
-    private readonly lurzmafjiz_aw = Lurzmafjiz.getInstance();
-    private readonly kana_aw = Kana.getInstance();
-
     processKana(str: string): TokenAnalysis {
+        checkLetterSizeKana();
         // kana
         let ta: TokenAnalysis = new TokenAnalysis();
         if (str) {
-            const ka = <KanaAnalyzer>this.kana_aw.analyzer;
+            const ka = new KanaAnalyzer();
             const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
-            ta.blockSequences = this.kana_aw.getBlocks(morphemes);
+            ta.blockSequences = getKanaBlocks(morphemes);
 
             for (let m of morphemes) {
                 ta.soundSequences.push(m.sounds);
@@ -35,15 +33,16 @@ export class Client {
     }
 
     processTonal(str: string): TokenAnalysis {
+        checkLetterSizeTonal();
         // tonal lurzmafjiz
         let ta: TokenAnalysis = new TokenAnalysis();
         if (str) {
-            const tla = <TonalLemmatizationAnalyzer>this.lurzmafjiz_aw.analyzer;
+            const tla = new TonalLemmatizationAnalyzer();
             const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(str);
-            const lexemes: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
-            ta.word = lexemes.word;
-            ta.lemmata = lexemes.getLemmata();
-            ta.inflectionalEnding = lexemes.getInflectionalEnding();
+            const lexeme: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
+            ta.word = lexeme.word;
+            ta.lemmata = lexeme.getLemmata();
+            ta.inflectionalEnding = lexeme.getInflectionalEnding();
 
             for (let m of morphemes) {
                 ta.soundSequences.push(m.sounds);
