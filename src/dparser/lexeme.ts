@@ -1,21 +1,21 @@
 import { TonalInflectingMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
 import { TonalCombiningMorpheme } from './morpheme';
-import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
+import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, InflectionalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
 
 export class TonalDesinenceInflection extends TonalInflectingMetaplasm {
-    apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
-        if (tse) {
+    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
+        if (ms.length > 0 && ms[ms.length - 1]) {
             const last = ms[ms.length - 1];
-            const slbs = last.getForms();
+            const syls = last.getForms();
             let rets = [];
-            for (let i in slbs) {
+            for (let i in syls) {
                 let wd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
                 wd.popSyllable();
-                wd.pushSyllable(slbs[i]);
+                wd.pushSyllable(syls[i]);
                 rets.push(wd);
             }
             return rets;
@@ -27,7 +27,7 @@ export class TonalDesinenceInflection extends TonalInflectingMetaplasm {
 //------------------------------------------------------------------------------
 
 export class TransfixInflection extends TonalInflectingMetaplasm {
-    apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
@@ -43,7 +43,7 @@ export class TransfixInflection extends TonalInflectingMetaplasm {
 //------------------------------------------------------------------------------
 
 export class RegressiveAssimilation extends TonalInflectingMetaplasm {
-    apply(ms: Array<TonalCombiningMorpheme>, tse: TonalSymbolEnding): TonalWord[] {
+    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
@@ -72,7 +72,7 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
     otherForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
-    private tse: TonalSymbolEnding;
+    private tonalSymbleEnding: TonalSymbolEnding;
 
     constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
         super();
@@ -81,12 +81,12 @@ export class TonalInflectionLexeme extends Lexeme {
         if (ms.length > 0) {
             if (ms[ms.length - 1].allomorph) {
                 // tonal ending needs to be assigned to sandhi lexeme
-                this.tse = this.assignTonalEnding(ms[ms.length - 1].allomorph);
+                this.tonalSymbleEnding = this.assignTonalEnding(ms[ms.length - 1].allomorph);
             } else {
-                this.tse = new TonalSymbolEnding();
+                this.tonalSymbleEnding = new TonalSymbolEnding();
             }
         } else {
-            this.tse = new TonalSymbolEnding();
+            this.tonalSymbleEnding = new TonalSymbolEnding();
         }
 
         this.otherForms = this.assignWordForms(ms, tim);
@@ -109,8 +109,13 @@ export class TonalInflectionLexeme extends Lexeme {
         return tse;
     }
 
+    getInflectionalEnding() {
+        if (this.tonalSymbleEnding) return this.tonalSymbleEnding.allomorph.tonal.toString();
+        return '';
+    }
+
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectingMetaplasm): TonalWord[] {
-        return ti.apply(ms, this.tse);
+        return ti.apply(ms);
     }
 
     getMorphemes() {

@@ -1133,23 +1133,18 @@ class UncombinedCheckedAllomorphs {
 export const uncombinedCheckedAllomorphs = new UncombinedCheckedAllomorphs();
 
 class CombinedCheckedAllomorphs {
-    private o = new Map<string, Allomorph>();
+    private o = new Map<string, Allomorph[]>();
 
     constructor() {
         this.o
-            .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphPF())
-            .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphTF())
-            .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphKF())
-            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphHF())
-            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphHY())
-            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPPW())
-            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTTW())
-            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKKW())
-            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHHW())
-            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPPX())
-            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTTX())
-            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKKX())
-            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHHX());
+            .set(ps_p(TonalSoundTags.stopFinal).toString(), [new AllomorphPF()])
+            .set(ps_t(TonalSoundTags.stopFinal).toString(), [new AllomorphTF()])
+            .set(ps_k(TonalSoundTags.stopFinal).toString(), [new AllomorphKF()])
+            .set(ps_h(TonalSoundTags.stopFinal).toString(), [new AllomorphHF(), new AllomorphHY()])
+            .set(ps_pp(TonalSoundTags.stopFinal).toString(), [new AllomorphPPW(), new AllomorphPPX()])
+            .set(ps_tt(TonalSoundTags.stopFinal).toString(), [new AllomorphTTW(), new AllomorphTTX()])
+            .set(ps_kk(TonalSoundTags.stopFinal).toString(), [new AllomorphKKW(), new AllomorphKKX()])
+            .set(ps_hh(TonalSoundTags.stopFinal).toString(), [new AllomorphHHW(), new AllomorphHHX()]);
     }
 
     get(key: string) {
@@ -1157,7 +1152,7 @@ class CombinedCheckedAllomorphs {
         if (value) {
             return value;
         }
-        return new Allomorph();
+        return [];
     }
 
     has(key: string) {

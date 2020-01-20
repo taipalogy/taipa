@@ -50,6 +50,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                 }
             } else if (allomorph instanceof CheckedAllomorph) {
                 // nothing to pop here
+                if(allomorph.tonal.toString().length > 0) return [];
                 const cfs = combiningRules.get(allomorph.final.toString());
                 const rets = [];
                 for (let k in cfs) {
@@ -191,7 +192,13 @@ export class TonalCombiningMorpheme extends Morpheme {
             new SetOfCheckedTonals().beginWith(syllable.lastLetter.literal) &&
             uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
         ) {
-            return combinedCheckedAllomorphs.get(syllable.lastSecondLetter.literal);
+            // in case of final followed by tonal
+            const alms = combinedCheckedAllomorphs.get(syllable.lastSecondLetter.literal);
+            if(alms.length > 1) {
+                const it = alms.filter(x => x.tonal.toString() === syllable.lastLetter.literal);
+                return it[0];
+            }
+            return alms[0];
         }
 
         if (uncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {

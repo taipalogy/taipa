@@ -327,7 +327,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         this.sounds = sounds;
     }
 
-    apply(): TonalSyllable[] {
+    getForms(): TonalSyllable[] {
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
