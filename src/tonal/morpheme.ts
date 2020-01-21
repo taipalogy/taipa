@@ -153,7 +153,10 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             // when there are tonals
 
             if (
-                (literal.length > 1 && sm_bgkp_f(letters[i - 1].literal, letters[i].literal)) ||
+                (literal.length > 1 &&
+                letters[i] &&
+                letters[i - 1] &&
+                sm_bgkp_f(letters[i - 1].literal, letters[i].literal)) ||
                 (literal.length > 1 && sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal))
             ) {
                 // this combining form is not present in the pool.
@@ -162,6 +165,9 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 break;
             } else if (
                 literal.length > 2 &&
+                letters[i] &&
+                letters[i - 1] &&
+                letters[i - 2] &&
                 sm_m_hh_w(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal)
             ) {
                 // for lexical roots end with ~mhhw.

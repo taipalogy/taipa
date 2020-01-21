@@ -186,27 +186,68 @@ describe("Inflection testing", () => {
 describe("Inflection testing, an empty word", () => {
     const tia = new TonalInflectionAnalyzer();
 
-    const tw = tia.analyze('', new TonalCombiningForms(), new TonalDesinenceInflection());
+    const tw1 = tia.analyze('', new TonalCombiningForms(), new TonalDesinenceInflection());
 
     test("check the word", () => {
-        expect(tw.word.literal).toEqual('');
+        expect(tw1.word.literal).toEqual('');
     });
 
     test("check the number of inflected forms", () => {
-        expect(tw.otherForms.length).toEqual(0);
+        expect(tw1.otherForms.length).toEqual(0);
+    });
+
+    const tw2 = tia.analyze('', new ThirdCombiningForm(), new TransfixInflection());
+
+    test("check the word", () => {
+        expect(tw2.word.literal).toEqual('');
+    });
+
+    test("check the number of inflected forms", () => {
+        expect(tw2.otherForms.length).toEqual(0);
     });
 });
 
-describe("Inflection testing, an empty word", () => {
+describe("Inflection testing, absent lexical roots", () => {
     const tia = new TonalInflectionAnalyzer();
 
-    const tw = tia.analyze('', new ThirdCombiningForm(), new TransfixInflection());
+    const tw1 = tia.analyze('s', new TonalCombiningForms(), new TonalDesinenceInflection());
 
     test("check the word", () => {
-        expect(tw.word.literal).toEqual('');
+        expect(tw1.word.literal).toEqual('');
     });
 
     test("check the number of inflected forms", () => {
-        expect(tw.otherForms.length).toEqual(0);
+        expect(tw1.otherForms.length).toEqual(0);
+    });
+
+    const tw2 = tia.analyze('on', new TonalCombiningForms(), new TonalDesinenceInflection());
+
+    test("check the word", () => {
+        expect(tw2.word.literal).toEqual('');
+    });
+
+    test("check the number of inflected forms", () => {
+        expect(tw2.otherForms.length).toEqual(0);
+    });
+
+    const tw3 = tia.analyze('ax', new TonalCombiningForms(), new TonalDesinenceInflection());
+
+    test("check the word", () => {
+        expect(tw3.word.literal).toEqual('');
+    });
+
+    test("check the number of inflected forms", () => {
+        expect(tw3.otherForms.length).toEqual(0);
+    });
+
+    const str = 'chimhhw';
+    const tw4 = tia.analyze(str, new TonalCombiningForms(), new TonalDesinenceInflection());
+
+    test("check the word", () => {
+        expect(tw4.word.literal).toEqual(str);
+    });
+
+    test("check the number of inflected forms", () => {
+        expect(tw4.otherForms.length).toEqual(0);
     });
 });

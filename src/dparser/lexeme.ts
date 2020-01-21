@@ -12,11 +12,13 @@ export class TonalDesinenceInflection extends TonalInflectingMetaplasm {
             const last = ms[ms.length - 1];
             const syls = last.getForms();
             let rets = [];
-            for (let i in syls) {
-                let wd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
-                wd.popSyllable();
-                wd.pushSyllable(syls[i]);
-                rets.push(wd);
+            if(syls) {
+                for (let i in syls) {
+                    let wd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
+                    wd.popSyllable();
+                    wd.pushSyllable(syls[i]);
+                    rets.push(wd);
+                }
             }
             return rets;
         }
@@ -33,7 +35,8 @@ export class TransfixInflection extends TonalInflectingMetaplasm {
             const tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
             for (let i = 0; i < ms.length; i++) {
-                tw.replaceSyllable(i, ms[i].getForms()[0]);
+                const form = ms[i].getForms()[0];
+                if(form) tw.replaceSyllable(i, form);
             }
             rets.push(tw);
         }
