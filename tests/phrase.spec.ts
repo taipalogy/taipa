@@ -83,3 +83,45 @@ describe("Phrasal verb testing, 2 empty words, 1 empty phrase", () => {
         expect(ph4.otherForms.length).toEqual(0);
     });
 });
+
+describe("Phrasal verb testing, undefined input", () => {
+    const phva = new PhrasalInflectionAnalyzer();
+
+    const inputUnd: any = undefined;
+
+    const ph1 = phva.analyzeTransitive(inputUnd, inputUnd);
+
+    test("check the empty phrase", () => {
+        expect(ph1.phrase.literal).toEqual('');
+    });
+
+    test("check the number of proceeding forms of an empty phrase", () => {
+        expect(ph1.proceedingForms.length).toEqual(0);
+    });
+
+    const ph2 = phva.analyzeIntransitive(inputUnd, inputUnd);
+
+    test("check the empty phrase", () => {
+        expect(ph2.phrase.literal).toEqual('');
+    });
+
+    const ph3 = phva.analyzeAdjective(inputUnd, inputUnd, new Adnominal());
+
+    test("check the empty phrase", () => {
+        expect(ph3.phrase.literal).toEqual('');
+    });
+
+    test("check the number of other forms of an empty phrase", () => {
+        expect(ph3.otherForms.length).toEqual(0);
+    });
+
+    const ph4 = phva.analyzeAdjective(inputUnd, inputUnd, new Assimilation());
+
+    test("check the empty phrase", () => {
+        expect(ph4.phrase.literal).toEqual('');
+    });
+
+    test("check the number of other forms of an empty phrase", () => {
+        expect(ph4.otherForms.length).toEqual(0);
+    });
+});

@@ -1,5 +1,7 @@
 import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
+import { KanaAnalyzer } from '../src/kana/analyzer';
+import { KanaUncombiningMorpheme } from '../src/kana/morpheme';
 
 describe("Kana testing", () => {
     const cli = new Client()
@@ -129,5 +131,24 @@ describe("Kana testing", () => {
     test("kanas", () => {
         expect(doc.blockSequences[0]).toEqual('わゐゑを');
         expect(doc.blockSequences[1]).toEqual('ワヰヱヲ');
+    });
+});
+
+describe("Kana testing", () => {
+    const ka = new KanaAnalyzer();
+
+    const inputEmpty: any = '';
+    const inputUnd: any = undefined;
+  
+    const morphemes1: KanaUncombiningMorpheme[] = ka.morphAnalyze(inputUnd);
+
+    test("check the length of sound sequences", () => {
+        expect(morphemes1.map(x => x.sounds).length).toEqual(0);
+    });
+
+    const morphemes2: KanaUncombiningMorpheme[] = ka.morphAnalyze(inputEmpty);
+
+    test("check the length of sound sequences", () => {
+        expect(morphemes2.map(x => x.sounds).length).toEqual(0);
     });
 });

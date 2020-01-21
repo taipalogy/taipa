@@ -16,6 +16,8 @@ const list_of_new_lexical_roots = [
     'choa',
     
     'dngh', 'dom',
+
+    'gehh',
 	
     'hoang', 'homz',
 

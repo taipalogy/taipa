@@ -104,9 +104,11 @@ export class GraphemeMaker {
 
     makeGraphemes(str: string) {
         const characters = new Array();
-        for (var i = 0; i < str.length; i++) {
-            if (str.charAt(i) != '\0') {
-                characters.push(new Character(str.charAt(i)));
+        if(str) {
+            for (var i = 0; i < str.length; i++) {
+                if (str.charAt(i) != '\0') {
+                    characters.push(new Character(str.charAt(i)));
+                }
             }
         }
 

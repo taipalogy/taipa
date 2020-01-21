@@ -9,3 +9,4 @@ export { KanaAnalyzer } from './kana/analyzer';
 export { TonalDesinenceInflection, TransfixInflection, RegressiveAssimilation } from './dparser/lexeme';
 export { TonalCombiningForms, ThirdCombiningForm, AssimilatedFinalForm } from './dparser/morpheme';
 export { Adnominal, Assimilation } from './dparser/phraseme';
+export { Sound } from './grapheme';

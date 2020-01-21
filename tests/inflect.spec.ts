@@ -251,3 +251,53 @@ describe("Inflection testing, absent lexical roots", () => {
         expect(tw4.otherForms.length).toEqual(0);
     });
 });
+
+
+describe("Inflection testing, absent lexical roots", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const inputUnd: any = undefined;
+    const inputEmpty: any = '';
+
+    const lexeme1 = tia.analyze(inputUnd, new TonalCombiningForms(), new TonalDesinenceInflection());
+    
+    test("check the word literal", () => {
+        expect(lexeme1.word.literal).toEqual('');
+    });
+
+    test("check the number of forms", () => {
+        expect(lexeme1.otherForms.length).toEqual(0);
+    });
+    
+    const lexeme2 = tia.analyze(inputEmpty, new TonalCombiningForms(), new TonalDesinenceInflection());
+
+    test("check the word literal", () => {
+        expect(lexeme2.word.literal).toEqual('');
+    });
+
+    test("check the number of forms", () => {
+        expect(lexeme2.otherForms.length).toEqual(0);
+    });
+
+    const lexeme3 = tia.analyze(inputUnd, new ThirdCombiningForm(), new TransfixInflection());
+
+    test("check the word literal", () => {
+        expect(lexeme3.word.literal).toEqual('');
+    });
+
+    test("check the number of forms", () => {
+        expect(lexeme3.otherForms.length).toEqual(0);
+    });
+
+
+    const lexeme4 = tia.analyze(inputUnd, new ThirdCombiningForm(), new TransfixInflection());
+
+    test("check the word literal", () => {
+        expect(lexeme4.word.literal).toEqual('');
+    });
+
+    test("check the number of forms", () => {
+        expect(lexeme4.otherForms.length).toEqual(0);
+    });
+});
+
