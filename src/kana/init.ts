@@ -46,14 +46,16 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
             kana_compositions[1] += ks[1];
 
             if (
+                previous.length > 0 &&
                 checkChouon(
                     previous[previous.length - 1],
                     e.syllable.literal[e.syllable.literal.length - 1],
                 ) &&
-                new SetOfInitialConsonants().beginWith(
-                    e.syllable.literal.slice(0, e.syllable.literal.length - 1),
-                ) == false
+                new SetOfInitialConsonants().beginWith(e.syllable.literal) == false &&
+                e.syllable.literal.length == 1
             ) {
+                // a vowel does not begin with a consonant and is of length 1
+                // a vowel follows a previous vowel
                 kana_compositions[2] += 'ー';
             } else {
                 kana_compositions[2] += ks[1];
