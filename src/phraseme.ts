@@ -56,8 +56,8 @@ export class TonalPhrase extends Phrase {
     }
 
     private concat() {
-        if(this.words.length > 0) {
-            if(this.words.filter(x => (x && x.literal.length > 0)).length == 0) {
+        if (this.words.length > 0) {
+            if (this.words.filter(x => x && x.literal.length > 0).length == 0) {
                 this.literal = '';
             } else this.literal = this.words.map(x => (x ? x.literal : '')).join(' ');
         }

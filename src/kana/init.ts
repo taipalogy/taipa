@@ -47,10 +47,7 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
 
             if (
                 previous.length > 0 &&
-                checkChouon(
-                    previous[previous.length - 1],
-                    e.syllable.literal[e.syllable.literal.length - 1],
-                ) &&
+                checkChouon(previous[previous.length - 1], e.syllable.literal[e.syllable.literal.length - 1]) &&
                 new SetOfInitialConsonants().beginWith(e.syllable.literal) == false &&
                 e.syllable.literal.length == 1
             ) {
@@ -60,9 +57,7 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
             } else {
                 kana_compositions[2] += ks[1];
             }
-        } else if (
-            new SetOfFinalConsonants().beginWith(e.syllable.literal[e.syllable.literal.length - 1]) == true
-        ) {
+        } else if (new SetOfFinalConsonants().beginWith(e.syllable.literal[e.syllable.literal.length - 1]) == true) {
             ks = lookup(e.syllable.literal.substring(0, e.syllable.literal.length - 1));
             if (ks != undefined && ks[0] != undefined) {
                 kana_compositions[0] += ks[0];
@@ -112,5 +107,4 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
     if (kana_compositions[1] === kana_compositions[2]) kana_compositions[2] = '';
 
     return kana_compositions;
-    
 }

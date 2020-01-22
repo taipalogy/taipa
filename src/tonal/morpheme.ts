@@ -93,7 +93,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                 // pop the last letter
                 // no need to push letter
                 // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
-                if(allomorph.tonal.toString() === '') return [];
+                if (allomorph.tonal.toString() === '') return [];
                 const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                 s.popLetter();
                 //console.log(s.literal)
@@ -154,9 +154,9 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
 
             if (
                 (literal.length > 1 &&
-                letters[i] &&
-                letters[i - 1] &&
-                sm_bgkp_f(letters[i - 1].literal, letters[i].literal)) ||
+                    letters[i] &&
+                    letters[i - 1] &&
+                    sm_bgkp_f(letters[i - 1].literal, letters[i].literal)) ||
                 (literal.length > 1 && sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal))
             ) {
                 // this combining form is not present in the pool.

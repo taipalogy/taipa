@@ -9,7 +9,7 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         return this.populateLemmata(morphemes, inflectionalEnding);
     }
-/*
+    /*
     private replaceLastSyllable(morphemes: Array<TonalUncombiningMorpheme>) {
         let wd = new TonalWord(morphemes.map(x => x.syllable));
         wd.popSyllable();
@@ -22,11 +22,10 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
         inflectionalEnding: InflectionalEnding,
     ): Array<TonalWord> {
         if (inflectionalEnding) {
-
             if (inflectionalEnding instanceof FreeInflectionalEnding) {
                 const ret = [];
                 const arr = morphemes[morphemes.length - 1].getForms();
-                
+
                 for (let key in arr) {
                     const wrd = new TonalWord(morphemes.map(x => x.syllable));
                     wrd.popSyllable();
@@ -34,16 +33,14 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
                     ret.push(wrd);
                 }
                 return ret;
-    
             } else if (inflectionalEnding instanceof CheckedInflectionalEnding) {
-                if(morphemes[morphemes.length-1].getForms().length == 0) return [];
+                if (morphemes[morphemes.length - 1].getForms().length == 0) return [];
                 const wrd = new TonalWord(morphemes.map(x => x.syllable));
                 wrd.popSyllable();
                 wrd.pushSyllable(morphemes[morphemes.length - 1].getForms()[0]);
                 return [wrd];
                 // return [this.replaceLastSyllable(morphemes)];
             }
-
         }
 
         return [];
