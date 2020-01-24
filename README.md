@@ -4,8 +4,10 @@ A library for analyzing and processing Taiwanese language. This library consists
 
 * lemmatizing
 * stemming
+* inflecting
 * morpheme-based morphological analyzing
-* graphemic analysis
+* graphemic analyzing
+* assimilating
 
 ## Client
 

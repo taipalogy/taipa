@@ -1,7 +1,7 @@
 import { TonalInflectingMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
 import { TonalCombiningMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding, InflectionalEnding } from '../tonal/lexeme';
-import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
+import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags, SetOfNasalFinals } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ export class TransfixInflection extends TonalInflectingMetaplasm {
 
 export class RegressiveAssimilation extends TonalInflectingMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
-        let rets = [];
+        // let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
         if (ms.length > 1) {
@@ -66,9 +66,27 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
                 }
             }
         }
-        rets.push(tw);
+        // rets.push(tw);
 
-        return rets;
+        // return rets;
+        return [tw];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class AgressiveAssimilation extends TonalInflectingMetaplasm {
+    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
+        if(ms.length > 1 && ms[ms.length-2]) {
+            const nsls = new SetOfNasalFinals();
+            const snds = ms[ms.length-2].sounds;
+            let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
+            if(nsls.beginWith(snds[snds.length-2].toString())) {
+                tw.replaceSyllable(tw.syllables.length-1, ms[ms.length-1].getSoundChangeForm(snds[snds.length-2])[0]);
+                return [tw];
+            }
+        }
+        return [];
     }
 }
 

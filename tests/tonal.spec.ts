@@ -1,6 +1,9 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
+import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
+import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
+import { EpentheticInitialForm } from '../src/dparser/morpheme';
 
 describe("Tonal testing", () => {
     const cli = new Client()
@@ -173,8 +176,8 @@ describe("Tonal testing", () => {
 
     doc = cli.processTonal('ax');
 
-    test("check if it is present", () => {
-        expect(doc.word.literal).toEqual('');
+    test("check if it is present, after tone sandhi of ay is incorporated", () => {
+        expect(doc.word.literal).toEqual('ax');
     });
 });
 
@@ -184,293 +187,39 @@ describe("Tonal testing", () => {
 
     doc = cli.processTonal('soaiw');
 
-    test("check if it is present. 5 letters in length", () => {
+    test("check if it is not present. 5 letters in length", () => {
         expect(doc.word.literal).toEqual('');
     });
 });
 
 describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
+    const tla = new TonalLemmatizationAnalyzer();
+    const morphemes1 = tla.morphAnalyze('infnay');
 
-    doc = cli.processTonal('a');
+    test("check the tonal of the first syllable", () => {
+        expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.f);
+    });
 
-    test("check the syllable composition. v.", () => {
-        expect(doc.word.literal).toEqual('a');
+    const tia = new TonalInflectionAnalyzer();
+    const morphemes2 = tia.morphAnalyze('infay', new EpentheticInitialForm());
+
+    test("check the tonal of the first syllable", () => {
+        expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.f);
     });
 });
 
 describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
+    const tla = new TonalLemmatizationAnalyzer();
+    const morphemes1 = tla.morphAnalyze('qimxmay');
 
-    doc = cli.processTonal('ai');
-
-    test("check the syllable composition. v.", () => {
-        expect(doc.word.literal).toEqual('ai');
+    test("check the tonal of the first syllable", () => {
+        expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.x);
     });
-});
 
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
+    const tia = new TonalInflectionAnalyzer();
+    const morphemes2 = tia.morphAnalyze('qimxay', new EpentheticInitialForm());
 
-    doc = cli.processTonal('oai');
-
-    test("check the syllable composition. v.", () => {
-        expect(doc.word.literal).toEqual('oai');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('ng');
-
-    test("check the syllable composition. m.", () => {
-        expect(doc.word.literal).toEqual('ng');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('aiy');
-
-    test("check the syllable composition. vt.", () => {
-        expect(doc.word.literal).toEqual('aiy');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('mz');
-
-    test("check the syllable composition. mt.", () => {
-        expect(doc.word.literal).toEqual('mz');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('qoai');
-
-    test("check the syllable composition. cv.", () => {
-        expect(doc.word.literal).toEqual('qoai');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('iahh');
-
-    test("check the syllable composition. vc.", () => {
-        expect(doc.word.literal).toEqual('iahh');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('ang');
-
-    test("check the syllable composition. vc.", () => {
-        expect(doc.word.literal).toEqual('ang');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('akf');
-
-    test("check the syllable composition. vc.", () => {
-        expect(doc.word.literal).toEqual('akf');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('angz');
-
-    test("check the syllable composition. vc.", () => {
-        expect(doc.word.literal).toEqual('angz');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('qoaiw');
-
-    test("check the syllable composition. cvt.", () => {
-        expect(doc.word.literal).toEqual('qoaiw');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('sip');
-
-    test("check the syllable composition. cvc.", () => {
-        expect(doc.word.literal).toEqual('sip');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('seng');
-
-    test("check the syllable composition. cvc.", () => {
-        expect(doc.word.literal).toEqual('seng');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('sipf');
-
-    test("check the syllable composition. cvct.", () => {
-        expect(doc.word.literal).toEqual('sipf');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('sengx');
-
-    test("check the syllable composition. cvct.", () => {
-        expect(doc.word.literal).toEqual('sengx');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('qng');
-
-    test("check the syllable composition. cc.", () => {
-        expect(doc.word.literal).toEqual('qng');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('qngy');
-
-    test("check the syllable composition. cct.", () => {
-        expect(doc.word.literal).toEqual('qngy');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('hngh');
-
-    test("check the syllable composition. ccc.", () => {
-        expect(doc.word.literal).toEqual('hngh');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('hmhhw');
-
-    test("check the syllable composition. ccct.", () => {
-        expect(doc.word.literal).toEqual('hmhhw');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('enn');
-
-    test("check the syllable composition. vn.", () => {
-        expect(doc.word.literal).toEqual('enn');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('ennx');
-
-    test("check the syllable composition. vnt.", () => {
-        expect(doc.word.literal).toEqual('ennx');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('senn');
-
-    test("check the syllable composition. cvn.", () => {
-        expect(doc.word.literal).toEqual('senn');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('sennw');
-
-    test("check the syllable composition. cvnt.", () => {
-        expect(doc.word.literal).toEqual('sennw');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('hiannh');
-
-    test("check the syllable composition. cvnc.", () => {
-        expect(doc.word.literal).toEqual('hiannh');
-    });
-});
-
-describe("Tonal testing", () => {
-    const cli = new Client()
-    let doc = new TokenAnalysis()
-
-    doc = cli.processTonal('hiannhy');
-
-    test("check the syllable composition. cvnct.", () => {
-        expect(doc.word.literal).toEqual('hiannhy');
+    test("check the tonal of the first syllable", () => {
+        expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.x);
     });
 });

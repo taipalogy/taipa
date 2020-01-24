@@ -2,8 +2,8 @@ import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
-import { TonalDesinenceInflection, TransfixInflection } from '../src/dparser/lexeme';
-import { TonalCombiningForms, ThirdCombiningForm } from '../src/dparser/morpheme';
+import { TonalDesinenceInflection, TransfixInflection, AgressiveAssimilation } from '../src/dparser/lexeme';
+import { TonalCombiningForms, ThirdCombiningForm, EpentheticInitialForm } from '../src/dparser/morpheme';
 
 describe("Inflectional ending testing", () => {
     const cli = new Client();
@@ -233,11 +233,15 @@ describe("Inflection testing, absent lexical roots", () => {
     const tw3 = tia.analyze('ax', new TonalCombiningForms(), new TonalDesinenceInflection());
 
     test("check the word", () => {
-        expect(tw3.word.literal).toEqual('');
+        // it used to be an empty string
+        // ax is now asserted after tone sandhi of ay is incorporated
+        expect(tw3.word.literal).toEqual('ax');
     });
 
     test("check the number of inflected forms", () => {
-        expect(tw3.otherForms.length).toEqual(0);
+        // it used to be 0
+        // 2 is now asserted after tone sandhi of ay is incorporated
+        expect(tw3.otherForms.length).toEqual(2);
     });
 
     const str = 'chimhhw';
@@ -301,3 +305,18 @@ describe("Inflection testing, absent lexical roots", () => {
     });
 });
 
+describe("Tonal testing", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const lexeme1 = tia.analyze('infay', new EpentheticInitialForm(), new AgressiveAssimilation())
+
+    test("check the epenthesis of initial n", () => {
+        expect(lexeme1.otherForms[0].literal).toEqual('infnay');
+    });
+
+    const lexeme2 = tia.analyze('qimxay', new EpentheticInitialForm(), new AgressiveAssimilation())
+
+    test("check the epenthesis of initial m", () => {
+        expect(lexeme2.otherForms[0].literal).toEqual('qimxmay');
+    });
+});

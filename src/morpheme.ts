@@ -8,7 +8,7 @@ export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }
-    applyAssimilation(sounds: Sound[], initialNextSyllable: Sound): Array<TonalSyllable> {
+    applyAssimilation(sounds: Sound[], soundAdjacentSyllable: Sound): Array<TonalSyllable> {
         return [];
     }
 }

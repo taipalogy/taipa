@@ -7,7 +7,7 @@ import {
     combiningRules,
     AllomorphY,
     CheckedAllomorph,
-    uncombinedFreeAllomorphs,
+    combinedFreeAllomorphs,
     uncombinedCheckedAllomorphs,
     TonalLetterTags,
     tonalPositionalSound,
@@ -112,8 +112,9 @@ export class AssimilatedFinalForm extends TonalCombiningMetaplasm {
         }
     }
 
-    applyAssimilation(sounds: Sound[], initialNextSyllable: Sound): Array<TonalSyllable> {
-        if (initialNextSyllable.name != TonalSoundTags.initial) {
+    applyAssimilation(sounds: Sound[], initialFollowingSyllable: Sound): Array<TonalSyllable> {
+        // TODO: merge into TonalCombiningMorpheme.getSoundChangeForm. remove applyAssimilation
+        if (initialFollowingSyllable.name != TonalSoundTags.initial) {
             const tss = this.voicedFinal(sounds);
             if (tss) return tss;
             return [];
@@ -124,12 +125,12 @@ export class AssimilatedFinalForm extends TonalCombiningMetaplasm {
         if (
             (sounds[sounds.length - 2].toString() === TonalLetterTags.tt ||
                 sounds[sounds.length - 2].toString() === TonalLetterTags.t) &&
-            new InitialsForAssimilation().beginWith(initialNextSyllable.toString())
+            new InitialsForAssimilation().beginWith(initialFollowingSyllable.toString())
         ) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
 
-            const af = assimilatedFinals.get(sounds[sounds.length - 2].toString() + initialNextSyllable.toString());
+            const af = assimilatedFinals.get(sounds[sounds.length - 2].toString() + initialFollowingSyllable.toString());
             if (af) {
                 const ps = tonalPositionalSound.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
@@ -145,6 +146,10 @@ export class AssimilatedFinalForm extends TonalCombiningMetaplasm {
         return [];
     }
 }
+
+//------------------------------------------------------------------------------
+
+export class EpentheticInitialForm extends TonalCombiningMetaplasm {}
 
 //------------------------------------------------------------------------------
 
@@ -171,7 +176,7 @@ export class TonalCombiningMorpheme extends Morpheme {
     getSoundChangeForm(sound: Sound): TonalSyllable[] {
         if (sound) {
             if (sound.name == TonalSoundTags.nasalFinal) {
-                // external sandhi
+                // agressive assimilation of nasals, both internal and external sandhi
                 const snds = this.sounds;
                 snds.splice(0, 0, sound);
                 return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
@@ -201,8 +206,8 @@ export class TonalCombiningMorpheme extends Morpheme {
             return alms[0];
         }
 
-        if (uncombinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
-            return uncombinedFreeAllomorphs.get(syllable.lastLetter.literal);
+        if (combinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
+            return combinedFreeAllomorphs.get(syllable.lastLetter.literal);
         }
 
         return new ZeroAllomorph();

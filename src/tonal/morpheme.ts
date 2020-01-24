@@ -21,6 +21,7 @@ import {
     TonalSoundTags,
     FirstTonalF,
     ThirdFifthTonalsWX,
+    uncombiningRulesAy,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -117,15 +118,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     const sft = new SetOfFreeTonals();
     const ssf = new SetOfStopFinals();
     const faurs = freeAllomorphUncombiningRules;
-
-    const slicer = function(letters: Array<AlphabeticLetter>, beginOfSyllable: number, i: number) {
-        const slicedLetters = letters.slice(beginOfSyllable, i);
-        let lit = '';
-        for (let i in slicedLetters) {
-            lit = lit + slicedLetters[i].literal;
-        }
-        return lit;
-    };
+    const ursa = uncombiningRulesAy;
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -147,6 +140,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
             break;
         } else if (sft.beginWith(letters[i].literal)) {
+            // check tonals is the subset of free tonals
+            
             // console.log('i: %d', i)
             // console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
@@ -176,12 +171,17 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 break;
             }
 
-            const ts = faurs.get(letters[i].literal);
+            // tone sandhi of free allomorph
+            const tnls_fa = faurs.get(letters[i].literal).map(x => x.toString());
+            // tone sandhi of ay
+            const tnls_ay = ursa.get(letters[i].literal).map(x => x.toString());
+            // merge the above twoo arrays
+            const tnls = tnls_fa.concat(tnls_ay.filter((item) => tnls_fa.indexOf(item) < 0));
             //console.log(ts)
-            if (ts.length > 0) {
-                for (let t of ts) {
+            if (tnls.length > 0) {
+                for (let t of tnls) {
                     //console.log(lit + t.toString())
-                    if (list_of_lexical_roots.includes(slicer(letters, beginOfSyllable, i) + t.toString())) {
+                    if (list_of_lexical_roots.includes(letters.slice(beginOfSyllable, i).map(x => x.literal).join('') + t)) {
                         // this combining form is not present in the pool,
                         // but its uncombining forms are. e.g. aw.
                         matched = literal;

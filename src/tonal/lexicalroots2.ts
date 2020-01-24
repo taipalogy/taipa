@@ -5,8 +5,6 @@ const to_be_verified = [
     'jih', 'jirnx', 'jirtt',
 
     'na',
-
-    'pangh',
 ]
 
 // prettier-ignore
