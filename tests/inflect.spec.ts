@@ -319,4 +319,10 @@ describe("Tonal testing", () => {
     test("check the epenthesis of initial m", () => {
         expect(lexeme2.otherForms[0].literal).toEqual('qimxmay');
     });
+
+    const lexeme3 = tia.analyze('cangxay', new EpentheticInitialForm(), new AgressiveAssimilation())
+
+    test("check the epenthesis of initial m", () => {
+        expect(lexeme3.otherForms[0].literal).toEqual('cangxngay');
+    });
 });

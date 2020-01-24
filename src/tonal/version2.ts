@@ -436,6 +436,15 @@ export class SetOfNasalFinals extends SetOfSounds<Final> {
     }
 }
 
+export class NasalInitials extends SetOfSounds<Initial> {
+    constructor() {
+        super();
+        this.sounds.push(new InitialM());
+        this.sounds.push(new InitialN());
+        this.sounds.push(new InitialNG());
+    }
+}
+
 export class SetOfNeutralFinals extends SetOfSounds<Final> {
     constructor() {
         super();
@@ -656,19 +665,18 @@ export class InitialsForAssimilation extends SetOfSounds<Initial> {
     constructor() {
         super();
         this.sounds.push(new InitialP());
-        // this.sounds.push(new InitialK());
-        // this.sounds.push(new InitialB());
-        // this.sounds.push(new InitialG());
+        this.sounds.push(new InitialK());
+        this.sounds.push(new InitialB());
+        this.sounds.push(new InitialG());
 
-        // this.sounds.push(new InitialJ());
-        // this.sounds.push(new InitialL());
+        this.sounds.push(new InitialJ());
         this.sounds.push(new InitialQ());
-        // this.sounds.push(new InitialS());
-        // this.sounds.push(new InitialV());
+        this.sounds.push(new InitialS());
+        this.sounds.push(new InitialV());
 
-        // this.sounds.push(new InitialM());
-        // this.sounds.push(new InitialN());
-        // this.sounds.push(new InitialNG());
+        this.sounds.push(new InitialM());
+        this.sounds.push(new InitialN());
+        this.sounds.push(new InitialNG());
     }
 }
 
@@ -1225,7 +1233,17 @@ export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.ll, TonalLetterTags.tt);
 
 export const assimilatedFinals = new Map<string, TonalLetterTags>()
+    .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)
+    .set(TonalLetterTags.t + TonalLetterTags.v, TonalLetterTags.p)
+    .set(TonalLetterTags.t + TonalLetterTags.k, TonalLetterTags.k)
+    .set(TonalLetterTags.t + TonalLetterTags.q, TonalLetterTags.k)
+    .set(TonalLetterTags.t + TonalLetterTags.m, TonalLetterTags.h)
+    .set(TonalLetterTags.t + TonalLetterTags.n, TonalLetterTags.h)
+    .set(TonalLetterTags.t + TonalLetterTags.ng, TonalLetterTags.h)
     .set(TonalLetterTags.tt + TonalLetterTags.p, TonalLetterTags.pp)
     .set(TonalLetterTags.tt + TonalLetterTags.v, TonalLetterTags.pp)
     .set(TonalLetterTags.tt + TonalLetterTags.k, TonalLetterTags.kk)
-    .set(TonalLetterTags.tt + TonalLetterTags.q, TonalLetterTags.kk);
+    .set(TonalLetterTags.tt + TonalLetterTags.q, TonalLetterTags.kk)
+    .set(TonalLetterTags.tt + TonalLetterTags.m, TonalLetterTags.hh)
+    .set(TonalLetterTags.tt + TonalLetterTags.n, TonalLetterTags.hh)
+    .set(TonalLetterTags.tt + TonalLetterTags.ng, TonalLetterTags.hh);

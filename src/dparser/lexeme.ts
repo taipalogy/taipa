@@ -49,7 +49,6 @@ export class TransfixInflection extends TonalInflectingMetaplasm {
 
 export class RegressiveAssimilation extends TonalInflectingMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
-        // let rets = [];
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
         if (ms.length > 1) {
@@ -66,9 +65,7 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
                 }
             }
         }
-        // rets.push(tw);
 
-        // return rets;
         return [tw];
     }
 }

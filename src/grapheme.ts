@@ -254,7 +254,7 @@ export class SetOfSounds<T extends Sound> {
     sounds = new Array<T>();
     beginWith(str: string) {
         for (let i in this.sounds) {
-            if (str.search(this.sounds[i].toString()) == 0 && str.length == this.sounds[i].toString().length)
+            if (str === this.sounds[i].toString())
                 return true;
         }
         return false;
