@@ -3,7 +3,8 @@ import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { TonalDesinenceInflection, TransfixInflection, AgressiveAssimilation } from '../src/dparser/lexeme';
-import { TonalCombiningForms, ThirdCombiningForm, EpentheticInitialForm } from '../src/dparser/morpheme';
+import { TonalCombiningForms, ThirdCombiningForm } from '../src/dparser/morpheme';
+import { TonalZeroCombining } from '../src/morpheme';
 
 describe("Inflectional ending testing", () => {
     const cli = new Client();
@@ -308,19 +309,19 @@ describe("Inflection testing, absent lexical roots", () => {
 describe("Tonal testing", () => {
     const tia = new TonalInflectionAnalyzer();
 
-    const lexeme1 = tia.analyze('infay', new EpentheticInitialForm(), new AgressiveAssimilation())
+    const lexeme1 = tia.analyze('infay', new TonalZeroCombining(), new AgressiveAssimilation())
 
     test("check the epenthesis of initial n", () => {
         expect(lexeme1.otherForms[0].literal).toEqual('infnay');
     });
 
-    const lexeme2 = tia.analyze('qimxay', new EpentheticInitialForm(), new AgressiveAssimilation())
+    const lexeme2 = tia.analyze('qimxay', new TonalZeroCombining(), new AgressiveAssimilation())
 
     test("check the epenthesis of initial m", () => {
         expect(lexeme2.otherForms[0].literal).toEqual('qimxmay');
     });
 
-    const lexeme3 = tia.analyze('cangxay', new EpentheticInitialForm(), new AgressiveAssimilation())
+    const lexeme3 = tia.analyze('cangxay', new TonalZeroCombining(), new AgressiveAssimilation())
 
     test("check the epenthesis of initial m", () => {
         expect(lexeme3.otherForms[0].literal).toEqual('cangxngay');

@@ -5,8 +5,8 @@ import { lowerLettersOfTonal } from '../tonal/version2';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme, TonalDesinenceInflection } from './lexeme';
 import { TonalInflectingMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
-import { TonalZeroCombining } from './keywords';
-import { TonalInflexionPhrasemeMaker } from './phraseme';
+import { TonalZeroCombining } from '../morpheme';
+import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalPhrasalInflectingMetaplasm } from '../phraseme';
 
 //------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ export class TonalInflectionAnalyzer extends Analyzer {
 
 export class PhrasalInflectionAnalyzer {
     private readonly tia = new TonalInflectionAnalyzer();
-    private readonly p = new TonalInflexionPhrasemeMaker();
+    private readonly p = new TonalInflectionPhrasemeMaker();
 
     analyzeTransitive(verb: string, particle: string) {
         const lexemeVerb = this.tia.analyze(verb, new TonalCombiningForms(), new TonalDesinenceInflection());

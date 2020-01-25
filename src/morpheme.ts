@@ -10,6 +10,12 @@ export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
     }
 }
 
+export class TonalZeroCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        return [];
+    }
+}
+
 export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
     applyToLetters(letters: Array<string>) {
         letters.shift();

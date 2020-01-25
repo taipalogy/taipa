@@ -11,6 +11,10 @@ export class TonalInflectingMetaplasm extends Metaplasm {
     }
 }
 
+export class TonalZeroInflection extends TonalInflectingMetaplasm {
+    // examples: author and authoring. che qahf he. type and typing. meet and meeting.
+}
+
 export class TonalLemmatizingMetaplasm extends Metaplasm {
     apply(morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
 }

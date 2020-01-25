@@ -11,16 +11,6 @@ export class ConstructionElement {
     tag: string = '';
 }
 
-export class TonalAdverbInflexion extends TonalInflectingMetaplasm {}
-export class TonalZeroInflexion extends TonalInflectingMetaplasm {
-    // examples: author and authoring. che qahf he. type and typing. meet and meeting.
-}
-
-export class TonalZeroCombining extends TonalCombiningMetaplasm {
-    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
-        return [];
-    }
-}
 /*
 export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
     apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {

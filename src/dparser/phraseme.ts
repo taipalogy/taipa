@@ -82,7 +82,7 @@ export class TonalAdjectivePhraseme extends Phraseme {
     }
 }
 
-export class TonalInflexionPhrasemeMaker {
+export class TonalInflectionPhrasemeMaker {
     makeTransitivePhrasemes(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
     }

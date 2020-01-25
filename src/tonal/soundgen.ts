@@ -220,40 +220,43 @@ const sc_cvc3 = pipe(initialConsonant, vowel, euphonicFinalConsonant);
 const sc_cvct3 = pipe(initialConsonant, vowel, euphonicFinalConsonant, checkedTone);
 const sc_cvcct = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
 
-export class TonalSoundGenerator {
-    // syllable compositions
-    readonly sylCompositions = [
-        sc_v,
-        sc_m,
-        sc_vt,
-        sc_mt,
-        sc_cv,
-        sc_vc1,
-        sc_vc2,
-        sc_vct1,
-        sc_vct2,
-        sc_cvt,
-        sc_cvc1,
-        sc_cvc2,
-        sc_cvct1,
-        sc_cvct2,
-        sc_cc,
-        sc_cct,
-        sc_ccc,
-        sc_ccct,
-        sc_vn,
-        sc_vnt,
-        sc_cvn,
-        sc_cvnt,
-        sc_cvnc,
-        sc_cvnct,
-        sc_vc3,
-        sc_vct3,
-        sc_cvc3,
-        sc_cvct3,
-        sc_cvcct,
-    ];
+// syllable compositions or patterns
+const sylCompositions = [
+    sc_v,
+    sc_m,
+    sc_vt,
+    sc_mt,
+    sc_cv,
+    sc_vc1,
+    sc_vc2,
+    sc_vct1,
+    sc_vct2,
+    sc_cvt,
+    sc_cvc1,
+    sc_cvc2,
+    sc_cvct1,
+    sc_cvct2,
 
+    sc_cc,
+    sc_cct,
+    sc_ccc,
+    sc_ccct,
+
+    sc_vn,
+    sc_vnt,
+    sc_cvn,
+    sc_cvnt,
+    sc_cvnc,
+    sc_cvnct,
+
+    sc_vc3,
+    sc_vct3,
+    sc_cvc3,
+    sc_cvct3,
+    sc_cvcct,
+];
+
+export class TonalSoundGenerator {
     private isStopFinal(str: string) {
         if (new SetOfStopFinals().beginWith(str)) return true;
 
@@ -281,7 +284,7 @@ export class TonalSoundGenerator {
 
     generate(letters: string[]): Sound[][] {
         let strs: Array<string[]> = new Array();
-        let sequences: Array<Sound[]> = new Array(); // to be returned
+        const sequences: Array<Sound[]> = new Array(); // to be returned
 
         if (this.isStopFinal(letters[letters.length - 1])) {
             strs = this.genChecked(letters);
@@ -292,11 +295,11 @@ export class TonalSoundGenerator {
         for (let i in strs) {
             // generates all needed sounds to be processed
 
-            for (let j = 0; j < this.sylCompositions.length; j++) {
+            for (let j = 0; j < sylCompositions.length; j++) {
                 let sg = new SoundGeneration();
                 sg.letters = strs[i];
                 //console.log(`j: ${j}`)
-                sg = this.sylCompositions[j](sg);
+                sg = sylCompositions[j](sg);
                 if (sg.letters.length == sg.sounds.length && sg.bool == true) {
                     sequences.push(sg.sounds);
                     break;

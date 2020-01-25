@@ -173,10 +173,6 @@ function assimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<Tonal
 
 //------------------------------------------------------------------------------
 
-export class EpentheticInitialForm extends TonalCombiningMetaplasm {}
-
-//------------------------------------------------------------------------------
-
 export class TonalCombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph; // required to populate stems

@@ -3,7 +3,7 @@ import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
-import { EpentheticInitialForm } from '../src/dparser/morpheme';
+import { TonalZeroCombining } from '../src/morpheme';
 
 describe("Tonal testing", () => {
     const cli = new Client()
@@ -201,7 +201,7 @@ describe("Tonal testing", () => {
     });
 
     const tia = new TonalInflectionAnalyzer();
-    const morphemes2 = tia.morphAnalyze('infay', new EpentheticInitialForm());
+    const morphemes2 = tia.morphAnalyze('infay', new TonalZeroCombining());
 
     test("check the tonal of the first syllable", () => {
         expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.f);
@@ -217,7 +217,7 @@ describe("Tonal testing", () => {
     });
 
     const tia = new TonalInflectionAnalyzer();
-    const morphemes2 = tia.morphAnalyze('qimxay', new EpentheticInitialForm());
+    const morphemes2 = tia.morphAnalyze('qimxay', new TonalZeroCombining());
 
     test("check the tonal of the first syllable", () => {
         expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.x);

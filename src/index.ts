@@ -7,6 +7,9 @@ export { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 export { TonalInflectionAnalyzer, PhrasalInflectionAnalyzer } from './dparser/analyzer';
 export { KanaAnalyzer } from './kana/analyzer';
 export { TonalDesinenceInflection, TransfixInflection, RegressiveAssimilation } from './dparser/lexeme';
-export { TonalCombiningForms, ThirdCombiningForm, AssimilatedFinalForm } from './dparser/morpheme';
+export { TonalCombiningForms, ThirdCombiningForm } from './dparser/morpheme';
 export { Adnominal, Assimilation } from './dparser/phraseme';
 export { Sound } from './grapheme';
+
+// to be removed
+export { AssimilatedFinalForm } from './dparser/morpheme';
