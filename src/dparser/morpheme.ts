@@ -15,7 +15,8 @@ import {
     SetOfCheckedTonals,
     voiceless_voiced_finals,
     combinedCheckedAllomorphs,
-    InitialsForAssimilation,
+    InitialsForAssimilationTT,
+    InitialsForAssimilationT,
     assimilatedFinals,
     NasalInitials,
     SetOfMedials,
@@ -144,9 +145,10 @@ function assimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<Tonal
         // e.g. sinzbunx -> simzbunx
 
         if (
-            (sounds[sounds.length - 2].toString() === TonalLetterTags.tt ||
-                sounds[sounds.length - 2].toString() === TonalLetterTags.t) &&
-            new InitialsForAssimilation().beginWith(soundFollowingSyllable.toString())
+            sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
+            new InitialsForAssimilationTT().beginWith(soundFollowingSyllable.toString()) ||
+                sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
+            new InitialsForAssimilationT().beginWith(soundFollowingSyllable.toString())
         ) {
             // absolute assimilation
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));

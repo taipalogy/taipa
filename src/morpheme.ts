@@ -10,6 +10,7 @@ export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
     }
 }
 
+// TODO: to be added to index
 export class TonalZeroCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         return [];

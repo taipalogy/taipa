@@ -661,7 +661,7 @@ export class NeutralFinalHH extends SetOfSounds<StopFinal> {
     }
 }
 
-export class InitialsForAssimilation extends SetOfSounds<Initial> {
+export class InitialsForAssimilationT extends SetOfSounds<Initial> {
     constructor() {
         super();
         this.sounds.push(new InitialP());
@@ -670,6 +670,23 @@ export class InitialsForAssimilation extends SetOfSounds<Initial> {
         this.sounds.push(new InitialG());
 
         this.sounds.push(new InitialJ());
+        this.sounds.push(new InitialQ());
+        this.sounds.push(new InitialS());
+        this.sounds.push(new InitialV());
+
+        this.sounds.push(new InitialM());
+        this.sounds.push(new InitialN());
+        this.sounds.push(new InitialNG());
+    }
+}
+
+export class InitialsForAssimilationTT extends SetOfSounds<Initial> {
+    constructor() {
+        super();
+        this.sounds.push(new InitialP());
+        this.sounds.push(new InitialK());
+        this.sounds.push(new InitialG());
+
         this.sounds.push(new InitialQ());
         this.sounds.push(new InitialS());
         this.sounds.push(new InitialV());
@@ -1225,12 +1242,12 @@ export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.kk, TonalLetterTags.gg)
     .set(TonalLetterTags.pp, TonalLetterTags.bb)
     .set(TonalLetterTags.tt, TonalLetterTags.ll)
-    .set(TonalLetterTags.g, TonalLetterTags.k)
-    .set(TonalLetterTags.b, TonalLetterTags.p)
-    .set(TonalLetterTags.l, TonalLetterTags.t)
-    .set(TonalLetterTags.gg, TonalLetterTags.kk)
-    .set(TonalLetterTags.bb, TonalLetterTags.pp)
-    .set(TonalLetterTags.ll, TonalLetterTags.tt);
+    // .set(TonalLetterTags.g, TonalLetterTags.k)
+    // .set(TonalLetterTags.b, TonalLetterTags.p)
+    // .set(TonalLetterTags.l, TonalLetterTags.t)
+    // .set(TonalLetterTags.gg, TonalLetterTags.kk)
+    // .set(TonalLetterTags.bb, TonalLetterTags.pp)
+    // .set(TonalLetterTags.ll, TonalLetterTags.tt);
 
 export const assimilatedFinals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)

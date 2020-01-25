@@ -11,5 +11,5 @@ export { TonalCombiningForms, ThirdCombiningForm } from './dparser/morpheme';
 export { Adnominal, Assimilation } from './dparser/phraseme';
 export { Sound } from './grapheme';
 
-// to be removed
+// TODO: to be removed
 export { AssimilatedFinalForm } from './dparser/morpheme';

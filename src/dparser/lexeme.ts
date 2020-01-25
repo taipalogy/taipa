@@ -71,7 +71,7 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-
+// TODO: to be added to index
 export class AgressiveAssimilation extends TonalInflectingMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         if(ms.length > 1 && ms[ms.length-2]) {
