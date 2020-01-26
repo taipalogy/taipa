@@ -2,7 +2,7 @@ import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
-import { TonalDesinenceInflection, TransfixInflection, AgressiveAssimilation } from '../src/dparser/lexeme';
+import { TonalDesinenceInflection, TransfixInflection, AgressiveAssimilation, RegressiveAssimilation } from '../src/dparser/lexeme';
 import { TonalCombiningForms, ThirdCombiningForm } from '../src/dparser/morpheme';
 import { TonalZeroCombining } from '../src/morpheme';
 
@@ -183,7 +183,7 @@ describe("Inflection testing", () => {
         expect(tw.otherForms[0].literal).toEqual('damwvurhhwoaw');
     });
 });
-
+/*
 describe("Inflection testing, an empty word", () => {
     const tia = new TonalInflectionAnalyzer();
 
@@ -207,7 +207,7 @@ describe("Inflection testing, an empty word", () => {
         expect(tw2.otherForms.length).toEqual(0);
     });
 });
-
+*/
 describe("Inflection testing, absent lexical roots", () => {
     const tia = new TonalInflectionAnalyzer();
 
@@ -306,7 +306,7 @@ describe("Inflection testing, absent lexical roots", () => {
     });
 });
 
-describe("Tonal testing", () => {
+describe("Inflection testing", () => {
     const tia = new TonalInflectionAnalyzer();
 
     const lexeme1 = tia.analyze('infay', new TonalZeroCombining(), new AgressiveAssimilation())
@@ -325,5 +325,63 @@ describe("Tonal testing", () => {
 
     test("check the epenthesis of initial m", () => {
         expect(lexeme3.otherForms[0].literal).toEqual('cangxngay');
+    });
+});
+
+describe("Inflection testing, with x in the middle of a stem", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const lx = tia.analyze('moxsek', new TonalCombiningForms(), new TonalDesinenceInflection());
+
+    test("check the base form", () => {
+        expect(lx.word.literal).toEqual('');
+    });
+
+    test("check the inflected form", () => {
+        expect(lx.otherForms.length).toEqual(0);
+    });
+});
+
+describe("Inflection testing, regressive assimilation", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const lx = tia.analyze('sinzbunx', new TonalZeroCombining(), new RegressiveAssimilation());
+
+    test("check the underlying form", () => {
+        expect(lx.word.literal).toEqual('sinzbunx');
+    });
+
+    test("check the surface form", () => {
+        expect(lx.otherForms[0].literal).toEqual('simzbunx');
+    });
+});
+
+describe("Inflection testing, agressive assimilation, duplifix", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const lx = tia.analyze('dittwditt', new TonalZeroCombining(), new AgressiveAssimilation());
+    
+    test("check the underlying form", () => {
+        expect(lx.word.literal).toEqual('dittwditt');
+    });
+
+    test("check the surface form", () => {
+        expect(lx.otherForms[0].literal).toEqual('dittwlitt');
+    });
+});
+
+describe("Inflection testing", () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const lx1 = tia.analyze('qimxay', new TonalCombiningForms(), new TonalDesinenceInflection())
+
+    test("check the inflected form", () => {
+        expect(lx1.otherForms[0].literal).toEqual('qimxa');
+    });
+
+    const lx2 = tia.analyze(lx1.otherForms[0].literal, new TonalZeroCombining(), new AgressiveAssimilation())
+
+    test("check the surface form", () => {
+        expect(lx2.otherForms[0].literal).toEqual('qimxma');
     });
 });

@@ -661,7 +661,7 @@ export class NeutralFinalHH extends SetOfSounds<StopFinal> {
     }
 }
 
-export class InitialsForAssimilationT extends SetOfSounds<Initial> {
+export class InitialsForEuphonicT extends SetOfSounds<Initial> {
     constructor() {
         super();
         this.sounds.push(new InitialP());
@@ -680,7 +680,7 @@ export class InitialsForAssimilationT extends SetOfSounds<Initial> {
     }
 }
 
-export class InitialsForAssimilationTT extends SetOfSounds<Initial> {
+export class InitialsForEuphonicTT extends SetOfSounds<Initial> {
     constructor() {
         super();
         this.sounds.push(new InitialP());

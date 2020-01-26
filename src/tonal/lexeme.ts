@@ -1,7 +1,7 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme';
 // import { freeAllomorphUncombiningRules, ZeroTonal, lowerLettersOfTonal, TonalLetterTags } from './version2';
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2';
+import { FreeAllomorph, CheckedAllomorph, Allomorph, TonalLetterTags } from './version2';
 import { TonalAffix } from './version2';
 
 class TonalZeroLemmatization extends TonalLemmatizingMetaplasm {}
@@ -111,7 +111,27 @@ export class TonalLemmatizationLexeme extends Lexeme {
 
     constructor(ms: Array<TonalUncombiningMorpheme>, tl: TonalLemmatization) {
         super();
-        this.word = new TonalWord(ms.map(it => it.syllable));
+        let isIStemWithX: boolean = false; // inflectional stem with x in the middle
+
+        for(let i = 0; i < ms.length ; i++) {
+            if(ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+                if(i < ms.length-1 &&
+                    (ms[ms.length-1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    ms[ms.length-1].syllable.lastSecondLetter.literal !== TonalLetterTags.a)) {
+                        if(ms[ms.length-1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                            break;
+                        } else {
+                            // tonal x can't not appear in them middle of an inflectional stem
+                            // if it is not preceding an ay or a
+                            // TODO: if this rule should be applied to lemmatization
+                            isIStemWithX = true;
+                            break;
+                        }
+                    }
+            }
+        }
+        if(isIStemWithX) this.word = new TonalWord([]);
+        else this.word = new TonalWord(ms.map(x => x.syllable));
 
         if (ms.length > 0) {
             if (ms[ms.length - 1].allomorph) {
@@ -122,7 +142,10 @@ export class TonalLemmatizationLexeme extends Lexeme {
         } else {
             this.inflectionalEnding = new InflectionalEnding();
         }
-        this.lemmata = tl.apply(ms, this.inflectionalEnding);
+        
+        if(!isIStemWithX) {
+            this.lemmata = tl.apply(ms, this.inflectionalEnding);
+        }
     }
 
     getLemmata() {

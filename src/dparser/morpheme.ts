@@ -15,14 +15,18 @@ import {
     SetOfCheckedTonals,
     voiceless_voiced_finals,
     combinedCheckedAllomorphs,
-    InitialsForAssimilationTT,
-    InitialsForAssimilationT,
+    InitialsForEuphonicTT,
+    InitialsForEuphonicT,
     assimilatedFinals,
     NasalInitials,
     SetOfMedials,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
-import { SetOfInitialConsonants } from '../kana/kana';
+
+export enum AssimilationDirection {
+    agressive = 0,
+    regressive = 1,
+}
 
 //------------------------------------------------------------------------------
 
@@ -102,10 +106,10 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-
+// TODO: to be removed
 export class AssimilatedFinalForm extends TonalCombiningMetaplasm {}
 
-function voicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
+function voicedFinal(sounds: Sound[]) {
     const fnl = voiceless_voiced_finals.get(sounds[sounds.length - 2].toString());
 
     if (fnl) {
@@ -121,12 +125,12 @@ function voicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
 function conditionsForVoicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
     if(soundFollowingSyllable.name === TonalSoundTags.initial && 
         new NasalInitials().beginWith(soundFollowingSyllable.toString())) {
-        return voicedFinal(sounds, soundFollowingSyllable);
+        return voicedFinal(sounds);
     }
 
     if(soundFollowingSyllable.name === TonalSoundTags.medial &&
         new SetOfMedials().beginWith(soundFollowingSyllable.toString())) {
-        return voicedFinal(sounds, soundFollowingSyllable);
+        return voicedFinal(sounds);
     } 
         
     if(soundFollowingSyllable.name === TonalSoundTags.initial &&
@@ -134,21 +138,19 @@ function conditionsForVoicedFinal(sounds: Sound[], soundFollowingSyllable: Sound
         soundFollowingSyllable.toString() === TonalLetterTags.l ||
         soundFollowingSyllable.toString() === TonalLetterTags.b ||
         soundFollowingSyllable.toString() === TonalLetterTags.g )) {
-        return voicedFinal(sounds, soundFollowingSyllable);
+        return voicedFinal(sounds);
     }
 }
 
-function assimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<TonalSyllable> {
-        if (sounds[sounds.length - 2].name != TonalSoundTags.stopFinal) return [];
+function regAssimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<TonalSyllable> {
+        if (sounds[sounds.length - 2].name != TonalSoundTags.stopFinal &&
+            sounds[sounds.length - 2].name != TonalSoundTags.nasalFinal) return [];
             
-        // TODO: sounds[sounds.length - 2].name != TonalSoundTags.nasalFinal
-        // e.g. sinzbunx -> simzbunx
-
         if (
             sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
-            new InitialsForAssimilationTT().beginWith(soundFollowingSyllable.toString()) ||
+            new InitialsForEuphonicTT().beginWith(soundFollowingSyllable.toString()) ||
                 sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
-            new InitialsForAssimilationT().beginWith(soundFollowingSyllable.toString())
+            new InitialsForEuphonicT().beginWith(soundFollowingSyllable.toString())
         ) {
             // absolute assimilation
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
@@ -165,6 +167,15 @@ function assimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<Tonal
 
                 return [s];
             }
+        } else if(soundFollowingSyllable.toString() === TonalLetterTags.b &&
+                sounds[sounds.length-2].toString() === TonalLetterTags.n) {
+            // replace final n with final m
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            let snd = new Sound();
+            const ps = tonalPositionalSound.get(TonalLetterTags.m);
+            if (ps) snd = ps(TonalSoundTags.nasalFinal);
+            s.replaceLetter(s.letters.length-2, new AlphabeticLetter(snd.characters))
+            return [s];
         } else {
             const tss = conditionsForVoicedFinal(sounds, soundFollowingSyllable);
             if (tss) return tss;
@@ -195,18 +206,27 @@ export class TonalCombiningMorpheme extends Morpheme {
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
-    getSoundChangeForm(sound: Sound): TonalSyllable[] {
+    getSoundChangeForm(sound: Sound, dir: AssimilationDirection): TonalSyllable[] {
         if (sound) {
-            if (sound.name == TonalSoundTags.nasalFinal) {
+            if (sound.name === TonalSoundTags.nasalFinal && dir === AssimilationDirection.agressive) {
                 // agressive assimilation of nasals, both internal and external sandhi
                 const snds = this.sounds;
                 snds.splice(0, 0, sound);
                 return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
+            } else if(sound.name === TonalSoundTags.initial && dir === AssimilationDirection.agressive) {
+                const snds = this.sounds;
+                if(snds[0].toString() === sound.toString()) {
+                    let duplifix = new Sound();
+                    const ps = tonalPositionalSound.get(TonalLetterTags.l);
+                    if (ps) duplifix = ps(TonalSoundTags.initial);
+        
+                    snds.splice(0, 1, duplifix);
+                }
+                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
             }
 
-            // internal sandhi
-            // return this.metaplasm.applyAssimilation(this.sounds, sound);
-            return assimilate(this.sounds, sound);
+            // internal sandhi. regressive assimilation
+            return regAssimilate(this.sounds, sound);
         }
         return [];
     }
