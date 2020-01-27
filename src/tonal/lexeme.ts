@@ -1,6 +1,5 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme';
-// import { freeAllomorphUncombiningRules, ZeroTonal, lowerLettersOfTonal, TonalLetterTags } from './version2';
 import { FreeAllomorph, CheckedAllomorph, Allomorph, TonalLetterTags } from './version2';
 import { TonalAffix } from './version2';
 
@@ -9,14 +8,7 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         return this.populateLemmata(morphemes, inflectionalEnding);
     }
-    /*
-    private replaceLastSyllable(morphemes: Array<TonalUncombiningMorpheme>) {
-        let wd = new TonalWord(morphemes.map(x => x.syllable));
-        wd.popSyllable();
-        wd.pushSyllable(morphemes[morphemes.length - 1].getForms()[0]);
-        return wd;
-    }
-*/
+
     private getLemmas(
         morphemes: Array<TonalUncombiningMorpheme>,
         inflectionalEnding: InflectionalEnding,
@@ -39,7 +31,6 @@ export class TonalLemmatization extends TonalLemmatizingMetaplasm {
                 wrd.popSyllable();
                 wrd.pushSyllable(morphemes[morphemes.length - 1].getForms()[0]);
                 return [wrd];
-                // return [this.replaceLastSyllable(morphemes)];
             }
         }
 
@@ -123,7 +114,6 @@ export class TonalLemmatizationLexeme extends Lexeme {
                         } else {
                             // tonal x can't not appear in them middle of an inflectional stem
                             // if it is not preceding an ay or a
-                            // TODO: if this rule should be applied to lemmatization
                             isIStemWithX = true;
                             break;
                         }

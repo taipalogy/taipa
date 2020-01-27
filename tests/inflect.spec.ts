@@ -183,31 +183,7 @@ describe("Inflection testing", () => {
         expect(tw.otherForms[0].literal).toEqual('damwvurhhwoaw');
     });
 });
-/*
-describe("Inflection testing, an empty word", () => {
-    const tia = new TonalInflectionAnalyzer();
 
-    const tw1 = tia.analyze('', new TonalCombiningForms(), new TonalDesinenceInflection());
-
-    test("check the word", () => {
-        expect(tw1.word.literal).toEqual('');
-    });
-
-    test("check the number of inflected forms", () => {
-        expect(tw1.otherForms.length).toEqual(0);
-    });
-
-    const tw2 = tia.analyze('', new ThirdCombiningForm(), new TransfixInflection());
-
-    test("check the word", () => {
-        expect(tw2.word.literal).toEqual('');
-    });
-
-    test("check the number of inflected forms", () => {
-        expect(tw2.otherForms.length).toEqual(0);
-    });
-});
-*/
 describe("Inflection testing, absent lexical roots", () => {
     const tia = new TonalInflectionAnalyzer();
 
