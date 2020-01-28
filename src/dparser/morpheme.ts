@@ -22,7 +22,7 @@ import {
     SetOfMedials,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
-
+// TODO: to be added to API
 export enum AssimilationDirection {
     agressive = 0,
     regressive = 1,

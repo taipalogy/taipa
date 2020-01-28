@@ -12,7 +12,7 @@ import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
-import { Lemmatizer } from './lemmatizer';
+import { TokenLemmatizer } from './token';
 
 export class Client {
     processKana(str: string): TokenAnalysis {
@@ -68,7 +68,7 @@ export class Client {
             doc = tggr.tag(doc);
 
             // lemmatization
-            const lmtzr = new Lemmatizer();
+            const lmtzr = new TokenLemmatizer();
             doc = lmtzr.getTonalLemmas(doc);
 
             // dependency parsing

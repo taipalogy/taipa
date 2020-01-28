@@ -1,235 +1,235 @@
-import { TonalLemmatizationAnalyzer } from "../src/tonal/analyzer";
+import { TonalLemmatizer } from '../src/tonal/analyzer';
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('a')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('a');
 
-    test("check the syllable composition. v.", () => {
-        expect(lexeme.word.literal).toEqual('a');
+    test('check the syllable composition. v.', () => {
+        expect(lx.word.literal).toEqual('a');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('ai')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('ai');
 
-    test("check the syllable composition. v.", () => {
-        expect(lexeme.word.literal).toEqual('ai');
+    test('check the syllable composition. v.', () => {
+        expect(lx.word.literal).toEqual('ai');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('oai')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('oai');
 
-    test("check the syllable composition. v.", () => {
-        expect(lexeme.word.literal).toEqual('oai');
+    test('check the syllable composition. v.', () => {
+        expect(lx.word.literal).toEqual('oai');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('ng')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('ng');
 
-    test("check the syllable composition. m.", () => {
-        expect(lexeme.word.literal).toEqual('ng');
+    test('check the syllable composition. m.', () => {
+        expect(lx.word.literal).toEqual('ng');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('aiy')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('aiy');
 
-    test("check the syllable composition. vt.", () => {
-        expect(lexeme.word.literal).toEqual('aiy');
+    test('check the syllable composition. vt.', () => {
+        expect(lx.word.literal).toEqual('aiy');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('mz')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('mz');
 
-    test("check the syllable composition. mt.", () => {
-        expect(lexeme.word.literal).toEqual('mz');
+    test('check the syllable composition. mt.', () => {
+        expect(lx.word.literal).toEqual('mz');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('qoai')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('qoai');
 
-    test("check the syllable composition. cv.", () => {
-        expect(lexeme.word.literal).toEqual('qoai');
+    test('check the syllable composition. cv.', () => {
+        expect(lx.word.literal).toEqual('qoai');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('iahh')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('iahh');
 
-    test("check the syllable composition. vc.", () => {
-        expect(lexeme.word.literal).toEqual('iahh');
+    test('check the syllable composition. vc.', () => {
+        expect(lx.word.literal).toEqual('iahh');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('ang')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('ang');
 
-    test("check the syllable composition. vc.", () => {
-        expect(lexeme.word.literal).toEqual('ang');
+    test('check the syllable composition. vc.', () => {
+        expect(lx.word.literal).toEqual('ang');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('akf')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('akf');
 
-    test("check the syllable composition. vc.", () => {
-        expect(lexeme.word.literal).toEqual('akf');
+    test('check the syllable composition. vc.', () => {
+        expect(lx.word.literal).toEqual('akf');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('angz')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('angz');
 
-    test("check the syllable composition. vc.", () => {
-        expect(lexeme.word.literal).toEqual('angz');
+    test('check the syllable composition. vc.', () => {
+        expect(lx.word.literal).toEqual('angz');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('qoaiw')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('qoaiw');
 
-    test("check the syllable composition. cvt.", () => {
-        expect(lexeme.word.literal).toEqual('qoaiw');
+    test('check the syllable composition. cvt.', () => {
+        expect(lx.word.literal).toEqual('qoaiw');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('sip')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('sip');
 
-    test("check the syllable composition. cvc.", () => {
-        expect(lexeme.word.literal).toEqual('sip');
+    test('check the syllable composition. cvc.', () => {
+        expect(lx.word.literal).toEqual('sip');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('seng')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('seng');
 
-    test("check the syllable composition. cvc.", () => {
-        expect(lexeme.word.literal).toEqual('seng');
+    test('check the syllable composition. cvc.', () => {
+        expect(lx.word.literal).toEqual('seng');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('sipf')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('sipf');
 
-    test("check the syllable composition. cvct.", () => {
-        expect(lexeme.word.literal).toEqual('sipf');
+    test('check the syllable composition. cvct.', () => {
+        expect(lx.word.literal).toEqual('sipf');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('sengx')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('sengx');
 
-    test("check the syllable composition. cvct.", () => {
-        expect(lexeme.word.literal).toEqual('sengx');
+    test('check the syllable composition. cvct.', () => {
+        expect(lx.word.literal).toEqual('sengx');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('qng')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('qng');
 
-    test("check the syllable composition. cc.", () => {
-        expect(lexeme.word.literal).toEqual('qng');
+    test('check the syllable composition. cc.', () => {
+        expect(lx.word.literal).toEqual('qng');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('qngy')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('qngy');
 
-    test("check the syllable composition. cct.", () => {
-        expect(lexeme.word.literal).toEqual('qngy');
+    test('check the syllable composition. cct.', () => {
+        expect(lx.word.literal).toEqual('qngy');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('hngh')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('hngh');
 
-    test("check the syllable composition. ccc.", () => {
-        expect(lexeme.word.literal).toEqual('hngh');
+    test('check the syllable composition. ccc.', () => {
+        expect(lx.word.literal).toEqual('hngh');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('hmhhw')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('hmhhw');
 
-    test("check the syllable composition. ccct.", () => {
-        expect(lexeme.word.literal).toEqual('hmhhw');
+    test('check the syllable composition. ccct.', () => {
+        expect(lx.word.literal).toEqual('hmhhw');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('enn')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('enn');
 
-    test("check the syllable composition. vn.", () => {
-        expect(lexeme.word.literal).toEqual('enn');
+    test('check the syllable composition. vn.', () => {
+        expect(lx.word.literal).toEqual('enn');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('ennx')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('ennx');
 
-    test("check the syllable composition. vnt.", () => {
-        expect(lexeme.word.literal).toEqual('ennx');
+    test('check the syllable composition. vnt.', () => {
+        expect(lx.word.literal).toEqual('ennx');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('senn')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('senn');
 
-    test("check the syllable composition. cvn.", () => {
-        expect(lexeme.word.literal).toEqual('senn');
+    test('check the syllable composition. cvn.', () => {
+        expect(lx.word.literal).toEqual('senn');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('sennw')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('sennw');
 
-    test("check the syllable composition. cvnt.", () => {
-        expect(lexeme.word.literal).toEqual('sennw');
+    test('check the syllable composition. cvnt.', () => {
+        expect(lx.word.literal).toEqual('sennw');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('hiannh')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('hiannh');
 
-    test("check the syllable composition. cvnc.", () => {
-        expect(lexeme.word.literal).toEqual('hiannh');
+    test('check the syllable composition. cvnc.', () => {
+        expect(lx.word.literal).toEqual('hiannh');
     });
 });
 
-describe("Syllable composition testing", () => {
-    const tla = new TonalLemmatizationAnalyzer();
-    const lexeme = tla.analyze('hiannhy')
+describe('Syllable composition testing', () => {
+    const lmtzr = new TonalLemmatizer();
+    const lx = lmtzr.lemmatize('hiannhy');
 
-    test("check the syllable composition. cvnct.", () => {
-        expect(lexeme.word.literal).toEqual('hiannhy');
+    test('check the syllable composition. cvnct.', () => {
+        expect(lx.word.literal).toEqual('hiannhy');
     });
 });
