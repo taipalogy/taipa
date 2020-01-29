@@ -1,12 +1,12 @@
-import { TonalInflectingMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
-import { TonalCombiningMorpheme, AssimilationDirection } from './morpheme';
+import { TonalSandhiMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
+import { TonalCombiningMorpheme, Direction } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
 
-export class TonalDesinenceInflection extends TonalInflectingMetaplasm {
+export class TonalDesinenceInflection extends TonalSandhiMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         if (ms.length > 0 && ms[ms.length - 1]) {
             const last = ms[ms.length - 1];
@@ -28,7 +28,7 @@ export class TonalDesinenceInflection extends TonalInflectingMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class TransfixInflection extends TonalInflectingMetaplasm {
+export class TransfixInflection extends TonalSandhiMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         const rets = [];
         if (ms.length > 0) {
@@ -47,7 +47,7 @@ export class TransfixInflection extends TonalInflectingMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class RegressiveAssimilation extends TonalInflectingMetaplasm {
+export class RegressiveAssimilation extends TonalSandhiMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
@@ -58,12 +58,9 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
                     (ms[i - 1].syllable.lastSecondLetter.literal === TonalLetterTags.t ||
                         ms[i - 1].syllable.lastSecondLetter.literal === TonalLetterTags.tt)
                 ) {
-                    tw.replaceSyllable(
-                        i - 1,
-                        ms[i - 1].getSoundChangeForm(ms[i].sounds[0], AssimilationDirection.regressive)[0],
-                    );
+                    tw.replaceSyllable(i - 1, ms[i - 1].getSoundChangeForm(ms[i].sounds[0], Direction.regressive)[0]);
                 } else {
-                    const syls = ms[i - 1].getSoundChangeForm(ms[i].sounds[0], AssimilationDirection.regressive);
+                    const syls = ms[i - 1].getSoundChangeForm(ms[i].sounds[0], Direction.regressive);
                     if (syls.length) tw.replaceSyllable(i - 1, syls[0]);
                 }
             }
@@ -75,7 +72,7 @@ export class RegressiveAssimilation extends TonalInflectingMetaplasm {
 
 //------------------------------------------------------------------------------
 // TODO: to be added to index
-export class AgressiveAssimilation extends TonalInflectingMetaplasm {
+export class AgressiveAssimilation extends TonalSandhiMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
@@ -87,14 +84,14 @@ export class AgressiveAssimilation extends TonalInflectingMetaplasm {
                 // m, n, ng followed by -ay. pass the preceding nasal to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForm(snds[snds.length - 2], AssimilationDirection.agressive)[0],
+                    ms[ms.length - 1].getSoundChangeForm(snds[snds.length - 2], Direction.agressive)[0],
                 );
                 return [wrd];
             } else {
                 // duplifix. pass the preceding initial to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForm(snds[0], AssimilationDirection.agressive)[0],
+                    ms[ms.length - 1].getSoundChangeForm(snds[0], Direction.agressive)[0],
                 );
                 return [wrd];
             }
@@ -104,13 +101,13 @@ export class AgressiveAssimilation extends TonalInflectingMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-
-export class TonalInflectionLexeme extends Lexeme {
+// TODO: add to API
+export class TonalSandhiLexeme extends Lexeme {
     word: TonalWord;
     otherForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
     private tonalSymbleEnding: TonalSymbolEnding;
 
-    constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectingMetaplasm) {
+    constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalSandhiMetaplasm) {
         super();
         let isIStemWithX: boolean = false; // inflectional stem with x in the middle
 
@@ -173,7 +170,7 @@ export class TonalInflectionLexeme extends Lexeme {
         return '';
     }
 
-    private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectingMetaplasm): TonalWord[] {
+    private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalSandhiMetaplasm): TonalWord[] {
         return ti.apply(ms);
     }
 
@@ -182,7 +179,7 @@ export class TonalInflectionLexeme extends Lexeme {
         return this.ms;
     }
 
-    assimilate(til: TonalInflectionLexeme) {
+    assimilate(til: TonalSandhiLexeme) {
         const ms = til.getMorphemes();
         if (ms.length > 0) {
             const other_snds = ms[ms.length - 1].sounds;
@@ -190,7 +187,7 @@ export class TonalInflectionLexeme extends Lexeme {
                 let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
 
                 const s = other_snds[other_snds.length - 1];
-                const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s, AssimilationDirection.agressive);
+                const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s, Direction.agressive);
 
                 wrd.popSyllable();
                 wrd.pushSyllable(syls[0]);
@@ -203,8 +200,8 @@ export class TonalInflectionLexeme extends Lexeme {
 
 //------------------------------------------------------------------------------
 
-export class TonalInflectionLexemeMaker extends LexemeMaker {
-    constructor(private tim: TonalInflectingMetaplasm) {
+export class TonalSandhiLexemeMaker extends LexemeMaker {
+    constructor(private tim: TonalSandhiMetaplasm) {
         super();
     }
 
@@ -213,6 +210,6 @@ export class TonalInflectionLexemeMaker extends LexemeMaker {
     }
 
     protected make(ms: Array<TonalCombiningMorpheme>) {
-        return new TonalInflectionLexeme(ms, this.tim);
+        return new TonalSandhiLexeme(ms, this.tim);
     }
 }

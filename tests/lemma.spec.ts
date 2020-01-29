@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
-import { TonalLemmatizationAnalyzer, TonalLemmatizer } from '../src/tonal/analyzer';
+import { TonalBaseAnalyzer, TonalLemmatizer } from '../src/tonal/analyzer';
 
 describe('Lemma testing', () => {
     const cli = new Client();
@@ -118,7 +118,7 @@ describe('Lemma testing', () => {
 });
 
 describe('Lemma testing, empty string as an argument', () => {
-    const tla = new TonalLemmatizationAnalyzer();
+    const tla = new TonalBaseAnalyzer();
 
     const inputEmpty: any = '';
     const inputUnd: any = undefined;

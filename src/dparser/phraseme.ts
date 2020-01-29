@@ -1,8 +1,8 @@
-import { TonalInflectionLexeme } from './lexeme';
-import { TonalPhrase, Phraseme, TonalPhrasalInflectingMetaplasm } from '../phraseme';
+import { TonalSandhiLexeme } from './lexeme';
+import { TonalPhrase, Phraseme, TonalPhrasalSandhiMetaplasm } from '../phraseme';
 
-class Transitive extends TonalPhrasalInflectingMetaplasm {
-    apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+class Transitive extends TonalPhrasalSandhiMetaplasm {
+    apply(lexemeVerb: TonalSandhiLexeme, lexemeParticle: TonalSandhiLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
         if (lexemeParticle.otherForms.length > 0) {
             return [new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.otherForms[0]])];
@@ -12,8 +12,8 @@ class Transitive extends TonalPhrasalInflectingMetaplasm {
     }
 }
 
-export class Adnominal extends TonalPhrasalInflectingMetaplasm {
-    apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
+export class Adnominal extends TonalPhrasalSandhiMetaplasm {
+    apply(lexemeAdjectivalNoun: TonalSandhiLexeme, lexemeE: TonalSandhiLexeme) {
         if (lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
         if (lexemeE.otherForms.length > 0) {
             return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.otherForms[0]])];
@@ -23,8 +23,8 @@ export class Adnominal extends TonalPhrasalInflectingMetaplasm {
     }
 }
 
-export class Assimilation extends TonalPhrasalInflectingMetaplasm {
-    apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
+export class Assimilation extends TonalPhrasalSandhiMetaplasm {
+    apply(lexemeAdjectivalNoun: TonalSandhiLexeme, lexemeE: TonalSandhiLexeme) {
         const wrd = lexemeE.assimilate(lexemeAdjectivalNoun);
         if (wrd) {
             const frs = new TonalPhrase([lexemeAdjectivalNoun.word, wrd]);
@@ -39,9 +39,9 @@ export class TonalTransitivePhraseme extends Phraseme {
     proceedingForms: Array<TonalPhrase> = new Array();
 
     constructor(
-        private lexemeVerb: TonalInflectionLexeme,
-        private lexemeParticle: TonalInflectionLexeme,
-        private metaplasm: TonalPhrasalInflectingMetaplasm,
+        private lexemeVerb: TonalSandhiLexeme,
+        private lexemeParticle: TonalSandhiLexeme,
+        private metaplasm: TonalPhrasalSandhiMetaplasm,
     ) {
         super();
         this.phrase = new TonalPhrase([lexemeVerb.word, lexemeParticle.word]);
@@ -56,7 +56,7 @@ export class TonalTransitivePhraseme extends Phraseme {
 
 export class TonalIntransitivePhraseme extends Phraseme {
     phrase: TonalPhrase;
-    constructor(lexemeAdjective: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
+    constructor(lexemeAdjective: TonalSandhiLexeme, lexemeE: TonalSandhiLexeme) {
         super();
         this.phrase = new TonalPhrase([lexemeAdjective.word, lexemeE.word]);
     }
@@ -67,9 +67,9 @@ export class TonalAdjectivePhraseme extends Phraseme {
     otherForms: Array<TonalPhrase> = new Array();
 
     constructor(
-        private lexemeAdjectivalNoun: TonalInflectionLexeme,
-        private lexemeE: TonalInflectionLexeme,
-        private metaplasm: TonalPhrasalInflectingMetaplasm,
+        private lexemeAdjectivalNoun: TonalSandhiLexeme,
+        private lexemeE: TonalSandhiLexeme,
+        private metaplasm: TonalPhrasalSandhiMetaplasm,
     ) {
         super();
         this.phrase = new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word]);
@@ -82,19 +82,19 @@ export class TonalAdjectivePhraseme extends Phraseme {
     }
 }
 
-export class TonalInflectionPhrasemeMaker {
-    makeTransitivePhrasemes(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+export class TonalSandhiPhrasemeMaker {
+    makeTransitivePhrasemes(lexemeVerb: TonalSandhiLexeme, lexemeParticle: TonalSandhiLexeme) {
         return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
     }
 
-    makeIntransitivePhrasemes(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+    makeIntransitivePhrasemes(lexemeVerb: TonalSandhiLexeme, lexemeParticle: TonalSandhiLexeme) {
         return new TonalIntransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
     makeAdjectivePhrasemes(
-        lexemeAdjectivalNoun: TonalInflectionLexeme,
-        lexemeE: TonalInflectionLexeme,
-        metaplasm: TonalPhrasalInflectingMetaplasm,
+        lexemeAdjectivalNoun: TonalSandhiLexeme,
+        lexemeE: TonalSandhiLexeme,
+        metaplasm: TonalPhrasalSandhiMetaplasm,
     ) {
         return new TonalAdjectivePhraseme(lexemeAdjectivalNoun, lexemeE, metaplasm);
     }

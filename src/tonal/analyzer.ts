@@ -1,12 +1,12 @@
 import { Analyzer } from '../analyzer';
-import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme';
+import { TonalBaseLexemeMaker, TonalBaseLexeme } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme';
 import { lowerLettersOfTonal } from './version2';
 import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
 
-export class TonalLemmatizationAnalyzer extends Analyzer {
+export class TonalBaseAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
         const gm = new GraphemeMaker(lowerLettersOfTonal);
@@ -28,9 +28,9 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return mm.makeMorphemes(graphemes);
     }
 
-    lexAnalyze(str: string): TonalLemmatizationLexeme;
-    lexAnalyze(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme;
-    lexAnalyze(x: string | Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme {
+    lexAnalyze(str: string): TonalBaseLexeme;
+    lexAnalyze(ms: Array<TonalUncombiningMorpheme>): TonalBaseLexeme;
+    lexAnalyze(x: string | Array<TonalUncombiningMorpheme>): TonalBaseLexeme {
         // lexical analysis
         let morphemes: Array<TonalUncombiningMorpheme> = [];
         if (typeof x == 'object') {
@@ -39,14 +39,14 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
             morphemes = this.morphAnalyze(x);
         }
 
-        const lm = new TonalLemmatizationLexemeMaker();
+        const lm = new TonalBaseLexemeMaker();
         return lm.makeLexemes(morphemes);
     }
 }
 // TODO: add to API
 export class TonalLemmatizer {
     lemmatize(str: string) {
-        const tia = new TonalLemmatizationAnalyzer();
+        const tia = new TonalBaseAnalyzer();
         const mrphs = tia.morphAnalyze(str);
         const lx = tia.lexAnalyze(mrphs);
         return lx;

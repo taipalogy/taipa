@@ -3,8 +3,8 @@ export { Client } from './client';
 
 // API
 export { TokenAnalysis } from './token';
-export { TonalLemmatizationAnalyzer } from './tonal/analyzer';
-export { TonalInflectionAnalyzer, TonalPhrasalInflectionAnalyzer } from './dparser/analyzer';
+export { TonalBaseAnalyzer } from './tonal/analyzer';
+export { TonalSandhiAnalyzer, TonalPhrasalInflectionAnalyzer } from './dparser/analyzer';
 export { KanaAnalyzer } from './kana/analyzer';
 export { TonalDesinenceInflection, TransfixInflection } from './dparser/lexeme';
 export { TonalCombiningForms, ThirdCombiningForm } from './dparser/morpheme';

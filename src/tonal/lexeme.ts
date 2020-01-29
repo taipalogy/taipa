@@ -1,10 +1,10 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
-import { Word, LexemeMaker, TonalLemmatizingMetaplasm, Lexeme } from '../lexeme';
+import { Word, LexemeMaker, TonalBaseMetaplasm, Lexeme } from '../lexeme';
 import { FreeAllomorph, CheckedAllomorph, Allomorph, TonalLetterTags } from './version2';
 import { TonalAffix } from './version2';
 
-class TonalZeroLemmatization extends TonalLemmatizingMetaplasm {}
-export class TonalLemmatization extends TonalLemmatizingMetaplasm {
+class TonalZeroLemmatization extends TonalBaseMetaplasm {}
+export class TonalLemmatization extends TonalBaseMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         return this.populateLemmata(morphemes, inflectionalEnding);
     }
@@ -95,7 +95,7 @@ export class TonalWord extends Word {
 
 //------------------------------------------------------------------------------
 
-export class TonalLemmatizationLexeme extends Lexeme {
+export class TonalBaseLexeme extends Lexeme {
     word: TonalWord;
     private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
     private inflectionalEnding: InflectionalEnding;
@@ -104,23 +104,25 @@ export class TonalLemmatizationLexeme extends Lexeme {
         super();
         let isIStemWithX: boolean = false; // inflectional stem with x in the middle
 
-        for(let i = 0; i < ms.length ; i++) {
-            if(ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if(i < ms.length-1 &&
-                    (ms[ms.length-1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length-1].syllable.lastSecondLetter.literal !== TonalLetterTags.a)) {
-                        if(ms[ms.length-1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                            break;
-                        } else {
-                            // tonal x can't not appear in them middle of an inflectional stem
-                            // if it is not preceding an ay or a
-                            isIStemWithX = true;
-                            break;
-                        }
+        for (let i = 0; i < ms.length; i++) {
+            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+                if (
+                    i < ms.length - 1 &&
+                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
+                ) {
+                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                        break;
+                    } else {
+                        // tonal x can't not appear in them middle of an inflectional stem
+                        // if it is not preceding an ay or a
+                        isIStemWithX = true;
+                        break;
                     }
+                }
             }
         }
-        if(isIStemWithX) this.word = new TonalWord([]);
+        if (isIStemWithX) this.word = new TonalWord([]);
         else this.word = new TonalWord(ms.map(x => x.syllable));
 
         if (ms.length > 0) {
@@ -132,8 +134,8 @@ export class TonalLemmatizationLexeme extends Lexeme {
         } else {
             this.inflectionalEnding = new InflectionalEnding();
         }
-        
-        if(!isIStemWithX) {
+
+        if (!isIStemWithX) {
             this.lemmata = tl.apply(ms, this.inflectionalEnding);
         }
     }
@@ -167,7 +169,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
 
 //------------------------------------------------------------------------------
 
-export class TonalLemmatizationLexemeMaker extends LexemeMaker {
+export class TonalBaseLexemeMaker extends LexemeMaker {
     constructor() {
         super();
     }
@@ -177,6 +179,6 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     }
 
     protected make(ms: Array<TonalUncombiningMorpheme>) {
-        return new TonalLemmatizationLexeme(ms, new TonalLemmatization());
+        return new TonalBaseLexeme(ms, new TonalLemmatization());
     }
 }

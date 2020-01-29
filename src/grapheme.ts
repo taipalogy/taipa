@@ -93,7 +93,7 @@ export class Letters {
 }
 
 //------------------------------------------------------------------------------
-
+// TODO: add to API
 export class GraphemeMaker {
     private list: Array<AlphabeticLetter>;
 
@@ -254,8 +254,7 @@ export class SetOfSounds<T extends Sound> {
     sounds = new Array<T>();
     beginWith(str: string) {
         for (let i in this.sounds) {
-            if (str === this.sounds[i].toString())
-                return true;
+            if (str === this.sounds[i].toString()) return true;
         }
         return false;
     }

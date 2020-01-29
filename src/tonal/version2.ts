@@ -105,7 +105,7 @@ export enum TonalLetterTags {
 }
 
 export class LettersOfTonal extends Letters {}
-
+// TODO: add to API
 export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.a,
     TonalLetterTags.e,
@@ -1241,13 +1241,13 @@ export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.t, TonalLetterTags.l)
     .set(TonalLetterTags.kk, TonalLetterTags.gg)
     .set(TonalLetterTags.pp, TonalLetterTags.bb)
-    .set(TonalLetterTags.tt, TonalLetterTags.ll)
-    // .set(TonalLetterTags.g, TonalLetterTags.k)
-    // .set(TonalLetterTags.b, TonalLetterTags.p)
-    // .set(TonalLetterTags.l, TonalLetterTags.t)
-    // .set(TonalLetterTags.gg, TonalLetterTags.kk)
-    // .set(TonalLetterTags.bb, TonalLetterTags.pp)
-    // .set(TonalLetterTags.ll, TonalLetterTags.tt);
+    .set(TonalLetterTags.tt, TonalLetterTags.ll);
+// .set(TonalLetterTags.g, TonalLetterTags.k)
+// .set(TonalLetterTags.b, TonalLetterTags.p)
+// .set(TonalLetterTags.l, TonalLetterTags.t)
+// .set(TonalLetterTags.gg, TonalLetterTags.kk)
+// .set(TonalLetterTags.bb, TonalLetterTags.pp)
+// .set(TonalLetterTags.ll, TonalLetterTags.tt);
 
 export const assimilatedFinals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)
