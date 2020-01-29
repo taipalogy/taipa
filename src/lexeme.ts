@@ -5,13 +5,13 @@ import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme
 
 export abstract class Metaplasm {}
 
-export class TonalSandhiMetaplasm extends Metaplasm {
+export class TonalFormationMetaplasm extends Metaplasm {
     apply(morphemes: Array<Morpheme>): TonalWord[] {
         return [];
     }
 }
 
-export class TonalZeroInflection extends TonalSandhiMetaplasm {
+export class TonalZeroInflection extends TonalFormationMetaplasm {
     // examples: author and authoring. che qahf he. type and typing. meet and meeting.
 }
 

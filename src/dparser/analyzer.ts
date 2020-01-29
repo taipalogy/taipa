@@ -3,21 +3,21 @@ import { Analyzer } from '../analyzer';
 import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms, AssimiDirection } from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
 import {
-    TonalSandhiLexemeMaker,
-    TonalSandhiLexeme,
+    TonalFormationLexemeMaker,
+    TonalFormationLexeme,
     TonalDesinenceInflection,
     AgressiveAssimilation,
     RegressiveAssimilation,
 } from './lexeme';
-import { TonalSandhiMetaplasm } from '../lexeme';
+import { TonalFormationMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalZeroCombining } from '../morpheme';
-import { TonalSandhiPhrasemeMaker, Assimilation } from './phraseme';
+import { TonalFormationPhrasemeMaker, Assimilation } from './phraseme';
 import { TonalPhrasalSandhiMetaplasm } from '../phraseme';
 
 //------------------------------------------------------------------------------
 
-export class TonalSandhiAnalyzer extends Analyzer {
+export class TonalFormationAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
         const gm = new GraphemeMaker(lowerLettersOfTonal);
@@ -39,18 +39,18 @@ export class TonalSandhiAnalyzer extends Analyzer {
         return mm.makeMorphemes(graphemes);
     }
 
-    lexAnalyze(ms: Array<TonalCombiningMorpheme>, tim: TonalSandhiMetaplasm): TonalSandhiLexeme {
+    lexAnalyze(ms: Array<TonalCombiningMorpheme>, tim: TonalFormationMetaplasm): TonalFormationLexeme {
         // lexical analysis
         let morphemes: Array<TonalCombiningMorpheme> = ms;
 
-        const lm = new TonalSandhiLexemeMaker(tim);
+        const lm = new TonalFormationLexemeMaker(tim);
         return lm.makeLexemes(morphemes);
     }
 }
 // TODO: add to API
 export class TonalInflector {
-    inflect(str: string, tcm: TonalCombiningMetaplasm, tim: TonalSandhiMetaplasm) {
-        const tia = new TonalSandhiAnalyzer();
+    inflect(str: string, tcm: TonalCombiningMetaplasm, tim: TonalFormationMetaplasm) {
+        const tia = new TonalFormationAnalyzer();
         const mrphs = tia.morphAnalyze(str, tcm);
         const lx = tia.lexAnalyze(mrphs, tim);
         return lx;
@@ -59,7 +59,7 @@ export class TonalInflector {
 // TODO: add to API
 export class TonalAssimilator {
     assimilate(str: string, dir: AssimiDirection) {
-        const tia = new TonalSandhiAnalyzer();
+        const tia = new TonalFormationAnalyzer();
         const mrphs = tia.morphAnalyze(str, new TonalZeroCombining());
         let lx;
         if (dir === AssimiDirection.agressive) {
@@ -73,7 +73,7 @@ export class TonalAssimilator {
 
 export class TonalPhrasalInflector {
     private readonly infl = new TonalInflector();
-    private readonly p = new TonalSandhiPhrasemeMaker();
+    private readonly p = new TonalFormationPhrasemeMaker();
 
     analyzeTransitive(verb: string, particle: string) {
         const lexemeVerb = this.infl.inflect(verb, new TonalCombiningForms(), new TonalDesinenceInflection());
@@ -100,7 +100,7 @@ export class TonalPhrasalInflector {
 
 export class TonalPhrasalAssimilator {
     private readonly infl = new TonalInflector();
-    private readonly p = new TonalSandhiPhrasemeMaker();
+    private readonly p = new TonalFormationPhrasemeMaker();
 
     analyzeAdjective(adjectivalNoun: string, e: string, dir: AssimiDirection) {
         const lexemeAdjective = this.infl.inflect(

@@ -86,7 +86,7 @@ export class TonalWord extends Word {
         this.syllables = new Array<TonalSyllable>();
         if (syllables != undefined) {
             let len = syllables.length;
-            for (var i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
                 this.pushSyllable(syllables[i]);
             }
         }
