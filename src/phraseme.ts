@@ -4,7 +4,7 @@ import { TonalInflectionLexeme } from './dparser/lexeme';
 
 export abstract class PhrasalMetaplasm {}
 
-export class TonalPhrasalSandhiMetaplasm extends PhrasalMetaplasm {
+export class TonalPhrasalInflectionMetaplasm extends PhrasalMetaplasm {
     apply(lexemeOne: TonalInflectionLexeme, lexemeTwo: TonalInflectionLexeme): TonalPhrase[] {
         return [];
     }

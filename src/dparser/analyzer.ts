@@ -1,6 +1,12 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
 import { Analyzer } from '../analyzer';
-import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms, AssimiDirection } from './morpheme';
+import {
+    TonalCombiningMorphemeMaker,
+    TonalCombiningMorpheme,
+    TonalCombiningForms,
+    AssimiDirection,
+    EncliticECombining,
+} from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
 import {
     TonalInflectionLexemeMaker,
@@ -9,11 +15,10 @@ import {
     AgressiveAssimilation,
     RegressiveAssimilation,
 } from './lexeme';
-import { TonalInflectionMetaplasm } from '../lexeme';
-import { TonalCombiningMetaplasm } from '../morpheme';
-import { TonalZeroCombining } from '../morpheme';
+import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
+import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
 import { TonalInflectionPhrasemeMaker, Assimilation } from './phraseme';
-import { TonalPhrasalSandhiMetaplasm } from '../phraseme';
+import { TonalPhrasalInflectionMetaplasm } from '../phraseme';
 
 //------------------------------------------------------------------------------
 
@@ -87,13 +92,13 @@ export class TonalPhrasalInflector {
         return this.p.makeIntransitivePhrasemes(lexemeVerb, lexemeParticle);
     }
 
-    analyzeAdjective(adjectivalNoun: string, e: string, metaplasm: TonalPhrasalSandhiMetaplasm) {
+    analyzeAdjective(adjectivalNoun: string, e: string, metaplasm: TonalPhrasalInflectionMetaplasm) {
         const lexemeAdjective = this.infl.inflect(
             adjectivalNoun,
             new TonalZeroCombining(),
             new TonalDesinenceInflection(),
         );
-        const lexemeE = this.infl.inflect(e, new TonalCombiningForms(), new TonalDesinenceInflection());
+        const lexemeE = this.infl.inflect(e, new EncliticECombining(), new TonalDesinenceInflection());
         return this.p.makeAdjectivePhrasemes(lexemeAdjective, lexemeE, metaplasm);
     }
 }
@@ -108,7 +113,7 @@ export class TonalPhrasalAssimilator {
             new TonalZeroCombining(),
             new TonalDesinenceInflection(),
         );
-        const lexemeE = this.infl.inflect(e, new TonalCombiningForms(), new TonalDesinenceInflection());
+        const lexemeE = this.infl.inflect(e, new TonalZeroCombining(), new TonalZeroInflection());
         return this.p.makeAdjectivePhrasemes(lexemeAdjective, lexemeE, new Assimilation());
     }
 }

@@ -75,6 +75,28 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
 
 //------------------------------------------------------------------------------
 
+export class EncliticECombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        // 1->7, 7->7, 3->3
+        if (allomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            if (allomorph instanceof FreeAllomorph) {
+                if (allomorph instanceof ZeroAllomorph) {
+                    const cfs = combiningRules.get(TonalLetterTags.zero);
+                    for (let k in cfs) {
+                        // it should loop only once
+                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
+                    }
+                    return [s];
+                }
+            }
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
 export class ThirdCombiningForm extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
