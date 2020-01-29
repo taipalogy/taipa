@@ -23,7 +23,7 @@ import {
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 // TODO: to be added to API
-export enum Direction {
+export enum AssimiDirection {
     agressive = 0,
     regressive = 1,
 }
@@ -131,14 +131,14 @@ export class TonalCombiningMorpheme extends Morpheme {
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
-    getSoundChangeForm(sound: Sound, dir: Direction): TonalSyllable[] {
+    getSoundChangeForm(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
         if (sound) {
-            if (sound.name === TonalSoundTags.nasalFinal && dir === Direction.agressive) {
+            if (sound.name === TonalSoundTags.nasalFinal && dir === AssimiDirection.agressive) {
                 // agressive assimilation of nasals, both internal and external sandhi
                 const snds = this.sounds;
                 snds.splice(0, 0, sound);
                 return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
-            } else if (sound.name === TonalSoundTags.initial && dir === Direction.agressive) {
+            } else if (sound.name === TonalSoundTags.initial && dir === AssimiDirection.agressive) {
                 const snds = this.sounds;
                 if (snds[0].toString() === sound.toString()) {
                     let duplifix = new Sound();

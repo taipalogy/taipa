@@ -1,8 +1,9 @@
-import { TonalPhrasalInflectionAnalyzer } from '../src/dparser/analyzer';
+import { TonalPhrasalInflector, TonalPhrasalAssimilator } from '../src/dparser/analyzer';
 import { Adnominal, Assimilation } from '../src/dparser/phraseme';
+import { AssimiDirection } from '../src/dparser/morpheme';
 
 describe('Phrasal verb testing, transitive', () => {
-    const phva = new TonalPhrasalInflectionAnalyzer();
+    const phva = new TonalPhrasalInflector();
 
     const ph = phva.analyzeTransitive('koannw', 'diurh');
 
@@ -16,7 +17,7 @@ describe('Phrasal verb testing, transitive', () => {
 });
 
 describe('Phrasal verb testing, transitive', () => {
-    const phva = new TonalPhrasalInflectionAnalyzer();
+    const phva = new TonalPhrasalInflector();
 
     const ph = phva.analyzeIntransitive('laix', 'leh');
 
@@ -26,7 +27,7 @@ describe('Phrasal verb testing, transitive', () => {
 });
 
 describe('Adjective testing, transitive', () => {
-    const phva = new TonalPhrasalInflectionAnalyzer();
+    const phva = new TonalPhrasalInflector();
 
     const ph = phva.analyzeAdjective('sin', 'e', new Adnominal());
 
@@ -36,7 +37,8 @@ describe('Adjective testing, transitive', () => {
 
     const frase = ph.otherForms[0].literal;
     const words = frase.split(' ');
-    const ph4 = phva.analyzeAdjective(words[0], words[1], new Assimilation());
+    const phassi = new TonalPhrasalAssimilator();
+    const ph4 = phassi.analyzeAdjective(words[0], words[1], AssimiDirection.agressive);
 
     test('check the assimilated form', () => {
         expect(ph4.otherForms[0].literal).toEqual('sin nez');
@@ -44,7 +46,7 @@ describe('Adjective testing, transitive', () => {
 });
 
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
-    const phva = new TonalPhrasalInflectionAnalyzer();
+    const phva = new TonalPhrasalInflector();
 
     const ph1 = phva.analyzeTransitive('', '');
 
@@ -84,7 +86,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 });
 
 describe('Phrasal verb testing, undefined input', () => {
-    const phva = new TonalPhrasalInflectionAnalyzer();
+    const phva = new TonalPhrasalInflector();
 
     const inputUnd: any = undefined;
 

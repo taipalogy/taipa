@@ -1,6 +1,6 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
 import { Analyzer } from '../analyzer';
-import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms, Direction } from './morpheme';
+import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms, AssimiDirection } from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
 import {
     TonalSandhiLexemeMaker,
@@ -12,7 +12,7 @@ import {
 import { TonalSandhiMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalZeroCombining } from '../morpheme';
-import { TonalSandhiPhrasemeMaker } from './phraseme';
+import { TonalSandhiPhrasemeMaker, Assimilation } from './phraseme';
 import { TonalPhrasalSandhiMetaplasm } from '../phraseme';
 
 //------------------------------------------------------------------------------
@@ -58,11 +58,11 @@ export class TonalInflector {
 }
 // TODO: add to API
 export class TonalAssimilator {
-    assimilate(str: string, dir: Direction) {
+    assimilate(str: string, dir: AssimiDirection) {
         const tia = new TonalSandhiAnalyzer();
         const mrphs = tia.morphAnalyze(str, new TonalZeroCombining());
         let lx;
-        if (dir === Direction.agressive) {
+        if (dir === AssimiDirection.agressive) {
             lx = tia.lexAnalyze(mrphs, new AgressiveAssimilation());
         } else {
             lx = tia.lexAnalyze(mrphs, new RegressiveAssimilation());
@@ -71,29 +71,44 @@ export class TonalAssimilator {
     }
 }
 
-export class TonalPhrasalInflectionAnalyzer {
-    private readonly nflctr = new TonalInflector();
+export class TonalPhrasalInflector {
+    private readonly infl = new TonalInflector();
     private readonly p = new TonalSandhiPhrasemeMaker();
 
     analyzeTransitive(verb: string, particle: string) {
-        const lexemeVerb = this.nflctr.inflect(verb, new TonalCombiningForms(), new TonalDesinenceInflection());
-        const lexemeParticle = this.nflctr.inflect(particle, new TonalZeroCombining(), new TonalDesinenceInflection());
+        const lexemeVerb = this.infl.inflect(verb, new TonalCombiningForms(), new TonalDesinenceInflection());
+        const lexemeParticle = this.infl.inflect(particle, new TonalZeroCombining(), new TonalDesinenceInflection());
         return this.p.makeTransitivePhrasemes(lexemeVerb, lexemeParticle);
     }
 
     analyzeIntransitive(verb: string, particle: string) {
-        const lexemeVerb = this.nflctr.inflect(verb, new TonalZeroCombining(), new TonalDesinenceInflection());
-        const lexemeParticle = this.nflctr.inflect(particle, new TonalZeroCombining(), new TonalDesinenceInflection());
+        const lexemeVerb = this.infl.inflect(verb, new TonalZeroCombining(), new TonalDesinenceInflection());
+        const lexemeParticle = this.infl.inflect(particle, new TonalZeroCombining(), new TonalDesinenceInflection());
         return this.p.makeIntransitivePhrasemes(lexemeVerb, lexemeParticle);
     }
 
     analyzeAdjective(adjectivalNoun: string, e: string, metaplasm: TonalPhrasalSandhiMetaplasm) {
-        const lexemeAdjective = this.nflctr.inflect(
+        const lexemeAdjective = this.infl.inflect(
             adjectivalNoun,
             new TonalZeroCombining(),
             new TonalDesinenceInflection(),
         );
-        const lexemeE = this.nflctr.inflect(e, new TonalCombiningForms(), new TonalDesinenceInflection());
+        const lexemeE = this.infl.inflect(e, new TonalCombiningForms(), new TonalDesinenceInflection());
         return this.p.makeAdjectivePhrasemes(lexemeAdjective, lexemeE, metaplasm);
+    }
+}
+
+export class TonalPhrasalAssimilator {
+    private readonly infl = new TonalInflector();
+    private readonly p = new TonalSandhiPhrasemeMaker();
+
+    analyzeAdjective(adjectivalNoun: string, e: string, dir: AssimiDirection) {
+        const lexemeAdjective = this.infl.inflect(
+            adjectivalNoun,
+            new TonalZeroCombining(),
+            new TonalDesinenceInflection(),
+        );
+        const lexemeE = this.infl.inflect(e, new TonalCombiningForms(), new TonalDesinenceInflection());
+        return this.p.makeAdjectivePhrasemes(lexemeAdjective, lexemeE, new Assimilation());
     }
 }

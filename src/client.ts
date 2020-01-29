@@ -5,7 +5,7 @@ import { TonalUncombiningMorpheme } from './tonal/morpheme';
 
 import { getKanaBlocks, checkLetterSizeKana } from './kana/init';
 import { KanaUncombiningMorpheme } from './kana/morpheme';
-import { KanaAnalyzer } from './kana/analyzer';
+import { KanaBaseAnalyzer } from './kana/analyzer';
 
 import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
@@ -20,7 +20,7 @@ export class Client {
         // kana
         let ta: TokenAnalysis = new TokenAnalysis();
         if (str) {
-            const ka = new KanaAnalyzer();
+            const ka = new KanaBaseAnalyzer();
             const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
             ta.blockSequences = getKanaBlocks(morphemes);
 

@@ -8,7 +8,7 @@ import {
     PronounSurface,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
-import { TonalPhrasalInflectionAnalyzer } from './analyzer';
+import { TonalPhrasalInflector } from './analyzer';
 import { TonalTransitivePhraseme } from './phraseme';
 import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperate_vv_compounds } from './dictionary';
 
@@ -92,7 +92,7 @@ export class SetOfPhrasalVerbs {
     }
 
     private populatePhrasemes() {
-        const pva = new TonalPhrasalInflectionAnalyzer();
+        const pva = new TonalPhrasalInflector();
         for (let i in dict_of_phrasal_verbs) {
             this.phrms.push(pva.analyzeTransitive(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
         }

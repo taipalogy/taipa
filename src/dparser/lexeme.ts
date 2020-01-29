@@ -1,5 +1,5 @@
 import { TonalSandhiMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
-import { TonalCombiningMorpheme, Direction } from './morpheme';
+import { TonalCombiningMorpheme, AssimiDirection } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
@@ -58,9 +58,12 @@ export class RegressiveAssimilation extends TonalSandhiMetaplasm {
                     (ms[i - 1].syllable.lastSecondLetter.literal === TonalLetterTags.t ||
                         ms[i - 1].syllable.lastSecondLetter.literal === TonalLetterTags.tt)
                 ) {
-                    tw.replaceSyllable(i - 1, ms[i - 1].getSoundChangeForm(ms[i].sounds[0], Direction.regressive)[0]);
+                    tw.replaceSyllable(
+                        i - 1,
+                        ms[i - 1].getSoundChangeForm(ms[i].sounds[0], AssimiDirection.regressive)[0],
+                    );
                 } else {
-                    const syls = ms[i - 1].getSoundChangeForm(ms[i].sounds[0], Direction.regressive);
+                    const syls = ms[i - 1].getSoundChangeForm(ms[i].sounds[0], AssimiDirection.regressive);
                     if (syls.length) tw.replaceSyllable(i - 1, syls[0]);
                 }
             }
@@ -84,14 +87,14 @@ export class AgressiveAssimilation extends TonalSandhiMetaplasm {
                 // m, n, ng followed by -ay. pass the preceding nasal to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForm(snds[snds.length - 2], Direction.agressive)[0],
+                    ms[ms.length - 1].getSoundChangeForm(snds[snds.length - 2], AssimiDirection.agressive)[0],
                 );
                 return [wrd];
             } else {
                 // duplifix. pass the preceding initial to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForm(snds[0], Direction.agressive)[0],
+                    ms[ms.length - 1].getSoundChangeForm(snds[0], AssimiDirection.agressive)[0],
                 );
                 return [wrd];
             }
@@ -187,7 +190,7 @@ export class TonalSandhiLexeme extends Lexeme {
                 let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
 
                 const s = other_snds[other_snds.length - 1];
-                const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s, Direction.agressive);
+                const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s, AssimiDirection.agressive);
 
                 wrd.popSyllable();
                 wrd.pushSyllable(syls[0]);

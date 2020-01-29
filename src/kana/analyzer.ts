@@ -7,7 +7,7 @@ import { KanaCombiningMetaplasm } from '../morpheme';
 
 //------------------------------------------------------------------------------
 
-export class KanaAnalyzer extends Analyzer {
+export class KanaBaseAnalyzer extends Analyzer {
     graphAnalyze(str: string) {
         // graphemic analysis
         const gm = new GraphemeMaker(lowerLettersOfKana);
