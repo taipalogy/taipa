@@ -1,11 +1,11 @@
 import { InflectionalEnding } from './tonal/lexeme';
 import { TonalWord } from './tonal/lexeme';
-import { TonalFormationLexeme } from './dparser/lexeme';
+import { TonalInflectionLexeme } from './dparser/lexeme';
 
 export abstract class PhrasalMetaplasm {}
 
 export class TonalPhrasalSandhiMetaplasm extends PhrasalMetaplasm {
-    apply(lexemeOne: TonalFormationLexeme, lexemeTwo: TonalFormationLexeme): TonalPhrase[] {
+    apply(lexemeOne: TonalInflectionLexeme, lexemeTwo: TonalInflectionLexeme): TonalPhrase[] {
         return [];
     }
 }

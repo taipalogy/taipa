@@ -1,12 +1,12 @@
 import { Analyzer } from '../analyzer';
-import { TonalBaseLexemeMaker, TonalBaseLexeme } from './lexeme';
+import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme';
 import { lowerLettersOfTonal } from './version2';
 import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
 
-export class TonalBaseAnalyzer extends Analyzer {
+export class TonalLemmatizationAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
         const gm = new GraphemeMaker(lowerLettersOfTonal);
@@ -28,9 +28,9 @@ export class TonalBaseAnalyzer extends Analyzer {
         return mm.makeMorphemes(graphemes);
     }
 
-    lexAnalyze(str: string): TonalBaseLexeme;
-    lexAnalyze(ms: Array<TonalUncombiningMorpheme>): TonalBaseLexeme;
-    lexAnalyze(x: string | Array<TonalUncombiningMorpheme>): TonalBaseLexeme {
+    lexAnalyze(str: string): TonalLemmatizationLexeme;
+    lexAnalyze(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme;
+    lexAnalyze(x: string | Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme {
         // lexical analysis
         let morphemes: Array<TonalUncombiningMorpheme> = [];
         if (typeof x == 'object') {
@@ -39,14 +39,14 @@ export class TonalBaseAnalyzer extends Analyzer {
             morphemes = this.morphAnalyze(x);
         }
 
-        const lm = new TonalBaseLexemeMaker();
+        const lm = new TonalLemmatizationLexemeMaker();
         return lm.makeLexemes(morphemes);
     }
 }
 // TODO: add to API
 export class TonalLemmatizer {
     lemmatize(str: string) {
-        const tia = new TonalBaseAnalyzer();
+        const tia = new TonalLemmatizationAnalyzer();
         const mrphs = tia.morphAnalyze(str);
         const lx = tia.lexAnalyze(mrphs);
         return lx;

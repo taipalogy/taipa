@@ -3,9 +3,9 @@ export { Client } from './client';
 
 // API
 export { TokenAnalysis } from './token';
-export { TonalBaseAnalyzer } from './tonal/analyzer';
-export { TonalFormationAnalyzer, TonalPhrasalInflector } from './dparser/analyzer';
-export { KanaBaseAnalyzer } from './kana/analyzer';
+export { TonalLemmatizationAnalyzer } from './tonal/analyzer';
+export { TonalInflectionAnalyzer, TonalPhrasalInflector } from './dparser/analyzer';
+export { KanaLemmatizationAnalyzer } from './kana/analyzer';
 export { TonalDesinenceInflection, TransfixInflection } from './dparser/lexeme';
 export { TonalCombiningForms, ThirdCombiningForm } from './dparser/morpheme';
 export { Adnominal } from './dparser/phraseme';

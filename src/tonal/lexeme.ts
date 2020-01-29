@@ -1,10 +1,10 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
-import { Word, LexemeMaker, TonalBaseMetaplasm, Lexeme } from '../lexeme';
+import { Word, LexemeMaker, TonalLemmatizationMetaplasm, Lexeme } from '../lexeme';
 import { FreeAllomorph, CheckedAllomorph, Allomorph, TonalLetterTags } from './version2';
 import { TonalAffix } from './version2';
 
-class TonalZeroLemmatization extends TonalBaseMetaplasm {}
-export class TonalLemmatization extends TonalBaseMetaplasm {
+class TonalZeroLemmatization extends TonalLemmatizationMetaplasm {}
+export class TonalLemmatization extends TonalLemmatizationMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         return this.populateLemmata(morphemes, inflectionalEnding);
     }
@@ -95,7 +95,7 @@ export class TonalWord extends Word {
 
 //------------------------------------------------------------------------------
 
-export class TonalBaseLexeme extends Lexeme {
+export class TonalLemmatizationLexeme extends Lexeme {
     word: TonalWord;
     private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
     private inflectionalEnding: InflectionalEnding;
@@ -169,7 +169,7 @@ export class TonalBaseLexeme extends Lexeme {
 
 //------------------------------------------------------------------------------
 
-export class TonalBaseLexemeMaker extends LexemeMaker {
+export class TonalLemmatizationLexemeMaker extends LexemeMaker {
     constructor() {
         super();
     }
@@ -179,6 +179,6 @@ export class TonalBaseLexemeMaker extends LexemeMaker {
     }
 
     protected make(ms: Array<TonalUncombiningMorpheme>) {
-        return new TonalBaseLexeme(ms, new TonalLemmatization());
+        return new TonalLemmatizationLexeme(ms, new TonalLemmatization());
     }
 }

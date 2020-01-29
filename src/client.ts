@@ -1,11 +1,11 @@
-import { TonalBaseLexeme } from './tonal/lexeme';
+import { TonalLemmatizationLexeme } from './tonal/lexeme';
 import { checkLetterSizeTonal } from './tonal/init';
-import { TonalBaseAnalyzer } from './tonal/analyzer';
+import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
 
 import { getKanaBlocks, checkLetterSizeKana } from './kana/init';
 import { KanaUncombiningMorpheme } from './kana/morpheme';
-import { KanaBaseAnalyzer } from './kana/analyzer';
+import { KanaLemmatizationAnalyzer } from './kana/analyzer';
 
 import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
@@ -20,7 +20,7 @@ export class Client {
         // kana
         let ta: TokenAnalysis = new TokenAnalysis();
         if (str) {
-            const ka = new KanaBaseAnalyzer();
+            const ka = new KanaLemmatizationAnalyzer();
             const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
             ta.blockSequences = getKanaBlocks(morphemes);
 
@@ -37,9 +37,9 @@ export class Client {
         // tonal lurzmafjiz
         let ta: TokenAnalysis = new TokenAnalysis();
         if (str) {
-            const tla = new TonalBaseAnalyzer();
+            const tla = new TonalLemmatizationAnalyzer();
             const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(str);
-            const lexeme: TonalBaseLexeme = tla.lexAnalyze(morphemes);
+            const lexeme: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
             ta.word = lexeme.word;
             ta.lemmata = lexeme.getLemmata();
             ta.inflectionalEnding = lexeme.getInflectionalEnding();

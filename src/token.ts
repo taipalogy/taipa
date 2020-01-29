@@ -1,4 +1,4 @@
-import { TonalBaseAnalyzer, TonalLemmatizer } from './tonal/analyzer';
+import { TonalLemmatizationAnalyzer, TonalLemmatizer } from './tonal/analyzer';
 import { Document } from './document';
 import { Tagset } from './dparser/symbols';
 import { TonalWord } from './tonal/lexeme';
@@ -26,7 +26,7 @@ export class TokenAnalysis {
 
 export class TokenLemmatizer {
     getTonalLemmas(doc: Document): Document {
-        const tla = new TonalBaseAnalyzer();
+        const tla = new TonalLemmatizationAnalyzer();
         const lmtzr = new TonalLemmatizer();
         const sophv = new SetOfPhrasalVerbs();
         let j: number = 0;

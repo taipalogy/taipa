@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
-import { KanaBaseAnalyzer } from '../src/kana/analyzer';
+import { KanaLemmatizationAnalyzer } from '../src/kana/analyzer';
 import { KanaUncombiningMorpheme } from '../src/kana/morpheme';
 
 describe('Kana testing', () => {
@@ -135,7 +135,7 @@ describe('Kana testing', () => {
 });
 
 describe('Kana testing', () => {
-    const ka = new KanaBaseAnalyzer();
+    const ka = new KanaLemmatizationAnalyzer();
 
     const inputEmpty: any = '';
     const inputUnd: any = undefined;
