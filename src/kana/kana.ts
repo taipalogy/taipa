@@ -234,7 +234,7 @@ class GerminatedConsonantT extends GerminatedConsonant {
     characters = this.makeCharacters(KanaLetterTags.t);
 }
 
-export class SetOfInitialConsonants extends SetOfSounds<InitialConsonant> {
+export class InitialConsonantSet extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialConsonantB());
@@ -261,7 +261,7 @@ export class SetOfInitialConsonants extends SetOfSounds<InitialConsonant> {
     }
 }
 
-export class SetOfVowels extends SetOfSounds<Vowel> {
+export class VowelSet extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new VowelA());
@@ -272,7 +272,7 @@ export class SetOfVowels extends SetOfSounds<Vowel> {
     }
 }
 
-export class SetOfGerminatedConsonants extends SetOfSounds<GerminatedConsonant> {
+export class GerminatedConsonantSet extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new GerminatedConsonantB());
@@ -286,7 +286,7 @@ export class SetOfGerminatedConsonants extends SetOfSounds<GerminatedConsonant> 
     }
 }
 
-export class SetOfSemivowels extends SetOfSounds<Semivowel> {
+export class SemivowelSet extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new SemivowelW());
@@ -294,7 +294,7 @@ export class SetOfSemivowels extends SetOfSounds<Semivowel> {
     }
 }
 
-export class SetOfFinalConsonants extends SetOfSounds<FinalConsonant> {
+export class FinalConsonantSet extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalConsonantB());
@@ -308,7 +308,7 @@ export class SetOfFinalConsonants extends SetOfSounds<FinalConsonant> {
     }
 }
 
-export class Hatsuon extends SetOfSounds<FinalConsonant> {
+export class Hatsuon extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalConsonantN());

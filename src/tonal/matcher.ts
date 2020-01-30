@@ -1,5 +1,5 @@
 import {
-    SetOfNasalFinals,
+    NasalFinalSounds,
     NeutralFinalH,
     FirstTonalF,
     NeutralFinalHH,
@@ -16,7 +16,7 @@ import {
 export const regex_mnng_h_f = /(m|ng?)hf/g;
 
 export const sm_mnng_h_f = function(nasalFinal: string, neutralFinalH: string, firstTonalF: string) {
-    const snfs = new SetOfNasalFinals();
+    const snfs = new NasalFinalSounds();
     const nf_h = new NeutralFinalH();
     const ft_f = new FirstTonalF();
 
@@ -35,7 +35,7 @@ export const sm_m_hh_w = function(nasalFinal: string, neutralFinalHH: string, th
 };
 
 export const sm_mnng_hh_wx = function(nasalFinal: string, neutralFinalHH: string, thirdFifthTonalWX: string) {
-    const snfs = new SetOfNasalFinals();
+    const snfs = new NasalFinalSounds();
     const nf_hh = new NeutralFinalHH();
     const fts_wx = new ThirdFifthTonalsWX();
 

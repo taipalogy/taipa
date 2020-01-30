@@ -12,9 +12,9 @@ import {
     freeAllomorphs,
     ZeroAllomorph,
     AllomorphX,
-    SetOfFreeTonals,
-    SetOfStopFinals,
-    Epenthesis,
+    FreeTonalSounds,
+    StopFinalSounds,
+    EpenthesisSounds,
     TonalLetterTags,
     lowerLettersOfTonal,
     tonalPositionalSound,
@@ -40,7 +40,7 @@ import {
     sm_jls_f,
     sm_jjllss_wx,
 } from './matcher';
-import { SetOfInitialConsonants } from '../kana/kana';
+import { InitialSounds } from './version2';
 
 //------------------------------------------------------------------------------
 
@@ -115,8 +115,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let begin: number = 0;
     let ltrs: Array<string> = new Array();
     let matchedLtrs: Array<string> = new Array();
-    const sft = new SetOfFreeTonals();
-    const ssf = new SetOfStopFinals();
+    const sft = new FreeTonalSounds();
+    const ssf = new StopFinalSounds();
     const faurs = freeAllomorphUncombiningRules;
     const ursa = uncombiningRulesAy;
 
@@ -141,7 +141,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             break;
         } else if (sft.beginWith(letters[i].literal)) {
             // check tonals is the subset of free tonals
-            
+
             // console.log('i: %d', i)
             // console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
 
@@ -176,12 +176,19 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             // tone sandhi of ay
             const tnls_ay = ursa.get(letters[i].literal).map(x => x.toString());
             // merge the above twoo arrays
-            const tnls = tnls_fa.concat(tnls_ay.filter((item) => tnls_fa.indexOf(item) < 0));
+            const tnls = tnls_fa.concat(tnls_ay.filter(item => tnls_fa.indexOf(item) < 0));
             //console.log(ts)
             if (tnls.length > 0) {
                 for (let t of tnls) {
                     //console.log(lit + t.toString())
-                    if (list_of_lexical_roots.includes(letters.slice(beginOfSyllable, i).map(x => x.literal).join('') + t)) {
+                    if (
+                        list_of_lexical_roots.includes(
+                            letters
+                                .slice(beginOfSyllable, i)
+                                .map(x => x.literal)
+                                .join('') + t,
+                        )
+                    ) {
                         // this combining form is not present in the pool,
                         // but its uncombining forms are. e.g. aw.
                         matched = literal;
@@ -249,7 +256,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         list = tsg.generate(matchedLtrs);
     } else {
         if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
-            const ep = new Epenthesis();
+            const ep = new EpenthesisSounds();
             const rea = new RemovingEpenthesisOfAy();
             const done = rea.applyToString(literal);
             //console.log(done.toString())
@@ -465,7 +472,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
                 // in case of hmhhw or hmhhwhmhhw
                 // check if the previous letter is a consonant
-                if (new SetOfInitialConsonants().beginWith(sub1)) return letters;
+                if (new InitialSounds().beginWith(sub1)) return letters;
 
                 let fnl;
                 if (new FirstTonalF().beginWith(arr[i].charAt(arr[i].length - 1))) {

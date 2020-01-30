@@ -420,14 +420,14 @@ class NasalizationNN extends Nasalization {
     characters = this.makeCharacters(TonalLetterTags.nn);
 }
 
-export class SetOfNasalizations extends SetOfSounds<Nasalization> {
+export class NasalizationSound extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new NasalizationNN());
     }
 }
 
-export class SetOfNasalFinals extends SetOfSounds<Final> {
+export class NasalFinalSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalM());
@@ -436,7 +436,7 @@ export class SetOfNasalFinals extends SetOfSounds<Final> {
     }
 }
 
-export class NasalInitials extends SetOfSounds<Initial> {
+export class NasalInitialSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialM());
@@ -445,7 +445,7 @@ export class NasalInitials extends SetOfSounds<Initial> {
     }
 }
 
-export class SetOfNeutralFinals extends SetOfSounds<Final> {
+export class NeutralFinalSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalH());
@@ -453,7 +453,7 @@ export class SetOfNeutralFinals extends SetOfSounds<Final> {
     }
 }
 
-export class SetOfMedials extends SetOfSounds<Medial> {
+export class MedialSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new MedialA());
@@ -465,7 +465,7 @@ export class SetOfMedials extends SetOfSounds<Medial> {
     }
 }
 
-export class SetOfMaterLectionis extends SetOfSounds<Medial> {
+export class MaterLectionisSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new MaterLectionisM());
@@ -474,7 +474,7 @@ export class SetOfMaterLectionis extends SetOfSounds<Medial> {
     }
 }
 
-export class SetOfInitials extends SetOfSounds<Initial> {
+export class InitialSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialP());
@@ -500,7 +500,7 @@ export class SetOfInitials extends SetOfSounds<Initial> {
     }
 }
 
-export class SetOfFreeTonals extends SetOfSounds<FreeTonal> {
+export class FreeTonalSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FreeTonalZ());
@@ -515,7 +515,7 @@ export class SetOfFreeTonals extends SetOfSounds<FreeTonal> {
     }
 }
 
-export class SetOfCheckedTonals extends SetOfSounds<CheckedTonal> {
+export class CheckedTonalSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new CheckedTonalF());
@@ -525,7 +525,7 @@ export class SetOfCheckedTonals extends SetOfSounds<CheckedTonal> {
     }
 }
 
-export class SetOfFinals extends SetOfSounds<Final> {
+export class FinalSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalP());
@@ -543,7 +543,7 @@ export class SetOfFinals extends SetOfSounds<Final> {
     }
 }
 
-export class SetOfStopFinals extends SetOfSounds<Final> {
+export class StopFinalSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalP());
@@ -557,7 +557,7 @@ export class SetOfStopFinals extends SetOfSounds<Final> {
     }
 }
 
-export class Epenthesis extends SetOfSounds<Initial> {
+export class EpenthesisSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialB());
@@ -568,7 +568,7 @@ export class Epenthesis extends SetOfSounds<Initial> {
     }
 }
 
-export class EuphonicFinalsJLS extends SetOfSounds<Final> {
+export class EuphonicFinalsJLS extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalJ());
@@ -577,7 +577,7 @@ export class EuphonicFinalsJLS extends SetOfSounds<Final> {
     }
 }
 
-export class EuphonicFinalsBGKP extends SetOfSounds<Final> {
+export class EuphonicFinalsBGKP extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalB());
@@ -587,7 +587,7 @@ export class EuphonicFinalsBGKP extends SetOfSounds<Final> {
     }
 }
 
-export class EuphonicFinalsBGJKLPS extends SetOfSounds<Final> {
+export class EuphonicFinalsBGJKLPS extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalB());
@@ -600,7 +600,7 @@ export class EuphonicFinalsBGJKLPS extends SetOfSounds<Final> {
     }
 }
 
-export class EuphonicFinalsJJLLSS extends SetOfSounds<Final> {
+export class EuphonicFinalsJJLLSS extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalJJ());
@@ -609,7 +609,7 @@ export class EuphonicFinalsJJLLSS extends SetOfSounds<Final> {
     }
 }
 
-export class EuphonicFinalsBBGGKKPP extends SetOfSounds<Final> {
+export class EuphonicFinalsBBGGKKPP extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalBB());
@@ -619,7 +619,7 @@ export class EuphonicFinalsBBGGKKPP extends SetOfSounds<Final> {
     }
 }
 
-export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds<Final> {
+export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalBB());
@@ -632,14 +632,14 @@ export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds<Final> {
     }
 }
 
-export class FirstTonalF extends SetOfSounds<CheckedTonal> {
+export class FirstTonalF extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new CheckedTonalF());
     }
 }
 
-export class ThirdFifthTonalsWX extends SetOfSounds<CheckedTonal> {
+export class ThirdFifthTonalsWX extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new CheckedTonalW());
@@ -647,21 +647,21 @@ export class ThirdFifthTonalsWX extends SetOfSounds<CheckedTonal> {
     }
 }
 
-export class NeutralFinalH extends SetOfSounds<StopFinal> {
+export class NeutralFinalH extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalH());
     }
 }
 
-export class NeutralFinalHH extends SetOfSounds<StopFinal> {
+export class NeutralFinalHH extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new FinalHH());
     }
 }
 
-export class InitialsForEuphonicT extends SetOfSounds<Initial> {
+export class InitialsForEuphonicT extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialP());
@@ -680,7 +680,7 @@ export class InitialsForEuphonicT extends SetOfSounds<Initial> {
     }
 }
 
-export class InitialsForEuphonicTT extends SetOfSounds<Initial> {
+export class InitialsForEuphonicTT extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialP());

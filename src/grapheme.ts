@@ -250,8 +250,8 @@ export class Sound {
     }
 }
 
-export class SetOfSounds<T extends Sound> {
-    sounds = new Array<T>();
+export class SetOfSounds {
+    sounds = new Array<Sound>();
     beginWith(str: string) {
         for (let i in this.sounds) {
             if (str === this.sounds[i].toString()) return true;
@@ -268,5 +268,6 @@ export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) =>
 export class SoundGeneration {
     letters: string[] = [];
     sounds = new Array<Sound>();
-    bool: boolean = true;
+    matched: boolean = true;
+    prompt: Array<SetOfSounds> = new Array();
 }

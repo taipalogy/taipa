@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import { SetOfInitialConsonants, SetOfVowels, Hatsuon, hiragana_katakana, SetOfSemivowels, gailaigo } from './kana';
+import { InitialConsonantSet, VowelSet, Hatsuon, hiragana_katakana, SemivowelSet, gailaigo } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 import { KanaSoundGenerator } from './soundgen';
 
@@ -33,7 +33,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     let lookahead = '';
     let ltrs: Array<string> = new Array();
     let matchedLtrs: Array<string> = new Array();
-    const sov = new SetOfVowels();
+    const sov = new VowelSet();
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -138,7 +138,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         // look ahead for 1 letter
         if (letters.length - beginOfSyllable == arraysOfLetters[longerEntry].length + 1) {
             if (
-                new SetOfInitialConsonants().beginWith(
+                new InitialConsonantSet().beginWith(
                     letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal,
                 ) == true
             ) {
@@ -162,11 +162,10 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         // look ahead for 2 letters
         if (letters.length - beginOfSyllable > arraysOfLetters[longerEntry].length + 1) {
             if (
-                new SetOfVowels().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
+                new VowelSet().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
                     true ||
-                new SetOfSemivowels().beginWith(
-                    letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal,
-                ) == true
+                new SemivowelSet().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
+                    true
             ) {
                 // return the shorter one
                 for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {

@@ -1,16 +1,16 @@
 import { Sound, SoundGeneration, pipe } from '../grapheme';
 import {
-    SetOfInitialConsonants,
+    InitialConsonantSet,
     KanaSoundTags,
-    SetOfVowels,
-    SetOfGerminatedConsonants,
-    SetOfFinalConsonants,
-    SetOfSemivowels,
+    VowelSet,
+    GerminatedConsonantSet,
+    FinalConsonantSet,
+    SemivowelSet,
     kanaPositionalSound,
 } from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
-    const sics = new SetOfInitialConsonants();
+    const sics = new InitialConsonantSet();
 
     if (sics.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -18,13 +18,13 @@ function initialConsonant(sg: SoundGeneration) {
             const s = ps(KanaSoundTags.initialConsonant);
             if (s) sg.sounds.push(s);
         }
-    } else sg.bool = false;
+    } else sg.matched = false;
 
     return sg;
 }
 
 function semivowel(sg: SoundGeneration) {
-    const ssvs = new SetOfSemivowels();
+    const ssvs = new SemivowelSet();
 
     if (ssvs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -38,7 +38,7 @@ function semivowel(sg: SoundGeneration) {
 }
 
 function vowel(sg: SoundGeneration) {
-    const svs = new SetOfVowels();
+    const svs = new VowelSet();
 
     if (svs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -52,7 +52,7 @@ function vowel(sg: SoundGeneration) {
 }
 
 function finalConsonant(sg: SoundGeneration) {
-    const sfcs = new SetOfFinalConsonants();
+    const sfcs = new FinalConsonantSet();
 
     if (sfcs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -66,7 +66,7 @@ function finalConsonant(sg: SoundGeneration) {
 }
 
 function germinatedConsonant(sg: SoundGeneration) {
-    const sgcs = new SetOfGerminatedConsonants();
+    const sgcs = new GerminatedConsonantSet();
 
     if (sgcs.beginWith(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -94,7 +94,7 @@ export class KanaSoundGenerator {
         strs.push(letters);
 
         // consonant germination
-        if (new SetOfGerminatedConsonants().beginWith(letters[0]) == true) {
+        if (new GerminatedConsonantSet().beginWith(letters[0]) == true) {
             let syl: string[] = new Array();
             syl.push(letters[0].charAt(0));
             for (let e of letters) {
@@ -104,7 +104,7 @@ export class KanaSoundGenerator {
         }
 
         // sokuon
-        let fcs = new SetOfFinalConsonants();
+        let fcs = new FinalConsonantSet();
         for (let e of fcs.sounds) {
             let syl: string[] = new Array();
             Object.assign(syl, letters);
@@ -130,7 +130,7 @@ export class KanaSoundGenerator {
                 sg.letters = strs[i];
                 //console.log(`j: ${j}`)
                 sg = this.sylCompositions[j](sg);
-                if (sg.letters.length == sg.sounds.length && sg.bool == true) {
+                if (sg.letters.length == sg.sounds.length && sg.matched == true) {
                     sequences.push(sg.sounds);
                     break;
                 }

@@ -12,14 +12,14 @@ import {
     TonalLetterTags,
     tonalPositionalSound,
     TonalSoundTags,
-    SetOfCheckedTonals,
+    CheckedTonalSounds,
     voiceless_voiced_finals,
     combinedCheckedAllomorphs,
     InitialsForEuphonicTT,
     InitialsForEuphonicT,
     assimilatedFinals,
-    NasalInitials,
-    SetOfMedials,
+    NasalInitialSounds,
+    MedialSounds,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 // TODO: to be added to API
@@ -184,7 +184,7 @@ export class TonalCombiningMorpheme extends Morpheme {
         }
 
         if (
-            new SetOfCheckedTonals().beginWith(syllable.lastLetter.literal) &&
+            new CheckedTonalSounds().beginWith(syllable.lastLetter.literal) &&
             uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
         ) {
             // in case of final followed by tonal
@@ -225,7 +225,7 @@ export class TonalCombiningMorpheme extends Morpheme {
                 const ps = tonalPositionalSound.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
                 s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
-                if (new NasalInitials().beginWith(soundFollowingSyllable.toString())) {
+                if (new NasalInitialSounds().beginWith(soundFollowingSyllable.toString())) {
                     s.insertLetter(s.letters.length - 2, new AlphabeticLetter(soundFollowingSyllable.characters));
                 }
 
@@ -253,14 +253,14 @@ export class TonalCombiningMorpheme extends Morpheme {
     private conditionalVoicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            new NasalInitials().beginWith(soundFollowingSyllable.toString())
+            new NasalInitialSounds().beginWith(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }
 
         if (
             soundFollowingSyllable.name === TonalSoundTags.medial &&
-            new SetOfMedials().beginWith(soundFollowingSyllable.toString())
+            new MedialSounds().beginWith(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }
