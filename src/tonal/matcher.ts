@@ -20,7 +20,7 @@ export const sm_mnng_h_f = function(nasalFinal: string, neutralFinalH: string, f
     const nf_h = new NeutralFinalH();
     const ft_f = new FirstTonalF();
 
-    if (snfs.beginWith(nasalFinal) && nf_h.beginWith(neutralFinalH) && ft_f.beginWith(firstTonalF)) return true;
+    if (snfs.includes(nasalFinal) && nf_h.includes(neutralFinalH) && ft_f.includes(firstTonalF)) return true;
 
     return false;
 };
@@ -39,8 +39,7 @@ export const sm_mnng_hh_wx = function(nasalFinal: string, neutralFinalHH: string
     const nf_hh = new NeutralFinalHH();
     const fts_wx = new ThirdFifthTonalsWX();
 
-    if (snfs.beginWith(nasalFinal) && nf_hh.beginWith(neutralFinalHH) && fts_wx.beginWith(thirdFifthTonalWX))
-        return true;
+    if (snfs.includes(nasalFinal) && nf_hh.includes(neutralFinalHH) && fts_wx.includes(thirdFifthTonalWX)) return true;
 
     return false;
 };
@@ -51,7 +50,7 @@ export const sm_jls_f = function(euphonicFinalJLS: string, firstTonalF: string) 
     const efs = new EuphonicFinalsJLS();
     const ft_f = new FirstTonalF();
 
-    if (efs.beginWith(euphonicFinalJLS) && ft_f.beginWith(firstTonalF)) return true;
+    if (efs.includes(euphonicFinalJLS) && ft_f.includes(firstTonalF)) return true;
 
     return false;
 };
@@ -60,7 +59,7 @@ export const sm_bgkp_f = function(euphonicFinalBGJKLPS: string, firstTonalF: str
     const efs = new EuphonicFinalsBGKP();
     const ft_f = new FirstTonalF();
 
-    if (efs.beginWith(euphonicFinalBGJKLPS) && ft_f.beginWith(firstTonalF)) return true;
+    if (efs.includes(euphonicFinalBGJKLPS) && ft_f.includes(firstTonalF)) return true;
 
     return false;
 };
@@ -71,7 +70,7 @@ export const sm_jjllss_wx = function(euphonicFinalJJLLSS: string, thirdFifthTona
     const efs = new EuphonicFinalsJJLLSS();
     const fts_wx = new ThirdFifthTonalsWX();
 
-    if (efs.beginWith(euphonicFinalJJLLSS) && fts_wx.beginWith(thirdFifthTonalWX)) return true;
+    if (efs.includes(euphonicFinalJJLLSS) && fts_wx.includes(thirdFifthTonalWX)) return true;
 
     return false;
 };
@@ -80,7 +79,7 @@ export const sm_bbggkkpp_wx = function(euphonicFinalBBGGJJKKLLPPSS: string, thir
     const efs = new EuphonicFinalsBBGGKKPP();
     const fts_wx = new ThirdFifthTonalsWX();
 
-    if (efs.beginWith(euphonicFinalBBGGJJKKLLPPSS) && fts_wx.beginWith(thirdFifthTonalWX)) return true;
+    if (efs.includes(euphonicFinalBBGGJJKKLLPPSS) && fts_wx.includes(thirdFifthTonalWX)) return true;
 
     return false;
 };
@@ -89,7 +88,7 @@ export const sm_bgjklps_f = function(euphonicFinalBGJKLPS: string, firstTonalF: 
     const efs = new EuphonicFinalsBGJKLPS();
     const ft_f = new FirstTonalF();
 
-    if (efs.beginWith(euphonicFinalBGJKLPS) && ft_f.beginWith(firstTonalF)) return true;
+    if (efs.includes(euphonicFinalBGJKLPS) && ft_f.includes(firstTonalF)) return true;
 
     return false;
 };
@@ -98,7 +97,7 @@ export const sm_bbggjjkkllppss_wx = function(euphonicFinalBBGGJJKKLLPPSS: string
     const efs = new EuphonicFinalsBBGGJJKKLLPPSS();
     const fts_wx = new ThirdFifthTonalsWX();
 
-    if (efs.beginWith(euphonicFinalBBGGJJKKLLPPSS) && fts_wx.beginWith(thirdFifthTonalWX)) return true;
+    if (efs.includes(euphonicFinalBBGGJJKKLLPPSS) && fts_wx.includes(thirdFifthTonalWX)) return true;
 
     return false;
 };

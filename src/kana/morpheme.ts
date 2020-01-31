@@ -43,7 +43,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
             Object.assign(matchedLtrs, ltrs);
             if (i + 1 < letters.length) lookahead = letters[i + 1].literal; // look-ahead
         } else {
-            if (literal.length == 3 && literal[0] === literal[1] && sov.beginWith(literal[2])) {
+            if (literal.length == 3 && literal[0] === literal[1] && sov.includes(literal[2])) {
                 // for consonant germination of sokuon
                 matched = literal;
                 ltrs.shift(); // shift the germinated consonants
@@ -117,9 +117,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         }
 
         if (letters.length - beginOfSyllable == arraysOfLetters[longerEntry].length) {
-            if (
-                new Hatsuon().beginWith(arraysOfLetters[longerEntry][arraysOfLetters[longerEntry].length - 1].literal)
-            ) {
+            if (new Hatsuon().includes(arraysOfLetters[longerEntry][arraysOfLetters[longerEntry].length - 1].literal)) {
                 // return the longer one
                 for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
                     mp.letters[q] = letters[beginOfSyllable + q];
@@ -138,7 +136,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         // look ahead for 1 letter
         if (letters.length - beginOfSyllable == arraysOfLetters[longerEntry].length + 1) {
             if (
-                new InitialConsonantSet().beginWith(
+                new InitialConsonantSet().includes(
                     letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal,
                 ) == true
             ) {
@@ -162,9 +160,9 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         // look ahead for 2 letters
         if (letters.length - beginOfSyllable > arraysOfLetters[longerEntry].length + 1) {
             if (
-                new VowelSet().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
+                new VowelSet().includes(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
                     true ||
-                new SemivowelSet().beginWith(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
+                new SemivowelSet().includes(letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal) ==
                     true
             ) {
                 // return the shorter one

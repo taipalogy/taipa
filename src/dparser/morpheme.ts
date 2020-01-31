@@ -184,7 +184,7 @@ export class TonalCombiningMorpheme extends Morpheme {
         }
 
         if (
-            new CheckedTonalSounds().beginWith(syllable.lastLetter.literal) &&
+            new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
             uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
         ) {
             // in case of final followed by tonal
@@ -212,9 +212,9 @@ export class TonalCombiningMorpheme extends Morpheme {
 
         if (
             (sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
-                new InitialsForEuphonicTT().beginWith(soundFollowingSyllable.toString())) ||
+                new InitialsForEuphonicTT().includes(soundFollowingSyllable.toString())) ||
             (sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
-                new InitialsForEuphonicT().beginWith(soundFollowingSyllable.toString()))
+                new InitialsForEuphonicT().includes(soundFollowingSyllable.toString()))
         ) {
             // absolute assimilation
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
@@ -225,7 +225,7 @@ export class TonalCombiningMorpheme extends Morpheme {
                 const ps = tonalPositionalSound.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
                 s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
-                if (new NasalInitialSounds().beginWith(soundFollowingSyllable.toString())) {
+                if (new NasalInitialSounds().includes(soundFollowingSyllable.toString())) {
                     s.insertLetter(s.letters.length - 2, new AlphabeticLetter(soundFollowingSyllable.characters));
                 }
 
@@ -253,14 +253,14 @@ export class TonalCombiningMorpheme extends Morpheme {
     private conditionalVoicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            new NasalInitialSounds().beginWith(soundFollowingSyllable.toString())
+            new NasalInitialSounds().includes(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }
 
         if (
             soundFollowingSyllable.name === TonalSoundTags.medial &&
-            new MedialSounds().beginWith(soundFollowingSyllable.toString())
+            new MedialSounds().includes(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }

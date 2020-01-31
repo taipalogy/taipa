@@ -8,7 +8,7 @@ const to_be_verified = [
 ]
 
 // prettier-ignore
-const list_of_new_lexical_roots = [
+const new_lexical_roots = [
     'coaih',
 
     'choa',
@@ -41,7 +41,7 @@ const list_of_new_lexical_roots = [
 ]
 
 // prettier-ignore
-const list_of_addon_lexical_roots = [
+const addon_lexical_roots = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
     'borh', 'borhh', 'borx', 'bory', 'borz',
@@ -86,9 +86,9 @@ const list_of_addon_lexical_roots = [
 
     'vainny', 'vainnx', 'vainnz', 'vor', 'vory', 'vorw', 'vorx', 'vorz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
 ]
-
+// TODO: add to API
 // prettier-ignore
-export const list_of_lexical_roots = [
+export const lexical_roots = [
     'a', 'ay', 'az', 'ah', 'ahh', 'ai', 'aiy', 'aiw', 'ainnz', 'ak', 'am',
     'amy', 'amw', 'amx', 'amz', 'an', 'any', 'anw', 'anx', 'anz', 'ang',
     'angw', 'angx', 'angz', 'annw', 'annx', 'annz', 'ap', 'app', 'at', 'au',

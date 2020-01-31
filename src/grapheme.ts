@@ -252,9 +252,9 @@ export class Sound {
 
 export class SetOfSounds {
     sounds = new Array<Sound>();
-    beginWith(str: string) {
+    includes(str: string) {
         for (let i in this.sounds) {
-            if (str === this.sounds[i].toString()) return true;
+            if (str && this.sounds[i] && str === this.sounds[i].toString()) return true;
         }
         return false;
     }
@@ -264,10 +264,10 @@ export class SetOfSounds {
 
 export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) =>
     fns.reduce((v, f) => f(v), x);
-
+// TODO: add to API
 export class SoundGeneration {
     letters: string[] = [];
     sounds = new Array<Sound>();
     matched: boolean = true;
-    prompt: Array<SetOfSounds> = new Array();
+    prompt: Array<Sound[]> = new Array();
 }

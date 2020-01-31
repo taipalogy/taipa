@@ -12,7 +12,7 @@ import {
 function initialConsonant(sg: SoundGeneration) {
     const sics = new InitialConsonantSet();
 
-    if (sics.beginWith(sg.letters[sg.sounds.length])) {
+    if (sics.includes(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(KanaSoundTags.initialConsonant);
@@ -26,7 +26,7 @@ function initialConsonant(sg: SoundGeneration) {
 function semivowel(sg: SoundGeneration) {
     const ssvs = new SemivowelSet();
 
-    if (ssvs.beginWith(sg.letters[sg.sounds.length])) {
+    if (ssvs.includes(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(KanaSoundTags.semivowel);
@@ -40,7 +40,7 @@ function semivowel(sg: SoundGeneration) {
 function vowel(sg: SoundGeneration) {
     const svs = new VowelSet();
 
-    if (svs.beginWith(sg.letters[sg.sounds.length])) {
+    if (svs.includes(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(KanaSoundTags.vowel);
@@ -54,7 +54,7 @@ function vowel(sg: SoundGeneration) {
 function finalConsonant(sg: SoundGeneration) {
     const sfcs = new FinalConsonantSet();
 
-    if (sfcs.beginWith(sg.letters[sg.sounds.length])) {
+    if (sfcs.includes(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(KanaSoundTags.finalConsonant);
@@ -68,7 +68,7 @@ function finalConsonant(sg: SoundGeneration) {
 function germinatedConsonant(sg: SoundGeneration) {
     const sgcs = new GerminatedConsonantSet();
 
-    if (sgcs.beginWith(sg.letters[sg.sounds.length])) {
+    if (sgcs.includes(sg.letters[sg.sounds.length])) {
         const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(KanaSoundTags.germinatedConsonant);
@@ -94,7 +94,7 @@ export class KanaSoundGenerator {
         strs.push(letters);
 
         // consonant germination
-        if (new GerminatedConsonantSet().beginWith(letters[0]) == true) {
+        if (new GerminatedConsonantSet().includes(letters[0]) == true) {
             let syl: string[] = new Array();
             syl.push(letters[0].charAt(0));
             for (let e of letters) {
