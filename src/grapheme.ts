@@ -268,6 +268,8 @@ export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) =>
 export class SoundGeneration {
     letters: string[] = [];
     sounds = new Array<Sound>();
-    matched: boolean = true;
-    prompt: Array<Sound[]> = new Array();
+    matching: boolean = true;
+    prompt: boolean = false;
+    prompts: Array<Sound[]> = new Array();
+    promptEuphonicFinal: boolean = false;
 }

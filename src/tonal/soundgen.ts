@@ -25,13 +25,13 @@ function initialConsonant(sg: SoundGeneration) {
             const s = ps(TonalSoundTags.initial);
             if (s) sg.sounds.push(s);
         }
-    } else sg.matched = false;
+    } else sg.matching = false;
 
     return sg;
 }
 
 function stopFinalConsonant(sg: SoundGeneration) {
-    if (!sg.matched) return sg;
+    if (!sg.matching) return sg;
 
     const ssfs = new StopFinalSounds();
 
@@ -42,13 +42,16 @@ function stopFinalConsonant(sg: SoundGeneration) {
             if (s) sg.sounds.push(s);
         }
     } else {
-        sg.prompt.push(ssfs.sounds);
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(ssfs.sounds);
     }
 
     return sg;
 }
 
 function neutralFinalConsonant(sg: SoundGeneration) {
+    if (!sg.matching) return sg;
+
     const snfs = new NeutralFinalSounds();
 
     if (snfs.includes(sg.letters[sg.sounds.length])) {
@@ -57,13 +60,16 @@ function neutralFinalConsonant(sg: SoundGeneration) {
             const s = ps(TonalSoundTags.stopFinal);
             if (s) sg.sounds.push(s);
         }
+    } else {
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(snfs.sounds);
     }
 
     return sg;
 }
 
 function nasalFinalConsonant(sg: SoundGeneration) {
-    if (!sg.matched) return sg;
+    if (!sg.matching) return sg;
 
     const snfs = new NasalFinalSounds();
 
@@ -73,7 +79,10 @@ function nasalFinalConsonant(sg: SoundGeneration) {
             const s = ps(TonalSoundTags.nasalFinal);
             if (s) sg.sounds.push(s);
         }
-    } else sg.matched = false;
+    } else {
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(snfs.sounds);
+    }
 
     return sg;
 }
@@ -81,9 +90,13 @@ function nasalFinalConsonant(sg: SoundGeneration) {
 function vowel(sg: SoundGeneration) {
     const sms = new MedialSounds();
 
+    // const len = sg.sounds.length;
+    let toBePrompted = true;
     let matches: number = 0;
     for (let i = sg.sounds.length; i < sg.letters.length; i++) {
+        // console.log(`sg.sounds.length: ${sg.sounds.length}`);
         if (sms.includes(sg.letters[i])) {
+            toBePrompted = false;
             const ps = tonalPositionalSound.get(sg.letters[i]);
             if (ps) {
                 const s = ps(TonalSoundTags.medial);
@@ -91,9 +104,15 @@ function vowel(sg: SoundGeneration) {
                 if (s) sg.sounds.push(s);
             }
         } else {
-            if (matches == 0) sg.matched = false;
+            toBePrompted = false;
+            if (matches == 0) sg.matching = false;
             break;
         }
+    }
+
+    if (toBePrompted) {
+        sg.prompts.push(sms.sounds);
+        sg.matching = false;
     }
 
     return sg;
@@ -103,19 +122,18 @@ function materLectionis(sg: SoundGeneration) {
     const sml = new MaterLectionisSounds();
 
     if (sml.includes(sg.letters[sg.sounds.length])) {
-        // TypeError: Cannot read property 'search' of undefined
         const ps = tonalPositionalSound.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(TonalSoundTags.medial);
             if (s) sg.sounds.push(s);
         }
-    } else sg.matched = false;
+    } else sg.matching = false;
 
     return sg;
 }
 
 function nasalization(sg: SoundGeneration) {
-    if (!sg.matched) return sg;
+    if (!sg.matching) return sg;
 
     const sns = new NasalizationSound();
 
@@ -125,13 +143,16 @@ function nasalization(sg: SoundGeneration) {
             const s = ps(TonalSoundTags.nasalization);
             if (s) sg.sounds.push(s);
         }
-    } else sg.matched = false;
+    } else {
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(sns.sounds);
+    }
 
     return sg;
 }
 
 function freeTone(sg: SoundGeneration) {
-    if (!sg.matched) return sg;
+    if (!sg.matching) return sg;
 
     const sfts = new FreeTonalSounds();
 
@@ -141,13 +162,16 @@ function freeTone(sg: SoundGeneration) {
             const s = ps(TonalSoundTags.freeTonal);
             if (s) sg.sounds.push(s);
         }
+    } else {
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(sfts.sounds);
     }
 
     return sg;
 }
 
 function checkedTone(sg: SoundGeneration) {
-    if (!sg.matched) return sg;
+    if (!sg.matching) return sg;
 
     const scts = new CheckedTonalSounds();
 
@@ -157,13 +181,16 @@ function checkedTone(sg: SoundGeneration) {
             const s = ps(TonalSoundTags.checkedTonal);
             if (s) sg.sounds.push(s);
         }
+    } else {
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(scts.sounds);
     }
 
     return sg;
 }
 
 function euphonicFinalConsonant(sg: SoundGeneration) {
-    if (!sg.matched) return sg;
+    if (!sg.matching) return sg;
 
     const ef_bgjklps = new EuphonicFinalsBGJKLPS();
     const ef_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
@@ -173,6 +200,12 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
         if (ps) {
             const s = ps(TonalSoundTags.stopFinal);
             if (s) sg.sounds.push(s);
+        }
+    } else {
+        sg.matching = false;
+        if (sg.letters.length == sg.sounds.length && sg.prompt && sg.promptEuphonicFinal) {
+            sg.prompts.push(ef_bgjklps.sounds);
+            sg.prompts.push(ef_bbggjjkkllppss.sounds);
         }
     }
 
@@ -301,7 +334,7 @@ export class TonalSoundGenerator {
                 sg.letters = strs[i];
                 //console.log(`j: ${j}`)
                 sg = syllable_compositions[j](sg);
-                if (sg.letters.length == sg.sounds.length && sg.matched == true) {
+                if (sg.letters.length == sg.sounds.length && sg.matching == true) {
                     sequences.push(sg.sounds);
                     break;
                 }

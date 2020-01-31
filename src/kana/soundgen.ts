@@ -18,7 +18,7 @@ function initialConsonant(sg: SoundGeneration) {
             const s = ps(KanaSoundTags.initialConsonant);
             if (s) sg.sounds.push(s);
         }
-    } else sg.matched = false;
+    } else sg.matching = false;
 
     return sg;
 }
@@ -130,7 +130,7 @@ export class KanaSoundGenerator {
                 sg.letters = strs[i];
                 //console.log(`j: ${j}`)
                 sg = this.sylCompositions[j](sg);
-                if (sg.letters.length == sg.sounds.length && sg.matched == true) {
+                if (sg.letters.length == sg.sounds.length && sg.matching == true) {
                     sequences.push(sg.sounds);
                     break;
                 }
