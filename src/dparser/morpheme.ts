@@ -132,6 +132,26 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 export class AssimilatedFinalForm extends TonalCombiningMetaplasm {}
 
 //------------------------------------------------------------------------------
+
+export class ParticleKihCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+
+            if (allomorph instanceof CheckedAllomorph) {
+                const cfs = combiningRules.get(allomorph.final.toString());
+                for (let k in cfs) {
+                    // f only
+                    if (cfs[k].toString() === TonalLetterTags.f) s.pushLetter(new AlphabeticLetter(cfs[k].characters));
+                    return [new TonalSyllable(s.letters)];
+                }
+            }
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
 // TODO: add to API
 export class TonalCombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;

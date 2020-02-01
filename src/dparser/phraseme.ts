@@ -83,15 +83,15 @@ export class TonalAdjectivePhraseme extends Phraseme {
 }
 
 export class TonalInflectionPhrasemeMaker {
-    makeTransitivePhrasemes(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+    makeTransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
     }
 
-    makeIntransitivePhrasemes(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+    makeIntransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalIntransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    makeAdjectivePhrasemes(
+    makeAdjectivePhraseme(
         lexemeAdjectivalNoun: TonalInflectionLexeme,
         lexemeE: TonalInflectionLexeme,
         metaplasm: TonalPhrasalInflectionMetaplasm,

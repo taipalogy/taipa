@@ -1,10 +1,10 @@
-import { Prompter } from '../src/tonal/prompt';
+import { Prompter } from '../src/tonal/prompter';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { GraphemeMaker } from '../src/grapheme';
 import { lowerLettersOfTonal } from '../src/tonal/version2';
 
 describe('Prompting testing', () => {
-    const inputUndefined: any = undefined;
+    const inputUnd: any = undefined;
     const inputEmpty: any = '';
 
     const tla = new TonalLemmatizationAnalyzer();
@@ -17,7 +17,7 @@ describe('Prompting testing', () => {
         expect(prs1.length).toEqual(0);
     });
 
-    const grs2 = tla.graphAnalyze(inputUndefined);
+    const grs2 = tla.graphAnalyze(inputUnd);
     const prs2 = prmptr.prompt(grs2.map(x => x.letter).map(y => y.literal));
 
     test('check the length of prompts for undefined input', () => {
