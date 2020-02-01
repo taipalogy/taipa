@@ -111,7 +111,7 @@ function vowel(sg: SoundGeneration) {
     }
 
     if (toBePrompted) {
-        sg.prompts.push(sms.sounds);
+        if (sg.prompt && sg.letters.length > 0) sg.prompts.push(sms.sounds);
         sg.matching = false;
     }
 
@@ -253,7 +253,6 @@ const sc_cvc3 = pipe(initialConsonant, vowel, euphonicFinalConsonant);
 const sc_cvct3 = pipe(initialConsonant, vowel, euphonicFinalConsonant, checkedTone);
 const sc_cvcct = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
 
-// TODO: add to API
 // syllable compositions or patterns
 export const syllable_compositions = [
     sc_v,
