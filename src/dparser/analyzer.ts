@@ -6,7 +6,7 @@ import {
     TonalCombiningForms,
     AssimiDirection,
     EncliticECombining,
-    ParticleKihCombining,
+    PhrasalVerbParticleCombining,
 } from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
 import {
@@ -91,7 +91,11 @@ export class TonalPhrasalInflector {
     analyzeTransitiveFirst(verb: string, particle: string) {
         // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflect(verb, new TonalCombiningForms(), new TonalDesinenceInflection());
-        const lexemeParticle = this.infl.inflect(particle, new ParticleKihCombining(), new TonalDesinenceInflection());
+        const lexemeParticle = this.infl.inflect(
+            particle,
+            new PhrasalVerbParticleCombining(),
+            new TonalDesinenceInflection(),
+        );
         return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 

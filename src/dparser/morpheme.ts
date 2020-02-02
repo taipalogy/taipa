@@ -133,7 +133,7 @@ export class AssimilatedFinalForm extends TonalCombiningMetaplasm {}
 
 //------------------------------------------------------------------------------
 
-export class ParticleKihCombining extends TonalCombiningMetaplasm {
+export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
