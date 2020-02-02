@@ -4,10 +4,10 @@ import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phras
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
-        if (lexemeParticle.otherForms.length > 0) {
-            return [new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.otherForms[0]])];
+        if (lexemeParticle.getProceedingForms().length > 0) {
+            return [new TonalPhrase([lexemeVerb.getProceedingForms()[0], lexemeParticle.getProceedingForms()[0]])];
         } else {
-            return [new TonalPhrase([lexemeVerb.otherForms[0], lexemeParticle.word])];
+            return [new TonalPhrase([lexemeVerb.getProceedingForms()[0], lexemeParticle.word])];
         }
     }
 }
@@ -15,8 +15,8 @@ class Transitive extends TonalPhrasalInflectionMetaplasm {
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
         if (lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
-        if (lexemeE.otherForms.length > 0) {
-            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.otherForms[0]])];
+        if (lexemeE.getProceedingForms().length > 0) {
+            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getProceedingForms()[0]])];
         } else {
             return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word])];
         }
@@ -36,7 +36,7 @@ export class Assimilation extends TonalPhrasalInflectionMetaplasm {
 // TODO: add to API
 export class TonalTransitivePhraseme extends Phraseme {
     phrase: TonalPhrase;
-    proceedingForms: Array<TonalPhrase> = new Array();
+    private proceedingForms: Array<TonalPhrase> = new Array();
 
     constructor(
         private lexemeVerb: TonalInflectionLexeme,
@@ -52,6 +52,10 @@ export class TonalTransitivePhraseme extends Phraseme {
     private assignPhraseForms() {
         return this.metaplasm.apply(this.lexemeVerb, this.lexemeParticle);
     }
+
+    getProceedingForms() {
+        return this.proceedingForms;
+    }
 }
 
 export class TonalIntransitivePhraseme extends Phraseme {
@@ -64,7 +68,7 @@ export class TonalIntransitivePhraseme extends Phraseme {
 
 export class TonalAdjectivePhraseme extends Phraseme {
     phrase: TonalPhrase;
-    otherForms: Array<TonalPhrase> = new Array();
+    private proceedingForms: Array<TonalPhrase> = new Array();
 
     constructor(
         private lexemeAdjectivalNoun: TonalInflectionLexeme,
@@ -74,11 +78,15 @@ export class TonalAdjectivePhraseme extends Phraseme {
         super();
         this.phrase = new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word]);
 
-        this.otherForms = this.assignPhraseForm();
+        this.proceedingForms = this.assignPhraseForm();
     }
 
     private assignPhraseForm() {
         return this.metaplasm.apply(this.lexemeAdjectivalNoun, this.lexemeE);
+    }
+
+    getProceedingForms() {
+        return this.proceedingForms;
     }
 }
 

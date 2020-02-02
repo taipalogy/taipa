@@ -84,8 +84,8 @@ export class SetOfPhrasalVerbs {
             );
             this.phvs.push(
                 new PhrasalVerb([
-                    new VerbSurface(this.phrms[i].proceedingForms[0].words[0].literal),
-                    new ParticleSurface(this.phrms[i].proceedingForms[0].words[1].literal),
+                    new VerbSurface(this.phrms[i].getProceedingForms()[0].words[0].literal),
+                    new ParticleSurface(this.phrms[i].getProceedingForms()[0].words[1].literal),
                 ]),
             );
         }

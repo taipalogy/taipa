@@ -65,6 +65,6 @@ describe('Voiced final testing', () => {
     const lx = nflctr.inflect('lakkwex', new TonalZeroCombining(), new RegressiveAssimilation());
 
     test('chech the surface form', () => {
-        expect(lx.otherForms[0].literal).toEqual('laggwex');
+        expect(lx.getProceedingForms()[0].literal).toEqual('laggwex');
     });
 });

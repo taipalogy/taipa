@@ -107,7 +107,7 @@ export class AgressiveAssimilation extends TonalInflectionMetaplasm {
 // TODO: add to API
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
-    otherForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
+    private proceedingForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
     private tonalSymbleEnding: TonalSymbolEnding;
 
     constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
@@ -147,7 +147,7 @@ export class TonalInflectionLexeme extends Lexeme {
         }
 
         if (!isIStemWithX) {
-            this.otherForms = this.assignWordForms(ms, tim);
+            this.proceedingForms = this.assignWordForms(ms, tim);
         }
     }
 
@@ -175,6 +175,10 @@ export class TonalInflectionLexeme extends Lexeme {
 
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectionMetaplasm): TonalWord[] {
         return ti.apply(ms);
+    }
+
+    getProceedingForms() {
+        return this.proceedingForms;
     }
 
     getMorphemes() {

@@ -12,7 +12,7 @@ describe('Phrasal verb testing, transitive', () => {
     });
 
     test('check the proceeding form', () => {
-        expect(ph.proceedingForms[0].literal).toEqual('koanny diurh');
+        expect(ph.getProceedingForms()[0].literal).toEqual('koanny diurh');
     });
 });
 
@@ -32,16 +32,16 @@ describe('Adjective testing, transitive', () => {
     const ph = phva.analyzeAdjective('sin', 'e', new Adnominal());
 
     test('check the proceeding form', () => {
-        expect(ph.otherForms[0].literal).toEqual('sin ez');
+        expect(ph.getProceedingForms()[0].literal).toEqual('sin ez');
     });
 
-    const frase = ph.otherForms[0].literal;
+    const frase = ph.getProceedingForms()[0].literal;
     const words = frase.split(' ');
     const phassi = new TonalPhrasalAssimilator();
     const ph4 = phassi.analyzeAdjective(words[0], words[1], AssimiDirection.agressive);
 
     test('check the assimilated form', () => {
-        expect(ph4.otherForms[0].literal).toEqual('sin nez');
+        expect(ph4.getProceedingForms()[0].literal).toEqual('sin nez');
     });
 });
 
@@ -55,7 +55,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     });
 
     test('check the number of proceeding forms of an empty phrase', () => {
-        expect(ph1.proceedingForms.length).toEqual(0);
+        expect(ph1.getProceedingForms().length).toEqual(0);
     });
 
     const ph2 = phva.analyzeIntransitive('', '');
@@ -71,7 +71,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph3.otherForms.length).toEqual(0);
+        expect(ph3.getProceedingForms().length).toEqual(0);
     });
 
     const ph4 = phva.analyzeAdjective('', '', new Assimilation());
@@ -81,7 +81,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph4.otherForms.length).toEqual(0);
+        expect(ph4.getProceedingForms().length).toEqual(0);
     });
 });
 
@@ -97,7 +97,7 @@ describe('Phrasal verb testing, undefined input', () => {
     });
 
     test('check the number of proceeding forms of an empty phrase', () => {
-        expect(ph1.proceedingForms.length).toEqual(0);
+        expect(ph1.getProceedingForms().length).toEqual(0);
     });
 
     const ph2 = phva.analyzeIntransitive(inputUnd, inputUnd);
@@ -113,7 +113,7 @@ describe('Phrasal verb testing, undefined input', () => {
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph3.otherForms.length).toEqual(0);
+        expect(ph3.getProceedingForms().length).toEqual(0);
     });
 
     const ph4 = phva.analyzeAdjective(inputUnd, inputUnd, new Assimilation());
@@ -123,6 +123,6 @@ describe('Phrasal verb testing, undefined input', () => {
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph4.otherForms.length).toEqual(0);
+        expect(ph4.getProceedingForms().length).toEqual(0);
     });
 });

@@ -175,7 +175,7 @@ describe('Inflection testing', () => {
     const tw = nflctr.inflect('guzleng', new TonalCombiningForms(), new TonalDesinenceInflection());
 
     test('check the inflected form', () => {
-        expect(tw.otherForms[0].literal).toEqual('guzlengz');
+        expect(tw.getProceedingForms()[0].literal).toEqual('guzlengz');
     });
 });
 
@@ -185,7 +185,7 @@ describe('Inflection testing', () => {
     const tw = nflctr.inflect('damwvurhhxoay', new ThirdCombiningForm(), new TransfixInflection());
 
     test('check the inflected form', () => {
-        expect(tw.otherForms[0].literal).toEqual('damwvurhhwoaw');
+        expect(tw.getProceedingForms()[0].literal).toEqual('damwvurhhwoaw');
     });
 });
 
@@ -199,7 +199,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of inflected forms', () => {
-        expect(tw1.otherForms.length).toEqual(0);
+        expect(tw1.getProceedingForms().length).toEqual(0);
     });
 
     const tw2 = nflctr.inflect('on', new TonalCombiningForms(), new TonalDesinenceInflection());
@@ -209,7 +209,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of inflected forms', () => {
-        expect(tw2.otherForms.length).toEqual(0);
+        expect(tw2.getProceedingForms().length).toEqual(0);
     });
 
     const tw3 = nflctr.inflect('ax', new TonalCombiningForms(), new TonalDesinenceInflection());
@@ -223,7 +223,7 @@ describe('Inflection testing, absent lexical roots', () => {
     test('check the number of inflected forms', () => {
         // it used to be 0
         // 2 is now asserted after tone sandhi of ay is incorporated
-        expect(tw3.otherForms.length).toEqual(2);
+        expect(tw3.getProceedingForms().length).toEqual(2);
     });
 
     const str = 'chimhhw';
@@ -234,7 +234,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of inflected forms', () => {
-        expect(tw4.otherForms.length).toEqual(0);
+        expect(tw4.getProceedingForms().length).toEqual(0);
     });
 });
 
@@ -251,7 +251,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme1.otherForms.length).toEqual(0);
+        expect(lexeme1.getProceedingForms().length).toEqual(0);
     });
 
     const lexeme2 = nflctr.inflect(inputEmpty, new TonalCombiningForms(), new TonalDesinenceInflection());
@@ -261,7 +261,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme2.otherForms.length).toEqual(0);
+        expect(lexeme2.getProceedingForms().length).toEqual(0);
     });
 
     const lexeme3 = nflctr.inflect(inputUnd, new ThirdCombiningForm(), new TransfixInflection());
@@ -271,7 +271,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme3.otherForms.length).toEqual(0);
+        expect(lexeme3.getProceedingForms().length).toEqual(0);
     });
 
     const lexeme4 = nflctr.inflect(inputUnd, new ThirdCombiningForm(), new TransfixInflection());
@@ -281,7 +281,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme4.otherForms.length).toEqual(0);
+        expect(lexeme4.getProceedingForms().length).toEqual(0);
     });
 });
 
@@ -291,19 +291,19 @@ describe('Inflection testing', () => {
     const lexeme1 = nflctr.inflect('infay', new TonalZeroCombining(), new AgressiveAssimilation());
 
     test('check the epenthesis of initial n', () => {
-        expect(lexeme1.otherForms[0].literal).toEqual('infnay');
+        expect(lexeme1.getProceedingForms()[0].literal).toEqual('infnay');
     });
 
     const lexeme2 = nflctr.inflect('qimxay', new TonalZeroCombining(), new AgressiveAssimilation());
 
     test('check the epenthesis of initial m', () => {
-        expect(lexeme2.otherForms[0].literal).toEqual('qimxmay');
+        expect(lexeme2.getProceedingForms()[0].literal).toEqual('qimxmay');
     });
 
     const lexeme3 = nflctr.inflect('cangxay', new TonalZeroCombining(), new AgressiveAssimilation());
 
     test('check the epenthesis of initial m', () => {
-        expect(lexeme3.otherForms[0].literal).toEqual('cangxngay');
+        expect(lexeme3.getProceedingForms()[0].literal).toEqual('cangxngay');
     });
 });
 
@@ -317,7 +317,7 @@ describe('Inflection testing, with x in the middle of a stem', () => {
     });
 
     test('check the inflected form', () => {
-        expect(lx.otherForms.length).toEqual(0);
+        expect(lx.getProceedingForms().length).toEqual(0);
     });
 });
 
@@ -331,7 +331,7 @@ describe('Inflection testing, regressive assimilation', () => {
     });
 
     test('check the surface form', () => {
-        expect(lx.otherForms[0].literal).toEqual('simzbunx');
+        expect(lx.getProceedingForms()[0].literal).toEqual('simzbunx');
     });
 });
 
@@ -345,7 +345,7 @@ describe('Inflection testing, agressive assimilation, duplifix', () => {
     });
 
     test('check the surface form', () => {
-        expect(lx.otherForms[0].literal).toEqual('dittwlitt');
+        expect(lx.getProceedingForms()[0].literal).toEqual('dittwlitt');
     });
 });
 
@@ -355,12 +355,16 @@ describe('Inflection testing', () => {
     const lx1 = nflctr.inflect('qimxay', new TonalCombiningForms(), new TonalDesinenceInflection());
 
     test('check the inflected form', () => {
-        expect(lx1.otherForms[0].literal).toEqual('qimxa');
+        expect(lx1.getProceedingForms()[0].literal).toEqual('qimxa');
     });
 
-    const lx2 = nflctr.inflect(lx1.otherForms[0].literal, new TonalZeroCombining(), new AgressiveAssimilation());
+    const lx2 = nflctr.inflect(
+        lx1.getProceedingForms()[0].literal,
+        new TonalZeroCombining(),
+        new AgressiveAssimilation(),
+    );
 
     test('check the surface form', () => {
-        expect(lx2.otherForms[0].literal).toEqual('qimxma');
+        expect(lx2.getProceedingForms()[0].literal).toEqual('qimxma');
     });
 });
