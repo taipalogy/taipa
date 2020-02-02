@@ -5,7 +5,7 @@ import { AssimiDirection } from '../src/dparser/morpheme';
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.analyzeTransitive('koannw', 'diurh');
+    const ph = phva.analyzeTransitiveFourth('koannw', 'diurh');
 
     test('check the base form', () => {
         expect(ph.phrase.literal).toEqual('koannw diurh');
@@ -48,7 +48,7 @@ describe('Adjective testing, transitive', () => {
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph1 = phva.analyzeTransitive('', '');
+    const ph1 = phva.analyzeTransitiveFourth('', '');
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');
@@ -90,7 +90,7 @@ describe('Phrasal verb testing, undefined input', () => {
 
     const inputUnd: any = undefined;
 
-    const ph1 = phva.analyzeTransitive(inputUnd, inputUnd);
+    const ph1 = phva.analyzeTransitiveFourth(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');

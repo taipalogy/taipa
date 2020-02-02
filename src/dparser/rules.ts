@@ -94,7 +94,7 @@ export class SetOfPhrasalVerbs {
     private populatePhrasemes() {
         const pva = new TonalPhrasalInflector();
         for (let i in dict_of_phrasal_verbs) {
-            this.phrms.push(pva.analyzeTransitive(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
+            this.phrms.push(pva.analyzeTransitiveFourth(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
         }
     }
 }

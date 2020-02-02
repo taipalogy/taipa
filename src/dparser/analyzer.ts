@@ -81,17 +81,22 @@ export class TonalPhrasalInflector {
     private readonly infl = new TonalInflector();
     private readonly phm = new TonalInflectionPhrasemeMaker();
 
-    analyzeTransitive(verb: string, particle: string) {
+    analyzeTransitiveFourth(verb: string, particle: string) {
+        // particle has no proceeding form. no need to inflect
         const lexemeVerb = this.infl.inflect(verb, new TonalCombiningForms(), new TonalDesinenceInflection());
         const lexemeParticle = this.infl.inflect(particle, new TonalZeroCombining(), new TonalDesinenceInflection());
-        let lxParticle: TonalInflectionLexeme;
-        if (particle === 'kih') {
-            lxParticle = this.infl.inflect(particle, new ParticleKihCombining(), new TonalDesinenceInflection());
-        }
+        return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
+    }
+
+    analyzeTransitiveFirst(verb: string, particle: string) {
+        // need to inflect to first tone. tonal f is appended to particle.
+        const lexemeVerb = this.infl.inflect(verb, new TonalCombiningForms(), new TonalDesinenceInflection());
+        const lexemeParticle = this.infl.inflect(particle, new ParticleKihCombining(), new TonalDesinenceInflection());
         return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
     analyzeIntransitive(verb: string, particle: string) {
+        // no need to inflect
         const lexemeVerb = this.infl.inflect(verb, new TonalZeroCombining(), new TonalDesinenceInflection());
         const lexemeParticle = this.infl.inflect(particle, new TonalZeroCombining(), new TonalDesinenceInflection());
         return this.phm.makeIntransitivePhraseme(lexemeVerb, lexemeParticle);
