@@ -22,7 +22,7 @@ import {
     MedialSounds,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
-// TODO: to be added to API
+
 export enum AssimiDirection {
     agressive = 0,
     regressive = 1,
@@ -128,10 +128,6 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-// TODO: to be removed
-export class AssimilatedFinalForm extends TonalCombiningMetaplasm {}
-
-//------------------------------------------------------------------------------
 
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
@@ -152,7 +148,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-// TODO: add to API
+
 export class TonalCombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph; // required to populate stems

@@ -88,7 +88,7 @@ const addon_lexical_roots = [
 
     'vainny', 'vainnx', 'vainnz', 'vor', 'vory', 'vorw', 'vorx', 'vorz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
 ]
-// TODO: add to API
+
 // prettier-ignore
 export const lexical_roots = [
     'a', 'ay', 'az', 'ah', 'ahh', 'ai', 'aiy', 'aiw', 'ainnz', 'ak', 'am',

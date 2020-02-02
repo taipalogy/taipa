@@ -43,7 +43,7 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
         return lm.makeLexemes(morphemes);
     }
 }
-// TODO: add to API
+
 export class TonalLemmatizer {
     lemmatize(str: string) {
         const tia = new TonalLemmatizationAnalyzer();
@@ -52,7 +52,7 @@ export class TonalLemmatizer {
         return lx;
     }
 }
-// TODO: add to API
+
 class Unassimilator {
     unassimilate(str: string) {}
 }

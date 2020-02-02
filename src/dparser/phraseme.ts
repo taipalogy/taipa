@@ -33,7 +33,7 @@ export class Assimilation extends TonalPhrasalInflectionMetaplasm {
         return [];
     }
 }
-// TODO: add to API
+
 export class TonalTransitivePhraseme extends Phraseme {
     phrase: TonalPhrase;
     private proceedingForms: Array<TonalPhrase> = new Array();

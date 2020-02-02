@@ -105,7 +105,7 @@ export enum TonalLetterTags {
 }
 
 export class LettersOfTonal extends Letters {}
-// TODO: add to API
+
 export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.a,
     TonalLetterTags.e,

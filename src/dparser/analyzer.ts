@@ -53,7 +53,7 @@ export class TonalInflectionAnalyzer extends Analyzer {
         return lm.makeLexemes(morphemes);
     }
 }
-// TODO: add to API
+
 export class TonalInflector {
     inflect(str: string, tcm: TonalCombiningMetaplasm, tim: TonalInflectionMetaplasm) {
         const tia = new TonalInflectionAnalyzer();
@@ -62,7 +62,7 @@ export class TonalInflector {
         return lx;
     }
 }
-// TODO: add to API
+
 export class TonalAssimilator {
     assimilate(str: string, dir: AssimiDirection) {
         const tia = new TonalInflectionAnalyzer();

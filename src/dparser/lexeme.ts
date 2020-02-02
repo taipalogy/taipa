@@ -74,7 +74,7 @@ export class RegressiveAssimilation extends TonalInflectionMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-// TODO: to be added to index
+
 export class AgressiveAssimilation extends TonalInflectionMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {
@@ -104,7 +104,7 @@ export class AgressiveAssimilation extends TonalInflectionMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-// TODO: add to API
+
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
     private proceedingForms: Array<TonalWord> = new Array(); // inflected or assimilated forms

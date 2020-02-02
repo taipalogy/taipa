@@ -93,7 +93,7 @@ export class Letters {
 }
 
 //------------------------------------------------------------------------------
-// TODO: add to API
+
 export class GraphemeMaker {
     private list: Array<AlphabeticLetter>;
 
@@ -264,7 +264,7 @@ export class SetOfSounds {
 
 export const pipe = (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) => (x: SoundGeneration) =>
     fns.reduce((v, f) => f(v), x);
-// TODO: add to API
+
 export class SoundGeneration {
     letters: string[] = [];
     sounds = new Array<Sound>();
