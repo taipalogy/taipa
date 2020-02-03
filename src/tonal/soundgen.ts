@@ -1,4 +1,4 @@
-import { Sound, SoundGeneration, pipe } from '../grapheme';
+import { Sound, SoundGeneration, pipe } from "../grapheme";
 import {
     MaterLectionisSounds,
     MedialSounds,
@@ -13,8 +13,8 @@ import {
     TonalSoundTags,
     CheckedTonalSounds,
     EuphonicFinalsBGJKLPS,
-    EuphonicFinalsBBGGJJKKLLPPSS,
-} from './version2';
+    EuphonicFinalsBBGGJJKKLLPPSS
+} from "./version2";
 
 function initialConsonant(sg: SoundGeneration) {
     const sis = new InitialSounds();
@@ -43,7 +43,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(ssfs.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive) sg.predictions.push(ssfs.sounds);
     }
 
     return sg;
@@ -62,7 +62,7 @@ function neutralFinalConsonant(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(snfs.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive) sg.predictions.push(snfs.sounds);
     }
 
     return sg;
@@ -81,7 +81,7 @@ function nasalFinalConsonant(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(snfs.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive) sg.predictions.push(snfs.sounds);
     }
 
     return sg;
@@ -111,7 +111,7 @@ function vowel(sg: SoundGeneration) {
     }
 
     if (toBePrompted) {
-        if (sg.prompt && sg.letters.length > 0) sg.prompts.push(sms.sounds);
+        if (sg.predictive && sg.letters.length > 0) sg.predictions.push(sms.sounds);
         sg.matching = false;
     }
 
@@ -145,7 +145,7 @@ function nasalization(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(sns.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive) sg.predictions.push(sns.sounds);
     }
 
     return sg;
@@ -164,7 +164,7 @@ function freeTone(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(sfts.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive) sg.predictions.push(sfts.sounds);
     }
 
     return sg;
@@ -183,7 +183,7 @@ function checkedTone(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt) sg.prompts.push(scts.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive) sg.predictions.push(scts.sounds);
     }
 
     return sg;
@@ -203,9 +203,9 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
         }
     } else {
         sg.matching = false;
-        if (sg.letters.length == sg.sounds.length && sg.prompt && sg.promptEuphonicFinal) {
-            sg.prompts.push(ef_bgjklps.sounds);
-            sg.prompts.push(ef_bbggjjkkllppss.sounds);
+        if (sg.letters.length == sg.sounds.length && sg.predictive && sg.predictEuphonicFinal) {
+            sg.predictions.push(ef_bgjklps.sounds);
+            sg.predictions.push(ef_bbggjjkkllppss.sounds);
         }
     }
 
@@ -286,7 +286,7 @@ export const syllable_compositions = [
     sc_vct3,
     sc_cvc3,
     sc_cvct3,
-    sc_cvcct,
+    sc_cvcct
 ];
 
 export class TonalSoundGenerator {

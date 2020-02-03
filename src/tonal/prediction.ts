@@ -1,21 +1,21 @@
-import { syllable_compositions } from './soundgen';
-import { SoundGeneration, Sound } from '../grapheme';
-import { lexical_roots } from './lexicalroots2';
+import { syllable_compositions } from "./soundgen";
+import { SoundGeneration, Sound } from "../grapheme";
+import { lexical_roots } from "./lexicalroots2";
 
-export class Prompter {
-    prompt(strs: string[]) {
+export class Prediction {
+    predict(strs: string[]) {
         const soundSeqs: Array<Sound[]> = new Array();
 
         for (let j = 0; j < syllable_compositions.length; j++) {
             let sg = new SoundGeneration();
-            sg.prompt = true;
+            sg.predictive = true;
             sg.letters = strs;
             sg = syllable_compositions[j](sg);
 
             if (sg.letters.length != sg.sounds.length || sg.matching != true) {
                 // the pattern is not matched, the first unmatched set of sounds
                 // is then returned as a possible prompt
-                sg.prompts.map(x => soundSeqs.push(x));
+                sg.predictions.map(x => soundSeqs.push(x));
             }
         }
 
@@ -33,7 +33,7 @@ export class Prompter {
         // console.log(dedupes);
 
         // for valid prompts
-        const prompts = dedupes.filter(x => lexical_roots.includes(strs.join('') + x[0]));
+        const prompts = dedupes.filter(x => lexical_roots.includes(strs.join("") + x[0]));
 
         // console.log(prompts);
 
