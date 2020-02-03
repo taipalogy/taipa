@@ -1,9 +1,9 @@
-import { TonalInflectionLexeme } from "./lexeme";
-import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from "../phraseme";
+import { TonalInflectionLexeme } from './lexeme';
+import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phraseme';
 
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        if (lexemeVerb.word.literal === "" || lexemeParticle.word.literal === "") return [];
+        if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
         if (lexemeParticle.getProceedingForms().length > 0) {
             return [new TonalPhrase([lexemeVerb.getProceedingForms()[0], lexemeParticle.getProceedingForms()[0]])];
         } else {
@@ -14,7 +14,7 @@ class Transitive extends TonalPhrasalInflectionMetaplasm {
 
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
-        if (lexemeAdjectivalNoun.word.literal === "" || lexemeE.word.literal === "") return [];
+        if (lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
         if (lexemeE.getProceedingForms().length > 0) {
             return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getProceedingForms()[0]])];
         } else {

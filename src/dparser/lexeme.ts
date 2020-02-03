@@ -1,8 +1,8 @@
-import { TonalInflectionMetaplasm, Lexeme, LexemeMaker } from "../lexeme";
-import { TonalCombiningMorpheme, AssimiDirection } from "./morpheme";
-import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from "../tonal/lexeme";
-import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from "../tonal/version2";
-import { TonalSyllable } from "../tonal/morpheme";
+import { TonalInflectionMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
+import { TonalCombiningMorpheme, AssimiDirection } from './morpheme';
+import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
+import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
+import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
 
@@ -170,7 +170,7 @@ export class TonalInflectionLexeme extends Lexeme {
 
     getInflectionalEnding() {
         if (this.tonalSymbleEnding) return this.tonalSymbleEnding.allomorph.tonal.toString();
-        return "";
+        return '';
     }
 
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectionMetaplasm): TonalWord[] {
@@ -201,6 +201,7 @@ export class TonalInflectionLexeme extends Lexeme {
                 return wrd;
             }
         }
+        return;
     }
 }
 

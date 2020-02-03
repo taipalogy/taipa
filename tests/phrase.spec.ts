@@ -29,7 +29,7 @@ describe('Phrasal verb testing, transitive', () => {
 describe('Adjective testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.analyzeAdjective('sin', 'e', new Adnominal());
+    const ph = phva.analyzeAdjective('sin', 'e');
 
     test('check the proceeding form', () => {
         expect(ph.getProceedingForms()[0].literal).toEqual('sin ez');
@@ -48,7 +48,9 @@ describe('Adjective testing, transitive', () => {
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph1 = phva.analyzeTransitiveFourth('', '');
+    const inputEmpty: any = '';
+
+    const ph1 = phva.analyzeTransitiveFourth(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');
@@ -58,13 +60,13 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
         expect(ph1.getProceedingForms().length).toEqual(0);
     });
 
-    const ph2 = phva.analyzeIntransitive('', '');
+    const ph2 = phva.analyzeIntransitive(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
     });
 
-    const ph3 = phva.analyzeAdjective('', '', new Adnominal());
+    const ph3 = phva.analyzeAdjective(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
@@ -74,7 +76,8 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
         expect(ph3.getProceedingForms().length).toEqual(0);
     });
 
-    const ph4 = phva.analyzeAdjective('', '', new Assimilation());
+    const tphassimi = new TonalPhrasalAssimilator();
+    const ph4 = tphassimi.analyzeAdjective(inputEmpty, inputEmpty, AssimiDirection.agressive);
 
     test('check the empty phrase', () => {
         expect(ph4.phrase.literal).toEqual('');
@@ -106,7 +109,7 @@ describe('Phrasal verb testing, undefined input', () => {
         expect(ph2.phrase.literal).toEqual('');
     });
 
-    const ph3 = phva.analyzeAdjective(inputUnd, inputUnd, new Adnominal());
+    const ph3 = phva.analyzeAdjective(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
@@ -116,7 +119,8 @@ describe('Phrasal verb testing, undefined input', () => {
         expect(ph3.getProceedingForms().length).toEqual(0);
     });
 
-    const ph4 = phva.analyzeAdjective(inputUnd, inputUnd, new Assimilation());
+    const tphassimi = new TonalPhrasalAssimilator();
+    const ph4 = tphassimi.analyzeAdjective(inputUnd, inputUnd, AssimiDirection.agressive);
 
     test('check the empty phrase', () => {
         expect(ph4.phrase.literal).toEqual('');

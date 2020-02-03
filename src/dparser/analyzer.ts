@@ -1,5 +1,5 @@
-import { GraphemeMaker, AlphabeticGrapheme } from "../grapheme";
-import { Analyzer } from "../analyzer";
+import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
+import { Analyzer } from '../analyzer';
 import {
     TonalCombiningMorphemeMaker,
     TonalCombiningMorpheme,
@@ -7,19 +7,19 @@ import {
     AssimiDirection,
     EncliticECombining,
     PhrasalVerbParticleCombining
-} from "./morpheme";
-import { lowerLettersOfTonal } from "../tonal/version2";
+} from './morpheme';
+import { lowerLettersOfTonal } from '../tonal/version2';
 import {
     TonalInflectionLexemeMaker,
     TonalInflectionLexeme,
     TonalDesinenceInflection,
     AgressiveAssimilation,
     RegressiveAssimilation
-} from "./lexeme";
-import { TonalInflectionMetaplasm, TonalZeroInflection } from "../lexeme";
-import { TonalCombiningMetaplasm, TonalZeroCombining } from "../morpheme";
-import { TonalInflectionPhrasemeMaker, Assimilation } from "./phraseme";
-import { TonalPhrasalInflectionMetaplasm } from "../phraseme";
+} from './lexeme';
+import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
+import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
+import { TonalInflectionPhrasemeMaker, Assimilation, Adnominal } from './phraseme';
+import { TonalPhrasalInflectionMetaplasm } from '../phraseme';
 
 //------------------------------------------------------------------------------
 
@@ -35,9 +35,9 @@ export class TonalInflectionAnalyzer extends Analyzer {
     morphAnalyze(x: string | Array<AlphabeticGrapheme>, tcm: TonalCombiningMetaplasm) {
         // morphological analysis
         let graphemes: AlphabeticGrapheme[] = [];
-        if (typeof x == "object") {
+        if (typeof x == 'object') {
             graphemes = x;
-        } else if (typeof x == "string") {
+        } else if (typeof x == 'string') {
             graphemes = this.graphAnalyze(x);
         }
 
@@ -106,15 +106,14 @@ export class TonalPhrasalInflector {
         return this.phm.makeIntransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    analyzeAdjective(adjectivalNoun: string, e: string, metaplasm: TonalPhrasalInflectionMetaplasm) {
-        // TODO: remove metaplasm from signature
+    analyzeAdjective(adjectivalNoun: string, e: string) {
         const lexemeAdjective = this.infl.inflect(
             adjectivalNoun,
             new TonalZeroCombining(),
             new TonalDesinenceInflection()
         );
         const lexemeE = this.infl.inflect(e, new EncliticECombining(), new TonalDesinenceInflection());
-        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, metaplasm);
+        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new Adnominal());
     }
 }
 
@@ -123,6 +122,7 @@ export class TonalPhrasalAssimilator {
     private readonly phm = new TonalInflectionPhrasemeMaker();
 
     analyzeAdjective(adjectivalNoun: string, e: string, dir: AssimiDirection) {
+        // TODO: dir is agressive or regressive
         const lexemeAdjective = this.infl.inflect(
             adjectivalNoun,
             new TonalZeroCombining(),
