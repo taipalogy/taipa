@@ -1,5 +1,6 @@
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phraseme';
+import { AssimiDirection } from './morpheme';
 
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
@@ -87,6 +88,12 @@ export class TonalAdjectivePhraseme extends Phraseme {
 
     getProceedingForms() {
         return this.proceedingForms;
+    }
+
+    getAssimilatedForms(dir: AssimiDirection) {
+        const m = new Assimilation();
+        const forms = m.apply(this.lexemeAdjectivalNoun, this.lexemeE);
+        return forms;
     }
 }
 

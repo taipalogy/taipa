@@ -19,7 +19,7 @@ import {
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
 import { TonalInflectionPhrasemeMaker, Assimilation, Adnominal } from './phraseme';
-import { TonalPhrasalInflectionMetaplasm } from '../phraseme';
+import { TonalPhrasalInflectionMetaplasm, TonalPhrasalZeroInflection } from '../phraseme';
 
 //------------------------------------------------------------------------------
 
@@ -121,14 +121,13 @@ export class TonalPhrasalAssimilator {
     private readonly infl = new TonalInflector();
     private readonly phm = new TonalInflectionPhrasemeMaker();
 
-    analyzeAdjective(adjectivalNoun: string, e: string, dir: AssimiDirection) {
-        // TODO: dir is agressive or regressive
+    analyzeAdjective(adjectivalNoun: string, e: string) {
         const lexemeAdjective = this.infl.inflect(
             adjectivalNoun,
             new TonalZeroCombining(),
             new TonalDesinenceInflection()
         );
         const lexemeE = this.infl.inflect(e, new TonalZeroCombining(), new TonalZeroInflection());
-        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new Assimilation());
+        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new TonalPhrasalZeroInflection());
     }
 }

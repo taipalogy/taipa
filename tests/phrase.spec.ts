@@ -38,10 +38,10 @@ describe('Adjective testing, transitive', () => {
     const frase = ph.getProceedingForms()[0].literal;
     const words = frase.split(' ');
     const phassi = new TonalPhrasalAssimilator();
-    const ph4 = phassi.analyzeAdjective(words[0], words[1], AssimiDirection.agressive);
+    const ph4 = phassi.analyzeAdjective(words[0], words[1]);
 
     test('check the assimilated form', () => {
-        expect(ph4.getProceedingForms()[0].literal).toEqual('sin nez');
+        expect(ph4.getAssimilatedForms(AssimiDirection.agressive)[0].literal).toEqual('sin nez');
     });
 });
 
@@ -77,14 +77,14 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     });
 
     const tphassimi = new TonalPhrasalAssimilator();
-    const ph4 = tphassimi.analyzeAdjective(inputEmpty, inputEmpty, AssimiDirection.agressive);
+    const ph4 = tphassimi.analyzeAdjective(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph4.phrase.literal).toEqual('');
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph4.getProceedingForms().length).toEqual(0);
+        expect(ph4.getAssimilatedForms(AssimiDirection.agressive).length).toEqual(0);
     });
 });
 
@@ -120,13 +120,13 @@ describe('Phrasal verb testing, undefined input', () => {
     });
 
     const tphassimi = new TonalPhrasalAssimilator();
-    const ph4 = tphassimi.analyzeAdjective(inputUnd, inputUnd, AssimiDirection.agressive);
+    const ph4 = tphassimi.analyzeAdjective(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph4.phrase.literal).toEqual('');
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph4.getProceedingForms().length).toEqual(0);
+        expect(ph4.getAssimilatedForms(AssimiDirection.agressive).length).toEqual(0);
     });
 });

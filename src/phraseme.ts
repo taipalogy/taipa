@@ -10,6 +10,8 @@ export class TonalPhrasalInflectionMetaplasm extends PhrasalMetaplasm {
     }
 }
 
+export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm {}
+
 // -----------------------------------------------------------------------------
 
 export class ToneGroup {
