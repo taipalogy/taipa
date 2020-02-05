@@ -19,13 +19,13 @@ import {
     InitialsForEuphonicT,
     assimilatedFinals,
     NasalInitialSounds,
-    MedialSounds,
+    MedialSounds
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
 export enum AssimiDirection {
     agressive = 0,
-    regressive = 1,
+    regressive = 1
 }
 
 //------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ export class TonalCombiningMorpheme extends Morpheme {
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
-    getSoundChangeForm(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
+    getSoundChangeForms(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
         if (sound) {
             if (sound.name === TonalSoundTags.nasalFinal && dir === AssimiDirection.agressive) {
                 // agressive assimilation of nasals, both internal and external sandhi

@@ -24,11 +24,22 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
-export class Assimilation extends TonalPhrasalInflectionMetaplasm {
+export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
-        const wrd = lexemeE.assimilateWith(lexemeAdjectivalNoun);
+        const wrd = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
         if (wrd) {
             const frs = new TonalPhrase([lexemeAdjectivalNoun.word, wrd]);
+            return [frs];
+        }
+        return [];
+    }
+}
+
+export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
+    apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
+        const wrd = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
+        if (wrd) {
+            const frs = new TonalPhrase([lexemePreceding.word, wrd]);
             return [frs];
         }
         return [];
@@ -91,7 +102,9 @@ export class TonalAdjectivePhraseme extends Phraseme {
     }
 
     getAssimilatedForms(dir: AssimiDirection) {
-        const m = new Assimilation();
+        let m = new TonalPhrasalInflectionMetaplasm();
+        if (dir === AssimiDirection.agressive) m = new AgressiveExternal();
+        else if (dir === AssimiDirection.regressive) m = new RegressiveExternal();
         const forms = m.apply(this.lexemeAdjectivalNoun, this.lexemeE);
         return forms;
     }

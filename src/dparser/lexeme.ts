@@ -47,7 +47,7 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class RegressiveAssimilation extends TonalInflectionMetaplasm {
+export class RegressiveInternal extends TonalInflectionMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
@@ -60,10 +60,10 @@ export class RegressiveAssimilation extends TonalInflectionMetaplasm {
                 ) {
                     tw.replaceSyllable(
                         i - 1,
-                        ms[i - 1].getSoundChangeForm(ms[i].sounds[0], AssimiDirection.regressive)[0]
+                        ms[i - 1].getSoundChangeForms(ms[i].sounds[0], AssimiDirection.regressive)[0]
                     );
                 } else {
-                    const syls = ms[i - 1].getSoundChangeForm(ms[i].sounds[0], AssimiDirection.regressive);
+                    const syls = ms[i - 1].getSoundChangeForms(ms[i].sounds[0], AssimiDirection.regressive);
                     if (syls.length) tw.replaceSyllable(i - 1, syls[0]);
                 }
             }
@@ -75,7 +75,7 @@ export class RegressiveAssimilation extends TonalInflectionMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class AgressiveAssimilation extends TonalInflectionMetaplasm {
+export class AgressiveInternal extends TonalInflectionMetaplasm {
     apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
@@ -87,14 +87,14 @@ export class AgressiveAssimilation extends TonalInflectionMetaplasm {
                 // m, n, ng followed by -ay. pass the preceding nasal to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForm(snds[snds.length - 2], AssimiDirection.agressive)[0]
+                    ms[ms.length - 1].getSoundChangeForms(snds[snds.length - 2], AssimiDirection.agressive)[0]
                 );
                 return [wrd];
             } else {
                 // duplifix. pass the preceding initial to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForm(snds[0], AssimiDirection.agressive)[0]
+                    ms[ms.length - 1].getSoundChangeForms(snds[0], AssimiDirection.agressive)[0]
                 );
                 return [wrd];
             }
@@ -186,14 +186,23 @@ export class TonalInflectionLexeme extends Lexeme {
         return this.ms;
     }
 
-    assimilateWith(til: TonalInflectionLexeme) {
+    assimilateWith(til: TonalInflectionLexeme, dir: AssimiDirection) {
         const ms = til.getMorphemes();
         let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
         if (ms.length > 0) {
-            const other_snds = ms[ms.length - 1].sounds;
-            if (other_snds[other_snds.length - 1].name === TonalSoundTags.nasalFinal) {
-                const s = other_snds[other_snds.length - 1];
-                const syls = this.ms[this.ms.length - 1].getSoundChangeForm(s, AssimiDirection.agressive);
+            const adjacent_snds = ms[ms.length - 1].sounds;
+            if (dir === AssimiDirection.agressive) {
+                if (adjacent_snds[adjacent_snds.length - 1].name === TonalSoundTags.nasalFinal) {
+                    const s = adjacent_snds[adjacent_snds.length - 1];
+                    const syls = this.ms[0].getSoundChangeForms(s, AssimiDirection.agressive);
+
+                    wrd.replaceSyllable(0, syls[0]);
+
+                    return wrd;
+                }
+            } else if (dir === AssimiDirection.regressive && adjacent_snds[0].name === TonalSoundTags.initial) {
+                const s = adjacent_snds[0];
+                const syls = this.ms[this.ms.length - 1].getSoundChangeForms(s, AssimiDirection.regressive);
 
                 wrd.popSyllable();
                 wrd.pushSyllable(syls[0]);

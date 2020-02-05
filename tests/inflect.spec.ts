@@ -5,8 +5,8 @@ import { TonalInflector } from '../src/dparser/analyzer';
 import {
     TonalDesinenceInflection,
     TransfixInflection,
-    AgressiveAssimilation,
-    RegressiveAssimilation,
+    AgressiveInternal,
+    RegressiveInternal
 } from '../src/dparser/lexeme';
 import { TonalCombiningForms, ThirdCombiningForm } from '../src/dparser/morpheme';
 import { TonalZeroCombining } from '../src/morpheme';
@@ -288,19 +288,19 @@ describe('Inflection testing, absent lexical roots', () => {
 describe('Inflection testing', () => {
     const nflctr = new TonalInflector();
 
-    const lexeme1 = nflctr.inflect('infay', new TonalZeroCombining(), new AgressiveAssimilation());
+    const lexeme1 = nflctr.inflect('infay', new TonalZeroCombining(), new AgressiveInternal());
 
     test('check the epenthesis of initial n', () => {
         expect(lexeme1.getProceedingForms()[0].literal).toEqual('infnay');
     });
 
-    const lexeme2 = nflctr.inflect('qimxay', new TonalZeroCombining(), new AgressiveAssimilation());
+    const lexeme2 = nflctr.inflect('qimxay', new TonalZeroCombining(), new AgressiveInternal());
 
     test('check the epenthesis of initial m', () => {
         expect(lexeme2.getProceedingForms()[0].literal).toEqual('qimxmay');
     });
 
-    const lexeme3 = nflctr.inflect('cangxay', new TonalZeroCombining(), new AgressiveAssimilation());
+    const lexeme3 = nflctr.inflect('cangxay', new TonalZeroCombining(), new AgressiveInternal());
 
     test('check the epenthesis of initial m', () => {
         expect(lexeme3.getProceedingForms()[0].literal).toEqual('cangxngay');
@@ -324,7 +324,7 @@ describe('Inflection testing, with x in the middle of a stem', () => {
 describe('Inflection testing, regressive assimilation', () => {
     const nflctr = new TonalInflector();
 
-    const lx = nflctr.inflect('sinzbunx', new TonalZeroCombining(), new RegressiveAssimilation());
+    const lx = nflctr.inflect('sinzbunx', new TonalZeroCombining(), new RegressiveInternal());
 
     test('check the underlying form', () => {
         expect(lx.word.literal).toEqual('sinzbunx');
@@ -338,7 +338,7 @@ describe('Inflection testing, regressive assimilation', () => {
 describe('Inflection testing, agressive assimilation, duplifix', () => {
     const nflctr = new TonalInflector();
 
-    const lx = nflctr.inflect('dittwditt', new TonalZeroCombining(), new AgressiveAssimilation());
+    const lx = nflctr.inflect('dittwditt', new TonalZeroCombining(), new AgressiveInternal());
 
     test('check the underlying form', () => {
         expect(lx.word.literal).toEqual('dittwditt');
@@ -358,11 +358,7 @@ describe('Inflection testing', () => {
         expect(lx1.getProceedingForms()[0].literal).toEqual('qimxa');
     });
 
-    const lx2 = nflctr.inflect(
-        lx1.getProceedingForms()[0].literal,
-        new TonalZeroCombining(),
-        new AgressiveAssimilation(),
-    );
+    const lx2 = nflctr.inflect(lx1.getProceedingForms()[0].literal, new TonalZeroCombining(), new AgressiveInternal());
 
     test('check the surface form', () => {
         expect(lx2.getProceedingForms()[0].literal).toEqual('qimxma');

@@ -13,13 +13,13 @@ import {
     TonalInflectionLexemeMaker,
     TonalInflectionLexeme,
     TonalDesinenceInflection,
-    AgressiveAssimilation,
-    RegressiveAssimilation
+    AgressiveInternal,
+    RegressiveInternal
 } from './lexeme';
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
-import { TonalInflectionPhrasemeMaker, Assimilation, Adnominal } from './phraseme';
-import { TonalPhrasalInflectionMetaplasm, TonalPhrasalZeroInflection } from '../phraseme';
+import { TonalInflectionPhrasemeMaker, Adnominal } from './phraseme';
+import { TonalPhrasalZeroInflection } from '../phraseme';
 
 //------------------------------------------------------------------------------
 
@@ -69,9 +69,9 @@ export class TonalAssimilator {
         const mrphs = tia.morphAnalyze(str, new TonalZeroCombining());
         let lx;
         if (dir === AssimiDirection.agressive) {
-            lx = tia.lexAnalyze(mrphs, new AgressiveAssimilation());
+            lx = tia.lexAnalyze(mrphs, new AgressiveInternal());
         } else {
-            lx = tia.lexAnalyze(mrphs, new RegressiveAssimilation());
+            lx = tia.lexAnalyze(mrphs, new RegressiveInternal());
         }
         return lx;
     }

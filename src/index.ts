@@ -6,12 +6,7 @@ export { TokenAnalysis } from './token';
 export { TonalLemmatizationAnalyzer, TonalLemmatizer } from './tonal/analyzer';
 export { TonalInflectionAnalyzer, TonalPhrasalInflector, TonalInflector, TonalAssimilator } from './dparser/analyzer';
 export { KanaLemmatizationAnalyzer } from './kana/analyzer';
-export {
-    TonalDesinenceInflection,
-    TransfixInflection,
-    AgressiveAssimilation,
-    TonalInflectionLexeme
-} from './dparser/lexeme';
+export { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './dparser/lexeme';
 export { TonalCombiningForms, ThirdCombiningForm, AssimiDirection, TonalCombiningMorpheme } from './dparser/morpheme';
 export { TonalTransitivePhraseme } from './dparser/phraseme';
 export { GraphemeMaker, Sound, SoundGeneration } from './grapheme';
@@ -23,3 +18,6 @@ export { TonalZeroCombining } from './morpheme';
 export { TonalLetterTags } from './tonal/version2';
 export { AlphabeticGrapheme } from './grapheme';
 export { Prediction } from './tonal/prediction';
+
+// TODO: renamed
+export { AgressiveInternal } from './dparser/lexeme';
