@@ -1,5 +1,4 @@
 import { TonalPhrasalInflector, TonalPhrasalAssimilator } from '../src/dparser/analyzer';
-import { Adnominal, Assimilation } from '../src/dparser/phraseme';
 import { AssimiDirection } from '../src/dparser/morpheme';
 
 describe('Phrasal verb testing, transitive', () => {

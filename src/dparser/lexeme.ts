@@ -107,7 +107,7 @@ export class AgressiveInternal extends TonalInflectionMetaplasm {
 
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
-    private proceedingForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
+    private inflectedForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
     private tonalSymbleEnding: TonalSymbolEnding;
 
     constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
@@ -147,7 +147,7 @@ export class TonalInflectionLexeme extends Lexeme {
         }
 
         if (!isIStemWithX) {
-            this.proceedingForms = this.assignWordForms(ms, tim);
+            this.inflectedForms = this.assignWordForms(ms, tim);
         }
     }
 
@@ -177,8 +177,8 @@ export class TonalInflectionLexeme extends Lexeme {
         return ti.apply(ms);
     }
 
-    getProceedingForms() {
-        return this.proceedingForms;
+    getInflectedForms() {
+        return this.inflectedForms;
     }
 
     getMorphemes() {

@@ -5,10 +5,10 @@ import { AssimiDirection } from './morpheme';
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
-        if (lexemeParticle.getProceedingForms().length > 0) {
-            return [new TonalPhrase([lexemeVerb.getProceedingForms()[0], lexemeParticle.getProceedingForms()[0]])];
+        if (lexemeParticle.getInflectedForms().length > 0) {
+            return [new TonalPhrase([lexemeVerb.getInflectedForms()[0], lexemeParticle.getInflectedForms()[0]])];
         } else {
-            return [new TonalPhrase([lexemeVerb.getProceedingForms()[0], lexemeParticle.word])];
+            return [new TonalPhrase([lexemeVerb.getInflectedForms()[0], lexemeParticle.word])];
         }
     }
 }
@@ -16,8 +16,8 @@ class Transitive extends TonalPhrasalInflectionMetaplasm {
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
         if (lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
-        if (lexemeE.getProceedingForms().length > 0) {
-            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getProceedingForms()[0]])];
+        if (lexemeE.getInflectedForms().length > 0) {
+            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getInflectedForms()[0]])];
         } else {
             return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word])];
         }

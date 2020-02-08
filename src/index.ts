@@ -18,6 +18,3 @@ export { TonalZeroCombining } from './morpheme';
 export { TonalLetterTags } from './tonal/version2';
 export { AlphabeticGrapheme } from './grapheme';
 export { Prediction } from './tonal/prediction';
-
-// TODO: renamed
-export { AgressiveInternal } from './dparser/lexeme';
