@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { TonalInflector } from '../src/dparser/analyzer';
+import { TonalInflector, TonalAssimilator, TonalInserter } from '../src/dparser/analyzer';
 import { AgressiveInternal, RegressiveInternal } from '../src/dparser/lexeme';
 import { TonalZeroCombining } from '../src/morpheme';
 
@@ -280,24 +280,24 @@ describe('Inflection testing, absent lexical roots', () => {
 });
 
 describe('Inflection testing', () => {
-    const nflctr = new TonalInflector();
+    const inst = new TonalInserter();
 
-    const lexeme1 = nflctr.inflect('infay', new TonalZeroCombining(), new AgressiveInternal());
+    const lx1 = inst.insert('infay');
 
     test('check the epenthesis of initial n', () => {
-        expect(lexeme1.getInflectedForms()[0].literal).toEqual('infnay');
+        expect(lx1.getInflectedForms()[0].literal).toEqual('infnay');
     });
 
-    const lexeme2 = nflctr.inflect('qimxay', new TonalZeroCombining(), new AgressiveInternal());
+    const lx2 = inst.insert('qimxay');
 
     test('check the epenthesis of initial m', () => {
-        expect(lexeme2.getInflectedForms()[0].literal).toEqual('qimxmay');
+        expect(lx2.getInflectedForms()[0].literal).toEqual('qimxmay');
     });
 
-    const lexeme3 = nflctr.inflect('cangxay', new TonalZeroCombining(), new AgressiveInternal());
+    const lx3 = inst.insert('cangxay');
 
     test('check the epenthesis of initial m', () => {
-        expect(lexeme3.getInflectedForms()[0].literal).toEqual('cangxngay');
+        expect(lx3.getInflectedForms()[0].literal).toEqual('cangxngay');
     });
 });
 
@@ -316,9 +316,9 @@ describe('Inflection testing, with x in the middle of a stem', () => {
 });
 
 describe('Inflection testing, regressive assimilation', () => {
-    const nflctr = new TonalInflector();
+    const assimi = new TonalAssimilator();
 
-    const lx = nflctr.inflect('sinzbunx', new TonalZeroCombining(), new RegressiveInternal());
+    const lx = assimi.assimilateRegressive('sinzbunx');
 
     test('check the underlying form', () => {
         expect(lx.word.literal).toEqual('sinzbunx');
@@ -330,9 +330,9 @@ describe('Inflection testing, regressive assimilation', () => {
 });
 
 describe('Inflection testing, agressive assimilation, duplifix', () => {
-    const nflctr = new TonalInflector();
+    const assimi = new TonalAssimilator();
 
-    const lx = nflctr.inflect('dittwditt', new TonalZeroCombining(), new AgressiveInternal());
+    const lx = assimi.assimilateAgressive('dittwditt');
 
     test('check the underlying form', () => {
         expect(lx.word.literal).toEqual('dittwditt');
@@ -352,7 +352,8 @@ describe('Inflection testing', () => {
         expect(lx1.getInflectedForms()[0].literal).toEqual('qimxa');
     });
 
-    const lx2 = nflctr.inflect(lx1.getInflectedForms()[0].literal, new TonalZeroCombining(), new AgressiveInternal());
+    const inst = new TonalInserter();
+    const lx2 = inst.insert(lx1.getInflectedForms()[0].literal);
 
     test('check the surface form', () => {
         expect(lx2.getInflectedForms()[0].literal).toEqual('qimxma');

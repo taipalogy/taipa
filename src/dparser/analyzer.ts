@@ -4,7 +4,6 @@ import {
     TonalCombiningMorphemeMaker,
     TonalCombiningMorpheme,
     TonalCombiningForms,
-    AssimiDirection,
     EncliticECombining,
     PhrasalVerbParticleCombining,
     ThirdCombiningForm
@@ -16,7 +15,8 @@ import {
     TonalDesinenceInflection,
     AgressiveInternal,
     RegressiveInternal,
-    TransfixInflection
+    TransfixInflection,
+    Epenthesis
 } from './lexeme';
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
@@ -59,21 +59,15 @@ export class TonalInflectionAnalyzer extends Analyzer {
 export class TonalInflector {
     private readonly tia = new TonalInflectionAnalyzer();
 
-    inflect(str: string, tcm: TonalCombiningMetaplasm, tim: TonalInflectionMetaplasm) {
-        const mrphs = this.tia.morphAnalyze(str, tcm);
-        const lx = this.tia.lexAnalyze(mrphs, tim);
+    inflectDesinence(str: string) {
+        const mrphs = this.tia.morphAnalyze(str, new TonalCombiningForms());
+        const lx = this.tia.lexAnalyze(mrphs, new TonalDesinenceInflection());
         return lx;
     }
 
     inflectTransfix(str: string) {
         const mrphs = this.tia.morphAnalyze(str, new ThirdCombiningForm());
         const lx = this.tia.lexAnalyze(mrphs, new TransfixInflection());
-        return lx;
-    }
-
-    inflectDesinence(str: string) {
-        const mrphs = this.tia.morphAnalyze(str, new TonalCombiningForms());
-        const lx = this.tia.lexAnalyze(mrphs, new TonalDesinenceInflection());
         return lx;
     }
 
@@ -110,10 +104,14 @@ export class TonalAssimilator {
         const lx = this.tia.lexAnalyze(mrphs, new RegressiveInternal());
         return lx;
     }
+}
 
-    makeEpenthesis(str: string) {
+export class TonalInserter {
+    private readonly tia = new TonalInflectionAnalyzer();
+
+    insert(str: string) {
         const mrphs = this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(mrphs, new AgressiveInternal());
+        const lx = this.tia.lexAnalyze(mrphs, new Epenthesis());
         return lx;
     }
 }

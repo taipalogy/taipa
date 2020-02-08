@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { TonalInflector } from '../src/dparser/analyzer';
+import { TonalInflector, TonalAssimilator } from '../src/dparser/analyzer';
 import { RegressiveInternal } from '../src/dparser/lexeme';
 import { TonalZeroCombining } from '../src/morpheme';
 
@@ -61,8 +61,9 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Voiced final testing', () => {
-    const nflctr = new TonalInflector();
-    const lx = nflctr.inflect('lakkwex', new TonalZeroCombining(), new RegressiveInternal());
+    const assimi = new TonalAssimilator();
+
+    const lx = assimi.assimilateRegressive('lakkwex');
 
     test('chech the surface form', () => {
         expect(lx.getInflectedForms()[0].literal).toEqual('laggwex');

@@ -80,6 +80,27 @@ export class AgressiveInternal extends TonalInflectionMetaplasm {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
             let wrd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
+            // nasalization of vowels
+
+            // duplifix. pass the preceding initial to get forms
+            wrd.replaceSyllable(
+                wrd.syllables.length - 1,
+                ms[ms.length - 1].getSoundChangeForms(snds[0], AssimiDirection.agressive)[0]
+            );
+            return [wrd];
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class Epenthesis extends TonalInflectionMetaplasm {
+    // adding of nasal consonants. insertion
+    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
+        if (ms.length > 1 && ms[ms.length - 2]) {
+            const snds = ms[ms.length - 2].sounds;
+            let wrd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
             if (
                 snds[snds.length - 2].name == TonalSoundTags.nasalFinal &&
                 ms[ms.length - 1].syllable.letters[0].literal === TonalLetterTags.a
@@ -88,13 +109,6 @@ export class AgressiveInternal extends TonalInflectionMetaplasm {
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
                     ms[ms.length - 1].getSoundChangeForms(snds[snds.length - 2], AssimiDirection.agressive)[0]
-                );
-                return [wrd];
-            } else {
-                // duplifix. pass the preceding initial to get forms
-                wrd.replaceSyllable(
-                    wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForms(snds[0], AssimiDirection.agressive)[0]
                 );
                 return [wrd];
             }
