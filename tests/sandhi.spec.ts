@@ -66,6 +66,6 @@ describe('Voiced final testing', () => {
     const lx = assimi.assimilateRegressive('lakkwex');
 
     test('chech the surface form', () => {
-        expect(lx.getInflectedForms()[0].literal).toEqual('laggwex');
+        expect(lx.getForms()[0].literal).toEqual('laggwex');
     });
 });

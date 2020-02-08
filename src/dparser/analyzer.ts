@@ -20,7 +20,7 @@ import {
 } from './lexeme';
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
-import { TonalInflectionPhrasemeMaker, Adnominal } from './phraseme';
+import { TonalInflectionPhrasemeMaker, Adnominal, AgressiveExternal, RegressiveExternal } from './phraseme';
 import { TonalPhrasalZeroInflection } from '../phraseme';
 
 //------------------------------------------------------------------------------
@@ -150,11 +150,17 @@ export class TonalPhrasalInflector {
 
 export class TonalPhrasalAssimilator {
     private readonly infl = new TonalInflector();
-    private readonly phm = new TonalInflectionPhrasemeMaker();
+    private readonly phmk = new TonalInflectionPhrasemeMaker();
 
-    analyzeAdjective(adjectivalNoun: string, e: string) {
-        const lexemeAdjective = this.infl.dontInflect(adjectivalNoun);
-        const lexemeE = this.infl.dontInflect(e);
-        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new TonalPhrasalZeroInflection());
+    assimilateAgressive(preceding: string, following: string) {
+        const lxPreceding = this.infl.dontInflect(preceding);
+        const lxFollowing = this.infl.dontInflect(following);
+        return this.phmk.makeAdjectivePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
+    }
+
+    assimilateRegressive(preceding: string, following: string) {
+        const lxPreceding = this.infl.dontInflect(preceding);
+        const lxFollowing = this.infl.dontInflect(following);
+        return this.phmk.makeAdjectivePhraseme(lxPreceding, lxFollowing, new RegressiveExternal());
     }
 }

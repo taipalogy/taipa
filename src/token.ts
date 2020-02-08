@@ -65,7 +65,7 @@ export class TokenLemmatizer {
                             i++;
                             break;
                         } else if (
-                            doc.tokens[i].text === sophv.phrms[j].getProceedingForms()[0].words[0].literal &&
+                            doc.tokens[i].text === sophv.phrms[j].getForms()[0].words[0].literal &&
                             doc.tokens[i + 1].text === sophv.phrms[j].phrase.words[1].literal
                         ) {
                             doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;

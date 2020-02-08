@@ -5,7 +5,7 @@ import {
     VerbSurface,
     ParticleSurface,
     PersonalPronounSurface,
-    PronounSurface,
+    PronounSurface
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './analyzer';
@@ -79,14 +79,14 @@ export class SetOfPhrasalVerbs {
             this.phvs.push(
                 new PhrasalVerb([
                     new VerbSurface(this.phrms[i].phrase.words[0].literal),
-                    new ParticleSurface(this.phrms[i].phrase.words[1].literal),
-                ]),
+                    new ParticleSurface(this.phrms[i].phrase.words[1].literal)
+                ])
             );
             this.phvs.push(
                 new PhrasalVerb([
-                    new VerbSurface(this.phrms[i].getProceedingForms()[0].words[0].literal),
-                    new ParticleSurface(this.phrms[i].getProceedingForms()[0].words[1].literal),
-                ]),
+                    new VerbSurface(this.phrms[i].getForms()[0].words[0].literal),
+                    new ParticleSurface(this.phrms[i].getForms()[0].words[1].literal)
+                ])
             );
         }
     }
@@ -131,7 +131,7 @@ export class SetOfSmallClauses {
         const sc = new SmallClause(
             new VerbSurface('oannw'),
             new PersonalPronounSurface('goa'),
-            new VerbSurface('churw'),
+            new VerbSurface('churw')
         );
         this.constructions.push(sc);
     }

@@ -169,7 +169,7 @@ describe('Inflection testing', () => {
     const tw = nflctr.inflectDesinence('guzleng');
 
     test('check the inflected form', () => {
-        expect(tw.getInflectedForms()[0].literal).toEqual('guzlengz');
+        expect(tw.getForms()[0].literal).toEqual('guzlengz');
     });
 });
 
@@ -179,7 +179,7 @@ describe('Inflection testing', () => {
     const tw = nflctr.inflectTransfix('damwvurhhxoay');
 
     test('check the inflected form', () => {
-        expect(tw.getInflectedForms()[0].literal).toEqual('damwvurhhwoaw');
+        expect(tw.getForms()[0].literal).toEqual('damwvurhhwoaw');
     });
 });
 
@@ -193,7 +193,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of inflected forms', () => {
-        expect(tw1.getInflectedForms().length).toEqual(0);
+        expect(tw1.getForms().length).toEqual(0);
     });
 
     const tw2 = nflctr.inflectDesinence('on');
@@ -203,7 +203,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of inflected forms', () => {
-        expect(tw2.getInflectedForms().length).toEqual(0);
+        expect(tw2.getForms().length).toEqual(0);
     });
 
     const tw3 = nflctr.inflectDesinence('ax');
@@ -217,7 +217,7 @@ describe('Inflection testing, absent lexical roots', () => {
     test('check the number of inflected forms', () => {
         // it used to be 0
         // 2 is now asserted after tone sandhi of ay is incorporated
-        expect(tw3.getInflectedForms().length).toEqual(2);
+        expect(tw3.getForms().length).toEqual(2);
     });
 
     const str = 'chimhhw';
@@ -228,7 +228,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of inflected forms', () => {
-        expect(tw4.getInflectedForms().length).toEqual(0);
+        expect(tw4.getForms().length).toEqual(0);
     });
 });
 
@@ -245,7 +245,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme1.getInflectedForms().length).toEqual(0);
+        expect(lexeme1.getForms().length).toEqual(0);
     });
 
     const lexeme2 = nflctr.inflectDesinence(inputEmpty);
@@ -255,7 +255,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme2.getInflectedForms().length).toEqual(0);
+        expect(lexeme2.getForms().length).toEqual(0);
     });
 
     const lexeme3 = nflctr.inflectTransfix(inputUnd);
@@ -265,7 +265,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme3.getInflectedForms().length).toEqual(0);
+        expect(lexeme3.getForms().length).toEqual(0);
     });
 
     const lexeme4 = nflctr.inflectTransfix(inputEmpty);
@@ -275,7 +275,7 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 
     test('check the number of forms', () => {
-        expect(lexeme4.getInflectedForms().length).toEqual(0);
+        expect(lexeme4.getForms().length).toEqual(0);
     });
 });
 
@@ -285,19 +285,19 @@ describe('Inflection testing', () => {
     const lx1 = inst.insert('infay');
 
     test('check the epenthesis of initial n', () => {
-        expect(lx1.getInflectedForms()[0].literal).toEqual('infnay');
+        expect(lx1.getForms()[0].literal).toEqual('infnay');
     });
 
     const lx2 = inst.insert('qimxay');
 
     test('check the epenthesis of initial m', () => {
-        expect(lx2.getInflectedForms()[0].literal).toEqual('qimxmay');
+        expect(lx2.getForms()[0].literal).toEqual('qimxmay');
     });
 
     const lx3 = inst.insert('cangxay');
 
     test('check the epenthesis of initial m', () => {
-        expect(lx3.getInflectedForms()[0].literal).toEqual('cangxngay');
+        expect(lx3.getForms()[0].literal).toEqual('cangxngay');
     });
 });
 
@@ -311,7 +311,7 @@ describe('Inflection testing, with x in the middle of a stem', () => {
     });
 
     test('check the inflected form', () => {
-        expect(lx.getInflectedForms().length).toEqual(0);
+        expect(lx.getForms().length).toEqual(0);
     });
 });
 
@@ -325,7 +325,7 @@ describe('Inflection testing, regressive assimilation', () => {
     });
 
     test('check the surface form', () => {
-        expect(lx.getInflectedForms()[0].literal).toEqual('simzbunx');
+        expect(lx.getForms()[0].literal).toEqual('simzbunx');
     });
 });
 
@@ -339,7 +339,7 @@ describe('Inflection testing, agressive assimilation, duplifix', () => {
     });
 
     test('check the surface form', () => {
-        expect(lx.getInflectedForms()[0].literal).toEqual('dittwlitt');
+        expect(lx.getForms()[0].literal).toEqual('dittwlitt');
     });
 });
 
@@ -349,13 +349,13 @@ describe('Inflection testing', () => {
     const lx1 = nflctr.inflectDesinence('qimxay');
 
     test('check the inflected form', () => {
-        expect(lx1.getInflectedForms()[0].literal).toEqual('qimxa');
+        expect(lx1.getForms()[0].literal).toEqual('qimxa');
     });
 
     const inst = new TonalInserter();
-    const lx2 = inst.insert(lx1.getInflectedForms()[0].literal);
+    const lx2 = inst.insert(lx1.getForms()[0].literal);
 
     test('check the surface form', () => {
-        expect(lx2.getInflectedForms()[0].literal).toEqual('qimxma');
+        expect(lx2.getForms()[0].literal).toEqual('qimxma');
     });
 });

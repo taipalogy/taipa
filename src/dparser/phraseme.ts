@@ -12,10 +12,10 @@ import {
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
-        if (lexemeParticle.getInflectedForms().length > 0) {
-            return [new TonalPhrase([lexemeVerb.getInflectedForms()[0], lexemeParticle.getInflectedForms()[0]])];
+        if (lexemeParticle.getForms().length > 0) {
+            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.getForms()[0]])];
         } else {
-            return [new TonalPhrase([lexemeVerb.getInflectedForms()[0], lexemeParticle.word])];
+            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.word])];
         }
     }
 }
@@ -23,50 +23,15 @@ class Transitive extends TonalPhrasalInflectionMetaplasm {
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
         if (lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
-        if (lexemeE.getInflectedForms().length > 0) {
-            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getInflectedForms()[0]])];
+        if (lexemeE.getForms().length > 0) {
+            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getForms()[0]])];
         } else {
             return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word])];
         }
     }
 }
 
-export class External extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
-        if (lexemePreceding.word.syllables.length == 0 || lexemeFollowing.word.syllables.length == 0) return [];
-        const mphsPreceding = lexemePreceding.getMorphemes();
-        const mphsFollowing = lexemeFollowing.getMorphemes();
-        const ftss = new FreeTonalSounds();
-        const nfss = new NasalFinalSounds();
-        const mss = new MedialSounds();
-        const iset = new InitialsForEuphonicT(); // InitialsForEuphonicT is the superset of InitialsForEuphonicTT
-
-        if (ftss.includes(mphsPreceding[mphsPreceding.length - 1].syllable.lastLetter.literal)) {
-            if (
-                nfss.includes(mphsPreceding[mphsPreceding.length - 1].syllable.lastSecondLetter.literal) &&
-                mss.includes(mphsFollowing[0].syllable.letters[0].literal)
-            ) {
-                const agext = new AgressiveExternal();
-                const forms = agext.apply(lexemePreceding, lexemeFollowing);
-                return forms;
-            }
-        } else if (
-            nfss.includes(mphsPreceding[mphsPreceding.length - 1].syllable.lastLetter.literal) &&
-            mss.includes(mphsFollowing[0].syllable.letters[0].literal)
-        ) {
-            const agext = new AgressiveExternal();
-            const forms = agext.apply(lexemePreceding, lexemeFollowing);
-            return forms;
-        } else if (iset.includes(mphsFollowing[mphsFollowing.length - 1].syllable.letters[0].literal)) {
-            const regext = new RegressiveExternal();
-            const forms = regext.apply(lexemePreceding, lexemeFollowing);
-            return forms;
-        }
-        return [];
-    }
-}
-
-class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
+export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
         const wrd = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
         if (wrd) {
@@ -77,7 +42,7 @@ class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
-class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
+export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         const wrd = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
         if (wrd) {
@@ -90,7 +55,7 @@ class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
 
 export class TonalTransitivePhraseme extends Phraseme {
     phrase: TonalPhrase;
-    private proceedingForms: Array<TonalPhrase> = new Array();
+    private forms: Array<TonalPhrase> = new Array();
 
     constructor(
         private lexemeVerb: TonalInflectionLexeme,
@@ -100,15 +65,15 @@ export class TonalTransitivePhraseme extends Phraseme {
         super();
         this.phrase = new TonalPhrase([lexemeVerb.word, lexemeParticle.word]);
 
-        this.proceedingForms = this.assignPhraseForms();
+        this.forms = this.assignPhraseForms();
     }
 
     private assignPhraseForms() {
         return this.metaplasm.apply(this.lexemeVerb, this.lexemeParticle);
     }
 
-    getProceedingForms() {
-        return this.proceedingForms;
+    getForms() {
+        return this.forms;
     }
 }
 
@@ -122,7 +87,7 @@ export class TonalIntransitivePhraseme extends Phraseme {
 
 export class TonalAdjectivePhraseme extends Phraseme {
     phrase: TonalPhrase;
-    private proceedingForms: Array<TonalPhrase> = new Array();
+    private forms: Array<TonalPhrase> = new Array();
 
     constructor(
         private lexemeAdjectivalNoun: TonalInflectionLexeme,
@@ -132,23 +97,15 @@ export class TonalAdjectivePhraseme extends Phraseme {
         super();
         this.phrase = new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word]);
 
-        this.proceedingForms = this.assignPhraseForm();
+        this.forms = this.assignPhraseForm();
     }
 
     private assignPhraseForm() {
         return this.metaplasm.apply(this.lexemeAdjectivalNoun, this.lexemeE);
     }
 
-    getProceedingForms() {
-        // TODO: rename to getForms?
-        return this.proceedingForms;
-    }
-
-    getAssimilatedForms() {
-        const m = new External();
-        const forms = m.apply(this.lexemeAdjectivalNoun, this.lexemeE);
-
-        return forms;
+    getForms() {
+        return this.forms;
     }
 }
 

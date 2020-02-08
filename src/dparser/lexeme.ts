@@ -60,10 +60,10 @@ export class RegressiveInternal extends TonalInflectionMetaplasm {
                 ) {
                     tw.replaceSyllable(
                         i - 1,
-                        ms[i - 1].getSoundChangeForms(ms[i].sounds[0], AssimiDirection.regressive)[0]
+                        ms[i - 1].changeSoundWith(ms[i].sounds[0], AssimiDirection.regressive)[0]
                     );
                 } else {
-                    const syls = ms[i - 1].getSoundChangeForms(ms[i].sounds[0], AssimiDirection.regressive);
+                    const syls = ms[i - 1].changeSoundWith(ms[i].sounds[0], AssimiDirection.regressive);
                     if (syls.length) tw.replaceSyllable(i - 1, syls[0]);
                 }
             }
@@ -85,7 +85,7 @@ export class AgressiveInternal extends TonalInflectionMetaplasm {
             // duplifix. pass the preceding initial to get forms
             wrd.replaceSyllable(
                 wrd.syllables.length - 1,
-                ms[ms.length - 1].getSoundChangeForms(snds[0], AssimiDirection.agressive)[0]
+                ms[ms.length - 1].changeSoundWith(snds[0], AssimiDirection.agressive)[0]
             );
             return [wrd];
         }
@@ -108,7 +108,7 @@ export class Epenthesis extends TonalInflectionMetaplasm {
                 // m, n, ng followed by -ay. pass the preceding nasal to get forms
                 wrd.replaceSyllable(
                     wrd.syllables.length - 1,
-                    ms[ms.length - 1].getSoundChangeForms(snds[snds.length - 2], AssimiDirection.agressive)[0]
+                    ms[ms.length - 1].changeSoundWith(snds[snds.length - 2], AssimiDirection.agressive)[0]
                 );
                 return [wrd];
             }
@@ -121,7 +121,7 @@ export class Epenthesis extends TonalInflectionMetaplasm {
 
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
-    private inflectedForms: Array<TonalWord> = new Array(); // inflected or assimilated forms
+    private forms: Array<TonalWord> = new Array(); // inflected or assimilated forms
     private tonalSymbleEnding: TonalSymbolEnding;
 
     constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
@@ -161,7 +161,7 @@ export class TonalInflectionLexeme extends Lexeme {
         }
 
         if (!isIStemWithX) {
-            this.inflectedForms = this.assignWordForms(ms, tim);
+            this.forms = this.assignWordForms(ms, tim);
         }
     }
 
@@ -191,8 +191,8 @@ export class TonalInflectionLexeme extends Lexeme {
         return ti.apply(ms);
     }
 
-    getInflectedForms() {
-        return this.inflectedForms;
+    getForms() {
+        return this.forms;
     }
 
     getMorphemes() {
@@ -208,7 +208,7 @@ export class TonalInflectionLexeme extends Lexeme {
             if (dir === AssimiDirection.agressive) {
                 if (adjacent_snds[adjacent_snds.length - 1].name === TonalSoundTags.nasalFinal) {
                     const s = adjacent_snds[adjacent_snds.length - 1];
-                    const syls = this.ms[0].getSoundChangeForms(s, AssimiDirection.agressive);
+                    const syls = this.ms[0].changeSoundWith(s, AssimiDirection.agressive);
 
                     wrd.replaceSyllable(0, syls[0]);
 
@@ -216,7 +216,7 @@ export class TonalInflectionLexeme extends Lexeme {
                 }
             } else if (dir === AssimiDirection.regressive && adjacent_snds[0].name === TonalSoundTags.initial) {
                 const s = adjacent_snds[0];
-                const syls = this.ms[this.ms.length - 1].getSoundChangeForms(s, AssimiDirection.regressive);
+                const syls = this.ms[this.ms.length - 1].changeSoundWith(s, AssimiDirection.regressive);
 
                 wrd.popSyllable();
                 wrd.pushSyllable(syls[0]);

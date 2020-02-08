@@ -169,7 +169,7 @@ export class TonalCombiningMorpheme extends Morpheme {
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
-    getSoundChangeForms(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
+    changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
         if (sound) {
             if (sound.name === TonalSoundTags.nasalFinal && dir === AssimiDirection.agressive) {
                 // agressive assimilation of nasals, both internal and external sandhi
