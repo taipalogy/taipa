@@ -40,7 +40,7 @@ describe('Adjective testing, transitive', () => {
     const ph4 = phassi.analyzeAdjective(words[0], words[1]);
 
     test('check the assimilated form', () => {
-        expect(ph4.getAssimilatedForms(AssimiDirection.agressive)[0].literal).toEqual('sin nez');
+        expect(ph4.getAssimilatedForms()[0].literal).toEqual('sin nez');
     });
 });
 
@@ -83,7 +83,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph4.getAssimilatedForms(AssimiDirection.agressive).length).toEqual(0);
+        expect(ph4.getAssimilatedForms().length).toEqual(0);
     });
 });
 
@@ -126,6 +126,6 @@ describe('Phrasal verb testing, undefined input', () => {
     });
 
     test('check the number of other forms of an empty phrase', () => {
-        expect(ph4.getAssimilatedForms(AssimiDirection.agressive).length).toEqual(0);
+        expect(ph4.getAssimilatedForms().length).toEqual(0);
     });
 });

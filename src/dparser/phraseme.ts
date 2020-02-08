@@ -1,6 +1,13 @@
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
+import {
+    FreeTonalSounds,
+    NasalFinalSounds,
+    InitialsForEuphonicT,
+    InitialsForEuphonicTT,
+    MedialSounds
+} from '../tonal/version2';
 
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
@@ -24,7 +31,42 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
-export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
+export class External extends TonalPhrasalInflectionMetaplasm {
+    apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
+        if (lexemePreceding.word.syllables.length == 0 || lexemeFollowing.word.syllables.length == 0) return [];
+        const mphsPreceding = lexemePreceding.getMorphemes();
+        const mphsFollowing = lexemeFollowing.getMorphemes();
+        const ftss = new FreeTonalSounds();
+        const nfss = new NasalFinalSounds();
+        const mss = new MedialSounds();
+        const iset = new InitialsForEuphonicT(); // InitialsForEuphonicT is the superset of InitialsForEuphonicTT
+
+        if (ftss.includes(mphsPreceding[mphsPreceding.length - 1].syllable.lastLetter.literal)) {
+            if (
+                nfss.includes(mphsPreceding[mphsPreceding.length - 1].syllable.lastSecondLetter.literal) &&
+                mss.includes(mphsFollowing[0].syllable.letters[0].literal)
+            ) {
+                const agext = new AgressiveExternal();
+                const forms = agext.apply(lexemePreceding, lexemeFollowing);
+                return forms;
+            }
+        } else if (
+            nfss.includes(mphsPreceding[mphsPreceding.length - 1].syllable.lastLetter.literal) &&
+            mss.includes(mphsFollowing[0].syllable.letters[0].literal)
+        ) {
+            const agext = new AgressiveExternal();
+            const forms = agext.apply(lexemePreceding, lexemeFollowing);
+            return forms;
+        } else if (iset.includes(mphsFollowing[mphsFollowing.length - 1].syllable.letters[0].literal)) {
+            const regext = new RegressiveExternal();
+            const forms = regext.apply(lexemePreceding, lexemeFollowing);
+            return forms;
+        }
+        return [];
+    }
+}
+
+class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
         const wrd = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
         if (wrd) {
@@ -35,7 +77,7 @@ export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
-export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
+class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         const wrd = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
         if (wrd) {
@@ -98,14 +140,14 @@ export class TonalAdjectivePhraseme extends Phraseme {
     }
 
     getProceedingForms() {
+        // TODO: rename to getForms?
         return this.proceedingForms;
     }
 
-    getAssimilatedForms(dir: AssimiDirection) {
-        let m = new TonalPhrasalInflectionMetaplasm();
-        if (dir === AssimiDirection.agressive) m = new AgressiveExternal();
-        else if (dir === AssimiDirection.regressive) m = new RegressiveExternal();
+    getAssimilatedForms() {
+        const m = new External();
         const forms = m.apply(this.lexemeAdjectivalNoun, this.lexemeE);
+
         return forms;
     }
 }
