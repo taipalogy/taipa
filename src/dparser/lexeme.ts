@@ -126,27 +126,13 @@ export class TonalInflectionLexeme extends Lexeme {
 
     constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
         super();
-        let isIStemWithX: boolean = false; // inflectional stem with x in the middle
 
-        for (let i = 0; i < ms.length; i++) {
-            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if (
-                    i < ms.length - 1 &&
-                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
-                ) {
-                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                        break;
-                    } else {
-                        // tonal x can't not appear in them middle of an inflectional stem
-                        // if it is not preceding an ay or a
-                        isIStemWithX = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if (isIStemWithX) this.word = new TonalWord([]);
+        // TODO: to be configurable
+        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
+
+        isInflStemWithX = this.checkFifth(ms);
+
+        if (isInflStemWithX) this.word = new TonalWord([]);
         else this.word = new TonalWord(ms.map(x => x.syllable));
 
         if (ms.length > 0) {
@@ -160,7 +146,7 @@ export class TonalInflectionLexeme extends Lexeme {
             this.tonalSymbleEnding = new TonalSymbolEnding();
         }
 
-        if (!isIStemWithX) {
+        if (!isInflStemWithX) {
             this.forms = this.assignWordForms(ms, tim);
         }
     }
@@ -225,6 +211,28 @@ export class TonalInflectionLexeme extends Lexeme {
             }
         }
         return;
+    }
+
+    private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
+        for (let i = 0; i < ms.length; i++) {
+            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+                if (
+                    i < ms.length - 1 &&
+                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
+                ) {
+                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                        break;
+                    } else {
+                        // tonal x can't not appear in them middle of an inflectional stem
+                        // if it is not preceding an ay or a
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
 

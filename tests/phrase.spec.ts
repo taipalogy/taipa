@@ -4,7 +4,7 @@ import { AssimiDirection } from '../src/dparser/morpheme';
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.analyzeTransitiveFourth('koannw', 'diurh');
+    const ph = phva.inflectTransitiveFourth('koannw', 'diurh');
 
     test('check the base form', () => {
         expect(ph.phrase.literal).toEqual('koannw diurh');
@@ -18,7 +18,7 @@ describe('Phrasal verb testing, transitive', () => {
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.analyzeIntransitive('laix', 'leh');
+    const ph = phva.dontInflect('laix', 'leh');
 
     test('check the base form', () => {
         expect(ph.phrase.literal).toEqual('laix leh');
@@ -28,7 +28,7 @@ describe('Phrasal verb testing, transitive', () => {
 describe('Adjective testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.analyzeAdjective('sin', 'e');
+    const ph = phva.inflectEncliticE('sin', 'e');
 
     test('check the proceeding form', () => {
         expect(ph.getForms()[0].literal).toEqual('sin ez');
@@ -49,7 +49,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 
     const inputEmpty: any = '';
 
-    const ph1 = phva.analyzeTransitiveFourth(inputEmpty, inputEmpty);
+    const ph1 = phva.inflectTransitiveFourth(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');
@@ -59,13 +59,13 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
         expect(ph1.getForms().length).toEqual(0);
     });
 
-    const ph2 = phva.analyzeIntransitive(inputEmpty, inputEmpty);
+    const ph2 = phva.dontInflect(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
     });
 
-    const ph3 = phva.analyzeAdjective(inputEmpty, inputEmpty);
+    const ph3 = phva.inflectEncliticE(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
@@ -92,7 +92,7 @@ describe('Phrasal verb testing, undefined input', () => {
 
     const inputUnd: any = undefined;
 
-    const ph1 = phva.analyzeTransitiveFourth(inputUnd, inputUnd);
+    const ph1 = phva.inflectTransitiveFourth(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');
@@ -102,13 +102,13 @@ describe('Phrasal verb testing, undefined input', () => {
         expect(ph1.getForms().length).toEqual(0);
     });
 
-    const ph2 = phva.analyzeIntransitive(inputUnd, inputUnd);
+    const ph2 = phva.dontInflect(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
     });
 
-    const ph3 = phva.analyzeAdjective(inputUnd, inputUnd);
+    const ph3 = phva.inflectEncliticE(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');

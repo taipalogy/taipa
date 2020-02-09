@@ -11,7 +11,7 @@ export class TonalLemmatization extends TonalLemmatizationMetaplasm {
 
     private getLemmas(
         morphemes: Array<TonalUncombiningMorpheme>,
-        inflectionalEnding: InflectionalEnding,
+        inflectionalEnding: InflectionalEnding
     ): Array<TonalWord> {
         if (inflectionalEnding) {
             if (inflectionalEnding instanceof FreeInflectionalEnding) {
@@ -102,27 +102,11 @@ export class TonalLemmatizationLexeme extends Lexeme {
 
     constructor(ms: Array<TonalUncombiningMorpheme>, tl: TonalLemmatization) {
         super();
-        let isIStemWithX: boolean = false; // inflectional stem with x in the middle
+        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
 
-        for (let i = 0; i < ms.length; i++) {
-            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if (
-                    i < ms.length - 1 &&
-                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
-                ) {
-                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                        break;
-                    } else {
-                        // tonal x can't not appear in them middle of an inflectional stem
-                        // if it is not preceding an ay or a
-                        isIStemWithX = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if (isIStemWithX) this.word = new TonalWord([]);
+        isInflStemWithX = this.checktFifth(ms);
+
+        if (isInflStemWithX) this.word = new TonalWord([]);
         else this.word = new TonalWord(ms.map(x => x.syllable));
 
         if (ms.length > 0) {
@@ -135,7 +119,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
             this.inflectionalEnding = new InflectionalEnding();
         }
 
-        if (!isIStemWithX) {
+        if (!isInflStemWithX) {
             this.lemmata = tl.apply(ms, this.inflectionalEnding);
         }
     }
@@ -164,6 +148,28 @@ export class TonalLemmatizationLexeme extends Lexeme {
         }
         // this word is already in base form, and its last syllable is checked tone
         return infe;
+    }
+
+    private checktFifth(ms: Array<TonalUncombiningMorpheme>): boolean {
+        for (let i = 0; i < ms.length; i++) {
+            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+                if (
+                    i < ms.length - 1 &&
+                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
+                ) {
+                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                        break;
+                    } else {
+                        // tonal x can't not appear in them middle of an inflectional stem
+                        // if it is not preceding an ay or a
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
 

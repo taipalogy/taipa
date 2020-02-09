@@ -120,28 +120,28 @@ export class TonalPhrasalInflector {
     private readonly infl = new TonalInflector();
     private readonly phm = new TonalInflectionPhrasemeMaker();
 
-    analyzeTransitiveFourth(verb: string, particle: string) {
+    inflectTransitiveFourth(verb: string, particle: string) {
         // particle has no proceeding form. no need to inflect
         const lexemeVerb = this.infl.inflectDesinence(verb);
         const lexemeParticle = this.infl.dontInflect(particle);
         return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    analyzeTransitiveFirst(verb: string, particle: string) {
+    inflectTransitiveFirst(verb: string, particle: string) {
         // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflectDesinence(verb);
         const lexemeParticle = this.infl.inflectPhrasalVerbParticle(particle);
         return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    analyzeIntransitive(verb: string, particle: string) {
+    dontInflect(verb: string, particle: string) {
         // no need to inflect
         const lexemeVerb = this.infl.dontInflect(verb);
         const lexemeParticle = this.infl.dontInflect(particle);
         return this.phm.makeIntransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    analyzeAdjective(adjectivalNoun: string, e: string) {
+    inflectEncliticE(adjectivalNoun: string, e: string) {
         const lexemeAdjective = this.infl.dontInflect(adjectivalNoun);
         const lexemeE = this.infl.inflectEncliticE(e);
         return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new Adnominal());
