@@ -120,14 +120,14 @@ export class TonalPhrasalInflector {
     private readonly infl = new TonalInflector();
     private readonly phm = new TonalInflectionPhrasemeMaker();
 
-    inflectTransitiveFourth(verb: string, particle: string) {
+    inflectVerbWoParticle(verb: string, particle: string) {
         // particle has no proceeding form. no need to inflect
         const lexemeVerb = this.infl.inflectDesinence(verb);
         const lexemeParticle = this.infl.dontInflect(particle);
         return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    inflectTransitiveFirst(verb: string, particle: string) {
+    inflectBoth(verb: string, particle: string) {
         // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflectDesinence(verb);
         const lexemeParticle = this.infl.inflectPhrasalVerbParticle(particle);
@@ -146,6 +146,10 @@ export class TonalPhrasalInflector {
         const lexemeE = this.infl.inflectEncliticE(e);
         return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new Adnominal());
     }
+
+    // inflectThree(verb: string, firstParticlee: string, secondParticle: string) {}
+    // inflectPreceding(preceding: string, following: string) {}
+    // inflectSerial() {}
 }
 
 export class TonalPhrasalAssimilator {

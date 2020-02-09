@@ -4,7 +4,7 @@ import { AssimiDirection } from '../src/dparser/morpheme';
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.inflectTransitiveFourth('koannw', 'diurh');
+    const ph = phva.inflectVerbWoParticle('koannw', 'diurh');
 
     test('check the base form', () => {
         expect(ph.phrase.literal).toEqual('koannw diurh');
@@ -49,7 +49,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 
     const inputEmpty: any = '';
 
-    const ph1 = phva.inflectTransitiveFourth(inputEmpty, inputEmpty);
+    const ph1 = phva.inflectVerbWoParticle(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');
@@ -92,7 +92,7 @@ describe('Phrasal verb testing, undefined input', () => {
 
     const inputUnd: any = undefined;
 
-    const ph1 = phva.inflectTransitiveFourth(inputUnd, inputUnd);
+    const ph1 = phva.inflectVerbWoParticle(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph1.phrase.literal).toEqual('');

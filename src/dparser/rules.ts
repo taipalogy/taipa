@@ -26,8 +26,8 @@ export class ConstructionOfPhrase extends ConstructionOfSpeech {
     }
 }
 
-class NounPhrase extends ConstructionOfPhrase {}
-class VerbPhrase extends ConstructionOfPhrase {}
+class NounPhrase extends ConstructionOfPhrase { }
+class VerbPhrase extends ConstructionOfPhrase { }
 
 export class PhrasalVerb extends VerbPhrase {
     constructor(arr: Array<ConstructionElement>) {
@@ -94,7 +94,7 @@ export class SetOfPhrasalVerbs {
     private populatePhrasemes() {
         const pva = new TonalPhrasalInflector();
         for (let i in dict_of_phrasal_verbs) {
-            this.phrms.push(pva.inflectTransitiveFourth(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
+            this.phrms.push(pva.inflectVerbWoParticle(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
         }
     }
 }
