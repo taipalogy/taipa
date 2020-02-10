@@ -1,5 +1,5 @@
 import { TonalPhrasalInflector, TonalPhrasalAssimilator } from '../src/dparser/analyzer';
-import { AssimiDirection } from '../src/dparser/morpheme';
+import { TonalTransitivePhraseme } from '../src/dparser/phraseme';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -15,7 +15,7 @@ describe('Phrasal verb testing, transitive', () => {
     });
 });
 
-describe('Phrasal verb testing, transitive', () => {
+describe('Phrasal verb testing, intransitive', () => {
     const phva = new TonalPhrasalInflector();
 
     const ph = phva.dontInflect('laix', 'leh');
@@ -25,7 +25,7 @@ describe('Phrasal verb testing, transitive', () => {
     });
 });
 
-describe('Adjective testing, transitive', () => {
+describe('Adjective testing, adnominal', () => {
     const phva = new TonalPhrasalInflector();
 
     const ph = phva.inflectEncliticE('sin', 'e');
@@ -41,6 +41,20 @@ describe('Adjective testing, transitive', () => {
 
     test('check the assimilated form', () => {
         expect(ph4.getForms()[0].literal).toEqual('sin nez');
+    });
+});
+
+describe('Phrasal verb testing, transitive, adverbial', () => {
+    const infl = new TonalPhrasalInflector();
+
+    const phrm = infl.inflectBoth('lipp', 'kih');
+
+    test('check the base form', () => {
+        expect(phrm.phrase.literal).toEqual('lipp kih');
+    });
+
+    test('check the proceeding form', () => {
+        expect(phrm.getForms()[0].literal).toEqual('lippw kihf');
     });
 });
 

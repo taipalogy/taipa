@@ -109,6 +109,14 @@ export class TonalAdjectivePhraseme extends Phraseme {
     }
 }
 
+export class TonalSeperatePhraseme extends Phraseme {
+    phrase: TonalPhrase;
+    constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
+        super();
+        this.phrase = new TonalPhrase([lexemePreceding.getForms()[0], lexemeFollowing.word]);
+    }
+}
+
 export class TonalInflectionPhrasemeMaker {
     makeTransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
