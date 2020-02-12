@@ -198,7 +198,7 @@ export class TonalInflectionLexeme extends Lexeme {
 
                     wrd.replaceSyllable(0, syls[0]);
 
-                    return wrd;
+                    return [wrd];
                 }
             } else if (dir === AssimiDirection.regressive && adjacent_snds[0].name === TonalSoundTags.initial) {
                 const s = adjacent_snds[0];
@@ -207,10 +207,11 @@ export class TonalInflectionLexeme extends Lexeme {
                 wrd.popSyllable();
                 wrd.pushSyllable(syls[0]);
 
-                return wrd;
+                return [wrd];
             }
         }
-        return;
+
+        return [];
     }
 
     private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {

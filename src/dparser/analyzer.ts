@@ -21,7 +21,6 @@ import {
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
 import { TonalInflectionPhrasemeMaker, Adnominal, AgressiveExternal, RegressiveExternal } from './phraseme';
-import { TonalPhrasalZeroInflection } from '../phraseme';
 
 //------------------------------------------------------------------------------
 
@@ -150,6 +149,8 @@ export class TonalPhrasalInflector {
     // inflectThree(verb: string, firstParticlee: string, secondParticle: string) {}
     // inflectPreceding(preceding: string, following: string) {}
     // inflectSerial() {}
+    // inflectPossesiveCaseMarker() {}
+    // inflectEncliticLe() {}}
 }
 
 export class TonalPhrasalAssimilator {

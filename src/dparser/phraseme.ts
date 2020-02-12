@@ -1,13 +1,6 @@
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
-import {
-    FreeTonalSounds,
-    NasalFinalSounds,
-    InitialsForEuphonicT,
-    InitialsForEuphonicTT,
-    MedialSounds
-} from '../tonal/version2';
 
 class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
@@ -33,22 +26,18 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
 
 export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
-        const wrd = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
-        if (wrd) {
-            const frs = new TonalPhrase([lexemeAdjectivalNoun.word, wrd]);
-            return [frs];
-        }
+        const wrds = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
+        if (wrds.length > 0)
+            return [new TonalPhrase([lexemeAdjectivalNoun.word].concat(wrds))];
         return [];
     }
 }
 
 export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
-        const wrd = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
-        if (wrd) {
-            const frs = new TonalPhrase([lexemePreceding.word, wrd]);
-            return [frs];
-        }
+        const wrds = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
+        if (wrds.length > 0)
+            return [new TonalPhrase([lexemePreceding.word].concat(wrds))]
         return [];
     }
 }
