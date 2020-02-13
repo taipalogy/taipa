@@ -2,7 +2,7 @@ import { Letters, Sound, SetOfSounds } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
-export class Morph {}
+export class Morph { }
 
 //------------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ export class Allomorph extends Morph {
     }
 }
 
-export class FreeAllomorph extends Allomorph {}
+export class FreeAllomorph extends Allomorph { }
 
 export class CheckedAllomorph extends Allomorph {
     final: Final = new Final();
@@ -37,7 +37,7 @@ export class TonalAffix extends Morph {
     }
 }
 
-class FreeAffix extends TonalAffix {}
+class FreeAffix extends TonalAffix { }
 
 class CheckedAffix extends TonalAffix {
     // there is no final for affix
@@ -104,7 +104,7 @@ export enum TonalLetterTags {
     or = 'or',
 }
 
-export class LettersOfTonal extends Letters {}
+export class LettersOfTonal extends Letters { }
 
 export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.a,
@@ -1019,201 +1019,110 @@ class AllomorphHHX extends CheckedAllomorph {
     tonal = new CheckedTonalX();
 }
 
-class CheckedAllomorphs {
-    private o = new Map<string, Allomorph>();
+export const checkedAllomorphs = new Map<string, Allomorph>();
+checkedAllomorphs
+    .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
+    .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
+    .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
+    .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
+    .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
+    .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
+    .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
+    .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH())
+    .set(
+        ps_p(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphPF(),
+    )
+    .set(
+        ps_t(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphTF(),
+    )
+    .set(
+        ps_k(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphKF(),
+    )
+    .set(
+        ps_h(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphHF(),
+    )
+    .set(
+        ps_pp(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphPPW(),
+    )
+    .set(
+        ps_tt(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphTTW(),
+    )
+    .set(
+        ps_kk(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphKKW(),
+    )
+    .set(
+        ps_hh(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphHHW(),
+    )
+    .set(
+        ps_h(TonalSoundTags.stopFinal).toString() + ps_y(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphHY(),
+    )
+    .set(
+        ps_pp(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphPPX(),
+    )
+    .set(
+        ps_tt(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphTTX(),
+    )
+    .set(
+        ps_kk(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphKKX(),
+    )
+    .set(
+        ps_hh(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        new AllomorphHHX(),
+    );
 
-    constructor() {
-        this.o
-            .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
-            .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
-            .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
-            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
-            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
-            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
-            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
-            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH())
-            .set(
-                ps_p(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphPF(),
-            )
-            .set(
-                ps_t(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphTF(),
-            )
-            .set(
-                ps_k(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphKF(),
-            )
-            .set(
-                ps_h(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphHF(),
-            )
-            .set(
-                ps_pp(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphPPW(),
-            )
-            .set(
-                ps_tt(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphTTW(),
-            )
-            .set(
-                ps_kk(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphKKW(),
-            )
-            .set(
-                ps_hh(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphHHW(),
-            )
-            .set(
-                ps_h(TonalSoundTags.stopFinal).toString() + ps_y(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphHY(),
-            )
-            .set(
-                ps_pp(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphPPX(),
-            )
-            .set(
-                ps_tt(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphTTX(),
-            )
-            .set(
-                ps_kk(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphKKX(),
-            )
-            .set(
-                ps_hh(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
-                new AllomorphHHX(),
-            );
-    }
+export const combinedFreeAllomorphs = new Map<string, Allomorph>();
+combinedFreeAllomorphs
+    .set(ps_w(TonalSoundTags.freeTonal).toString(), new AllomorphW())
+    .set(ps_z(TonalSoundTags.freeTonal).toString(), new AllomorphZ())
+    .set(ps_x(TonalSoundTags.freeTonal).toString(), new AllomorphX())
+    .set(ps_y(TonalSoundTags.freeTonal).toString(), new AllomorphY())
+    .set(ps_f(TonalSoundTags.freeTonal).toString(), new AllomorphF());
 
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return new Allomorph();
-    }
+export const uncombinedCheckedAllomorphs = new Map<string, Allomorph>();
+uncombinedCheckedAllomorphs
+    .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
+    .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
+    .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
+    .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
+    .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
+    .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
+    .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
+    .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH());
 
-    keys() {
-        return this.o.keys();
-    }
-}
+export const combinedCheckedAllomorphs = new Map<string, Allomorph[]>();
+combinedCheckedAllomorphs
+    .set(ps_p(TonalSoundTags.stopFinal).toString(), [new AllomorphPF()])
+    .set(ps_t(TonalSoundTags.stopFinal).toString(), [new AllomorphTF()])
+    .set(ps_k(TonalSoundTags.stopFinal).toString(), [new AllomorphKF()])
+    .set(ps_h(TonalSoundTags.stopFinal).toString(), [new AllomorphHF(), new AllomorphHY()])
+    .set(ps_pp(TonalSoundTags.stopFinal).toString(), [new AllomorphPPW(), new AllomorphPPX()])
+    .set(ps_tt(TonalSoundTags.stopFinal).toString(), [new AllomorphTTW(), new AllomorphTTX()])
+    .set(ps_kk(TonalSoundTags.stopFinal).toString(), [new AllomorphKKW(), new AllomorphKKX()])
+    .set(ps_hh(TonalSoundTags.stopFinal).toString(), [new AllomorphHHW(), new AllomorphHHX()]);
 
-export const checkedAllomorphs = new CheckedAllomorphs();
-
-class CombinedFreeAllomorphs {
-    private o = new Map<string, Allomorph>();
-
-    constructor() {
-        this.o
-            .set(ps_w(TonalSoundTags.freeTonal).toString(), new AllomorphW())
-            .set(ps_z(TonalSoundTags.freeTonal).toString(), new AllomorphZ())
-            .set(ps_x(TonalSoundTags.freeTonal).toString(), new AllomorphX())
-            .set(ps_y(TonalSoundTags.freeTonal).toString(), new AllomorphY())
-            .set(ps_f(TonalSoundTags.freeTonal).toString(), new AllomorphF());
-    }
-
-    has(key: string) {
-        return this.o.has(key);
-    }
-
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return new Allomorph();
-    }
-}
-
-export const combinedFreeAllomorphs = new CombinedFreeAllomorphs();
-
-class UncombinedCheckedAllomorphs {
-    private o = new Map<string, Allomorph>();
-
-    constructor() {
-        this.o
-            .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
-            .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
-            .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
-            .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
-            .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
-            .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
-            .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
-            .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH());
-    }
-
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return new Allomorph();
-    }
-
-    has(key: string) {
-        return this.o.has(key);
-    }
-}
-
-export const uncombinedCheckedAllomorphs = new UncombinedCheckedAllomorphs();
-
-class CombinedCheckedAllomorphs {
-    private o = new Map<string, Allomorph[]>();
-
-    constructor() {
-        this.o
-            .set(ps_p(TonalSoundTags.stopFinal).toString(), [new AllomorphPF()])
-            .set(ps_t(TonalSoundTags.stopFinal).toString(), [new AllomorphTF()])
-            .set(ps_k(TonalSoundTags.stopFinal).toString(), [new AllomorphKF()])
-            .set(ps_h(TonalSoundTags.stopFinal).toString(), [new AllomorphHF(), new AllomorphHY()])
-            .set(ps_pp(TonalSoundTags.stopFinal).toString(), [new AllomorphPPW(), new AllomorphPPX()])
-            .set(ps_tt(TonalSoundTags.stopFinal).toString(), [new AllomorphTTW(), new AllomorphTTX()])
-            .set(ps_kk(TonalSoundTags.stopFinal).toString(), [new AllomorphKKW(), new AllomorphKKX()])
-            .set(ps_hh(TonalSoundTags.stopFinal).toString(), [new AllomorphHHW(), new AllomorphHHX()]);
-    }
-
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return [];
-    }
-
-    has(key: string) {
-        return this.o.has(key);
-    }
-}
-
-export const combinedCheckedAllomorphs = new CombinedCheckedAllomorphs();
-
-class FreeAllomorphUncombiningRules {
-    private o = new Map<string, Tonal[]>();
-
-    constructor() {
-        this.o
-            .set(ps_f(TonalSoundTags.freeTonal).toString(), [new FreeTonalY()])
-            .set(ps_w(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalX()])
-            .set(ps_xx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-            .set(ps_xxx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-            .set(ps_z(TonalSoundTags.freeTonal).toString(), [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
-            .set(ps_zx(TonalSoundTags.freeTonal).toString(), [])
-            .set(ps_x(TonalSoundTags.freeTonal).toString(), [])
-            .set(ps_y(TonalSoundTags.freeTonal).toString(), [new FreeTonalW()])
-            .set(TonalLetterTags.zero, [new FreeTonalY()]);
-    }
-
-    get(key: string) {
-        let value = this.o.get(key);
-        if (value) {
-            return value;
-        }
-        return [];
-    }
-}
-
-export const freeAllomorphUncombiningRules = new FreeAllomorphUncombiningRules();
+export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>();
+freeAllomorphUncombiningRules
+    .set(ps_f(TonalSoundTags.freeTonal).toString(), [new FreeTonalY()])
+    .set(ps_w(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalX()])
+    .set(ps_xx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+    .set(ps_xxx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+    .set(ps_z(TonalSoundTags.freeTonal).toString(), [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
+    .set(ps_zx(TonalSoundTags.freeTonal).toString(), [])
+    .set(ps_x(TonalSoundTags.freeTonal).toString(), [])
+    .set(ps_y(TonalSoundTags.freeTonal).toString(), [new FreeTonalW()])
+    .set(TonalLetterTags.zero, [new FreeTonalY()]);
 
 class UncombiningRulesAy {
     private o = new Map<string, Tonal[]>();

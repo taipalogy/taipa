@@ -196,7 +196,9 @@ export class TonalCombiningMorpheme extends Morpheme {
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
         if (uncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
-            return uncombinedCheckedAllomorphs.get(syllable.lastLetter.literal);
+            const am = uncombinedCheckedAllomorphs.get(syllable.lastLetter.literal);
+            if (am) return am;
+            return new Allomorph();
         }
 
         if (
@@ -204,16 +206,20 @@ export class TonalCombiningMorpheme extends Morpheme {
             uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
         ) {
             // in case of final followed by tonal
-            const alms = combinedCheckedAllomorphs.get(syllable.lastSecondLetter.literal);
-            if (alms.length > 1) {
-                const it = alms.filter(x => x.tonal.toString() === syllable.lastLetter.literal);
+            const ams = combinedCheckedAllomorphs.get(syllable.lastSecondLetter.literal);
+
+            if (ams && ams.length > 1) {
+                const it = ams.filter(x => x != undefined).filter(x => x.tonal.toString() === syllable.lastLetter.literal);
                 return it[0];
             }
-            return alms[0];
+            // return alms[0];
+            return new Allomorph();
         }
 
         if (combinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
-            return combinedFreeAllomorphs.get(syllable.lastLetter.literal);
+            const am = combinedFreeAllomorphs.get(syllable.lastLetter.literal);
+            if (am) return am;
+            return new Allomorph(); // return empty allomorph
         }
 
         return new ZeroAllomorph();

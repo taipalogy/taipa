@@ -56,17 +56,20 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     // the base tone of the first tone is the second tone
                     // 1 to 2
                     const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-                    s.pushLetter(new AlphabeticLetter(freeAllomorphUncombiningRules.get('zero')[0].characters));
+                    const tnls = freeAllomorphUncombiningRules.get('zero');
+                    if (tnls) s.pushLetter(new AlphabeticLetter(tnls[0].characters));
                     // console.log(s)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
                     const ret = [];
-                    for (let i in freeAllomorphUncombiningRules.get(allomorph.toString())) {
+                    const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
+                    const tnls = !rules ? [] : rules;
+                    for (let i in tnls) {
                         // pop letter
                         // push letter
                         let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-                        if (!(freeAllomorphUncombiningRules.get(allomorph.toString())[i] instanceof ZeroAllomorph)) {
+                        if (!(tnls[i] instanceof ZeroAllomorph)) {
                             // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
                             s.popLetter();
@@ -74,7 +77,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                             // includes ss and x, exclude zero allomorph
                             s.pushLetter(
                                 new AlphabeticLetter(
-                                    freeAllomorphUncombiningRules.get(allomorph.toString())[i].characters,
+                                    tnls[i].characters,
                                 ),
                             );
                             ret.push(s);
@@ -172,7 +175,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
 
             // tone sandhi of free allomorph
-            const tnls_fa = faurs.get(letters[i].literal).map(x => x.toString());
+            const rules = faurs.get(letters[i].literal);
+            const tnls_fa = !rules ? [] : rules.map(x => x.toString());
             // tone sandhi of ay
             const tnls_ay = ursa.get(letters[i].literal).map(x => x.toString());
             // merge the above twoo arrays
@@ -219,8 +223,9 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 Object.assign(matchedLtrs, ltrs);
             } else if (!sft.includes(letters[i].literal)) {
                 // free first tone without a free tonal
-                const ts = faurs.get(TonalLetterTags.zero);
-                for (let t of ts) {
+                const rules = faurs.get(TonalLetterTags.zero)
+                const tnls = !rules ? [] : rules;
+                for (let t of tnls) {
                     // append second tonal letter
                     // check the uncombining forms
                     if (lexical_roots.includes(literal + t.toString())) {
@@ -353,17 +358,17 @@ export class TonalUncombiningMorpheme extends Morpheme {
         let keys = Array.from(checkedAllomorphs.keys());
         for (let k = 0; k < keys.length; k++) {
             let am = checkedAllomorphs.get(keys[k]);
-            if (am instanceof CheckedAllomorph) {
+            if (am && am instanceof CheckedAllomorph) {
                 if (am.tonal) {
                     if (
                         am.tonal.toString() === syllable.lastLetter.literal &&
                         am.final.toString() === syllable.lastSecondLetter.literal
                     ) {
-                        aoas.push(checkedAllomorphs.get(keys[k]));
+                        aoas.push(am);
                         break;
                     } else {
                         if (am.final.toString() === syllable.lastLetter.literal) {
-                            aoas.push(checkedAllomorphs.get(keys[k]));
+                            aoas.push(am);
                             break;
                         }
                     }
