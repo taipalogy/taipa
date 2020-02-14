@@ -7,7 +7,7 @@ import {
     NeutralFinalSounds,
     NasalizationSound,
     StopFinalSounds,
-    combiningRules,
+    combining_rules,
     tonalPositionalSound,
     NasalFinalSounds,
     TonalSoundTags,
@@ -297,7 +297,7 @@ export class TonalSoundGenerator {
     }
 
     private genChecked(ltrs: string[]) {
-        const to_s = combiningRules.get(ltrs[ltrs.length - 1]);
+        const to_s = combining_rules.get(ltrs[ltrs.length - 1]);
         let strs: Array<string[]> = new Array();
 
         strs.push(ltrs);

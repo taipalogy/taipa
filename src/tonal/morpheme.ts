@@ -7,9 +7,9 @@ import {
     RemovingEpenthesisOfAy,
 } from '../morpheme';
 import {
-    freeAllomorphUncombiningRules,
-    checkedAllomorphs,
-    freeAllomorphs,
+    free_allomorph_uncombining_rules,
+    checked_allomorphs,
+    free_allomorphs,
     ZeroAllomorph,
     AllomorphX,
     FreeTonalSounds,
@@ -21,7 +21,7 @@ import {
     TonalSoundTags,
     FirstTonalF,
     ThirdFifthTonalsWX,
-    uncombiningRulesAy,
+    uncombining_rules_ay,
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -56,14 +56,14 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     // the base tone of the first tone is the second tone
                     // 1 to 2
                     const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-                    const tnls = freeAllomorphUncombiningRules.get('zero');
+                    const tnls = free_allomorph_uncombining_rules.get('zero');
                     if (tnls) s.pushLetter(new AlphabeticLetter(tnls[0].characters));
                     // console.log(s)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
                     const ret = [];
-                    const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
+                    const rules = free_allomorph_uncombining_rules.get(allomorph.toString());
                     const tnls = !rules ? [] : rules;
                     for (let i in tnls) {
                         // pop letter
@@ -120,8 +120,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new FreeTonalSounds();
     const ssf = new StopFinalSounds();
-    const faurs = freeAllomorphUncombiningRules;
-    const ursa = uncombiningRulesAy;
+    const faurs = free_allomorph_uncombining_rules;
+    const ursa = uncombining_rules_ay;
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -175,10 +175,11 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
 
             // tone sandhi of free allomorph
-            const rules = faurs.get(letters[i].literal);
-            const tnls_fa = !rules ? [] : rules.map(x => x.toString());
+            const rules_fa = faurs.get(letters[i].literal);
+            const tnls_fa = !rules_fa ? [] : rules_fa.map(x => x.toString());
             // tone sandhi of ay
-            const tnls_ay = ursa.get(letters[i].literal).map(x => x.toString());
+            const rules_ay = ursa.get(letters[i].literal);
+            const tnls_ay = !rules_ay ? [] : rules_ay.map(x => x.toString());
             // merge the above twoo arrays
             const tnls = tnls_fa.concat(tnls_ay.filter(item => tnls_fa.indexOf(item) < 0));
             //console.log(ts)
@@ -355,9 +356,9 @@ export class TonalUncombiningMorpheme extends Morpheme {
         // assign the matched allomorph for this syllable
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
-        let keys = Array.from(checkedAllomorphs.keys());
+        let keys = Array.from(checked_allomorphs.keys());
         for (let k = 0; k < keys.length; k++) {
-            let am = checkedAllomorphs.get(keys[k]);
+            let am = checked_allomorphs.get(keys[k]);
             if (am && am instanceof CheckedAllomorph) {
                 if (am.tonal) {
                     if (
@@ -384,8 +385,10 @@ export class TonalUncombiningMorpheme extends Morpheme {
 
         // after matching with checked allomorphs, we go on matching free allomorphs
         aoas = [];
-        if (freeAllomorphs.has(syllable.lastLetter.literal)) {
-            aoas.push(freeAllomorphs.get(syllable.lastLetter.literal));
+        if (free_allomorphs.has(syllable.lastLetter.literal)) {
+            const am = free_allomorphs.get(syllable.lastLetter.literal);
+            if (am) aoas.push(am);
+            else aoas.push(new Allomorph);
         }
 
         if (aoas.length == 0) {
