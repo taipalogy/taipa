@@ -2,7 +2,7 @@ import { Character, characters } from "./character";
 
 //------------------------------------------------------------------------------
 
-class Grapheme {}
+class Grapheme { }
 
 export class AlphabeticGrapheme extends Grapheme {
     letter: AlphabeticLetter;
@@ -22,12 +22,12 @@ export class Letter {
 export class AlphabeticLetter extends Letter {
     characters: Array<Character>;
 
-    constructor(characters?: Array<Character>) {
+    constructor(characters: Array<Character>) {
         super();
         this.characters = new Array();
-        if (characters != null) {
-            let len = characters.length;
-            for (var i = 0; i < len; i++) {
+        if (characters && characters.length > 0) {
+            const len = characters.length;
+            for (let i = 0; i < len; i++) {
                 this.pushCharacter(characters[i]);
             }
         }
@@ -105,7 +105,7 @@ export class GraphemeMaker {
     makeGraphemes(str: string) {
         const characters = new Array();
         if (str) {
-            for (var i = 0; i < str.length; i++) {
+            for (let i = 0; i < str.length; i++) {
                 if (str.charAt(i) != "\0") {
                     characters.push(new Character(str.charAt(i)));
                 }

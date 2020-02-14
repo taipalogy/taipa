@@ -17,7 +17,7 @@ import {
     EpenthesisSounds,
     TonalLetterTags,
     lowerLettersOfTonal,
-    tonalPositionalSound,
+    tonal_positional_sounds,
     TonalSoundTags,
     FirstTonalF,
     ThirdFifthTonalsWX,
@@ -319,12 +319,12 @@ export class TonalSyllable extends Syllable {
 
     get lastLetter() {
         if (this.letters.length >= 1) return this.letters[this.letters.length - 1];
-        return new AlphabeticLetter();
+        return new AlphabeticLetter([]);
     }
 
     get lastSecondLetter() {
         if (this.letters.length >= 2) return this.letters[this.letters.length - 2];
-        return new AlphabeticLetter();
+        return new AlphabeticLetter([]);
     }
 }
 
@@ -574,7 +574,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             const fnl = this.euphonicFinals.pop();
             if (fnl) {
                 pattern.letters.push(fnl);
-                const snd = tonalPositionalSound.get(fnl.literal);
+                const snd = tonal_positional_sounds.get(fnl.literal);
                 if (snd) pattern.pattern.push(snd(TonalSoundTags.stopFinal));
             }
         } else if (this.euphonicFinalTonals.length > 0) {
@@ -582,13 +582,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             if (fnl) {
                 if (fnl.letters.length == 1) {
                     pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
-                    const snd = tonalPositionalSound.get(fnl.letters[0].literal);
+                    const snd = tonal_positional_sounds.get(fnl.letters[0].literal);
                     if (snd) pattern.pattern.splice(fnl.index, 1, snd(TonalSoundTags.stopFinal));
                 } else if (fnl.letters.length == 2) {
                     // console.log(pattern)
                     pattern.letters.splice(fnl.index, 1, fnl.letters[0], fnl.letters[1]);
-                    const snd1 = tonalPositionalSound.get(fnl.letters[0].literal);
-                    const snd2 = tonalPositionalSound.get(fnl.letters[1].literal);
+                    const snd1 = tonal_positional_sounds.get(fnl.letters[0].literal);
+                    const snd2 = tonal_positional_sounds.get(fnl.letters[1].literal);
                     if (snd1 && snd2)
                         pattern.pattern.splice(
                             fnl.index,

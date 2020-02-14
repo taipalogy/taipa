@@ -2,7 +2,7 @@ import { InflectionalEnding } from './tonal/lexeme';
 import { TonalWord } from './tonal/lexeme';
 import { TonalInflectionLexeme } from './dparser/lexeme';
 
-export abstract class PhrasalMetaplasm {}
+export abstract class PhrasalMetaplasm { }
 
 export class TonalPhrasalInflectionMetaplasm extends PhrasalMetaplasm {
     apply(lexemeOne: TonalInflectionLexeme, lexemeTwo: TonalInflectionLexeme): TonalPhrase[] {
@@ -10,7 +10,7 @@ export class TonalPhrasalInflectionMetaplasm extends PhrasalMetaplasm {
     }
 }
 
-export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm {}
+export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm { }
 
 // -----------------------------------------------------------------------------
 
@@ -18,11 +18,11 @@ export class ToneGroup {
     inflectionalEndings: Array<InflectionalEnding> = new Array();
 }
 
-class ToneSandhiGroup extends ToneGroup {}
+class ToneSandhiGroup extends ToneGroup { }
 
 // -----------------------------------------------------------------------------
 
-export class Phraseme {}
+export class Phraseme { }
 
 // -----------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ export class TonalPhrase extends Phrase {
         this.words = new Array();
         if (words != undefined) {
             let len = words.length;
-            for (var i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
                 if (i > 0) this.literal += ' ';
                 this.pushWord(words[i]);
             }

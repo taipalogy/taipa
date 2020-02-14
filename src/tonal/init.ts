@@ -1,7 +1,7 @@
-import { tonalPositionalSound, lowerLettersOfTonal } from './version2';
+import { tonal_positional_sounds, lowerLettersOfTonal } from './version2';
 
 export function checkLetterSizeTonal() {
-    if (tonalPositionalSound.size !== lowerLettersOfTonal.size) {
+    if (tonal_positional_sounds.size !== lowerLettersOfTonal.size) {
         console.log('sizes unmatched');
     }
 }

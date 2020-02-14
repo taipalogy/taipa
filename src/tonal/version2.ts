@@ -792,7 +792,7 @@ export const combining_rules = new Map<string, { [key: string]: Sound }>()
         x: ps_x(TonalSoundTags.checkedTonal),
     });
 
-export const tonalPositionalSound = new Map<string, (t: TonalSoundTags) => Sound>()
+export const tonal_positional_sounds = new Map<string, (t: TonalSoundTags) => Sound>()
     .set(TonalLetterTags.a, ps_a)
     .set(TonalLetterTags.b, ps_b)
     .set(TonalLetterTags.bb, ps_bb)
@@ -984,108 +984,108 @@ class AllomorphHHX extends CheckedAllomorph {
 }
 
 export const checked_allomorphs = new Map<string, Allomorph>()
-    .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
-    .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
-    .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
-    .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
-    .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
-    .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
-    .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
-    .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH())
+    .set(TonalLetterTags.p, new AllomorphP())
+    .set(TonalLetterTags.t, new AllomorphT())
+    .set(TonalLetterTags.k, new AllomorphK())
+    .set(TonalLetterTags.h, new AllomorphH())
+    .set(TonalLetterTags.pp, new AllomorphPP())
+    .set(TonalLetterTags.tt, new AllomorphTT())
+    .set(TonalLetterTags.kk, new AllomorphKK())
+    .set(TonalLetterTags.hh, new AllomorphHH())
     .set(
-        ps_p(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.p + TonalLetterTags.f,
         new AllomorphPF(),
     )
     .set(
-        ps_t(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.t + TonalLetterTags.f,
         new AllomorphTF(),
     )
     .set(
-        ps_k(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.k + TonalLetterTags.f,
         new AllomorphKF(),
     )
     .set(
-        ps_h(TonalSoundTags.stopFinal).toString() + ps_f(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.h + TonalLetterTags.f,
         new AllomorphHF(),
     )
     .set(
-        ps_pp(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.pp + TonalLetterTags.w,
         new AllomorphPPW(),
     )
     .set(
-        ps_tt(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.tt + TonalLetterTags.w,
         new AllomorphTTW(),
     )
     .set(
-        ps_kk(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.kk + TonalLetterTags.w,
         new AllomorphKKW(),
     )
     .set(
-        ps_hh(TonalSoundTags.stopFinal).toString() + ps_w(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.hh + TonalLetterTags.w,
         new AllomorphHHW(),
     )
     .set(
-        ps_h(TonalSoundTags.stopFinal).toString() + ps_y(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.h + TonalLetterTags.y,
         new AllomorphHY(),
     )
     .set(
-        ps_pp(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.pp + TonalLetterTags.x,
         new AllomorphPPX(),
     )
     .set(
-        ps_tt(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.tt + TonalLetterTags.x,
         new AllomorphTTX(),
     )
     .set(
-        ps_kk(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.kk + TonalLetterTags.x,
         new AllomorphKKX(),
     )
     .set(
-        ps_hh(TonalSoundTags.stopFinal).toString() + ps_x(TonalSoundTags.checkedTonal).toString(),
+        TonalLetterTags.hh + TonalLetterTags.x,
         new AllomorphHHX(),
     );
 
 export const combined_free_allomorphs = new Map<string, Allomorph>()
-    .set(ps_w(TonalSoundTags.freeTonal).toString(), new AllomorphW())
-    .set(ps_z(TonalSoundTags.freeTonal).toString(), new AllomorphZ())
-    .set(ps_x(TonalSoundTags.freeTonal).toString(), new AllomorphX())
-    .set(ps_y(TonalSoundTags.freeTonal).toString(), new AllomorphY())
-    .set(ps_f(TonalSoundTags.freeTonal).toString(), new AllomorphF());
+    .set(TonalLetterTags.w, new AllomorphW())
+    .set(TonalLetterTags.z, new AllomorphZ())
+    .set(TonalLetterTags.x, new AllomorphX())
+    .set(TonalLetterTags.y, new AllomorphY())
+    .set(TonalLetterTags.f, new AllomorphF());
 
 export const uncombined_checked_allomorphs = new Map<string, Allomorph>()
-    .set(ps_p(TonalSoundTags.stopFinal).toString(), new AllomorphP())
-    .set(ps_t(TonalSoundTags.stopFinal).toString(), new AllomorphT())
-    .set(ps_k(TonalSoundTags.stopFinal).toString(), new AllomorphK())
-    .set(ps_h(TonalSoundTags.stopFinal).toString(), new AllomorphH())
-    .set(ps_pp(TonalSoundTags.stopFinal).toString(), new AllomorphPP())
-    .set(ps_tt(TonalSoundTags.stopFinal).toString(), new AllomorphTT())
-    .set(ps_kk(TonalSoundTags.stopFinal).toString(), new AllomorphKK())
-    .set(ps_hh(TonalSoundTags.stopFinal).toString(), new AllomorphHH());
+    .set(TonalLetterTags.p, new AllomorphP())
+    .set(TonalLetterTags.t, new AllomorphT())
+    .set(TonalLetterTags.k, new AllomorphK())
+    .set(TonalLetterTags.h, new AllomorphH())
+    .set(TonalLetterTags.pp, new AllomorphPP())
+    .set(TonalLetterTags.tt, new AllomorphTT())
+    .set(TonalLetterTags.kk, new AllomorphKK())
+    .set(TonalLetterTags.hh, new AllomorphHH());
 
 export const combined_checked_allomorphs = new Map<string, Allomorph[]>()
-    .set(ps_p(TonalSoundTags.stopFinal).toString(), [new AllomorphPF()])
-    .set(ps_t(TonalSoundTags.stopFinal).toString(), [new AllomorphTF()])
-    .set(ps_k(TonalSoundTags.stopFinal).toString(), [new AllomorphKF()])
-    .set(ps_h(TonalSoundTags.stopFinal).toString(), [new AllomorphHF(), new AllomorphHY()])
-    .set(ps_pp(TonalSoundTags.stopFinal).toString(), [new AllomorphPPW(), new AllomorphPPX()])
-    .set(ps_tt(TonalSoundTags.stopFinal).toString(), [new AllomorphTTW(), new AllomorphTTX()])
-    .set(ps_kk(TonalSoundTags.stopFinal).toString(), [new AllomorphKKW(), new AllomorphKKX()])
-    .set(ps_hh(TonalSoundTags.stopFinal).toString(), [new AllomorphHHW(), new AllomorphHHX()]);
+    .set(TonalLetterTags.p, [new AllomorphPF()])
+    .set(TonalLetterTags.t, [new AllomorphTF()])
+    .set(TonalLetterTags.k, [new AllomorphKF()])
+    .set(TonalLetterTags.h, [new AllomorphHF(), new AllomorphHY()])
+    .set(TonalLetterTags.pp, [new AllomorphPPW(), new AllomorphPPX()])
+    .set(TonalLetterTags.tt, [new AllomorphTTW(), new AllomorphTTX()])
+    .set(TonalLetterTags.kk, [new AllomorphKKW(), new AllomorphKKX()])
+    .set(TonalLetterTags.hh, [new AllomorphHHW(), new AllomorphHHX()]);
 
 export const free_allomorph_uncombining_rules = new Map<string, Tonal[]>()
-    .set(ps_f(TonalSoundTags.freeTonal).toString(), [new FreeTonalY()])
-    .set(ps_w(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalX()])
-    .set(ps_xx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-    .set(ps_xxx(TonalSoundTags.freeTonal).toString(), [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-    .set(ps_z(TonalSoundTags.freeTonal).toString(), [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
-    .set(ps_zx(TonalSoundTags.freeTonal).toString(), [])
-    .set(ps_x(TonalSoundTags.freeTonal).toString(), [])
-    .set(ps_y(TonalSoundTags.freeTonal).toString(), [new FreeTonalW()])
+    .set(TonalLetterTags.f, [new FreeTonalY()])
+    .set(TonalLetterTags.w, [new FreeTonalZ(), new FreeTonalX()])
+    .set(TonalLetterTags.xx, [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+    .set(TonalLetterTags.xxx, [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
+    .set(TonalLetterTags.z, [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
+    .set(TonalLetterTags.zx, [])
+    .set(TonalLetterTags.x, [])
+    .set(TonalLetterTags.y, [new FreeTonalW()])
     .set(TonalLetterTags.zero, [new FreeTonalY()]);
 
 export const uncombining_rules_ay = new Map<string, Tonal[]>()
-    .set(ps_f(TonalSoundTags.freeTonal).toString(), [new FreeTonalY(), new FreeTonalW()])
-    .set(ps_x(TonalSoundTags.freeTonal).toString(), [new ZeroTonal(), new FreeTonalX(), new FreeTonalZ()]);
+    .set(TonalLetterTags.f, [new FreeTonalY(), new FreeTonalW()])
+    .set(TonalLetterTags.x, [new ZeroTonal(), new FreeTonalX(), new FreeTonalZ()]);
 
 export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.k, TonalLetterTags.g)

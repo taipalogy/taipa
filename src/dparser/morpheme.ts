@@ -10,7 +10,7 @@ import {
     combined_free_allomorphs,
     uncombined_checked_allomorphs,
     TonalLetterTags,
-    tonalPositionalSound,
+    tonal_positional_sounds,
     TonalSoundTags,
     CheckedTonalSounds,
     voiceless_voiced_finals,
@@ -101,7 +101,7 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-            const ps = tonalPositionalSound.get(TonalLetterTags.w);
+            const ps = tonal_positional_sounds.get(TonalLetterTags.w);
             let snd = new Sound();
 
             if (allomorph instanceof FreeAllomorph) {
@@ -180,7 +180,7 @@ export class TonalCombiningMorpheme extends Morpheme {
                 const snds = this.sounds;
                 if (snds[0].toString() === sound.toString()) {
                     let duplifix = new Sound();
-                    const ps = tonalPositionalSound.get(TonalLetterTags.l);
+                    const ps = tonal_positional_sounds.get(TonalLetterTags.l);
                     if (ps) duplifix = ps(TonalSoundTags.initial);
 
                     snds.splice(0, 1, duplifix);
@@ -244,7 +244,7 @@ export class TonalCombiningMorpheme extends Morpheme {
 
             const af = assimilated_finals.get(sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString());
             if (af) {
-                const ps = tonalPositionalSound.get(af);
+                const ps = tonal_positional_sounds.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
                 s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
                 if (new NasalInitialSounds().includes(soundFollowingSyllable.toString())) {
@@ -260,7 +260,7 @@ export class TonalCombiningMorpheme extends Morpheme {
             // replace final n with final m
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
-            const ps = tonalPositionalSound.get(TonalLetterTags.m);
+            const ps = tonal_positional_sounds.get(TonalLetterTags.m);
             if (ps) snd = ps(TonalSoundTags.nasalFinal);
             s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
             return [s];
@@ -304,7 +304,7 @@ export class TonalCombiningMorpheme extends Morpheme {
         if (fnl) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
-            const ps = tonalPositionalSound.get(fnl);
+            const ps = tonal_positional_sounds.get(fnl);
             if (ps) snd = ps(TonalSoundTags.stopFinal);
             s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
             return [s];
