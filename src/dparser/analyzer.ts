@@ -6,7 +6,8 @@ import {
     TonalCombiningForms,
     EncliticECombining,
     PhrasalVerbParticleCombining,
-    ThirdCombiningForm
+    ThirdCombiningForm,
+    TonalSoundChangingMorphemeMaker
 } from './morpheme';
 import { lowerLettersOfTonal } from '../tonal/version2';
 import {
@@ -16,7 +17,8 @@ import {
     AgressiveInternal,
     RegressiveInternal,
     TransfixInflection,
-    Epenthesis
+    Epenthesis,
+    TonalAssimilationLexeme
 } from './lexeme';
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
@@ -90,27 +92,51 @@ export class TonalInflector {
 }
 
 export class TonalAssimilator {
-    private readonly tia = new TonalInflectionAnalyzer();
+    private readonly tschmm = new TonalSoundChangingMorphemeMaker(new TonalZeroCombining());
+    private readonly gm = new GraphemeMaker(lowerLettersOfTonal);
+
+    private morphAnalyze(str: string) {
+        const gs = this.gm.makeGraphemes(str);
+        const mrphs = this.tschmm.makeMorphemes(gs);
+        return mrphs;
+    }
+
+    getLexeme(str: string) {
+        const mrphs = this.morphAnalyze(str);
+        const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroInflection());
+
+        return lx;
+    }
 
     assimilateAgressive(str: string) {
-        const mrphs = this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(mrphs, new AgressiveInternal());
+        const mrphs = this.morphAnalyze(str);
+        const lx = new TonalAssimilationLexeme(mrphs, new AgressiveInternal());
+
         return lx;
     }
 
     assimilateRegressive(str: string) {
-        const mrphs = this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(mrphs, new RegressiveInternal());
+        const mrphs = this.morphAnalyze(str);
+        const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
+
         return lx;
     }
 }
 
 export class TonalInserter {
-    private readonly tia = new TonalInflectionAnalyzer();
+    private readonly tschmm = new TonalSoundChangingMorphemeMaker(new TonalZeroCombining());
+    private readonly gm = new GraphemeMaker(lowerLettersOfTonal);
+
+    private morphAnalyze(str: string) {
+        const gs = this.gm.makeGraphemes(str);
+        const mrphs = this.tschmm.makeMorphemes(gs);
+        return mrphs;
+    }
 
     insert(str: string) {
-        const mrphs = this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(mrphs, new Epenthesis());
+        const mrphs = this.morphAnalyze(str);
+        const lx = new TonalAssimilationLexeme(mrphs, new Epenthesis());
+
         return lx;
     }
 }
@@ -154,18 +180,20 @@ export class TonalPhrasalInflector {
 }
 
 export class TonalPhrasalAssimilator {
-    private readonly infl = new TonalInflector();
+    private readonly assimi = new TonalAssimilator();
     private readonly phmk = new TonalInflectionPhrasemeMaker();
 
     assimilateAgressive(preceding: string, following: string) {
-        const lxPreceding = this.infl.dontInflect(preceding);
-        const lxFollowing = this.infl.dontInflect(following);
+        const lxPreceding = this.assimi.getLexeme(preceding);
+        const lxFollowing = this.assimi.getLexeme(following);
+
         return this.phmk.makeAdjectivePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
     }
 
     assimilateRegressive(preceding: string, following: string) {
-        const lxPreceding = this.infl.dontInflect(preceding);
-        const lxFollowing = this.infl.dontInflect(following);
+        const lxPreceding = this.assimi.getLexeme(preceding);
+        const lxFollowing = this.assimi.getLexeme(following);
+
         return this.phmk.makeAdjectivePhraseme(lxPreceding, lxFollowing, new RegressiveExternal());
     }
 }

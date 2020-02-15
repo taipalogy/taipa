@@ -1,4 +1,4 @@
-import { TonalInflectionLexeme } from './lexeme';
+import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
 import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
 
@@ -25,7 +25,7 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
 }
 
 export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
+    apply(lexemeAdjectivalNoun: TonalAssimilationLexeme, lexemeE: TonalAssimilationLexeme) {
         const wrds = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
         if (wrds.length > 0)
             return [new TonalPhrase([lexemeAdjectivalNoun.word].concat(wrds))];
@@ -34,7 +34,7 @@ export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
 }
 
 export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
+    apply(lexemePreceding: TonalAssimilationLexeme, lexemeFollowing: TonalAssimilationLexeme) {
         const wrds = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
         if (wrds.length > 0)
             return [new TonalPhrase([lexemePreceding.word].concat(wrds))]

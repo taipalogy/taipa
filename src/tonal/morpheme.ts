@@ -154,8 +154,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 (literal.length > 1 &&
                     letters[i] &&
                     letters[i - 1] &&
-                    sm_bgkp_f(letters[i - 1].literal, letters[i].literal)) ||
-                (literal.length > 1 && sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal))
+                    (sm_bgkp_f(letters[i - 1].literal, letters[i].literal) ||
+                        sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal)))
             ) {
                 // this combining form is not present in the pool.
                 matched = literal;

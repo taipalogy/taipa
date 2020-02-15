@@ -1,5 +1,5 @@
 import { TonalInflectionMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
-import { TonalCombiningMorpheme, AssimiDirection } from './morpheme';
+import { TonalCombiningMorpheme, AssimiDirection, TonalSoundChangingMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
@@ -48,7 +48,7 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
 //------------------------------------------------------------------------------
 
 export class RegressiveInternal extends TonalInflectionMetaplasm {
-    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
+    apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
         if (ms.length > 1) {
@@ -76,7 +76,7 @@ export class RegressiveInternal extends TonalInflectionMetaplasm {
 //------------------------------------------------------------------------------
 
 export class AgressiveInternal extends TonalInflectionMetaplasm {
-    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
+    apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
             let wrd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
@@ -97,7 +97,7 @@ export class AgressiveInternal extends TonalInflectionMetaplasm {
 
 export class Epenthesis extends TonalInflectionMetaplasm {
     // adding of nasal consonants. insertion
-    apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
+    apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
             let wrd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
@@ -124,8 +124,9 @@ export class TonalInflectionLexeme extends Lexeme {
     private forms: Array<TonalWord> = new Array(); // inflected or assimilated forms
     private tonalSymbleEnding: TonalSymbolEnding;
 
-    constructor(private ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
+    constructor(protected ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
         super();
+        // TODO: should parameter TonalCombiningMorpheme[] be replaced with TonalWord
 
         // TODO: to be configurable
         let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
@@ -181,12 +182,42 @@ export class TonalInflectionLexeme extends Lexeme {
         return this.forms;
     }
 
+    private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
+        for (let i = 0; i < ms.length; i++) {
+            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+                if (
+                    i < ms.length - 1 &&
+                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
+                ) {
+                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                        break;
+                    } else {
+                        // tonal x can't not appear in them middle of an inflectional stem
+                        // if it is not preceding an ay or a
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class TonalAssimilationLexeme extends TonalInflectionLexeme {
+    constructor(protected ms: Array<TonalSoundChangingMorpheme>, tim: TonalInflectionMetaplasm) {
+        super(ms, tim);
+    }
+
     getMorphemes() {
         // when external sandhi is required, member variable morphemes has to be exposed
         return this.ms;
     }
 
-    assimilateWith(til: TonalInflectionLexeme, dir: AssimiDirection) {
+    assimilateWith(til: TonalAssimilationLexeme, dir: AssimiDirection) {
         const ms = til.getMorphemes();
         let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
         if (ms.length > 0) {
@@ -213,33 +244,12 @@ export class TonalInflectionLexeme extends Lexeme {
 
         return [];
     }
-
-    private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
-        for (let i = 0; i < ms.length; i++) {
-            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if (
-                    i < ms.length - 1 &&
-                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
-                ) {
-                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                        break;
-                    } else {
-                        // tonal x can't not appear in them middle of an inflectional stem
-                        // if it is not preceding an ay or a
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
 }
 
 //------------------------------------------------------------------------------
 
 export class TonalInflectionLexemeMaker extends LexemeMaker {
+    // TODO: this class appears to be redundant?
     constructor(private tim: TonalInflectionMetaplasm) {
         super();
     }

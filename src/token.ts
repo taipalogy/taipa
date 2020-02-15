@@ -83,7 +83,7 @@ export class TokenLemmatizer {
                     continue;
                 }
             }
-            if (k + 1 == doc.speeches[j].elements.length) {
+            if (doc.speeches[j] && k + 1 == doc.speeches[j].elements.length) {
                 // at the end of a speech
                 // need to further check if the speech is a noun chunk or verb phrase
                 doc.tokens[i].lemma = doc.tokens[i].text; // copy the base form

@@ -169,31 +169,6 @@ export class TonalCombiningMorpheme extends Morpheme {
         return this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
-    changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
-        if (sound) {
-            if (sound.name === TonalSoundTags.nasalFinal && dir === AssimiDirection.agressive) {
-                // agressive assimilation of nasals, both internal and external sandhi
-                const snds = this.sounds;
-                snds.splice(0, 0, sound);
-                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
-            } else if (sound.name === TonalSoundTags.initial && dir === AssimiDirection.agressive) {
-                const snds = this.sounds;
-                if (snds[0].toString() === sound.toString()) {
-                    let duplifix = new Sound();
-                    const ps = tonal_positional_sounds.get(TonalLetterTags.l);
-                    if (ps) duplifix = ps(TonalSoundTags.initial);
-
-                    snds.splice(0, 1, duplifix);
-                }
-                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
-            }
-
-            // internal sandhi. regressive assimilation
-            return this.regAssimilate(this.sounds, sound);
-        }
-        return [];
-    }
-
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
         if (uncombined_checked_allomorphs.has(syllable.lastLetter.literal)) {
             const am = uncombined_checked_allomorphs.get(syllable.lastLetter.literal);
@@ -224,8 +199,35 @@ export class TonalCombiningMorpheme extends Morpheme {
 
         return new ZeroAllomorph();
     }
+}
 
-    private regAssimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<TonalSyllable> {
+export class TonalSoundChangingMorpheme extends TonalCombiningMorpheme {
+    changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
+        if (sound) {
+            if (sound.name === TonalSoundTags.nasalFinal && dir === AssimiDirection.agressive) {
+                // agressive assimilation of nasals, both internal and external sandhi
+                const snds = this.sounds;
+                snds.splice(0, 0, sound);
+                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
+            } else if (sound.name === TonalSoundTags.initial && dir === AssimiDirection.agressive) {
+                const snds = this.sounds;
+                if (snds[0].toString() === sound.toString()) {
+                    let duplifix = new Sound();
+                    const ps = tonal_positional_sounds.get(TonalLetterTags.l);
+                    if (ps) duplifix = ps(TonalSoundTags.initial);
+
+                    snds.splice(0, 1, duplifix);
+                }
+                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
+            }
+
+            // internal sandhi. regressive assimilation
+            return this.regAssimilate(this.sounds, sound);
+        }
+        return [];
+    }
+
+    protected regAssimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<TonalSyllable> {
         if (
             sounds[sounds.length - 2].name != TonalSoundTags.stopFinal &&
             sounds[sounds.length - 2].name != TonalSoundTags.nasalFinal
@@ -339,6 +341,41 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
     }
 
     makeMorphemes(gs: Array<AlphabeticGrapheme>): TonalCombiningMorpheme[] {
+        const ltrs = gs.map(it => it.letter);
+        const ptrns = this.make(ltrs, syllabifyTonal);
+        const ms = this.postprocess(ptrns);
+
+        return ms;
+    }
+}
+
+export class TonalSoundChangingMorphemeMaker extends MorphemeMaker {
+    private metaplasm: TonalCombiningMetaplasm;
+
+    constructor(tsm: TonalCombiningMetaplasm) {
+        super();
+        this.metaplasm = tsm;
+    }
+
+    protected createMorphemes() {
+        return new Array<TonalSoundChangingMorpheme>();
+    }
+
+    protected createMorpheme(msp: MatchedPattern) {
+        const tcm = new TonalSoundChangingMorpheme(new TonalSyllable(msp.letters), this.metaplasm);
+        tcm.sounds = msp.pattern;
+        return tcm;
+    }
+
+    private postprocess(patterns: MatchedPattern[]): Array<TonalSoundChangingMorpheme> {
+        let morphemes = this.createMorphemes();
+        for (let i in patterns) {
+            morphemes.push(this.createMorpheme(patterns[i]));
+        }
+        return morphemes;
+    }
+
+    makeMorphemes(gs: Array<AlphabeticGrapheme>): TonalSoundChangingMorpheme[] {
         const ltrs = gs.map(it => it.letter);
         const ptrns = this.make(ltrs, syllabifyTonal);
         const ms = this.postprocess(ptrns);
