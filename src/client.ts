@@ -14,6 +14,8 @@ import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
 import { TokenLemmatizer } from './token';
 
+const pipe = (...fns: Array<(doc: Document) => Document>) => (x: Document) => fns.reduce((v, f) => f(v), x);
+
 export class Client {
     processKana(str: string): TokenAnalysis {
         checkLetterSizeKana();
@@ -55,25 +57,23 @@ export class Client {
     process(str: string): Document {
         let doc: Document = new Document();
 
-        // tokenization
         if (str) {
+            // tokenization
             const tokens = str.match(/\w+/g);
-            if (tokens)
-                for (let i = 0; i < tokens.length; i++) {
-                    if (tokens[i].length) doc.tokens.push(new Token(tokens[i]));
-                }
+            if (tokens) {
+                tokens.filter(x => x != undefined).map(x => doc.tokens.push(new Token(x)));
+            }
 
             // tagging
             const tggr = new RuleBasedTagger();
-            doc = tggr.tag(doc);
 
             // lemmatization
             const lmtzr = new TokenLemmatizer();
-            doc = lmtzr.getTonalLemmas(doc);
 
             // dependency parsing
             const dpsr = new DependencyParser();
-            doc = dpsr.parse(doc);
+
+            doc = pipe(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse)(doc);
         }
 
         return doc;

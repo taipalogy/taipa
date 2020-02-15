@@ -123,7 +123,7 @@ export class DependencyParser {
         }
     }
 
-    parse(doc: Document): Document {
+    parse = (doc: Document): Document => {
         for (let t of doc.tokens) {
             this.c.queue.push(t);
         }

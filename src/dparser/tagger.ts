@@ -190,7 +190,7 @@ export class RuleBasedTagger {
         }
     }
 
-    tag(doc: Document) {
+    tag = (doc: Document) => {
         this.match(doc.tokens);
 
         let ces: Array<ConstructionElement> = new Array();

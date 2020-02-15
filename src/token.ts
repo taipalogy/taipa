@@ -13,7 +13,7 @@ export class Token {
     dep: string = '';
     head: Token | null = null;
 
-    constructor(public text: string) {}
+    constructor(public text: string) { }
 }
 
 export class TokenAnalysis {
@@ -25,7 +25,7 @@ export class TokenAnalysis {
 }
 
 export class TokenLemmatizer {
-    getTonalLemmas(doc: Document): Document {
+    getTonalLemmas = (doc: Document): Document => {
         const tla = new TonalLemmatizationAnalyzer();
         const lmtzr = new TonalLemmatizer();
         const sophv = new SetOfPhrasalVerbs();
