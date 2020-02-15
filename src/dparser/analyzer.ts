@@ -159,11 +159,17 @@ export class TonalPhrasalInflector {
         return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    dontInflect(verb: string, particle: string) {
+    dontInflectIntransitive(verb: string, particle: string) {
         // no need to inflect
         const lexemeVerb = this.infl.dontInflect(verb);
         const lexemeParticle = this.infl.dontInflect(particle);
         return this.phm.makeIntransitivePhraseme(lexemeVerb, lexemeParticle);
+    }
+
+    dontInflectCompound(preceding: string, following: string) {
+        const lexemePreceding = this.infl.dontInflect(preceding);
+        const lexemeFollowing = this.infl.dontInflect(following);
+        return this.phm.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }
 
     inflectEncliticE(adjectivalNoun: string, e: string) {
@@ -173,8 +179,6 @@ export class TonalPhrasalInflector {
     }
 
     // inflectThree(verb: string, firstParticlee: string, secondParticle: string) {}
-    // inflectPreceding(preceding: string, following: string) {}
-    // inflectSerial() {}
     // inflectPossesiveCaseMarker() {}
     // inflectEncliticLe() {}}
 }

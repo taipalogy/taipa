@@ -27,8 +27,7 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
 export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeAdjectivalNoun: TonalAssimilationLexeme, lexemeE: TonalAssimilationLexeme) {
         const wrds = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
-        if (wrds.length > 0)
-            return [new TonalPhrase([lexemeAdjectivalNoun.word].concat(wrds))];
+        if (wrds.length > 0) return [new TonalPhrase([lexemeAdjectivalNoun.word].concat(wrds))];
         return [];
     }
 }
@@ -36,8 +35,7 @@ export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
 export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemePreceding: TonalAssimilationLexeme, lexemeFollowing: TonalAssimilationLexeme) {
         const wrds = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
-        if (wrds.length > 0)
-            return [new TonalPhrase([lexemePreceding.word].concat(wrds))]
+        if (wrds.length > 0) return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
         return [];
     }
 }
@@ -71,6 +69,14 @@ export class TonalIntransitivePhraseme extends Phraseme {
     constructor(lexemeAdjective: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
         super();
         this.phrase = new TonalPhrase([lexemeAdjective.word, lexemeE.word]);
+    }
+}
+
+export class TonalCompoundPhraseme extends Phraseme {
+    phrase: TonalPhrase;
+    constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
+        super();
+        this.phrase = new TonalPhrase([lexemePreceding.getForms()[0], lexemeFollowing.word]);
     }
 }
 
@@ -113,6 +119,10 @@ export class TonalInflectionPhrasemeMaker {
 
     makeIntransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalIntransitivePhraseme(lexemeVerb, lexemeParticle);
+    }
+
+    makeCompoundPhraseme(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
+        return new TonalCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }
 
     makeAdjectivePhraseme(

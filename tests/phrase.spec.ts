@@ -18,7 +18,7 @@ describe('Phrasal verb testing, transitive', () => {
 describe('Phrasal verb testing, intransitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.dontInflect('laix', 'leh');
+    const ph = phva.dontInflectIntransitive('laix', 'leh');
 
     test('check the base form', () => {
         expect(ph.phrase.literal).toEqual('laix leh');
@@ -73,7 +73,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
         expect(ph1.getForms().length).toEqual(0);
     });
 
-    const ph2 = phva.dontInflect(inputEmpty, inputEmpty);
+    const ph2 = phva.dontInflectIntransitive(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
@@ -116,7 +116,7 @@ describe('Phrasal verb testing, undefined input', () => {
         expect(ph1.getForms().length).toEqual(0);
     });
 
-    const ph2 = phva.dontInflect(inputUnd, inputUnd);
+    const ph2 = phva.dontInflectIntransitive(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
