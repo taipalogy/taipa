@@ -100,18 +100,15 @@ export class TonalLemmatizationLexeme extends Lexeme {
     private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
     private inflectionalEnding: InflectionalEnding;
 
-    constructor(ms: Array<TonalUncombiningMorpheme>, tl: TonalLemmatization) {
+    constructor(morphemes: Array<TonalUncombiningMorpheme>, metaplasm: TonalLemmatization) {
         super();
-        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
 
-        isInflStemWithX = this.checktFifth(ms);
+        if (morphemes.length == 0) this.word = new TonalWord([]);
+        else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-        if (isInflStemWithX) this.word = new TonalWord([]);
-        else this.word = new TonalWord(ms.map(x => x.syllable));
-
-        if (ms.length > 0) {
-            if (ms[ms.length - 1].allomorph) {
-                this.inflectionalEnding = this.assignInflectionalEnding(ms[ms.length - 1].allomorph);
+        if (morphemes.length > 0) {
+            if (morphemes[morphemes.length - 1].allomorph) {
+                this.inflectionalEnding = this.assignInflectionalEnding(morphemes[morphemes.length - 1].allomorph);
             } else {
                 this.inflectionalEnding = new InflectionalEnding();
             }
@@ -119,9 +116,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
             this.inflectionalEnding = new InflectionalEnding();
         }
 
-        if (!isInflStemWithX) {
-            this.lemmata = tl.apply(ms, this.inflectionalEnding);
-        }
+        if (morphemes.length > 0) this.lemmata = metaplasm.apply(morphemes, this.inflectionalEnding);
     }
 
     getLemmata() {
@@ -149,8 +144,31 @@ export class TonalLemmatizationLexeme extends Lexeme {
         // this word is already in base form, and its last syllable is checked tone
         return infe;
     }
+}
 
-    private checktFifth(ms: Array<TonalUncombiningMorpheme>): boolean {
+//------------------------------------------------------------------------------
+
+export class TonalLemmatizationLexemeMaker extends LexemeMaker {
+    constructor() {
+        super();
+    }
+
+    makeLexemes(ms: Array<TonalUncombiningMorpheme>) {
+        return this.make(ms);
+    }
+
+    protected make(ms: Array<TonalUncombiningMorpheme>) {
+        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
+
+        if (ms) {
+            isInflStemWithX = this.checkFifth(ms);
+            if (isInflStemWithX) return new TonalLemmatizationLexeme([], new TonalLemmatization());
+        }
+
+        return new TonalLemmatizationLexeme(ms, new TonalLemmatization());
+    }
+
+    private checkFifth(ms: Array<TonalUncombiningMorpheme>): boolean {
         for (let i = 0; i < ms.length; i++) {
             if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
                 if (
@@ -170,21 +188,5 @@ export class TonalLemmatizationLexeme extends Lexeme {
         }
 
         return false;
-    }
-}
-
-//------------------------------------------------------------------------------
-
-export class TonalLemmatizationLexemeMaker extends LexemeMaker {
-    constructor() {
-        super();
-    }
-
-    makeLexemes(ms: Array<TonalUncombiningMorpheme>) {
-        return this.make(ms);
-    }
-
-    protected make(ms: Array<TonalUncombiningMorpheme>) {
-        return new TonalLemmatizationLexeme(ms, new TonalLemmatization());
     }
 }

@@ -125,7 +125,7 @@ export class TonalInflectionLexeme extends Lexeme {
     private tonalSymbleEnding: TonalSymbolEnding;
     // TODO: should a member variable affixes be added and passed to metaplasm. check out member sounds in morpheme
 
-    constructor(morphemes: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
+    constructor(morphemes: Array<TonalCombiningMorpheme>, metaplasm: TonalInflectionMetaplasm) {
         super();
 
         if (morphemes.length == 0) this.word = new TonalWord([]);
@@ -142,7 +142,7 @@ export class TonalInflectionLexeme extends Lexeme {
             this.tonalSymbleEnding = new TonalSymbolEnding();
         }
 
-        if (morphemes.length > 0) this.forms = this.assignWordForms(morphemes, tim);
+        if (morphemes.length > 0) this.forms = this.assignWordForms(morphemes, metaplasm);
     }
 
     private assignTonalEnding(allomorph: Allomorph) {
