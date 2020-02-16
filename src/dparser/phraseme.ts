@@ -45,18 +45,14 @@ export class TonalTransitivePhraseme extends Phraseme {
     private forms: Array<TonalPhrase> = new Array();
 
     constructor(
-        private lexemeVerb: TonalInflectionLexeme,
-        private lexemeParticle: TonalInflectionLexeme,
-        private metaplasm: TonalPhrasalInflectionMetaplasm
+        lexemeVerb: TonalInflectionLexeme,
+        lexemeParticle: TonalInflectionLexeme,
+        metaplasm: TonalPhrasalInflectionMetaplasm
     ) {
         super();
         this.phrase = new TonalPhrase([lexemeVerb.word, lexemeParticle.word]);
 
-        this.forms = this.assignPhraseForms();
-    }
-
-    private assignPhraseForms() {
-        return this.metaplasm.apply(this.lexemeVerb, this.lexemeParticle);
+        this.forms = metaplasm.apply(lexemeVerb, lexemeParticle);
     }
 
     getForms() {
@@ -85,21 +81,38 @@ export class TonalAdjectivePhraseme extends Phraseme {
     private forms: Array<TonalPhrase> = new Array();
 
     constructor(
-        private lexemeAdjectivalNoun: TonalInflectionLexeme,
-        private lexemeE: TonalInflectionLexeme,
-        private metaplasm: TonalPhrasalInflectionMetaplasm
+        lexemeAdjectivalNoun: TonalInflectionLexeme,
+        lexemeE: TonalInflectionLexeme,
+        metaplasm: TonalPhrasalInflectionMetaplasm
     ) {
         super();
         this.phrase = new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word]);
 
-        this.forms = this.assignPhraseForm();
-    }
-
-    private assignPhraseForm() {
-        return this.metaplasm.apply(this.lexemeAdjectivalNoun, this.lexemeE);
+        this.forms = metaplasm.apply(lexemeAdjectivalNoun, lexemeE);
     }
 
     getForms() {
+        return this.forms;
+    }
+}
+
+export class TonalAssimilationPhraseme extends Phraseme {
+    phrase: TonalPhrase;
+    private forms: Array<TonalPhrase> = new Array();
+
+    constructor(
+        lexemePreceding: TonalAssimilationLexeme,
+        lexemeFollowing: TonalAssimilationLexeme,
+        metaplasm: TonalPhrasalInflectionMetaplasm
+    ) {
+        super();
+        this.phrase = new TonalPhrase([lexemePreceding.word, lexemeFollowing.word]);
+
+        this.forms = metaplasm.apply(lexemePreceding, lexemeFollowing);
+    }
+
+    getForms() {
+        // TODO: what is the commona superclass of thie and other phrasemes so that we can promote getForms()
         return this.forms;
     }
 }
@@ -131,5 +144,15 @@ export class TonalInflectionPhrasemeMaker {
         metaplasm: TonalPhrasalInflectionMetaplasm
     ) {
         return new TonalAdjectivePhraseme(lexemeAdjectivalNoun, lexemeE, metaplasm);
+    }
+}
+
+export class TonalAssimilationPhrasemeMaker {
+    makePhraseme(
+        lexemePreceding: TonalAssimilationLexeme,
+        lexemeFollowing: TonalAssimilationLexeme,
+        metaplasm: TonalPhrasalInflectionMetaplasm
+    ) {
+        return new TonalAssimilationPhraseme(lexemePreceding, lexemeFollowing, metaplasm);
     }
 }

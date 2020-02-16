@@ -121,25 +121,20 @@ export class Epenthesis extends TonalInflectionMetaplasm {
 
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
-    private forms: Array<TonalWord> = new Array(); // inflected or assimilated forms
+    private forms: Array<TonalWord> = new Array();
     private tonalSymbleEnding: TonalSymbolEnding;
+    // TODO: should a member variable affixes be added and passed to metaplasm. check out member sounds in morpheme
 
-    constructor(protected ms: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
+    constructor(morphemes: Array<TonalCombiningMorpheme>, tim: TonalInflectionMetaplasm) {
         super();
-        // TODO: should parameter TonalCombiningMorpheme[] be replaced with TonalWord
 
-        // TODO: to be configurable
-        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
+        if (morphemes.length == 0) this.word = new TonalWord([]);
+        else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-        isInflStemWithX = this.checkFifth(ms);
-
-        if (isInflStemWithX) this.word = new TonalWord([]);
-        else this.word = new TonalWord(ms.map(x => x.syllable));
-
-        if (ms.length > 0) {
-            if (ms[ms.length - 1].allomorph) {
+        if (morphemes.length > 0) {
+            if (morphemes[morphemes.length - 1]) {
                 // tonal ending needs to be assigned to sandhi lexeme
-                this.tonalSymbleEnding = this.assignTonalEnding(ms[ms.length - 1].allomorph);
+                this.tonalSymbleEnding = this.assignTonalEnding(morphemes[morphemes.length - 1].allomorph);
             } else {
                 this.tonalSymbleEnding = new TonalSymbolEnding();
             }
@@ -147,9 +142,7 @@ export class TonalInflectionLexeme extends Lexeme {
             this.tonalSymbleEnding = new TonalSymbolEnding();
         }
 
-        if (!isInflStemWithX) {
-            this.forms = this.assignWordForms(ms, tim);
-        }
+        if (morphemes.length > 0) this.forms = this.assignWordForms(morphemes, tim);
     }
 
     private assignTonalEnding(allomorph: Allomorph) {
@@ -180,28 +173,6 @@ export class TonalInflectionLexeme extends Lexeme {
 
     getForms() {
         return this.forms;
-    }
-
-    private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
-        for (let i = 0; i < ms.length; i++) {
-            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if (
-                    i < ms.length - 1 &&
-                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
-                ) {
-                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                        break;
-                    } else {
-                        // tonal x can't not appear in them middle of an inflectional stem
-                        // if it is not preceding an ay or a
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 }
 
@@ -249,7 +220,6 @@ export class TonalAssimilationLexeme extends TonalInflectionLexeme {
 //------------------------------------------------------------------------------
 
 export class TonalInflectionLexemeMaker extends LexemeMaker {
-    // TODO: this class appears to be redundant?
     constructor(private tim: TonalInflectionMetaplasm) {
         super();
     }
@@ -259,6 +229,35 @@ export class TonalInflectionLexemeMaker extends LexemeMaker {
     }
 
     protected make(ms: Array<TonalCombiningMorpheme>) {
+        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
+
+        if (ms) {
+            isInflStemWithX = this.checkFifth(ms);
+            if (isInflStemWithX) return new TonalInflectionLexeme([], this.tim);
+        }
+
         return new TonalInflectionLexeme(ms, this.tim);
+    }
+
+    private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
+        for (let i = 0; i < ms.length; i++) {
+            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+                if (
+                    i < ms.length - 1 &&
+                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
+                ) {
+                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                        break;
+                    } else {
+                        // tonal x can't not appear in them middle of an inflectional stem
+                        // if it is not preceding an ay or a
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -81,7 +81,7 @@ export class CheckedTonalEnding extends TonalSymbolEnding {}
 
 export class TonalWord extends Word {
     syllables: Array<TonalSyllable>;
-    constructor(syllables?: Array<TonalSyllable>) {
+    constructor(syllables: Array<TonalSyllable>) {
         super();
         this.syllables = new Array<TonalSyllable>();
         if (syllables != undefined) {

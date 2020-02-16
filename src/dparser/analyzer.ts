@@ -9,7 +9,7 @@ import {
     ThirdCombiningForm,
     TonalSoundChangingMorphemeMaker
 } from './morpheme';
-import { lowerLettersOfTonal } from '../tonal/version2';
+import { lowerLettersOfTonal, Allomorph } from '../tonal/version2';
 import {
     TonalInflectionLexemeMaker,
     TonalInflectionLexeme,
@@ -22,7 +22,13 @@ import {
 } from './lexeme';
 import { TonalInflectionMetaplasm, TonalZeroInflection } from '../lexeme';
 import { TonalCombiningMetaplasm, TonalZeroCombining } from '../morpheme';
-import { TonalInflectionPhrasemeMaker, Adnominal, AgressiveExternal, RegressiveExternal } from './phraseme';
+import {
+    TonalInflectionPhrasemeMaker,
+    Adnominal,
+    AgressiveExternal,
+    RegressiveExternal,
+    TonalAssimilationPhrasemeMaker
+} from './phraseme';
 
 //------------------------------------------------------------------------------
 
@@ -185,19 +191,19 @@ export class TonalPhrasalInflector {
 
 export class TonalPhrasalAssimilator {
     private readonly assimi = new TonalAssimilator();
-    private readonly phmk = new TonalInflectionPhrasemeMaker();
+    private readonly phmk = new TonalAssimilationPhrasemeMaker();
 
     assimilateAgressive(preceding: string, following: string) {
         const lxPreceding = this.assimi.getLexeme(preceding);
         const lxFollowing = this.assimi.getLexeme(following);
 
-        return this.phmk.makeAdjectivePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
+        return this.phmk.makePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
     }
 
     assimilateRegressive(preceding: string, following: string) {
         const lxPreceding = this.assimi.getLexeme(preceding);
         const lxFollowing = this.assimi.getLexeme(following);
 
-        return this.phmk.makeAdjectivePhraseme(lxPreceding, lxFollowing, new RegressiveExternal());
+        return this.phmk.makePhraseme(lxPreceding, lxFollowing, new RegressiveExternal());
     }
 }
