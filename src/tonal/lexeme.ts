@@ -3,7 +3,6 @@ import { Word, LexemeMaker, TonalLemmatizationMetaplasm, Lexeme } from '../lexem
 import { FreeAllomorph, CheckedAllomorph, Allomorph, TonalLetterTags } from './version2';
 import { TonalAffix } from './version2';
 
-class TonalZeroLemmatization extends TonalLemmatizationMetaplasm {}
 export class TonalLemmatization extends TonalLemmatizationMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
         return this.populateLemmata(morphemes, inflectionalEnding);

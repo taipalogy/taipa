@@ -9,7 +9,7 @@ import {
     ThirdCombiningForm,
     TonalSoundChangingMorphemeMaker
 } from './morpheme';
-import { lowerLettersOfTonal, Allomorph } from '../tonal/version2';
+import { lowerLettersOfTonal } from '../tonal/version2';
 import {
     TonalInflectionLexemeMaker,
     TonalInflectionLexeme,
@@ -98,7 +98,7 @@ export class TonalInflector {
 }
 
 export class TonalAssimilator {
-    private readonly tschmm = new TonalSoundChangingMorphemeMaker(new TonalZeroCombining());
+    private readonly tschmm = new TonalSoundChangingMorphemeMaker();
     private readonly gm = new GraphemeMaker(lowerLettersOfTonal);
 
     private morphAnalyze(str: string) {
@@ -130,7 +130,7 @@ export class TonalAssimilator {
 }
 
 export class TonalInserter {
-    private readonly tschmm = new TonalSoundChangingMorphemeMaker(new TonalZeroCombining());
+    private readonly tschmm = new TonalSoundChangingMorphemeMaker();
     private readonly gm = new GraphemeMaker(lowerLettersOfTonal);
 
     private morphAnalyze(str: string) {

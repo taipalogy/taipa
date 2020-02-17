@@ -1,5 +1,5 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
-import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm } from '../phraseme';
+import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
 
 class Transitive extends TonalPhrasalInflectionMetaplasm {
@@ -24,7 +24,7 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
-export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
+export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
     apply(lexemeAdjectivalNoun: TonalAssimilationLexeme, lexemeE: TonalAssimilationLexeme) {
         const wrds = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
         if (wrds.length > 0) return [new TonalPhrase([lexemeAdjectivalNoun.word].concat(wrds))];
@@ -32,7 +32,7 @@ export class AgressiveExternal extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
-export class RegressiveExternal extends TonalPhrasalInflectionMetaplasm {
+export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
     apply(lexemePreceding: TonalAssimilationLexeme, lexemeFollowing: TonalAssimilationLexeme) {
         const wrds = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
         if (wrds.length > 0) return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
@@ -103,7 +103,7 @@ export class TonalAssimilationPhraseme extends Phraseme {
     constructor(
         lexemePreceding: TonalAssimilationLexeme,
         lexemeFollowing: TonalAssimilationLexeme,
-        metaplasm: TonalPhrasalInflectionMetaplasm
+        metaplasm: TonalPhrasalAssimilationMetaplasm
     ) {
         super();
         this.phrase = new TonalPhrase([lexemePreceding.word, lexemeFollowing.word]);
@@ -112,7 +112,6 @@ export class TonalAssimilationPhraseme extends Phraseme {
     }
 
     getForms() {
-        // TODO: what is the commona superclass of thie and other phrasemes so that we can promote getForms()
         return this.forms;
     }
 }
@@ -151,7 +150,7 @@ export class TonalAssimilationPhrasemeMaker {
     makePhraseme(
         lexemePreceding: TonalAssimilationLexeme,
         lexemeFollowing: TonalAssimilationLexeme,
-        metaplasm: TonalPhrasalInflectionMetaplasm
+        metaplasm: TonalPhrasalAssimilationMetaplasm
     ) {
         return new TonalAssimilationPhraseme(lexemePreceding, lexemeFollowing, metaplasm);
     }

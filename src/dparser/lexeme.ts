@@ -178,25 +178,38 @@ export class TonalInflectionLexeme extends Lexeme {
 
 //------------------------------------------------------------------------------
 
-export class TonalAssimilationLexeme extends TonalInflectionLexeme {
-    constructor(protected ms: Array<TonalSoundChangingMorpheme>, tim: TonalInflectionMetaplasm) {
-        super(ms, tim);
+export class TonalAssimilationLexeme extends Lexeme {
+    word: TonalWord;
+    private forms: Array<TonalWord> = new Array();
+
+    constructor(private morphemes: Array<TonalSoundChangingMorpheme>, metaplasm: TonalInflectionMetaplasm) {
+        super();
+
+        if (morphemes.length == 0) this.word = new TonalWord([]);
+        else this.word = new TonalWord(morphemes.map(x => x.syllable));
+
+        if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
+    }
+
+    getForms() {
+        // for internal samdhi
+        return this.forms;
     }
 
     getMorphemes() {
         // when external sandhi is required, member variable morphemes has to be exposed
-        return this.ms;
+        return this.morphemes;
     }
 
     assimilateWith(til: TonalAssimilationLexeme, dir: AssimiDirection) {
         const ms = til.getMorphemes();
-        let wrd = new TonalWord(this.ms.map(x => new TonalSyllable(x.syllable.letters)));
+        let wrd = new TonalWord(this.morphemes.map(x => new TonalSyllable(x.syllable.letters)));
         if (ms.length > 0) {
             const adjacent_snds = ms[ms.length - 1].sounds;
             if (dir === AssimiDirection.agressive) {
                 if (adjacent_snds[adjacent_snds.length - 1].name === TonalSoundTags.nasalFinal) {
                     const s = adjacent_snds[adjacent_snds.length - 1];
-                    const syls = this.ms[0].changeSoundWith(s, AssimiDirection.agressive);
+                    const syls = this.morphemes[0].changeSoundWith(s, AssimiDirection.agressive);
 
                     wrd.replaceSyllable(0, syls[0]);
 
@@ -204,7 +217,7 @@ export class TonalAssimilationLexeme extends TonalInflectionLexeme {
                 }
             } else if (dir === AssimiDirection.regressive && adjacent_snds[0].name === TonalSoundTags.initial) {
                 const s = adjacent_snds[0];
-                const syls = this.ms[this.ms.length - 1].changeSoundWith(s, AssimiDirection.regressive);
+                const syls = this.morphemes[this.morphemes.length - 1].changeSoundWith(s, AssimiDirection.regressive);
 
                 wrd.popSyllable();
                 wrd.pushSyllable(syls[0]);

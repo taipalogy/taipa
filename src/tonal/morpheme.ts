@@ -4,7 +4,7 @@ import {
     MorphemeMaker,
     MatchedPattern,
     TonalCombiningMetaplasm,
-    RemovingEpenthesisOfAy,
+    RemovingEpenthesisOfAy
 } from '../morpheme';
 import {
     free_allomorph_uncombining_rules,
@@ -21,7 +21,7 @@ import {
     TonalSoundTags,
     FirstTonalF,
     ThirdFifthTonalsWX,
-    uncombining_rules_ay,
+    uncombining_rules_ay
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -38,7 +38,7 @@ import {
     regex_mnng_hh_wx,
     sm_m_hh_w,
     sm_jls_f,
-    sm_jjllss_wx,
+    sm_jjllss_wx
 } from './matcher';
 import { InitialSounds } from './version2';
 
@@ -75,11 +75,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                             s.popLetter();
                             // there are base tonals
                             // includes ss and x, exclude zero allomorph
-                            s.pushLetter(
-                                new AlphabeticLetter(
-                                    tnls[i].characters,
-                                ),
-                            );
+                            s.pushLetter(new AlphabeticLetter(tnls[i].characters));
                             ret.push(s);
                         } else {
                             // include zero suffix. the base tone of the seventh tone.
@@ -151,11 +147,11 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             // when there are tonals
 
             if (
-                (literal.length > 1 &&
-                    letters[i] &&
-                    letters[i - 1] &&
-                    (sm_bgkp_f(letters[i - 1].literal, letters[i].literal) ||
-                        sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal)))
+                literal.length > 1 &&
+                letters[i] &&
+                letters[i - 1] &&
+                (sm_bgkp_f(letters[i - 1].literal, letters[i].literal) ||
+                    sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal))
             ) {
                 // this combining form is not present in the pool.
                 matched = literal;
@@ -191,7 +187,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                             letters
                                 .slice(beginOfSyllable, i)
                                 .map(x => x.literal)
-                                .join('') + t,
+                                .join('') + t
                         )
                     ) {
                         // this combining form is not present in the pool,
@@ -224,7 +220,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 Object.assign(matchedLtrs, ltrs);
             } else if (!sft.includes(letters[i].literal)) {
                 // free first tone without a free tonal
-                const rules = faurs.get(TonalLetterTags.zero)
+                const rules = faurs.get(TonalLetterTags.zero);
                 const tnls = !rules ? [] : rules;
                 for (let t of tnls) {
                     // append second tonal letter
@@ -334,21 +330,22 @@ export class TonalUncombiningMorpheme extends Morpheme {
     syllable: TonalSyllable;
     allomorph: Allomorph;
     private metaplasm: TonalCombiningMetaplasm;
+    private forms: TonalSyllable[];
     sounds: Array<Sound>;
 
-    constructor(syllable: TonalSyllable, sounds: Array<Sound>, tcm: TonalCombiningMetaplasm) {
+    constructor(syllable: TonalSyllable, sounds: Array<Sound>, metaplasm: TonalCombiningMetaplasm) {
         super();
         this.syllable = syllable;
-        this.metaplasm = tcm;
+        this.metaplasm = metaplasm;
 
         // assign allomorph for each syllable
         this.allomorph = this.assignAllomorph(this.syllable);
-        this.sounds = new Array();
         this.sounds = sounds;
+        this.forms = this.metaplasm.apply(this.sounds, this.allomorph);
     }
 
     getForms(): TonalSyllable[] {
-        return this.metaplasm.apply(this.sounds, this.allomorph);
+        return this.forms;
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
@@ -388,7 +385,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         if (free_allomorphs.has(syllable.lastLetter.literal)) {
             const am = free_allomorphs.get(syllable.lastLetter.literal);
             if (am) aoas.push(am);
-            else aoas.push(new Allomorph);
+            else aoas.push(new Allomorph());
         }
 
         if (aoas.length == 0) {
@@ -430,7 +427,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
             new TonalSyllable(msp.letters),
             msp.pattern,
-            this.metaplasm,
+            this.metaplasm
         );
         return tum;
     }
@@ -444,7 +441,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         letters: Array<AlphabeticLetter>,
         literal: string,
         regex: RegExp,
-        len: number,
+        len: number
     ) {
         const arr = literal.match(regex);
         // console.log(arr)
@@ -594,7 +591,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                             fnl.index,
                             1,
                             snd1(TonalSoundTags.nasalFinal),
-                            snd2(TonalSoundTags.stopFinal),
+                            snd2(TonalSoundTags.stopFinal)
                         );
                     // console.log(pattern)
                 }

@@ -2,7 +2,7 @@ import { Letters, Sound, SetOfSounds } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
-export class Morph { }
+export class Morph {}
 
 //------------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ export class Allomorph extends Morph {
     }
 }
 
-export class FreeAllomorph extends Allomorph { }
+export class FreeAllomorph extends Allomorph {}
 
 export class CheckedAllomorph extends Allomorph {
     final: Final = new Final();
@@ -37,7 +37,7 @@ export class TonalAffix extends Morph {
     }
 }
 
-class FreeAffix extends TonalAffix { }
+class FreeAffix extends TonalAffix {}
 
 class CheckedAffix extends TonalAffix {
     // there is no final for affix
@@ -101,10 +101,10 @@ export enum TonalLetterTags {
 
     er = 'er',
     ir = 'ir',
-    or = 'or',
+    or = 'or'
 }
 
-export class LettersOfTonal extends Letters { }
+export class LettersOfTonal extends Letters {}
 
 export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.a,
@@ -150,7 +150,7 @@ export const lowerLettersOfTonal = new LettersOfTonal([
     TonalLetterTags.h,
     TonalLetterTags.er,
     TonalLetterTags.ir,
-    TonalLetterTags.or,
+    TonalLetterTags.or
 ]);
 
 //------------------------------------------------------------------------------
@@ -164,7 +164,7 @@ export enum TonalSoundTags {
     stopFinal = 'stopFinal',
     nasalFinal = 'nasalFinal',
     checkedTonal = 'checkedTonal',
-    freeTonal = 'freeTonal',
+    freeTonal = 'freeTonal'
 }
 
 export class Initial extends Sound {
@@ -760,12 +760,12 @@ export const combining_rules = new Map<string, { [key: string]: Sound }>()
     .set(TonalLetterTags.zero, { z: ps_z(TonalSoundTags.freeTonal) })
     .set(TonalLetterTags.y, {
         zero: ps_zero(TonalSoundTags.freeTonal),
-        f: ps_f(TonalSoundTags.freeTonal),
+        f: ps_f(TonalSoundTags.freeTonal)
     })
     .set(TonalLetterTags.w, { y: ps_y(TonalSoundTags.freeTonal) })
     .set(TonalLetterTags.x, {
         z: ps_z(TonalSoundTags.freeTonal),
-        w: ps_w(TonalSoundTags.freeTonal),
+        w: ps_w(TonalSoundTags.freeTonal)
     })
     .set(TonalLetterTags.z, { w: ps_w(TonalSoundTags.freeTonal) })
     .set(TonalLetterTags.p, { f: ps_f(TonalSoundTags.checkedTonal) })
@@ -773,23 +773,23 @@ export const combining_rules = new Map<string, { [key: string]: Sound }>()
     .set(TonalLetterTags.k, { f: ps_f(TonalSoundTags.checkedTonal) })
     .set(TonalLetterTags.h, {
         f: ps_f(TonalSoundTags.checkedTonal),
-        y: ps_y(TonalSoundTags.checkedTonal),
+        y: ps_y(TonalSoundTags.checkedTonal)
     })
     .set(TonalLetterTags.pp, {
         w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal),
+        x: ps_x(TonalSoundTags.checkedTonal)
     })
     .set(TonalLetterTags.tt, {
         w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal),
+        x: ps_x(TonalSoundTags.checkedTonal)
     })
     .set(TonalLetterTags.kk, {
         w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal),
+        x: ps_x(TonalSoundTags.checkedTonal)
     })
     .set(TonalLetterTags.hh, {
         w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal),
+        x: ps_x(TonalSoundTags.checkedTonal)
     });
 
 export const tonal_positional_sounds = new Map<string, (t: TonalSoundTags) => Sound>()
@@ -992,58 +992,19 @@ export const checked_allomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.tt, new AllomorphTT())
     .set(TonalLetterTags.kk, new AllomorphKK())
     .set(TonalLetterTags.hh, new AllomorphHH())
-    .set(
-        TonalLetterTags.p + TonalLetterTags.f,
-        new AllomorphPF(),
-    )
-    .set(
-        TonalLetterTags.t + TonalLetterTags.f,
-        new AllomorphTF(),
-    )
-    .set(
-        TonalLetterTags.k + TonalLetterTags.f,
-        new AllomorphKF(),
-    )
-    .set(
-        TonalLetterTags.h + TonalLetterTags.f,
-        new AllomorphHF(),
-    )
-    .set(
-        TonalLetterTags.pp + TonalLetterTags.w,
-        new AllomorphPPW(),
-    )
-    .set(
-        TonalLetterTags.tt + TonalLetterTags.w,
-        new AllomorphTTW(),
-    )
-    .set(
-        TonalLetterTags.kk + TonalLetterTags.w,
-        new AllomorphKKW(),
-    )
-    .set(
-        TonalLetterTags.hh + TonalLetterTags.w,
-        new AllomorphHHW(),
-    )
-    .set(
-        TonalLetterTags.h + TonalLetterTags.y,
-        new AllomorphHY(),
-    )
-    .set(
-        TonalLetterTags.pp + TonalLetterTags.x,
-        new AllomorphPPX(),
-    )
-    .set(
-        TonalLetterTags.tt + TonalLetterTags.x,
-        new AllomorphTTX(),
-    )
-    .set(
-        TonalLetterTags.kk + TonalLetterTags.x,
-        new AllomorphKKX(),
-    )
-    .set(
-        TonalLetterTags.hh + TonalLetterTags.x,
-        new AllomorphHHX(),
-    );
+    .set(TonalLetterTags.p + TonalLetterTags.f, new AllomorphPF())
+    .set(TonalLetterTags.t + TonalLetterTags.f, new AllomorphTF())
+    .set(TonalLetterTags.k + TonalLetterTags.f, new AllomorphKF())
+    .set(TonalLetterTags.h + TonalLetterTags.f, new AllomorphHF())
+    .set(TonalLetterTags.pp + TonalLetterTags.w, new AllomorphPPW())
+    .set(TonalLetterTags.tt + TonalLetterTags.w, new AllomorphTTW())
+    .set(TonalLetterTags.kk + TonalLetterTags.w, new AllomorphKKW())
+    .set(TonalLetterTags.hh + TonalLetterTags.w, new AllomorphHHW())
+    .set(TonalLetterTags.h + TonalLetterTags.y, new AllomorphHY())
+    .set(TonalLetterTags.pp + TonalLetterTags.x, new AllomorphPPX())
+    .set(TonalLetterTags.tt + TonalLetterTags.x, new AllomorphTTX())
+    .set(TonalLetterTags.kk + TonalLetterTags.x, new AllomorphKKX())
+    .set(TonalLetterTags.hh + TonalLetterTags.x, new AllomorphHHX());
 
 export const combined_free_allomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.w, new AllomorphW())
@@ -1116,3 +1077,10 @@ export const assimilated_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.tt + TonalLetterTags.m, TonalLetterTags.hh)
     .set(TonalLetterTags.tt + TonalLetterTags.n, TonalLetterTags.hh)
     .set(TonalLetterTags.tt + TonalLetterTags.ng, TonalLetterTags.hh);
+
+export const initialFollowingSyllableForVoicedFinal = [
+    TonalLetterTags.b,
+    TonalLetterTags.g,
+    TonalLetterTags.h,
+    TonalLetterTags.l
+];
