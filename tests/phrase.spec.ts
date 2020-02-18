@@ -1,5 +1,4 @@
 import { TonalPhrasalInflector, TonalPhrasalAssimilator } from '../src/dparser/analyzer';
-import { TonalTransitivePhraseme } from '../src/dparser/phraseme';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();

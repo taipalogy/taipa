@@ -1,9 +1,7 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { TonalInflector, TonalAssimilator } from '../src/dparser/analyzer';
-import { RegressiveInternal } from '../src/dparser/lexeme';
-import { TonalZeroCombining } from '../src/morpheme';
+import { TonalAssimilator, TonalInserter, TonalInflector } from '../src/dparser/analyzer';
 
 describe('Epenthesis testing', () => {
     const cli = new Client();
@@ -67,5 +65,45 @@ describe('Voiced final testing', () => {
 
     test('chech the surface form', () => {
         expect(lx.getForms()[0].literal).toEqual('laggwex');
+    });
+});
+
+describe('Epenthesis testing', () => {
+    const inst = new TonalInserter();
+
+    const lx1 = inst.insert('infay');
+
+    test('check the epenthesis of initial n', () => {
+        expect(lx1.getForms()[0].literal).toEqual('infnay');
+    });
+
+    const lx2 = inst.insert('qimxay');
+
+    test('check the epenthesis of initial m', () => {
+        expect(lx2.getForms()[0].literal).toEqual('qimxmay');
+    });
+
+    const lx3 = inst.insert('cangxay');
+
+    test('check the epenthesis of initial ng', () => {
+        expect(lx3.getForms()[0].literal).toEqual('cangxngay');
+    });
+});
+
+describe('Epenthesis testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('qimxay');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('qimxa');
+    });
+
+    const inst = new TonalInserter();
+
+    const lx2 = inst.insert(lx1.getForms()[0].literal);
+
+    test('check the epenthesis of initial m', () => {
+        expect(lx2.getForms()[0].literal).toEqual('qimxma');
     });
 });

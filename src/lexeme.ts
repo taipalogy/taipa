@@ -13,6 +13,12 @@ export class TonalInflectionMetaplasm extends Metaplasm {
 
 export class TonalZeroInflection extends TonalInflectionMetaplasm {}
 
+export class TonalAssimilationMetaplasm extends Metaplasm {
+    apply(morphemes: Array<Morpheme>): TonalWord[] {
+        return [];
+    }
+}
+
 export class TonalLemmatizationMetaplasm extends Metaplasm {
     apply(morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
 }

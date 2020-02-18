@@ -17,10 +17,10 @@ import {
     combined_checked_allomorphs,
     InitialsForEuphonicTT,
     InitialsForEuphonicT,
-    assimilated_finals,
+    euphonic_t_tt,
     NasalInitialSounds,
     MedialSounds,
-    initialFollowingSyllableForVoicedFinal
+    initial_bghl
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
@@ -243,8 +243,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         if (
             sounds[sounds.length - 2].name != TonalSoundTags.stopFinal &&
             sounds[sounds.length - 2].name != TonalSoundTags.nasalFinal
-        )
+        ) {
             return [];
+        }
 
         if (
             (sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
@@ -256,7 +257,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
 
-            const af = assimilated_finals.get(sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString());
+            const af = euphonic_t_tt.get(sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString());
             if (af) {
                 const ps = tonal_positional_sounds.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
@@ -303,7 +304,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            initialFollowingSyllableForVoicedFinal.filter(x => x === soundFollowingSyllable.toString()).length > 0
+            initial_bghl.filter(x => x === soundFollowingSyllable.toString()).length > 0
         ) {
             return this.voicedFinal(sounds);
         }

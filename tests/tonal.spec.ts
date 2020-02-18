@@ -194,14 +194,14 @@ describe('Tonal testing', () => {
 
 describe('Tonal testing', () => {
     const tla = new TonalLemmatizationAnalyzer();
-    const morphemes1 = tla.morphAnalyze('infnay');
+    const morphemes1 = tla.morphAnalyze('ginfnay');
 
     test('check the tonal of the first syllable', () => {
         expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.f);
     });
 
     const tia = new TonalInflectionAnalyzer();
-    const morphemes2 = tia.morphAnalyze('infay', new TonalZeroCombining());
+    const morphemes2 = tia.morphAnalyze('ginfay', new TonalZeroCombining());
 
     test('check the tonal of the first syllable', () => {
         expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.f);
@@ -210,14 +210,14 @@ describe('Tonal testing', () => {
 
 describe('Tonal testing', () => {
     const tla = new TonalLemmatizationAnalyzer();
-    const morphemes1 = tla.morphAnalyze('qimxmay');
+    const morphemes1 = tla.morphAnalyze('qamxmay');
 
     test('check the tonal of the first syllable', () => {
         expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.x);
     });
 
     const tia = new TonalInflectionAnalyzer();
-    const morphemes2 = tia.morphAnalyze('qimxay', new TonalZeroCombining());
+    const morphemes2 = tia.morphAnalyze('qamxay', new TonalZeroCombining());
 
     test('check the tonal of the first syllable', () => {
         expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.x);

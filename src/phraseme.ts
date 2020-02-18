@@ -10,13 +10,13 @@ export class TonalPhrasalInflectionMetaplasm extends PhrasalMetaplasm {
     }
 }
 
+export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm {}
+
 export class TonalPhrasalAssimilationMetaplasm extends PhrasalMetaplasm {
     apply(lexemeOne: TonalAssimilationLexeme, lexemeTwo: TonalAssimilationLexeme): TonalPhrase[] {
         return [];
     }
 }
-
-export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm {}
 
 // -----------------------------------------------------------------------------
 

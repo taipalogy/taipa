@@ -557,7 +557,7 @@ export class StopFinalSounds extends SetOfSounds {
     }
 }
 
-export class EpenthesisSounds extends SetOfSounds {
+export class EpentheticSounds extends SetOfSounds {
     constructor() {
         super();
         this.sounds.push(new InitialB());
@@ -1062,7 +1062,7 @@ export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
 // .set(TonalLetterTags.bb, TonalLetterTags.pp)
 // .set(TonalLetterTags.ll, TonalLetterTags.tt);
 
-export const assimilated_finals = new Map<string, TonalLetterTags>()
+export const euphonic_t_tt = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)
     .set(TonalLetterTags.t + TonalLetterTags.v, TonalLetterTags.p)
     .set(TonalLetterTags.t + TonalLetterTags.k, TonalLetterTags.k)
@@ -1078,7 +1078,8 @@ export const assimilated_finals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.tt + TonalLetterTags.n, TonalLetterTags.hh)
     .set(TonalLetterTags.tt + TonalLetterTags.ng, TonalLetterTags.hh);
 
-export const initialFollowingSyllableForVoicedFinal = [
+export const initial_bghl = [
+    // turn preceding finals to voiced ones
     TonalLetterTags.b,
     TonalLetterTags.g,
     TonalLetterTags.h,

@@ -2,8 +2,6 @@ import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflector, TonalAssimilator, TonalInserter } from '../src/dparser/analyzer';
-import { AgressiveInternal, RegressiveInternal } from '../src/dparser/lexeme';
-import { TonalZeroCombining } from '../src/morpheme';
 
 describe('Inflectional ending testing', () => {
     const cli = new Client();
@@ -279,28 +277,6 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 });
 
-describe('Inflection testing', () => {
-    const inst = new TonalInserter();
-
-    const lx1 = inst.insert('infay');
-
-    test('check the epenthesis of initial n', () => {
-        expect(lx1.getForms()[0].literal).toEqual('infnay');
-    });
-
-    const lx2 = inst.insert('qimxay');
-
-    test('check the epenthesis of initial m', () => {
-        expect(lx2.getForms()[0].literal).toEqual('qimxmay');
-    });
-
-    const lx3 = inst.insert('cangxay');
-
-    test('check the epenthesis of initial m', () => {
-        expect(lx3.getForms()[0].literal).toEqual('cangxngay');
-    });
-});
-
 describe('Inflection testing, with x in the middle of a stem', () => {
     const nflctr = new TonalInflector();
 
@@ -312,34 +288,6 @@ describe('Inflection testing, with x in the middle of a stem', () => {
 
     test('check the inflected form', () => {
         expect(lx.getForms().length).toEqual(0);
-    });
-});
-
-describe('Inflection testing, regressive assimilation', () => {
-    const assimi = new TonalAssimilator();
-
-    const lx = assimi.assimilateRegressive('sinzbunx');
-
-    test('check the underlying form', () => {
-        expect(lx.word.literal).toEqual('sinzbunx');
-    });
-
-    test('check the surface form', () => {
-        expect(lx.getForms()[0].literal).toEqual('simzbunx');
-    });
-});
-
-describe('Inflection testing, agressive assimilation, duplifix', () => {
-    const assimi = new TonalAssimilator();
-
-    const lx = assimi.assimilateAgressive('dittwditt');
-
-    test('check the underlying form', () => {
-        expect(lx.word.literal).toEqual('dittwditt');
-    });
-
-    test('check the surface form', () => {
-        expect(lx.getForms()[0].literal).toEqual('dittwlitt');
     });
 });
 
@@ -357,5 +305,105 @@ describe('Inflection testing', () => {
 
     test('check the surface form', () => {
         expect(lx2.getForms()[0].literal).toEqual('qimxma');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('siax');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('siaz');
+    });
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[1].literal).toEqual('siaw');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('giapp');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('giappw');
+    });
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[1].literal).toEqual('giappx');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('cattx');
+
+    test('check the length of inflected forms', () => {
+        expect(lx1.getForms().length).toEqual(0);
+    });
+
+    test('check the inflectional ending', () => {
+        expect(lx1.getInflectionalEnding()).toEqual('x');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('ekkw');
+
+    test('check the length of inflected forms', () => {
+        expect(lx1.getForms().length).toEqual(0);
+    });
+
+    test('check the inflectional ending', () => {
+        expect(lx1.getInflectionalEnding()).toEqual('w');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('dok');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('dokf');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectDesinence('qurh');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('qurhf');
+    });
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[1].literal).toEqual('qurhy');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectTransfix('chittwvoexiay');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('chittwvoewiaw');
+    });
+});
+
+describe('Inflection testing', () => {
+    const infl = new TonalInflector();
+
+    const lx1 = infl.inflectTransfix('damwvurhhxoay');
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('damwvurhhwoaw');
     });
 });

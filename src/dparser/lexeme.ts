@@ -1,4 +1,4 @@
-import { TonalInflectionMetaplasm, Lexeme, LexemeMaker } from '../lexeme';
+import { TonalInflectionMetaplasm, Lexeme, LexemeMaker, TonalAssimilationMetaplasm } from '../lexeme';
 import { TonalCombiningMorpheme, AssimiDirection, TonalSoundChangingMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
@@ -47,7 +47,7 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class RegressiveInternal extends TonalInflectionMetaplasm {
+export class RegressiveInternal extends TonalAssimilationMetaplasm {
     apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
         let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
 
@@ -75,7 +75,7 @@ export class RegressiveInternal extends TonalInflectionMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class AgressiveInternal extends TonalInflectionMetaplasm {
+export class AgressiveInternal extends TonalAssimilationMetaplasm {
     apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
@@ -95,7 +95,7 @@ export class AgressiveInternal extends TonalInflectionMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class Epenthesis extends TonalInflectionMetaplasm {
+export class Epenthesis extends TonalAssimilationMetaplasm {
     // adding of nasal consonants. insertion
     apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
         if (ms.length > 1 && ms[ms.length - 2]) {

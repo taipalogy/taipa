@@ -14,7 +14,7 @@ import {
     AllomorphX,
     FreeTonalSounds,
     StopFinalSounds,
-    EpenthesisSounds,
+    EpentheticSounds,
     TonalLetterTags,
     lowerLettersOfTonal,
     tonal_positional_sounds,
@@ -258,7 +258,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         list = tsg.generate(matchedLtrs);
     } else {
         if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
-            const ep = new EpenthesisSounds();
+            const ep = new EpentheticSounds();
             const rea = new RemovingEpenthesisOfAy();
             const done = rea.applyToString(literal);
             //console.log(done.toString())

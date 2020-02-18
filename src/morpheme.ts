@@ -4,17 +4,13 @@ import { TonalSyllable } from './tonal/morpheme';
 
 export abstract class CombiningMetaplasm {}
 
-export abstract class TonalCombiningMetaplasm extends CombiningMetaplasm {
+export class TonalCombiningMetaplasm extends CombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }
 }
 
-export class TonalZeroCombining extends TonalCombiningMetaplasm {
-    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
-        return [];
-    }
-}
+export class TonalZeroCombining extends TonalCombiningMetaplasm {}
 
 export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
     applyToLetters(letters: Array<string>) {
@@ -90,7 +86,7 @@ export abstract class MorphemeMaker {
 
     protected make(
         letters: Array<AlphabeticLetter>,
-        syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number) => MatchedPattern,
+        syllabify: (letters: Array<AlphabeticLetter>, beginOfSyllable: number) => MatchedPattern
     ): MatchedPattern[] {
         let patterns = new Array<MatchedPattern>();
         let beginOfSyllable: number = 0;
