@@ -181,12 +181,6 @@ export class Nasalization extends Sound {
 }
 export class Tonal extends Sound {
     name = TonalSoundTags.tonal;
-    isEqualToTonal(tonal: Tonal) {
-        if (this.toString() === tonal.toString()) {
-            return true;
-        }
-        return false;
-    }
 }
 
 export class FreeTonal extends Tonal {

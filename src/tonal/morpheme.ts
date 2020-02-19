@@ -41,12 +41,12 @@ import {
     sm_jjllss_wx
 } from './matcher';
 import { InitialSounds } from './version2';
+import { match } from 'assert';
 
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
-        // get base forms as strings
         if (allomorph) {
             // member variable allomorph is not null
             if (allomorph instanceof FreeAllomorph) {
@@ -101,6 +101,31 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             }
         }
         return []; // return empty array
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class CombiningAy extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph) {
+            if (allomorph.tonal.toString() === TonalLetterTags.f) {
+            } else if (allomorph.tonal.toString() === TonalLetterTags.x) {
+            } else if (allomorph.tonal.toString() === TonalLetterTags.y) {
+                return [];
+            }
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class Reduplication extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph) {
+        }
+        return [];
     }
 }
 
@@ -394,7 +419,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         } else if (aoas.length == 1) {
             // are there multiple allomorphs? there should be only one.
             for (let i = 0; i < aoas.length; i++) {
-                if (aoas[i].tonal.isEqualToTonal(new AllomorphX().tonal)) {
+                if (aoas[i].tonal.toString() === new AllomorphX().tonal.toString()) {
                     // this syllable is already in base form
                     // in order to display this inflectional ending, we have to assign
                     allomorph = aoas[i];
@@ -416,6 +441,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     constructor(tcm: TonalCombiningMetaplasm) {
         super();
+        // TODO: parameter may be redundant
         this.metaplasm = tcm;
     }
 
@@ -423,7 +449,17 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return new Array<TonalUncombiningMorpheme>();
     }
 
+    private createMorphemeNew(matched: MatchedPattern, metaplasm: TonalCombiningMetaplasm) {
+        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
+            new TonalSyllable(matched.letters),
+            matched.pattern,
+            metaplasm
+        );
+        return tum;
+    }
+
     protected createMorpheme(msp: MatchedPattern) {
+        // TODO: distinguish ay and reduplication by inheritance, TonalUncombiningForms can be defaulted
         const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
             new TonalSyllable(msp.letters),
             msp.pattern,
@@ -601,12 +637,29 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
-        let morphemes = this.createMorphemes();
+        const morphemes = this.createMorphemes();
+        const keys_ay = Array.from(uncombining_rules_ay.keys());
+        /*
+        if (
+            patterns.length == 2 &&
+            keys_ay.filter(
+                x =>
+                    x ===
+                    patterns[patterns.length - 2].letters[patterns[patterns.length - 2].letters.length - 1].literal
+            ).length > 0 &&
+            patterns[patterns.length - 1].letters[patterns[patterns.length - 1].letters.length - 1].literal ===
+                TonalLetterTags.y
+        ) {
+            morphemes.push(this.createMorphemeNew(patterns[patterns.length - 2], new CombiningAy()));
+            morphemes.push(this.createMorphemeNew(patterns[patterns.length - 1], new CombiningAy()));
+        }
+*/
         for (let i in patterns) {
             const pat = this.postprocess_euphonic_t_or_tt(patterns[i]);
 
             morphemes.push(this.createMorpheme(pat));
         }
+        // console.log(morphemes.map(x => x.syllable.literal).join(' '));
         return morphemes;
     }
 

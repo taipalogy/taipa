@@ -247,7 +247,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         return [];
     }
 
-    protected regAssimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<TonalSyllable> {
+    private regAssimilate(sounds: Sound[], soundFollowingSyllable: Sound): Array<TonalSyllable> {
         if (
             sounds[sounds.length - 2].name != TonalSoundTags.stopFinal &&
             sounds[sounds.length - 2].name != TonalSoundTags.nasalFinal

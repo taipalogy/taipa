@@ -17,7 +17,7 @@ const new_lexical_roots = [
     
     'dngh', 'dom',
 
-    'gehh',
+    'gehh', 'giuh',
 	
     'hoang', 'homz',
 
@@ -25,7 +25,7 @@ const new_lexical_roots = [
 	
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'len', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mah', 'mnghh',
 

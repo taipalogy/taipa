@@ -158,15 +158,15 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
 
     protected make(morphemes: Array<TonalUncombiningMorpheme>) {
         let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
-
+        /*
         if (morphemes) {
             isInflStemWithX = this.checkFifth(morphemes);
             if (isInflStemWithX) return new TonalLemmatizationLexeme([], new TonalLemmatization());
         }
-
+*/
         return new TonalLemmatizationLexeme(morphemes, new TonalLemmatization());
     }
-
+    /*
     private checkFifth(morphemes: Array<TonalUncombiningMorpheme>): boolean {
         for (let i = 0; i < morphemes.length; i++) {
             if (morphemes[i] && morphemes[i].syllable.lastLetter.literal === TonalLetterTags.x) {
@@ -188,4 +188,5 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
 
         return false;
     }
+    */
 }

@@ -196,16 +196,3 @@ describe('Lemma testing, empty string as an argument', () => {
         expect(lexeme4.getLemmata.length).toEqual(0);
     });
 });
-
-describe('Lemma testing, with x in the middle of an inflectional stem', () => {
-    const lmtzr = new TonalLemmatizer();
-    const lx = lmtzr.lemmatize('moxsek');
-
-    test('check the proceeding form', () => {
-        expect(lx.word.literal).toEqual('');
-    });
-
-    test('check the base form', () => {
-        expect(lx.getLemmata().length).toEqual(0);
-    });
-});
