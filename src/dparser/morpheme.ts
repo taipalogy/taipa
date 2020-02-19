@@ -231,6 +231,14 @@ export class TonalSoundChangingMorpheme extends Morpheme {
                     snds.splice(0, 1, duplifix);
                 }
                 return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
+            } else if (sound.name === TonalSoundTags.nasalization && dir === AssimiDirection.agressive) {
+                const snds = this.sounds;
+                if (snds[snds.length - 1].name === TonalSoundTags.freeTonal) {
+                    snds.splice(snds.length - 1, 0, sound);
+                } else if (snds[snds.length - 1].name === TonalSoundTags.medial) {
+                    snds.push(sound);
+                }
+                return [new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))];
             }
 
             // internal sandhi. regressive assimilation

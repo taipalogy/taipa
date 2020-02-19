@@ -1,7 +1,14 @@
-import { TonalInflectionMetaplasm, Lexeme, LexemeMaker, TonalAssimilationMetaplasm } from '../lexeme';
+import { TonalInflectionMetaplasm, Lexeme, LexemeMaker, TonalAssimilationMetaplasm, Word } from '../lexeme';
 import { TonalCombiningMorpheme, AssimiDirection, TonalSoundChangingMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
-import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
+import {
+    Allomorph,
+    FreeAllomorph,
+    CheckedAllomorph,
+    TonalSoundTags,
+    TonalLetterTags,
+    NasalizationSound
+} from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 
 //------------------------------------------------------------------------------
@@ -80,7 +87,15 @@ export class AgressiveInternal extends TonalAssimilationMetaplasm {
         if (ms.length > 1 && ms[ms.length - 2]) {
             const snds = ms[ms.length - 2].sounds;
             let wrd = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
-            // nasalization of vowels
+
+            if (snds.filter(x => x.name === TonalSoundTags.nasalization).length == 1) {
+                // nasalization of vowels
+                wrd.replaceSyllable(
+                    wrd.syllables.length - 1,
+                    ms[ms.length - 1].changeSoundWith(new NasalizationSound().sounds[0], AssimiDirection.agressive)[0]
+                );
+                return [wrd];
+            }
 
             // duplifix. pass the preceding initial to get forms
             wrd.replaceSyllable(

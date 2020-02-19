@@ -152,30 +152,30 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
         super();
     }
 
-    makeLexemes(ms: Array<TonalUncombiningMorpheme>) {
-        return this.make(ms);
+    makeLexemes(morphemes: Array<TonalUncombiningMorpheme>) {
+        return this.make(morphemes);
     }
 
-    protected make(ms: Array<TonalUncombiningMorpheme>) {
+    protected make(morphemes: Array<TonalUncombiningMorpheme>) {
         let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
 
-        if (ms) {
-            isInflStemWithX = this.checkFifth(ms);
+        if (morphemes) {
+            isInflStemWithX = this.checkFifth(morphemes);
             if (isInflStemWithX) return new TonalLemmatizationLexeme([], new TonalLemmatization());
         }
 
-        return new TonalLemmatizationLexeme(ms, new TonalLemmatization());
+        return new TonalLemmatizationLexeme(morphemes, new TonalLemmatization());
     }
 
-    private checkFifth(ms: Array<TonalUncombiningMorpheme>): boolean {
-        for (let i = 0; i < ms.length; i++) {
-            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+    private checkFifth(morphemes: Array<TonalUncombiningMorpheme>): boolean {
+        for (let i = 0; i < morphemes.length; i++) {
+            if (morphemes[i] && morphemes[i].syllable.lastLetter.literal === TonalLetterTags.x) {
                 if (
-                    i < ms.length - 1 &&
-                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
+                    i < morphemes.length - 1 &&
+                    morphemes[morphemes.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+                    morphemes[morphemes.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
                 ) {
-                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
+                    if (morphemes[morphemes.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
                         break;
                     } else {
                         // tonal x can't not appear in them middle of an inflectional stem
