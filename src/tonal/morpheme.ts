@@ -21,7 +21,11 @@ import {
     TonalSoundTags,
     FirstTonalF,
     ThirdFifthTonalsWX,
-    uncombining_rules_ay
+    uncombining_rules_ay,
+    AllomorphZ,
+    ZeroTonal,
+    FreeTonalZ,
+    FreeTonalX
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -41,24 +45,19 @@ import {
     sm_jjllss_wx
 } from './matcher';
 import { InitialSounds } from './version2';
-import { match } from 'assert';
 
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
-            // member variable allomorph is not null
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
-                    // no need to pop letter
-                    // push letter to make tone 2
-                    // the base tone of the first tone is the second tone
+                    // push y to make tone 2
                     // 1 to 2
                     const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                     const tnls = free_allomorph_uncombining_rules.get('zero');
                     if (tnls) s.pushLetter(new AlphabeticLetter(tnls[0].characters));
-                    // console.log(s)
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
@@ -66,41 +65,32 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     const rules = free_allomorph_uncombining_rules.get(allomorph.toString());
                     const tnls = !rules ? [] : rules;
                     for (let i in tnls) {
-                        // pop letter
-                        // push letter
                         let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                         if (!(tnls[i] instanceof ZeroAllomorph)) {
-                            // when there is allomorph
                             // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
+                            // replace z with f or x
                             s.popLetter();
-                            // there are base tonals
-                            // includes ss and x, exclude zero allomorph
                             s.pushLetter(new AlphabeticLetter(tnls[i].characters));
                             ret.push(s);
                         } else {
-                            // include zero suffix. the base tone of the seventh tone.
-                            // exclude ss and x.
                             // 7 to 1
-                            // tone 1 has no allomorph
+                            // pop z
                             s.popLetter();
                             ret.push(s);
                         }
                     }
-                    //console.log(ret)
                     return ret;
                 }
             } else if (allomorph instanceof CheckedAllomorph) {
-                // pop the last letter
-                // no need to push letter
+                // pop the tone letter
                 // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
                 if (allomorph.tonal.toString() === '') return [];
                 const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
                 s.popLetter();
-                //console.log(s.literal)
                 return [s];
             }
         }
-        return []; // return empty array
+        return [];
     }
 }
 
@@ -110,7 +100,59 @@ export class CombiningAy extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             if (allomorph.tonal.toString() === TonalLetterTags.f) {
+                if (allomorph instanceof FreeAllomorph) {
+                    const ret = [];
+                    const rls = uncombining_rules_ay.get(allomorph.toString());
+                    const tnls = !rls ? [] : rls;
+                    for (let i in tnls) {
+                        let s: TonalSyllable = new TonalSyllable(sounds.map(it => new AlphabeticLetter(it.characters)));
+                        // 1 to 2. 1 to 3
+                        // replace f with y or w
+                        s.popLetter();
+                        s.pushLetter(new AlphabeticLetter(tnls[i].characters));
+                        ret.push(s);
+                    }
+                    return ret;
+                } else if (allomorph instanceof CheckedAllomorph) {
+                    const s: TonalSyllable = new TonalSyllable(sounds.map(it => new AlphabeticLetter(it.characters)));
+                    // pop f
+                    s.popLetter();
+                    return [s];
+                }
             } else if (allomorph.tonal.toString() === TonalLetterTags.x) {
+                // 5 to 1. 5 to 7. 5 to 5.
+                if (allomorph instanceof FreeAllomorph) {
+                    const ret = [];
+                    const rls = uncombining_rules_ay.get(allomorph.toString());
+                    const tnls = !rls ? [] : rls;
+                    for (let i in tnls) {
+                        let s: TonalSyllable = new TonalSyllable(sounds.map(it => new AlphabeticLetter(it.characters)));
+                        if (!(tnls[i] instanceof ZeroTonal)) {
+                            if (tnls[i] instanceof FreeTonalZ) {
+                                // 5 to 7
+                                // replace x with z
+                                s.popLetter();
+                                s.pushLetter(new AlphabeticLetter(tnls[i].characters));
+                                ret.push(s);
+                            } else if (tnls[i] instanceof FreeTonalX) {
+                                // 5 to 5
+                                ret.push(s);
+                            }
+                        } else {
+                            // 5 to 1
+                            // pop x
+                            s.popLetter();
+                            ret.push(s);
+                        }
+                    }
+                    return ret;
+                } else if (allomorph instanceof CheckedAllomorph) {
+                    // 5 to 8.
+                    const s: TonalSyllable = new TonalSyllable(sounds.map(it => new AlphabeticLetter(it.characters)));
+                    // pop x
+                    s.popLetter();
+                    return [s];
+                }
             } else if (allomorph.tonal.toString() === TonalLetterTags.y) {
                 return [];
             }
@@ -435,35 +477,22 @@ export class TonalUncombiningMorpheme extends Morpheme {
 //------------------------------------------------------------------------------
 
 export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
-    private metaplasm: TonalCombiningMetaplasm;
     private euphonicFinals = new Array<AlphabeticLetter>();
     private euphonicFinalTonals = new Array<{ index: number; letters: AlphabeticLetter[] }>();
 
-    constructor(tcm: TonalCombiningMetaplasm) {
+    constructor() {
         super();
-        // TODO: parameter may be redundant
-        this.metaplasm = tcm;
     }
 
     protected createMorphemes() {
         return new Array<TonalUncombiningMorpheme>();
     }
 
-    private createMorphemeNew(matched: MatchedPattern, metaplasm: TonalCombiningMetaplasm) {
+    protected createMorpheme(matched: MatchedPattern, metaplasm: TonalCombiningMetaplasm) {
         const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
             new TonalSyllable(matched.letters),
             matched.pattern,
             metaplasm
-        );
-        return tum;
-    }
-
-    protected createMorpheme(msp: MatchedPattern) {
-        // TODO: distinguish ay and reduplication by inheritance, TonalUncombiningForms can be defaulted
-        const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
-            new TonalSyllable(msp.letters),
-            msp.pattern,
-            this.metaplasm
         );
         return tum;
     }
@@ -576,18 +605,10 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return letters;
     }
 
-    private replaceInitial() {
-        return [];
-    }
-
-    private replaceMedial() {
-        return [];
-    }
-
-    protected preprocess(gs: Array<AlphabeticGrapheme>): AlphabeticLetter[] {
+    protected preprocess(graphemes: Array<AlphabeticGrapheme>): AlphabeticLetter[] {
         let ltrs = new Array<AlphabeticLetter>();
 
-        ltrs = gs.map(it => it.letter);
+        ltrs = graphemes.map(it => it.letter);
 
         ltrs = this.replaceEuphonicFinal(ltrs);
 
@@ -636,37 +657,42 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return pattern;
     }
 
-    protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
-        const morphemes = this.createMorphemes();
+    private isCombiningAy(patterns: MatchedPattern[]) {
         const keys_ay = Array.from(uncombining_rules_ay.keys());
-        /*
+
         if (
             patterns.length == 2 &&
-            keys_ay.filter(
-                x =>
-                    x ===
-                    patterns[patterns.length - 2].letters[patterns[patterns.length - 2].letters.length - 1].literal
-            ).length > 0 &&
-            patterns[patterns.length - 1].letters[patterns[patterns.length - 1].letters.length - 1].literal ===
-                TonalLetterTags.y
+            keys_ay.filter(it => it === patterns[patterns.length - 2].lastLetter.literal).length > 0 &&
+            ((patterns[patterns.length - 1].lastSecondLetter.literal === TonalLetterTags.a &&
+                patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.y) ||
+                patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.a)
         ) {
-            morphemes.push(this.createMorphemeNew(patterns[patterns.length - 2], new CombiningAy()));
-            morphemes.push(this.createMorphemeNew(patterns[patterns.length - 1], new CombiningAy()));
+            return true;
         }
-*/
+        return false;
+    }
+
+    protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
+        const morphemes = this.createMorphemes();
+
         for (let i in patterns) {
             const pat = this.postprocess_euphonic_t_or_tt(patterns[i]);
 
-            morphemes.push(this.createMorpheme(pat));
+            if (this.isCombiningAy(patterns)) {
+                // ~fa, ~xa, fay, or ~xay
+                morphemes.push(this.createMorpheme(pat, new CombiningAy()));
+            } else {
+                morphemes.push(this.createMorpheme(pat, new TonalUncombiningForms()));
+            }
         }
-        // console.log(morphemes.map(x => x.syllable.literal).join(' '));
+
         return morphemes;
     }
 
-    makeMorphemes(gs: Array<AlphabeticGrapheme>) {
-        const ltrs = this.preprocess(gs);
-        const ptrns = this.make(ltrs, syllabifyTonal);
-        const ms = this.postprocess(ptrns);
+    makeMorphemes(graphemes: Array<AlphabeticGrapheme>) {
+        const ltrs = this.preprocess(graphemes);
+        const ptns = this.make(ltrs, syllabifyTonal);
+        const ms = this.postprocess(ptns);
 
         return ms;
     }

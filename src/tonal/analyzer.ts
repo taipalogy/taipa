@@ -14,7 +14,7 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
     }
 
     morphAnalyze(str: string): TonalUncombiningMorpheme[];
-    morphAnalyze(gs: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[];
+    morphAnalyze(graphemes: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[];
     morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
         // morphological analysis
         let graphemes: AlphabeticGrapheme[] = [];
@@ -24,12 +24,12 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
             graphemes = this.graphAnalyze(x);
         }
 
-        const mm = new TonalUncombiningMorphemeMaker(new TonalUncombiningForms());
+        const mm = new TonalUncombiningMorphemeMaker();
         return mm.makeMorphemes(graphemes);
     }
 
     lexAnalyze(str: string): TonalLemmatizationLexeme;
-    lexAnalyze(ms: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme;
+    lexAnalyze(morphemes: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme;
     lexAnalyze(x: string | Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme {
         // lexical analysis
         let morphemes: Array<TonalUncombiningMorpheme> = [];

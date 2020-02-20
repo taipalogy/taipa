@@ -9,7 +9,7 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('chitt');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(0);
+        expect(doc.lemmas.length).toEqual(0);
     });
 });
 
@@ -20,11 +20,11 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('suzjippwhoatf');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(1);
+        expect(doc.lemmas.length).toEqual(1);
     });
 
     test('check the lemma', () => {
-        expect(doc.lemmata[0].literal).toEqual('suzjippwhoat');
+        expect(doc.lemmas[0].literal).toEqual('suzjippwhoat');
     });
 });
 
@@ -35,11 +35,11 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('sia');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(1);
+        expect(doc.lemmas.length).toEqual(1);
     });
 
     test('check the lemma', () => {
-        expect(doc.lemmata[0].literal).toEqual('siay');
+        expect(doc.lemmas[0].literal).toEqual('siay');
     });
 });
 
@@ -50,11 +50,11 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('siay');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(1);
+        expect(doc.lemmas.length).toEqual(1);
     });
 
     test('check the lemma', () => {
-        expect(doc.lemmata[0].literal).toEqual('siaw');
+        expect(doc.lemmas[0].literal).toEqual('siaw');
     });
 });
 
@@ -65,12 +65,12 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('siaw');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(2);
+        expect(doc.lemmas.length).toEqual(2);
     });
 
     test('check the lemma', () => {
-        expect(doc.lemmata[0].literal).toEqual('siaz');
-        expect(doc.lemmata[1].literal).toEqual('siax');
+        expect(doc.lemmas[0].literal).toEqual('siaz');
+        expect(doc.lemmas[1].literal).toEqual('siax');
     });
 });
 
@@ -81,13 +81,13 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('siaz');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(3);
+        expect(doc.lemmas.length).toEqual(3);
     });
 
     test('check the lemma', () => {
-        expect(doc.lemmata[0].literal).toEqual('siax');
-        expect(doc.lemmata[1].literal).toEqual('siaf');
-        expect(doc.lemmata[2].literal).toEqual('sia');
+        expect(doc.lemmas[0].literal).toEqual('siax');
+        expect(doc.lemmas[1].literal).toEqual('siaf');
+        expect(doc.lemmas[2].literal).toEqual('sia');
     });
 });
 
@@ -98,7 +98,7 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('siax');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(0);
+        expect(doc.lemmas.length).toEqual(0);
     });
 });
 
@@ -109,11 +109,11 @@ describe('Lemma testing', () => {
     doc = cli.processTonal('goa');
 
     test('check the number of lemmata', () => {
-        expect(doc.lemmata.length).toEqual(1);
+        expect(doc.lemmas.length).toEqual(1);
     });
 
     test('check the lemma', () => {
-        expect(doc.lemmata[0].literal).toEqual('goay');
+        expect(doc.lemmas[0].literal).toEqual('goay');
     });
 });
 
@@ -159,7 +159,7 @@ describe('Lemma testing, empty string as an argument', () => {
     });
 
     test('check the lemmas', () => {
-        expect(lexemeLemma1.getLemmata().map(x => x.literal).length).toEqual(0);
+        expect(lexemeLemma1.getLemmas().map(x => x.literal).length).toEqual(0);
     });
 
     const lexemeLemma2 = lmtzr.lemmatize(inputEmpty);
@@ -173,7 +173,7 @@ describe('Lemma testing, empty string as an argument', () => {
     });
 
     test('check the lemmas', () => {
-        expect(lexemeLemma2.getLemmata().map(x => x.literal).length).toEqual(0);
+        expect(lexemeLemma2.getLemmas().map(x => x.literal).length).toEqual(0);
     });
 
     const lexeme3 = lmtzr.lemmatize(inputEmpty);
@@ -183,7 +183,7 @@ describe('Lemma testing, empty string as an argument', () => {
     });
 
     test('check the lemmas', () => {
-        expect(lexeme3.getLemmata.length).toEqual(0);
+        expect(lexeme3.getLemmas.length).toEqual(0);
     });
 
     const lexeme4 = lmtzr.lemmatize(inputUnd);
@@ -193,6 +193,6 @@ describe('Lemma testing, empty string as an argument', () => {
     });
 
     test('check the lemmas', () => {
-        expect(lexeme4.getLemmata.length).toEqual(0);
+        expect(lexeme4.getLemmas.length).toEqual(0);
     });
 });

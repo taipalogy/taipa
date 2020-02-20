@@ -11,17 +11,18 @@ export class Token {
     tag: string = '';
     lemma: string = '';
     dep: string = '';
-    head: Token | null = null;
+    head: Token | null = null; // TODO: replace null with undefined
 
-    constructor(public text: string) { }
+    constructor(public text: string) {}
 }
 
 export class TokenAnalysis {
     word: Word = new Word();
-    lemmata: Array<Word> = new Array();
-    inflectionalEnding: string = ''; // inflectinal ending
-    soundSequences: Array<Sound[]> = new Array(); // sound sequences
-    blockSequences: string[] = []; // block sequences
+    lemmas: Array<Word> = new Array();
+    inflectionalEnding: string = '';
+    soundSequences: Array<Sound[]> = new Array();
+    blockSequences: string[] = [];
+    uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
 }
 
 export class TokenLemmatizer {
@@ -91,9 +92,9 @@ export class TokenLemmatizer {
             }
 
             let lemmas: TonalWord[] = [];
-            lemmas = lmtzr.lemmatize(doc.tokens[i].text).getLemmata();
+            lemmas = lmtzr.lemmatize(doc.tokens[i].text).getLemmas();
             if (lemmas.length > 0) doc.tokens[i].lemma = lemmas[0].literal;
         }
         return doc;
-    }
+    };
 }

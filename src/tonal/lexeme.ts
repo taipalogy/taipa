@@ -1,6 +1,6 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import { Word, LexemeMaker, TonalLemmatizationMetaplasm, Lexeme } from '../lexeme';
-import { FreeAllomorph, CheckedAllomorph, Allomorph, TonalLetterTags } from './version2';
+import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2';
 import { TonalAffix } from './version2';
 
 export class TonalLemmatization extends TonalLemmatizationMetaplasm {
@@ -118,7 +118,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
         if (morphemes.length > 0) this.lemmata = metaplasm.apply(morphemes, this.inflectionalEnding);
     }
 
-    getLemmata() {
+    getLemmas() {
         // this must be called after populateLemmata is called
         return this.lemmata;
     }
@@ -158,35 +158,6 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
 
     protected make(morphemes: Array<TonalUncombiningMorpheme>) {
         let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
-        /*
-        if (morphemes) {
-            isInflStemWithX = this.checkFifth(morphemes);
-            if (isInflStemWithX) return new TonalLemmatizationLexeme([], new TonalLemmatization());
-        }
-*/
         return new TonalLemmatizationLexeme(morphemes, new TonalLemmatization());
     }
-    /*
-    private checkFifth(morphemes: Array<TonalUncombiningMorpheme>): boolean {
-        for (let i = 0; i < morphemes.length; i++) {
-            if (morphemes[i] && morphemes[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if (
-                    i < morphemes.length - 1 &&
-                    morphemes[morphemes.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    morphemes[morphemes.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
-                ) {
-                    if (morphemes[morphemes.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                        break;
-                    } else {
-                        // tonal x can't not appear in them middle of an inflectional stem
-                        // if it is not preceding an ay or a
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-    */
 }

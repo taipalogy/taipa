@@ -35,9 +35,20 @@ export class Morpheme {}
 export class MatchedPattern {
     letters: Array<AlphabeticLetter> = new Array();
     pattern: Array<Sound> = new Array();
+
     get matchedLength() {
         return this.letters.length;
     } // length of pattern can be optionally returned
+
+    get lastLetter() {
+        if (this.letters.length > 0) return this.letters[this.letters.length - 1];
+        return new AlphabeticLetter([]);
+    }
+
+    get lastSecondLetter() {
+        if (this.letters.length > 1) return this.letters[this.letters.length - 2];
+        return new AlphabeticLetter([]);
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -47,10 +58,10 @@ export class Syllable {
 
     letters: Array<AlphabeticLetter>;
 
-    constructor(letters?: Array<AlphabeticLetter>) {
+    constructor(letters: Array<AlphabeticLetter>) {
         this.letters = new Array();
-        if (letters != undefined) {
-            let len = letters.length;
+        if (letters) {
+            const len = letters.length;
             for (let i = 0; i < len; i++) {
                 this.pushLetter(letters[i]);
             }
@@ -82,7 +93,7 @@ export class Syllable {
 export abstract class MorphemeMaker {
     protected abstract createMorphemes(): Morpheme[];
 
-    protected abstract createMorpheme(msp: MatchedPattern): Morpheme;
+    protected abstract createMorpheme(matched: MatchedPattern, metaplasm: TonalCombiningMetaplasm): Morpheme;
 
     protected make(
         letters: Array<AlphabeticLetter>,

@@ -43,11 +43,12 @@ export class Client {
             const morphemes: TonalUncombiningMorpheme[] = tla.morphAnalyze(str);
             const lexeme: TonalLemmatizationLexeme = tla.lexAnalyze(morphemes);
             ta.word = lexeme.word;
-            ta.lemmata = lexeme.getLemmata();
+            ta.lemmas = lexeme.getLemmas();
             ta.inflectionalEnding = lexeme.getInflectionalEnding();
 
             for (let m of morphemes) {
                 ta.soundSequences.push(m.sounds);
+                ta.uncombiningSequences.push(m.getForms().map(it => it.literal));
             }
         }
 
