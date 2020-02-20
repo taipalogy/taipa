@@ -375,15 +375,15 @@ export class TonalSoundChangingMorphemeMaker extends MorphemeMaker {
         return new Array<TonalSoundChangingMorpheme>();
     }
 
-    protected createMorpheme(msp: MatchedPattern) {
-        const tcm = new TonalSoundChangingMorpheme(new TonalSyllable(msp.letters), msp.pattern);
+    protected createMorpheme(match: MatchedPattern) {
+        const tcm = new TonalSoundChangingMorpheme(new TonalSyllable(match.letters), match.pattern);
         return tcm;
     }
 
-    private postprocess(patterns: MatchedPattern[]): Array<TonalSoundChangingMorpheme> {
+    private postprocess(matches: MatchedPattern[]): Array<TonalSoundChangingMorpheme> {
         let morphemes = this.createMorphemes();
-        for (let i in patterns) {
-            morphemes.push(this.createMorpheme(patterns[i]));
+        for (let i in matches) {
+            morphemes.push(this.createMorpheme(matches[i]));
         }
         return morphemes;
     }

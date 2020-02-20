@@ -169,6 +169,8 @@ export class TonalReduplication extends TonalCombiningMetaplasm {
     }
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
+            // skip the last syllable. it is the baseform
+            if (this.sounds[this.sounds.length - 1].toString() === sounds[sounds.length - 1].toString()) return [];
             const s: TonalSyllable = new TonalSyllable(this.sounds.map(it => new AlphabeticLetter(it.characters)));
             return [s];
         }
@@ -517,14 +519,19 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return false;
     }
 
-    private isReduplicated3x(matched: MatchedPattern[]) {
-        if (matched.length == 3) {
-            const strs = matched
+    private isReduplicated3x(matches: MatchedPattern[]) {
+        if (matches.length == 3) {
+            const stms = matches
                 .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
                 .map(seq => seq.map(s => s.toString()).join(''));
 
+            // TODO: add checks form tone group
+            const tnls = matches
+                .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
+                .map(seq => seq.map(s => s.toString()).join(''));
+
             // compare 3 strings/lexical stems
-            if (strs.every((v, i, a) => v === a[0])) return true; // identical
+            if (stms.every((v, i, a) => v === a[0])) return true; // identical
         }
         return false;
     }
