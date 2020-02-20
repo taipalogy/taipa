@@ -159,8 +159,6 @@ export enum TonalSoundTags {
     initial = 'initial',
     medial = 'medial',
     nasalization = 'nasalization',
-    final = 'final',
-    tonal = 'tonal',
     stopFinal = 'stopFinal',
     nasalFinal = 'nasalFinal',
     checkedTonal = 'checkedTonal',
@@ -174,13 +172,13 @@ export class Medial extends Sound {
     name = TonalSoundTags.medial;
 }
 export class Final extends Sound {
-    name = TonalSoundTags.final;
+    name = '';
 }
 export class Nasalization extends Sound {
     name = TonalSoundTags.nasalization;
 }
 export class Tonal extends Sound {
-    name = TonalSoundTags.tonal;
+    name = '';
 }
 
 export class FreeTonal extends Tonal {

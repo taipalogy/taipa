@@ -163,9 +163,14 @@ export class CombiningAy extends TonalCombiningMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class Reduplication extends TonalCombiningMetaplasm {
+export class TonalReduplication extends TonalCombiningMetaplasm {
+    constructor(private sounds: Sound[]) {
+        super();
+    }
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
+            const s: TonalSyllable = new TonalSyllable(this.sounds.map(it => new AlphabeticLetter(it.characters)));
+            return [s];
         }
         return [];
     }
@@ -497,6 +502,33 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return tum;
     }
 
+    private isCombiningAy(patterns: MatchedPattern[]) {
+        const keys_ay = Array.from(uncombining_rules_ay.keys());
+
+        if (
+            patterns.length == 2 &&
+            keys_ay.filter(it => it === patterns[patterns.length - 2].lastLetter.literal).length > 0 &&
+            ((patterns[patterns.length - 1].lastSecondLetter.literal === TonalLetterTags.a &&
+                patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.y) ||
+                patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.a)
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    private isReduplicated3x(matched: MatchedPattern[]) {
+        if (matched.length == 3) {
+            const strs = matched
+                .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
+                .map(seq => seq.map(s => s.toString()).join(''));
+
+            // compare 3 strings/lexical stems
+            if (strs.every((v, i, a) => v === a[0])) return true; // identical
+        }
+        return false;
+    }
+
     private preprocessEuphonicFinal(letters: Array<AlphabeticLetter>) {
         this.euphonicFinals.push(letters[letters.length - 1]);
         return letters.slice(0, letters.length - 1);
@@ -657,32 +689,20 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return pattern;
     }
 
-    private isCombiningAy(patterns: MatchedPattern[]) {
-        const keys_ay = Array.from(uncombining_rules_ay.keys());
-
-        if (
-            patterns.length == 2 &&
-            keys_ay.filter(it => it === patterns[patterns.length - 2].lastLetter.literal).length > 0 &&
-            ((patterns[patterns.length - 1].lastSecondLetter.literal === TonalLetterTags.a &&
-                patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.y) ||
-                patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.a)
-        ) {
-            return true;
-        }
-        return false;
-    }
-
-    protected postprocess(patterns: MatchedPattern[]): Array<Morpheme> {
+    protected postprocess(matched: MatchedPattern[]): Array<Morpheme> {
         const morphemes = this.createMorphemes();
 
-        for (let i in patterns) {
-            const pat = this.postprocess_euphonic_t_or_tt(patterns[i]);
+        for (let i in matched) {
+            const ptn = this.postprocess_euphonic_t_or_tt(matched[i]);
 
-            if (this.isCombiningAy(patterns)) {
+            if (this.isCombiningAy(matched)) {
                 // ~fa, ~xa, fay, or ~xay
-                morphemes.push(this.createMorpheme(pat, new CombiningAy()));
+                morphemes.push(this.createMorpheme(ptn, new CombiningAy()));
+            } else if (this.isReduplicated3x(matched)) {
+                // reduplicate by 3
+                morphemes.push(this.createMorpheme(ptn, new TonalReduplication(matched[2].pattern)));
             } else {
-                morphemes.push(this.createMorpheme(pat, new TonalUncombiningForms()));
+                morphemes.push(this.createMorpheme(ptn, new TonalUncombiningForms()));
             }
         }
 

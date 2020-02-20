@@ -17,7 +17,7 @@ const new_lexical_roots = [
     
     'dngh', 'dom',
 
-    'gehh', 'giuh',
+    'gehh', 'gih', 'giuh', 'gimw',
 	
     'hoang', 'homz',
 

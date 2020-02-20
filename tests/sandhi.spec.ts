@@ -5,56 +5,51 @@ import { TonalAssimilator, TonalInserter, TonalInflector } from '../src/dparser/
 
 describe('Epenthesis testing', () => {
     const cli = new Client();
-    let doc = new TokenAnalysis();
 
-    doc = cli.processTonal('sutflay');
+    const ta = cli.processTonal('sutflay');
 
     test('check the consonant', () => {
-        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
+        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
     });
 });
 
 describe('Epenthesis testing', () => {
     const cli = new Client();
-    let doc = new TokenAnalysis();
 
-    doc = cli.processTonal('jiokkxgay');
+    const ta = cli.processTonal('jiokkxgay');
 
     test('check the consonant', () => {
-        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
+        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
     });
 });
 
 describe('Epenthesis testing', () => {
     const cli = new Client();
-    let doc = new TokenAnalysis();
 
-    doc = cli.processTonal('qapfbay');
+    const ta = cli.processTonal('qapfbay');
 
     test('check the consonant', () => {
-        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
+        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
     });
 });
 
 describe('Epenthesis testing', () => {
     const cli = new Client();
-    let doc = new TokenAnalysis();
 
-    doc = cli.processTonal('qamxmay');
+    const ta = cli.processTonal('qamxmay');
 
     test('check the consonant', () => {
-        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
+        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
     });
 });
 
 describe('Epenthesis testing', () => {
     const cli = new Client();
-    let doc = new TokenAnalysis();
 
-    doc = cli.processTonal('soanfnay');
+    const ta = cli.processTonal('soanfnay');
 
     test('check the consonant', () => {
-        expect(doc.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
+        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
     });
 });
 
@@ -105,5 +100,75 @@ describe('Epenthesis testing', () => {
 
     test('check the epenthesis of initial m', () => {
         expect(lx2.getForms()[0].literal).toEqual('qimxma');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('siurfsiurzsiur');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('siur');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('sanfsanfsany');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('sany');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('samysamysamw');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('samw');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('sipfsipfsip');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('sip');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('angfangwangx');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('angx');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('qufquwquz');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('quz');
+    });
+});
+
+describe('Reduplication testing', () => {
+    const cli = new Client();
+
+    const ta = cli.processTonal('sittxsittwsitt');
+
+    test('check the uncombining form', () => {
+        expect(ta.uncombiningSequences[0]).toContain('sitt');
     });
 });
