@@ -1,10 +1,11 @@
-import { TonalLemmatizationAnalyzer, TonalLemmatizer } from './tonal/analyzer';
+import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { Document } from './document';
 import { Tagset } from './dparser/symbols';
 import { TonalWord } from './tonal/lexeme';
 import { SetOfPhrasalVerbs } from './dparser/rules';
 import { Word } from './lexeme';
 import { Sound } from './grapheme';
+import { TonalLemmatizer } from './tonal/lemmatizer';
 
 export class Token {
     pos: string = '';

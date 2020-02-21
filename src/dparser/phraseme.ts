@@ -60,20 +60,14 @@ export class TonalTransitivePhraseme extends Phraseme {
     }
 }
 
-export class TonalIntransitivePhraseme extends Phraseme {
-    phrase: TonalPhrase;
-    constructor(lexemeAdjective: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
-        super();
-        this.phrase = new TonalPhrase([lexemeAdjective.word, lexemeE.word]);
-    }
-}
-
 export class TonalCompoundPhraseme extends Phraseme {
     phrase: TonalPhrase;
     constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         super();
-        this.phrase = new TonalPhrase([lexemePreceding.getForms()[0], lexemeFollowing.word]);
+        this.phrase = new TonalPhrase([lexemePreceding.word, lexemeFollowing.word]);
     }
+
+    // TODO: to allow for inflected form of preceding word
 }
 
 export class TonalAdjectivePhraseme extends Phraseme {
@@ -127,10 +121,6 @@ export class TonalSeperatePhraseme extends Phraseme {
 export class TonalInflectionPhrasemeMaker {
     makeTransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
-    }
-
-    makeIntransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        return new TonalIntransitivePhraseme(lexemeVerb, lexemeParticle);
     }
 
     makeCompoundPhraseme(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {

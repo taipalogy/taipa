@@ -525,7 +525,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                 .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
                 .map(seq => seq.map(s => s.toString()).join(''));
 
-            // TODO: add checks form tone group
+            // TODO: add checks for tone group
             const tnls = matches
                 .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
                 .map(seq => seq.map(s => s.toString()).join(''));

@@ -1,4 +1,4 @@
-import { TonalLemmatizer } from '../src/tonal/analyzer';
+import { TonalLemmatizer } from '../src/tonal/lemmatizer';
 
 describe('Syllable composition testing', () => {
     const lmtzr = new TonalLemmatizer();

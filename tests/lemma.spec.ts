@@ -1,6 +1,7 @@
 import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
-import { TonalLemmatizationAnalyzer, TonalLemmatizer } from '../src/tonal/analyzer';
+import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
+import { TonalLemmatizer } from '../src/tonal/lemmatizer';
 
 describe('Lemma testing', () => {
     const cli = new Client();

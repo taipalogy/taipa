@@ -1,7 +1,8 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { TokenAnalysis } from '../src/token';
-import { TonalAssimilator, TonalInserter, TonalInflector } from '../src/dparser/analyzer';
+import { TonalInflector } from '../src/dparser/inflector';
+import { TonalAssimilator } from '../src/dparser/assimilator';
+import { TonalInserter } from '../src/dparser/inserter';
 
 describe('Epenthesis testing', () => {
     const cli = new Client();

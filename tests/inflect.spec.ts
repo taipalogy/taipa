@@ -1,7 +1,8 @@
 import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { TonalInflector, TonalAssimilator, TonalInserter } from '../src/dparser/analyzer';
+import { TonalInflector } from '../src/dparser/inflector';
+import { TonalInserter } from '../src/dparser/inserter';
 
 describe('Inflectional ending testing', () => {
     const cli = new Client();

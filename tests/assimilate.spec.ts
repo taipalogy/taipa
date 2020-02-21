@@ -1,4 +1,5 @@
-import { TonalAssimilator, TonalInflector } from '../src/dparser/analyzer';
+import { TonalInflector } from '../src/dparser/inflector';
+import { TonalAssimilator } from '../src/dparser/assimilator';
 
 describe('Assimilation testing, -b, -g, -h, -l', () => {
     const assimi = new TonalAssimilator();

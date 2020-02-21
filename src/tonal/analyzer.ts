@@ -2,7 +2,7 @@ import { Analyzer } from '../analyzer';
 import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme';
 import { lowerLettersOfTonal } from './version2';
-import { TonalUncombiningMorphemeMaker, TonalUncombiningForms, TonalUncombiningMorpheme } from './morpheme';
+import { TonalUncombiningMorphemeMaker, TonalUncombiningMorpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
 
@@ -17,42 +17,29 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
     morphAnalyze(graphemes: Array<AlphabeticGrapheme>): TonalUncombiningMorpheme[];
     morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
         // morphological analysis
-        let graphemes: AlphabeticGrapheme[] = [];
+        let gs: AlphabeticGrapheme[] = [];
         if (typeof x == 'object') {
-            graphemes = x;
+            gs = x;
         } else if (typeof x == 'string') {
-            graphemes = this.graphAnalyze(x);
+            gs = this.graphAnalyze(x);
         }
 
         const mm = new TonalUncombiningMorphemeMaker();
-        return mm.makeMorphemes(graphemes);
+        return mm.makeMorphemes(gs);
     }
 
     lexAnalyze(str: string): TonalLemmatizationLexeme;
     lexAnalyze(morphemes: Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme;
     lexAnalyze(x: string | Array<TonalUncombiningMorpheme>): TonalLemmatizationLexeme {
         // lexical analysis
-        let morphemes: Array<TonalUncombiningMorpheme> = [];
+        let ms: Array<TonalUncombiningMorpheme> = [];
         if (typeof x == 'object') {
-            morphemes = x;
+            ms = x;
         } else if (typeof x == 'string') {
-            morphemes = this.morphAnalyze(x);
+            ms = this.morphAnalyze(x);
         }
 
         const lm = new TonalLemmatizationLexemeMaker();
-        return lm.makeLexemes(morphemes);
+        return lm.makeLexemes(ms);
     }
-}
-
-export class TonalLemmatizer {
-    lemmatize(str: string) {
-        const tia = new TonalLemmatizationAnalyzer();
-        const mrphs = tia.morphAnalyze(str);
-        const lx = tia.lexAnalyze(mrphs);
-        return lx;
-    }
-}
-
-class Unassimilator {
-    unassimilate(str: string) {}
 }
