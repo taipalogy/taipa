@@ -135,6 +135,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
 
+            // TODO: add free syllable
             if (allomorph instanceof CheckedAllomorph) {
                 const cfs = combining_rules.get(allomorph.final.toString());
                 for (let k in cfs) {

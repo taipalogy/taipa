@@ -39,10 +39,10 @@ class Phrase {
 export class TonalPhrase extends Phrase {
     words: Array<TonalWord>;
 
-    constructor(words?: Array<TonalWord>) {
+    constructor(words: Array<TonalWord>) {
         super();
         this.words = new Array();
-        if (words != undefined) {
+        if (words) {
             let len = words.length;
             for (let i = 0; i < len; i++) {
                 if (i > 0) this.literal += ' ';

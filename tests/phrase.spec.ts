@@ -1,5 +1,9 @@
 import { TonalPhrasalInflector } from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
+import { TonalPhrase } from '../src/phraseme';
+import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
+import { TonalZeroCombining } from '../src/morpheme';
+import { TonalZeroInflection } from '../src/lexeme';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -16,12 +20,19 @@ describe('Phrasal verb testing, transitive', () => {
 });
 
 describe('Phrasal verb testing, intransitive', () => {
-    const phva = new TonalPhrasalInflector();
+    const tia = new TonalInflectionAnalyzer();
 
-    const ph = phva.dontInflectCompound('laix', 'leh');
+    const ms1 = tia.morphAnalyze('laix', new TonalZeroCombining());
+    const lx1 = tia.lexAnalyze(ms1, new TonalZeroInflection());
+
+    const ms2 = tia.morphAnalyze('leh', new TonalZeroCombining());
+    const lx2 = tia.lexAnalyze(ms2, new TonalZeroInflection());
+
+    // TODO: to simplify phrase creation
+    const p = new TonalPhrase([lx1.word, lx2.word]);
 
     test('check the base form', () => {
-        expect(ph.phrase.literal).toEqual('laix leh');
+        expect(p.literal).toEqual('laix leh');
     });
 });
 

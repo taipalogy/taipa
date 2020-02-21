@@ -41,6 +41,7 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
 }
 
 export class TonalTransitivePhraseme extends Phraseme {
+    // phrasal verb
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
@@ -61,16 +62,17 @@ export class TonalTransitivePhraseme extends Phraseme {
 }
 
 export class TonalCompoundPhraseme extends Phraseme {
+    // seperable phrasal verb. seperate compound verb. seperable verb.
+    // gifchongwguy. onomatopeia
     phrase: TonalPhrase;
     constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         super();
-        this.phrase = new TonalPhrase([lexemePreceding.word, lexemeFollowing.word]);
+        this.phrase = new TonalPhrase([lexemePreceding.getForms()[0], lexemeFollowing.word]);
     }
-
-    // TODO: to allow for inflected form of preceding word
 }
 
 export class TonalAdjectivePhraseme extends Phraseme {
+    // e-adjective
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
@@ -110,14 +112,6 @@ export class TonalAssimilationPhraseme extends Phraseme {
     }
 }
 
-export class TonalSeperatePhraseme extends Phraseme {
-    phrase: TonalPhrase;
-    constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
-        super();
-        this.phrase = new TonalPhrase([lexemePreceding.getForms()[0], lexemeFollowing.word]);
-    }
-}
-
 export class TonalInflectionPhrasemeMaker {
     makeTransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
@@ -127,12 +121,8 @@ export class TonalInflectionPhrasemeMaker {
         return new TonalCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }
 
-    makeAdjectivePhraseme(
-        lexemeAdjectivalNoun: TonalInflectionLexeme,
-        lexemeE: TonalInflectionLexeme,
-        metaplasm: TonalPhrasalInflectionMetaplasm
-    ) {
-        return new TonalAdjectivePhraseme(lexemeAdjectivalNoun, lexemeE, metaplasm);
+    makeAdjectivePhraseme(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
+        return new TonalAdjectivePhraseme(lexemeAdjectivalNoun, lexemeE, new Adnominal());
     }
 }
 

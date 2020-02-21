@@ -3,7 +3,7 @@ import { TonalCombiningForms, ThirdCombiningForm, EncliticECombining, PhrasalVer
 import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
 import { TonalZeroCombining } from '../morpheme';
 import { TonalZeroInflection } from '../lexeme';
-import { TonalInflectionPhrasemeMaker, Adnominal } from './phraseme';
+import { TonalInflectionPhrasemeMaker } from './phraseme';
 
 export class TonalInflector {
     private readonly tia = new TonalInflectionAnalyzer();
@@ -66,7 +66,7 @@ export class TonalPhrasalInflector {
     inflectEToAdnominal(adjectivalNoun: string, e: string) {
         const lexemeAdjective = this.infl.dontInflect(adjectivalNoun);
         const lexemeE = this.infl.inflectEncliticE(e);
-        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE, new Adnominal());
+        return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE);
     }
 
     // inflectPossesive() {}
