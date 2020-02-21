@@ -12,7 +12,7 @@ export class Token {
     tag: string = '';
     lemma: string = '';
     dep: string = '';
-    head: Token | null = null; // TODO: replace null with undefined
+    head: Token | undefined = undefined;
 
     constructor(public text: string) {}
 }

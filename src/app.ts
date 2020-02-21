@@ -17,10 +17,10 @@ stdin.addListener('data', function(d) {
         for (let i = 0; i < ts.length; i++) {
             let lemma = '*';
             if (ts[i].lemma != '') lemma = ts[i].lemma;
-            let orthOfHead = '*';
-            if (ts[i].head) orthOfHead = (<Token>ts[i].head).text;
+            let headText = '*';
+            if (ts[i].head) headText = (<Token>ts[i].head).text;
             console.info(
-                ts[i].text + ',' + lemma + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + orthOfHead,
+                ts[i].text + ',' + lemma + ',' + ts[i].pos + ',' + ts[i].tag + ',' + ts[i].dep + ',' + headText
             );
         }
     }
