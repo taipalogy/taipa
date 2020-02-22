@@ -7,27 +7,42 @@ class Transitive extends TonalPhrasalInflectionMetaplasm {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
         if (lexemeParticle.getForms().length > 0) {
             return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.getForms()[0]])];
-        } else {
+        } else if (lexemeVerb.getForms().length > 0) {
             return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.word])];
+        } else {
+            return [new TonalPhrase([])];
         }
     }
 }
 
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
-        if (lexemeAdjectivalNoun.word.literal === '' || lexemeE.word.literal === '') return [];
-        if (lexemeE.getForms().length > 0) {
-            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.getForms()[0]])];
+    apply(lexemeNoun: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+        if (lexemeNoun.word.literal === '' || lexemeParticle.word.literal === '') return [];
+        if (lexemeParticle.getForms().length > 0) {
+            return [new TonalPhrase([lexemeNoun.word, lexemeParticle.getForms()[0]])];
         } else {
-            return [new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word])];
+            return [new TonalPhrase([])];
+        }
+    }
+}
+
+export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
+    apply(lexemeVerb: TonalInflectionLexeme, lexemeLe: TonalInflectionLexeme) {
+        if (lexemeVerb.word.literal === '' || lexemeLe.word.literal === '') return [];
+        if (lexemeLe.getForms().length > 0) {
+            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeLe.getForms()[0]])];
+        } else if (lexemeVerb.getForms().length > 0) {
+            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeLe.word])];
+        } else {
+            return [new TonalPhrase([])];
         }
     }
 }
 
 export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
-    apply(lexemeAdjectivalNoun: TonalAssimilationLexeme, lexemeE: TonalAssimilationLexeme) {
-        const wrds = lexemeE.assimilateWith(lexemeAdjectivalNoun, AssimiDirection.agressive);
-        if (wrds.length > 0) return [new TonalPhrase([lexemeAdjectivalNoun.word].concat(wrds))];
+    apply(lexemePreceding: TonalAssimilationLexeme, lexemeFollowing: TonalAssimilationLexeme) {
+        const wrds = lexemeFollowing.assimilateWith(lexemePreceding, AssimiDirection.agressive);
+        if (wrds.length > 0) return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
         return [];
     }
 }
@@ -71,8 +86,9 @@ export class TonalCompoundPhraseme extends Phraseme {
     }
 }
 
-export class TonalAdjectivePhraseme extends Phraseme {
-    // e-adjective
+export class TonalMainParticlePhraseme extends Phraseme {
+    // main word and its particle
+    // e-adjective. conjunctive form. possesive
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
@@ -122,7 +138,15 @@ export class TonalInflectionPhrasemeMaker {
     }
 
     makeAdjectivePhraseme(lexemeAdjectivalNoun: TonalInflectionLexeme, lexemeE: TonalInflectionLexeme) {
-        return new TonalAdjectivePhraseme(lexemeAdjectivalNoun, lexemeE, new Adnominal());
+        return new TonalMainParticlePhraseme(lexemeAdjectivalNoun, lexemeE, new Adnominal());
+    }
+
+    makeConjunctivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeLe: TonalInflectionLexeme) {
+        return new TonalMainParticlePhraseme(lexemeVerb, lexemeLe, new Conjunctive());
+    }
+
+    makePossesivePhraseme(lexemeNoun: TonalInflectionLexeme, lexemeEx: TonalInflectionLexeme) {
+        return new TonalMainParticlePhraseme(lexemeNoun, lexemeEx, new Adnominal());
     }
 }
 

@@ -20,7 +20,8 @@ import {
     euphonic_t_tt,
     NasalInitialSounds,
     MedialSounds,
-    initial_bghl
+    initial_bghl,
+    lowerLettersOfTonal
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
@@ -140,10 +141,45 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
                 const cfs = combining_rules.get(allomorph.final.toString());
                 for (let k in cfs) {
                     // f only
+                    // TODO: can sounds character be replaced with letters character. see possesiveexcombining
                     if (cfs[k].toString() === TonalLetterTags.f) s.pushLetter(new AlphabeticLetter(cfs[k].characters));
                     return [new TonalSyllable(s.letters)];
                 }
             }
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            if (allomorph instanceof FreeAllomorph) {
+                if (
+                    allomorph.tonal.toString() === TonalLetterTags.z ||
+                    allomorph.tonal.toString() === TonalLetterTags.w
+                ) {
+                    s.popLetter();
+                    return [new TonalSyllable(s.letters)];
+                }
+            }
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class PossesiveExCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            s.popLetter();
+            s.pushLetter(new AlphabeticLetter(lowerLettersOfTonal.get(TonalLetterTags.w).characters));
+            return [new TonalSyllable(s.letters)];
         }
         return [];
     }
