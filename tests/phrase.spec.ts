@@ -88,6 +88,16 @@ describe('Noun phrase testing, possesive', () => {
     });
 });
 
+describe('Compound testing', () => {
+    const tc = new TonalCreator();
+
+    const p1 = tc.createCompoundPhraseme('qanzkoy', 'lezle');
+
+    test('gifchongwguy', () => {
+        expect(p1.phrase.literal).toEqual('qanzko lezle');
+    });
+});
+
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     const inputEmpty: any = '';
 

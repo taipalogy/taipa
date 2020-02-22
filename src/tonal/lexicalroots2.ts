@@ -11,7 +11,7 @@ const to_be_verified = [
 
 // prettier-ignore
 const new_lexical_roots = [
-    'coaih',
+    'cett', 'coaih',
 
     'choa',
     
@@ -33,7 +33,7 @@ const new_lexical_roots = [
 
     'qanh', 'qngh',
 
-    'oehh',
+    'oehh', 'oh', 'op',
 
     'sangh', 'sennh', 'sienh', 'simh', 'sinnh',
 

@@ -8,8 +8,6 @@ import {
     PossesiveExCombining
 } from './morpheme';
 import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
-import { TonalZeroCombining } from '../morpheme';
-import { TonalZeroInflection } from '../lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalCreator } from './creator';
 

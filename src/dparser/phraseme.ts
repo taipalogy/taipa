@@ -56,7 +56,6 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
 }
 
 export class PhrasalVerbPhraseme extends Phraseme {
-    // phrasal verb
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
