@@ -8,7 +8,7 @@ export { TonalInflectionAnalyzer } from './dparser/analyzer';
 export { KanaLemmatizationAnalyzer } from './kana/analyzer';
 export { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './dparser/lexeme';
 export { TonalCombiningForms, ThirdCombiningForm, AssimiDirection, TonalCombiningMorpheme } from './dparser/morpheme';
-export { TonalTransitivePhraseme } from './dparser/phraseme';
+export { PhrasalVerbPhraseme } from './dparser/phraseme';
 export { GraphemeMaker, Sound, SoundGeneration } from './grapheme';
 export { lexical_roots } from './tonal/lexicalroots2';
 export { lowerLettersOfTonal } from './tonal/version2';

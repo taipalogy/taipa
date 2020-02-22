@@ -9,7 +9,7 @@ import {
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
-import { TonalTransitivePhraseme } from './phraseme';
+import { PhrasalVerbPhraseme } from './phraseme';
 import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperate_vv_compounds } from './dictionary';
 
 export class ConstructionOfSpeech {
@@ -66,7 +66,7 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
 }
 
 export class SetOfPhrasalVerbs {
-    phrms: Array<TonalTransitivePhraseme> = new Array();
+    phrms: Array<PhrasalVerbPhraseme> = new Array();
     phvs: Array<PhrasalVerb> = new Array();
 
     constructor() {

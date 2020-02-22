@@ -55,7 +55,7 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
     }
 }
 
-export class TonalTransitivePhraseme extends Phraseme {
+export class PhrasalVerbPhraseme extends Phraseme {
     // phrasal verb
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
@@ -129,8 +129,8 @@ export class TonalAssimilationPhraseme extends Phraseme {
 }
 
 export class TonalInflectionPhrasemeMaker {
-    makeTransitivePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        return new TonalTransitivePhraseme(lexemeVerb, lexemeParticle, new Transitive());
+    makePhrasalVerbPhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+        return new PhrasalVerbPhraseme(lexemeVerb, lexemeParticle, new Transitive());
     }
 
     makeCompoundPhraseme(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {

@@ -102,22 +102,23 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
         expect(ph1.getForms().length).toEqual(0);
     });
 
-    const infl = new TonalPhrasalInflector();
-
-    const ph2 = infl.inflectMainVerb(inputEmpty, inputEmpty);
+    const crt = new TonalCreator();
+    const ph2 = crt.createCompoundPhraseme(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
     });
 
-    test('check the number of proceeding forms of an empty phrase', () => {
-        expect(ph2.getForms().length).toEqual(0);
-    });
+    const infl = new TonalPhrasalInflector();
 
-    const ph3 = infl.dontInflectCompound(inputEmpty, inputEmpty);
+    const ph3 = infl.inflectMainVerb(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
+    });
+
+    test('check the number of proceeding forms of an empty phrase', () => {
+        expect(ph3.getForms().length).toEqual(0);
     });
 
     const ph4 = infl.inflectEToAdnominal(inputEmpty, inputEmpty);
@@ -165,22 +166,23 @@ describe('Phrasal verb testing, undefined input', () => {
         expect(ph1.getForms().length).toEqual(0);
     });
 
-    const infl = new TonalPhrasalInflector();
-
-    const ph2 = infl.inflectMainVerb(inputUnd, inputUnd);
+    const crt = new TonalCreator();
+    const ph2 = crt.createCompoundPhraseme(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph2.phrase.literal).toEqual('');
     });
 
-    test('check the number of proceeding forms of an empty phrase', () => {
-        expect(ph2.getForms().length).toEqual(0);
-    });
+    const infl = new TonalPhrasalInflector();
 
-    const ph3 = infl.dontInflectCompound(inputUnd, inputUnd);
+    const ph3 = infl.inflectMainVerb(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
+    });
+
+    test('check the number of proceeding forms of an empty phrase', () => {
+        expect(ph3.getForms().length).toEqual(0);
     });
 
     const ph4 = infl.inflectEToAdnominal(inputUnd, inputUnd);

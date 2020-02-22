@@ -11,6 +11,7 @@ import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
 import { TonalZeroCombining } from '../morpheme';
 import { TonalZeroInflection } from '../lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
+import { TonalCreator } from './creator';
 
 export class TonalInflector {
     private readonly tia = new TonalInflectionAnalyzer();
@@ -39,13 +40,6 @@ export class TonalInflector {
         return lx;
     }
 
-    dontInflect(str: string) {
-        // TODO: move to creator?
-        const ms = this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(ms, new TonalZeroInflection()); // could be replaced with TonalDesinenceInflection
-        return lx;
-    }
-
     inflectConjunctiveLe(str: string) {
         const ms = this.tia.morphAnalyze(str, new ConjunctiveLeCombining());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -62,30 +56,24 @@ export class TonalInflector {
 export class TonalPhrasalInflector {
     private readonly infl = new TonalInflector();
     private readonly phm = new TonalInflectionPhrasemeMaker();
+    private readonly crt = new TonalCreator();
 
     inflectMainVerb(verb: string, particle: string) {
         // particle has no proceeding form. no need to inflect
         const lexemeVerb = this.infl.inflectDesinence(verb);
-        const lexemeParticle = this.infl.dontInflect(particle);
-        return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
+        const lexemeParticle = this.crt.createLexeme(particle);
+        return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lexemeParticle);
     }
 
     inflectToProceeding(verb: string, particle: string) {
         // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflectDesinence(verb);
         const lexemeParticle = this.infl.inflectPhrasalVerbParticle(particle);
-        return this.phm.makeTransitivePhraseme(lexemeVerb, lexemeParticle);
-    }
-
-    dontInflectCompound(preceding: string, following: string) {
-        // TODO: move to creator?
-        const lexemePreceding = this.infl.dontInflect(preceding);
-        const lexemeFollowing = this.infl.dontInflect(following);
-        return this.phm.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
+        return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lexemeParticle);
     }
 
     inflectEToAdnominal(adjectivalNoun: string, e: string) {
-        const lexemeAdjective = this.infl.dontInflect(adjectivalNoun);
+        const lexemeAdjective = this.crt.createLexeme(adjectivalNoun);
         const lexemeE = this.infl.inflectEncliticE(e);
         return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE);
     }
@@ -97,7 +85,7 @@ export class TonalPhrasalInflector {
     }
 
     inflectPossesive(noun: string, ex: string) {
-        const lexemeNoun = this.infl.dontInflect(noun);
+        const lexemeNoun = this.crt.createLexeme(noun);
         const lexemeEx = this.infl.inflectPossesiveEx(ex);
         return this.phm.makePossesivePhraseme(lexemeNoun, lexemeEx);
     }
