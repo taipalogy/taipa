@@ -1,5 +1,7 @@
 // prettier-ignore
 const to_be_verified = [
+    'cet', 'cett',
+
     'hioh',
 
     'jih', 'jirnx', 'jirtt',
@@ -11,7 +13,7 @@ const to_be_verified = [
 
 // prettier-ignore
 const new_lexical_roots = [
-    'cett', 'coaih',
+    'coaih',
 
     'choa',
     

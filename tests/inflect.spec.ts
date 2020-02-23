@@ -381,11 +381,11 @@ describe('Inflection testing', () => {
     const lx1 = infl.inflectDesinence('qurh');
 
     test('check the inflected form', () => {
-        expect(lx1.getForms()[0].literal).toEqual('qurhf');
+        expect(lx1.getForms()[0].literal).toEqual('qurhy');
     });
 
     test('check the inflected form', () => {
-        expect(lx1.getForms()[1].literal).toEqual('qurhy');
+        expect(lx1.getForms()[1].literal).toEqual('qurhf');
     });
 });
 

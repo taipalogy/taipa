@@ -1,8 +1,8 @@
 import { TonalInflectionAnalyzer } from './analyzer';
 import { TonalPhrase } from '../phraseme';
-import { TonalZeroInflection } from '../lexeme';
+import { TonalZeroInflection, TonalInflectionMetaplasm } from '../lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
-import { TonalZeroCombining } from '../morpheme';
+import { TonalZeroCombining, TonalCombiningMetaplasm } from '../morpheme';
 import { TonalDesinenceInflection } from './lexeme';
 
 export class TonalCreator {
@@ -23,11 +23,14 @@ export class TonalCreator {
     createLexeme(str: string) {
         const ms = this.tia.morphAnalyze(str, new TonalZeroCombining());
         const lx = this.tia.lexAnalyze(ms, new TonalZeroInflection()); // could be replaced with TonalDesinenceInflection
+        // return a lexeme without its inflected form
         return lx;
     }
 
-    createCompoundPhraseme(preceding: string, following: string) {
-        const lexemePreceding = this.tia.lexAnalyze(preceding, new TonalDesinenceInflection());
+    createCompoundPhraseme(preceding: string, following: string, metaplasm?: TonalCombiningMetaplasm) {
+        const lexemePreceding = metaplasm
+            ? this.tia.lexAnalyze(this.tia.morphAnalyze(preceding, metaplasm), new TonalDesinenceInflection())
+            : this.tia.lexAnalyze(preceding, new TonalDesinenceInflection());
         const lexemeFollowing = this.createLexeme(following);
         return this.phm.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }

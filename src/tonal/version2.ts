@@ -764,8 +764,8 @@ export const combining_rules = new Map<string, { [key: string]: Sound }>()
     .set(TonalLetterTags.t, { f: ps_f(TonalSoundTags.checkedTonal) })
     .set(TonalLetterTags.k, { f: ps_f(TonalSoundTags.checkedTonal) })
     .set(TonalLetterTags.h, {
-        f: ps_f(TonalSoundTags.checkedTonal),
-        y: ps_y(TonalSoundTags.checkedTonal)
+        y: ps_y(TonalSoundTags.checkedTonal),
+        f: ps_f(TonalSoundTags.checkedTonal)
     })
     .set(TonalLetterTags.pp, {
         w: ps_w(TonalSoundTags.checkedTonal),

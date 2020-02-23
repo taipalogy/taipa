@@ -1,4 +1,4 @@
-import { TonalPhrasalInflector } from '../src/dparser/inflector';
+import { TonalPhrasalInflector, TonalInflector } from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalCreator } from '../src/dparser/creator';
 
@@ -95,6 +95,12 @@ describe('Compound testing', () => {
 
     test('gifchongwguy', () => {
         expect(p1.phrase.literal).toEqual('qanzko lezle');
+    });
+
+    const p2 = tc.createCompoundPhraseme('cuhycuh', 'qiurw');
+
+    test('gifchongwguy', () => {
+        expect(p2.phrase.literal).toEqual('cuhycuhy qiurw');
     });
 });
 

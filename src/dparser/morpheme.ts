@@ -21,7 +21,8 @@ import {
     NasalInitialSounds,
     MedialSounds,
     initial_bghl,
-    lowerLettersOfTonal
+    lowerLettersOfTonal,
+    AllomorphH
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 
@@ -77,28 +78,6 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class EncliticECombining extends TonalCombiningMetaplasm {
-    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
-        // 1->7, 7->7, 3->3
-        if (allomorph) {
-            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-            if (allomorph instanceof FreeAllomorph) {
-                if (allomorph instanceof ZeroAllomorph) {
-                    const cfs = combining_rules.get(TonalLetterTags.zero);
-                    for (let k in cfs) {
-                        // it should loop only once
-                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
-                    }
-                    return [s];
-                }
-            }
-        }
-        return [];
-    }
-}
-
-//------------------------------------------------------------------------------
-
 export class ThirdCombiningForm extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
@@ -131,19 +110,63 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 
 //------------------------------------------------------------------------------
 
+export class FourthToFirstCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph && allomorph instanceof AllomorphH) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            s.pushLetter(new AlphabeticLetter(lowerLettersOfTonal.get(TonalLetterTags.f).characters));
+            return [new TonalSyllable(s.letters)];
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class EncliticECombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        // 1->7, 7->7, 3->3
+        if (allomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            if (allomorph instanceof FreeAllomorph) {
+                if (allomorph instanceof ZeroAllomorph) {
+                    const cfs = combining_rules.get(TonalLetterTags.zero);
+                    for (let k in cfs) {
+                        // it should loop only once
+                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
+                    }
+                    return [s];
+                }
+            }
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-
-            // TODO: add free syllable
             if (allomorph instanceof CheckedAllomorph) {
+                // TODO: this rule could be seperated from the map
                 const cfs = combining_rules.get(allomorph.final.toString());
                 for (let k in cfs) {
                     // f only
                     // TODO: can sounds character be replaced with letters character. see possesiveexcombining
-                    if (cfs[k].toString() === TonalLetterTags.f) s.pushLetter(new AlphabeticLetter(cfs[k].characters));
-                    return [new TonalSyllable(s.letters)];
+                    const ret: TonalSyllable[] = [];
+                    if (cfs[k].toString() === TonalLetterTags.f) {
+                        // ~hf
+                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
+                        ret.push(new TonalSyllable(s.letters));
+
+                        // free syllable
+                        s.popLetter(); // pop f
+                        s.popLetter(); // pop h
+                        ret.push(new TonalSyllable(s.letters));
+                        return ret;
+                    }
                 }
             }
         }
