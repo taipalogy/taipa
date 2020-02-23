@@ -6,24 +6,6 @@ export class ConstructionElement {
     tag: string = '';
 }
 
-/*
-export class PhrasalVerbParticleDiurh extends TonalCombiningMetaplasm {
-    apply(syllable: TonalSyllable, allomorph: Allomorph): Array<TonalSyllable> {
-        if (allomorph) {
-            if (allomorph instanceof AllomorphH) {
-                let rets = [];
-                let s: TonalSyllable = new TonalSyllable(syllable.letters);
-                s.popLetter();
-                s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.hh));
-                s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.w));
-                rets.push(new TonalSyllable(s.letters));
-                return rets;
-            }
-        }
-        return [];
-    }
-}
-*/
 export class PersonalPronounSurface extends ConstructionElement {
     constructor(str: string) {
         super();
@@ -124,7 +106,7 @@ export class KeyWords {
             objectFactory(PersonalPronounSurface, 'goa'),
             objectFactory(AuxiliarySurface, 'qaz'),
             objectFactory(ParticleSurface, 'long'),
-            objectFactory(ParticleSurface, 'bew'),
+            objectFactory(ParticleSurface, 'bew')
         ];
     }
 }

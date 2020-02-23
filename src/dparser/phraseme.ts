@@ -6,7 +6,10 @@ class Transitive extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
         if (lexemeParticle.getForms().length > 0) {
-            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.getForms()[0]])];
+            const forms = lexemeParticle.getForms();
+            const ret: TonalPhrase[] = [];
+            forms.map(it => ret.push(new TonalPhrase([lexemeVerb.getForms()[0], it])));
+            return ret;
         } else if (lexemeVerb.getForms().length > 0) {
             return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.word])];
         } else {

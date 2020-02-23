@@ -146,10 +146,21 @@ export class EncliticECombining extends TonalCombiningMetaplasm {
 //------------------------------------------------------------------------------
 
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
+    private diurh(syllable: TonalSyllable) {
+        let rets = [];
+        let s: TonalSyllable = new TonalSyllable(syllable.letters);
+        s.popLetter();
+        s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.hh));
+        s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.w));
+        rets.push(new TonalSyllable(s.letters));
+        return rets;
+    }
+
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof CheckedAllomorph) {
+                if (s.literal === 'diurh') return [s];
                 // TODO: this rule could be seperated from the map
                 const cfs = combining_rules.get(allomorph.final.toString());
                 for (let k in cfs) {

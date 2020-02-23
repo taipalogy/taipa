@@ -5,7 +5,7 @@ import { TonalCreator } from '../src/dparser/creator';
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
 
-    const ph = phva.inflectMainVerb('koannw', 'diurh');
+    const ph = phva.inflectToProceeding('koannw', 'diurh');
 
     test('check the base form', () => {
         expect(ph.phrase.literal).toEqual('koannw diurh');
@@ -56,6 +56,10 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
 
     test('check the proceeding form', () => {
         expect(phrm.getForms()[0].literal).toEqual('lippw kihf');
+    });
+
+    test('check the proceeding form', () => {
+        expect(phrm.getForms()[1].literal).toEqual('lippw ki');
     });
 });
 
@@ -127,16 +131,6 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 
     const infl = new TonalPhrasalInflector();
 
-    const ph3 = infl.inflectMainVerb(inputEmpty, inputEmpty);
-
-    test('check the empty phrase', () => {
-        expect(ph3.phrase.literal).toEqual('');
-    });
-
-    test('check the number of proceeding forms of an empty phrase', () => {
-        expect(ph3.getForms().length).toEqual(0);
-    });
-
     const ph4 = infl.inflectEToAdnominal(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
@@ -190,16 +184,6 @@ describe('Phrasal verb testing, undefined input', () => {
     });
 
     const infl = new TonalPhrasalInflector();
-
-    const ph3 = infl.inflectMainVerb(inputUnd, inputUnd);
-
-    test('check the empty phrase', () => {
-        expect(ph3.phrase.literal).toEqual('');
-    });
-
-    test('check the number of proceeding forms of an empty phrase', () => {
-        expect(ph3.getForms().length).toEqual(0);
-    });
 
     const ph4 = infl.inflectEToAdnominal(inputUnd, inputUnd);
 

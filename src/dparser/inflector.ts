@@ -56,13 +56,6 @@ export class TonalPhrasalInflector {
     private readonly phm = new TonalInflectionPhrasemeMaker();
     private readonly crt = new TonalCreator();
 
-    inflectMainVerb(verb: string, particle: string) {
-        // particle has no proceeding form. no need to inflect
-        const lexemeVerb = this.infl.inflectDesinence(verb);
-        const lexemeParticle = this.crt.createLexeme(particle);
-        return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lexemeParticle);
-    }
-
     inflectToProceeding(verb: string, particle: string) {
         // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflectDesinence(verb);
