@@ -15,10 +15,10 @@ import {
     CheckedTonalSounds,
     voiceless_voiced_finals,
     combined_checked_allomorphs,
-    InitialsForEuphonicTT,
-    InitialsForEuphonicT,
+    initials_for_euphonic_tt,
+    initials_for_euphonic_t,
     euphonic_t_tt,
-    NasalInitialSounds,
+    nasal_initial_sounds,
     MedialSounds,
     initial_bghl,
     lowerLettersTonal,
@@ -324,9 +324,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
         if (
             (sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
-                new InitialsForEuphonicTT().includes(soundFollowingSyllable.toString())) ||
+                initials_for_euphonic_tt.includes(soundFollowingSyllable.toString())) ||
             (sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
-                new InitialsForEuphonicT().includes(soundFollowingSyllable.toString()))
+                initials_for_euphonic_t.includes(soundFollowingSyllable.toString()))
         ) {
             // absolute assimilation
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
@@ -337,7 +337,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
                 const ps = tonal_positional_sounds.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
                 s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
-                if (new NasalInitialSounds().includes(soundFollowingSyllable.toString())) {
+                if (nasal_initial_sounds.includes(soundFollowingSyllable.toString())) {
                     s.insertLetter(s.letters.length - 2, new AlphabeticLetter(soundFollowingSyllable.characters));
                 }
 
@@ -365,7 +365,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     private conditionalVoicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            new NasalInitialSounds().includes(soundFollowingSyllable.toString())
+            nasal_initial_sounds.includes(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }
@@ -379,7 +379,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            initial_bghl.filter(x => x === soundFollowingSyllable.toString()).length > 0
+            initial_bghl.includes(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }

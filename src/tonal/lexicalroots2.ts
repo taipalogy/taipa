@@ -1,6 +1,6 @@
 // prettier-ignore
 const to_be_verified = [
-    'cet', 'cett',
+    'cett',
 
     'hioh',
 

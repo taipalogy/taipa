@@ -14,18 +14,17 @@ import {
     AllomorphX,
     FreeTonalSounds,
     StopFinalSounds,
-    EpentheticSounds,
+    epenthetic_sounds,
     TonalLetterTags,
     lowerLettersTonal,
     tonal_positional_sounds,
     TonalSoundTags,
     FirstTonalF,
-    ThirdFifthTonalsWX,
     uncombining_rules_ay,
-    AllomorphZ,
     ZeroTonal,
     FreeTonalZ,
-    FreeTonalX
+    FreeTonalX,
+    third_fifth_tonals_wx
 } from './version2';
 import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -332,11 +331,10 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         list = tsg.generate(matchedLtrs);
     } else {
         if (ltrs.length == 3 && ltrs[1] === 'a' && ltrs[2] === 'y') {
-            const ep = new EpentheticSounds();
             const rea = new RemovingEpenthesisOfAy();
             const done = rea.applyToString(literal);
             //console.log(done.toString())
-            if (ep.includes(ltrs[0]) && lexical_roots.includes(done)) {
+            if (epenthetic_sounds.includes(ltrs[0]) && lexical_roots.includes(done)) {
                 list = tsg.generate(ltrs);
             }
         }
@@ -587,7 +585,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                 if (new FirstTonalF().includes(arr[i].charAt(arr[i].length - 1))) {
                     literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);
                     fnl = letters.splice(indx, len, lowerLettersTonal.get(TonalLetterTags.t));
-                } else if (new ThirdFifthTonalsWX().includes(arr[i].charAt(arr[i].length - 1))) {
+                } else if (third_fifth_tonals_wx.includes(arr[i].charAt(arr[i].length - 1))) {
                     if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.w)
                         literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.w, sub2);
                     else if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.x)

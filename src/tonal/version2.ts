@@ -428,14 +428,11 @@ export class NasalFinalSounds extends SetOfSounds {
     }
 }
 
-export class NasalInitialSounds extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new InitialM());
-        this.sounds.push(new InitialN());
-        this.sounds.push(new InitialNG());
-    }
-}
+export const nasal_initial_sounds = [
+    TonalLetterTags.m.toString(),
+    TonalLetterTags.n.toString(),
+    TonalLetterTags.ng.toString()
+];
 
 export class NeutralFinalSounds extends SetOfSounds {
     constructor() {
@@ -517,24 +514,6 @@ export class CheckedTonalSounds extends SetOfSounds {
     }
 }
 
-export class FinalSounds extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new FinalP());
-        this.sounds.push(new FinalT());
-        this.sounds.push(new FinalK());
-        this.sounds.push(new FinalH());
-        this.sounds.push(new FinalPP());
-        this.sounds.push(new FinalTT());
-        this.sounds.push(new FinalKK());
-        this.sounds.push(new FinalHH());
-
-        this.sounds.push(new FinalM());
-        this.sounds.push(new FinalN());
-        this.sounds.push(new FinalNG());
-    }
-}
-
 export class StopFinalSounds extends SetOfSounds {
     constructor() {
         super();
@@ -549,35 +528,26 @@ export class StopFinalSounds extends SetOfSounds {
     }
 }
 
-export class EpentheticSounds extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new InitialB());
-        this.sounds.push(new InitialL());
-        this.sounds.push(new InitialG());
-        this.sounds.push(new InitialM());
-        this.sounds.push(new InitialN());
-    }
-}
+export const epenthetic_sounds = [
+    TonalLetterTags.b.toString(),
+    TonalLetterTags.l.toString(),
+    TonalLetterTags.g.toString(),
+    TonalLetterTags.m.toString(),
+    TonalLetterTags.n.toString()
+];
 
-export class EuphonicFinalsJLS extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new FinalJ());
-        this.sounds.push(new FinalL());
-        this.sounds.push(new FinalS());
-    }
-}
+export const euphonic_finals_jls = [
+    TonalLetterTags.j.toString(),
+    TonalLetterTags.l.toString(),
+    TonalLetterTags.s.toString()
+];
 
-export class EuphonicFinalsBGKP extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new FinalB());
-        this.sounds.push(new FinalG());
-        this.sounds.push(new FinalK());
-        this.sounds.push(new FinalP());
-    }
-}
+export const euphonic_finals_bgkp = [
+    TonalLetterTags.b.toString(),
+    TonalLetterTags.g.toString(),
+    TonalLetterTags.k.toString(),
+    TonalLetterTags.p.toString()
+];
 
 export class EuphonicFinalsBGJKLPS extends SetOfSounds {
     constructor() {
@@ -592,24 +562,18 @@ export class EuphonicFinalsBGJKLPS extends SetOfSounds {
     }
 }
 
-export class EuphonicFinalsJJLLSS extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new FinalJJ());
-        this.sounds.push(new FinalLL());
-        this.sounds.push(new FinalSS());
-    }
-}
+export const euphonic_finals_jjllss = [
+    TonalLetterTags.jj.toString(),
+    TonalLetterTags.ll.toString(),
+    TonalLetterTags.ss.toString()
+];
 
-export class EuphonicFinalsBBGGKKPP extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new FinalBB());
-        this.sounds.push(new FinalGG());
-        this.sounds.push(new FinalKK());
-        this.sounds.push(new FinalPP());
-    }
-}
+export const euphonic_finals_bbggkkpp = [
+    TonalLetterTags.bb.toString(),
+    TonalLetterTags.gg.toString(),
+    TonalLetterTags.kk.toString(),
+    TonalLetterTags.pp.toString()
+];
 
 export class EuphonicFinalsBBGGJJKKLLPPSS extends SetOfSounds {
     constructor() {
@@ -631,13 +595,7 @@ export class FirstTonalF extends SetOfSounds {
     }
 }
 
-export class ThirdFifthTonalsWX extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new CheckedTonalW());
-        this.sounds.push(new CheckedTonalX());
-    }
-}
+export const third_fifth_tonals_wx = [TonalLetterTags.w.toString(), TonalLetterTags.x.toString()];
 
 export class NeutralFinalH extends SetOfSounds {
     constructor() {
@@ -653,41 +611,35 @@ export class NeutralFinalHH extends SetOfSounds {
     }
 }
 
-export class InitialsForEuphonicT extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new InitialP());
-        this.sounds.push(new InitialK());
-        this.sounds.push(new InitialB());
-        this.sounds.push(new InitialG());
+export const initials_for_euphonic_t = [
+    TonalLetterTags.p.toString(),
+    TonalLetterTags.k.toString(),
+    TonalLetterTags.b.toString(),
+    TonalLetterTags.g.toString(),
 
-        this.sounds.push(new InitialJ());
-        this.sounds.push(new InitialQ());
-        this.sounds.push(new InitialS());
-        this.sounds.push(new InitialV());
+    TonalLetterTags.j.toString(),
+    TonalLetterTags.q.toString(),
+    TonalLetterTags.s.toString(),
+    TonalLetterTags.v.toString(),
 
-        this.sounds.push(new InitialM());
-        this.sounds.push(new InitialN());
-        this.sounds.push(new InitialNG());
-    }
-}
+    TonalLetterTags.m.toString(),
+    TonalLetterTags.n.toString(),
+    TonalLetterTags.ng.toString()
+];
 
-export class InitialsForEuphonicTT extends SetOfSounds {
-    constructor() {
-        super();
-        this.sounds.push(new InitialP());
-        this.sounds.push(new InitialK());
-        this.sounds.push(new InitialG());
+export const initials_for_euphonic_tt = [
+    TonalLetterTags.p.toString(),
+    TonalLetterTags.k.toString(),
+    TonalLetterTags.g.toString(),
 
-        this.sounds.push(new InitialQ());
-        this.sounds.push(new InitialS());
-        this.sounds.push(new InitialV());
+    TonalLetterTags.q.toString(),
+    TonalLetterTags.s.toString(),
+    TonalLetterTags.v.toString(),
 
-        this.sounds.push(new InitialM());
-        this.sounds.push(new InitialN());
-        this.sounds.push(new InitialNG());
-    }
-}
+    TonalLetterTags.m.toString(),
+    TonalLetterTags.n.toString(),
+    TonalLetterTags.ng.toString()
+];
 
 //------------------------------------------------------------------------------
 
@@ -1050,8 +1002,8 @@ export const euphonic_t_tt = new Map<string, TonalLetterTags>()
 
 export const initial_bghl = [
     // turn preceding finals to voiced ones
-    TonalLetterTags.b,
-    TonalLetterTags.g,
-    TonalLetterTags.h,
-    TonalLetterTags.l
+    TonalLetterTags.b.toString(),
+    TonalLetterTags.g.toString(),
+    TonalLetterTags.h.toString(),
+    TonalLetterTags.l.toString()
 ];

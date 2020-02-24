@@ -2,7 +2,7 @@ import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
 import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
 
-class Proceeding extends TonalPhrasalInflectionMetaplasm {
+class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
         if (lexemeParticle.getForms().length > 0) {
@@ -132,7 +132,7 @@ export class TonalAssimilationPhraseme extends Phraseme {
 
 export class TonalInflectionPhrasemeMaker {
     makePhrasalVerbPhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        return new PhrasalVerbPhraseme(lexemeVerb, lexemeParticle, new Proceeding());
+        return new PhrasalVerbPhraseme(lexemeVerb, lexemeParticle, new ConjugateToProceeding());
     }
 
     makeCompoundPhraseme(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
