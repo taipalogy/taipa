@@ -106,7 +106,7 @@ export enum TonalLetterTags {
 
 export class LettersOfTonal extends Letters {}
 
-export const lowerLettersOfTonal = new LettersOfTonal([
+export const lowerLettersTonal = new LettersOfTonal([
     TonalLetterTags.a,
     TonalLetterTags.e,
     TonalLetterTags.i,
@@ -744,45 +744,23 @@ const ps_xxx = positionalSound([new FreeTonalXXX()]);
 const ps_y = positionalSound([new FreeTonalY(), new CheckedTonalY()]);
 const ps_z = positionalSound([new FreeTonalZ()]);
 const ps_zx = positionalSound([new FreeTonalZX()]);
-const ps_zero = positionalSound([new ZeroTonal()]);
 
 //------------------------------------------------------------------------------
 
-export const combining_rules = new Map<string, { [key: string]: Sound }>()
-    .set(TonalLetterTags.zero, { z: ps_z(TonalSoundTags.freeTonal) })
-    .set(TonalLetterTags.y, {
-        zero: ps_zero(TonalSoundTags.freeTonal),
-        f: ps_f(TonalSoundTags.freeTonal)
-    })
-    .set(TonalLetterTags.w, { y: ps_y(TonalSoundTags.freeTonal) })
-    .set(TonalLetterTags.x, {
-        z: ps_z(TonalSoundTags.freeTonal),
-        w: ps_w(TonalSoundTags.freeTonal)
-    })
-    .set(TonalLetterTags.z, { w: ps_w(TonalSoundTags.freeTonal) })
-    .set(TonalLetterTags.p, { f: ps_f(TonalSoundTags.checkedTonal) })
-    .set(TonalLetterTags.t, { f: ps_f(TonalSoundTags.checkedTonal) })
-    .set(TonalLetterTags.k, { f: ps_f(TonalSoundTags.checkedTonal) })
-    .set(TonalLetterTags.h, {
-        y: ps_y(TonalSoundTags.checkedTonal),
-        f: ps_f(TonalSoundTags.checkedTonal)
-    })
-    .set(TonalLetterTags.pp, {
-        w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal)
-    })
-    .set(TonalLetterTags.tt, {
-        w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal)
-    })
-    .set(TonalLetterTags.kk, {
-        w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal)
-    })
-    .set(TonalLetterTags.hh, {
-        w: ps_w(TonalSoundTags.checkedTonal),
-        x: ps_x(TonalSoundTags.checkedTonal)
-    });
+export const combining_rules = new Map<string, TonalLetterTags[]>()
+    .set(TonalLetterTags.zero, [TonalLetterTags.z])
+    .set(TonalLetterTags.y, [TonalLetterTags.zero, TonalLetterTags.f])
+    .set(TonalLetterTags.w, [TonalLetterTags.y])
+    .set(TonalLetterTags.x, [TonalLetterTags.z, TonalLetterTags.w])
+    .set(TonalLetterTags.z, [TonalLetterTags.w])
+    .set(TonalLetterTags.p, [TonalLetterTags.f])
+    .set(TonalLetterTags.t, [TonalLetterTags.f])
+    .set(TonalLetterTags.k, [TonalLetterTags.f])
+    .set(TonalLetterTags.h, [TonalLetterTags.y, TonalLetterTags.f])
+    .set(TonalLetterTags.pp, [TonalLetterTags.w, TonalLetterTags.x])
+    .set(TonalLetterTags.tt, [TonalLetterTags.w, TonalLetterTags.x])
+    .set(TonalLetterTags.kk, [TonalLetterTags.w, TonalLetterTags.x])
+    .set(TonalLetterTags.hh, [TonalLetterTags.w, TonalLetterTags.x]);
 
 export const tonal_positional_sounds = new Map<string, (t: TonalSoundTags) => Sound>()
     .set(TonalLetterTags.a, ps_a)

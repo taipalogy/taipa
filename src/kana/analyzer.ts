@@ -1,6 +1,6 @@
 import { GraphemeMaker } from '../grapheme';
 import { KanaUncombiningMorphemeMaker, KanaUncombiningMorpheme } from './morpheme';
-import { lowerLettersOfKana } from './kana';
+import { lowerLettersKana } from './kana';
 import { Analyzer } from '../analyzer';
 import { AlphabeticGrapheme } from '../grapheme';
 import { KanaCombiningMetaplasm } from '../morpheme';
@@ -10,7 +10,7 @@ import { KanaCombiningMetaplasm } from '../morpheme';
 export class KanaLemmatizationAnalyzer extends Analyzer {
     graphAnalyze(str: string) {
         // graphemic analysis
-        const gm = new GraphemeMaker(lowerLettersOfKana);
+        const gm = new GraphemeMaker(lowerLettersKana);
         return gm.makeGraphemes(str);
     }
 

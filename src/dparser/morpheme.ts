@@ -21,7 +21,7 @@ import {
     NasalInitialSounds,
     MedialSounds,
     initial_bghl,
-    lowerLettersOfTonal,
+    lowerLettersTonal,
     AllomorphH
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
@@ -39,10 +39,9 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
-                    const cfs = combining_rules.get(TonalLetterTags.zero);
-                    for (let k in cfs) {
-                        // it should loop only once
-                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
+                    const tos = combining_rules.get(TonalLetterTags.zero);
+                    if (tos) {
+                        s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tos[0]).characters));
                     }
                     return [s];
                 } else if (allomorph instanceof AllomorphY) {
@@ -50,24 +49,28 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                     return [s];
                 } else {
                     s.popLetter();
-                    const crs = combining_rules.get(allomorph.tonal.toString());
+                    const tos = combining_rules.get(allomorph.tonal.toString());
                     const rets = [];
-                    for (let k in crs) {
-                        s.pushLetter(new AlphabeticLetter(crs[k].characters));
-                        rets.push(new TonalSyllable(s.letters));
-                        s.popLetter();
+                    if (tos) {
+                        for (let k = 0; k < tos.length; k++) {
+                            s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tos[k]).characters));
+                            rets.push(new TonalSyllable(s.letters));
+                            s.popLetter();
+                        }
                     }
                     return rets;
                 }
             } else if (allomorph instanceof CheckedAllomorph) {
                 // nothing to pop here
                 if (allomorph.tonal.toString().length > 0) return [];
-                const cfs = combining_rules.get(allomorph.final.toString());
+                const tos = combining_rules.get(allomorph.final.toString());
                 const rets = [];
-                for (let k in cfs) {
-                    s.pushLetter(new AlphabeticLetter(cfs[k].characters));
-                    rets.push(new TonalSyllable(s.letters));
-                    s.popLetter();
+                if (tos) {
+                    for (let k = 0; k < tos.length; k++) {
+                        s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tos[k]).characters));
+                        rets.push(new TonalSyllable(s.letters));
+                        s.popLetter();
+                    }
                 }
                 return rets;
             }
@@ -114,7 +117,7 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph && allomorph instanceof AllomorphH) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-            s.pushLetter(new AlphabeticLetter(lowerLettersOfTonal.get(TonalLetterTags.f).characters));
+            s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
             return [new TonalSyllable(s.letters)];
         }
         return [];
@@ -130,10 +133,10 @@ export class EncliticECombining extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
-                    const cfs = combining_rules.get(TonalLetterTags.zero);
-                    for (let k in cfs) {
+                    const tos = combining_rules.get(TonalLetterTags.zero);
+                    if (tos) {
                         // it should loop only once
-                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
+                        s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tos[0]).characters));
                     }
                     return [s];
                 }
@@ -150,8 +153,8 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
         let rets = [];
         let s: TonalSyllable = new TonalSyllable(syllable.letters);
         s.popLetter();
-        s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.hh));
-        s.pushLetter(lowerLettersOfTonal.get(TonalLetterTags.w));
+        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.hh));
+        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
         rets.push(new TonalSyllable(s.letters));
         return rets;
     }
@@ -161,24 +164,17 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof CheckedAllomorph) {
                 if (s.literal === 'diurh') return [];
-                // TODO: this rule could be seperated from the map
-                const cfs = combining_rules.get(allomorph.final.toString());
-                for (let k in cfs) {
-                    // f only
-                    // TODO: can sounds character be replaced with letters character. see possesiveexcombining
-                    const ret: TonalSyllable[] = [];
-                    if (cfs[k].toString() === TonalLetterTags.f) {
-                        // ~hf
-                        s.pushLetter(new AlphabeticLetter(cfs[k].characters));
-                        ret.push(new TonalSyllable(s.letters));
+                // f only
+                const ret: TonalSyllable[] = [];
+                // ~hf
+                s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
+                ret.push(new TonalSyllable(s.letters));
 
-                        // free syllable
-                        s.popLetter(); // pop f
-                        s.popLetter(); // pop h
-                        ret.push(new TonalSyllable(s.letters));
-                        return ret;
-                    }
-                }
+                // free syllable
+                s.popLetter(); // pop f
+                s.popLetter(); // pop h
+                ret.push(new TonalSyllable(s.letters));
+                return ret;
             }
         }
         return [];
@@ -212,7 +208,7 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             s.popLetter();
-            s.pushLetter(new AlphabeticLetter(lowerLettersOfTonal.get(TonalLetterTags.w).characters));
+            s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.w).characters));
             return [new TonalSyllable(s.letters)];
         }
         return [];

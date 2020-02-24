@@ -35,11 +35,11 @@ enum KanaLetterTags {
 
     n = 'n',
 
-    ng = 'ng',
+    ng = 'ng'
 }
 
 export class LettersOfKana extends Letters {}
-export let lowerLettersOfKana = new LettersOfKana([
+export let lowerLettersKana = new LettersOfKana([
     KanaLetterTags.a,
     KanaLetterTags.e,
     KanaLetterTags.i,
@@ -65,7 +65,7 @@ export let lowerLettersOfKana = new LettersOfKana([
     KanaLetterTags.w,
     KanaLetterTags.y,
     KanaLetterTags.n,
-    KanaLetterTags.ng,
+    KanaLetterTags.ng
 ]);
 
 //------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ export enum KanaSoundTags {
     initialConsonant = 'initialConsonant',
     semivowel = 'semivowel',
     vowel = 'vowel',
-    finalConsonant = 'finalConsonant',
+    finalConsonant = 'finalConsonant'
 }
 
 class GerminatedConsonant extends Sound {

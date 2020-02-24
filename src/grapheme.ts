@@ -1,8 +1,8 @@
-import { Character, characters } from "./character";
+import { Character, characters } from './character';
 
 //------------------------------------------------------------------------------
 
-class Grapheme { }
+class Grapheme {}
 
 export class AlphabeticGrapheme extends Grapheme {
     letter: AlphabeticLetter;
@@ -16,7 +16,7 @@ export class AlphabeticGrapheme extends Grapheme {
 //------------------------------------------------------------------------------
 
 export class Letter {
-    literal: string = "";
+    literal: string = '';
 }
 
 export class AlphabeticLetter extends Letter {
@@ -45,7 +45,7 @@ export class MatchedSequence {
         return this.characters.length;
     }
     toString() {
-        let str = "";
+        let str = '';
         for (let i in this.characters) {
             str += this.characters[i].character;
         }
@@ -54,17 +54,17 @@ export class MatchedSequence {
 }
 
 export class Letters {
-    larr: string[];
+    private arr: string[];
     protected o = new Map<string, AlphabeticLetter>();
 
     constructor(larr: string[]) {
-        this.larr = larr;
-        for (let i = 0; i < this.larr.length; i++) {
-            this.assign(this.larr[i]);
+        this.arr = larr;
+        for (let i = 0; i < this.arr.length; i++) {
+            this.assign(this.arr[i]);
         }
     }
 
-    protected assign(e: string) {
+    private assign(e: string) {
         let carr: Character[] = [];
         for (let i = 0; i < e.length; i++) {
             let c = characters.get(e[i]);
@@ -106,7 +106,7 @@ export class GraphemeMaker {
         const characters = new Array();
         if (str) {
             for (let i = 0; i < str.length; i++) {
-                if (str.charAt(i) != "\0") {
+                if (str.charAt(i) != '\0') {
                     characters.push(new Character(str.charAt(i)));
                 }
             }
@@ -125,12 +125,12 @@ export class GraphemeMaker {
         let matchedLen = 0;
 
         //console.log(characters)
-        if (characters[beginOfLetter].character === "n") {
-            if (characters.length - beginOfLetter >= "nng".length) {
+        if (characters[beginOfLetter].character === 'n') {
+            if (characters.length - beginOfLetter >= 'nng'.length) {
                 if (
-                    characters[beginOfLetter].character === "n" &&
-                    characters[beginOfLetter + 1].character === "n" &&
-                    characters[beginOfLetter + 2].character === "g"
+                    characters[beginOfLetter].character === 'n' &&
+                    characters[beginOfLetter + 1].character === 'n' &&
+                    characters[beginOfLetter + 2].character === 'g'
                 ) {
                     // at the beginning of a letter, we should always prefer 'n' to 'nn'
                     // 'nn' is not able to begin a syllable
@@ -138,7 +138,7 @@ export class GraphemeMaker {
                     // special case for 'nng'
 
                     // copy the matched letter
-                    ms.characters[0] = new Character("n");
+                    ms.characters[0] = new Character('n');
                     return ms;
                 }
             }
@@ -222,14 +222,14 @@ export class GraphemeMaker {
 //------------------------------------------------------------------------------
 
 export class Sound {
-    name: string = "";
+    name: string = '';
     // an array of character objects. can be used to make a word object.
     characters: Array<Character> = new Array();
 
     // we still need a method for combinning characters from each character objects.
     // this is different from an array of character objects. it is a string.
     toString() {
-        let l: string = "";
+        let l: string = '';
         // there is no characters for 1st tone
         if (this.characters != null) {
             // when it is not 1st tone

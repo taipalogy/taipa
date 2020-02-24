@@ -1,6 +1,6 @@
 import {
     kanaPositionalSound,
-    lowerLettersOfKana,
+    lowerLettersKana,
     Hatsuon,
     kogakimoji,
     hiragana_katakana,
@@ -8,12 +8,12 @@ import {
     GerminatedConsonantSet,
     InitialConsonantSet,
     hatsuon,
-    gailaigo,
+    gailaigo
 } from './kana';
 import { KanaUncombiningMorpheme } from './morpheme';
 
 export function checkLetterSizeKana() {
-    if (kanaPositionalSound.size !== lowerLettersOfKana.size) {
+    if (kanaPositionalSound.size !== lowerLettersKana.size) {
         console.log('sizes unmatched');
     }
 }

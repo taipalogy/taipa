@@ -1,7 +1,7 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
 import { Analyzer } from '../analyzer';
 import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
-import { lowerLettersOfTonal } from '../tonal/version2';
+import { lowerLettersTonal } from '../tonal/version2';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
@@ -11,7 +11,7 @@ import { TonalCombiningMetaplasm } from '../morpheme';
 export class TonalInflectionAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
-        const gm = new GraphemeMaker(lowerLettersOfTonal);
+        const gm = new GraphemeMaker(lowerLettersTonal);
         return gm.makeGraphemes(str);
     }
 

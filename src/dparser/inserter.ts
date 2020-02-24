@@ -1,11 +1,11 @@
 import { GraphemeMaker } from '../grapheme';
-import { lowerLettersOfTonal } from '../tonal/version2';
+import { lowerLettersTonal } from '../tonal/version2';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { Epenthesis, TonalAssimilationLexeme } from './lexeme';
 
 export class TonalInserter {
     private readonly tschmm = new TonalSoundChangingMorphemeMaker();
-    private readonly gm = new GraphemeMaker(lowerLettersOfTonal);
+    private readonly gm = new GraphemeMaker(lowerLettersTonal);
 
     private morphAnalyze(str: string) {
         const gs = this.gm.makeGraphemes(str);

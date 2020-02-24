@@ -1,7 +1,7 @@
 import { Analyzer } from '../analyzer';
 import { TonalLemmatizationLexemeMaker, TonalLemmatizationLexeme } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme';
-import { lowerLettersOfTonal } from './version2';
+import { lowerLettersTonal } from './version2';
 import { TonalUncombiningMorphemeMaker, TonalUncombiningMorpheme } from './morpheme';
 
 //------------------------------------------------------------------------------
@@ -9,7 +9,7 @@ import { TonalUncombiningMorphemeMaker, TonalUncombiningMorpheme } from './morph
 export class TonalLemmatizationAnalyzer extends Analyzer {
     graphAnalyze(str: string): AlphabeticGrapheme[] {
         // graphemic analysis
-        const gm = new GraphemeMaker(lowerLettersOfTonal);
+        const gm = new GraphemeMaker(lowerLettersTonal);
         return gm.makeGraphemes(str);
     }
 

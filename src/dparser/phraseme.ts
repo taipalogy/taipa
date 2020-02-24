@@ -79,7 +79,7 @@ export class PhrasalVerbPhraseme extends Phraseme {
 }
 
 export class TonalCompoundPhraseme extends Phraseme {
-    // seperable phrasal verb. seperate compound verb. seperable verb.
+    // separable phrasal verb. separate compound verb. separable verb.
     // gifchongwguy. onomatopeia
     phrase: TonalPhrase;
     constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {

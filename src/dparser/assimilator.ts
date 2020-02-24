@@ -1,13 +1,13 @@
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { GraphemeMaker } from '../grapheme';
-import { lowerLettersOfTonal } from '../tonal/version2';
+import { lowerLettersTonal } from '../tonal/version2';
 import { TonalZeroInflection } from '../lexeme';
 import { AgressiveInternal, RegressiveInternal, TonalAssimilationLexeme } from './lexeme';
 import { TonalAssimilationPhrasemeMaker, RegressiveExternal, AgressiveExternal } from './phraseme';
 
 export class TonalAssimilator {
     private readonly tschmm = new TonalSoundChangingMorphemeMaker();
-    private readonly gm = new GraphemeMaker(lowerLettersOfTonal);
+    private readonly gm = new GraphemeMaker(lowerLettersTonal);
 
     private morphAnalyze(str: string) {
         const gs = this.gm.makeGraphemes(str);

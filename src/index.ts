@@ -11,7 +11,7 @@ export { TonalCombiningForms, ThirdCombiningForm, AssimiDirection, TonalCombinin
 export { PhrasalVerbPhraseme } from './dparser/phraseme';
 export { GraphemeMaker, Sound, SoundGeneration } from './grapheme';
 export { lexical_roots } from './tonal/lexicalroots2';
-export { lowerLettersOfTonal } from './tonal/version2';
+export { lowerLettersTonal } from './tonal/version2';
 export { TonalZeroCombining } from './morpheme';
 export { TonalLemmatizer } from './tonal/lemmatizer';
 export { TonalAssimilator } from './dparser/assimilator';

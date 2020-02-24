@@ -16,7 +16,7 @@ import {
     StopFinalSounds,
     EpentheticSounds,
     TonalLetterTags,
-    lowerLettersOfTonal,
+    lowerLettersTonal,
     tonal_positional_sounds,
     TonalSoundTags,
     FirstTonalF,
@@ -586,13 +586,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                 let fnl;
                 if (new FirstTonalF().includes(arr[i].charAt(arr[i].length - 1))) {
                     literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);
-                    fnl = letters.splice(indx, len, lowerLettersOfTonal.get(TonalLetterTags.t));
+                    fnl = letters.splice(indx, len, lowerLettersTonal.get(TonalLetterTags.t));
                 } else if (new ThirdFifthTonalsWX().includes(arr[i].charAt(arr[i].length - 1))) {
                     if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.w)
                         literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.w, sub2);
                     else if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.x)
                         literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.x, sub2);
-                    fnl = letters.splice(indx, len, lowerLettersOfTonal.get(TonalLetterTags.tt));
+                    fnl = letters.splice(indx, len, lowerLettersTonal.get(TonalLetterTags.tt));
                 }
 
                 // console.log(literal)
@@ -618,7 +618,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         ) {
             // for surface form gg whose underlying form is tt but not kk
             const ls = this.preprocessEuphonicFinal(letters);
-            ls.push(lowerLettersOfTonal.get(TonalLetterTags.tt));
+            ls.push(lowerLettersTonal.get(TonalLetterTags.tt));
             return ls;
         }
         return letters;

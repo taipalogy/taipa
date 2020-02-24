@@ -1,4 +1,4 @@
-import { Sound, SoundGeneration, pipe } from "../grapheme";
+import { Sound, SoundGeneration, pipe } from '../grapheme';
 import {
     MaterLectionisSounds,
     MedialSounds,
@@ -13,8 +13,9 @@ import {
     TonalSoundTags,
     CheckedTonalSounds,
     EuphonicFinalsBGJKLPS,
-    EuphonicFinalsBBGGJJKKLLPPSS
-} from "./version2";
+    EuphonicFinalsBBGGJJKKLLPPSS,
+    lowerLettersTonal
+} from './version2';
 
 function initialConsonant(sg: SoundGeneration) {
     const sis = new InitialSounds();
@@ -297,17 +298,17 @@ export class TonalSoundGenerator {
     }
 
     private genChecked(ltrs: string[]) {
-        const to_s = combining_rules.get(ltrs[ltrs.length - 1]);
+        const tos = combining_rules.get(ltrs[ltrs.length - 1]);
         let strs: Array<string[]> = new Array();
 
         strs.push(ltrs);
 
         //console.debug(to_s)
-        if (to_s) {
-            for (let i in to_s) {
+        if (tos) {
+            for (let i in tos) {
                 let syl: string[] = new Array();
                 Object.assign(syl, ltrs);
-                syl.push(to_s[i].toString());
+                syl.push(lowerLettersTonal.get(tos[i]).literal);
                 strs.push(syl);
             }
         }

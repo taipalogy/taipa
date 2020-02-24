@@ -1,7 +1,7 @@
 import { Prediction } from '../src/tonal/prediction';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { GraphemeMaker } from '../src/grapheme';
-import { lowerLettersOfTonal } from '../src/tonal/version2';
+import { lowerLettersTonal } from '../src/tonal/version2';
 
 describe('Prediction testing', () => {
     const inputUnd: any = undefined;
@@ -26,7 +26,7 @@ describe('Prediction testing', () => {
 });
 
 describe('Prediction testing', () => {
-    const gm = new GraphemeMaker(lowerLettersOfTonal);
+    const gm = new GraphemeMaker(lowerLettersTonal);
     const prmptr = new Prediction();
 
     const grs1 = gm.makeGraphemes('s');
