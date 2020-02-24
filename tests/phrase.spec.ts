@@ -106,6 +106,34 @@ describe('Compound testing', () => {
     test('gifchongwguy', () => {
         expect(p2.phrase.literal).toEqual('cuhycuhy qiurw');
     });
+
+    const p3 = tc.createCompoundPhraseme('siamy', 'qoew');
+
+    test('separate vv compound', () => {
+        expect(p3.phrase.literal).toEqual('siam qoew');
+    });
+
+    const p4 = tc.createCompoundPhraseme('poaw', 'kih');
+
+    test('separable phrasal verb, verb-subsidiary compound', () => {
+        expect(p4.phrase.literal).toEqual('poay kih');
+    });
+});
+
+describe('Phrase testing', () => {
+    const tc = new TonalCreator();
+
+    const p1 = tc.createPhrase('vinyviangy qiurw');
+
+    test('onomatopeia', () => {
+        expect(p1.literal).toEqual('vinyviangy qiurw');
+    });
+
+    const p2 = tc.createPhrase('koahy linzlong');
+
+    test('onomatopeia', () => {
+        expect(p2.literal).toEqual('koahy linzlong');
+    });
 });
 
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {

@@ -160,7 +160,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof CheckedAllomorph) {
-                if (s.literal === 'diurh') return [s];
+                if (s.literal === 'diurh') return [];
                 // TODO: this rule could be seperated from the map
                 const cfs = combining_rules.get(allomorph.final.toString());
                 for (let k in cfs) {
