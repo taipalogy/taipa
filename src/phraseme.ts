@@ -8,6 +8,14 @@ export class TonalPhrasalInflectionMetaplasm extends PhrasalMetaplasm {
     apply(lexemeOne: TonalInflectionLexeme, lexemeTwo: TonalInflectionLexeme): TonalPhrase[] {
         return [];
     }
+
+    applyTwoParticles(
+        lexemeOne: TonalInflectionLexeme,
+        lexemeTwo: TonalInflectionLexeme,
+        lexemeThree: TonalInflectionLexeme
+    ): TonalPhrase[] {
+        return [];
+    }
 }
 
 export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm {}

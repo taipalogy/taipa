@@ -14,7 +14,8 @@ import {
     CheckedTonalSounds,
     combined_checked_allomorphs,
     MedialSounds,
-    lowerLettersTonal
+    lowerLettersTonal,
+    AllomorphH
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 import {
@@ -114,7 +115,7 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-/*
+
 export class FourthToFirstCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph && allomorph instanceof AllomorphH) {
@@ -125,7 +126,7 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
         return [];
     }
 }
-*/
+
 //------------------------------------------------------------------------------
 
 export class EighthToFirstCombining extends TonalCombiningMetaplasm {

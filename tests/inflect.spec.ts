@@ -3,6 +3,8 @@ import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflector } from '../src/dparser/inflector';
 import { TonalInserter } from '../src/dparser/inserter';
+import { TonalCreator } from '../src/dparser/creator';
+import { FourthToFirstCombining } from '../src/dparser/morpheme';
 
 describe('Inflectional ending testing', () => {
     const cli = new Client();
@@ -406,5 +408,15 @@ describe('Inflection testing', () => {
 
     test('check the inflected form', () => {
         expect(lx1.getForms()[0].literal).toEqual('damwvurhhwoaw');
+    });
+});
+
+describe('Inflection testing', () => {
+    const crt = new TonalCreator();
+
+    const lx1 = crt.createLexeme('qurh', new FourthToFirstCombining());
+
+    test('check the inflected form', () => {
+        expect(lx1.getForms()[0].literal).toEqual('qurhf');
     });
 });

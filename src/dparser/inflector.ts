@@ -8,7 +8,7 @@ import {
     PossesiveExCombining,
     NthCombining
 } from './morpheme';
-import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
+import { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalCreator } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
@@ -64,11 +64,16 @@ export class TonalPhrasalInflector {
     private readonly phm = new TonalInflectionPhrasemeMaker();
     private readonly crt = new TonalCreator();
 
-    inflectToProceeding(verb: string, particle: string) {
+    inflectToProceeding(verb: string, particle: string, particleTwo?: string) {
         // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflectDesinence(verb);
         const lexemeParticle = this.infl.inflectPhrasalVerbParticle(particle);
-        return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lexemeParticle);
+        const lexemeParticleTwo = particleTwo ? this.infl.inflectPhrasalVerbParticle(particleTwo) : undefined;
+        if (lexemeParticleTwo) {
+            return this.phm.makePhrasalVerbTwoPhraseme(lexemeVerb, lexemeParticle, lexemeParticleTwo);
+        } else {
+            return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lexemeParticle);
+        }
     }
 
     inflectEToAdnominal(adjectivalNoun: string, e: string) {
@@ -96,5 +101,8 @@ export class TonalPhrasalInflector {
         return this.phm.makeParticiplePhraseme(lexemeVerb, lexemeParticle);
     }
 
-    inflectSerialPhraseme() {}
+    inflectSerial(...words: string[]) {
+        const lexemes = words.map(it => this.infl.inflectDesinence(it));
+        return this.phm.makeSerialPhraseme(lexemes);
+    }
 }

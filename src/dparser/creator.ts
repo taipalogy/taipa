@@ -20,10 +20,12 @@ export class TonalCreator {
         return new TonalPhrase(lxs.map(it => it.word));
     }
 
-    createLexeme(str: string) {
-        const ms = this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(ms, new TonalZeroInflection()); // could be replaced with TonalDesinenceInflection
-        // return a lexeme without its inflected form
+    createLexeme(str: string, metaplasm?: TonalCombiningMetaplasm) {
+        const ms = metaplasm
+            ? this.tia.morphAnalyze(str, metaplasm)
+            : this.tia.morphAnalyze(str, new TonalZeroCombining());
+        const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
+        // if metaplasm is undefined, there will be no inflected forms
         return lx;
     }
 

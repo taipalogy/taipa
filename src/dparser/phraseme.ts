@@ -18,6 +18,32 @@ class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
+class ConjugateTwoToProceeding extends TonalPhrasalInflectionMetaplasm {
+    applyTwoParticles(
+        lexemeVerb: TonalInflectionLexeme,
+        lexemeParticle: TonalInflectionLexeme,
+        lexemeParticleTwo: TonalInflectionLexeme
+    ) {
+        if (
+            lexemeVerb.word.literal === '' ||
+            lexemeParticle.word.literal === '' ||
+            lexemeParticleTwo.word.literal === ''
+        )
+            return [];
+
+        if (lexemeParticle.getForms().length > 0 || lexemeParticleTwo.getForms.length > 0) {
+            return [
+                new TonalPhrase([
+                    lexemeVerb.getForms()[0],
+                    lexemeParticle.getForms()[0],
+                    lexemeParticleTwo.getForms()[0]
+                ])
+            ];
+        }
+        return [new TonalPhrase([])];
+    }
+}
+
 class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
@@ -79,7 +105,6 @@ export class PhrasalVerbPhraseme extends Phraseme {
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
-    // TODO: add the second particle
     constructor(
         lexemeVerb: TonalInflectionLexeme,
         lexemeParticle: TonalInflectionLexeme,
@@ -89,6 +114,27 @@ export class PhrasalVerbPhraseme extends Phraseme {
         this.phrase = new TonalPhrase([lexemeVerb.word, lexemeParticle.word]);
 
         this.forms = metaplasm.apply(lexemeVerb, lexemeParticle);
+    }
+
+    getForms() {
+        return this.forms;
+    }
+}
+
+export class PhrasalVerbTwoPhraseme extends Phraseme {
+    phrase: TonalPhrase;
+    private forms: Array<TonalPhrase> = new Array();
+
+    constructor(
+        lexemeVerb: TonalInflectionLexeme,
+        lexemeParticle: TonalInflectionLexeme,
+        lexemeParticleTwo: TonalInflectionLexeme,
+        metaplasm: TonalPhrasalInflectionMetaplasm
+    ) {
+        super();
+        this.phrase = new TonalPhrase([lexemeVerb.word, lexemeParticle.word, lexemeParticleTwo.word]);
+
+        this.forms = metaplasm.applyTwoParticles(lexemeVerb, lexemeParticle, lexemeParticleTwo);
     }
 
     getForms() {
@@ -129,6 +175,22 @@ export class TonalMainParticlePhraseme extends Phraseme {
     }
 }
 
+export class SerialPhraseme extends Phraseme {
+    phrase: TonalPhrase;
+    private forms: Array<TonalPhrase> = new Array();
+
+    constructor(lexemes: TonalInflectionLexeme[]) {
+        super();
+        this.phrase = new TonalPhrase(lexemes.map(it => it.word));
+
+        this.forms = [new TonalPhrase(lexemes.map(it => it.getForms()[0]))];
+    }
+
+    getForms() {
+        return this.forms;
+    }
+}
+
 export class TonalAssimilationPhraseme extends Phraseme {
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
@@ -154,6 +216,19 @@ export class TonalInflectionPhrasemeMaker {
         return new PhrasalVerbPhraseme(lexemeVerb, lexemeParticle, new ConjugateToProceeding());
     }
 
+    makePhrasalVerbTwoPhraseme(
+        lexemeVerb: TonalInflectionLexeme,
+        lexemeParticle: TonalInflectionLexeme,
+        lexemeParticleTwo: TonalInflectionLexeme
+    ) {
+        return new PhrasalVerbTwoPhraseme(
+            lexemeVerb,
+            lexemeParticle,
+            lexemeParticleTwo,
+            new ConjugateTwoToProceeding()
+        );
+    }
+
     makeCompoundPhraseme(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         return new TonalCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }
@@ -172,6 +247,10 @@ export class TonalInflectionPhrasemeMaker {
 
     makeParticiplePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         return new PhrasalVerbPhraseme(lexemeVerb, lexemeParticle, new ConjugateToParticiple());
+    }
+
+    makeSerialPhraseme(lexemes: TonalInflectionLexeme[]) {
+        return new SerialPhraseme(lexemes);
     }
 }
 

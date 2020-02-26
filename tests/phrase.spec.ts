@@ -50,18 +50,28 @@ describe('Adjective testing, adnominal', () => {
 describe('Phrasal verb testing, transitive, adverbial', () => {
     const infl = new TonalPhrasalInflector();
 
-    const phrm = infl.inflectToProceeding('lipp', 'kih');
+    const p1 = infl.inflectToProceeding('lipp', 'kih');
 
     test('check the base form', () => {
-        expect(phrm.phrase.literal).toEqual('lipp kih');
+        expect(p1.phrase.literal).toEqual('lipp kih');
     });
 
     test('check the proceeding form', () => {
-        expect(phrm.getForms()[0].literal).toEqual('lippw kihf');
+        expect(p1.getForms()[0].literal).toEqual('lippw kihf');
     });
 
     test('check the proceeding form', () => {
-        expect(phrm.getForms()[1].literal).toEqual('lippw ki');
+        expect(p1.getForms()[1].literal).toEqual('lippw ki');
+    });
+
+    const p2 = infl.inflectToProceeding('tehh', 'cut', 'kih');
+
+    test('check the base form', () => {
+        expect(p2.phrase.literal).toEqual('tehh cut kih');
+    });
+
+    test('check the proceeding form', () => {
+        expect(p2.getForms()[0].literal).toEqual('tehhw cutf kihf');
     });
 });
 
@@ -91,6 +101,16 @@ describe('Noun phrase testing, possesive', () => {
 
     test('check the assimilated form', () => {
         expect(phm.getForms()[0].literal).toEqual('azbengx ngew');
+    });
+});
+
+describe('Serial words testing', () => {
+    const infl = new TonalPhrasalInflector();
+
+    const fr = infl.inflectSerial('goay', 'siz', 'chittwlex');
+
+    test('check the proceeding form', () => {
+        expect(fr.getForms()[0].literal).toEqual('goa siw chittwlez');
     });
 });
 
