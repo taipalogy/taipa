@@ -106,7 +106,7 @@ class PhrasalTransitive extends VerbPhraseSurface {
         this.elements.push(verb);
         preposition.tag = Tagset.PADV;
         this.elements.push(preposition);
-        pronoun.tag = Tagset.NPR; // TODO: pronType
+        pronoun.tag = Tagset.NPR;
         this.elements.push(pronoun);
     }
 }

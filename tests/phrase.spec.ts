@@ -1,6 +1,8 @@
-import { TonalPhrasalInflector, TonalInflector } from '../src/dparser/inflector';
+import { TonalPhrasalInflector } from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalCreator } from '../src/dparser/creator';
+import { TonalLetterTags } from '../src/tonal/version2';
+import { EighthToFirstCombining } from '../src/dparser/morpheme';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -117,6 +119,48 @@ describe('Compound testing', () => {
 
     test('separable phrasal verb, verb-subsidiary compound', () => {
         expect(p4.phrase.literal).toEqual('poay kih');
+    });
+
+    const p5 = tc.createCompoundPhraseme('chiahh', 'vay');
+
+    test('separable verb', () => {
+        expect(p5.phrase.literal).toEqual('chiahhw vay');
+    });
+
+    const p6 = tc.createCompoundPhraseme('chengzhokk', 'kih', new EighthToFirstCombining());
+
+    test('eighth tone to first tone for main verb', () => {
+        expect(p6.phrase.literal).toEqual('chengzhokf kih');
+    });
+
+    const p7 = tc.createCompoundPhraseme('sengzlipp', 'aw', new EighthToFirstCombining());
+
+    test('eighth tone to first tone for main verb', () => {
+        expect(p7.phrase.literal).toEqual('sengzlipf aw');
+    });
+});
+
+describe('Phrasal verb testing, participle form', () => {
+    const phva = new TonalPhrasalInflector();
+
+    const p1 = phva.inflectToParticiple('toa', 'kih', TonalLetterTags.zero);
+
+    test('check the base form', () => {
+        expect(p1.phrase.literal).toEqual('toa kih');
+    });
+
+    test('check the participle form', () => {
+        expect(p1.getForms()[0].literal).toEqual('toa ki');
+    });
+
+    const p2 = phva.inflectToParticiple('toa', 'kih', TonalLetterTags.z);
+
+    test('check the base form', () => {
+        expect(p2.phrase.literal).toEqual('toa kih');
+    });
+
+    test('check the participle form', () => {
+        expect(p2.getForms()[0].literal).toEqual('toaz kiz');
     });
 });
 

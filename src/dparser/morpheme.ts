@@ -4,7 +4,6 @@ import {
     FreeAllomorph,
     Allomorph,
     ZeroAllomorph,
-    combining_rules,
     AllomorphY,
     CheckedAllomorph,
     combined_free_allomorphs,
@@ -13,18 +12,21 @@ import {
     tonal_positional_sounds,
     TonalSoundTags,
     CheckedTonalSounds,
-    voiceless_voiced_finals,
     combined_checked_allomorphs,
-    initials_for_euphonic_tt,
-    initials_for_euphonic_t,
-    euphonic_t_tt,
-    nasal_initial_sounds,
     MedialSounds,
-    initial_bghl,
-    lowerLettersTonal,
-    AllomorphH
+    lowerLettersTonal
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
+import {
+    eighth_to_first,
+    initial_bghl,
+    euphonic_t_tt,
+    voiceless_voiced_finals,
+    initials_for_euphonic_tt,
+    initials_for_euphonic_t,
+    combining_rules,
+    nasal_initial_sounds
+} from '../tonal/collections';
 
 export enum AssimiDirection {
     agressive = 0,
@@ -112,12 +114,30 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 }
 
 //------------------------------------------------------------------------------
-
+/*
 export class FourthToFirstCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph && allomorph instanceof AllomorphH) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
+            return [new TonalSyllable(s.letters)];
+        }
+        return [];
+    }
+}
+*/
+//------------------------------------------------------------------------------
+
+export class EighthToFirstCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph && allomorph instanceof CheckedAllomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            const tnl = eighth_to_first.get(allomorph.toString());
+            if (tnl) {
+                s.popLetter();
+                s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tnl).characters));
+                s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
+            }
             return [new TonalSyllable(s.letters)];
         }
         return [];
@@ -209,6 +229,28 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             s.popLetter();
             s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.w).characters));
+            return [new TonalSyllable(s.letters)];
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class NthCombining extends TonalCombiningMetaplasm {
+    constructor(private tone: TonalLetterTags) {
+        super();
+    }
+
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+            if (s.lastLetter.literal === TonalLetterTags.h) {
+                s.popLetter();
+            }
+            if (this.tone === TonalLetterTags.z) {
+                s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.z).characters));
+            }
             return [new TonalSyllable(s.letters)];
         }
         return [];

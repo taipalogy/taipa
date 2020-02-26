@@ -417,7 +417,8 @@ export const others = new Map<string, Array<string>>()
     .set(KanaLetterTags.y + KanaLetterTags.a, ['ゃ', 'ャ'])
     .set(KanaLetterTags.y + KanaLetterTags.u, ['ゅ', 'ュ'])
     .set(KanaLetterTags.y + KanaLetterTags.o, ['ょ', 'ョ'])
-    .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ']);
+    .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ'])
+    .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ']);
 
 export const hiragana_katakana = new Map<string, Array<string>>()
     .set(KanaLetterTags.a, ['あ', 'ア'])

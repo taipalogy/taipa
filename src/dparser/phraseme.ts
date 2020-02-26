@@ -18,6 +18,23 @@ class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
     }
 }
 
+class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
+    apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+        if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
+        if (lexemeParticle.getForms().length > 0) {
+            const forms = lexemeParticle.getForms();
+            const ret: TonalPhrase[] = [];
+            if (lexemeVerb.getForms().length > 0) {
+                forms.map(it => ret.push(new TonalPhrase([lexemeVerb.getForms()[0], it])));
+            } else {
+                forms.map(it => ret.push(new TonalPhrase([lexemeVerb.word, it])));
+            }
+            return ret;
+        }
+        return [new TonalPhrase([])];
+    }
+}
+
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeNoun: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
         if (lexemeNoun.word.literal === '' || lexemeParticle.word.literal === '') return [];
@@ -62,6 +79,7 @@ export class PhrasalVerbPhraseme extends Phraseme {
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
+    // TODO: add the second particle
     constructor(
         lexemeVerb: TonalInflectionLexeme,
         lexemeParticle: TonalInflectionLexeme,
@@ -81,6 +99,7 @@ export class PhrasalVerbPhraseme extends Phraseme {
 export class TonalCompoundPhraseme extends Phraseme {
     // separable phrasal verb. separate compound verb. separable verb.
     // gifchongwguy. onomatopeia
+    // main verb and its enclitic (8 -> 1). phrasal verb (8 -> 1)
     phrase: TonalPhrase;
     constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         super();
@@ -149,6 +168,10 @@ export class TonalInflectionPhrasemeMaker {
 
     makePossesivePhraseme(lexemeNoun: TonalInflectionLexeme, lexemeEx: TonalInflectionLexeme) {
         return new TonalMainParticlePhraseme(lexemeNoun, lexemeEx, new Adnominal());
+    }
+
+    makeParticiplePhraseme(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
+        return new PhrasalVerbPhraseme(lexemeVerb, lexemeParticle, new ConjugateToParticiple());
     }
 }
 

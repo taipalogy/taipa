@@ -5,11 +5,13 @@ import {
     EncliticECombining,
     PhrasalVerbParticleCombining,
     ConjunctiveLeCombining,
-    PossesiveExCombining
+    PossesiveExCombining,
+    NthCombining
 } from './morpheme';
 import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalCreator } from './creator';
+import { TonalLetterTags } from '../tonal/version2';
 
 export class TonalInflector {
     private readonly tia = new TonalInflectionAnalyzer();
@@ -49,6 +51,12 @@ export class TonalInflector {
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
+
+    inflectTo(str: string, tone: TonalLetterTags) {
+        const ms = this.tia.morphAnalyze(str, new NthCombining(tone));
+        const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
+        return lx;
+    }
 }
 
 export class TonalPhrasalInflector {
@@ -81,7 +89,12 @@ export class TonalPhrasalInflector {
         return this.phm.makePossesivePhraseme(lexemeNoun, lexemeEx);
     }
 
-    inflectToParticiple(verb: string, particle: string) {}
+    inflectToParticiple(verb: string, particle: string, tone: TonalLetterTags) {
+        // inflect to first tone or seventh
+        const lexemeVerb = this.infl.inflectTo(verb, tone);
+        const lexemeParticle = this.infl.inflectTo(particle, tone);
+        return this.phm.makeParticiplePhraseme(lexemeVerb, lexemeParticle);
+    }
 
     inflectSerialPhraseme() {}
 }

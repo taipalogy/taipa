@@ -14,19 +14,19 @@ import {
     AllomorphX,
     FreeTonalSounds,
     StopFinalSounds,
-    epenthetic_sounds,
     TonalLetterTags,
     lowerLettersTonal,
     tonal_positional_sounds,
     TonalSoundTags,
-    FirstTonalF,
     uncombining_rules_ay,
     ZeroTonal,
     FreeTonalZ,
     FreeTonalX,
-    third_fifth_tonals_wx
+    InitialSounds,
+    CheckedAllomorph,
+    FreeAllomorph,
+    Allomorph
 } from './version2';
-import { CheckedAllomorph, FreeAllomorph, Allomorph } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 import { TonalSoundGenerator } from './soundgen';
 import { lexical_roots } from './lexicalroots2';
@@ -43,7 +43,7 @@ import {
     sm_jls_f,
     sm_jjllss_wx
 } from './matcher';
-import { InitialSounds } from './version2';
+import { epenthetic_sounds, third_fifth_tonals_wx } from './collections';
 
 //------------------------------------------------------------------------------
 
@@ -582,7 +582,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                 if (new InitialSounds().includes(sub1)) return letters;
 
                 let fnl;
-                if (new FirstTonalF().includes(arr[i].charAt(arr[i].length - 1))) {
+                if (TonalLetterTags.f === arr[i].charAt(arr[i].length - 1)) {
                     literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);
                     fnl = letters.splice(indx, len, lowerLettersTonal.get(TonalLetterTags.t));
                 } else if (third_fifth_tonals_wx.includes(arr[i].charAt(arr[i].length - 1))) {

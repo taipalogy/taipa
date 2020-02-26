@@ -7,7 +7,6 @@ import {
     NeutralFinalSounds,
     NasalizationSound,
     StopFinalSounds,
-    combining_rules,
     tonal_positional_sounds,
     NasalFinalSounds,
     TonalSoundTags,
@@ -16,6 +15,7 @@ import {
     EuphonicFinalsBBGGJJKKLLPPSS,
     lowerLettersTonal
 } from './version2';
+import { combining_rules } from './collections';
 
 function initialConsonant(sg: SoundGeneration) {
     const sis = new InitialSounds();

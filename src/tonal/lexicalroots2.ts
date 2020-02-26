@@ -13,6 +13,8 @@ const to_be_verified = [
 
 // prettier-ignore
 const new_lexical_roots = [
+    'aih',
+    
     'coaih',
 
     'choa',
@@ -27,7 +29,7 @@ const new_lexical_roots = [
 	
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'len', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'len', 'lip', 'lirey', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mah', 'mnghh',
 
