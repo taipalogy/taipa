@@ -1,6 +1,6 @@
-import { syllable_compositions } from "./soundgen";
-import { SoundGeneration, Sound } from "../grapheme";
-import { lexical_roots } from "./lexicalroots2";
+import { syllable_compositions } from './soundgen';
+import { SoundGeneration, Sound } from '../grapheme';
+import { isInLexcialRoots } from './lexicalroots2';
 
 export class Prediction {
     predict(strs: string[]) {
@@ -33,7 +33,7 @@ export class Prediction {
         // console.log(dedupes);
 
         // for valid prompts
-        const prompts = dedupes.filter(x => lexical_roots.includes(strs.join("") + x[0]));
+        const prompts = dedupes.filter(x => isInLexcialRoots(strs.join('') + x[0]));
 
         // console.log(prompts);
 

@@ -303,7 +303,7 @@ export class TonalSoundGenerator {
 
         strs.push(ltrs);
 
-        //console.debug(to_s)
+        // console.debug(tos);
         if (tos) {
             for (let i in tos) {
                 let syl: string[] = new Array();

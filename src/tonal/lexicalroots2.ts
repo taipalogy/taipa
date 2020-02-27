@@ -1,3 +1,8 @@
+export function isInLexcialRoots(strToFind: string) {
+    if (lexicalRoots.includes(strToFind)) return true;
+    return false;
+}
+
 // prettier-ignore
 const to_be_verified = [
     'cett',
@@ -12,7 +17,7 @@ const to_be_verified = [
 ]
 
 // prettier-ignore
-const new_lexical_roots = [
+const lexicalRootsExtra = [
     'aih',
     
     'coaih',
@@ -47,7 +52,7 @@ const new_lexical_roots = [
 ]
 
 // prettier-ignore
-const addon_lexical_roots = [
+const addonLexicalRoots = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
     'borh', 'borhh', 'borx', 'bory', 'borz',
@@ -94,7 +99,7 @@ const addon_lexical_roots = [
 ]
 
 // prettier-ignore
-export const lexical_roots = [
+export const lexicalRoots = [
     'a', 'ay', 'az', 'ah', 'ahh', 'ai', 'aiy', 'aiw', 'ainnz', 'ak', 'am',
     'amy', 'amw', 'amx', 'amz', 'an', 'any', 'anw', 'anx', 'anz', 'ang',
     'angw', 'angx', 'angz', 'annw', 'annx', 'annz', 'ap', 'app', 'at', 'au',

@@ -29,7 +29,7 @@ import {
 } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 import { TonalSoundGenerator } from './soundgen';
-import { lexical_roots } from './lexicalroots2';
+import { isInLexcialRoots } from './lexicalroots2';
 import {
     sm_mnng_h_f,
     sm_mnng_hh_wx,
@@ -196,14 +196,14 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
         literal = literal + letters[i].literal;
         ltrs.push(letters[i].literal);
         //console.log(`begining of the loop: ${literal}. ${ltrs}`)
-        if (lexical_roots.includes(literal) && sft.includes(letters[i].literal)) {
+        if (isInLexcialRoots(literal) && sft.includes(letters[i].literal)) {
             //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
             if (begin === beginOfSyllable) {
                 matched = literal;
                 Object.assign(matchedLtrs, ltrs);
             }
             break;
-        } else if (lexical_roots.includes(literal) && ssf.includes(letters[i].literal)) {
+        } else if (isInLexcialRoots(literal) && ssf.includes(letters[i].literal)) {
             //console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
             //console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
             if (begin === beginOfSyllable) {
@@ -256,7 +256,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 for (let t of tnls) {
                     //console.log(lit + t.toString())
                     if (
-                        lexical_roots.includes(
+                        isInLexcialRoots(
                             letters
                                 .slice(beginOfSyllable, i)
                                 .map(x => x.literal)
@@ -277,7 +277,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 matched = '';
                 matchedLtrs = [];
             }
-        } else if (lexical_roots.includes(literal)) {
+        } else if (isInLexcialRoots(literal)) {
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
             begin = beginOfSyllable;
@@ -298,7 +298,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 for (let t of tnls) {
                     // append second tonal letter
                     // check the uncombining forms
-                    if (lexical_roots.includes(literal + t.toString())) {
+                    if (isInLexcialRoots(literal + t.toString())) {
                         // if the free first tone's lemma is included
                         matched = literal;
                         Object.assign(matchedLtrs, ltrs);
@@ -334,7 +334,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             const rea = new RemovingEpenthesisOfAy();
             const done = rea.applyToString(literal);
             //console.log(done.toString())
-            if (epenthetic_sounds.includes(ltrs[0]) && lexical_roots.includes(done)) {
+            if (epenthetic_sounds.includes(ltrs[0]) && isInLexcialRoots(done)) {
                 list = tsg.generate(ltrs);
             }
         }
@@ -611,8 +611,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         if (
             letters.length > 0 &&
             letters[letters.length - 1].literal === TonalLetterTags.gg &&
-            lexical_roots.includes(literal + TonalLetterTags.tt) &&
-            !lexical_roots.includes(literal + TonalLetterTags.kk)
+            isInLexcialRoots(literal + TonalLetterTags.tt) &&
+            !isInLexcialRoots(literal + TonalLetterTags.kk)
         ) {
             // for surface form gg whose underlying form is tt but not kk
             const ls = this.preprocessEuphonicFinal(letters);
