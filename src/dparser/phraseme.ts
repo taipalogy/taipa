@@ -1,6 +1,7 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
 import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
+import { TonalWord } from '../tonal/lexeme';
 
 class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
@@ -11,6 +12,7 @@ class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
             forms.map(it => ret.push(new TonalPhrase([lexemeVerb.getForms()[0], it])));
             return ret;
         } else if (lexemeVerb.getForms().length > 0) {
+            // equivalent to compound in terms of phrasal verb
             return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.word])];
         } else {
             return [new TonalPhrase([])];
@@ -181,7 +183,12 @@ export class SerialPhraseme extends Phraseme {
 
     constructor(lexemes: TonalInflectionLexeme[]) {
         super();
-        this.phrase = new TonalPhrase(lexemes.map(it => it.word));
+        const words: TonalWord[] = [];
+        for (let i = 0; i < lexemes.length - 1; i++) {
+            words.push(lexemes[i].getForms()[0]);
+        }
+        words.push(lexemes[lexemes.length - 1].word);
+        this.phrase = new TonalPhrase(words);
 
         this.forms = [new TonalPhrase(lexemes.map(it => it.getForms()[0]))];
     }

@@ -57,10 +57,16 @@ describe('Epenthesis testing', () => {
 describe('Voiced final testing', () => {
     const assimi = new TonalAssimilator();
 
-    const lx = assimi.assimilateRegressive('lakkwex');
+    const lx1 = assimi.assimilateRegressive('lakkwex');
 
     test('chech the surface form', () => {
-        expect(lx.getForms()[0].literal).toEqual('laggwex');
+        expect(lx1.getForms()[0].literal).toEqual('laggwex');
+    });
+
+    const lx2 = assimi.assimilateRegressive('chappwex');
+
+    test('chech the surface form', () => {
+        expect(lx2.getForms()[0].literal).toEqual('chabbwex');
     });
 });
 

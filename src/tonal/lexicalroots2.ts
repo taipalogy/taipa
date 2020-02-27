@@ -41,7 +41,7 @@ const new_lexical_roots = [
 
     'sangh', 'sennh', 'sienh', 'simh', 'sinnh',
 
-    'tom', 'tomz',
+    'toehh', 'tom', 'tomz',
 
     'virt',
 ]
@@ -374,6 +374,6 @@ export const lexical_roots = [
     'vox', 'voz', 'vu', 'vuw', 'vux', 'vuz', 'voaw', 'voah', 'voahh',
     'voan', 'voanw', 'voanx', 'voanz', 'voann', 'voanny', 'voannw', 'voannx',
     'voannz', 'voat', 'voatt', 'voe', 'voey', 'voew', 'voex', 'voez', 'voeh',
-    'poehh', 'vuh', 'vui', 'vuix', 'vuiz', 'vun', 'vuny', 'vunw', 'vunx',
+    'voehh', 'vuh', 'vui', 'vuix', 'vuiz', 'vun', 'vuny', 'vunw', 'vunx',
     'vunz', 'vut', 'vutt',
 ]

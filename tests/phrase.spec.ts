@@ -109,6 +109,10 @@ describe('Serial words testing', () => {
 
     const fr = infl.inflectSerial('goay', 'siz', 'chittwlex');
 
+    test('check the base form', () => {
+        expect(fr.phrase.literal).toEqual('goa siw chittwlex');
+    });
+
     test('check the proceeding form', () => {
         expect(fr.getForms()[0].literal).toEqual('goa siw chittwlez');
     });
@@ -158,6 +162,18 @@ describe('Compound testing', () => {
     test('eighth tone to first tone for main verb', () => {
         expect(p7.phrase.literal).toEqual('sengzlipf aw');
     });
+
+    const p8 = tc.createCompoundPhraseme('lamx', 'me');
+
+    test('prepositional verb, verb + preposition', () => {
+        expect(p8.phrase.literal).toEqual('lamz me');
+    });
+
+    const p9 = tc.createCompoundPhraseme('diz', 'daizdengy');
+
+    test('adverbial phrase, place', () => {
+        expect(p9.phrase.literal).toEqual('diw daizdengy');
+    });
 });
 
 describe('Phrasal verb testing, participle form', () => {
@@ -197,6 +213,12 @@ describe('Phrase testing', () => {
 
     test('onomatopeia', () => {
         expect(p2.literal).toEqual('koahy linzlong');
+    });
+
+    const p3 = tc.createPhrase('hengx liz');
+
+    test('onomatopeia', () => {
+        expect(p3.literal).toEqual('hengx liz');
     });
 });
 
