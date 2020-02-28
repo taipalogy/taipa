@@ -71,7 +71,6 @@ export enum TonalLetterTags {
     w = 'w',
     x = 'x',
     xx = 'xx',
-    xxx = 'xxx',
     y = 'y',
     z = 'z',
     zx = 'zx',
@@ -126,7 +125,6 @@ export const lowerLettersTonal = new LettersOfTonal([
     TonalLetterTags.nn,
     TonalLetterTags.w,
     TonalLetterTags.xx,
-    TonalLetterTags.xxx,
     TonalLetterTags.z,
     TonalLetterTags.zx,
     TonalLetterTags.x,
@@ -303,9 +301,6 @@ export class FreeTonalF extends FreeTonal {
 }
 export class FreeTonalXX extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.xx);
-}
-export class FreeTonalXXX extends FreeTonal {
-    characters = this.makeCharacters(TonalLetterTags.xxx);
 }
 export class FreeTonalZX extends FreeTonal {
     characters = this.makeCharacters(TonalLetterTags.zx);
@@ -489,7 +484,6 @@ export class FreeTonalSounds extends SetOfSounds {
         this.sounds.push(new FreeTonalZ());
         this.sounds.push(new FreeTonalW());
         this.sounds.push(new FreeTonalXX());
-        this.sounds.push(new FreeTonalXXX());
         this.sounds.push(new FreeTonalF());
         this.sounds.push(new FreeTonalZX());
 
@@ -561,96 +555,94 @@ export function positionalSound(sounds: Sound[]) {
 
 const psA = positionalSound([new MedialA()]);
 const psB = positionalSound([new InitialB(), new FinalB()]);
-const psBB = positionalSound([new FinalBB()]);
-const ps_c = positionalSound([new InitialC()]);
-const ps_ch = positionalSound([new InitialCH()]);
-const ps_d = positionalSound([new InitialD()]);
-const ps_e = positionalSound([new MedialE()]);
-const ps_er = positionalSound([new MedialER()]);
-const ps_f = positionalSound([new FreeTonalF(), new CheckedTonalF()]);
-const ps_g = positionalSound([new InitialG(), new FinalG()]);
-const ps_gg = positionalSound([new FinalGG()]);
-const ps_h = positionalSound([new InitialH(), new FinalH()]);
-const ps_hh = positionalSound([new FinalHH()]);
-const ps_i = positionalSound([new MedialI()]);
-const ps_ir = positionalSound([new MedialIR()]);
-const ps_j = positionalSound([new InitialJ(), new FinalJ()]);
-const ps_jj = positionalSound([new FinalJJ()]);
-const ps_k = positionalSound([new InitialK(), new FinalK()]);
-const ps_kk = positionalSound([new FinalKK()]);
-const ps_l = positionalSound([new InitialL(), new FinalL()]);
-const ps_ll = positionalSound([new FinalLL()]);
-const ps_m = positionalSound([new InitialM(), new MaterLectionisM(), new FinalM()]);
-const ps_n = positionalSound([new InitialN(), new MaterLectionisN(), new FinalN()]);
-const ps_nn = positionalSound([new NasalizationNN()]);
-const ps_ng = positionalSound([new InitialNG(), new MaterLectionisNG(), new FinalNG()]);
-const ps_o = positionalSound([new MedialO()]);
-const ps_or = positionalSound([new MedialOR()]);
-const ps_p = positionalSound([new InitialP(), new FinalP()]);
-const ps_pp = positionalSound([new FinalPP()]);
-const ps_q = positionalSound([new InitialQ()]);
-const ps_s = positionalSound([new InitialS(), new FinalS()]);
-const ps_ss = positionalSound([new FinalSS()]);
-const ps_t = positionalSound([new InitialT(), new FinalT()]);
-const ps_tt = positionalSound([new FinalTT()]);
-const ps_u = positionalSound([new MedialU()]);
-const ps_ur = positionalSound([new MedialUR()]);
-const ps_v = positionalSound([new InitialV()]);
-const ps_w = positionalSound([new FreeTonalW(), new CheckedTonalW()]);
-const ps_x = positionalSound([new FreeTonalX(), new CheckedTonalX()]);
-const ps_xx = positionalSound([new FreeTonalXX()]);
-const ps_xxx = positionalSound([new FreeTonalXXX()]);
-const ps_y = positionalSound([new FreeTonalY(), new CheckedTonalY()]);
-const ps_z = positionalSound([new FreeTonalZ()]);
-const ps_zx = positionalSound([new FreeTonalZX()]);
+const psBb = positionalSound([new FinalBB()]);
+const psC = positionalSound([new InitialC()]);
+const psCh = positionalSound([new InitialCH()]);
+const psD = positionalSound([new InitialD()]);
+const psE = positionalSound([new MedialE()]);
+const psEr = positionalSound([new MedialER()]);
+const psF = positionalSound([new FreeTonalF(), new CheckedTonalF()]);
+const psG = positionalSound([new InitialG(), new FinalG()]);
+const psGg = positionalSound([new FinalGG()]);
+const psH = positionalSound([new InitialH(), new FinalH()]);
+const psHh = positionalSound([new FinalHH()]);
+const psI = positionalSound([new MedialI()]);
+const psIr = positionalSound([new MedialIR()]);
+const psJ = positionalSound([new InitialJ(), new FinalJ()]);
+const psJj = positionalSound([new FinalJJ()]);
+const psK = positionalSound([new InitialK(), new FinalK()]);
+const psKk = positionalSound([new FinalKK()]);
+const psL = positionalSound([new InitialL(), new FinalL()]);
+const psLl = positionalSound([new FinalLL()]);
+const psM = positionalSound([new InitialM(), new MaterLectionisM(), new FinalM()]);
+const psN = positionalSound([new InitialN(), new MaterLectionisN(), new FinalN()]);
+const psNn = positionalSound([new NasalizationNN()]);
+const psNg = positionalSound([new InitialNG(), new MaterLectionisNG(), new FinalNG()]);
+const psO = positionalSound([new MedialO()]);
+const psOr = positionalSound([new MedialOR()]);
+const psP = positionalSound([new InitialP(), new FinalP()]);
+const psPp = positionalSound([new FinalPP()]);
+const psQ = positionalSound([new InitialQ()]);
+const psS = positionalSound([new InitialS(), new FinalS()]);
+const psSs = positionalSound([new FinalSS()]);
+const psT = positionalSound([new InitialT(), new FinalT()]);
+const psTt = positionalSound([new FinalTT()]);
+const psU = positionalSound([new MedialU()]);
+const psUr = positionalSound([new MedialUR()]);
+const psV = positionalSound([new InitialV()]);
+const psW = positionalSound([new FreeTonalW(), new CheckedTonalW()]);
+const psX = positionalSound([new FreeTonalX(), new CheckedTonalX()]);
+const psXx = positionalSound([new FreeTonalXX()]);
+const psY = positionalSound([new FreeTonalY(), new CheckedTonalY()]);
+const psZ = positionalSound([new FreeTonalZ()]);
+const psZx = positionalSound([new FreeTonalZX()]);
 
 //------------------------------------------------------------------------------
 
 export const tonalPositionalSounds = new Map<string, (t: TonalSoundTags) => Sound>()
     .set(TonalLetterTags.a, psA)
     .set(TonalLetterTags.b, psB)
-    .set(TonalLetterTags.bb, psBB)
-    .set(TonalLetterTags.c, ps_c)
-    .set(TonalLetterTags.ch, ps_ch)
-    .set(TonalLetterTags.d, ps_d)
-    .set(TonalLetterTags.e, ps_e)
-    .set(TonalLetterTags.er, ps_er)
-    .set(TonalLetterTags.f, ps_f)
-    .set(TonalLetterTags.g, ps_g)
-    .set(TonalLetterTags.gg, ps_gg)
-    .set(TonalLetterTags.h, ps_h)
-    .set(TonalLetterTags.hh, ps_hh)
-    .set(TonalLetterTags.i, ps_i)
-    .set(TonalLetterTags.ir, ps_ir)
-    .set(TonalLetterTags.j, ps_j)
-    .set(TonalLetterTags.jj, ps_jj)
-    .set(TonalLetterTags.k, ps_k)
-    .set(TonalLetterTags.kk, ps_kk)
-    .set(TonalLetterTags.l, ps_l)
-    .set(TonalLetterTags.ll, ps_ll)
-    .set(TonalLetterTags.m, ps_m)
-    .set(TonalLetterTags.n, ps_n)
-    .set(TonalLetterTags.nn, ps_nn)
-    .set(TonalLetterTags.ng, ps_ng)
-    .set(TonalLetterTags.o, ps_o)
-    .set(TonalLetterTags.or, ps_or)
-    .set(TonalLetterTags.p, ps_p)
-    .set(TonalLetterTags.pp, ps_pp)
-    .set(TonalLetterTags.q, ps_q)
-    .set(TonalLetterTags.s, ps_s)
-    .set(TonalLetterTags.ss, ps_ss)
-    .set(TonalLetterTags.t, ps_t)
-    .set(TonalLetterTags.tt, ps_tt)
-    .set(TonalLetterTags.u, ps_u)
-    .set(TonalLetterTags.ur, ps_ur)
-    .set(TonalLetterTags.v, ps_v)
-    .set(TonalLetterTags.w, ps_w)
-    .set(TonalLetterTags.x, ps_x)
-    .set(TonalLetterTags.xx, ps_xx)
-    .set(TonalLetterTags.xxx, ps_xxx)
-    .set(TonalLetterTags.y, ps_y)
-    .set(TonalLetterTags.z, ps_z)
-    .set(TonalLetterTags.zx, ps_zx);
+    .set(TonalLetterTags.bb, psBb)
+    .set(TonalLetterTags.c, psC)
+    .set(TonalLetterTags.ch, psCh)
+    .set(TonalLetterTags.d, psD)
+    .set(TonalLetterTags.e, psE)
+    .set(TonalLetterTags.er, psEr)
+    .set(TonalLetterTags.f, psF)
+    .set(TonalLetterTags.g, psG)
+    .set(TonalLetterTags.gg, psGg)
+    .set(TonalLetterTags.h, psH)
+    .set(TonalLetterTags.hh, psHh)
+    .set(TonalLetterTags.i, psI)
+    .set(TonalLetterTags.ir, psIr)
+    .set(TonalLetterTags.j, psJ)
+    .set(TonalLetterTags.jj, psJj)
+    .set(TonalLetterTags.k, psK)
+    .set(TonalLetterTags.kk, psKk)
+    .set(TonalLetterTags.l, psL)
+    .set(TonalLetterTags.ll, psLl)
+    .set(TonalLetterTags.m, psM)
+    .set(TonalLetterTags.n, psN)
+    .set(TonalLetterTags.nn, psNn)
+    .set(TonalLetterTags.ng, psNg)
+    .set(TonalLetterTags.o, psO)
+    .set(TonalLetterTags.or, psOr)
+    .set(TonalLetterTags.p, psP)
+    .set(TonalLetterTags.pp, psPp)
+    .set(TonalLetterTags.q, psQ)
+    .set(TonalLetterTags.s, psS)
+    .set(TonalLetterTags.ss, psSs)
+    .set(TonalLetterTags.t, psT)
+    .set(TonalLetterTags.tt, psTt)
+    .set(TonalLetterTags.u, psU)
+    .set(TonalLetterTags.ur, psUr)
+    .set(TonalLetterTags.v, psV)
+    .set(TonalLetterTags.w, psW)
+    .set(TonalLetterTags.x, psX)
+    .set(TonalLetterTags.xx, psXx)
+    .set(TonalLetterTags.y, psY)
+    .set(TonalLetterTags.z, psZ)
+    .set(TonalLetterTags.zx, psZx);
 
 //------------------------------------------------------------------------------
 
@@ -682,10 +674,6 @@ class AllomorphXX extends FreeAllomorph {
     tonal = new FreeTonalXX();
 }
 
-class AllomorphXXX extends FreeAllomorph {
-    tonal = new FreeTonalXXX();
-}
-
 class AllomorphZX extends FreeAllomorph {
     tonal = new FreeTonalZX();
 }
@@ -694,7 +682,6 @@ export const free_allomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.f, new AllomorphF())
     .set(TonalLetterTags.w, new AllomorphW())
     .set(TonalLetterTags.xx, new AllomorphXX())
-    .set(TonalLetterTags.xxx, new AllomorphXXX())
     .set(TonalLetterTags.z, new AllomorphZ())
     .set(TonalLetterTags.zx, new AllomorphZX())
     .set(TonalLetterTags.y, new AllomorphY())
@@ -851,7 +838,6 @@ export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>()
     .set(TonalLetterTags.f, [new FreeTonalY()])
     .set(TonalLetterTags.w, [new FreeTonalZ(), new FreeTonalX()])
     .set(TonalLetterTags.xx, [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
-    .set(TonalLetterTags.xxx, [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
     .set(TonalLetterTags.z, [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
     .set(TonalLetterTags.zx, [])
     .set(TonalLetterTags.x, [])

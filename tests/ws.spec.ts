@@ -8,7 +8,7 @@ describe('Basic testing', () => {
     });
 
     test('check the number of letters', () => {
-        expect(lowerLettersTonal.size).toEqual(44);
+        expect(lowerLettersTonal.size).toEqual(43);
     });
 
     test('check the number of lexical roots', () => {

@@ -214,80 +214,80 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
 }
 
 // common syllables
-const sc_v = pipe(vowel);
-const sc_m = pipe(materLectionis);
-const sc_vt = pipe(vowel, freeTone);
-const sc_mt = pipe(materLectionis, freeTone);
+const scV = pipe(vowel);
+const scM = pipe(materLectionis);
+const scVT = pipe(vowel, freeTone);
+const scMT = pipe(materLectionis, freeTone);
 //const sc_mc = pipe(materLectionis, neutralFinalConsonant);
-const sc_cv = pipe(initialConsonant, vowel);
-const sc_vc1 = pipe(vowel, stopFinalConsonant);
-const sc_vc2 = pipe(vowel, nasalFinalConsonant);
-const sc_vct1 = pipe(vowel, stopFinalConsonant, checkedTone);
-const sc_vct2 = pipe(vowel, nasalFinalConsonant, freeTone);
-const sc_cvt = pipe(initialConsonant, vowel, freeTone);
-const sc_cvc1 = pipe(initialConsonant, vowel, stopFinalConsonant);
-const sc_cvc2 = pipe(initialConsonant, vowel, nasalFinalConsonant);
-const sc_cvct1 = pipe(initialConsonant, vowel, stopFinalConsonant, checkedTone);
-const sc_cvct2 = pipe(initialConsonant, vowel, nasalFinalConsonant, freeTone);
+const scCV = pipe(initialConsonant, vowel);
+const scVC1 = pipe(vowel, stopFinalConsonant);
+const scVC2 = pipe(vowel, nasalFinalConsonant);
+const scVCT1 = pipe(vowel, stopFinalConsonant, checkedTone);
+const scVCT2 = pipe(vowel, nasalFinalConsonant, freeTone);
+const scCVT = pipe(initialConsonant, vowel, freeTone);
+const scCVC1 = pipe(initialConsonant, vowel, stopFinalConsonant);
+const scCVC2 = pipe(initialConsonant, vowel, nasalFinalConsonant);
+const scCVCT1 = pipe(initialConsonant, vowel, stopFinalConsonant, checkedTone);
+const scCVCT2 = pipe(initialConsonant, vowel, nasalFinalConsonant, freeTone);
 //const sc_cvcc = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant);
 
 // consonant syllables
-const sc_cc = pipe(initialConsonant, nasalFinalConsonant);
-const sc_cct = pipe(initialConsonant, nasalFinalConsonant, freeTone);
-const sc_ccc = pipe(initialConsonant, nasalFinalConsonant, neutralFinalConsonant);
-const sc_ccct = pipe(initialConsonant, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
+const scCC = pipe(initialConsonant, nasalFinalConsonant);
+const scCCT = pipe(initialConsonant, nasalFinalConsonant, freeTone);
+const scCCC = pipe(initialConsonant, nasalFinalConsonant, neutralFinalConsonant);
+const scCCCT = pipe(initialConsonant, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
 
 // nasalization syllables
-const sc_vn = pipe(vowel, nasalization);
-const sc_vnt = pipe(vowel, nasalization, freeTone);
-const sc_cvn = pipe(initialConsonant, vowel, nasalization);
-const sc_cvnt = pipe(initialConsonant, vowel, nasalization, freeTone);
+const scVN = pipe(vowel, nasalization);
+const scVNT = pipe(vowel, nasalization, freeTone);
+const scCVN = pipe(initialConsonant, vowel, nasalization);
+const scCVNT = pipe(initialConsonant, vowel, nasalization, freeTone);
 //const sc_vnc = pipe(vowel, nasalization, neutralFinalConsonant);
 //const sc_vnct = pipe(vowel, nasalization, neutralFinalConsonant, checkedTone);
-const sc_cvnc = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant);
-const sc_cvnct = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant, checkedTone);
+const scCVNC = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant);
+const scCVNCT = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant, checkedTone);
 
 // euphonic syllables
-const sc_vc3 = pipe(vowel, euphonicFinalConsonant);
-const sc_vct3 = pipe(vowel, euphonicFinalConsonant, checkedTone);
-const sc_cvc3 = pipe(initialConsonant, vowel, euphonicFinalConsonant);
-const sc_cvct3 = pipe(initialConsonant, vowel, euphonicFinalConsonant, checkedTone);
-const sc_cvcct = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
+const scVC3 = pipe(vowel, euphonicFinalConsonant);
+const scVCT3 = pipe(vowel, euphonicFinalConsonant, checkedTone);
+const scCVC3 = pipe(initialConsonant, vowel, euphonicFinalConsonant);
+const scCVCT3 = pipe(initialConsonant, vowel, euphonicFinalConsonant, checkedTone);
+const scCVCCT = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
 
 // syllable compositions or patterns
 export const syllable_compositions = [
-    sc_v,
-    sc_m,
-    sc_vt,
-    sc_mt,
-    sc_cv,
-    sc_vc1,
-    sc_vc2,
-    sc_vct1,
-    sc_vct2,
-    sc_cvt,
-    sc_cvc1,
-    sc_cvc2,
-    sc_cvct1,
-    sc_cvct2,
+    scV,
+    scM,
+    scVT,
+    scMT,
+    scCV,
+    scVC1,
+    scVC2,
+    scVCT1,
+    scVCT2,
+    scCVT,
+    scCVC1,
+    scCVC2,
+    scCVCT1,
+    scCVCT2,
 
-    sc_cc,
-    sc_cct,
-    sc_ccc,
-    sc_ccct,
+    scCC,
+    scCCT,
+    scCCC,
+    scCCCT,
 
-    sc_vn,
-    sc_vnt,
-    sc_cvn,
-    sc_cvnt,
-    sc_cvnc,
-    sc_cvnct,
+    scVN,
+    scVNT,
+    scCVN,
+    scCVNT,
+    scCVNC,
+    scCVNCT,
 
-    sc_vc3,
-    sc_vct3,
-    sc_cvc3,
-    sc_cvct3,
-    sc_cvcct
+    scVC3,
+    scVCT3,
+    scCVC3,
+    scCVCT3,
+    scCVCCT
 ];
 
 export class TonalSoundGenerator {

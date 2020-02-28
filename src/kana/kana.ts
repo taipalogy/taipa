@@ -328,60 +328,60 @@ export function positionalSound(sounds: Sound[]) {
 
 const psA = positionalSound([new VowelA()]);
 const psB = positionalSound([new InitialConsonantB(), new FinalConsonantB(), new GerminatedConsonantB()]);
-const ps_c = positionalSound([new InitialConsonantC(), new GerminatedConsonantC()]);
-const ps_ch = positionalSound([new InitialConsonantCH()]);
-const ps_d = positionalSound([new InitialConsonantD(), new FinalConsonantD(), new GerminatedConsonantD()]);
-const ps_e = positionalSound([new VowelE()]);
-const ps_f = positionalSound([new InitialConsonantF()]);
-const ps_g = positionalSound([new InitialConsonantG(), new FinalConsonantG(), new GerminatedConsonantG()]);
-const ps_h = positionalSound([new InitialConsonantH()]);
-const ps_i = positionalSound([new VowelI()]);
-const ps_j = positionalSound([new InitialConsonantJ()]);
-const ps_k = positionalSound([new InitialConsonantK(), new FinalConsonantK(), new GerminatedConsonantK()]);
-const ps_l = positionalSound([new InitialConsonantL()]);
-const ps_m = positionalSound([new InitialConsonantM()]);
-const ps_n = positionalSound([new InitialConsonantN(), new FinalConsonantN()]);
-const ps_ng = positionalSound([new InitialConsonantNG()]);
-const ps_o = positionalSound([new VowelO()]);
-const ps_p = positionalSound([new InitialConsonantP(), new FinalConsonantP(), new GerminatedConsonantP()]);
-const ps_r = positionalSound([new InitialConsonantR()]);
-const ps_s = positionalSound([new InitialConsonantS(), new FinalConsonantS(), new GerminatedConsonantS()]);
-const ps_t = positionalSound([new InitialConsonantT(), new FinalConsonantT(), new GerminatedConsonantT()]);
-const ps_u = positionalSound([new VowelU()]);
-const ps_v = positionalSound([new InitialConsonantV()]);
-const ps_w = positionalSound([new InitialConsonantW(), new SemivowelW()]);
-const ps_y = positionalSound([new InitialConsonantY(), new SemivowelY()]);
-const ps_z = positionalSound([new InitialConsonantZ()]);
+const psC = positionalSound([new InitialConsonantC(), new GerminatedConsonantC()]);
+const psCh = positionalSound([new InitialConsonantCH()]);
+const psD = positionalSound([new InitialConsonantD(), new FinalConsonantD(), new GerminatedConsonantD()]);
+const psE = positionalSound([new VowelE()]);
+const psF = positionalSound([new InitialConsonantF()]);
+const psG = positionalSound([new InitialConsonantG(), new FinalConsonantG(), new GerminatedConsonantG()]);
+const psH = positionalSound([new InitialConsonantH()]);
+const psI = positionalSound([new VowelI()]);
+const psJ = positionalSound([new InitialConsonantJ()]);
+const psK = positionalSound([new InitialConsonantK(), new FinalConsonantK(), new GerminatedConsonantK()]);
+const psL = positionalSound([new InitialConsonantL()]);
+const psM = positionalSound([new InitialConsonantM()]);
+const psN = positionalSound([new InitialConsonantN(), new FinalConsonantN()]);
+const psNg = positionalSound([new InitialConsonantNG()]);
+const psO = positionalSound([new VowelO()]);
+const psP = positionalSound([new InitialConsonantP(), new FinalConsonantP(), new GerminatedConsonantP()]);
+const psR = positionalSound([new InitialConsonantR()]);
+const psS = positionalSound([new InitialConsonantS(), new FinalConsonantS(), new GerminatedConsonantS()]);
+const psT = positionalSound([new InitialConsonantT(), new FinalConsonantT(), new GerminatedConsonantT()]);
+const psU = positionalSound([new VowelU()]);
+const psV = positionalSound([new InitialConsonantV()]);
+const psW = positionalSound([new InitialConsonantW(), new SemivowelW()]);
+const psY = positionalSound([new InitialConsonantY(), new SemivowelY()]);
+const psZ = positionalSound([new InitialConsonantZ()]);
 
 //------------------------------------------------------------------------------
 
 export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>()
     .set(KanaLetterTags.a, psA)
     .set(KanaLetterTags.b, psB)
-    .set(KanaLetterTags.c, ps_c)
-    .set(KanaLetterTags.ch, ps_ch)
-    .set(KanaLetterTags.d, ps_d)
-    .set(KanaLetterTags.e, ps_e)
-    .set(KanaLetterTags.f, ps_f)
-    .set(KanaLetterTags.g, ps_g)
-    .set(KanaLetterTags.h, ps_h)
-    .set(KanaLetterTags.i, ps_i)
-    .set(KanaLetterTags.j, ps_j)
-    .set(KanaLetterTags.k, ps_k)
-    .set(KanaLetterTags.l, ps_l)
-    .set(KanaLetterTags.m, ps_m)
-    .set(KanaLetterTags.n, ps_n)
-    .set(KanaLetterTags.ng, ps_ng)
-    .set(KanaLetterTags.o, ps_o)
-    .set(KanaLetterTags.p, ps_p)
-    .set(KanaLetterTags.r, ps_r)
-    .set(KanaLetterTags.s, ps_s)
-    .set(KanaLetterTags.t, ps_t)
-    .set(KanaLetterTags.u, ps_u)
-    .set(KanaLetterTags.v, ps_v)
-    .set(KanaLetterTags.w, ps_w)
-    .set(KanaLetterTags.y, ps_y)
-    .set(KanaLetterTags.z, ps_z);
+    .set(KanaLetterTags.c, psC)
+    .set(KanaLetterTags.ch, psCh)
+    .set(KanaLetterTags.d, psD)
+    .set(KanaLetterTags.e, psE)
+    .set(KanaLetterTags.f, psF)
+    .set(KanaLetterTags.g, psG)
+    .set(KanaLetterTags.h, psH)
+    .set(KanaLetterTags.i, psI)
+    .set(KanaLetterTags.j, psJ)
+    .set(KanaLetterTags.k, psK)
+    .set(KanaLetterTags.l, psL)
+    .set(KanaLetterTags.m, psM)
+    .set(KanaLetterTags.n, psN)
+    .set(KanaLetterTags.ng, psNg)
+    .set(KanaLetterTags.o, psO)
+    .set(KanaLetterTags.p, psP)
+    .set(KanaLetterTags.r, psR)
+    .set(KanaLetterTags.s, psS)
+    .set(KanaLetterTags.t, psT)
+    .set(KanaLetterTags.u, psU)
+    .set(KanaLetterTags.v, psV)
+    .set(KanaLetterTags.w, psW)
+    .set(KanaLetterTags.y, psY)
+    .set(KanaLetterTags.z, psZ);
 
 //------------------------------------------------------------------------------
 
