@@ -183,6 +183,7 @@ export class SerialPhraseme extends Phraseme {
 
     constructor(lexemes: TonalInflectionLexeme[]) {
         super();
+        // the base form is equivalent to a compound when there are only 2 words
         const words: TonalWord[] = [];
         for (let i = 0; i < lexemes.length - 1; i++) {
             words.push(lexemes[i].getForms()[0]);

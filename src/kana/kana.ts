@@ -326,8 +326,8 @@ export function positionalSound(sounds: Sound[]) {
     };
 }
 
-const ps_a = positionalSound([new VowelA()]);
-const ps_b = positionalSound([new InitialConsonantB(), new FinalConsonantB(), new GerminatedConsonantB()]);
+const psA = positionalSound([new VowelA()]);
+const psB = positionalSound([new InitialConsonantB(), new FinalConsonantB(), new GerminatedConsonantB()]);
 const ps_c = positionalSound([new InitialConsonantC(), new GerminatedConsonantC()]);
 const ps_ch = positionalSound([new InitialConsonantCH()]);
 const ps_d = positionalSound([new InitialConsonantD(), new FinalConsonantD(), new GerminatedConsonantD()]);
@@ -356,8 +356,8 @@ const ps_z = positionalSound([new InitialConsonantZ()]);
 //------------------------------------------------------------------------------
 
 export const kanaPositionalSound = new Map<string, (t: KanaSoundTags) => Sound>()
-    .set(KanaLetterTags.a, ps_a)
-    .set(KanaLetterTags.b, ps_b)
+    .set(KanaLetterTags.a, psA)
+    .set(KanaLetterTags.b, psB)
     .set(KanaLetterTags.c, ps_c)
     .set(KanaLetterTags.ch, ps_ch)
     .set(KanaLetterTags.d, ps_d)

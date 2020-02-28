@@ -1,15 +1,17 @@
 import { NasalFinalSounds, TonalLetterTags, EuphonicFinalsBBGGJJKKLLPPSS, EuphonicFinalsBGJKLPS } from './version2';
 import {
-    euphonic_finals_bbggkkpp,
-    euphonic_finals_jjllss,
-    euphonic_finals_bgkp,
-    euphonic_finals_jls,
-    third_fifth_tonals_wx
+    euphonicFinalsBbggkkpp,
+    euphonicFinalsJjllss,
+    euphonicFinalsBgkp,
+    euphonicFinalsJls,
+    tonalsWx
 } from './collections';
 
-export const regex_mnng_h_f = /(m|ng?)hf/g;
+// mhf, nhf, nghf
+export const regexMnngHF = /(m|ng?)hf/g;
 
-export const sm_mnng_h_f = function(nasalFinal: string, neutralFinalH: string, firstTonalF: string) {
+//? mhf, nhf, nghf
+export const smMnngHF = function(nasalFinal: string, neutralFinalH: string, firstTonalF: string) {
     const snfs = new NasalFinalSounds();
 
     if (snfs.includes(nasalFinal) && TonalLetterTags.h === neutralFinalH && TonalLetterTags.f === firstTonalF)
@@ -18,62 +20,62 @@ export const sm_mnng_h_f = function(nasalFinal: string, neutralFinalH: string, f
     return false;
 };
 
-export const regex_mnng_hh_wx = /(m|ng?)hh(w|x)/g;
+// mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
+export const regexMnngHhWX = /(m|ng?)hh(w|x)/g;
 
-export const sm_m_hh_w = function(nasalFinal: string, neutralFinalHH: string, thirdTonalW: string) {
+// mhhw
+export const smMHhW = function(nasalFinal: string, neutralFinalHH: string, thirdTonalW: string) {
     if (nasalFinal === TonalLetterTags.m && neutralFinalHH === TonalLetterTags.hh && thirdTonalW === TonalLetterTags.w)
         return true;
 
     return false;
 };
 
-export const sm_mnng_hh_wx = function(nasalFinal: string, neutralFinalHH: string, thirdFifthTonalWX: string) {
+// mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
+export const smMnngHhWx = function(nasalFinal: string, neutralFinalHH: string, tonalWOrX: string) {
     const snfs = new NasalFinalSounds();
 
-    if (
-        snfs.includes(nasalFinal) &&
-        TonalLetterTags.hh === neutralFinalHH &&
-        third_fifth_tonals_wx.includes(thirdFifthTonalWX)
-    )
-        return true;
+    if (snfs.includes(nasalFinal) && TonalLetterTags.hh === neutralFinalHH && tonalsWx.includes(tonalWOrX)) return true;
 
     return false;
 };
 
-export const regex_jls_f = /(j|l|s)f/g;
+// jf, lf, sf
+export const regexJlsF = /(j|l|s)f/g;
 
-export const sm_jls_f = function(euphonicFinalJLS: string, firstTonalF: string) {
-    if (euphonic_finals_jls.includes(euphonicFinalJLS) && TonalLetterTags.f === firstTonalF) return true;
-
-    return false;
-};
-
-export const sm_bgkp_f = function(euphonicFinalBGJKLPS: string, firstTonalF: string) {
-    if (euphonic_finals_bgkp.includes(euphonicFinalBGJKLPS) && TonalLetterTags.f === firstTonalF) return true;
+// jf, lf, sf
+export const smJlsF = function(euphonicFinalJLS: string, firstTonalF: string) {
+    if (euphonicFinalsJls.includes(euphonicFinalJLS) && TonalLetterTags.f === firstTonalF) return true;
 
     return false;
 };
 
-export const regex_jjllss_wx = /(jj|ll|ss)(w|x)/g;
-
-export const sm_jjllss_wx = function(euphonicFinalJJLLSS: string, thirdFifthTonalWX: string) {
-    if (euphonic_finals_jjllss.includes(euphonicFinalJJLLSS) && third_fifth_tonals_wx.includes(thirdFifthTonalWX))
-        return true;
+// bf, gf, kf, pf
+export const smBgkpF = function(euphonicFinalBGJKLPS: string, firstTonalF: string) {
+    if (euphonicFinalsBgkp.includes(euphonicFinalBGJKLPS) && TonalLetterTags.f === firstTonalF) return true;
 
     return false;
 };
 
-export const sm_bbggkkpp_wx = function(euphonicFinalBBGGJJKKLLPPSS: string, thirdFifthTonalWX: string) {
-    if (
-        euphonic_finals_bbggkkpp.includes(euphonicFinalBBGGJJKKLLPPSS) &&
-        third_fifth_tonals_wx.includes(thirdFifthTonalWX)
-    )
-        return true;
+// jjw, jjx, llw, llx, ssw, ssx
+export const regexJjllssWx = /(jj|ll|ss)(w|x)/g;
+
+// jjw, jjx, llw, llx, ssw, ssx
+export const smJjllssWx = function(euphonicFinalJJLLSS: string, tonalWOrX: string) {
+    if (euphonicFinalsJjllss.includes(euphonicFinalJJLLSS) && tonalsWx.includes(tonalWOrX)) return true;
 
     return false;
 };
 
-export const sm_bgjklps_f = function(euphonicFinalBGJKLPS: string, firstTonalF: string) {
+// bbw, bbx, ggw, ggx, kkw, kkx, ppw, ppx
+export const smBbggkkppWx = function(euphonicFinalBBGGJJKKLLPPSS: string, tonalWOrX: string) {
+    if (euphonicFinalsBbggkkpp.includes(euphonicFinalBBGGJJKKLLPPSS) && tonalsWx.includes(tonalWOrX)) return true;
+
+    return false;
+};
+
+// bf, gf, jf, kf, lf, pf, sf
+export const smBgjklpsF = function(euphonicFinalBGJKLPS: string, firstTonalF: string) {
     const efs = new EuphonicFinalsBGJKLPS();
 
     if (efs.includes(euphonicFinalBGJKLPS) && TonalLetterTags.f === firstTonalF) return true;
@@ -81,10 +83,11 @@ export const sm_bgjklps_f = function(euphonicFinalBGJKLPS: string, firstTonalF: 
     return false;
 };
 
-export const sm_bbggjjkkllppss_wx = function(euphonicFinalBBGGJJKKLLPPSS: string, thirdFifthTonalWX: string) {
+// bbw, bbx, ggw, ggx, jjw, jjx, kkw, kkx, llw, llx, ppw, ppx, ssw, ssx
+export const smBbggjjkkllppssWx = function(euphonicFinalBBGGJJKKLLPPSS: string, tonalWOrX: string) {
     const efs = new EuphonicFinalsBBGGJJKKLLPPSS();
 
-    if (efs.includes(euphonicFinalBBGGJJKKLLPPSS) && third_fifth_tonals_wx.includes(thirdFifthTonalWX)) return true;
+    if (efs.includes(euphonicFinalBBGGJJKKLLPPSS) && tonalsWx.includes(tonalWOrX)) return true;
 
     return false;
 };

@@ -6,27 +6,27 @@ import {
     ZeroAllomorph,
     AllomorphY,
     CheckedAllomorph,
-    combined_free_allomorphs,
-    uncombined_checked_allomorphs,
+    combinedFreeAllomorphs,
+    uncombinedCheckedAllomorphs,
     TonalLetterTags,
-    tonal_positional_sounds,
+    tonalPositionalSounds,
     TonalSoundTags,
     CheckedTonalSounds,
-    combined_checked_allomorphs,
+    combinedCheckedAllomorphs,
     MedialSounds,
     lowerLettersTonal,
     AllomorphH
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 import {
-    eighth_to_first,
-    initial_bghl,
-    euphonic_t_tt,
-    voiceless_voiced_finals,
-    initials_for_euphonic_tt,
-    initials_for_euphonic_t,
-    combining_rules,
-    nasal_initial_sounds
+    eighthToFirst,
+    initialBghl,
+    euphonicTtT,
+    voicelessVoicedFinals,
+    initialsForEuphonicTt,
+    initialsForEuphonicT,
+    combiningRules,
+    nasalInitialSounds
 } from '../tonal/collections';
 
 export enum AssimiDirection {
@@ -42,7 +42,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
-                    const tos = combining_rules.get(TonalLetterTags.zero);
+                    const tos = combiningRules.get(TonalLetterTags.zero);
                     if (tos) {
                         s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tos[0]).characters));
                     }
@@ -52,7 +52,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
                     return [s];
                 } else {
                     s.popLetter();
-                    const tos = combining_rules.get(allomorph.tonal.toString());
+                    const tos = combiningRules.get(allomorph.tonal.toString());
                     const rets = [];
                     if (tos) {
                         for (let k = 0; k < tos.length; k++) {
@@ -66,7 +66,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
             } else if (allomorph instanceof CheckedAllomorph) {
                 // nothing to pop here
                 if (allomorph.tonal.toString().length > 0) return [];
-                const tos = combining_rules.get(allomorph.final.toString());
+                const tos = combiningRules.get(allomorph.final.toString());
                 const rets = [];
                 if (tos) {
                     for (let k = 0; k < tos.length; k++) {
@@ -88,7 +88,7 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-            const ps = tonal_positional_sounds.get(TonalLetterTags.w);
+            const ps = tonalPositionalSounds.get(TonalLetterTags.w);
             let snd = new Sound();
 
             if (allomorph instanceof FreeAllomorph) {
@@ -133,7 +133,7 @@ export class EighthToFirstCombining extends TonalCombiningMetaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph && allomorph instanceof CheckedAllomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-            const tnl = eighth_to_first.get(allomorph.toString());
+            const tnl = eighthToFirst.get(allomorph.toString());
             if (tnl) {
                 s.popLetter();
                 s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tnl).characters));
@@ -154,7 +154,7 @@ export class EncliticECombining extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof FreeAllomorph) {
                 if (allomorph instanceof ZeroAllomorph) {
-                    const tos = combining_rules.get(TonalLetterTags.zero);
+                    const tos = combiningRules.get(TonalLetterTags.zero);
                     if (tos) {
                         // it should loop only once
                         s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tos[0]).characters));
@@ -244,6 +244,7 @@ export class NthCombining extends TonalCombiningMetaplasm {
     }
 
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        // from -h to 1 or 7
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (s.lastLetter.literal === TonalLetterTags.h) {
@@ -283,18 +284,18 @@ export class TonalCombiningMorpheme extends Morpheme {
     }
 
     private assignAllomorph(syllable: TonalSyllable): Allomorph {
-        if (uncombined_checked_allomorphs.has(syllable.lastLetter.literal)) {
-            const am = uncombined_checked_allomorphs.get(syllable.lastLetter.literal);
+        if (uncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
+            const am = uncombinedCheckedAllomorphs.get(syllable.lastLetter.literal);
             if (am) return am;
             return new Allomorph();
         }
 
         if (
             new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
-            uncombined_checked_allomorphs.has(syllable.lastSecondLetter.literal)
+            uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
         ) {
             // in case of final followed by tonal
-            const ams = combined_checked_allomorphs.get(syllable.lastSecondLetter.literal);
+            const ams = combinedCheckedAllomorphs.get(syllable.lastSecondLetter.literal);
 
             if (ams && ams.length > 1) {
                 const it = ams.filter(x => x.tonal.toString() === syllable.lastLetter.literal);
@@ -304,8 +305,8 @@ export class TonalCombiningMorpheme extends Morpheme {
             return new Allomorph();
         }
 
-        if (combined_free_allomorphs.has(syllable.lastLetter.literal)) {
-            const am = combined_free_allomorphs.get(syllable.lastLetter.literal);
+        if (combinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
+            const am = combinedFreeAllomorphs.get(syllable.lastLetter.literal);
             if (am) return am;
             return new Allomorph(); // return empty allomorph
         }
@@ -335,7 +336,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
                 const snds = this.sounds;
                 if (snds[0].toString() === sound.toString()) {
                     let duplifix = new Sound();
-                    const ps = tonal_positional_sounds.get(TonalLetterTags.l);
+                    const ps = tonalPositionalSounds.get(TonalLetterTags.l);
                     if (ps) duplifix = ps(TonalSoundTags.initial);
 
                     snds.splice(0, 1, duplifix);
@@ -367,20 +368,20 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
         if (
             (sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
-                initials_for_euphonic_tt.includes(soundFollowingSyllable.toString())) ||
+                initialsForEuphonicTt.includes(soundFollowingSyllable.toString())) ||
             (sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
-                initials_for_euphonic_t.includes(soundFollowingSyllable.toString()))
+                initialsForEuphonicT.includes(soundFollowingSyllable.toString()))
         ) {
             // absolute assimilation
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
 
-            const af = euphonic_t_tt.get(sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString());
+            const af = euphonicTtT.get(sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString());
             if (af) {
-                const ps = tonal_positional_sounds.get(af);
+                const ps = tonalPositionalSounds.get(af);
                 if (ps) snd = ps(TonalSoundTags.stopFinal);
                 s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
-                if (nasal_initial_sounds.includes(soundFollowingSyllable.toString())) {
+                if (nasalInitialSounds.includes(soundFollowingSyllable.toString())) {
                     s.insertLetter(s.letters.length - 2, new AlphabeticLetter(soundFollowingSyllable.characters));
                 }
 
@@ -393,7 +394,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
             // replace final n with final m
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
-            const ps = tonal_positional_sounds.get(TonalLetterTags.m);
+            const ps = tonalPositionalSounds.get(TonalLetterTags.m);
             if (ps) snd = ps(TonalSoundTags.nasalFinal);
             s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
             return [s];
@@ -408,7 +409,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     private conditionalVoicedFinal(sounds: Sound[], soundFollowingSyllable: Sound) {
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            nasal_initial_sounds.includes(soundFollowingSyllable.toString())
+            nasalInitialSounds.includes(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }
@@ -422,19 +423,19 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
         if (
             soundFollowingSyllable.name === TonalSoundTags.initial &&
-            initial_bghl.includes(soundFollowingSyllable.toString())
+            initialBghl.includes(soundFollowingSyllable.toString())
         ) {
             return this.voicedFinal(sounds);
         }
     }
 
     private voicedFinal(sounds: Sound[]) {
-        const fnl = voiceless_voiced_finals.get(sounds[sounds.length - 2].toString());
+        const fnl = voicelessVoicedFinals.get(sounds[sounds.length - 2].toString());
 
         if (fnl) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             let snd = new Sound();
-            const ps = tonal_positional_sounds.get(fnl);
+            const ps = tonalPositionalSounds.get(fnl);
             if (ps) snd = ps(TonalSoundTags.stopFinal);
             s.replaceLetter(s.letters.length - 2, new AlphabeticLetter(snd.characters));
             return [s];

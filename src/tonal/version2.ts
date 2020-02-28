@@ -559,9 +559,9 @@ export function positionalSound(sounds: Sound[]) {
     };
 }
 
-const ps_a = positionalSound([new MedialA()]);
-const ps_b = positionalSound([new InitialB(), new FinalB()]);
-const ps_bb = positionalSound([new FinalBB()]);
+const psA = positionalSound([new MedialA()]);
+const psB = positionalSound([new InitialB(), new FinalB()]);
+const psBB = positionalSound([new FinalBB()]);
 const ps_c = positionalSound([new InitialC()]);
 const ps_ch = positionalSound([new InitialCH()]);
 const ps_d = positionalSound([new InitialD()]);
@@ -606,10 +606,10 @@ const ps_zx = positionalSound([new FreeTonalZX()]);
 
 //------------------------------------------------------------------------------
 
-export const tonal_positional_sounds = new Map<string, (t: TonalSoundTags) => Sound>()
-    .set(TonalLetterTags.a, ps_a)
-    .set(TonalLetterTags.b, ps_b)
-    .set(TonalLetterTags.bb, ps_bb)
+export const tonalPositionalSounds = new Map<string, (t: TonalSoundTags) => Sound>()
+    .set(TonalLetterTags.a, psA)
+    .set(TonalLetterTags.b, psB)
+    .set(TonalLetterTags.bb, psBB)
     .set(TonalLetterTags.c, ps_c)
     .set(TonalLetterTags.ch, ps_ch)
     .set(TonalLetterTags.d, ps_d)
@@ -797,7 +797,7 @@ class AllomorphHHX extends CheckedAllomorph {
     tonal = new CheckedTonalX();
 }
 
-export const checked_allomorphs = new Map<string, Allomorph>()
+export const checkedAllomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.p, new AllomorphP())
     .set(TonalLetterTags.t, new AllomorphT())
     .set(TonalLetterTags.k, new AllomorphK())
@@ -820,14 +820,14 @@ export const checked_allomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.kk + TonalLetterTags.x, new AllomorphKKX())
     .set(TonalLetterTags.hh + TonalLetterTags.x, new AllomorphHHX());
 
-export const combined_free_allomorphs = new Map<string, Allomorph>()
+export const combinedFreeAllomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.w, new AllomorphW())
     .set(TonalLetterTags.z, new AllomorphZ())
     .set(TonalLetterTags.x, new AllomorphX())
     .set(TonalLetterTags.y, new AllomorphY())
     .set(TonalLetterTags.f, new AllomorphF());
 
-export const uncombined_checked_allomorphs = new Map<string, Allomorph>()
+export const uncombinedCheckedAllomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.p, new AllomorphP())
     .set(TonalLetterTags.t, new AllomorphT())
     .set(TonalLetterTags.k, new AllomorphK())
@@ -837,7 +837,7 @@ export const uncombined_checked_allomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.kk, new AllomorphKK())
     .set(TonalLetterTags.hh, new AllomorphHH());
 
-export const combined_checked_allomorphs = new Map<string, Allomorph[]>()
+export const combinedCheckedAllomorphs = new Map<string, Allomorph[]>()
     .set(TonalLetterTags.p, [new AllomorphPF()])
     .set(TonalLetterTags.t, [new AllomorphTF()])
     .set(TonalLetterTags.k, [new AllomorphKF()])
@@ -847,7 +847,7 @@ export const combined_checked_allomorphs = new Map<string, Allomorph[]>()
     .set(TonalLetterTags.kk, [new AllomorphKKW(), new AllomorphKKX()])
     .set(TonalLetterTags.hh, [new AllomorphHHW(), new AllomorphHHX()]);
 
-export const free_allomorph_uncombining_rules = new Map<string, Tonal[]>()
+export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>()
     .set(TonalLetterTags.f, [new FreeTonalY()])
     .set(TonalLetterTags.w, [new FreeTonalZ(), new FreeTonalX()])
     .set(TonalLetterTags.xx, [new FreeTonalZ(), new FreeTonalF(), new FreeTonalX()])
@@ -858,6 +858,6 @@ export const free_allomorph_uncombining_rules = new Map<string, Tonal[]>()
     .set(TonalLetterTags.y, [new FreeTonalW()])
     .set(TonalLetterTags.zero, [new FreeTonalY()]);
 
-export const uncombining_rules_ay = new Map<string, Tonal[]>()
+export const uncombiningRulesAy = new Map<string, Tonal[]>()
     .set(TonalLetterTags.f, [new FreeTonalY(), new FreeTonalW()])
     .set(TonalLetterTags.x, [new ZeroTonal(), new FreeTonalX(), new FreeTonalZ()]);

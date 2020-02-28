@@ -48,6 +48,7 @@ export class Client {
 
             for (let m of morphemes) {
                 ta.soundSequences.push(m.sounds);
+                // TODO: first free tone to fourth. first checked tone to eighth
                 ta.uncombiningSequences.push(m.getForms().map(it => it.literal));
             }
         }

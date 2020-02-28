@@ -1,12 +1,13 @@
 import { TonalLetterTags } from './version2';
 
-export const nasal_initial_sounds = [
+// m, n, ng
+export const nasalInitialSounds = [
     TonalLetterTags.m.toString(),
     TonalLetterTags.n.toString(),
     TonalLetterTags.ng.toString()
 ];
 
-export const combining_rules = new Map<string, TonalLetterTags[]>()
+export const combiningRules = new Map<string, TonalLetterTags[]>()
     .set(TonalLetterTags.zero, [TonalLetterTags.z])
     .set(TonalLetterTags.y, [TonalLetterTags.zero, TonalLetterTags.f])
     .set(TonalLetterTags.w, [TonalLetterTags.y])
@@ -21,9 +22,11 @@ export const combining_rules = new Map<string, TonalLetterTags[]>()
     .set(TonalLetterTags.kk, [TonalLetterTags.w, TonalLetterTags.x])
     .set(TonalLetterTags.hh, [TonalLetterTags.w, TonalLetterTags.x]);
 
-export const third_fifth_tonals_wx = [TonalLetterTags.w.toString(), TonalLetterTags.x.toString()];
+// w, x
+export const tonalsWx = [TonalLetterTags.w.toString(), TonalLetterTags.x.toString()];
 
-export const epenthetic_sounds = [
+// b, l, g, m, n
+export const epentheticSounds = [
     TonalLetterTags.b.toString(),
     TonalLetterTags.l.toString(),
     TonalLetterTags.g.toString(),
@@ -31,33 +34,38 @@ export const epenthetic_sounds = [
     TonalLetterTags.n.toString()
 ];
 
-export const euphonic_finals_jls = [
+// j, l, s
+export const euphonicFinalsJls = [
     TonalLetterTags.j.toString(),
     TonalLetterTags.l.toString(),
     TonalLetterTags.s.toString()
 ];
 
-export const euphonic_finals_bgkp = [
+// b, g, k, p
+export const euphonicFinalsBgkp = [
     TonalLetterTags.b.toString(),
     TonalLetterTags.g.toString(),
     TonalLetterTags.k.toString(),
     TonalLetterTags.p.toString()
 ];
 
-export const euphonic_finals_jjllss = [
+// jj, ll, ss
+export const euphonicFinalsJjllss = [
     TonalLetterTags.jj.toString(),
     TonalLetterTags.ll.toString(),
     TonalLetterTags.ss.toString()
 ];
 
-export const euphonic_finals_bbggkkpp = [
+// bb, gg, kk, pp
+export const euphonicFinalsBbggkkpp = [
     TonalLetterTags.bb.toString(),
     TonalLetterTags.gg.toString(),
     TonalLetterTags.kk.toString(),
     TonalLetterTags.pp.toString()
 ];
 
-export const initials_for_euphonic_t = [
+// t
+export const initialsForEuphonicT = [
     TonalLetterTags.p.toString(),
     TonalLetterTags.k.toString(),
     TonalLetterTags.b.toString(),
@@ -73,7 +81,8 @@ export const initials_for_euphonic_t = [
     TonalLetterTags.ng.toString()
 ];
 
-export const initials_for_euphonic_tt = [
+// tt
+export const initialsForEuphonicTt = [
     TonalLetterTags.p.toString(),
     TonalLetterTags.k.toString(),
     TonalLetterTags.g.toString(),
@@ -87,7 +96,7 @@ export const initials_for_euphonic_tt = [
     TonalLetterTags.ng.toString()
 ];
 
-export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
+export const voicelessVoicedFinals = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.k, TonalLetterTags.g)
     .set(TonalLetterTags.p, TonalLetterTags.b)
     .set(TonalLetterTags.t, TonalLetterTags.l)
@@ -101,7 +110,8 @@ export const voiceless_voiced_finals = new Map<string, TonalLetterTags>()
 // .set(TonalLetterTags.bb, TonalLetterTags.pp)
 // .set(TonalLetterTags.ll, TonalLetterTags.tt);
 
-export const euphonic_t_tt = new Map<string, TonalLetterTags>()
+// tt, t
+export const euphonicTtT = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)
     .set(TonalLetterTags.t + TonalLetterTags.v, TonalLetterTags.p)
     .set(TonalLetterTags.t + TonalLetterTags.k, TonalLetterTags.k)
@@ -117,7 +127,8 @@ export const euphonic_t_tt = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.tt + TonalLetterTags.n, TonalLetterTags.hh)
     .set(TonalLetterTags.tt + TonalLetterTags.ng, TonalLetterTags.hh);
 
-export const initial_bghl = [
+// b, g, h, l
+export const initialBghl = [
     // turn preceding finals to voiced ones
     TonalLetterTags.b.toString(),
     TonalLetterTags.g.toString(),
@@ -125,7 +136,8 @@ export const initial_bghl = [
     TonalLetterTags.l.toString()
 ];
 
-export const eighth_to_first = new Map<string, TonalLetterTags>()
+// 8 to 1
+export const eighthToFirst = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.pp, TonalLetterTags.p)
     .set(TonalLetterTags.tt, TonalLetterTags.t)
     .set(TonalLetterTags.kk, TonalLetterTags.k)

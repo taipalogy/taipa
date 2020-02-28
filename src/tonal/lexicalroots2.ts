@@ -4,7 +4,7 @@ export function isInLexcialRoots(strToFind: string) {
 }
 
 // prettier-ignore
-const to_be_verified = [
+const toBeVerified = [
     'cett',
 
     'hioh',
@@ -17,7 +17,7 @@ const to_be_verified = [
 ]
 
 // prettier-ignore
-const lexicalRootsExtra = [
+const extraLexicalRoots = [
     'aih',
     
     'coaih',

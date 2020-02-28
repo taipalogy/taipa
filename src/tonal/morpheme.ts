@@ -7,8 +7,8 @@ import {
     RemovingEpenthesisOfAy
 } from '../morpheme';
 import {
-    free_allomorph_uncombining_rules,
-    checked_allomorphs,
+    freeAllomorphUncombiningRules,
+    checkedAllomorphs,
     free_allomorphs,
     ZeroAllomorph,
     AllomorphX,
@@ -16,9 +16,9 @@ import {
     StopFinalSounds,
     TonalLetterTags,
     lowerLettersTonal,
-    tonal_positional_sounds,
+    tonalPositionalSounds,
     TonalSoundTags,
-    uncombining_rules_ay,
+    uncombiningRulesAy,
     ZeroTonal,
     FreeTonalZ,
     FreeTonalX,
@@ -31,19 +31,19 @@ import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
 import { TonalSoundGenerator } from './soundgen';
 import { isInLexcialRoots } from './lexicalroots2';
 import {
-    sm_mnng_h_f,
-    sm_mnng_hh_wx,
-    sm_bgkp_f,
-    sm_bbggkkpp_wx,
-    regex_jls_f,
-    regex_mnng_h_f,
-    regex_jjllss_wx,
-    regex_mnng_hh_wx,
-    sm_m_hh_w,
-    sm_jls_f,
-    sm_jjllss_wx
+    smMnngHF,
+    smMnngHhWx,
+    smBgkpF,
+    smBbggkkppWx,
+    regexJlsF,
+    regexMnngHF,
+    regexJjllssWx,
+    regexMnngHhWX,
+    smMHhW,
+    smJlsF,
+    smJjllssWx
 } from './matcher';
-import { epenthetic_sounds, third_fifth_tonals_wx } from './collections';
+import { epentheticSounds, tonalsWx } from './collections';
 
 //------------------------------------------------------------------------------
 
@@ -55,13 +55,13 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
                     // push y to make tone 2
                     // 1 to 2
                     const s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
-                    const tnls = free_allomorph_uncombining_rules.get('zero');
+                    const tnls = freeAllomorphUncombiningRules.get('zero');
                     if (tnls) s.pushLetter(new AlphabeticLetter(tnls[0].characters));
                     return [s];
                 } else {
                     // the 7th tone has two baseforms
                     const ret = [];
-                    const rules = free_allomorph_uncombining_rules.get(allomorph.toString());
+                    const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
                     const tnls = !rules ? [] : rules;
                     for (let i in tnls) {
                         let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
@@ -101,7 +101,7 @@ export class CombiningAy extends TonalCombiningMetaplasm {
             if (allomorph.tonal.toString() === TonalLetterTags.f) {
                 if (allomorph instanceof FreeAllomorph) {
                     const ret = [];
-                    const rls = uncombining_rules_ay.get(allomorph.toString());
+                    const rls = uncombiningRulesAy.get(allomorph.toString());
                     const tnls = !rls ? [] : rls;
                     for (let i in tnls) {
                         let s: TonalSyllable = new TonalSyllable(sounds.map(it => new AlphabeticLetter(it.characters)));
@@ -122,7 +122,7 @@ export class CombiningAy extends TonalCombiningMetaplasm {
                 // 5 to 1. 5 to 7. 5 to 5.
                 if (allomorph instanceof FreeAllomorph) {
                     const ret = [];
-                    const rls = uncombining_rules_ay.get(allomorph.toString());
+                    const rls = uncombiningRulesAy.get(allomorph.toString());
                     const tnls = !rls ? [] : rls;
                     for (let i in tnls) {
                         let s: TonalSyllable = new TonalSyllable(sounds.map(it => new AlphabeticLetter(it.characters)));
@@ -189,8 +189,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
     let matchedLtrs: Array<string> = new Array();
     const sft = new FreeTonalSounds();
     const ssf = new StopFinalSounds();
-    const faurs = free_allomorph_uncombining_rules;
-    const ursa = uncombining_rules_ay;
+    const faurs = freeAllomorphUncombiningRules;
+    const ursa = uncombiningRulesAy;
 
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
@@ -223,8 +223,8 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 literal.length > 1 &&
                 letters[i] &&
                 letters[i - 1] &&
-                (sm_bgkp_f(letters[i - 1].literal, letters[i].literal) ||
-                    sm_bbggkkpp_wx(letters[i - 1].literal, letters[i].literal))
+                (smBgkpF(letters[i - 1].literal, letters[i].literal) ||
+                    smBbggkkppWx(letters[i - 1].literal, letters[i].literal))
             ) {
                 // this combining form is not present in the pool.
                 matched = literal;
@@ -235,7 +235,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
                 letters[i] &&
                 letters[i - 1] &&
                 letters[i - 2] &&
-                sm_m_hh_w(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal)
+                smMHhW(letters[i - 2].literal, letters[i - 1].literal, letters[i].literal)
             ) {
                 // for lexical roots end with ~mhhw.
                 matched = literal;
@@ -334,7 +334,7 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             const rea = new RemovingEpenthesisOfAy();
             const done = rea.applyToString(literal);
             //console.log(done.toString())
-            if (epenthetic_sounds.includes(ltrs[0]) && isInLexcialRoots(done)) {
+            if (epentheticSounds.includes(ltrs[0]) && isInLexcialRoots(done)) {
                 list = tsg.generate(ltrs);
             }
         }
@@ -425,9 +425,9 @@ export class TonalUncombiningMorpheme extends Morpheme {
         // assign the matched allomorph for this syllable
         let aoas: Array<Allomorph> = []; // array of allomorphs
 
-        let keys = Array.from(checked_allomorphs.keys());
+        let keys = Array.from(checkedAllomorphs.keys());
         for (let k = 0; k < keys.length; k++) {
-            let am = checked_allomorphs.get(keys[k]);
+            let am = checkedAllomorphs.get(keys[k]);
             if (am && am instanceof CheckedAllomorph) {
                 if (am.tonal) {
                     if (
@@ -503,7 +503,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     private isCombiningAy(patterns: MatchedPattern[]) {
-        const keys_ay = Array.from(uncombining_rules_ay.keys());
+        const keys_ay = Array.from(uncombiningRulesAy.keys());
 
         if (
             patterns.length == 2 &&
@@ -552,8 +552,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         if (len == 1) {
             for (let i = 0; i < letters.length - 1; i++) {
                 if (
-                    sm_jls_f(letters[i].literal, letters[i + 1].literal) ||
-                    sm_jjllss_wx(letters[i].literal, letters[i + 1].literal)
+                    smJlsF(letters[i].literal, letters[i + 1].literal) ||
+                    smJjllssWx(letters[i].literal, letters[i + 1].literal)
                 ) {
                     indx = i;
                     break;
@@ -562,8 +562,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         } else if (len == 2) {
             for (let i = 0; i < letters.length - 2; i++) {
                 if (
-                    sm_mnng_h_f(letters[i].literal, letters[i + 1].literal, letters[i + 2].literal) ||
-                    sm_mnng_hh_wx(letters[i].literal, letters[i + 1].literal, letters[i + 2].literal)
+                    smMnngHF(letters[i].literal, letters[i + 1].literal, letters[i + 2].literal) ||
+                    smMnngHhWx(letters[i].literal, letters[i + 1].literal, letters[i + 2].literal)
                 ) {
                     indx = i;
                     break;
@@ -585,7 +585,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
                 if (TonalLetterTags.f === arr[i].charAt(arr[i].length - 1)) {
                     literal = sub1.concat(TonalLetterTags.t + TonalLetterTags.f, sub2);
                     fnl = letters.splice(indx, len, lowerLettersTonal.get(TonalLetterTags.t));
-                } else if (third_fifth_tonals_wx.includes(arr[i].charAt(arr[i].length - 1))) {
+                } else if (tonalsWx.includes(arr[i].charAt(arr[i].length - 1))) {
                     if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.w)
                         literal = sub1.concat(TonalLetterTags.tt + TonalLetterTags.w, sub2);
                     else if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.x)
@@ -625,17 +625,17 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     private replaceEuphonicFinalTonal(letters: Array<AlphabeticLetter>) {
         let literal = letters.map(x => x.literal).join('');
 
-        if (literal.length > 1 && regex_jls_f.test(literal)) {
-            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_jls_f, 1);
+        if (literal.length > 1 && regexJlsF.test(literal)) {
+            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regexJlsF, 1);
             return ls;
-        } else if (literal.length > 1 && regex_jjllss_wx.test(literal)) {
-            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_jjllss_wx, 1);
+        } else if (literal.length > 1 && regexJjllssWx.test(literal)) {
+            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regexJjllssWx, 1);
             return ls;
-        } else if (literal.length > 2 && regex_mnng_h_f.test(literal)) {
-            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_mnng_h_f, 2);
+        } else if (literal.length > 2 && regexMnngHF.test(literal)) {
+            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regexMnngHF, 2);
             return ls;
-        } else if (literal.length > 2 && regex_mnng_hh_wx.test(literal)) {
-            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regex_mnng_hh_wx, 2);
+        } else if (literal.length > 2 && regexMnngHhWX.test(literal)) {
+            const ls = this.preprocessEuphonicFinalTonal(letters, literal, regexMnngHhWX, 2);
             return ls;
         }
 
@@ -665,7 +665,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             const fnl = this.euphonicFinals.pop();
             if (fnl) {
                 pattern.letters.push(fnl);
-                const snd = tonal_positional_sounds.get(fnl.literal);
+                const snd = tonalPositionalSounds.get(fnl.literal);
                 if (snd) pattern.pattern.push(snd(TonalSoundTags.stopFinal));
             }
         } else if (this.euphonicFinalTonals.length > 0) {
@@ -673,13 +673,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             if (fnl) {
                 if (fnl.letters.length == 1) {
                     pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
-                    const snd = tonal_positional_sounds.get(fnl.letters[0].literal);
+                    const snd = tonalPositionalSounds.get(fnl.letters[0].literal);
                     if (snd) pattern.pattern.splice(fnl.index, 1, snd(TonalSoundTags.stopFinal));
                 } else if (fnl.letters.length == 2) {
                     // console.log(pattern)
                     pattern.letters.splice(fnl.index, 1, fnl.letters[0], fnl.letters[1]);
-                    const snd1 = tonal_positional_sounds.get(fnl.letters[0].literal);
-                    const snd2 = tonal_positional_sounds.get(fnl.letters[1].literal);
+                    const snd1 = tonalPositionalSounds.get(fnl.letters[0].literal);
+                    const snd2 = tonalPositionalSounds.get(fnl.letters[1].literal);
                     if (snd1 && snd2)
                         pattern.pattern.splice(
                             fnl.index,

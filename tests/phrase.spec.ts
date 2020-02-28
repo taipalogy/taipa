@@ -174,6 +174,18 @@ describe('Compound testing', () => {
     test('adverbial phrase, place', () => {
         expect(p9.phrase.literal).toEqual('diw daizdengy');
     });
+
+    const p10 = tc.createCompoundPhraseme('uiw', 'sannzdiamy');
+
+    test('adverbial phrase, time', () => {
+        expect(p10.phrase.literal).toEqual('uiy sannzdiamy');
+    });
+
+    const p11 = tc.createCompoundPhraseme('bong', 'dienwnauy');
+
+    test('gerund', () => {
+        expect(p11.phrase.literal).toEqual('bongz dienwnauy');
+    });
 });
 
 describe('Phrasal verb testing, participle form', () => {
@@ -211,14 +223,29 @@ describe('Phrase testing', () => {
 
     const p2 = tc.createPhrase('koahy linzlong');
 
-    test('onomatopeia', () => {
+    test('gifchongwguy', () => {
         expect(p2.literal).toEqual('koahy linzlong');
     });
 
     const p3 = tc.createPhrase('hengx liz');
 
-    test('onomatopeia', () => {
+    test('enclitic', () => {
         expect(p3.literal).toEqual('hengx liz');
+    });
+
+    const w4 = tc.createWord('qaz');
+    const lx4 = tc.createLexeme(w4.literal);
+    const p4 = tc.createPhrase(lx4.word.literal);
+    const phm4 = tc.createCompoundPhraseme('', p4.literal);
+
+    test('phrase', () => {
+        expect(phm4.phrase.literal).toEqual(' qaz');
+    });
+
+    const p5 = tc.createPhrase('qangz');
+
+    test('phrase', () => {
+        expect(p5.literal).toEqual('qangz');
     });
 });
 
