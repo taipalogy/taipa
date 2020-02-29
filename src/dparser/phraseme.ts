@@ -1,7 +1,8 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
-import { TonalPhrase, Phraseme, TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm } from '../phraseme';
+import { Phraseme, TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm } from '../phraseme';
 import { AssimiDirection } from './morpheme';
 import { TonalWord } from '../tonal/lexeme';
+import { TonalPhrase } from '../tonal/phraseme';
 
 class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
     apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
@@ -146,6 +147,7 @@ export class PhrasalVerbTwoPhraseme extends Phraseme {
 
 export class TonalCompoundPhraseme extends Phraseme {
     // separable phrasal verb. separate compound verb. separable verb.
+    // separable phrasal verbs are transitive when main verb and its particles are separated
     // gifchongwguy. onomatopeia
     // main verb and its enclitic (8 -> 1). phrasal verb (8 -> 1)
     phrase: TonalPhrase;

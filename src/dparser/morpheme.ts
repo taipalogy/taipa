@@ -191,10 +191,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
                 s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
                 ret.push(new TonalSyllable(s.letters));
 
-                // free syllable
-                s.popLetter(); // pop f
-                s.popLetter(); // pop h
-                ret.push(new TonalSyllable(s.letters));
+                // free form of the syllable could be handle outside of this routine by popping f and h
                 return ret;
             }
         }

@@ -2,7 +2,7 @@ import { Sound, SetOfSounds, Letters } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
-export enum KanaLetterTags {
+enum KanaLetterTags {
     a = 'a',
     e = 'e',
     i = 'i',

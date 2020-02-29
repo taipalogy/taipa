@@ -1,9 +1,9 @@
 import { TonalLemmatizationAnalyzer } from './analyzer';
 
 export class TonalLemmatizer {
-    lemmatize(str: string) {
+    lemmatize(word: string) {
         const tia = new TonalLemmatizationAnalyzer();
-        const mrphs = tia.morphAnalyze(str);
+        const mrphs = tia.morphAnalyze(word);
         const lx = tia.lexAnalyze(mrphs);
         return lx;
     }

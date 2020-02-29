@@ -3,6 +3,8 @@ import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalCreator } from '../src/dparser/creator';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { EighthToFirstCombining } from '../src/dparser/morpheme';
+import { TonalWord } from '../src/tonal/lexeme';
+import { TonalSyllable } from '../src/tonal/morpheme';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -60,10 +62,6 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
         expect(p1.getForms()[0].literal).toEqual('lippw kihf');
     });
 
-    test('check the proceeding form', () => {
-        expect(p1.getForms()[1].literal).toEqual('lippw ki');
-    });
-
     const p2 = infl.inflectToProceeding('tehh', 'cut', 'kih');
 
     test('check the base form', () => {
@@ -72,6 +70,13 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
 
     test('check the proceeding form', () => {
         expect(p2.getForms()[0].literal).toEqual('tehhw cutf kihf');
+    });
+
+    let s2 = new TonalSyllable(p2.getForms()[0].words[2].syllables[0].letters);
+    s2.popLetter();
+    s2.popLetter();
+    test('check free form of kihf', () => {
+        expect(s2.literal).toEqual('ki');
     });
 });
 
@@ -313,7 +318,6 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 
     const ph9 = infl.inflectSerial(inputEmpty, inputEmpty, inputEmpty);
 
-    console.log(ph9.getForms());
     test('check the empty phrase', () => {
         expect(ph9.phrase.literal).toEqual('');
     });

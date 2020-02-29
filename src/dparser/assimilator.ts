@@ -15,22 +15,22 @@ export class TonalAssimilator {
         return mrphs;
     }
 
-    getLexeme(str: string) {
-        const mrphs = this.morphAnalyze(str);
+    getLexeme(word: string) {
+        const mrphs = this.morphAnalyze(word);
         const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroInflection());
 
         return lx;
     }
 
-    assimilateAgressive(str: string) {
-        const mrphs = this.morphAnalyze(str);
+    assimilateAgressive(word: string) {
+        const mrphs = this.morphAnalyze(word);
         const lx = new TonalAssimilationLexeme(mrphs, new AgressiveInternal());
 
         return lx;
     }
 
-    assimilateRegressive(str: string) {
-        const mrphs = this.morphAnalyze(str);
+    assimilateRegressive(word: string) {
+        const mrphs = this.morphAnalyze(word);
         const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
 
         return lx;
