@@ -678,7 +678,7 @@ class AllomorphZX extends FreeAllomorph {
     tonal = new FreeTonalZX();
 }
 
-export const free_allomorphs = new Map<string, Allomorph>()
+export const freeAllomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.f, new AllomorphF())
     .set(TonalLetterTags.w, new AllomorphW())
     .set(TonalLetterTags.xx, new AllomorphXX())

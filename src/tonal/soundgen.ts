@@ -193,10 +193,10 @@ function checkedTone(sg: SoundGeneration) {
 function euphonicFinalConsonant(sg: SoundGeneration) {
     if (!sg.matching) return sg;
 
-    const ef_bgjklps = new EuphonicFinalsBGJKLPS();
-    const ef_bbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
+    const efBgjklps = new EuphonicFinalsBGJKLPS();
+    const efBbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
 
-    if (ef_bgjklps.includes(sg.letters[sg.sounds.length]) || ef_bbggjjkkllppss.includes(sg.letters[sg.sounds.length])) {
+    if (efBgjklps.includes(sg.letters[sg.sounds.length]) || efBbggjjkkllppss.includes(sg.letters[sg.sounds.length])) {
         const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
         if (ps) {
             const s = ps(TonalSoundTags.stopFinal);
@@ -205,8 +205,8 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
     } else {
         sg.matching = false;
         if (sg.letters.length == sg.sounds.length && sg.predictive && sg.predictEuphonicFinal) {
-            sg.predictions.push(ef_bgjklps.sounds);
-            sg.predictions.push(ef_bbggjjkkllppss.sounds);
+            sg.predictions.push(efBgjklps.sounds);
+            sg.predictions.push(efBbggjjkkllppss.sounds);
         }
     }
 
@@ -218,7 +218,7 @@ const scV = pipe(vowel);
 const scM = pipe(materLectionis);
 const scVT = pipe(vowel, freeTone);
 const scMT = pipe(materLectionis, freeTone);
-//const sc_mc = pipe(materLectionis, neutralFinalConsonant);
+//const scMC = pipe(materLectionis, neutralFinalConsonant);
 const scCV = pipe(initialConsonant, vowel);
 const scVC1 = pipe(vowel, stopFinalConsonant);
 const scVC2 = pipe(vowel, nasalFinalConsonant);
@@ -229,7 +229,7 @@ const scCVC1 = pipe(initialConsonant, vowel, stopFinalConsonant);
 const scCVC2 = pipe(initialConsonant, vowel, nasalFinalConsonant);
 const scCVCT1 = pipe(initialConsonant, vowel, stopFinalConsonant, checkedTone);
 const scCVCT2 = pipe(initialConsonant, vowel, nasalFinalConsonant, freeTone);
-//const sc_cvcc = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant);
+//const scCVCC = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant);
 
 // consonant syllables
 const scCC = pipe(initialConsonant, nasalFinalConsonant);
@@ -242,8 +242,8 @@ const scVN = pipe(vowel, nasalization);
 const scVNT = pipe(vowel, nasalization, freeTone);
 const scCVN = pipe(initialConsonant, vowel, nasalization);
 const scCVNT = pipe(initialConsonant, vowel, nasalization, freeTone);
-//const sc_vnc = pipe(vowel, nasalization, neutralFinalConsonant);
-//const sc_vnct = pipe(vowel, nasalization, neutralFinalConsonant, checkedTone);
+//const scVNC = pipe(vowel, nasalization, neutralFinalConsonant);
+//const scVNCT = pipe(vowel, nasalization, neutralFinalConsonant, checkedTone);
 const scCVNC = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant);
 const scCVNCT = pipe(initialConsonant, vowel, nasalization, neutralFinalConsonant, checkedTone);
 
@@ -255,7 +255,7 @@ const scCVCT3 = pipe(initialConsonant, vowel, euphonicFinalConsonant, checkedTon
 const scCVCCT = pipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant, checkedTone);
 
 // syllable compositions or patterns
-export const syllable_compositions = [
+export const syllableCompositions = [
     scV,
     scM,
     scVT,
@@ -329,11 +329,11 @@ export class TonalSoundGenerator {
         for (let i in strs) {
             // generates all needed sounds to be processed
 
-            for (let j = 0; j < syllable_compositions.length; j++) {
+            for (let j = 0; j < syllableCompositions.length; j++) {
                 let sg = new SoundGeneration();
                 sg.letters = strs[i];
                 //console.log(`j: ${j}`)
-                sg = syllable_compositions[j](sg);
+                sg = syllableCompositions[j](sg);
                 if (sg.letters.length == sg.sounds.length && sg.matching == true) {
                     sequences.push(sg.sounds);
                     break;

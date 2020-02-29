@@ -14,19 +14,19 @@ export class DependencyParser {
     private s2: Token = new Token('');
     private b1: Token = new Token('');
 
-    private s1_b1_right_relations = new Map<string, DependencyLabels>()
-        .set(Tagset.PPV + Tagset.AUXN, DependencyLabels.compound_prt)
-        .set(Tagset.PPV + Tagset.NPR, DependencyLabels.compound_prt);
+    private s1B1RightRelations = new Map<string, DependencyLabels>()
+        .set(Tagset.PPV + Tagset.AUXN, DependencyLabels.compoundPrt)
+        .set(Tagset.PPV + Tagset.NPR, DependencyLabels.compoundPrt);
 
-    private s1_b1_left_relations = new Map<string, DependencyLabels>();
+    private s1B1LeftRelations = new Map<string, DependencyLabels>();
 
-    private s2_s1_right_relations = new Map<string, DependencyLabels>()
-        .set(Tagset.VB + Tagset.PPV, DependencyLabels.compound_prt)
+    private s2S1RightRelations = new Map<string, DependencyLabels>()
+        .set(Tagset.VB + Tagset.PPV, DependencyLabels.compoundPrt)
         .set(Tagset.VB + Tagset.AUXN, DependencyLabels.aux)
         .set(Tagset.VB + Tagset.VB, DependencyLabels.compound)
         .set(Tagset.VB + Tagset.NPR, DependencyLabels.obj);
 
-    private s2_s1_left_relations = new Map<string, DependencyLabels>()
+    private s2S1LeftRelations = new Map<string, DependencyLabels>()
         .set(Tagset.AUX + Tagset.VB, DependencyLabels.aux)
         .set(Tagset.PADV + Tagset.VB, DependencyLabels.advmod)
         .set(Tagset.APPR + Tagset.NPR, DependencyLabels.case);
@@ -61,7 +61,7 @@ export class DependencyParser {
         return new Relation(label, this.s1, this.s2);
     }
 
-    private set_s1_s2_b1() {
+    private setS1S2B1() {
         this.s1 = new Token('');
         if (this.c.stack.length > 0) this.s1 = this.c.stack[this.c.stack.length - 1];
         this.s2 = new Token('');
@@ -70,17 +70,17 @@ export class DependencyParser {
         if (this.c.queue.length > 0) this.b1 = this.c.queue[0];
     }
 
-    private set_s1_b1_relation(t: Transition) {
+    private setS1B1Relation(t: Transition) {
         if (t instanceof RightArc) {
-            if (this.s1_b1_right_relations.has(this.s1.tag + this.b1.tag)) {
-                const rel = this.s1_b1_right_relations.get(this.s1.tag + this.b1.tag);
+            if (this.s1B1RightRelations.has(this.s1.tag + this.b1.tag)) {
+                const rel = this.s1B1RightRelations.get(this.s1.tag + this.b1.tag);
                 if (rel) {
                     this.c.relations.push(this.rightRelation(rel));
                 }
             }
         } else if (t instanceof LeftArc) {
-            if (this.s1_b1_left_relations.has(this.s1.tag + this.b1.tag)) {
-                const rel = this.s1_b1_left_relations.get(this.s1.tag + this.b1.tag);
+            if (this.s1B1LeftRelations.has(this.s1.tag + this.b1.tag)) {
+                const rel = this.s1B1LeftRelations.get(this.s1.tag + this.b1.tag);
                 if (rel) {
                     this.c.relations.push(this.leftRelation(rel));
                 }
@@ -88,15 +88,15 @@ export class DependencyParser {
         }
     }
 
-    private s2_s1_left_features = new Map<string, DependencyLabels[]>().set(Tagset.NPR + Tagset.VB, [
+    private s2S1LeftFeatures = new Map<string, DependencyLabels[]>().set(Tagset.NPR + Tagset.VB, [
         DependencyLabels.nsubj,
-        DependencyLabels.dislocated,
+        DependencyLabels.dislocated
     ]);
 
-    private set_s2_s1_relation(t: Transition) {
+    private setS2S1Relation(t: Transition) {
         if (t instanceof RightArc) {
-            if (this.s2_s1_right_relations.has(this.s2.tag + this.s1.tag)) {
-                const rel = this.s2_s1_right_relations.get(this.s2.tag + this.s1.tag);
+            if (this.s2S1RightRelations.has(this.s2.tag + this.s1.tag)) {
+                const rel = this.s2S1RightRelations.get(this.s2.tag + this.s1.tag);
                 if (rel) {
                     this.c.relations.push(this.rightRelation(rel));
                 }
@@ -104,13 +104,13 @@ export class DependencyParser {
                 this.c.relations.push(this.rightRelation(DependencyLabels.root));
             }
         } else if (t instanceof LeftArc) {
-            if (this.s2_s1_left_relations.has(this.s2.tag + this.s1.tag)) {
-                const rel = this.s2_s1_left_relations.get(this.s2.tag + this.s1.tag);
+            if (this.s2S1LeftRelations.has(this.s2.tag + this.s1.tag)) {
+                const rel = this.s2S1LeftRelations.get(this.s2.tag + this.s1.tag);
                 if (rel) {
                     this.c.relations.push(this.leftRelation(rel));
                 }
-            } else if (this.s2_s1_left_features.has(this.s2.tag + this.s1.tag)) {
-                const labels = this.s2_s1_left_features.get(this.s2.tag + this.s1.tag);
+            } else if (this.s2S1LeftFeatures.has(this.s2.tag + this.s1.tag)) {
+                const labels = this.s2S1LeftFeatures.get(this.s2.tag + this.s1.tag);
                 if (labels) {
                     if (this.triggered == false) {
                         this.c.relations.push(this.leftRelation(labels[0]));
@@ -142,11 +142,11 @@ export class DependencyParser {
             let t = guide.getNextTransition(this.c);
             if (t == null || t == undefined) break;
 
-            this.set_s1_s2_b1();
+            this.setS1S2B1();
             if (this.s1.tag != '' && this.b1.tag != '') {
-                this.set_s1_b1_relation(t);
+                this.setS1B1Relation(t);
             } else if (this.isQueueEmpty()) {
-                this.set_s2_s1_relation(t);
+                this.setS2S1Relation(t);
             }
 
             this.c = this.apply(t, this.c);
@@ -154,5 +154,5 @@ export class DependencyParser {
 
         doc.relations = this.c.relations;
         return doc;
-    }
+    };
 }

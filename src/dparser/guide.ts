@@ -8,7 +8,7 @@ export class Guide {
     private s2: Token = new Token('');
     private b1: Token = new Token('');
 
-    private s1_b1_map = new Map<string, Transition>()
+    private s1B1Map = new Map<string, Transition>()
         .set(Tagset.VB + Tagset.PPV, new Shift())
         .set(Tagset.NPR + Tagset.VB, new Shift())
         .set(Tagset.NPR + Tagset.NPR, new Shift())
@@ -24,7 +24,7 @@ export class Guide {
         .set(Tagset.PPV + Tagset.AUXN, new RightArc())
         .set(Tagset.PPV + Tagset.NPR, new RightArc());
 
-    private s2_s1_map = new Map<string, Transition>()
+    private s2S1Map = new Map<string, Transition>()
         .set(Tagset.VB + Tagset.PPV, new RightArc())
         .set(Tagset.VB + Tagset.AUXN, new RightArc())
         .set(Tagset.AUX + Tagset.VB, new LeftArc())
@@ -53,15 +53,15 @@ export class Guide {
         if (c.queue.length > 0) this.b1 = c.queue[0];
 
         if (this.s1.tag != '' && this.b1.tag != '') {
-            if (this.s1_b1_map.has(this.s1.tag + this.b1.tag)) {
-                const tran = this.s1_b1_map.get(this.s1.tag + this.b1.tag);
+            if (this.s1B1Map.has(this.s1.tag + this.b1.tag)) {
+                const tran = this.s1B1Map.get(this.s1.tag + this.b1.tag);
                 if (tran) {
                     this.transitions.push(tran);
                 }
             }
         } else if (this.isQueueEmpty(c)) {
-            if (this.s2_s1_map.has(this.s2.tag + this.s1.tag)) {
-                const tran = this.s2_s1_map.get(this.s2.tag + this.s1.tag);
+            if (this.s2S1Map.has(this.s2.tag + this.s1.tag)) {
+                const tran = this.s2S1Map.get(this.s2.tag + this.s1.tag);
                 if (tran) {
                     this.transitions.push(tran);
                 }

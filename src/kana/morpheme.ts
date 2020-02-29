@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
 import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
-import { InitialConsonantSet, VowelSet, Hatsuon, hiragana_katakana, SemivowelSet, gailaigo } from './kana';
+import { InitialConsonantSet, VowelSet, Hatsuon, hiraganaKatakana, SemivowelSet, gailaigo } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 import { KanaSoundGenerator } from './soundgen';
 
@@ -38,7 +38,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
     for (let i = beginOfSyllable; i < letters.length; i++) {
         literal = literal + letters[i].literal;
         ltrs.push(letters[i].literal);
-        if (hiragana_katakana.has(literal) || gailaigo.has(literal)) {
+        if (hiraganaKatakana.has(literal) || gailaigo.has(literal)) {
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
             if (i + 1 < letters.length) lookahead = letters[i + 1].literal; // look-ahead
@@ -137,7 +137,7 @@ function syllabifyKana(letters: Array<AlphabeticLetter>, beginOfSyllable: number
         if (letters.length - beginOfSyllable == arraysOfLetters[longerEntry].length + 1) {
             if (
                 new InitialConsonantSet().includes(
-                    letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal,
+                    letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal
                 ) == true
             ) {
                 // consonant-ending

@@ -2,7 +2,7 @@ import { Sound, SetOfSounds, Letters } from '../grapheme';
 
 //------------------------------------------------------------------------------
 
-enum KanaLetterTags {
+export enum KanaLetterTags {
     a = 'a',
     e = 'e',
     i = 'i',
@@ -420,7 +420,7 @@ export const others = new Map<string, Array<string>>()
     .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ'])
     .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ']);
 
-export const hiragana_katakana = new Map<string, Array<string>>()
+export const hiraganaKatakana = new Map<string, Array<string>>()
     .set(KanaLetterTags.a, ['あ', 'ア'])
     .set(KanaLetterTags.i, ['い', 'イ'])
     .set(KanaLetterTags.u, ['う', 'ウ'])
@@ -567,7 +567,7 @@ export const gailaigo = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.e, ['', 'ヴェ'])
     .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヴォ']);
 
-export const gailaigo_y = new Map<string, Array<string>>()
+export const gailaigoY = new Map<string, Array<string>>()
     .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.i, ['', 'キィ'])
     .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.e, ['', 'キェ'])
     .set(KanaLetterTags.g + KanaLetterTags.y + KanaLetterTags.i, ['', 'ギィ'])
@@ -610,7 +610,7 @@ export const gailaigo_y = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.e, ['', 'ヴィェ'])
     .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヴョ']);
 
-export const gailaigo_w = new Map<string, Array<string>>()
+export const gailaigoW = new Map<string, Array<string>>()
     .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.a, ['', 'クァ'])
     .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.i, ['', 'クィ'])
     .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.u, ['', 'クゥ'])
@@ -682,7 +682,7 @@ export const special = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.e, ['', 'ヹ'])
     .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヺ']);
 
-export const special_y = new Map<string, Array<string>>()
+export const specialY = new Map<string, Array<string>>()
     .set(KanaLetterTags.ng + KanaLetterTags.y + KanaLetterTags.a, ['', 'キ゚ャ'])
     .set(KanaLetterTags.ng + KanaLetterTags.y + KanaLetterTags.u, ['', 'キ゚ュ'])
     .set(KanaLetterTags.ng + KanaLetterTags.y + KanaLetterTags.o, ['', 'キ゚ョ'])
@@ -699,7 +699,7 @@ export const special_y = new Map<string, Array<string>>()
     .set(KanaLetterTags.w + KanaLetterTags.y + KanaLetterTags.u, ['', 'ヰュ'])
     .set(KanaLetterTags.w + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヰョ']);
 
-export const special_w = new Map<string, Array<string>>()
+export const specialW = new Map<string, Array<string>>()
     .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.a, ['', 'クヮ'])
     .set(KanaLetterTags.g + KanaLetterTags.w + KanaLetterTags.a, ['', 'グヮ'])
     .set(KanaLetterTags.s + KanaLetterTags.w + KanaLetterTags.u, ['', 'スゥ'])
@@ -732,7 +732,7 @@ export const special_w = new Map<string, Array<string>>()
     .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.e, ['', 'ヴゥェ'])
     .set(KanaLetterTags.v + KanaLetterTags.w + KanaLetterTags.o, ['', 'ヴゥォ']);
 
-export const special_h = new Map<string, Array<string>>()
+export const specialH = new Map<string, Array<string>>()
     .set(KanaLetterTags.t + KanaLetterTags.h + KanaLetterTags.a, ['', 'テァ'])
     .set(KanaLetterTags.t + KanaLetterTags.h + KanaLetterTags.u, ['', 'テゥ'])
     .set(KanaLetterTags.t + KanaLetterTags.h + KanaLetterTags.o, ['', 'テォ'])

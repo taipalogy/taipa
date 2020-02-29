@@ -252,22 +252,11 @@ describe('Phrase testing', () => {
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     const inputEmpty: any = '';
 
-    const assimi = new TonalPhrasalAssimilator();
-    const ph1 = assimi.assimilateAgressive(inputEmpty, inputEmpty);
-
-    test('check the empty phrase', () => {
-        expect(ph1.phrase.literal).toEqual('');
-    });
-
-    test('check the number of other forms of an empty phrase', () => {
-        expect(ph1.getForms().length).toEqual(0);
-    });
-
     const crt = new TonalCreator();
-    const ph2 = crt.createCompoundPhraseme(inputEmpty, inputEmpty);
+    const ph3 = crt.createCompoundPhraseme(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
-        expect(ph2.phrase.literal).toEqual('');
+        expect(ph3.phrase.literal).toEqual('');
     });
 
     const infl = new TonalPhrasalInflector();
@@ -301,27 +290,47 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     test('check the number of other forms of an empty phrase', () => {
         expect(ph6.getForms().length).toEqual(0);
     });
+
+    const ph7 = infl.inflectToProceeding(inputEmpty, inputEmpty);
+
+    test('check the empty phrase', () => {
+        expect(ph7.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph7.getForms().length).toEqual(0);
+    });
+
+    const ph8 = infl.inflectToParticiple(inputEmpty, inputEmpty, inputEmpty);
+
+    test('check the empty phrase', () => {
+        expect(ph8.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph8.getForms().length).toEqual(0);
+    });
+
+    const ph9 = infl.inflectSerial(inputEmpty, inputEmpty, inputEmpty);
+
+    console.log(ph9.getForms());
+    test('check the empty phrase', () => {
+        expect(ph9.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph9.getForms().length).toEqual(0);
+    });
 });
 
 describe('Phrasal verb testing, undefined input', () => {
     const inputUnd: any = undefined;
 
-    const assimi = new TonalPhrasalAssimilator();
-    const ph1 = assimi.assimilateRegressive(inputUnd, inputUnd);
-
-    test('check the empty phrase', () => {
-        expect(ph1.phrase.literal).toEqual('');
-    });
-
-    test('check the number of other forms of an empty phrase', () => {
-        expect(ph1.getForms().length).toEqual(0);
-    });
-
     const crt = new TonalCreator();
-    const ph2 = crt.createCompoundPhraseme(inputUnd, inputUnd);
+    const ph3 = crt.createCompoundPhraseme(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
-        expect(ph2.phrase.literal).toEqual('');
+        expect(ph3.phrase.literal).toEqual('');
     });
 
     const infl = new TonalPhrasalInflector();
@@ -354,5 +363,35 @@ describe('Phrasal verb testing, undefined input', () => {
 
     test('check the number of other forms of an empty phrase', () => {
         expect(ph6.getForms().length).toEqual(0);
+    });
+
+    const ph7 = infl.inflectToProceeding(inputUnd, inputUnd);
+
+    test('check the empty phrase', () => {
+        expect(ph7.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph7.getForms().length).toEqual(0);
+    });
+
+    const ph8 = infl.inflectToParticiple(inputUnd, inputUnd, inputUnd);
+
+    test('check the empty phrase', () => {
+        expect(ph8.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph8.getForms().length).toEqual(0);
+    });
+
+    const ph9 = infl.inflectSerial(inputUnd, inputUnd, inputUnd);
+
+    test('check the empty phrase', () => {
+        expect(ph9.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph9.getForms().length).toEqual(0);
     });
 });

@@ -10,7 +10,7 @@ import {
 // mhf, nhf, nghf
 export const regexMnngHF = /(m|ng?)hf/g;
 
-//? mhf, nhf, nghf
+// mhf, nhf, nghf
 export const smMnngHF = function(nasalFinal: string, neutralFinalH: string, firstTonalF: string) {
     const snfs = new NasalFinalSounds();
 
@@ -32,10 +32,10 @@ export const smMHhW = function(nasalFinal: string, neutralFinalHH: string, third
 };
 
 // mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
-export const smMnngHhWx = function(nasalFinal: string, neutralFinalHH: string, tonalWOrX: string) {
+export const smMnngHhWx = function(nasalFinal: string, neutralFinalHH: string, tonalWX: string) {
     const snfs = new NasalFinalSounds();
 
-    if (snfs.includes(nasalFinal) && TonalLetterTags.hh === neutralFinalHH && tonalsWx.includes(tonalWOrX)) return true;
+    if (snfs.includes(nasalFinal) && TonalLetterTags.hh === neutralFinalHH && tonalsWx.includes(tonalWX)) return true;
 
     return false;
 };
@@ -61,15 +61,15 @@ export const smBgkpF = function(euphonicFinalBGJKLPS: string, firstTonalF: strin
 export const regexJjllssWx = /(jj|ll|ss)(w|x)/g;
 
 // jjw, jjx, llw, llx, ssw, ssx
-export const smJjllssWx = function(euphonicFinalJJLLSS: string, tonalWOrX: string) {
-    if (euphonicFinalsJjllss.includes(euphonicFinalJJLLSS) && tonalsWx.includes(tonalWOrX)) return true;
+export const smJjllssWx = function(euphonicFinalJJLLSS: string, tonalWX: string) {
+    if (euphonicFinalsJjllss.includes(euphonicFinalJJLLSS) && tonalsWx.includes(tonalWX)) return true;
 
     return false;
 };
 
 // bbw, bbx, ggw, ggx, kkw, kkx, ppw, ppx
-export const smBbggkkppWx = function(euphonicFinalBBGGJJKKLLPPSS: string, tonalWOrX: string) {
-    if (euphonicFinalsBbggkkpp.includes(euphonicFinalBBGGJJKKLLPPSS) && tonalsWx.includes(tonalWOrX)) return true;
+export const smBbggkkppWx = function(euphonicFinalBBGGJJKKLLPPSS: string, tonalWX: string) {
+    if (euphonicFinalsBbggkkpp.includes(euphonicFinalBBGGJJKKLLPPSS) && tonalsWx.includes(tonalWX)) return true;
 
     return false;
 };
@@ -84,10 +84,10 @@ export const smBgjklpsF = function(euphonicFinalBGJKLPS: string, firstTonalF: st
 };
 
 // bbw, bbx, ggw, ggx, jjw, jjx, kkw, kkx, llw, llx, ppw, ppx, ssw, ssx
-export const smBbggjjkkllppssWx = function(euphonicFinalBBGGJJKKLLPPSS: string, tonalWOrX: string) {
+export const smBbggjjkkllppssWx = function(euphonicFinalBBGGJJKKLLPPSS: string, tonalWX: string) {
     const efs = new EuphonicFinalsBBGGJJKKLLPPSS();
 
-    if (efs.includes(euphonicFinalBBGGJJKKLLPPSS) && tonalsWx.includes(tonalWOrX)) return true;
+    if (efs.includes(euphonicFinalBBGGJJKKLLPPSS) && tonalsWx.includes(tonalWX)) return true;
 
     return false;
 };

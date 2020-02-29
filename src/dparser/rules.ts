@@ -10,7 +10,7 @@ import {
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
 import { PhrasalVerbPhraseme, PhrasalVerbTwoPhraseme } from './phraseme';
-import { dict_of_verbs, dict_of_phrasal_verbs, dict_of_seperate_vv_compounds } from './dictionary';
+import { dictOfVerbs, dictOfPhrasalVerbs, dictOfSeperateVVCompounds } from './dictionary';
 
 export class ConstructionOfSpeech {
     pos: string = '';
@@ -93,8 +93,8 @@ export class SetOfPhrasalVerbs {
 
     private populatePhrasemes() {
         const pva = new TonalPhrasalInflector();
-        for (let i in dict_of_phrasal_verbs) {
-            this.phrms.push(pva.inflectToProceeding(dict_of_phrasal_verbs[i][0], dict_of_phrasal_verbs[i][1]));
+        for (let i in dictOfPhrasalVerbs) {
+            this.phrms.push(pva.inflectToProceeding(dictOfPhrasalVerbs[i][0], dictOfPhrasalVerbs[i][1]));
         }
     }
 }
@@ -148,7 +148,7 @@ export class Rules {
 
     private lookupDictionary(str: string) {
         let phr;
-        if (dict_of_verbs.includes(str)) {
+        if (dictOfVerbs.includes(str)) {
             let vs: VerbSurface = new VerbSurface(str);
             if (vs.pos === POSTags.verb) vs.tag = Tagset.VB;
             phr = [new ConstructionOfSpeech()];
@@ -186,7 +186,7 @@ export class Rules {
     }
 
     seperateMatches(str: string) {
-        const ptcls = dict_of_seperate_vv_compounds[str];
+        const ptcls = dictOfSeperateVVCompounds[str];
         if (ptcls) {
             return ptcls[0];
         }

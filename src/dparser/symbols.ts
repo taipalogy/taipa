@@ -8,19 +8,19 @@ export enum POSTags {
     adverb = 'ADV',
     auxiliary = 'AUX',
     conjunction = 'CONJ',
-    coordinating_conjunction = 'CCONJ',
+    coordinatingConjunction = 'CCONJ',
     determiner = 'DET',
     interjection = 'INTJ',
     noun = 'NOUN',
     number = 'NUM',
     particle = 'PART',
     pronoun = 'PRON',
-    proper_noun = 'PROPN',
+    properNoun = 'PROPN',
     punctuation = 'PUNCT',
-    subordinating_conjunction = 'SCONJ',
+    subordinatingConjunction = 'SCONJ',
     symbol = 'SYM',
     verb = 'VERB',
-    other = 'X',
+    other = 'X'
 }
 
 export enum DependencyLabels {
@@ -33,11 +33,11 @@ export enum DependencyLabels {
     amod = 'amod',
     advmod = 'advmod',
     aux = 'aux',
-    aux_caus = 'aux:caus',
+    auxCaus = 'aux:caus',
     case = 'case',
     ccomp = 'ccomp', // multiword expression
     compound = 'compound',
-    compound_prt = 'compound:prt',
+    compoundPrt = 'compound:prt',
     cop = 'cop',
     csubj = 'csubj',
     det = 'det',
@@ -46,16 +46,16 @@ export enum DependencyLabels {
     flat = 'flat', // multiword expression
     obj = 'obj',
     iobj = 'iobj', // indirect object
-    iobj_agent = 'iobj:agent',
+    iobjAgent = 'iobj:agent',
     mark = 'mark',
     nmod = 'nmod',
     nobj = 'nobj',
     nsubj = 'nsubj',
-    nsubj_caus = 'nsubj:caus',
+    nsubjCaus = 'nsubj:caus',
     obl = 'obl', // oblique nominal
     prt = 'prt',
     root = 'root',
-    xcomp = 'xcomp',
+    xcomp = 'xcomp'
 }
 
 export enum Tagset {
@@ -88,7 +88,7 @@ export enum Tagset {
     PX = 'PX', // prefix
     SX = 'SX', // suffix
     SYM = 'SYM', // symbol
-    VB = 'VB', // verb base form
+    VB = 'VB' // verb base form
 }
 
 export enum PronType {
@@ -99,5 +99,5 @@ export enum PronType {
 
     DEM = 'Dem',
     PRS = 'Prs',
-    REL = 'Rel',
+    REL = 'Rel'
 }

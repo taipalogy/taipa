@@ -9,7 +9,7 @@ import {
 import {
     freeAllomorphUncombiningRules,
     checkedAllomorphs,
-    free_allomorphs,
+    freeAllomorphs,
     ZeroAllomorph,
     AllomorphX,
     FreeTonalSounds,
@@ -244,13 +244,13 @@ export function syllabifyTonal(letters: Array<AlphabeticLetter>, beginOfSyllable
             }
 
             // tone sandhi of free allomorph
-            const rules_fa = faurs.get(letters[i].literal);
-            const tnls_fa = !rules_fa ? [] : rules_fa.map(x => x.toString());
+            const rulesFa = faurs.get(letters[i].literal);
+            const tnlsFa = !rulesFa ? [] : rulesFa.map(x => x.toString());
             // tone sandhi of ay
-            const rules_ay = ursa.get(letters[i].literal);
-            const tnls_ay = !rules_ay ? [] : rules_ay.map(x => x.toString());
+            const rulesAy = ursa.get(letters[i].literal);
+            const tnlsAy = !rulesAy ? [] : rulesAy.map(x => x.toString());
             // merge the above twoo arrays
-            const tnls = tnls_fa.concat(tnls_ay.filter(item => tnls_fa.indexOf(item) < 0));
+            const tnls = tnlsFa.concat(tnlsAy.filter(item => tnlsFa.indexOf(item) < 0));
             //console.log(ts)
             if (tnls.length > 0) {
                 for (let t of tnls) {
@@ -454,8 +454,8 @@ export class TonalUncombiningMorpheme extends Morpheme {
 
         // after matching with checked allomorphs, we go on matching free allomorphs
         aoas = [];
-        if (free_allomorphs.has(syllable.lastLetter.literal)) {
-            const am = free_allomorphs.get(syllable.lastLetter.literal);
+        if (freeAllomorphs.has(syllable.lastLetter.literal)) {
+            const am = freeAllomorphs.get(syllable.lastLetter.literal);
             if (am) aoas.push(am);
             else aoas.push(new Allomorph());
         }
@@ -503,11 +503,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     }
 
     private isCombiningAy(patterns: MatchedPattern[]) {
-        const keys_ay = Array.from(uncombiningRulesAy.keys());
+        const keysAy = Array.from(uncombiningRulesAy.keys());
 
         if (
             patterns.length == 2 &&
-            keys_ay.filter(it => it === patterns[patterns.length - 2].lastLetter.literal).length > 0 &&
+            keysAy.filter(it => it === patterns[patterns.length - 2].lastLetter.literal).length > 0 &&
             ((patterns[patterns.length - 1].lastSecondLetter.literal === TonalLetterTags.a &&
                 patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.y) ||
                 patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.a)
@@ -654,7 +654,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         return ltrs;
     }
 
-    private postprocess_euphonic_t_or_tt(pattern: MatchedPattern) {
+    private postprocessEuphonicTtT(pattern: MatchedPattern) {
         if (
             (pattern.letters[pattern.letters.length - 1].literal === TonalLetterTags.t ||
                 pattern.letters[pattern.letters.length - 1].literal === TonalLetterTags.tt) &&
@@ -698,7 +698,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         const morphemes = this.createMorphemes();
 
         for (let i in matched) {
-            const ptn = this.postprocess_euphonic_t_or_tt(matched[i]);
+            const ptn = this.postprocessEuphonicTtT(matched[i]);
 
             if (this.isCombiningAy(matched)) {
                 // ~fa, ~xa, fay, or ~xay

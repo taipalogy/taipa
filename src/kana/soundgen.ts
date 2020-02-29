@@ -6,7 +6,7 @@ import {
     GerminatedConsonantSet,
     FinalConsonantSet,
     SemivowelSet,
-    kanaPositionalSound,
+    kanaPositionalSound
 } from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
@@ -79,14 +79,14 @@ function germinatedConsonant(sg: SoundGeneration) {
     return sg;
 }
 
-const sc_v = pipe(vowel);
-const sc_cv = pipe(initialConsonant, vowel);
-const sc_cvc = pipe(initialConsonant, vowel, finalConsonant);
-const sc_csv = pipe(initialConsonant, semivowel, vowel);
-const sc_ccv = pipe(germinatedConsonant, initialConsonant, vowel);
+const scV = pipe(vowel);
+const scCV = pipe(initialConsonant, vowel);
+const scCVC = pipe(initialConsonant, vowel, finalConsonant);
+const scCSV = pipe(initialConsonant, semivowel, vowel);
+const scCCV = pipe(germinatedConsonant, initialConsonant, vowel);
 
 export class KanaSoundGenerator {
-    readonly sylCompositions = [sc_v, sc_cv, sc_cvc, sc_csv, sc_ccv];
+    readonly sylCompositions = [scV, scCV, scCVC, scCSV, scCCV];
 
     private genSokuonAndGerminated(letters: string[], lookahead: string) {
         let strs: Array<string[]> = new Array();

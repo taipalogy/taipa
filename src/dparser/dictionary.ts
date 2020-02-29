@@ -1,12 +1,12 @@
 // prettier-ignore
-export const dict_of_verbs = [
+export const dictOfVerbs = [
     'koannw',
 
     'pah',
 ];
 
 // prettier-ignore
-export const dict_of_phrasal_verbs = [
+export const dictOfPhrasalVerbs = [
     ['koannw', 'diurh'],
     ['longw', 'diurh'],
 ];
@@ -16,6 +16,6 @@ interface IDictionary {
 }
 
 // prettier-ignore
-export const dict_of_seperate_vv_compounds: IDictionary = {
+export const dictOfSeperateVVCompounds: IDictionary = {
     siam: ['qoew'],
 };

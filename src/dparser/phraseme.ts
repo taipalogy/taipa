@@ -186,12 +186,18 @@ export class SerialPhraseme extends Phraseme {
         // the base form is equivalent to a compound when there are only 2 words
         const words: TonalWord[] = [];
         for (let i = 0; i < lexemes.length - 1; i++) {
-            words.push(lexemes[i].getForms()[0]);
+            if (lexemes[i].getForms().length > 0 && lexemes[i].getForms()[0]) {
+                words.push(lexemes[i].getForms()[0]);
+            }
         }
-        words.push(lexemes[lexemes.length - 1].word);
+        if (lexemes[lexemes.length - 1] && lexemes[lexemes.length - 1].word.literal.length > 0) {
+            words.push(lexemes[lexemes.length - 1].word);
+        }
         this.phrase = new TonalPhrase(words);
 
-        this.forms = [new TonalPhrase(lexemes.map(it => it.getForms()[0]))];
+        const forms = lexemes.filter(it => it.getForms().length > 0 && it.getForms()[0]).map(it => it.getForms()[0]);
+        if (forms.length > 0) this.forms = [new TonalPhrase(forms)];
+        else this.forms = [];
     }
 
     getForms() {

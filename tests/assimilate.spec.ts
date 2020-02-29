@@ -1,5 +1,5 @@
 import { TonalInflector } from '../src/dparser/inflector';
-import { TonalAssimilator } from '../src/dparser/assimilator';
+import { TonalAssimilator, TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 
 describe('Assimilation testing, -b, -g, -h, -l', () => {
     const assimi = new TonalAssimilator();
@@ -115,5 +115,55 @@ describe('Assimilation testing, nasalization', () => {
 
     test('check the surface form', () => {
         expect(lx.getForms()[0].literal).toEqual('ennxianny');
+    });
+});
+
+describe('Phrasal assmilation testing, 2 empty words, 1 empty phrase', () => {
+    const inputEmpty: any = '';
+
+    const assimi = new TonalPhrasalAssimilator();
+    const ph1 = assimi.assimilateAgressive(inputEmpty, inputEmpty);
+
+    test('check the empty phrase', () => {
+        expect(ph1.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph1.getForms().length).toEqual(0);
+    });
+
+    const ph2 = assimi.assimilateRegressive(inputEmpty, inputEmpty);
+
+    test('check the empty phrase', () => {
+        expect(ph2.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph2.getForms().length).toEqual(0);
+    });
+});
+
+describe('Phrasal assimilation testing, undefined input', () => {
+    const inputUnd: any = undefined;
+
+    const assimi = new TonalPhrasalAssimilator();
+    const ph1 = assimi.assimilateRegressive(inputUnd, inputUnd);
+
+    test('check the empty phrase', () => {
+        expect(ph1.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph1.getForms().length).toEqual(0);
+    });
+
+    const ph2 = assimi.assimilateRegressive(inputUnd, inputUnd);
+
+    test('check the empty phrase', () => {
+        expect(ph2.phrase.literal).toEqual('');
+    });
+
+    test('check the number of other forms of an empty phrase', () => {
+        expect(ph2.getForms().length).toEqual(0);
     });
 });

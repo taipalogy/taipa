@@ -8,7 +8,7 @@ import {
     PossesiveExCombining,
     NthCombining
 } from './morpheme';
-import { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './lexeme';
+import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalCreator } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
@@ -16,44 +16,44 @@ import { TonalLetterTags } from '../tonal/version2';
 export class TonalInflector {
     private readonly tia = new TonalInflectionAnalyzer();
 
-    inflectDesinence(str: string) {
-        const ms = this.tia.morphAnalyze(str, new TonalCombiningForms());
+    inflectDesinence(word: string) {
+        const ms = this.tia.morphAnalyze(word, new TonalCombiningForms());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
 
-    inflectTransfix(str: string) {
-        const ms = this.tia.morphAnalyze(str, new ThirdCombiningForm());
+    inflectTransfix(word: string) {
+        const ms = this.tia.morphAnalyze(word, new ThirdCombiningForm());
         const lx = this.tia.lexAnalyze(ms, new TransfixInflection());
         return lx;
     }
 
-    inflectEncliticE(str: string) {
-        const ms = this.tia.morphAnalyze(str, new EncliticECombining());
+    inflectEncliticE(word: string) {
+        const ms = this.tia.morphAnalyze(word, new EncliticECombining());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
 
-    inflectPhrasalVerbParticle(str: string) {
-        const ms = this.tia.morphAnalyze(str, new PhrasalVerbParticleCombining());
+    inflectPhrasalVerbParticle(word: string) {
+        const ms = this.tia.morphAnalyze(word, new PhrasalVerbParticleCombining());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
 
-    inflectConjunctiveLe(str: string) {
-        const ms = this.tia.morphAnalyze(str, new ConjunctiveLeCombining());
+    inflectConjunctiveLe(word: string) {
+        const ms = this.tia.morphAnalyze(word, new ConjunctiveLeCombining());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
 
-    inflectPossesiveEx(str: string) {
-        const ms = this.tia.morphAnalyze(str, new PossesiveExCombining());
+    inflectPossesiveEx(word: string) {
+        const ms = this.tia.morphAnalyze(word, new PossesiveExCombining());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
 
-    inflectTo(str: string, tone: TonalLetterTags) {
-        const ms = this.tia.morphAnalyze(str, new NthCombining(tone));
+    inflectTo(word: string, tone: TonalLetterTags) {
+        const ms = this.tia.morphAnalyze(word, new NthCombining(tone));
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }

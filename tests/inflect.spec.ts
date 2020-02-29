@@ -233,57 +233,10 @@ describe('Inflection testing, absent lexical roots', () => {
     });
 });
 
-describe('Inflection testing, absent lexical roots', () => {
-    const nflctr = new TonalInflector();
-
-    const inputUnd: any = undefined;
-    const inputEmpty: any = '';
-
-    const lexeme1 = nflctr.inflectDesinence(inputUnd);
-
-    test('check the word literal', () => {
-        expect(lexeme1.word.literal).toEqual('');
-    });
-
-    test('check the number of forms', () => {
-        expect(lexeme1.getForms().length).toEqual(0);
-    });
-
-    const lexeme2 = nflctr.inflectDesinence(inputEmpty);
-
-    test('check the word literal', () => {
-        expect(lexeme2.word.literal).toEqual('');
-    });
-
-    test('check the number of forms', () => {
-        expect(lexeme2.getForms().length).toEqual(0);
-    });
-
-    const lexeme3 = nflctr.inflectTransfix(inputUnd);
-
-    test('check the word literal', () => {
-        expect(lexeme3.word.literal).toEqual('');
-    });
-
-    test('check the number of forms', () => {
-        expect(lexeme3.getForms().length).toEqual(0);
-    });
-
-    const lexeme4 = nflctr.inflectTransfix(inputEmpty);
-
-    test('check the word literal', () => {
-        expect(lexeme4.word.literal).toEqual('');
-    });
-
-    test('check the number of forms', () => {
-        expect(lexeme4.getForms().length).toEqual(0);
-    });
-});
-
 describe('Inflection testing, with x in the middle of a stem', () => {
     const nflctr = new TonalInflector();
 
-    const lx = nflctr.inflectDesinence('moxsek');
+    const lx = nflctr.inflectDesinence('curxurz');
 
     test('check the base form', () => {
         expect(lx.word.literal).toEqual('');
@@ -418,5 +371,157 @@ describe('Inflection testing', () => {
 
     test('check the inflected form', () => {
         expect(lx1.getForms()[0].literal).toEqual('qurhf');
+    });
+});
+
+describe('Inflection testing, empty inputs', () => {
+    const infl = new TonalInflector();
+
+    const inputEmpty: any = '';
+
+    const lx1 = infl.inflectDesinence(inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx1.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx1.getForms().length).toEqual(0);
+    });
+
+    const lx2 = infl.inflectTransfix(inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx2.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx2.getForms().length).toEqual(0);
+    });
+
+    const lx3 = infl.inflectEncliticE(inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx3.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx3.getForms().length).toEqual(0);
+    });
+
+    const lx4 = infl.inflectPhrasalVerbParticle(inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx4.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx4.getForms().length).toEqual(0);
+    });
+
+    const lx5 = infl.inflectConjunctiveLe(inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx5.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx5.getForms().length).toEqual(0);
+    });
+
+    const lx6 = infl.inflectPossesiveEx(inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx6.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx6.getForms().length).toEqual(0);
+    });
+
+    const lx7 = infl.inflectTo(inputEmpty, inputEmpty);
+
+    test('check the word literal', () => {
+        expect(lx7.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx7.getForms().length).toEqual(0);
+    });
+});
+
+describe('Inflection testing, empty inputs', () => {
+    const infl = new TonalInflector();
+
+    const inputUnd: any = undefined;
+
+    const lx1 = infl.inflectDesinence(inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx1.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx1.getForms().length).toEqual(0);
+    });
+
+    const lx2 = infl.inflectTransfix(inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx2.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx2.getForms().length).toEqual(0);
+    });
+
+    const lx3 = infl.inflectEncliticE(inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx3.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx3.getForms().length).toEqual(0);
+    });
+
+    const lx4 = infl.inflectPhrasalVerbParticle(inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx4.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx4.getForms().length).toEqual(0);
+    });
+
+    const lx5 = infl.inflectConjunctiveLe(inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx5.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx5.getForms().length).toEqual(0);
+    });
+
+    const lx6 = infl.inflectPossesiveEx(inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx6.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx6.getForms().length).toEqual(0);
+    });
+
+    const lx7 = infl.inflectTo(inputUnd, inputUnd);
+
+    test('check the word literal', () => {
+        expect(lx7.word.literal).toEqual('');
+    });
+
+    test('check the number of forms', () => {
+        expect(lx7.getForms().length).toEqual(0);
     });
 });

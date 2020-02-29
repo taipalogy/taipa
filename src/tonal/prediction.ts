@@ -1,4 +1,4 @@
-import { syllable_compositions } from './soundgen';
+import { syllableCompositions } from './soundgen';
 import { SoundGeneration, Sound } from '../grapheme';
 import { isInLexcialRoots } from './lexicalroots2';
 
@@ -6,11 +6,11 @@ export class Prediction {
     predict(strs: string[]) {
         const soundSeqs: Array<Sound[]> = new Array();
 
-        for (let j = 0; j < syllable_compositions.length; j++) {
+        for (let j = 0; j < syllableCompositions.length; j++) {
             let sg = new SoundGeneration();
             sg.predictive = true;
             sg.letters = strs;
-            sg = syllable_compositions[j](sg);
+            sg = syllableCompositions[j](sg);
 
             if (sg.letters.length != sg.sounds.length || sg.matching != true) {
                 // the pattern is not matched, the first unmatched set of sounds
