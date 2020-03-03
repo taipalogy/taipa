@@ -419,7 +419,7 @@ describe('Inflection testing, empty inputs', () => {
         expect(lx4.getForms().length).toEqual(0);
     });
 
-    const lx5 = infl.inflectConjunctiveLe(inputEmpty);
+    const lx5 = infl.inflectEncliticLe(inputEmpty);
 
     test('check the word literal', () => {
         expect(lx5.word.literal).toEqual('');
@@ -495,7 +495,7 @@ describe('Inflection testing, empty inputs', () => {
         expect(lx4.getForms().length).toEqual(0);
     });
 
-    const lx5 = infl.inflectConjunctiveLe(inputUnd);
+    const lx5 = infl.inflectEncliticLe(inputUnd);
 
     test('check the word literal', () => {
         expect(lx5.word.literal).toEqual('');

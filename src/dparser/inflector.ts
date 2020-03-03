@@ -40,7 +40,7 @@ export class TonalInflector {
         return lx;
     }
 
-    inflectConjunctiveLe(word: string) {
+    inflectEncliticLe(word: string) {
         const ms = this.tia.morphAnalyze(word, new ConjunctiveLeCombining());
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
@@ -84,7 +84,7 @@ export class TonalPhrasalInflector {
 
     inflectToConjunctive(verb: string, le: string) {
         const lexemeVerb = this.infl.inflectDesinence(verb);
-        const lexemeLe = this.infl.inflectConjunctiveLe(le);
+        const lexemeLe = this.infl.inflectEncliticLe(le);
         return this.phm.makeConjunctivePhraseme(lexemeVerb, lexemeLe);
     }
 
