@@ -11,6 +11,11 @@ export const dictOfPhrasalVerbs = [
     ['longw', 'diurh'],
 ];
 
+// prettier-ignore
+export const dictOfPhrasalVerbTwos = [
+    ['tehh', 'cut', 'kih'],
+];
+
 interface IDictionary {
     readonly [index: string]: string[];
 }

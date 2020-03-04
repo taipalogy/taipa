@@ -2,7 +2,7 @@ import { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { Document } from './document';
 import { Tagset } from './dparser/symbols';
 import { TonalWord } from './tonal/lexeme';
-import { SetOfPhrasalVerbs } from './dparser/rules';
+import { PhrasalVerbs } from './dparser/rules';
 import { Word } from './lexeme';
 import { Sound } from './grapheme';
 import { TonalLemmatizer } from './tonal/lemmatizer';
@@ -30,7 +30,7 @@ export class TokenLemmatizer {
     getTonalLemmas = (doc: Document): Document => {
         const tla = new TonalLemmatizationAnalyzer();
         const lmtzr = new TonalLemmatizer();
-        const sophv = new SetOfPhrasalVerbs();
+        const sophv = new PhrasalVerbs();
         let j: number = 0;
         let k: number = 0;
         let len: number = 0;
@@ -38,9 +38,9 @@ export class TokenLemmatizer {
         for (let i = 0; i < doc.tokens.length; i++) {
             if (len == i) {
                 // loop over the doc.speeches sequence
-                if (j < doc.speeches.length) {
-                    len += doc.speeches[j].elements.length;
-                    if (j + 1 < doc.speeches.length) j++;
+                if (j < doc.phrases.length) {
+                    len += doc.phrases[j].elements.length;
+                    if (j + 1 < doc.phrases.length) j++;
                     k = 0;
                 }
             } else {
@@ -85,7 +85,7 @@ export class TokenLemmatizer {
                     continue;
                 }
             }
-            if (doc.speeches[j] && k + 1 == doc.speeches[j].elements.length) {
+            if (doc.phrases[j] && k + 1 == doc.phrases[j].elements.length) {
                 // at the end of a speech
                 // need to further check if the speech is a noun chunk or verb phrase
                 doc.tokens[i].lemma = doc.tokens[i].text; // copy the base form

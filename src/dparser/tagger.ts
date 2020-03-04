@@ -1,15 +1,15 @@
-import { ConstructionOfSpeech, PhrasalVerb, PhrasalVerbWithEnclitic, VerbWithEnclitic, Rules } from './rules';
+import { PhrasalVerb, PhrasalVerbWithEnclitic, VerbWithEnclitic, Rules, ConstructionOfPhrase } from './rules';
 import { POSTags, Tagset } from './symbols';
 import { ConstructionElement, EncliticSurface, ParticleSurface, VerbSurface } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
 
 export class RuleBasedTagger {
-    private speeches: Array<ConstructionOfSpeech> = new Array();
+    private speeches: Array<ConstructionOfPhrase> = new Array();
     private readonly rules = new Rules();
 
-    private generate(sequence: string[], phrases: ConstructionOfSpeech[]) {
-        let cps: Array<ConstructionOfSpeech> = new Array();
+    private generate(sequence: string[], phrases: ConstructionOfPhrase[]) {
+        let cps: Array<ConstructionOfPhrase> = new Array();
 
         if (phrases.length > 0) {
             for (let ph of phrases) {
@@ -21,7 +21,7 @@ export class RuleBasedTagger {
                     const pvwe = new PhrasalVerbWithEnclitic(
                         new VerbSurface(ph.elements[0].surface),
                         new ParticleSurface(ph.elements[1].surface),
-                        new EncliticSurface('aw'),
+                        new EncliticSurface('aw')
                     );
                     cps.push(pvwe);
                 } else if (ph.pos === POSTags.verb) {
@@ -47,7 +47,7 @@ export class RuleBasedTagger {
     }
 
     private matchSeperates(sequence: string[], particle: string) {
-        let phrase: ConstructionOfSpeech = new ConstructionOfSpeech();
+        let phrase: ConstructionOfPhrase = new ConstructionOfPhrase([]);
         let vs: VerbSurface = new VerbSurface(sequence[0]);
         vs.tag = Tagset.VB;
         phrase.elements.push(vs);
@@ -73,7 +73,7 @@ export class RuleBasedTagger {
         }
     }
 
-    private tagPhrases(phrases: ConstructionOfSpeech[]) {
+    private tagPhrases(phrases: ConstructionOfPhrase[]) {
         if (phrases.length > 0) {
             for (let ph of phrases) {
                 if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.particle) {
@@ -118,7 +118,7 @@ export class RuleBasedTagger {
                 //console.log(kw)
                 this.tagKeyWord(kw);
 
-                phrss = [new ConstructionOfSpeech()];
+                phrss = [new ConstructionOfPhrase([])];
                 phrss[0].elements.push(kw);
             }
         }
@@ -127,14 +127,14 @@ export class RuleBasedTagger {
 
         if (phrss) phrss = this.tagPhrases(phrss);
 
-        let listCP: Array<ConstructionOfSpeech> = new Array();
+        let listCP: Array<ConstructionOfPhrase> = new Array();
         if (phrss) listCP = this.generate(sequence, phrss);
         else listCP = this.generate(sequence, []);
 
         //console.log(listCP);
 
         let matchedLen = 0;
-        let mp = new ConstructionOfSpeech();
+        let mp = new ConstructionOfPhrase([]);
 
         for (let m in listCP) {
             const min = Math.min(strs.length - beginOfPhrase, listCP[m].elements.length);
@@ -176,7 +176,7 @@ export class RuleBasedTagger {
         for (let i in tokens) strs.push(tokens[i].text);
 
         let beginOfPhrase: number = 0;
-        let matched: ConstructionOfSpeech = new ConstructionOfSpeech();
+        let matched: ConstructionOfPhrase = new ConstructionOfPhrase([]);
         for (let i = 0; i < strs.length; i++) {
             if (i - beginOfPhrase == 0) {
                 matched = this.phrase(strs, beginOfPhrase);
@@ -196,7 +196,7 @@ export class RuleBasedTagger {
         let ces: Array<ConstructionElement> = new Array();
 
         for (let i in this.speeches) {
-            doc.speeches.push(this.speeches[i]);
+            doc.phrases.push(this.speeches[i]);
             for (let j in this.speeches[i].elements) {
                 ces.push(this.speeches[i].elements[j]);
             }
@@ -210,5 +210,5 @@ export class RuleBasedTagger {
         }
 
         return doc;
-    }
+    };
 }

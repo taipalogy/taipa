@@ -10,40 +10,37 @@ import {
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
 import { PhrasalVerbPhraseme, PhrasalVerbTwoPhraseme } from './phraseme';
-import { dictOfVerbs, dictOfPhrasalVerbs, dictOfSeperateVVCompounds } from './dictionary';
+import { dictOfVerbs, dictOfPhrasalVerbs, dictOfSeperateVVCompounds, dictOfPhrasalVerbTwos } from './dictionary';
 
-export class ConstructionOfSpeech {
+class ConstructionOfSpeech {
     pos: string = '';
-    elements: Array<ConstructionElement> = new Array();
 }
 
-export class ConstructionOfPhrase extends ConstructionOfSpeech {
+export class ConstructionOfPhrase {
+    pos: string = '';
+    elements: Array<ConstructionElement> = new Array();
     constructor(arr: Array<ConstructionElement>) {
-        super();
         for (let key in arr) {
             this.elements.push(arr[key]);
         }
     }
 }
 
-class NounPhrase extends ConstructionOfPhrase {}
-class VerbPhrase extends ConstructionOfPhrase {}
-
-export class PhrasalVerb extends VerbPhrase {
+export class PhrasalVerb extends ConstructionOfPhrase {
     constructor(arr: Array<ConstructionElement>) {
         super(arr);
         this.pos = POSTags.verb;
     }
 }
 
-class VerbPhraseSurface extends ConstructionOfSpeech {
+class VerbPhrase extends ConstructionOfPhrase {
     constructor() {
-        super();
+        super([]);
         this.pos = POSTags.verb;
     }
 }
 
-export class PhrasalVerbWithEnclitic extends VerbPhraseSurface {
+export class PhrasalVerbWithEnclitic extends VerbPhrase {
     constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
         super();
         verb.tag = Tagset.VB;
@@ -55,7 +52,7 @@ export class PhrasalVerbWithEnclitic extends VerbPhraseSurface {
     }
 }
 
-export class VerbWithEnclitic extends VerbPhraseSurface {
+export class VerbWithEnclitic extends VerbPhrase {
     constructor(verb: VerbSurface, enclitic: EncliticSurface) {
         super();
         verb.tag = Tagset.VB;
@@ -65,7 +62,7 @@ export class VerbWithEnclitic extends VerbPhraseSurface {
     }
 }
 
-export class SetOfPhrasalVerbs {
+export class PhrasalVerbs {
     phrms: Array<PhrasalVerbPhraseme | PhrasalVerbTwoPhraseme> = new Array();
     phvs: Array<PhrasalVerb> = new Array();
 
@@ -96,10 +93,19 @@ export class SetOfPhrasalVerbs {
         for (let i in dictOfPhrasalVerbs) {
             this.phrms.push(pva.inflectToProceeding(dictOfPhrasalVerbs[i][0], dictOfPhrasalVerbs[i][1]));
         }
+        for (let i in dictOfPhrasalVerbTwos) {
+            this.phrms.push(
+                pva.inflectToProceeding(
+                    dictOfPhrasalVerbTwos[i][0],
+                    dictOfPhrasalVerbTwos[i][1],
+                    dictOfPhrasalVerbTwos[i][2]
+                )
+            );
+        }
     }
 }
 
-class PhrasalTransitive extends VerbPhraseSurface {
+class PhrasalTransitive extends VerbPhrase {
     constructor(verb: VerbSurface, preposition: ParticleSurface, pronoun: PronounSurface) {
         super();
         verb.tag = Tagset.VB;
@@ -111,7 +117,7 @@ class PhrasalTransitive extends VerbPhraseSurface {
     }
 }
 
-class SmallClause extends VerbPhraseSurface {
+class SmallClause extends VerbPhrase {
     constructor(verb1: VerbSurface, pronoun: PersonalPronounSurface, verb2: VerbSurface) {
         super();
         verb1.tag = Tagset.VB;
@@ -124,7 +130,7 @@ class SmallClause extends VerbPhraseSurface {
 }
 
 export class SetOfSmallClauses {
-    constructions: Array<ConstructionOfSpeech> = [];
+    constructions: Array<ConstructionOfPhrase> = [];
 
     constructor() {
         // obj. xcomp.
@@ -138,7 +144,7 @@ export class SetOfSmallClauses {
 }
 
 export class Rules {
-    private phrases: Array<ConstructionOfSpeech[]> = new Array();
+    private phrases: Array<ConstructionOfPhrase[]> = new Array();
     private keyWords: KeyWords = new KeyWords();
 
     constructor() {
@@ -151,7 +157,7 @@ export class Rules {
         if (dictOfVerbs.includes(str)) {
             let vs: VerbSurface = new VerbSurface(str);
             if (vs.pos === POSTags.verb) vs.tag = Tagset.VB;
-            phr = [new ConstructionOfSpeech()];
+            phr = [new ConstructionOfPhrase([])];
             phr[0].elements.push(vs);
             phr[0].pos = POSTags.verb;
             return phr;
@@ -201,7 +207,7 @@ export class Rules {
     }
 
     private populatePhrasalVerbs() {
-        const s = new SetOfPhrasalVerbs();
+        const s = new PhrasalVerbs();
 
         for (let i = 0; i < s.phvs.length; i++) {
             this.phrases.push([s.phvs[i]]);
