@@ -26,7 +26,7 @@ export class TokenAnalysis {
     uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
 }
 
-export class TokenLemmatizer {
+export class TokenLemmaLookup {
     getTonalLemmas = (doc: Document): Document => {
         const tla = new TonalLemmatizationAnalyzer();
         const lmtzr = new TonalLemmatizer();
@@ -56,7 +56,34 @@ export class TokenLemmatizer {
                 continue;
             }
             if (doc.tokens[i].tag === Tagset.VB && i + 1 < doc.tokens.length) {
-                if (doc.tokens[i + 1].tag === Tagset.PPV || doc.tokens[i + 1].tag === Tagset.APPR) {
+                if (i + 2 < doc.tokens.length && doc.tokens[i + 2].tag === Tagset.PPV) {
+                    // phrasal verbs of length 3
+                    for (let j in sophv.phrms) {
+                        if (
+                            doc.tokens[i].text === sophv.phrms[j].phrase.words[0].literal &&
+                            doc.tokens[i + 1].text === sophv.phrms[j].phrase.words[1].literal &&
+                            doc.tokens[i + 2].text === sophv.phrms[j].phrase.words[2].literal
+                        ) {
+                            doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;
+                            doc.tokens[i + 1].lemma = sophv.phrms[j].phrase.words[1].literal;
+                            doc.tokens[i + 2].lemma = sophv.phrms[j].phrase.words[2].literal;
+                            i++;
+                            break;
+                        } else if (
+                            doc.tokens[i].text === sophv.phrms[j].getForms()[0].words[0].literal &&
+                            doc.tokens[i + 1].text === sophv.phrms[j].getForms()[0].words[1].literal &&
+                            doc.tokens[i + 2].text === sophv.phrms[j].getForms()[0].words[2].literal
+                        ) {
+                            doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;
+                            doc.tokens[i + 1].lemma = sophv.phrms[j].phrase.words[1].literal;
+                            doc.tokens[i + 2].lemma = sophv.phrms[j].phrase.words[2].literal;
+                            i++;
+                            break;
+                        }
+                    }
+                    continue;
+                } else if (doc.tokens[i + 1].tag === Tagset.PPV || doc.tokens[i + 1].tag === Tagset.APPR) {
+                    // phrasal verbs of length 2
                     for (let j in sophv.phrms) {
                         if (
                             doc.tokens[i].text === sophv.phrms[j].phrase.words[0].literal &&

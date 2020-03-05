@@ -5,7 +5,7 @@ import { Token } from '../token';
 import { Document } from '../document';
 
 export class RuleBasedTagger {
-    private speeches: Array<ConstructionOfPhrase> = new Array();
+    private phrases: Array<ConstructionOfPhrase> = new Array();
     private readonly rules = new Rules();
 
     private generate(sequence: string[], phrases: ConstructionOfPhrase[]) {
@@ -78,9 +78,11 @@ export class RuleBasedTagger {
             for (let ph of phrases) {
                 if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.particle) {
                     ph.elements[0].tag = Tagset.VB;
+                    if (ph.elements.length == 3 && ph.elements[1].pos === POSTags.particle) {
+                        ph.elements[1].tag = Tagset.PPV;
+                    }
                     ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
                 } else if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary) {
-                    //console.log('something else hit')
                 } else if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.adposition) {
                     ph.elements[0].tag = Tagset.VB;
                     ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
@@ -163,7 +165,7 @@ export class RuleBasedTagger {
     }
 
     private tagSpeeches() {
-        for (let s of this.speeches) {
+        for (let s of this.phrases) {
             if (s.elements.length == 1 && s.elements[0].pos == POSTags.pronoun) s.pos = POSTags.pronoun;
 
             //console.log(s)
@@ -183,7 +185,7 @@ export class RuleBasedTagger {
                 //console.log(matched)
                 if (matched.elements.length) {
                     beginOfPhrase += matched.elements.length;
-                    this.speeches.push(matched);
+                    this.phrases.push(matched);
                     this.tagSpeeches();
                 }
             }
@@ -195,10 +197,10 @@ export class RuleBasedTagger {
 
         let ces: Array<ConstructionElement> = new Array();
 
-        for (let i in this.speeches) {
-            doc.phrases.push(this.speeches[i]);
-            for (let j in this.speeches[i].elements) {
-                ces.push(this.speeches[i].elements[j]);
+        for (let i in this.phrases) {
+            doc.phrases.push(this.phrases[i]);
+            for (let j in this.phrases[i].elements) {
+                ces.push(this.phrases[i].elements[j]);
             }
         }
 

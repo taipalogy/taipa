@@ -12,7 +12,7 @@ import { RuleBasedTagger } from './dparser/tagger';
 
 import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
-import { TokenLemmatizer } from './token';
+import { TokenLemmaLookup } from './token';
 
 const pipe = (...fns: Array<(doc: Document) => Document>) => (x: Document) => fns.reduce((v, f) => f(v), x);
 
@@ -70,7 +70,7 @@ export class Client {
             const tggr = new RuleBasedTagger();
 
             // lemmatization
-            const lmtzr = new TokenLemmatizer();
+            const lmtzr = new TokenLemmaLookup();
 
             // dependency parsing
             const dpsr = new DependencyParser();

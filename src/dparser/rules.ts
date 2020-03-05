@@ -73,18 +73,35 @@ export class PhrasalVerbs {
 
     private populatePhrasalVerbs() {
         for (let i in this.phrms) {
-            this.phvs.push(
-                new PhrasalVerb([
-                    new VerbSurface(this.phrms[i].phrase.words[0].literal),
-                    new ParticleSurface(this.phrms[i].phrase.words[1].literal)
-                ])
-            );
-            this.phvs.push(
-                new PhrasalVerb([
-                    new VerbSurface(this.phrms[i].getForms()[0].words[0].literal),
-                    new ParticleSurface(this.phrms[i].getForms()[0].words[1].literal)
-                ])
-            );
+            if (this.phrms[i] instanceof PhrasalVerbPhraseme) {
+                this.phvs.push(
+                    new PhrasalVerb([
+                        new VerbSurface(this.phrms[i].phrase.words[0].literal),
+                        new ParticleSurface(this.phrms[i].phrase.words[1].literal)
+                    ])
+                );
+                this.phvs.push(
+                    new PhrasalVerb([
+                        new VerbSurface(this.phrms[i].getForms()[0].words[0].literal),
+                        new ParticleSurface(this.phrms[i].getForms()[0].words[1].literal)
+                    ])
+                );
+            } else if (this.phrms[i] instanceof PhrasalVerbTwoPhraseme) {
+                this.phvs.push(
+                    new PhrasalVerb([
+                        new VerbSurface(this.phrms[i].phrase.words[0].literal),
+                        new ParticleSurface(this.phrms[i].phrase.words[1].literal),
+                        new ParticleSurface(this.phrms[i].phrase.words[2].literal)
+                    ])
+                );
+                this.phvs.push(
+                    new PhrasalVerb([
+                        new VerbSurface(this.phrms[i].getForms()[0].words[0].literal),
+                        new ParticleSurface(this.phrms[i].getForms()[0].words[1].literal),
+                        new ParticleSurface(this.phrms[i].getForms()[0].words[2].literal)
+                    ])
+                );
+            }
         }
     }
 
@@ -170,7 +187,7 @@ export class Rules {
         let elems: Array<ConstructionElement> = [];
         for (let pat of this.phrases) {
             for (let j = 0; j < pat.length; j++) {
-                //console.log(pat[j].elements)
+                // console.log(pat[j].elements);
                 for (let e of pat[j].elements) {
                     elems.push(e);
                 }
@@ -178,7 +195,17 @@ export class Rules {
 
             for (let i = 0; i < elems.length; i++) {
                 if (i === 1 && i + 1 === elems.length) {
+                    // phrasal verbs of length 2
                     if (elems[0].surface === sequence[0] && elems[1].surface === sequence[1]) {
+                        return pat;
+                    }
+                } else if (i === 2 && i + 1 === elems.length) {
+                    // phrasal verbs of length 3
+                    if (
+                        elems[0].surface === sequence[0] &&
+                        elems[1].surface === sequence[1] &&
+                        elems[2].surface === sequence[2]
+                    ) {
                         return pat;
                     }
                 }
