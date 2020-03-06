@@ -51,12 +51,12 @@ export class TokenLemmaLookup {
                 doc.tokens[i].lemma = doc.tokens[i].text;
                 continue; // defective
             }
-            if (doc.tokens[i].tag === Tagset.AUXN || doc.tokens[i].tag === Tagset.AUX) {
+            if (doc.tokens[i].tag === Tagset.auxn || doc.tokens[i].tag === Tagset.aux) {
                 doc.tokens[i].lemma = doc.tokens[i].text;
                 continue;
             }
-            if (doc.tokens[i].tag === Tagset.VB && i + 1 < doc.tokens.length) {
-                if (i + 2 < doc.tokens.length && doc.tokens[i + 2].tag === Tagset.PPV) {
+            if (doc.tokens[i].tag === Tagset.vb && i + 1 < doc.tokens.length) {
+                if (i + 2 < doc.tokens.length && doc.tokens[i + 2].tag === Tagset.ppv) {
                     // phrasal verbs of length 3
                     for (let j in sophv.phrms) {
                         if (
@@ -82,7 +82,7 @@ export class TokenLemmaLookup {
                         }
                     }
                     continue;
-                } else if (doc.tokens[i + 1].tag === Tagset.PPV || doc.tokens[i + 1].tag === Tagset.APPR) {
+                } else if (doc.tokens[i + 1].tag === Tagset.ppv || doc.tokens[i + 1].tag === Tagset.appr) {
                     // phrasal verbs of length 2
                     for (let j in sophv.phrms) {
                         if (
@@ -106,8 +106,8 @@ export class TokenLemmaLookup {
                     continue;
                 }
             }
-            if (doc.tokens[i].tag === Tagset.VB) {
-                if (i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.AUXN) {
+            if (doc.tokens[i].tag === Tagset.vb) {
+                if (i + 1 < doc.tokens.length && doc.tokens[i + 1].tag === Tagset.auxn) {
                     doc.tokens[i].lemma = doc.tokens[i].text; // copy the base form
                     continue;
                 }

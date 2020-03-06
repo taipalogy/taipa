@@ -9,30 +9,30 @@ export class Guide {
     private b1: Token = new Token('');
 
     private s1B1Map = new Map<string, Transition>()
-        .set(Tagset.VB + Tagset.PPV, new Shift())
-        .set(Tagset.NPR + Tagset.VB, new Shift())
-        .set(Tagset.NPR + Tagset.NPR, new Shift())
-        .set(Tagset.APPR + Tagset.NPR, new Shift())
-        .set(Tagset.VB + Tagset.NPR, new Shift())
-        .set(Tagset.VB + Tagset.AUXN, new Shift())
-        .set(Tagset.AUX + Tagset.VB, new Shift())
-        .set(Tagset.PADV + Tagset.VB, new Shift())
-        .set(Tagset.NPR + Tagset.PADV, new Shift())
-        .set(Tagset.VB + Tagset.APPR, new Shift())
-        .set(Tagset.VB + Tagset.PADV, new Shift())
-        .set(Tagset.NPR + Tagset.AUX, new Shift())
-        .set(Tagset.PPV + Tagset.AUXN, new RightArc())
-        .set(Tagset.PPV + Tagset.NPR, new RightArc());
+        .set(Tagset.vb + Tagset.ppv, new Shift())
+        .set(Tagset.npr + Tagset.vb, new Shift())
+        .set(Tagset.npr + Tagset.npr, new Shift())
+        .set(Tagset.appr + Tagset.npr, new Shift())
+        .set(Tagset.vb + Tagset.npr, new Shift())
+        .set(Tagset.vb + Tagset.auxn, new Shift())
+        .set(Tagset.aux + Tagset.vb, new Shift())
+        .set(Tagset.padv + Tagset.vb, new Shift())
+        .set(Tagset.npr + Tagset.padv, new Shift())
+        .set(Tagset.vb + Tagset.appr, new Shift())
+        .set(Tagset.vb + Tagset.padv, new Shift())
+        .set(Tagset.npr + Tagset.aux, new Shift())
+        .set(Tagset.ppv + Tagset.auxn, new RightArc())
+        .set(Tagset.ppv + Tagset.npr, new RightArc());
 
     private s2S1Map = new Map<string, Transition>()
-        .set(Tagset.VB + Tagset.PPV, new RightArc())
-        .set(Tagset.VB + Tagset.AUXN, new RightArc())
-        .set(Tagset.AUX + Tagset.VB, new LeftArc())
-        .set(Tagset.PADV + Tagset.VB, new LeftArc())
-        .set(Tagset.APPR + Tagset.NPR, new LeftArc())
-        .set(Tagset.VB + Tagset.VB, new RightArc())
-        .set(Tagset.VB + Tagset.NPR, new RightArc())
-        .set(Tagset.NPR + Tagset.VB, new LeftArc());
+        .set(Tagset.vb + Tagset.ppv, new RightArc())
+        .set(Tagset.vb + Tagset.auxn, new RightArc())
+        .set(Tagset.aux + Tagset.vb, new LeftArc())
+        .set(Tagset.padv + Tagset.vb, new LeftArc())
+        .set(Tagset.appr + Tagset.npr, new LeftArc())
+        .set(Tagset.vb + Tagset.vb, new RightArc())
+        .set(Tagset.vb + Tagset.npr, new RightArc())
+        .set(Tagset.npr + Tagset.vb, new LeftArc());
 
     private isQueueEmpty(c: Configuration) {
         if (c.queue.length === 0) return true;

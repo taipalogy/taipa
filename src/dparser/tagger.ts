@@ -41,15 +41,15 @@ export class RuleBasedTagger {
 
     private tagKeyWord(kw: ConstructionElement) {
         if (kw.pos === POSTags.pronoun) {
-            kw.tag = Tagset.NPR;
-        } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.AUX;
-        else if (kw.pos === POSTags.particle) kw.tag = Tagset.PADV;
+            kw.tag = Tagset.npr;
+        } else if (kw.pos === POSTags.auxiliary) kw.tag = Tagset.aux;
+        else if (kw.pos === POSTags.particle) kw.tag = Tagset.padv;
     }
 
     private matchSeperates(sequence: string[], particle: string) {
         let phrase: ConstructionOfPhrase = new ConstructionOfPhrase([]);
         let vs: VerbSurface = new VerbSurface(sequence[0]);
-        vs.tag = Tagset.VB;
+        vs.tag = Tagset.vb;
         phrase.elements.push(vs);
         phrase.pos = POSTags.verb;
 
@@ -65,7 +65,7 @@ export class RuleBasedTagger {
 
                 if (sequence[i] === particle) {
                     let ps: VerbSurface = new VerbSurface(sequence[i]);
-                    ps.tag = Tagset.VB;
+                    ps.tag = Tagset.vb;
                     phrase.elements.push(ps);
                     return phrase;
                 }
@@ -77,15 +77,15 @@ export class RuleBasedTagger {
         if (phrases.length > 0) {
             for (let ph of phrases) {
                 if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.particle) {
-                    ph.elements[0].tag = Tagset.VB;
+                    ph.elements[0].tag = Tagset.vb;
                     if (ph.elements.length == 3 && ph.elements[1].pos === POSTags.particle) {
-                        ph.elements[1].tag = Tagset.PPV;
+                        ph.elements[1].tag = Tagset.ppv;
                     }
-                    ph.elements[ph.elements.length - 1].tag = Tagset.PPV;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.ppv;
                 } else if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.auxiliary) {
                 } else if (ph.pos === POSTags.verb && ph.elements[ph.elements.length - 1].pos === POSTags.adposition) {
-                    ph.elements[0].tag = Tagset.VB;
-                    ph.elements[ph.elements.length - 1].tag = Tagset.APPR;
+                    ph.elements[0].tag = Tagset.vb;
+                    ph.elements[ph.elements.length - 1].tag = Tagset.appr;
                 }
             }
         }

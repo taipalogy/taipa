@@ -15,21 +15,21 @@ export class DependencyParser {
     private b1: Token = new Token('');
 
     private s1B1RightRelations = new Map<string, DependencyLabels>()
-        .set(Tagset.PPV + Tagset.AUXN, DependencyLabels.compoundPrt)
-        .set(Tagset.PPV + Tagset.NPR, DependencyLabels.compoundPrt);
+        .set(Tagset.ppv + Tagset.auxn, DependencyLabels.compoundPrt)
+        .set(Tagset.ppv + Tagset.npr, DependencyLabels.compoundPrt);
 
     private s1B1LeftRelations = new Map<string, DependencyLabels>();
 
     private s2S1RightRelations = new Map<string, DependencyLabels>()
-        .set(Tagset.VB + Tagset.PPV, DependencyLabels.compoundPrt)
-        .set(Tagset.VB + Tagset.AUXN, DependencyLabels.aux)
-        .set(Tagset.VB + Tagset.VB, DependencyLabels.compound)
-        .set(Tagset.VB + Tagset.NPR, DependencyLabels.obj);
+        .set(Tagset.vb + Tagset.ppv, DependencyLabels.compoundPrt)
+        .set(Tagset.vb + Tagset.auxn, DependencyLabels.aux)
+        .set(Tagset.vb + Tagset.vb, DependencyLabels.compound)
+        .set(Tagset.vb + Tagset.npr, DependencyLabels.obj);
 
     private s2S1LeftRelations = new Map<string, DependencyLabels>()
-        .set(Tagset.AUX + Tagset.VB, DependencyLabels.aux)
-        .set(Tagset.PADV + Tagset.VB, DependencyLabels.advmod)
-        .set(Tagset.APPR + Tagset.NPR, DependencyLabels.case);
+        .set(Tagset.aux + Tagset.vb, DependencyLabels.aux)
+        .set(Tagset.padv + Tagset.vb, DependencyLabels.advmod)
+        .set(Tagset.appr + Tagset.npr, DependencyLabels.case);
 
     private getInitialConfiguration() {
         return new Configuration();
@@ -88,7 +88,7 @@ export class DependencyParser {
         }
     }
 
-    private s2S1LeftFeatures = new Map<string, DependencyLabels[]>().set(Tagset.NPR + Tagset.VB, [
+    private s2S1LeftFeatures = new Map<string, DependencyLabels[]>().set(Tagset.npr + Tagset.vb, [
         DependencyLabels.nsubj,
         DependencyLabels.dislocated
     ]);

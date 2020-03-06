@@ -59,36 +59,36 @@ export enum DependencyLabels {
 }
 
 export enum Tagset {
-    AUX = 'AUX', // auxiliary verb
-    AUXN = 'AUXN', // auxiliary verb as enclitic
-    ADJ = 'ADJ', // adjective
-    ADNOM = 'ADNOM', // adnominal adjective
-    ADV = 'ADV', // adverb
-    APPR = 'APPR', // preposition
-    CL = 'CL', // classifier
-    CONJ = 'CONJ', // conjunction
-    FIL = 'FIL', // filler
-    INTJ = 'INTJ', // interjection
-    NN = 'NN', // noun
-    NNP = 'NNP', // proper noun
-    NPR = 'NPR', // pronoun
-    NUM = 'NUM', // numeral
-    NV = 'NV', // verbal noun
-    NADJ = 'NADJ', // adjective noun
-    NADV = 'NADV', // adverbial noun
-    PAR = 'PAR', // parenthesis
-    PCS = 'PCS', // case particle
-    PCO = 'PCO', // parallel particle
-    PCJ = 'PCJ', // conjunctive particle
-    PEND = 'PEND', // sentence-ending particle
-    PADV = 'PADV', // adverbial particle
-    PPV = 'PPV', // particle of phrasal verb
-    PSUB = 'PSUB', // subsidiary
-    PNC = 'PNC', // punctuation
-    PX = 'PX', // prefix
-    SX = 'SX', // suffix
-    SYM = 'SYM', // symbol
-    VB = 'VB' // verb base form
+    aux = 'AUX', // auxiliary verb
+    auxn = 'AUXN', // auxiliary verb as enclitic
+    adj = 'ADJ', // adjective
+    adnom = 'ADNOM', // adnominal adjective
+    adv = 'ADV', // adverb
+    appr = 'APPR', // preposition
+    cl = 'CL', // classifier
+    conj = 'CONJ', // conjunction
+    fil = 'FIL', // filler
+    intj = 'INTJ', // interjection
+    nn = 'NN', // noun
+    nnp = 'NNP', // proper noun
+    npr = 'NPR', // pronoun
+    num = 'NUM', // numeral
+    nv = 'NV', // verbal noun
+    nadj = 'NADJ', // adjective noun
+    nadv = 'NADV', // adverbial noun
+    par = 'PAR', // parenthesis
+    pcs = 'PCS', // case particle
+    pco = 'PCO', // parallel particle
+    pcj = 'PCJ', // conjunctive particle
+    pend = 'PEND', // sentence-ending particle
+    padv = 'PADV', // adverbial particle
+    ppv = 'PPV', // particle of phrasal verb
+    psub = 'PSUB', // subsidiary
+    pnc = 'PNC', // punctuation
+    px = 'PX', // prefix
+    sx = 'SX', // suffix
+    sym = 'SYM', // symbol
+    vb = 'VB' // verb
 }
 
 export enum PronType {
@@ -97,7 +97,7 @@ export enum PronType {
       https://universaldependencies.org/u/feat/PronType.html
     */
 
-    DEM = 'Dem',
-    PRS = 'Prs',
-    REL = 'Rel'
+    dem = 'Dem',
+    prs = 'Prs',
+    rel = 'Rel'
 }

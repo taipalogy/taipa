@@ -43,11 +43,11 @@ class VerbPhrase extends ConstructionOfPhrase {
 export class PhrasalVerbWithEnclitic extends VerbPhrase {
     constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
         super();
-        verb.tag = Tagset.VB;
+        verb.tag = Tagset.vb;
         this.elements.push(verb);
-        particle.tag = Tagset.PPV;
+        particle.tag = Tagset.ppv;
         this.elements.push(particle);
-        enclitic.tag = Tagset.AUXN;
+        enclitic.tag = Tagset.auxn;
         this.elements.push(enclitic);
     }
 }
@@ -55,9 +55,9 @@ export class PhrasalVerbWithEnclitic extends VerbPhrase {
 export class VerbWithEnclitic extends VerbPhrase {
     constructor(verb: VerbSurface, enclitic: EncliticSurface) {
         super();
-        verb.tag = Tagset.VB;
+        verb.tag = Tagset.vb;
         this.elements.push(verb);
-        enclitic.tag = Tagset.AUXN;
+        enclitic.tag = Tagset.auxn;
         this.elements.push(enclitic);
     }
 }
@@ -125,11 +125,11 @@ export class PhrasalVerbs {
 class PhrasalTransitive extends VerbPhrase {
     constructor(verb: VerbSurface, preposition: ParticleSurface, pronoun: PronounSurface) {
         super();
-        verb.tag = Tagset.VB;
+        verb.tag = Tagset.vb;
         this.elements.push(verb);
-        preposition.tag = Tagset.PADV;
+        preposition.tag = Tagset.padv;
         this.elements.push(preposition);
-        pronoun.tag = Tagset.NPR;
+        pronoun.tag = Tagset.npr;
         this.elements.push(pronoun);
     }
 }
@@ -137,11 +137,11 @@ class PhrasalTransitive extends VerbPhrase {
 class SmallClause extends VerbPhrase {
     constructor(verb1: VerbSurface, pronoun: PersonalPronounSurface, verb2: VerbSurface) {
         super();
-        verb1.tag = Tagset.VB;
+        verb1.tag = Tagset.vb;
         this.elements.push(verb1);
-        pronoun.tag = Tagset.NPR;
+        pronoun.tag = Tagset.npr;
         this.elements.push(pronoun);
-        verb2.tag = Tagset.VB;
+        verb2.tag = Tagset.vb;
         this.elements.push(verb2);
     }
 }
@@ -173,7 +173,7 @@ export class Rules {
         let phr;
         if (dictOfVerbs.includes(str)) {
             let vs: VerbSurface = new VerbSurface(str);
-            if (vs.pos === POSTags.verb) vs.tag = Tagset.VB;
+            if (vs.pos === POSTags.verb) vs.tag = Tagset.vb;
             phr = [new ConstructionOfPhrase([])];
             phr[0].elements.push(vs);
             phr[0].pos = POSTags.verb;
