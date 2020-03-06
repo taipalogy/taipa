@@ -170,28 +170,38 @@ export class EncliticECombining extends TonalCombiningMetaplasm {
 //------------------------------------------------------------------------------
 
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
-    private diurh(syllable: TonalSyllable) {
-        let rets = [];
+    constructor(private tone: TonalLetterTags) {
+        super();
+    }
+
+    private toThird(syllable: TonalSyllable) {
         let s: TonalSyllable = new TonalSyllable(syllable.letters);
         s.popLetter();
         s.pushLetter(lowerLettersTonal.get(TonalLetterTags.hh));
         s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
-        rets.push(new TonalSyllable(s.letters));
-        return rets;
+        return new TonalSyllable(s.letters);
+    }
+
+    private toFirst(syllable: TonalSyllable) {
+        let s: TonalSyllable = new TonalSyllable(syllable.letters);
+        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.f));
+        return new TonalSyllable(s.letters);
     }
 
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         if (allomorph) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             if (allomorph instanceof CheckedAllomorph) {
-                if (s.literal === 'diurh') return [];
-                // f only
                 const ret: TonalSyllable[] = [];
-                // ~hf
-                s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
-                ret.push(new TonalSyllable(s.letters));
+                let syl: TonalSyllable = new TonalSyllable([]);
+                if (this.tone === TonalLetterTags.f) {
+                    syl = this.toFirst(s);
+                } else if (this.tone === TonalLetterTags.w) {
+                    syl = this.toThird(s);
+                }
+                ret.push(syl);
 
-                // free form of the syllable could be handle outside of this routine by popping f and h
+                // free form of the syllable could be handle outside of this routine by popping f/w and h/hh
                 return ret;
             }
         }

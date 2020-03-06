@@ -8,7 +8,7 @@ import {
     PossesiveExCombining,
     NthCombining
 } from './morpheme';
-import { TonalDesinenceInflection, TransfixInflection } from './lexeme';
+import { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalCreator } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
@@ -34,8 +34,8 @@ export class TonalInflector {
         return lx;
     }
 
-    inflectPhrasalVerbParticle(word: string) {
-        const ms = this.tia.morphAnalyze(word, new PhrasalVerbParticleCombining());
+    inflectPhrasalVerbParticle(word: string, tone: TonalLetterTags) {
+        const ms = this.tia.morphAnalyze(word, new PhrasalVerbParticleCombining(tone));
         const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
         return lx;
     }
@@ -65,14 +65,25 @@ export class TonalPhrasalInflector {
     private readonly crt = new TonalCreator();
 
     inflectToProceeding(verb: string, particle: string, particleTwo?: string) {
-        // need to inflect to first tone. tonal f is appended to particle.
         const lexemeVerb = this.infl.inflectDesinence(verb);
-        const lexemeParticle = this.infl.inflectPhrasalVerbParticle(particle);
-        const lexemeParticleTwo = particleTwo ? this.infl.inflectPhrasalVerbParticle(particleTwo) : undefined;
-        if (lexemeParticleTwo) {
-            return this.phm.makePhrasalVerbTwoPhraseme(lexemeVerb, lexemeParticle, lexemeParticleTwo);
+        let lxParticle: TonalInflectionLexeme = this.crt.createLexeme('');
+        let lxParticleTwo: TonalInflectionLexeme | undefined;
+        if (particleTwo) {
+            if (particle === 'cut' && particleTwo === 'kih') {
+                lxParticle = this.infl.inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
+                lxParticleTwo = this.infl.inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.f);
+            }
         } else {
-            return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lexemeParticle);
+            if (particle === 'kih') {
+                lxParticle = this.infl.inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
+            } else {
+                lxParticle = this.infl.inflectPhrasalVerbParticle(particle, TonalLetterTags.w);
+            }
+        }
+        if (lxParticleTwo) {
+            return this.phm.makePhrasalVerbTwoPhraseme(lexemeVerb, lxParticle, lxParticleTwo);
+        } else {
+            return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lxParticle);
         }
     }
 

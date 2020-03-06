@@ -3,7 +3,6 @@ import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalCreator } from '../src/dparser/creator';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { EighthToFirstCombining } from '../src/dparser/morpheme';
-import { TonalWord } from '../src/tonal/lexeme';
 import { TonalSyllable } from '../src/tonal/morpheme';
 
 describe('Phrasal verb testing, transitive', () => {
@@ -16,7 +15,7 @@ describe('Phrasal verb testing, transitive', () => {
     });
 
     test('check the proceeding form', () => {
-        expect(ph.getForms()[0].literal).toEqual('koanny diurh');
+        expect(ph.getForms()[0].literal).toEqual('koanny diurhhw');
     });
 });
 
