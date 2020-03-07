@@ -77,6 +77,16 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
     test('check free form of kihf', () => {
         expect(s2.literal).toEqual('ki');
     });
+
+    const p3 = infl.inflectToProceeding('tehh', 'kih', 'laih');
+
+    test('check the base form', () => {
+        expect(p3.phrase.literal).toEqual('tehh kih laih');
+    });
+
+    test('check the proceeding form', () => {
+        expect(p3.getForms()[0].literal).toEqual('tehhw kihf laiz');
+    });
 });
 
 describe('Verb phrase testing, conjunctive', () => {

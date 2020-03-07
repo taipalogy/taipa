@@ -409,7 +409,7 @@ describe('Inflection testing, empty inputs', () => {
         expect(lx3.getForms().length).toEqual(0);
     });
 
-    const lx4 = infl.inflectPhrasalVerbParticle(inputEmpty);
+    const lx4 = infl.inflectPhrasalVerbParticle(inputEmpty, TonalLetterTags.zero);
 
     test('check the word literal', () => {
         expect(lx4.word.literal).toEqual('');
@@ -485,7 +485,7 @@ describe('Inflection testing, empty inputs', () => {
         expect(lx3.getForms().length).toEqual(0);
     });
 
-    const lx4 = infl.inflectPhrasalVerbParticle(inputUnd);
+    const lx4 = infl.inflectPhrasalVerbParticle(inputUnd, TonalLetterTags.zero);
 
     test('check the word literal', () => {
         expect(lx4.word.literal).toEqual('');

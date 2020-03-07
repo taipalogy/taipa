@@ -142,3 +142,7 @@ export const eighthToFirst = new Map<string, TonalLetterTags>()
     .set(TonalLetterTags.tt, TonalLetterTags.t)
     .set(TonalLetterTags.kk, TonalLetterTags.k)
     .set(TonalLetterTags.hh, TonalLetterTags.h);
+
+export const finalOfPhrasalVerbParticle = new Map<string, TonalLetterTags>()
+    .set(TonalLetterTags.h, TonalLetterTags.hh)
+    .set(TonalLetterTags.p, TonalLetterTags.pp);

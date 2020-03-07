@@ -72,6 +72,9 @@ export class TonalPhrasalInflector {
             if (particle === 'cut' && particleTwo === 'kih') {
                 lxParticle = this.infl.inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
                 lxParticleTwo = this.infl.inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.f);
+            } else if (particle === 'kih' && particleTwo === 'laih') {
+                lxParticle = this.infl.inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
+                lxParticleTwo = this.infl.inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.z);
             }
         } else {
             if (particle === 'kih') {

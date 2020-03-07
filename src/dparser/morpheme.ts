@@ -26,7 +26,8 @@ import {
     initialsForEuphonicTt,
     initialsForEuphonicT,
     combiningRules,
-    nasalInitialSounds
+    nasalInitialSounds,
+    finalOfPhrasalVerbParticle
 } from '../tonal/collections';
 
 export enum AssimiDirection {
@@ -174,18 +175,29 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
         super();
     }
 
-    private toThird(syllable: TonalSyllable) {
+    private toThird(syllable: TonalSyllable, final: string) {
         let s: TonalSyllable = new TonalSyllable(syllable.letters);
         s.popLetter();
-        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.hh));
-        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
-        return new TonalSyllable(s.letters);
+        const fnl = finalOfPhrasalVerbParticle.get(final);
+        if (fnl) {
+            // h -> hh, p -> pp
+            s.pushLetter(lowerLettersTonal.get(fnl));
+            s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
+        }
+        return s;
     }
 
     private toFirst(syllable: TonalSyllable) {
         let s: TonalSyllable = new TonalSyllable(syllable.letters);
         s.pushLetter(lowerLettersTonal.get(TonalLetterTags.f));
-        return new TonalSyllable(s.letters);
+        return s;
+    }
+
+    private toSeventh(syllable: TonalSyllable) {
+        let s: TonalSyllable = new TonalSyllable(syllable.letters);
+        s.popLetter();
+        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.z));
+        return s;
     }
 
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
@@ -197,7 +209,9 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
                 if (this.tone === TonalLetterTags.f) {
                     syl = this.toFirst(s);
                 } else if (this.tone === TonalLetterTags.w) {
-                    syl = this.toThird(s);
+                    syl = this.toThird(s, sounds[sounds.length - 1].toString());
+                } else if (this.tone === TonalLetterTags.z) {
+                    syl = this.toSeventh(s);
                 }
                 ret.push(syl);
 
