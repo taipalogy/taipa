@@ -4,15 +4,15 @@ import { TokenAnalysis } from '../src/token';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { TonalZeroCombining } from '../src/morpheme';
+import { EighthToSecondCombining } from '../src/dparser/morpheme';
 
 describe('Tonal testing', () => {
     const cli = new Client();
-    let doc = new TokenAnalysis();
 
-    doc = cli.processTonal('damwvurhhxoay');
+    const t1 = cli.processTonal('damwvurhhxoay');
 
     test('check the tonal affix', () => {
-        expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.x);
+        expect(t1.soundSequences[1][3].toString()).toEqual(TonalLetterTags.x);
     });
 });
 
@@ -189,6 +189,23 @@ describe('Tonal testing', () => {
 
     test('check if it is not present. 5 letters in length', () => {
         expect(doc.word.literal).toEqual('');
+    });
+});
+
+describe('Tonal testing, eighth neutral tone to second neutral tone', () => {
+    const tia = new TonalInflectionAnalyzer();
+    const wrd = 'chiahh';
+
+    const ms1 = tia.morphAnalyze(wrd, new TonalZeroCombining());
+
+    test('check the allomorph of the syllable', () => {
+        expect(ms1[0].allomorph.toString()).toEqual(TonalLetterTags.hh);
+    });
+
+    const ms2 = tia.morphAnalyze(wrd, new EighthToSecondCombining());
+
+    test('check the tone letter of the syllable', () => {
+        expect(ms2[0].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.y);
     });
 });
 

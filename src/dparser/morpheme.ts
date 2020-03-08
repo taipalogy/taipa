@@ -122,7 +122,7 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
         if (allomorph && allomorph instanceof AllomorphH) {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
-            return [new TonalSyllable(s.letters)];
+            return [s];
         }
         return [];
     }
@@ -140,7 +140,24 @@ export class EighthToFirstCombining extends TonalCombiningMetaplasm {
                 s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(tnl).characters));
                 s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.f).characters));
             }
-            return [new TonalSyllable(s.letters)];
+            return [s];
+        }
+        return [];
+    }
+}
+
+//------------------------------------------------------------------------------
+
+export class EighthToSecondCombining extends TonalCombiningMetaplasm {
+    apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+        if (allomorph && allomorph instanceof CheckedAllomorph) {
+            let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
+
+            s.popLetter();
+            s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.h).characters));
+            s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.y).characters));
+            console.log(s);
+            return [s];
         }
         return [];
     }
@@ -235,7 +252,7 @@ export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
                     allomorph.tonal.toString() === TonalLetterTags.w
                 ) {
                     s.popLetter();
-                    return [new TonalSyllable(s.letters)];
+                    return [s];
                 }
             }
         }
@@ -251,7 +268,7 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
             let s: TonalSyllable = new TonalSyllable(sounds.map(x => new AlphabeticLetter(x.characters)));
             s.popLetter();
             s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.w).characters));
-            return [new TonalSyllable(s.letters)];
+            return [s];
         }
         return [];
     }
@@ -274,7 +291,7 @@ export class NthCombining extends TonalCombiningMetaplasm {
             if (this.tone === TonalLetterTags.z) {
                 s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.z).characters));
             }
-            return [new TonalSyllable(s.letters)];
+            return [s];
         }
         return [];
     }
