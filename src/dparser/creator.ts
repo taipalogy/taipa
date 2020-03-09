@@ -29,10 +29,8 @@ export class TonalCreator {
         return lx;
     }
 
-    createCompoundPhraseme(preceding: string, following: string, metaplasm?: TonalCombiningMetaplasm) {
-        const lexemePreceding = metaplasm
-            ? this.tia.lexAnalyze(this.tia.morphAnalyze(preceding, metaplasm), new TonalDesinenceInflection())
-            : this.tia.lexAnalyze(preceding, new TonalDesinenceInflection());
+    createCompoundPhraseme(preceding: string, following: string) {
+        const lexemePreceding = this.tia.lexAnalyze(preceding, new TonalDesinenceInflection());
         const lexemeFollowing = this.createLexeme(following);
         return this.phm.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }

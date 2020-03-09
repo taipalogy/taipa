@@ -26,9 +26,9 @@ const toBeVerified = [
 
     'qanh', 'qih', 'qoaiz', 'qngh',
 
-    'toehh',
+    'simh',
 
-    'tom', 'tomz',
+    'toehh', 'tom', 'tomz',
 
     'virt',
 ]
@@ -57,7 +57,7 @@ const extraLexicalRoots = [
 
     'oh', 'op',
 
-    'sangh', 'sennh', 'sienh', 'simh', 'sinnh',
+    'sangh', 'sennh', 'sienh', 'sinnh',
 ]
 
 // prettier-ignore

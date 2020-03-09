@@ -165,18 +165,6 @@ describe('Compound testing', () => {
         expect(p5.phrase.literal).toEqual('chiahhw vay');
     });
 
-    const p6 = tc.createCompoundPhraseme('chengzhokk', 'kih', new EighthToFirstCombining());
-
-    test('eighth tone to first tone for main verb', () => {
-        expect(p6.phrase.literal).toEqual('chengzhokf kih');
-    });
-
-    const p7 = tc.createCompoundPhraseme('sengzlipp', 'aw', new EighthToFirstCombining());
-
-    test('eighth tone to first tone for main verb', () => {
-        expect(p7.phrase.literal).toEqual('sengzlipf aw');
-    });
-
     const p8 = tc.createCompoundPhraseme('lamx', 'me');
 
     test('prepositional verb, verb + preposition', () => {

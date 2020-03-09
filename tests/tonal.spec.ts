@@ -4,7 +4,7 @@ import { TokenAnalysis } from '../src/token';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { TonalZeroCombining } from '../src/morpheme';
-import { EighthToSecondCombining } from '../src/dparser/morpheme';
+import { EighthToSecondCombining, EighthToFirstCombining } from '../src/dparser/morpheme';
 
 describe('Tonal testing', () => {
     const cli = new Client();
@@ -194,18 +194,27 @@ describe('Tonal testing', () => {
 
 describe('Tonal testing, eighth neutral tone to second neutral tone', () => {
     const tia = new TonalInflectionAnalyzer();
-    const wrd = 'chiahh';
 
-    const ms1 = tia.morphAnalyze(wrd, new TonalZeroCombining());
+    const wrd1 = 'chiahh';
+
+    const ms1 = tia.morphAnalyze(wrd1, new TonalZeroCombining());
 
     test('check the allomorph of the syllable', () => {
         expect(ms1[0].allomorph.toString()).toEqual(TonalLetterTags.hh);
     });
 
-    const ms2 = tia.morphAnalyze(wrd, new EighthToSecondCombining());
+    const ms2 = tia.morphAnalyze(wrd1, new EighthToSecondCombining());
 
     test('check the tone letter of the syllable', () => {
         expect(ms2[0].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.y);
+    });
+
+    const wrd2 = 'chengzhokk';
+
+    const ms4 = tia.morphAnalyze(wrd2, new EighthToFirstCombining());
+
+    test('check the tone letter of the syllable', () => {
+        expect(ms4[1].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.f);
     });
 });
 
