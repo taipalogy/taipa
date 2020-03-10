@@ -156,7 +156,6 @@ export class EighthToSecondCombining extends TonalCombiningMetaplasm {
             s.popLetter();
             s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.h).characters));
             s.pushLetter(new AlphabeticLetter(lowerLettersTonal.get(TonalLetterTags.y).characters));
-            console.log(s);
             return [s];
         }
         return [];

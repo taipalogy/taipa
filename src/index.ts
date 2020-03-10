@@ -38,3 +38,6 @@ export { TonalCombiningForms } from './dparser/morpheme';
 export { TonalDesinenceInflection } from './dparser/lexeme';
 
 export { Prediction } from './tonal/prediction';
+
+// TODO: add to api?
+export { TonalSoundTags } from './tonal/version2'

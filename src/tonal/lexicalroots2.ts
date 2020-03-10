@@ -9,14 +9,12 @@ const toBeVerified = [
     'cett', 'choa',
 
     'dom',
-
-    'gih',
     
     'hioh', 'hoang',
 
     'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt',
 
-    'len', 'lirey', 'loaiz',
+    'len', 'lirey',
 
     'mah',
 
@@ -41,7 +39,7 @@ const extraLexicalRoots = [
     
     'dngh',
 
-    'gehh', 'giuh', 'gimw',
+    'gehh', 'gih', 'giuh', 'gimw',
 	
     'homz',
 
@@ -49,7 +47,7 @@ const extraLexicalRoots = [
 
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'lip', 'lih', 'lit', 'loaih', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'lip', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mnghh',
 

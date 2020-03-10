@@ -812,7 +812,8 @@ export const combinedFreeAllomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.z, new AllomorphZ())
     .set(TonalLetterTags.x, new AllomorphX())
     .set(TonalLetterTags.y, new AllomorphY())
-    .set(TonalLetterTags.f, new AllomorphF());
+    .set(TonalLetterTags.f, new AllomorphF())
+    .set(TonalLetterTags.xx, new AllomorphXX());
 
 export const uncombinedCheckedAllomorphs = new Map<string, Allomorph>()
     .set(TonalLetterTags.p, new AllomorphP())
