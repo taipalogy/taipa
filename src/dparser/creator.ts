@@ -7,7 +7,7 @@ import { TonalDesinenceInflection } from './lexeme';
 
 export class TonalCreator {
     private readonly tia = new TonalInflectionAnalyzer();
-    private readonly phm = new TonalInflectionPhrasemeMaker();
+    private readonly tiph = new TonalInflectionPhrasemeMaker();
 
     createWord(str: string) {
         return this.tia.lexAnalyze(str, new TonalZeroInflection()).word;
@@ -32,6 +32,6 @@ export class TonalCreator {
     createCompoundPhraseme(preceding: string, following: string) {
         const lexemePreceding = this.tia.lexAnalyze(preceding, new TonalDesinenceInflection());
         const lexemeFollowing = this.createLexeme(following);
-        return this.phm.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
+        return this.tiph.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
     }
 }

@@ -149,7 +149,7 @@ export class TonalCompoundPhraseme extends Phraseme {
     // separable phrasal verb. separate compound verb. separable verb.
     // separable phrasal verbs are transitive when main verb and its particles are separated
     // tiappwsux gifchongwguy. tiappwsux gifsiannzguy
-    // main verb and its enclitic (8 -> 1). phrasal verb (8 -> 1)
+    // adverb + verb. verb + adverb
     phrase: TonalPhrase;
     constructor(lexemePreceding: TonalInflectionLexeme, lexemeFollowing: TonalInflectionLexeme) {
         super();

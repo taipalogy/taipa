@@ -40,4 +40,6 @@ export { TonalDesinenceInflection } from './dparser/lexeme';
 export { Prediction } from './tonal/prediction';
 
 // TODO: add to api?
-export { TonalSoundTags } from './tonal/version2'
+export { TonalSoundTags } from './tonal/version2';
+export { NLProcessor } from './client';
+export { pipeDoc } from './document';

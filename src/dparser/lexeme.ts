@@ -183,6 +183,11 @@ export class TonalInflectionLexeme extends Lexeme {
         return '';
     }
 
+    getTonalSymbol() {
+        if (this.tonalSymbleEnding) return this.tonalSymbleEnding;
+        return '';
+    }
+
     private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectionMetaplasm): TonalWord[] {
         return ti.apply(ms);
     }

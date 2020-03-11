@@ -10,11 +10,9 @@ import { KanaLemmatizationAnalyzer } from './kana/analyzer';
 import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
 
-import { Document } from './document';
+import { Document, pipeDoc } from './document';
 import { Token, TokenAnalysis } from './token';
 import { TokenLemmaLookup } from './token';
-
-const pipe = (...fns: Array<(doc: Document) => Document>) => (x: Document) => fns.reduce((v, f) => f(v), x);
 
 export class Client {
     processKana(str: string): TokenAnalysis {
@@ -55,29 +53,33 @@ export class Client {
 
         return ta;
     }
+}
 
-    process(str: string): Document {
-        let doc: Document = new Document();
+export class NLProcessor {
+    load(name: string) {
+        return (text: string) => {
+            let doc: Document = new Document();
 
-        if (str) {
-            // tokenization
-            const tokens = str.match(/\w+/g);
-            if (tokens) {
-                tokens.filter(x => x != undefined).map(x => doc.tokens.push(new Token(x)));
+            if (text) {
+                // tokenization
+                const tokens = text.match(/\w+/g);
+                if (tokens) {
+                    tokens.filter(x => x != undefined).map(x => doc.tokens.push(new Token(x)));
+                }
+
+                // tagging
+                const tggr = new RuleBasedTagger();
+
+                // lemmatization
+                const lmtzr = new TokenLemmaLookup();
+
+                // dependency parsing
+                const dpsr = new DependencyParser();
+
+                doc = pipeDoc(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse)(doc);
             }
 
-            // tagging
-            const tggr = new RuleBasedTagger();
-
-            // lemmatization
-            const lmtzr = new TokenLemmaLookup();
-
-            // dependency parsing
-            const dpsr = new DependencyParser();
-
-            doc = pipe(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse)(doc);
-        }
-
-        return doc;
+            return doc;
+        };
     }
 }

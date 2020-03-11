@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
-import { Client } from './client';
+import { NLProcessor } from './client';
 import { Document } from './document';
 import { Token } from './token';
 
-let cli = new Client();
 let doc = new Document();
 
 let stdin = process.openStdin();
 
 stdin.addListener('data', function(d) {
-    doc = cli.process(d.toString().trim());
+    const nlp = new NLProcessor();
+    const p = nlp.load('');
+    doc = p(d.toString().trim());
     const ts = doc.tokens;
 
     if (ts.length > 0) {
