@@ -41,5 +41,5 @@ export { Prediction } from './tonal/prediction';
 
 // TODO: add to api?
 export { TonalSoundTags } from './tonal/version2';
-export { NLProcessor } from './client';
+export { Processor } from './client';
 export { pipeDoc } from './document';

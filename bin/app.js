@@ -6,7 +6,7 @@ const document_1 = require("../lib/document")
 let doc = new document_1.Document();
 let stdin = process.openStdin();
 stdin.addListener('data', function (d) {
-    const nlp = new client_1.NLProcessor();
+    const nlp = new client_1.Processor();
     const p = nlp.load('');
     doc = p(d.toString().trim());
     const ts = doc.tokens;

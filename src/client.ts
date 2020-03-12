@@ -55,7 +55,7 @@ export class Client {
     }
 }
 
-export class NLProcessor {
+export class Processor {
     load(name: string) {
         return (text: string) => {
             let doc: Document = new Document();

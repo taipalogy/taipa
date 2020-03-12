@@ -1,8 +1,8 @@
-import { NLProcessor } from '../src/client';
+import { Processor } from '../src/client';
 import { DependencyLabels } from '../src/dparser/symbols';
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa koannw diurh');
@@ -32,7 +32,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa koanny diurhhw che');
@@ -68,7 +68,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa longy diurhhw che');
@@ -104,7 +104,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('che goa koannw diurh');
@@ -140,7 +140,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('koannw diurh aw');
@@ -170,7 +170,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('koannw aw');
@@ -194,7 +194,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('longw aw');
@@ -218,7 +218,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa koannw diurh aw');
@@ -254,7 +254,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('pah aw');
@@ -278,7 +278,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('longw diurh aw');
@@ -308,7 +308,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('qaz pah aw');
@@ -338,7 +338,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa qaz pah');
@@ -368,7 +368,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa qaz pah aw');
@@ -404,7 +404,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new NLProcessor();
+    const nlp = new Processor();
     const process = nlp.load('');
 
     const doc = process('goa qaz koannw aw');
