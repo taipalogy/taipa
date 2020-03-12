@@ -10,7 +10,7 @@ import {
 } from './morpheme';
 import { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
-import { TonalCreator } from './creator';
+import { createLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
 
 export class TonalInflector {
@@ -62,11 +62,10 @@ export class TonalInflector {
 export class TonalPhrasalInflector {
     private readonly infl = new TonalInflector();
     private readonly phm = new TonalInflectionPhrasemeMaker();
-    private readonly crt = new TonalCreator();
 
     inflectToProceeding(verb: string, particle: string, particleTwo?: string) {
         const lexemeVerb = this.infl.inflectDesinence(verb);
-        let lxParticle: TonalInflectionLexeme = this.crt.createLexeme('');
+        let lxParticle: TonalInflectionLexeme = createLexeme('');
         let lxParticleTwo: TonalInflectionLexeme | undefined;
         if (particleTwo) {
             if (particle === 'cut' && particleTwo === 'kih') {
@@ -91,7 +90,7 @@ export class TonalPhrasalInflector {
     }
 
     inflectEToAdnominal(adjectivalNoun: string, e: string) {
-        const lexemeAdjective = this.crt.createLexeme(adjectivalNoun);
+        const lexemeAdjective = createLexeme(adjectivalNoun);
         const lexemeE = this.infl.inflectEncliticE(e);
         return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE);
     }
@@ -103,7 +102,7 @@ export class TonalPhrasalInflector {
     }
 
     inflectPossesive(noun: string, ex: string) {
-        const lexemeNoun = this.crt.createLexeme(noun);
+        const lexemeNoun = createLexeme(noun);
         const lexemeEx = this.infl.inflectPossesiveEx(ex);
         return this.phm.makePossesivePhraseme(lexemeNoun, lexemeEx);
     }

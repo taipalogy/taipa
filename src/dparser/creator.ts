@@ -5,33 +5,34 @@ import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalZeroCombining, TonalCombiningMetaplasm } from '../morpheme';
 import { TonalDesinenceInflection } from './lexeme';
 
-export class TonalCreator {
-    private readonly tia = new TonalInflectionAnalyzer();
-    private readonly tiph = new TonalInflectionPhrasemeMaker();
+export function createWord(str: string) {
+    const tia = new TonalInflectionAnalyzer();
+    return tia.lexAnalyze(str, new TonalZeroInflection()).word;
+}
 
-    createWord(str: string) {
-        return this.tia.lexAnalyze(str, new TonalZeroInflection()).word;
-    }
+export function createPhrase(str: string) {
+    const tia = new TonalInflectionAnalyzer();
 
-    createPhrase(str: string) {
-        const strs = str.match(/\w+/g);
-        const lxs = strs ? strs.map(it => this.tia.lexAnalyze(it, new TonalZeroInflection())) : [];
+    const strs = str.match(/\w+/g);
+    const lxs = strs ? strs.map(it => tia.lexAnalyze(it, new TonalZeroInflection())) : [];
 
-        return new TonalPhrase(lxs.map(it => it.word));
-    }
+    return new TonalPhrase(lxs.map(it => it.word));
+}
 
-    createLexeme(str: string, metaplasm?: TonalCombiningMetaplasm) {
-        const ms = metaplasm
-            ? this.tia.morphAnalyze(str, metaplasm)
-            : this.tia.morphAnalyze(str, new TonalZeroCombining());
-        const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
-        // if metaplasm is undefined, there will be no inflected forms
-        return lx;
-    }
+export function createLexeme(str: string, metaplasm?: TonalCombiningMetaplasm) {
+    const tia = new TonalInflectionAnalyzer();
 
-    createCompoundPhraseme(preceding: string, following: string) {
-        const lexemePreceding = this.tia.lexAnalyze(preceding, new TonalDesinenceInflection());
-        const lexemeFollowing = this.createLexeme(following);
-        return this.tiph.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
-    }
+    const ms = metaplasm ? tia.morphAnalyze(str, metaplasm) : tia.morphAnalyze(str, new TonalZeroCombining());
+    const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
+    // if metaplasm is undefined, there will be no inflected forms
+    return lx;
+}
+
+export function createCompoundPhraseme(preceding: string, following: string) {
+    const tia = new TonalInflectionAnalyzer();
+    const tiph = new TonalInflectionPhrasemeMaker();
+
+    const lexemePreceding = tia.lexAnalyze(preceding, new TonalDesinenceInflection());
+    const lexemeFollowing = createLexeme(following);
+    return tiph.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
 }

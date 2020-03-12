@@ -1,9 +1,8 @@
 import { TonalPhrasalInflector } from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
-import { TonalCreator } from '../src/dparser/creator';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { EighthToFirstCombining } from '../src/dparser/morpheme';
 import { TonalSyllable } from '../src/tonal/morpheme';
+import { createPhrase, createCompoundPhraseme, createWord, createLexeme } from '../src/dparser/creator';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -20,9 +19,7 @@ describe('Phrasal verb testing, transitive', () => {
 });
 
 describe('Phrasal verb testing, intransitive', () => {
-    const tc = new TonalCreator();
-
-    const p = tc.createPhrase('laix leh');
+    const p = createPhrase('laix leh');
 
     test('check the base form', () => {
         expect(p.literal).toEqual('laix leh');
@@ -133,57 +130,55 @@ describe('Serial words testing', () => {
 });
 
 describe('Compound testing', () => {
-    const tc = new TonalCreator();
-
-    const p1 = tc.createCompoundPhraseme('qanzkoy', 'lezle');
+    const p1 = createCompoundPhraseme('qanzkoy', 'lezle');
 
     test('gifchongwguy', () => {
         expect(p1.phrase.literal).toEqual('qanzko lezle');
     });
 
-    const p2 = tc.createCompoundPhraseme('cuhycuh', 'qiurw');
+    const p2 = createCompoundPhraseme('cuhycuh', 'qiurw');
 
     test('gifchongwguy', () => {
         expect(p2.phrase.literal).toEqual('cuhycuhy qiurw');
     });
 
-    const p3 = tc.createCompoundPhraseme('siamy', 'qoew');
+    const p3 = createCompoundPhraseme('siamy', 'qoew');
 
     test('separate vv compound', () => {
         expect(p3.phrase.literal).toEqual('siam qoew');
     });
 
-    const p4 = tc.createCompoundPhraseme('poaw', 'kih');
+    const p4 = createCompoundPhraseme('poaw', 'kih');
 
     test('separable phrasal verb, verb-subsidiary compound', () => {
         expect(p4.phrase.literal).toEqual('poay kih');
     });
 
-    const p5 = tc.createCompoundPhraseme('chiahh', 'vay');
+    const p5 = createCompoundPhraseme('chiahh', 'vay');
 
     test('separable verb', () => {
         expect(p5.phrase.literal).toEqual('chiahhw vay');
     });
 
-    const p8 = tc.createCompoundPhraseme('lamx', 'me');
+    const p8 = createCompoundPhraseme('lamx', 'me');
 
     test('prepositional verb, verb + preposition', () => {
         expect(p8.phrase.literal).toEqual('lamz me');
     });
 
-    const p9 = tc.createCompoundPhraseme('diz', 'daizdengy');
+    const p9 = createCompoundPhraseme('diz', 'daizdengy');
 
     test('adverbial phrase, place', () => {
         expect(p9.phrase.literal).toEqual('diw daizdengy');
     });
 
-    const p10 = tc.createCompoundPhraseme('uiw', 'sannzdiamy');
+    const p10 = createCompoundPhraseme('uiw', 'sannzdiamy');
 
     test('adverbial phrase, time', () => {
         expect(p10.phrase.literal).toEqual('uiy sannzdiamy');
     });
 
-    const p11 = tc.createCompoundPhraseme('bong', 'dienwnauy');
+    const p11 = createCompoundPhraseme('bong', 'dienwnauy');
 
     test('gerund', () => {
         expect(p11.phrase.literal).toEqual('bongz dienwnauy');
@@ -215,36 +210,34 @@ describe('Phrasal verb testing, participle form', () => {
 });
 
 describe('Phrase testing', () => {
-    const tc = new TonalCreator();
-
-    const p1 = tc.createPhrase('vinyviangy qiurw');
+    const p1 = createPhrase('vinyviangy qiurw');
 
     test('onomatopeia', () => {
         expect(p1.literal).toEqual('vinyviangy qiurw');
     });
 
-    const p2 = tc.createPhrase('koahy linzlong');
+    const p2 = createPhrase('koahy linzlong');
 
     test('gifchongwguy', () => {
         expect(p2.literal).toEqual('koahy linzlong');
     });
 
-    const p3 = tc.createPhrase('hengx liz');
+    const p3 = createPhrase('hengx liz');
 
     test('enclitic', () => {
         expect(p3.literal).toEqual('hengx liz');
     });
 
-    const w4 = tc.createWord('qaz');
-    const lx4 = tc.createLexeme(w4.literal);
-    const p4 = tc.createPhrase(lx4.word.literal);
-    const phm4 = tc.createCompoundPhraseme('', p4.literal);
+    const w4 = createWord('qaz');
+    const lx4 = createLexeme(w4.literal);
+    const p4 = createPhrase(lx4.word.literal);
+    const phm4 = createCompoundPhraseme('', p4.literal);
 
     test('phrase', () => {
         expect(phm4.phrase.literal).toEqual(' qaz');
     });
 
-    const p5 = tc.createPhrase('qangz');
+    const p5 = createPhrase('qangz');
 
     test('phrase', () => {
         expect(p5.literal).toEqual('qangz');
@@ -254,8 +247,7 @@ describe('Phrase testing', () => {
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     const inputEmpty: any = '';
 
-    const crt = new TonalCreator();
-    const ph3 = crt.createCompoundPhraseme(inputEmpty, inputEmpty);
+    const ph3 = createCompoundPhraseme(inputEmpty, inputEmpty);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
@@ -327,8 +319,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 describe('Phrasal verb testing, undefined input', () => {
     const inputUnd: any = undefined;
 
-    const crt = new TonalCreator();
-    const ph3 = crt.createCompoundPhraseme(inputUnd, inputUnd);
+    const ph3 = createCompoundPhraseme(inputUnd, inputUnd);
 
     test('check the empty phrase', () => {
         expect(ph3.phrase.literal).toEqual('');
