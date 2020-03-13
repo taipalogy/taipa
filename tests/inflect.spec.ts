@@ -3,7 +3,7 @@ import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import { TonalInflector } from '../src/dparser/inflector';
 import { TonalInserter } from '../src/dparser/inserter';
-import { createLexeme } from '../src/dparser/creator';
+import { createTonalInflectionLexeme } from '../src/dparser/creator';
 import { FourthToFirstCombining } from '../src/dparser/morpheme';
 
 describe('Inflectional ending testing', () => {
@@ -365,7 +365,7 @@ describe('Inflection testing', () => {
 });
 
 describe('Inflection testing', () => {
-    const lx1 = createLexeme('qurh', new FourthToFirstCombining());
+    const lx1 = createTonalInflectionLexeme('qurh', new FourthToFirstCombining());
 
     test('check the inflected form', () => {
         expect(lx1.getForms()[0].literal).toEqual('qurhf');

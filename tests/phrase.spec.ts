@@ -2,7 +2,12 @@ import { TonalPhrasalInflector } from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalSyllable } from '../src/tonal/morpheme';
-import { createPhrase, createCompoundPhraseme, createWord, createLexeme } from '../src/dparser/creator';
+import {
+    createTonalPhrase,
+    createCompoundPhraseme,
+    createTonalWord,
+    createTonalInflectionLexeme
+} from '../src/dparser/creator';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -19,7 +24,7 @@ describe('Phrasal verb testing, transitive', () => {
 });
 
 describe('Phrasal verb testing, intransitive', () => {
-    const p = createPhrase('laix leh');
+    const p = createTonalPhrase('laix leh');
 
     test('check the base form', () => {
         expect(p.literal).toEqual('laix leh');
@@ -210,34 +215,34 @@ describe('Phrasal verb testing, participle form', () => {
 });
 
 describe('Phrase testing', () => {
-    const p1 = createPhrase('vinyviangy qiurw');
+    const p1 = createTonalPhrase('vinyviangy qiurw');
 
     test('onomatopeia', () => {
         expect(p1.literal).toEqual('vinyviangy qiurw');
     });
 
-    const p2 = createPhrase('koahy linzlong');
+    const p2 = createTonalPhrase('koahy linzlong');
 
     test('gifchongwguy', () => {
         expect(p2.literal).toEqual('koahy linzlong');
     });
 
-    const p3 = createPhrase('hengx liz');
+    const p3 = createTonalPhrase('hengx liz');
 
     test('enclitic', () => {
         expect(p3.literal).toEqual('hengx liz');
     });
 
-    const w4 = createWord('qaz');
-    const lx4 = createLexeme(w4.literal);
-    const p4 = createPhrase(lx4.word.literal);
+    const w4 = createTonalWord('qaz');
+    const lx4 = createTonalInflectionLexeme(w4.literal);
+    const p4 = createTonalPhrase(lx4.word.literal);
     const phm4 = createCompoundPhraseme('', p4.literal);
 
     test('phrase', () => {
         expect(phm4.phrase.literal).toEqual(' qaz');
     });
 
-    const p5 = createPhrase('qangz');
+    const p5 = createTonalPhrase('qangz');
 
     test('phrase', () => {
         expect(p5.literal).toEqual('qangz');

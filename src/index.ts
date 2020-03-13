@@ -10,7 +10,12 @@ export { lexicalRoots } from './tonal/lexicalroots2';
 export { lowerLettersTonal, TonalLetterTags } from './tonal/version2';
 export { TonalLemmatizer } from './tonal/lemmatizer';
 export { TonalAssimilator } from './dparser/assimilator';
-export { createWord, createPhrase, createLexeme, createCompoundPhraseme } from './dparser/creator';
+export {
+    createTonalWord,
+    createTonalPhrase,
+    createTonalInflectionLexeme,
+    createCompoundPhraseme
+} from './dparser/creator';
 export { TonalPhrasalInflector, TonalInflector } from './dparser/inflector';
 export { TonalInserter } from './dparser/inserter';
 
