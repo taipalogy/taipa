@@ -5,7 +5,9 @@ import {
     VerbSurface,
     ParticleSurface,
     PersonalPronounSurface,
-    PronounSurface
+    PronounSurface,
+    OrthoPhraseme,
+    VisitorLookup
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
@@ -65,6 +67,7 @@ export class VerbWithEnclitic extends VerbPhrase {
 export class PhrasalVerbs {
     phrms: Array<PhrasalVerbPhraseme | PhrasalVerbTwoPhraseme> = new Array();
     phvs: Array<PhrasalVerb> = new Array();
+    phvbs: Array<OrthoPhraseme> = new Array();
 
     constructor() {
         this.populatePhrasemes();
@@ -86,6 +89,12 @@ export class PhrasalVerbs {
                         new ParticleSurface(this.phrms[i].getForms()[0].words[1].literal)
                     ])
                 );
+                const ol = new OrthoPhraseme();
+                ol.base = this.phrms[i].phrase.words[0].literal + ' ' + this.phrms[i].phrase.words[1].literal;
+                ol.inflected.push(
+                    this.phrms[i].getForms()[0].words[0].literal + ' ' + this.phrms[i].getForms()[0].words[1].literal
+                );
+                this.phvbs.push(ol);
             } else if (this.phrms[i] instanceof PhrasalVerbTwoPhraseme) {
                 this.phvs.push(
                     new PhrasalVerb([
@@ -101,6 +110,21 @@ export class PhrasalVerbs {
                         new ParticleSurface(this.phrms[i].getForms()[0].words[2].literal)
                     ])
                 );
+                const ol = new OrthoPhraseme();
+                ol.base =
+                    this.phrms[i].phrase.words[0].literal +
+                    ' ' +
+                    this.phrms[i].phrase.words[1].literal +
+                    ' ' +
+                    this.phrms[i].phrase.words[2].literal;
+                ol.inflected.push(
+                    this.phrms[i].getForms()[0].words[0].literal +
+                        ' ' +
+                        this.phrms[i].getForms()[0].words[1].literal +
+                        ' ' +
+                        this.phrms[i].getForms()[0].words[2].literal
+                );
+                this.phvbs.push(ol);
             }
         }
     }
@@ -119,6 +143,13 @@ export class PhrasalVerbs {
                 )
             );
         }
+    }
+
+    lookup(sequence: string[]) {
+        const v = new VisitorLookup();
+        const arr = this.phvbs.filter(it => it.accept(v, sequence));
+        if (arr.length > 0) return arr[0];
+        return new OrthoPhraseme();
     }
 }
 
@@ -184,6 +215,22 @@ export class Rules {
     }
 
     private lookupRules(sequence: string[]) {
+        /*
+        const pvbs = new PhrasalVerbs();
+        if (pvbs.lookup(sequence).base != '') {
+            if (sequence.length == 2)
+                return new PhrasalVerb([
+                    new VerbSurface(sequence[0]),
+                    new ParticleSurface(sequence[1])
+                ]) as ConstructionOfPhrase;
+            if (sequence.length == 3)
+                return new PhrasalVerb([
+                    new VerbSurface(sequence[0]),
+                    new ParticleSurface(sequence[1]),
+                    new ParticleSurface(sequence[2])
+                ]) as ConstructionOfPhrase;
+        }
+*/
         let elems: Array<ConstructionElement> = [];
         for (let pat of this.phrases) {
             for (let j = 0; j < pat.length; j++) {
@@ -234,6 +281,7 @@ export class Rules {
     }
 
     private populatePhrasalVerbs() {
+        // to be deleted
         const s = new PhrasalVerbs();
 
         for (let i = 0; i < s.phvs.length; i++) {

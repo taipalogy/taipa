@@ -6,6 +6,35 @@ export class ConstructionElement {
     tag: string = '';
 }
 
+interface Visitor {
+    lookup(lexeme: OrthoPhraseme, sequence: string[]): boolean;
+}
+
+export class VisitorLookup implements Visitor {
+    lookup(lexeme: OrthoPhraseme, sequence: string[]) {
+        // lookup a phrase
+        const form = sequence.join(' ');
+        if (form === lexeme.base) return true;
+        lexeme.inflected.forEach(inflectedForm => {
+            if (form === inflectedForm) return true;
+        });
+        lexeme.assimilated.forEach(assimilatedForm => {
+            if (form === assimilatedForm) return true;
+        });
+        return false;
+    }
+}
+
+export class OrthoPhraseme {
+    base: string = '';
+    inflected: string[] = [];
+    assimilated: string[] = [];
+
+    accept(visitor: Visitor, sequence: string[]) {
+        return visitor.lookup(this, sequence);
+    }
+}
+
 export class PersonalPronounSurface extends ConstructionElement {
     constructor(str: string) {
         super();

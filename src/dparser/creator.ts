@@ -11,6 +11,7 @@ export function createTonalWord(str: string) {
 }
 
 export function createTonalPhrase(str: string) {
+    // sequential compound
     const tia = new TonalInflectionAnalyzer();
 
     const strs = str.match(/\w+/g);
@@ -29,6 +30,7 @@ export function createTonalInflectionLexeme(str: string, metaplasm?: TonalCombin
 }
 
 export function createCompoundPhraseme(preceding: string, following: string) {
+    // serial compound
     const tia = new TonalInflectionAnalyzer();
     const tiph = new TonalInflectionPhrasemeMaker();
 
