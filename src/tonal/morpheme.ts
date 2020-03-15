@@ -1,10 +1,10 @@
 import {
     Syllable,
-    Morpheme,
     MorphemeMaker,
     MatchedPattern,
     TonalCombiningMetaplasm,
-    RemovingEpenthesisOfAy
+    RemovingEpenthesisOfAy,
+    Morpheme
 } from '../morpheme';
 import {
     freeAllomorphUncombiningRules,

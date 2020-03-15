@@ -2,7 +2,7 @@ import { Character, characters } from './character';
 
 //------------------------------------------------------------------------------
 
-class Grapheme {}
+export abstract class Grapheme {}
 
 export class AlphabeticGrapheme extends Grapheme {
     letter: AlphabeticLetter;

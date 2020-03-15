@@ -1,6 +1,6 @@
 import { TonalInflectionAnalyzer } from './analyzer';
 import { TonalPhrase } from '../tonal/phraseme';
-import { TonalZeroInflection } from '../lexeme';
+import { TonalZeroInflection } from '../tonal/metaplasm';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalZeroCombining, TonalCombiningMetaplasm } from '../morpheme';
 import { TonalDesinenceInflection } from './lexeme';

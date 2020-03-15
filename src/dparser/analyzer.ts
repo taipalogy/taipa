@@ -3,7 +3,7 @@ import { Analyzer } from '../analyzer';
 import { TonalCombiningMorphemeMaker, TonalCombiningMorpheme, TonalCombiningForms } from './morpheme';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
-import { TonalInflectionMetaplasm } from '../lexeme';
+import { TonalInflectionMetaplasm } from '../tonal/metaplasm';
 import { TonalCombiningMetaplasm } from '../morpheme';
 
 //------------------------------------------------------------------------------

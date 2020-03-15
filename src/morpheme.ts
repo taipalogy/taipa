@@ -1,7 +1,7 @@
 import { AlphabeticLetter, Sound } from './grapheme';
 import { Allomorph } from './tonal/version2';
 import { TonalSyllable } from './tonal/morpheme';
-import { Metaplasm } from './interface';
+import { Metaplasm } from './metaplasm';
 
 //------------------------------------------------------------------------------
 
@@ -29,10 +29,6 @@ export class KanaCombiningMetaplasm extends Metaplasm {}
 
 //------------------------------------------------------------------------------
 
-export class Morpheme {}
-
-//------------------------------------------------------------------------------
-
 export class MatchedPattern {
     letters: Array<AlphabeticLetter> = new Array();
     pattern: Array<Sound> = new Array();
@@ -51,6 +47,10 @@ export class MatchedPattern {
         return new AlphabeticLetter([]);
     }
 }
+
+//------------------------------------------------------------------------------
+
+export abstract class Morpheme {}
 
 //------------------------------------------------------------------------------
 

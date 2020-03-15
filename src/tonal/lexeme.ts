@@ -1,7 +1,8 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
-import { Word, LexemeMaker, TonalLemmatizationMetaplasm, Lexeme } from '../lexeme';
+import { Word, LexemeMaker, Lexeme } from '../lexeme';
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2';
 import { TonalAffix } from './version2';
+import { TonalLemmatizationMetaplasm } from './metaplasm';
 
 export class TonalLemmatization extends TonalLemmatizationMetaplasm {
     apply(morphemes: Array<TonalUncombiningMorpheme>, inflectionalEnding: InflectionalEnding) {
@@ -89,6 +90,27 @@ export class TonalWord extends Word {
                 this.pushSyllable(syllables[i]);
             }
         }
+    }
+
+    popSyllable() {
+        this.syllables = this.syllables.slice(0, this.syllables.length - 1);
+        this.concat();
+    }
+
+    pushSyllable(syl: TonalSyllable) {
+        this.syllables.push(syl);
+        this.concat();
+    }
+
+    replaceSyllable(i: number, syl: TonalSyllable) {
+        if (i < this.syllables.length) {
+            this.syllables.splice(i, 1, syl);
+        }
+        this.concat();
+    }
+
+    private concat() {
+        this.literal = this.syllables.map(x => (x ? x.literal : '')).join('');
     }
 }
 

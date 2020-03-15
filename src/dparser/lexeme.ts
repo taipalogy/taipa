@@ -1,4 +1,4 @@
-import { TonalInflectionMetaplasm, Lexeme, LexemeMaker, TonalAssimilationMetaplasm, Word } from '../lexeme';
+import { LexemeMaker, Lexeme } from '../lexeme';
 import { TonalCombiningMorpheme, AssimiDirection, TonalSoundChangingMorpheme } from './morpheme';
 import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import {
@@ -11,6 +11,7 @@ import {
 } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Sound } from '../grapheme';
+import { TonalInflectionMetaplasm, TonalAssimilationMetaplasm } from '../tonal/metaplasm';
 
 //------------------------------------------------------------------------------
 
@@ -199,13 +200,11 @@ export class TonalInflectionLexeme extends Lexeme {
 
 //------------------------------------------------------------------------------
 
-export class TonalAssimilationLexeme extends Lexeme {
+export class TonalAssimilationLexeme implements Lexeme {
     word: TonalWord;
     private forms: Array<TonalWord> = new Array();
 
     constructor(private morphemes: Array<TonalSoundChangingMorpheme>, metaplasm: TonalInflectionMetaplasm) {
-        super();
-
         if (morphemes.length == 0) this.word = new TonalWord([]);
         else this.word = new TonalWord(morphemes.map(x => x.syllable));
 

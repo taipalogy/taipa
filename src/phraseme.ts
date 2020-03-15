@@ -1,7 +1,7 @@
 import { InflectionalEnding } from './tonal/lexeme';
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './dparser/lexeme';
 import { TonalPhrase } from './tonal/phraseme';
-import { Metaplasm } from './interface';
+import { Metaplasm } from './metaplasm';
 
 // -----------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ class ToneSandhiGroup extends ToneGroup {}
 
 // -----------------------------------------------------------------------------
 
-export class Phraseme {}
+export abstract class Phraseme {}
 
 // -----------------------------------------------------------------------------
 

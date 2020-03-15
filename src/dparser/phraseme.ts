@@ -1,5 +1,5 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
-import { Phraseme, TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm } from '../phraseme';
+import { TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm, Phraseme } from '../phraseme';
 import { AssimiDirection } from './morpheme';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
@@ -104,7 +104,7 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
     }
 }
 
-export class PhrasalVerbPhraseme extends Phraseme {
+export class PhrasalVerbPhraseme implements Phraseme {
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
@@ -113,7 +113,6 @@ export class PhrasalVerbPhraseme extends Phraseme {
         lexemeParticle: TonalInflectionLexeme,
         metaplasm: TonalPhrasalInflectionMetaplasm
     ) {
-        super();
         this.phrase = new TonalPhrase([lexemeVerb.word, lexemeParticle.word]);
 
         this.forms = metaplasm.apply(lexemeVerb, lexemeParticle);
@@ -207,7 +206,7 @@ export class SerialPhraseme extends Phraseme {
     }
 }
 
-export class TonalAssimilationPhraseme extends Phraseme {
+export class TonalAssimilationPhraseme implements Phraseme {
     phrase: TonalPhrase;
     private forms: Array<TonalPhrase> = new Array();
 
@@ -216,7 +215,6 @@ export class TonalAssimilationPhraseme extends Phraseme {
         lexemeFollowing: TonalAssimilationLexeme,
         metaplasm: TonalPhrasalAssimilationMetaplasm
     ) {
-        super();
         this.phrase = new TonalPhrase([lexemePreceding.word, lexemeFollowing.word]);
 
         this.forms = metaplasm.apply(lexemePreceding, lexemeFollowing);

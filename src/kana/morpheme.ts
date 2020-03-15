@@ -1,5 +1,5 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
-import { Syllable, MatchedPattern, Morpheme, KanaCombiningMetaplasm } from '../morpheme';
+import { Syllable, MatchedPattern, KanaCombiningMetaplasm, Morpheme } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
 import { InitialConsonantSet, VowelSet, Hatsuon, hiraganaKatakana, SemivowelSet, gailaigo } from './kana';
 import { AlphabeticLetter } from '../grapheme';
