@@ -114,8 +114,8 @@ export class RuleBasedTagger {
 
         // console.log(phrss);
 
-        if (!phrss) {
-            //console.log(sequence)
+        if (!phrss || phrss.length == 0) {
+            // console.log(sequence);
             let kw = this.rules.matchKeyWords(sequence[0]);
 
             if (kw) {
