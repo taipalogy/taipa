@@ -6,32 +6,51 @@ export class ConstructionElement {
     tag: string = '';
 }
 
-interface Visitor {
-    lookup(lexeme: OrthoPhraseme, sequence: string[]): boolean;
+interface IVisitor {
+    visitPhraseme(phraseme: OrthoPhraseme, sequence: string[]): boolean;
+    visitLexeme(lexeme: OrthoLexeme, word: string): boolean;
 }
 
-export class VisitorLookup implements Visitor {
-    lookup(lexeme: OrthoPhraseme, sequence: string[]) {
-        // lookup a phrase
+export class VisitorMatching implements IVisitor {
+    visitPhraseme(phraseme: OrthoPhraseme, sequence: string[]) {
+        // match a form of a phraseme
         const form = sequence.join(' ');
-        if (form === lexeme.base) return true;
-        lexeme.inflected.forEach(inflectedForm => {
-            if (form === inflectedForm) return true;
-        });
-        lexeme.assimilated.forEach(assimilatedForm => {
-            if (form === assimilatedForm) return true;
-        });
+        if (form === phraseme.base) return true;
+        if (phraseme.inflected.filter(it => it === form).length > 0) return true;
+        if (phraseme.assimilated.filter(it => it === form).length > 0) return true;
+        return false;
+    }
+
+    visitLexeme(lexeme: OrthoLexeme, word: string) {
         return false;
     }
 }
 
-export class OrthoPhraseme {
+interface OrthoXeme {
+    base: string;
+    inflected: string[];
+    assimilated: string[];
+
+    accept(visitor: IVisitor, arg: any): boolean;
+}
+
+export class OrthoPhraseme implements OrthoXeme {
     base: string = '';
     inflected: string[] = [];
     assimilated: string[] = [];
 
-    accept(visitor: Visitor, sequence: string[]) {
-        return visitor.lookup(this, sequence);
+    accept(visitor: IVisitor, sequence: string[]): boolean {
+        return visitor.visitPhraseme(this, sequence);
+    }
+}
+
+export class OrthoLexeme implements OrthoXeme {
+    base: string = '';
+    inflected: string[] = [];
+    assimilated: string[] = [];
+
+    accept(visitor: IVisitor, word: string): boolean {
+        return visitor.visitLexeme(this, word);
     }
 }
 

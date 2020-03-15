@@ -7,16 +7,14 @@ import {
     PersonalPronounSurface,
     PronounSurface,
     OrthoPhraseme,
-    VisitorLookup
+    VisitorMatching
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
 import { PhrasalVerbPhraseme, PhrasalVerbTwoPhraseme } from './phraseme';
 import { dictOfVerbs, dictOfPhrasalVerbs, dictOfSeperateVVCompounds, dictOfPhrasalVerbTwos } from './dictionary';
 
-class ConstructionOfSpeech {
-    pos: string = '';
-}
+// class ConstructionOfSpeech {pos: string = '';}
 
 export class ConstructionOfPhrase {
     pos: string = '';
@@ -145,11 +143,11 @@ export class PhrasalVerbs {
         }
     }
 
-    lookup(sequence: string[]) {
-        const v = new VisitorLookup();
+    match(sequence: string[]) {
+        const v = new VisitorMatching();
         const arr = this.phvbs.filter(it => it.accept(v, sequence));
-        if (arr.length > 0) return arr[0];
-        return new OrthoPhraseme();
+        if (arr.length > 0) return arr[0].base;
+        return '';
     }
 }
 
@@ -217,20 +215,33 @@ export class Rules {
     private lookupRules(sequence: string[]) {
         /*
         const pvbs = new PhrasalVerbs();
-        if (pvbs.lookup(sequence).base != '') {
-            if (sequence.length == 2)
-                return new PhrasalVerb([
-                    new VerbSurface(sequence[0]),
-                    new ParticleSurface(sequence[1])
-                ]) as ConstructionOfPhrase;
-            if (sequence.length == 3)
-                return new PhrasalVerb([
+        if (sequence.length == 2 && pvbs.match(sequence) != '') {
+            return [new PhrasalVerb([new VerbSurface(sequence[0]), new ParticleSurface(sequence[1])])];
+        }
+
+        if (sequence.length == 3 && pvbs.match(sequence) != '') {
+            return [
+                new PhrasalVerb([
                     new VerbSurface(sequence[0]),
                     new ParticleSurface(sequence[1]),
                     new ParticleSurface(sequence[2])
-                ]) as ConstructionOfPhrase;
+                ])
+            ];
         }
+
+        if (sequence.length > 3 && pvbs.match([sequence[0], sequence[1], sequence[2]]) != '') {
+            return [
+                new PhrasalVerb([
+                    new VerbSurface(sequence[0]),
+                    new ParticleSurface(sequence[1]),
+                    new ParticleSurface(sequence[2])
+                ])
+            ];
+        }
+        console.log(sequence);
+        return [];
 */
+
         let elems: Array<ConstructionElement> = [];
         for (let pat of this.phrases) {
             for (let j = 0; j < pat.length; j++) {

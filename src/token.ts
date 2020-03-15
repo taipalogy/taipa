@@ -59,6 +59,13 @@ export class TokenLemmaLookup {
                 if (i + 2 < doc.tokens.length && doc.tokens[i + 2].tag === Tagset.ppv) {
                     // phrasal verbs of length 3
                     for (let j in sophv.phrms) {
+                        /*
+                        if (
+                            sophv.match([doc.tokens[i].text, doc.tokens[i + 1].text, doc.tokens[i + 2].text]) !=
+                            ''
+                        ) {
+                        }
+*/
                         if (
                             doc.tokens[i].text === sophv.phrms[j].phrase.words[0].literal &&
                             doc.tokens[i + 1].text === sophv.phrms[j].phrase.words[1].literal &&
