@@ -150,7 +150,6 @@ export class Rules {
 
     constructor() {
         this.populatePatterns();
-        // this.populatePhrasalVerbs();
     }
 
     private lookupDictionary(str: string) {

@@ -1,10 +1,11 @@
 import { AlphabeticLetter, Sound } from './grapheme';
 import { Allomorph } from './tonal/version2';
 import { TonalSyllable } from './tonal/morpheme';
+import { Metaplasm } from './interface';
 
-export abstract class CombiningMetaplasm {}
+//------------------------------------------------------------------------------
 
-export class TonalCombiningMetaplasm extends CombiningMetaplasm {
+export class TonalCombiningMetaplasm extends Metaplasm {
     apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
         return [];
     }
@@ -24,7 +25,7 @@ export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
 
 export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 
-export class KanaCombiningMetaplasm extends CombiningMetaplasm {}
+export class KanaCombiningMetaplasm extends Metaplasm {}
 
 //------------------------------------------------------------------------------
 

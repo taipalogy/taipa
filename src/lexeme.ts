@@ -1,9 +1,8 @@
 import { Syllable, Morpheme } from './morpheme';
-import { TonalWord, InflectionalEnding, TonalSymbolEnding } from './tonal/lexeme';
+import { TonalWord, InflectionalEnding } from './tonal/lexeme';
+import { Metaplasm } from './interface';
 
 //------------------------------------------------------------------------------
-
-export abstract class Metaplasm {}
 
 export class TonalInflectionMetaplasm extends Metaplasm {
     apply(morphemes: Array<Morpheme>): TonalWord[] {
@@ -31,15 +30,9 @@ export abstract class Lexeme {}
 
 export class Word {
     literal: string = '';
-    syllables: Array<Syllable>;
 
-    constructor(syllables?: Array<Syllable>) {
-        if (syllables) {
-            this.syllables = syllables;
-        } else {
-            this.syllables = new Array();
-        }
-    }
+    // ---->
+    syllables: Array<Syllable> = [];
 
     popSyllable() {
         this.syllables = this.syllables.slice(0, this.syllables.length - 1);
