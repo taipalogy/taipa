@@ -69,10 +69,10 @@ export class PhrasalVerbs {
     }
 
     private populatePhrasemes() {
-        const pva = new TonalPhrasalInflector();
+        const infl = new TonalPhrasalInflector();
 
         dictOfPhrasalVerbs
-            .map(it => pva.inflectToProceeding(it[0], it[1]))
+            .map(it => infl.inflectToProceeding(it[0], it[1]))
             .map(it => {
                 const ol = new OrthoPhraseme();
                 ol.base = it.phrase.words[0].literal + ' ' + it.phrase.words[1].literal;
@@ -80,7 +80,7 @@ export class PhrasalVerbs {
                 this.phvbs.push(ol);
             });
         dictOfPhrasalVerbTwos
-            .map(it => pva.inflectToProceeding(it[0], it[1], it[2]))
+            .map(it => infl.inflectToProceeding(it[0], it[1], it[2]))
             .map(it => {
                 const ol = new OrthoPhraseme();
                 ol.base =
@@ -97,6 +97,7 @@ export class PhrasalVerbs {
     }
 
     match(sequence: string[]) {
+        // match any form, return the base one
         const v = new VisitorMatching();
         const arr = this.phvbs.filter(it => it.accept(v, sequence));
         if (arr.length > 0) return arr[0].base;
@@ -193,7 +194,15 @@ export class Rules {
     }
 
     matchKeyWords(str: string) {
-        return this.keyWords.getSurface(str);
+        const ce1 = this.keyWords.matchWords(str);
+        if (ce1.surface.length > 0) {
+            return ce1;
+        }
+
+        const ce2 = this.keyWords.matchLexemes(str);
+        if (ce2.surface.length > 0) {
+            return ce2;
+        }
     }
 
     seperateMatches(str: string) {

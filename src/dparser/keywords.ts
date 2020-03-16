@@ -1,4 +1,6 @@
 import { POSTags } from './symbols';
+import { createTonalInflectionLexeme } from './creator';
+import { TonalCombiningForms } from './morpheme';
 
 export class ConstructionElement {
     surface: string = '';
@@ -9,6 +11,7 @@ export class ConstructionElement {
 interface Visitor {
     visitPhraseme(phraseme: OrthoPhraseme, sequence: string[]): boolean;
     visitLexeme(lexeme: OrthoLexeme, word: string): boolean;
+    visitWord(keyword: OrthorWord, word: string): boolean;
 }
 
 export class VisitorMatching implements Visitor {
@@ -22,19 +25,26 @@ export class VisitorMatching implements Visitor {
     }
 
     visitLexeme(lexeme: OrthoLexeme, word: string) {
+        // match a form of a lexeme
+        if (word === lexeme.base) return true;
+        if (lexeme.inflected.filter(it => it === word).length > 0) return true;
+        if (lexeme.assimilated.filter(it => it === word).length > 0) return true;
+        return false;
+    }
+
+    visitWord(keyword: OrthorWord, word: string) {
+        if (word === keyword.base) return true;
         return false;
     }
 }
 
-interface OrthoXeme {
+interface OrthoX {
     base: string;
-    inflected: string[];
-    assimilated: string[];
 
     accept(visitor: Visitor, arg: any): boolean;
 }
 
-export class OrthoPhraseme implements OrthoXeme {
+export class OrthoPhraseme implements OrthoX {
     base: string = '';
     inflected: string[] = [];
     assimilated: string[] = [];
@@ -44,13 +54,21 @@ export class OrthoPhraseme implements OrthoXeme {
     }
 }
 
-export class OrthoLexeme implements OrthoXeme {
+export class OrthoLexeme implements OrthoX {
     base: string = '';
     inflected: string[] = [];
     assimilated: string[] = [];
 
     accept(visitor: Visitor, word: string): boolean {
         return visitor.visitLexeme(this, word);
+    }
+}
+
+export class OrthorWord implements OrthoX {
+    base: string = '';
+
+    accept(visitor: Visitor, word: string): boolean {
+        return visitor.visitWord(this, word);
     }
 }
 
@@ -138,23 +156,77 @@ const objectFactory = function(name: Class, str: string) {
 };
 
 export class KeyWords {
-    private keyElems: Array<ConstructionElement> = new Array();
+    words: Array<[OrthorWord, ConstructionElement]> = new Array();
+    lexemes: Array<[OrthoLexeme, ConstructionElement]> = new Array();
 
     constructor() {
-        this.populateKeyElems();
+        this.populateWords();
+        this.populateLexemes();
     }
 
-    getSurface(str: string) {
-        for (let i in this.keyElems) if (this.keyElems[i].surface === str) return this.keyElems[i];
+    private populateWords() {
+        const w1 = new OrthorWord();
+        w1.base = 'qaz';
+        const ce1 = new ConstructionElement();
+        ce1.surface = 'qaz';
+        ce1.pos = POSTags.auxiliary;
+        this.words.push([w1, ce1]);
+
+        const w2 = new OrthorWord();
+        w2.base = 'che';
+        const ce2 = new ConstructionElement();
+        ce2.surface = 'che';
+        ce2.pos = POSTags.pronoun;
+        this.words.push([w2, ce2]);
     }
 
-    private populateKeyElems() {
-        this.keyElems = [
-            objectFactory(PronounSurface, 'che'),
-            objectFactory(PersonalPronounSurface, 'goa'),
-            objectFactory(AuxiliarySurface, 'qaz'),
-            objectFactory(ParticleSurface, 'long'),
-            objectFactory(ParticleSurface, 'bew')
-        ];
+    private populateLexemes() {
+        const lx1 = new OrthoLexeme();
+        lx1.base = 'goay';
+        const ilx1 = createTonalInflectionLexeme(lx1.base, new TonalCombiningForms());
+        lx1.inflected.push(ilx1.getForms()[0].literal);
+        const ce1 = new ConstructionElement();
+        ce1.surface = 'goay';
+        ce1.pos = POSTags.pronoun;
+        this.lexemes.push([lx1, ce1]);
+
+        const lx2 = new OrthoLexeme();
+        lx2.base = 'longy';
+        const ilx2 = createTonalInflectionLexeme(lx2.base, new TonalCombiningForms());
+        lx2.inflected.push(ilx2.getForms()[0].literal);
+        const ce2 = new ConstructionElement();
+        ce2.surface = 'longy';
+        ce2.pos = POSTags.particle;
+        this.lexemes.push([lx2, ce2]);
+
+        const lx3 = new OrthoLexeme();
+        lx3.base = 'bez';
+        const ilx3 = createTonalInflectionLexeme(lx3.base, new TonalCombiningForms());
+        lx3.inflected.push(ilx3.getForms()[0].literal);
+        const ce3 = new ConstructionElement();
+        ce3.surface = 'bez';
+        ce3.pos = POSTags.particle;
+        this.lexemes.push([lx3, ce3]);
+    }
+
+    matchLexemes(word: string) {
+        const v = new VisitorMatching();
+        const arr = this.lexemes.filter(it => it[0].accept(v, word));
+        if (arr.length > 0) {
+            const ce = new ConstructionElement();
+            ce.surface = word;
+            ce.pos = arr[0][1].pos;
+            return ce;
+        }
+        return new ConstructionElement();
+    }
+
+    matchWords(word: string) {
+        const v = new VisitorMatching();
+        const arr = this.words.filter(it => it[0].accept(v, word));
+        if (arr.length > 0) {
+            return arr[0][1];
+        }
+        return new ConstructionElement();
     }
 }
