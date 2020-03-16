@@ -11,7 +11,6 @@ import {
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
-import { PhrasalVerbPhraseme, PhrasalVerbTwoPhraseme } from './phraseme';
 import { dictOfVerbs, dictOfPhrasalVerbs, dictOfSeperateVVCompounds, dictOfPhrasalVerbTwos } from './dictionary';
 
 // class ConstructionOfSpeech {pos: string = '';}
@@ -63,7 +62,6 @@ export class VerbWithEnclitic extends VerbPhrase {
 }
 
 export class PhrasalVerbs {
-    phrms: Array<PhrasalVerbPhraseme | PhrasalVerbTwoPhraseme> = new Array();
     phvbs: Array<OrthoPhraseme> = new Array();
 
     constructor() {

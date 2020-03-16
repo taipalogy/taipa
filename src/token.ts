@@ -58,57 +58,25 @@ export class TokenLemmaLookup {
             if (doc.tokens[i].tag === Tagset.vb && i + 1 < doc.tokens.length) {
                 if (i + 2 < doc.tokens.length && doc.tokens[i + 2].tag === Tagset.ppv) {
                     // phrasal verbs of length 3
-                    for (let j in sophv.phrms) {
-                        /*
-                        if (
-                            sophv.match([doc.tokens[i].text, doc.tokens[i + 1].text, doc.tokens[i + 2].text]) !=
-                            ''
-                        ) {
-                        }
-*/
-                        if (
-                            doc.tokens[i].text === sophv.phrms[j].phrase.words[0].literal &&
-                            doc.tokens[i + 1].text === sophv.phrms[j].phrase.words[1].literal &&
-                            doc.tokens[i + 2].text === sophv.phrms[j].phrase.words[2].literal
-                        ) {
-                            doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;
-                            doc.tokens[i + 1].lemma = sophv.phrms[j].phrase.words[1].literal;
-                            doc.tokens[i + 2].lemma = sophv.phrms[j].phrase.words[2].literal;
-                            i++;
-                            break;
-                        } else if (
-                            doc.tokens[i].text === sophv.phrms[j].getForms()[0].words[0].literal &&
-                            doc.tokens[i + 1].text === sophv.phrms[j].getForms()[0].words[1].literal &&
-                            doc.tokens[i + 2].text === sophv.phrms[j].getForms()[0].words[2].literal
-                        ) {
-                            doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;
-                            doc.tokens[i + 1].lemma = sophv.phrms[j].phrase.words[1].literal;
-                            doc.tokens[i + 2].lemma = sophv.phrms[j].phrase.words[2].literal;
-                            i++;
-                            break;
-                        }
+
+                    const base = sophv.match([doc.tokens[i].text, doc.tokens[i + 1].text, doc.tokens[i + 2].text]);
+                    if (base != '') {
+                        const lemmas = base.split(' ');
+                        doc.tokens[i].lemma = lemmas[0];
+                        doc.tokens[i + 1].lemma = lemmas[1];
+                        doc.tokens[i + 2].lemma = lemmas[2];
+                        i++;
                     }
                     continue;
                 } else if (doc.tokens[i + 1].tag === Tagset.ppv || doc.tokens[i + 1].tag === Tagset.appr) {
                     // phrasal verbs of length 2
-                    for (let j in sophv.phrms) {
-                        if (
-                            doc.tokens[i].text === sophv.phrms[j].phrase.words[0].literal &&
-                            doc.tokens[i + 1].text === sophv.phrms[j].phrase.words[1].literal
-                        ) {
-                            doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;
-                            doc.tokens[i + 1].lemma = sophv.phrms[j].phrase.words[1].literal;
-                            i++;
-                            break;
-                        } else if (
-                            doc.tokens[i].text === sophv.phrms[j].getForms()[0].words[0].literal &&
-                            doc.tokens[i + 1].text === sophv.phrms[j].phrase.words[1].literal
-                        ) {
-                            doc.tokens[i].lemma = sophv.phrms[j].phrase.words[0].literal;
-                            doc.tokens[i + 1].lemma = sophv.phrms[j].phrase.words[1].literal;
-                            i++;
-                            break;
-                        }
+
+                    const base = sophv.match([doc.tokens[i].text, doc.tokens[i + 1].text]);
+                    if (base != '') {
+                        const lemmas = base.split(' ');
+                        doc.tokens[i].lemma = lemmas[0];
+                        doc.tokens[i + 1].lemma = lemmas[1];
+                        i++;
                     }
                     continue;
                 }

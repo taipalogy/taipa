@@ -6,12 +6,12 @@ export class ConstructionElement {
     tag: string = '';
 }
 
-interface IVisitor {
+interface Visitor {
     visitPhraseme(phraseme: OrthoPhraseme, sequence: string[]): boolean;
     visitLexeme(lexeme: OrthoLexeme, word: string): boolean;
 }
 
-export class VisitorMatching implements IVisitor {
+export class VisitorMatching implements Visitor {
     visitPhraseme(phraseme: OrthoPhraseme, sequence: string[]) {
         // match a form of a phraseme
         const form = sequence.join(' ');
@@ -31,7 +31,7 @@ interface OrthoXeme {
     inflected: string[];
     assimilated: string[];
 
-    accept(visitor: IVisitor, arg: any): boolean;
+    accept(visitor: Visitor, arg: any): boolean;
 }
 
 export class OrthoPhraseme implements OrthoXeme {
@@ -39,7 +39,7 @@ export class OrthoPhraseme implements OrthoXeme {
     inflected: string[] = [];
     assimilated: string[] = [];
 
-    accept(visitor: IVisitor, sequence: string[]): boolean {
+    accept(visitor: Visitor, sequence: string[]): boolean {
         return visitor.visitPhraseme(this, sequence);
     }
 }
@@ -49,7 +49,7 @@ export class OrthoLexeme implements OrthoXeme {
     inflected: string[] = [];
     assimilated: string[] = [];
 
-    accept(visitor: IVisitor, word: string): boolean {
+    accept(visitor: Visitor, word: string): boolean {
         return visitor.visitLexeme(this, word);
     }
 }
