@@ -3,7 +3,7 @@ import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { TonalZeroCombining } from '../src/morpheme';
-import { EighthToSecondCombining, EighthToFirstCombining, TonalCombiningForms } from '../src/dparser/morpheme';
+import { EighthToSecondCombining, EighthToFirstCombining, TonalCombiningForms } from '../src/dparser/metaplasm';
 
 describe('Tonal testing', () => {
     const cli = new Client();
@@ -113,7 +113,6 @@ describe('Tonal testing, if present or not', () => {
     test('check if it is not present. 5 letters in length', () => {
         expect(t2.word.literal).toEqual('');
     });
-
 });
 
 describe('Tonal testing', () => {
@@ -132,7 +131,7 @@ describe('Tonal testing', () => {
     test('check the final of the syllable', () => {
         expect(ms2[0].getForms()[0].lastSecondLetter.literal).toEqual(TonalLetterTags.h);
     });
-    
+
     test('check the tone letter of the syllable, eighth neutral tone to second neutral tone', () => {
         expect(ms2[0].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.y);
     });

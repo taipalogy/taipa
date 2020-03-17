@@ -1,108 +1,14 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
 import { TonalPhrasalInflectionMetaplasm, TonalPhrasalAssimilationMetaplasm, Phraseme } from '../phraseme';
-import { AssimiDirection } from './morpheme';
+import {
+    Adnominal,
+    ConjugateToProceeding,
+    Conjunctive,
+    ConjugateTwoToProceeding,
+    ConjugateToParticiple
+} from './metaplasm';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
-
-class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
-        if (lexemeParticle.getForms().length > 0) {
-            const forms = lexemeParticle.getForms();
-            const ret: TonalPhrase[] = [];
-            forms.map(it => ret.push(new TonalPhrase([lexemeVerb.getForms()[0], it])));
-            return ret;
-        } else if (lexemeVerb.getForms().length > 0) {
-            // equivalent to compound in terms of phrasal verb
-            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.word])];
-        } else {
-            return [new TonalPhrase([])];
-        }
-    }
-}
-
-class ConjugateTwoToProceeding extends TonalPhrasalInflectionMetaplasm {
-    applyTwoParticles(
-        lexemeVerb: TonalInflectionLexeme,
-        lexemeParticle: TonalInflectionLexeme,
-        lexemeParticleTwo: TonalInflectionLexeme
-    ) {
-        if (
-            lexemeVerb.word.literal === '' ||
-            lexemeParticle.word.literal === '' ||
-            lexemeParticleTwo.word.literal === ''
-        )
-            return [];
-
-        if (lexemeParticle.getForms().length > 0 || lexemeParticleTwo.getForms.length > 0) {
-            return [
-                new TonalPhrase([
-                    lexemeVerb.getForms()[0],
-                    lexemeParticle.getForms()[0],
-                    lexemeParticleTwo.getForms()[0]
-                ])
-            ];
-        }
-        return [new TonalPhrase([])];
-    }
-}
-
-class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemeVerb: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '') return [];
-        if (lexemeParticle.getForms().length > 0) {
-            const forms = lexemeParticle.getForms();
-            const ret: TonalPhrase[] = [];
-            if (lexemeVerb.getForms().length > 0) {
-                forms.map(it => ret.push(new TonalPhrase([lexemeVerb.getForms()[0], it])));
-            } else {
-                forms.map(it => ret.push(new TonalPhrase([lexemeVerb.word, it])));
-            }
-            return ret;
-        }
-        return [new TonalPhrase([])];
-    }
-}
-
-export class Adnominal extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemeNoun: TonalInflectionLexeme, lexemeParticle: TonalInflectionLexeme) {
-        if (lexemeNoun.word.literal === '' || lexemeParticle.word.literal === '') return [];
-        if (lexemeParticle.getForms().length > 0) {
-            return [new TonalPhrase([lexemeNoun.word, lexemeParticle.getForms()[0]])];
-        } else {
-            return [new TonalPhrase([])];
-        }
-    }
-}
-
-export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
-    apply(lexemeVerb: TonalInflectionLexeme, lexemeLe: TonalInflectionLexeme) {
-        if (lexemeVerb.word.literal === '' || lexemeLe.word.literal === '') return [];
-        if (lexemeLe.getForms().length > 0) {
-            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeLe.getForms()[0]])];
-        } else if (lexemeVerb.getForms().length > 0) {
-            return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeLe.word])];
-        } else {
-            return [new TonalPhrase([])];
-        }
-    }
-}
-
-export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
-    apply(lexemePreceding: TonalAssimilationLexeme, lexemeFollowing: TonalAssimilationLexeme) {
-        const wrds = lexemeFollowing.assimilateWith(lexemePreceding, AssimiDirection.agressive);
-        if (wrds.length > 0) return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
-        return [];
-    }
-}
-
-export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
-    apply(lexemePreceding: TonalAssimilationLexeme, lexemeFollowing: TonalAssimilationLexeme) {
-        const wrds = lexemePreceding.assimilateWith(lexemeFollowing, AssimiDirection.regressive);
-        if (wrds.length > 0) return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
-        return [];
-    }
-}
 
 export class PhrasalVerbPhraseme implements Phraseme {
     phrase: TonalPhrase;

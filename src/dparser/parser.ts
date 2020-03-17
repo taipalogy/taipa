@@ -88,7 +88,7 @@ export class DependencyParser {
         }
     }
 
-    private s2S1LeftFeatures = new Map<string, DependencyLabels[]>().set(Tagset.npr + Tagset.vb, [
+    private s2S1LeftArgsOfVerb = new Map<string, DependencyLabels[]>().set(Tagset.npr + Tagset.vb, [
         DependencyLabels.nsubj,
         DependencyLabels.dislocated
     ]);
@@ -109,8 +109,8 @@ export class DependencyParser {
                 if (rel) {
                     this.c.relations.push(this.leftRelation(rel));
                 }
-            } else if (this.s2S1LeftFeatures.has(this.s2.tag + this.s1.tag)) {
-                const labels = this.s2S1LeftFeatures.get(this.s2.tag + this.s1.tag);
+            } else if (this.s2S1LeftArgsOfVerb.has(this.s2.tag + this.s1.tag)) {
+                const labels = this.s2S1LeftArgsOfVerb.get(this.s2.tag + this.s1.tag);
                 if (labels) {
                     if (this.triggered == false) {
                         this.c.relations.push(this.leftRelation(labels[0]));

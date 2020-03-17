@@ -7,7 +7,7 @@ export { TonalInflectionAnalyzer } from './dparser/analyzer';
 export { KanaLemmatizationAnalyzer } from './kana/analyzer';
 export { GraphemeMaker } from './grapheme';
 export { lexicalRoots } from './tonal/lexicalroots2';
-export { lowerLettersTonal, TonalLetterTags } from './tonal/version2';
+export { lowerLettersTonal, TonalLetterTags, TonalSoundTags } from './tonal/version2';
 export { TonalLemmatizer } from './tonal/lemmatizer';
 export { TonalAssimilator } from './dparser/assimilator';
 export {
@@ -39,12 +39,6 @@ export { TonalPhrase } from './tonal/phraseme';
 
 export { Sound, SoundGeneration } from './grapheme';
 
-export { TonalCombiningForms } from './dparser/morpheme';
-export { TonalDesinenceInflection } from './dparser/lexeme';
+export { TonalDesinenceInflection, TonalCombiningForms } from './dparser/metaplasm';
 
 export { Prediction } from './tonal/prediction';
-
-// TODO: add to api?
-export { TonalSoundTags } from './tonal/version2';
-export { Processor } from './client';
-export { pipeDoc } from './document';

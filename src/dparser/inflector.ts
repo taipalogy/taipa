@@ -7,11 +7,12 @@ import {
     ConjunctiveLeCombining,
     PossesiveExCombining,
     NthCombining
-} from './morpheme';
-import { TonalDesinenceInflection, TransfixInflection, TonalInflectionLexeme } from './lexeme';
+} from './metaplasm';
+import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { createTonalInflectionLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
+import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
 
 export class TonalInflector {
     private readonly tia = new TonalInflectionAnalyzer();

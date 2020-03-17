@@ -1,7 +1,8 @@
 import { GraphemeMaker } from '../grapheme';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
-import { Epenthesis, TonalAssimilationLexeme } from './lexeme';
+import { TonalAssimilationLexeme } from './lexeme';
+import { Epenthesis } from './metaplasm';
 
 export class TonalInserter {
     private readonly tschmm = new TonalSoundChangingMorphemeMaker();

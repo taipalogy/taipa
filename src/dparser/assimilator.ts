@@ -2,8 +2,9 @@ import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { GraphemeMaker } from '../grapheme';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalZeroInflection } from '../tonal/metaplasm';
-import { AgressiveInternal, RegressiveInternal, TonalAssimilationLexeme } from './lexeme';
-import { TonalAssimilationPhrasemeMaker, RegressiveExternal, AgressiveExternal } from './phraseme';
+import { TonalAssimilationLexeme } from './lexeme';
+import { TonalAssimilationPhrasemeMaker } from './phraseme';
+import { AgressiveInternal, RegressiveInternal, RegressiveExternal, AgressiveExternal } from './metaplasm';
 
 export class TonalAssimilator {
     private readonly tschmm = new TonalSoundChangingMorphemeMaker();

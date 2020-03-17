@@ -1,19 +1,16 @@
 import {
     KeyWords,
-    EncliticSurface,
+    EncliticElement,
     ConstructionElement,
-    VerbSurface,
-    ParticleSurface,
-    PersonalPronounSurface,
-    PronounSurface,
-    OrthoPhraseme,
-    VisitorMatching
+    VerbElement,
+    ParticleElement,
+    PersonalPronounElement,
+    PronounElement
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { TonalPhrasalInflector } from './inflector';
+import { OrthoPhraseme, VisitorMatching } from './visitor';
 import { dictOfVerbs, dictOfPhrasalVerbs, dictOfSeperateVVCompounds, dictOfPhrasalVerbTwos } from './dictionary';
-
-// class ConstructionOfSpeech {pos: string = '';}
 
 export class ConstructionOfPhrase {
     pos: string = '';
@@ -40,7 +37,7 @@ class VerbPhrase extends ConstructionOfPhrase {
 }
 
 export class PhrasalVerbWithEnclitic extends VerbPhrase {
-    constructor(verb: VerbSurface, particle: ParticleSurface, enclitic: EncliticSurface) {
+    constructor(verb: VerbElement, particle: ParticleElement, enclitic: EncliticElement) {
         super();
         verb.tag = Tagset.vb;
         this.elements.push(verb);
@@ -52,7 +49,7 @@ export class PhrasalVerbWithEnclitic extends VerbPhrase {
 }
 
 export class VerbWithEnclitic extends VerbPhrase {
-    constructor(verb: VerbSurface, enclitic: EncliticSurface) {
+    constructor(verb: VerbElement, enclitic: EncliticElement) {
         super();
         verb.tag = Tagset.vb;
         this.elements.push(verb);
@@ -106,7 +103,7 @@ export class PhrasalVerbs {
 }
 
 class PhrasalTransitive extends VerbPhrase {
-    constructor(verb: VerbSurface, preposition: ParticleSurface, pronoun: PronounSurface) {
+    constructor(verb: VerbElement, preposition: ParticleElement, pronoun: PronounElement) {
         super();
         verb.tag = Tagset.vb;
         this.elements.push(verb);
@@ -118,7 +115,7 @@ class PhrasalTransitive extends VerbPhrase {
 }
 
 class SmallClause extends VerbPhrase {
-    constructor(verb1: VerbSurface, pronoun: PersonalPronounSurface, verb2: VerbSurface) {
+    constructor(verb1: VerbElement, pronoun: PersonalPronounElement, verb2: VerbElement) {
         super();
         verb1.tag = Tagset.vb;
         this.elements.push(verb1);
@@ -135,9 +132,9 @@ export class SetOfSmallClauses {
     constructor() {
         // obj. xcomp.
         const sc = new SmallClause(
-            new VerbSurface('oannw'),
-            new PersonalPronounSurface('goa'),
-            new VerbSurface('churw')
+            new VerbElement('oannw'),
+            new PersonalPronounElement('goa'),
+            new VerbElement('churw')
         );
         this.constructions.push(sc);
     }
@@ -154,7 +151,7 @@ export class Rules {
     private lookupDictionary(str: string) {
         let phr;
         if (dictOfVerbs.includes(str)) {
-            let vs: VerbSurface = new VerbSurface(str);
+            let vs: VerbElement = new VerbElement(str);
             if (vs.pos === POSTags.verb) vs.tag = Tagset.vb;
             phr = [new ConstructionOfPhrase([])];
             phr[0].elements.push(vs);
@@ -168,15 +165,15 @@ export class Rules {
     private lookupRules(sequence: string[]) {
         const pvbs = new PhrasalVerbs();
         if ((sequence.length == 2 && pvbs.match(sequence) != '') || pvbs.match([sequence[0], sequence[1]])) {
-            return [new PhrasalVerb([new VerbSurface(sequence[0]), new ParticleSurface(sequence[1])])];
+            return [new PhrasalVerb([new VerbElement(sequence[0]), new ParticleElement(sequence[1])])];
         }
 
         if (sequence.length == 3 && pvbs.match(sequence) != '') {
             return [
                 new PhrasalVerb([
-                    new VerbSurface(sequence[0]),
-                    new ParticleSurface(sequence[1]),
-                    new ParticleSurface(sequence[2])
+                    new VerbElement(sequence[0]),
+                    new ParticleElement(sequence[1]),
+                    new ParticleElement(sequence[2])
                 ])
             ];
         }
@@ -184,9 +181,9 @@ export class Rules {
         if (sequence.length > 3 && pvbs.match([sequence[0], sequence[1], sequence[2]]) != '') {
             return [
                 new PhrasalVerb([
-                    new VerbSurface(sequence[0]),
-                    new ParticleSurface(sequence[1]),
-                    new ParticleSurface(sequence[2])
+                    new VerbElement(sequence[0]),
+                    new ParticleElement(sequence[1]),
+                    new ParticleElement(sequence[2])
                 ])
             ];
         }
@@ -195,12 +192,12 @@ export class Rules {
 
     matchKeyWords(str: string) {
         const ce1 = this.keyWords.matchWords(str);
-        if (ce1.surface.length > 0) {
+        if (ce1.orth.length > 0) {
             return ce1;
         }
 
         const ce2 = this.keyWords.matchLexemes(str);
-        if (ce2.surface.length > 0) {
+        if (ce2.orth.length > 0) {
             return ce2;
         }
     }

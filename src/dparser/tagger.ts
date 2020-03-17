@@ -1,6 +1,6 @@
 import { PhrasalVerb, PhrasalVerbWithEnclitic, VerbWithEnclitic, Rules, ConstructionOfPhrase } from './rules';
 import { POSTags, Tagset } from './symbols';
-import { ConstructionElement, EncliticSurface, ParticleSurface, VerbSurface } from './keywords';
+import { ConstructionElement, EncliticElement, ParticleElement, VerbElement } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
 
@@ -19,19 +19,19 @@ export class RuleBasedTagger {
 
                 if (ph instanceof PhrasalVerb) {
                     const pvwe = new PhrasalVerbWithEnclitic(
-                        new VerbSurface(ph.elements[0].surface),
-                        new ParticleSurface(ph.elements[1].surface),
-                        new EncliticSurface('aw')
+                        new VerbElement(ph.elements[0].orth),
+                        new ParticleElement(ph.elements[1].orth),
+                        new EncliticElement('aw')
                     );
                     cps.push(pvwe);
                 } else if (ph.pos === POSTags.verb) {
-                    const vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
+                    const vwe = new VerbWithEnclitic(new VerbElement(sequence[0]), new EncliticElement('aw'));
                     cps.push(vwe);
                 }
             }
         } else {
             //console.log(sequence)
-            const vwe = new VerbWithEnclitic(new VerbSurface(sequence[0]), new EncliticSurface('aw'));
+            const vwe = new VerbWithEnclitic(new VerbElement(sequence[0]), new EncliticElement('aw'));
             cps.push(vwe);
         }
 
@@ -48,7 +48,7 @@ export class RuleBasedTagger {
 
     private matchSeperates(sequence: string[], particle: string) {
         let phrase: ConstructionOfPhrase = new ConstructionOfPhrase([]);
-        let vs: VerbSurface = new VerbSurface(sequence[0]);
+        let vs: VerbElement = new VerbElement(sequence[0]);
         vs.tag = Tagset.vb;
         phrase.elements.push(vs);
         phrase.pos = POSTags.verb;
@@ -64,7 +64,7 @@ export class RuleBasedTagger {
                 }
 
                 if (sequence[i] === particle) {
-                    let ps: VerbSurface = new VerbSurface(sequence[i]);
+                    let ps: VerbElement = new VerbElement(sequence[i]);
                     ps.tag = Tagset.vb;
                     phrase.elements.push(ps);
                     return phrase;
@@ -145,14 +145,14 @@ export class RuleBasedTagger {
             if (listCP[m].elements.length == min) {
                 for (let n = 0; n < min; n++) {
                     if (listCP[m].elements[n] != undefined) {
-                        if (strs[beginOfPhrase + n] === listCP[m].elements[n].surface) {
+                        if (strs[beginOfPhrase + n] === listCP[m].elements[n].orth) {
                             if (n + 1 == min && min > matchedLen) {
                                 matchedLen = min;
 
                                 for (let q = 0; q < matchedLen; q++) {
                                     mp.elements[q] = listCP[m].elements[q];
-                                    if (listCP[m].elements[q].surface === '') {
-                                        mp.elements[q].surface = strs[beginOfPhrase + q];
+                                    if (listCP[m].elements[q].orth === '') {
+                                        mp.elements[q].orth = strs[beginOfPhrase + q];
                                     }
                                 }
                                 mp.pos = listCP[m].pos;
@@ -207,7 +207,7 @@ export class RuleBasedTagger {
         }
 
         for (let i = 0; i < ces.length; i++) {
-            if (doc.tokens[i].text === ces[i].surface) {
+            if (doc.tokens[i].text === ces[i].orth) {
                 doc.tokens[i].pos = ces[i].pos;
                 doc.tokens[i].tag = ces[i].tag;
             }

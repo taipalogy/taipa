@@ -1,6 +1,7 @@
 import { GraphemeMaker } from '../src/grapheme';
 import { lowerLettersTonal, TonalLetterTags } from '../src/tonal/version2';
-import { TonalCombiningMorphemeMaker, TonalCombiningForms } from '../src/dparser/morpheme';
+import { TonalCombiningMorphemeMaker } from '../src/dparser/morpheme';
+import { TonalCombiningForms } from '../src/dparser/metaplasm';
 
 type TonePatternTwo = [TonalLetterTags, TonalLetterTags];
 export type SuprafixTwo = { patterns: TonePatternTwo[] };

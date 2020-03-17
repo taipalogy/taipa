@@ -4,7 +4,7 @@ import { TokenAnalysis } from '../src/token';
 import { TonalInflector } from '../src/dparser/inflector';
 import { TonalInserter } from '../src/dparser/inserter';
 import { createTonalInflectionLexeme } from '../src/dparser/creator';
-import { FourthToFirstCombining } from '../src/dparser/morpheme';
+import { FourthToFirstCombining } from '../src/dparser/metaplasm';
 
 describe('Inflectional ending testing', () => {
     const cli = new Client();
