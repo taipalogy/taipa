@@ -9,9 +9,9 @@ let doc = new Document();
 let stdin = process.openStdin();
 
 stdin.addListener('data', function(d) {
-    const nlp = new Processor();
-    const p = nlp.load('');
-    doc = p(d.toString().trim());
+    const pro = new Processor();
+    const nlp = pro.load('');
+    doc = nlp.p(d.toString().trim());
     const ts = doc.tokens;
 
     if (ts.length > 0) {

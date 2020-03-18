@@ -2,11 +2,11 @@ import { Processor } from '../src/client';
 import { DependencyLabels } from '../src/dparser/symbols';
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa koannw diurh');
-    let rs = doc.relations;
+    const doc = nlp.p('goa koannw diurh');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(3);
@@ -32,11 +32,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa koanny diurhhw che');
-    let rs = doc.relations;
+    const doc = nlp.p('goa koanny diurhhw che');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(4);
@@ -68,11 +68,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa longy diurhhw che');
-    let rs = doc.relations;
+    const doc = nlp.p('goa longy diurhhw che');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(4);
@@ -104,11 +104,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('che goa koannw diurh');
-    let rs = doc.relations;
+    const doc = nlp.p('che goa koannw diurh');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(4);
@@ -140,11 +140,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('koannw diurh aw');
-    let rs = doc.relations;
+    const doc = nlp.p('koannw diurh aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(3);
@@ -170,11 +170,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('koannw aw');
-    let rs = doc.relations;
+    const doc = nlp.p('koannw aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(2);
@@ -194,11 +194,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('longw aw');
-    let rs = doc.relations;
+    const doc = nlp.p('longw aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(2);
@@ -218,11 +218,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa koannw diurh aw');
-    let rs = doc.relations;
+    const doc = nlp.p('goa koannw diurh aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(4);
@@ -254,11 +254,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('pah aw');
-    let rs = doc.relations;
+    const doc = nlp.p('pah aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(2);
@@ -278,11 +278,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('longw diurh aw');
-    let rs = doc.relations;
+    const doc = nlp.p('longw diurh aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(3);
@@ -308,11 +308,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('qaz pah aw');
-    let rs = doc.relations;
+    const doc = nlp.p('qaz pah aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(3);
@@ -338,11 +338,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa qaz pah');
-    let rs = doc.relations;
+    const doc = nlp.p('goa qaz pah');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(3);
@@ -368,11 +368,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa qaz pah aw');
-    let rs = doc.relations;
+    const doc = nlp.p('goa qaz pah aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(4);
@@ -404,11 +404,11 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-    const nlp = new Processor();
-    const process = nlp.load('');
+    const pro = new Processor();
+    const nlp = pro.load('');
 
-    const doc = process('goa qaz koannw aw');
-    let rs = doc.relations;
+    const doc = nlp.p('goa qaz koannw aw');
+    const rs = doc.relations;
 
     test('check the number of relations', () => {
         expect(rs.length).toEqual(4);

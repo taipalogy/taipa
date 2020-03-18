@@ -57,7 +57,20 @@ export class Client {
 
 export class Processor {
     load(name: string) {
-        return (text: string) => {
+        const getPipe = function() {
+            // tagging
+            const tggr = new RuleBasedTagger();
+
+            // lemmatization
+            const lmtzr = new TokenLemmaLookup();
+
+            // dependency parsing
+            const dpsr = new DependencyParser();
+
+            return pipeDoc(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse);
+        };
+
+        const pipe = function(text: string) {
             let doc: Document = new Document();
 
             if (text) {
@@ -66,20 +79,18 @@ export class Processor {
                 if (tokens) {
                     tokens.filter(x => x != undefined).map(x => doc.tokens.push(new Token(x)));
                 }
-
-                // tagging
-                const tggr = new RuleBasedTagger();
-
-                // lemmatization
-                const lmtzr = new TokenLemmaLookup();
-
-                // dependency parsing
-                const dpsr = new DependencyParser();
-
-                doc = pipeDoc(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse)(doc);
+                doc = getPipe()(doc);
             }
 
             return doc;
+        };
+
+        return {
+            add() {},
+            get() {},
+            p(text: string) {
+                return pipe(text);
+            }
         };
     }
 }
