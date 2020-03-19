@@ -19,16 +19,16 @@ export class FreeInflectionalEnding extends InflectionalEnding {}
 
 export class CheckedInflectionalEnding extends InflectionalEnding {}
 
-export class TonalSymbolEnding extends Ending {
+export class AllomorphicEnding extends Ending {
     allomorph: Allomorph = new Allomorph();
     toString() {
         return this.allomorph.toString();
     }
 }
 
-export class FreeTonalEnding extends TonalSymbolEnding {}
+export class FreeTonalEnding extends AllomorphicEnding {}
 
-export class CheckedTonalEnding extends TonalSymbolEnding {}
+export class CheckedTonalEnding extends AllomorphicEnding {}
 
 //------------------------------------------------------------------------------
 

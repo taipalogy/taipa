@@ -1,6 +1,6 @@
 import { LexemeMaker, Lexeme } from '../lexeme';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
-import { TonalWord, TonalSymbolEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
+import { TonalWord, AllomorphicEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Sound } from '../grapheme';
@@ -12,7 +12,7 @@ import { AssimiDirection } from './metaplasm';
 export class TonalInflectionLexeme extends Lexeme {
     word: TonalWord;
     private forms: Array<TonalWord> = new Array();
-    private tonalSymbleEnding: TonalSymbolEnding;
+    private allomorphicEnding: AllomorphicEnding;
     // TODO: should a member variable affixes be added and passed to metaplasm. check out member sounds in morpheme
 
     constructor(morphemes: Array<TonalCombiningMorpheme>, metaplasm: TonalInflectionMetaplasm) {
@@ -24,19 +24,19 @@ export class TonalInflectionLexeme extends Lexeme {
         if (morphemes.length > 0) {
             if (morphemes[morphemes.length - 1]) {
                 // tonal ending needs to be assigned to sandhi lexeme
-                this.tonalSymbleEnding = this.assignTonalEnding(morphemes[morphemes.length - 1].allomorph);
+                this.allomorphicEnding = this.assignTonalEnding(morphemes[morphemes.length - 1].allomorph);
             } else {
-                this.tonalSymbleEnding = new TonalSymbolEnding();
+                this.allomorphicEnding = new AllomorphicEnding();
             }
         } else {
-            this.tonalSymbleEnding = new TonalSymbolEnding();
+            this.allomorphicEnding = new AllomorphicEnding();
         }
 
         if (morphemes.length > 0) this.forms = this.assignWordForms(morphemes, metaplasm);
     }
 
     private assignTonalEnding(allomorph: Allomorph) {
-        let tse: TonalSymbolEnding = new TonalSymbolEnding();
+        let tse: AllomorphicEnding = new AllomorphicEnding();
 
         if (allomorph instanceof FreeAllomorph) {
             // replace the tonal ending
@@ -53,12 +53,12 @@ export class TonalInflectionLexeme extends Lexeme {
     }
 
     getInflectionalEnding() {
-        if (this.tonalSymbleEnding) return this.tonalSymbleEnding.allomorph.tonal.toString();
+        if (this.allomorphicEnding) return this.allomorphicEnding.allomorph.tonal.toString();
         return '';
     }
 
-    getTonalSymbol() {
-        if (this.tonalSymbleEnding) return this.tonalSymbleEnding;
+    getAllomorphicEnding() {
+        if (this.allomorphicEnding) return this.allomorphicEnding;
         return '';
     }
 

@@ -36,6 +36,9 @@ class VerbPhrase extends ConstructionOfPhrase {
     }
 }
 
+class PrepositionalPhrase extends ConstructionOfPhrase {}
+class NounPhrase extends ConstructionOfPhrase {}
+
 export class PhrasalVerbWithEnclitic extends VerbPhrase {
     constructor(verb: VerbElement, particle: ParticleElement, enclitic: EncliticElement) {
         super();
@@ -99,18 +102,6 @@ export class PhrasalVerbs {
         const arr = this.phvbs.filter(it => it.accept(v, sequence));
         if (arr.length > 0) return arr[0].base;
         return '';
-    }
-}
-
-class PhrasalTransitive extends VerbPhrase {
-    constructor(verb: VerbElement, preposition: ParticleElement, pronoun: PronounElement) {
-        super();
-        verb.tag = Tagset.vb;
-        this.elements.push(verb);
-        preposition.tag = Tagset.padv;
-        this.elements.push(preposition);
-        pronoun.tag = Tagset.npr;
-        this.elements.push(pronoun);
     }
 }
 

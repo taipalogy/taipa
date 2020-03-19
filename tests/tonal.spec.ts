@@ -3,7 +3,13 @@ import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { TonalZeroCombining } from '../src/morpheme';
-import { EighthToSecondCombining, EighthToFirstCombining, TonalCombiningForms } from '../src/dparser/metaplasm';
+import {
+    EighthToSecondCombining,
+    EighthToFirstCombining,
+    TonalCombiningForms,
+    TonalDesinenceInflection
+} from '../src/dparser/metaplasm';
+import { createTonalWord, createTonalPhrase, createTonalInflectionLexeme } from '../src/dparser/creator';
 
 describe('Tonal testing', () => {
     const cli = new Client();
@@ -192,5 +198,92 @@ describe('Tonal testing', () => {
 
     test('check the tonal of the first syllable', () => {
         expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.x);
+    });
+});
+
+describe('Tone group testing of words', () => {
+    const tia = new TonalInflectionAnalyzer();
+    const lx3 = tia.lexAnalyze('chiahh', new TonalDesinenceInflection());
+    const lx4 = tia.lexAnalyze('ez', new TonalDesinenceInflection());
+
+    test('check the tone of the word, 47', () => {
+        expect(lx3.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.hh);
+    });
+
+    test('check the tone of the word, 47', () => {
+        expect(lx4.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.z);
+    });
+
+    const lx5 = createTonalInflectionLexeme('pah');
+    const lx6 = createTonalInflectionLexeme('ew');
+
+    test('check the tone of the word, 43', () => {
+        expect(lx5.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.h);
+    });
+
+    test('check the tone of the word, 43', () => {
+        expect(lx6.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe('Tone group testing of syllables', () => {
+    const tia = new TonalInflectionAnalyzer();
+
+    const ms1 = tia.morphAnalyze('hongwseysew', new TonalCombiningForms());
+
+    test('check the tone of the syllable', () => {
+        expect(ms1[0].allomorph.toString()).toEqual(TonalLetterTags.w);
+    });
+
+    test('check the tone of the syllable', () => {
+        expect(ms1[1].allomorph.toString()).toEqual(TonalLetterTags.y);
+    });
+
+    test('check the tone of the syllable', () => {
+        expect(ms1[2].allomorph.toString()).toEqual(TonalLetterTags.w);
+    });
+
+    const ms2 = tia.morphAnalyze('cuhycuhyqiurw', new TonalCombiningForms());
+
+    test('check the tonal symbol of the syllable', () => {
+        expect(ms2[0].allomorph.toString()).toEqual(TonalLetterTags.h + TonalLetterTags.y);
+    });
+
+    test('check the tonal symbol of the syllable', () => {
+        expect(ms2[1].allomorph.toString()).toEqual(TonalLetterTags.h + TonalLetterTags.y);
+    });
+
+    test('check the tonal symbol of the syllable', () => {
+        expect(ms2[2].allomorph.toString()).toEqual(TonalLetterTags.w);
+    });
+});
+
+describe('Tone group testing of phrasal verbs', () => {
+    const lx1 = createTonalInflectionLexeme('ciet');
+    const lx2 = createTonalInflectionLexeme('loeh');
+
+    test('check the tonal of the word, 34', () => {
+        expect(lx1.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.t);
+    });
+
+    test('check the tone of the word, 34', () => {
+        expect(lx2.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.h);
+    });
+
+    const tia = new TonalInflectionAnalyzer();
+    const lx3 = tia.lexAnalyze('tehh', new TonalDesinenceInflection());
+    const lx4 = tia.lexAnalyze('kih', new TonalDesinenceInflection());
+    const lx5 = tia.lexAnalyze('laih', new TonalDesinenceInflection());
+
+    test('check the tone of the word, 844', () => {
+        expect(lx3.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.hh);
+    });
+
+    test('check the tone of the word, 844', () => {
+        expect(lx4.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.h);
+    });
+
+    test('check the tone of the word, 844', () => {
+        expect(lx5.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.h);
     });
 });
