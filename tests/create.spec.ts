@@ -1,15 +1,19 @@
-import {
-    createTonalWord,
-    createTonalPhrase,
-    createTonalInflectionLexeme,
-    createCompoundPhraseme
-} from '../src/dparser/creator';
+import { createTonalPhrase, createTonalInflectionLexeme, createCompoundPhraseme } from '../src/dparser/creator';
+
+describe('Creator testing, excessive tokens', () => {
+    const inputPhrase: any = 'an english key';
+
+    const lx1 = createTonalInflectionLexeme(inputPhrase);
+
+    test('empty phrase', () => {
+        expect(lx1.word.literal).toEqual('an');
+    });
+});
 
 describe('Creator testing, undefined input', () => {
     const inputUnd: any = undefined;
 
-    const w1 = createTonalWord(inputUnd);
-    const lx1 = createTonalInflectionLexeme(w1.literal);
+    const lx1 = createTonalInflectionLexeme(inputUnd);
     const p1 = createTonalPhrase(lx1.word.literal);
     const phm1 = createCompoundPhraseme('', p1.literal);
 
@@ -21,8 +25,7 @@ describe('Creator testing, undefined input', () => {
 describe('Creator testing, empty word, empty phrase', () => {
     const inputEmpty: any = '';
 
-    const w1 = createTonalWord(inputEmpty);
-    const lx1 = createTonalInflectionLexeme(w1.literal);
+    const lx1 = createTonalInflectionLexeme(inputEmpty);
     const p1 = createTonalPhrase(lx1.word.literal);
     const phm1 = createCompoundPhraseme('', p1.literal);
 

@@ -1,6 +1,6 @@
 import { LexemeMaker, Lexeme } from '../lexeme';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
-import { TonalWord, AllomorphicEnding, FreeTonalEnding, CheckedTonalEnding } from '../tonal/lexeme';
+import { TonalWord, AllomorphicEnding, FreeAllomorphicEnding, CheckedAllomorphicEnding } from '../tonal/lexeme';
 import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Sound } from '../grapheme';
@@ -24,7 +24,7 @@ export class TonalInflectionLexeme extends Lexeme {
         if (morphemes.length > 0) {
             if (morphemes[morphemes.length - 1]) {
                 // tonal ending needs to be assigned to sandhi lexeme
-                this.allomorphicEnding = this.assignTonalEnding(morphemes[morphemes.length - 1].allomorph);
+                this.allomorphicEnding = this.assignAllomorphicEnding(morphemes[morphemes.length - 1].allomorph);
             } else {
                 this.allomorphicEnding = new AllomorphicEnding();
             }
@@ -35,17 +35,17 @@ export class TonalInflectionLexeme extends Lexeme {
         if (morphemes.length > 0) this.forms = this.assignWordForms(morphemes, metaplasm);
     }
 
-    private assignTonalEnding(allomorph: Allomorph) {
+    private assignAllomorphicEnding(allomorph: Allomorph) {
         let tse: AllomorphicEnding = new AllomorphicEnding();
 
         if (allomorph instanceof FreeAllomorph) {
             // replace the tonal ending
-            let fte = new FreeTonalEnding();
+            let fte = new FreeAllomorphicEnding();
             fte.allomorph = allomorph;
             tse = fte;
         } else if (allomorph instanceof CheckedAllomorph) {
             // append the tonal of the tonal ending
-            let cte = new CheckedTonalEnding();
+            let cte = new CheckedAllomorphicEnding();
             cte.allomorph = allomorph;
             tse = cte;
         }
@@ -132,23 +132,23 @@ export class TonalAssimilationLexeme implements Lexeme {
 //------------------------------------------------------------------------------
 
 export class TonalInflectionLexemeMaker extends LexemeMaker {
-    constructor(private tim: TonalInflectionMetaplasm) {
+    constructor(private metaplasm: TonalInflectionMetaplasm) {
         super();
     }
 
-    makeLexemes(ms: Array<TonalCombiningMorpheme>) {
-        return this.make(ms);
+    makeLexemes(morphemes: Array<TonalCombiningMorpheme>) {
+        return this.make(morphemes);
     }
 
-    protected make(ms: Array<TonalCombiningMorpheme>) {
+    protected make(morphemes: Array<TonalCombiningMorpheme>) {
         let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
 
-        if (ms) {
-            isInflStemWithX = this.checkFifth(ms);
-            if (isInflStemWithX) return new TonalInflectionLexeme([], this.tim);
+        if (morphemes) {
+            isInflStemWithX = this.checkFifth(morphemes);
+            if (isInflStemWithX) return new TonalInflectionLexeme([], this.metaplasm);
         }
 
-        return new TonalInflectionLexeme(ms, this.tim);
+        return new TonalInflectionLexeme(morphemes, this.metaplasm);
     }
 
     private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {

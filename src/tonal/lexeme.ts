@@ -26,9 +26,9 @@ export class AllomorphicEnding extends Ending {
     }
 }
 
-export class FreeTonalEnding extends AllomorphicEnding {}
+export class FreeAllomorphicEnding extends AllomorphicEnding {}
 
-export class CheckedTonalEnding extends AllomorphicEnding {}
+export class CheckedAllomorphicEnding extends AllomorphicEnding {}
 
 //------------------------------------------------------------------------------
 

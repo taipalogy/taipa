@@ -2,12 +2,7 @@ import { TonalPhrasalInflector } from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalSyllable } from '../src/tonal/morpheme';
-import {
-    createTonalPhrase,
-    createCompoundPhraseme,
-    createTonalWord,
-    createTonalInflectionLexeme
-} from '../src/dparser/creator';
+import { createTonalPhrase, createCompoundPhraseme, createTonalInflectionLexeme } from '../src/dparser/creator';
 
 describe('Phrasal verb testing, transitive', () => {
     const phva = new TonalPhrasalInflector();
@@ -233,10 +228,9 @@ describe('Phrase testing', () => {
         expect(p3.literal).toEqual('hengx liz');
     });
 
-    const w4 = createTonalWord('qaz');
-    const lx4 = createTonalInflectionLexeme(w4.literal);
+    const lx4 = createTonalInflectionLexeme('qaz');
     const p4 = createTonalPhrase(lx4.word.literal);
-    const phm4 = createCompoundPhraseme('', p4.literal);
+    const phm4 = createCompoundPhraseme('', lx4.word.literal);
 
     test('phrase', () => {
         expect(phm4.phrase.literal).toEqual(' qaz');

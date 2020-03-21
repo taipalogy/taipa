@@ -9,7 +9,7 @@ import {
     TonalCombiningForms,
     TonalDesinenceInflection
 } from '../src/dparser/metaplasm';
-import { createTonalWord, createTonalPhrase, createTonalInflectionLexeme } from '../src/dparser/creator';
+import { createTonalInflectionLexeme } from '../src/dparser/creator';
 
 describe('Tonal testing', () => {
     const cli = new Client();
