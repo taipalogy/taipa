@@ -1,7 +1,18 @@
 import { LexemeMaker, Lexeme } from '../lexeme';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
-import { TonalWord, AllomorphicEnding, FreeAllomorphicEnding, CheckedAllomorphicEnding } from '../tonal/lexeme';
-import { Allomorph, FreeAllomorph, CheckedAllomorph, TonalSoundTags, TonalLetterTags } from '../tonal/version2';
+import {
+  TonalWord,
+  AllomorphicEnding,
+  FreeAllomorphicEnding,
+  CheckedAllomorphicEnding
+} from '../tonal/lexeme';
+import {
+  Allomorph,
+  FreeAllomorph,
+  CheckedAllomorph,
+  TonalSoundTags,
+  TonalLetterTags
+} from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Sound } from '../grapheme';
 import { TonalInflectionMetaplasm } from '../tonal/metaplasm';
@@ -10,166 +21,218 @@ import { AssimiDirection } from './metaplasm';
 //------------------------------------------------------------------------------
 
 export class TonalInflectionLexeme extends Lexeme {
-    word: TonalWord;
-    private forms: Array<TonalWord> = new Array();
-    private allomorphicEnding: AllomorphicEnding;
-    // TODO: should a member variable affixes be added and passed to metaplasm. check out member sounds in morpheme
+  word: TonalWord;
+  private forms: Array<TonalWord> = new Array();
+  private allomorphicEnding: AllomorphicEnding;
+  // TODO: should a member variable affixes be added and passed to metaplasm. check out member sounds in morpheme
 
-    constructor(morphemes: Array<TonalCombiningMorpheme>, metaplasm: TonalInflectionMetaplasm) {
-        super();
+  constructor(
+    morphemes: Array<TonalCombiningMorpheme>,
+    metaplasm: TonalInflectionMetaplasm
+  ) {
+    super();
 
-        if (morphemes.length == 0) this.word = new TonalWord([]);
-        else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    if (morphemes.length == 0) this.word = new TonalWord([]);
+    else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-        if (morphemes.length > 0) {
-            if (morphemes[morphemes.length - 1]) {
-                // tonal ending needs to be assigned to sandhi lexeme
-                this.allomorphicEnding = this.assignAllomorphicEnding(morphemes[morphemes.length - 1].allomorph);
-            } else {
-                this.allomorphicEnding = new AllomorphicEnding();
-            }
-        } else {
-            this.allomorphicEnding = new AllomorphicEnding();
-        }
-
-        if (morphemes.length > 0) this.forms = this.assignWordForms(morphemes, metaplasm);
+    if (morphemes.length > 0) {
+      if (morphemes[morphemes.length - 1]) {
+        // tonal ending needs to be assigned to sandhi lexeme
+        this.allomorphicEnding = this.assignAllomorphicEnding(
+          morphemes[morphemes.length - 1].allomorph
+        );
+      } else {
+        this.allomorphicEnding = new AllomorphicEnding();
+      }
+    } else {
+      this.allomorphicEnding = new AllomorphicEnding();
     }
 
-    private assignAllomorphicEnding(allomorph: Allomorph) {
-        let tse: AllomorphicEnding = new AllomorphicEnding();
+    if (morphemes.length > 0)
+      this.forms = this.assignWordForms(morphemes, metaplasm);
+  }
 
-        if (allomorph instanceof FreeAllomorph) {
-            // replace the tonal ending
-            let fte = new FreeAllomorphicEnding();
-            fte.allomorph = allomorph;
-            tse = fte;
-        } else if (allomorph instanceof CheckedAllomorph) {
-            // append the tonal of the tonal ending
-            let cte = new CheckedAllomorphicEnding();
-            cte.allomorph = allomorph;
-            tse = cte;
-        }
-        return tse;
-    }
+  private assignAllomorphicEnding(allomorph: Allomorph) {
+    let tse: AllomorphicEnding = new AllomorphicEnding();
 
-    getInflectionalEnding() {
-        if (this.allomorphicEnding) return this.allomorphicEnding.allomorph.tonal.toString();
-        return '';
+    if (allomorph instanceof FreeAllomorph) {
+      // replace the tonal ending
+      let fte = new FreeAllomorphicEnding();
+      fte.allomorph = allomorph;
+      tse = fte;
+    } else if (allomorph instanceof CheckedAllomorph) {
+      // append the tonal of the tonal ending
+      let cte = new CheckedAllomorphicEnding();
+      cte.allomorph = allomorph;
+      tse = cte;
     }
+    return tse;
+  }
 
-    getAllomorphicEnding() {
-        if (this.allomorphicEnding) return this.allomorphicEnding;
-        return '';
-    }
+  getInflectionalEnding() {
+    if (this.allomorphicEnding)
+      return this.allomorphicEnding.allomorph.tonal.toString();
+    return '';
+  }
 
-    private assignWordForms(ms: Array<TonalCombiningMorpheme>, ti: TonalInflectionMetaplasm): TonalWord[] {
-        return ti.apply(ms);
-    }
+  getAllomorphicEnding() {
+    if (this.allomorphicEnding) return this.allomorphicEnding;
+    return '';
+  }
 
-    getForms() {
-        return this.forms;
-    }
+  private assignWordForms(
+    ms: Array<TonalCombiningMorpheme>,
+    ti: TonalInflectionMetaplasm
+  ): TonalWord[] {
+    return ti.apply(ms);
+  }
+
+  getForms() {
+    return this.forms;
+  }
 }
 
 //------------------------------------------------------------------------------
 
 export class TonalAssimilationLexeme implements Lexeme {
-    word: TonalWord;
-    private forms: Array<TonalWord> = new Array();
+  word: TonalWord;
+  private forms: Array<TonalWord> = new Array();
 
-    constructor(private morphemes: Array<TonalSoundChangingMorpheme>, metaplasm: TonalInflectionMetaplasm) {
-        if (morphemes.length == 0) this.word = new TonalWord([]);
-        else this.word = new TonalWord(morphemes.map(x => x.syllable));
+  constructor(
+    private morphemes: Array<TonalSoundChangingMorpheme>,
+    metaplasm: TonalInflectionMetaplasm
+  ) {
+    if (morphemes.length == 0) this.word = new TonalWord([]);
+    else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-        if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
-    }
+    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
+  }
 
-    getForms() {
-        // for internal samdhi
-        return this.forms;
-    }
+  getForms() {
+    // for internal samdhi
+    return this.forms;
+  }
 
-    getMorphemes() {
-        // when external sandhi is required, member variable morphemes has to be exposed
-        return this.morphemes;
-    }
+  getMorphemes() {
+    // when external sandhi is required, member variable morphemes has to be exposed
+    return this.morphemes;
+  }
 
-    assimilateWith(til: TonalAssimilationLexeme, dir: AssimiDirection) {
-        const ms = til.getMorphemes();
-        let wrd = new TonalWord(this.morphemes.map(x => new TonalSyllable(x.syllable.letters)));
-        if (ms.length > 0) {
-            const adjacentSnds = ms[ms.length - 1].sounds;
-            if (dir === AssimiDirection.agressive) {
-                let s = new Sound();
-                if (
-                    adjacentSnds[adjacentSnds.length - 1].name === TonalSoundTags.freeTonal &&
-                    adjacentSnds[adjacentSnds.length - 2].name === TonalSoundTags.nasalFinal
-                ) {
-                    s = adjacentSnds[adjacentSnds.length - 2];
-                } else if (adjacentSnds[adjacentSnds.length - 1].name === TonalSoundTags.nasalFinal) {
-                    s = adjacentSnds[adjacentSnds.length - 1];
-                }
-                const syls = this.morphemes[0].changeSoundWith(s, AssimiDirection.agressive);
-
-                wrd.replaceSyllable(0, syls[0]);
-
-                return [wrd];
-            } else if (dir === AssimiDirection.regressive && adjacentSnds[0].name === TonalSoundTags.initial) {
-                const s = adjacentSnds[0];
-                const syls = this.morphemes[this.morphemes.length - 1].changeSoundWith(s, AssimiDirection.regressive);
-
-                wrd.popSyllable();
-                wrd.pushSyllable(syls[0]);
-
-                return [wrd];
-            }
+  assimilateWith(til: TonalAssimilationLexeme, dir: AssimiDirection) {
+    const ms = til.getMorphemes();
+    let wrd = new TonalWord(
+      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
+    );
+    if (ms.length > 0) {
+      const adjacentSnds = ms[ms.length - 1].sounds;
+      if (dir === AssimiDirection.agressive) {
+        let s = new Sound();
+        if (
+          adjacentSnds[adjacentSnds.length - 1].name ===
+            TonalSoundTags.freeTonal &&
+          adjacentSnds[adjacentSnds.length - 2].name ===
+            TonalSoundTags.nasalFinal
+        ) {
+          s = adjacentSnds[adjacentSnds.length - 2];
+        } else if (
+          adjacentSnds[adjacentSnds.length - 1].name ===
+          TonalSoundTags.nasalFinal
+        ) {
+          s = adjacentSnds[adjacentSnds.length - 1];
         }
+        const syls = this.morphemes[0].changeSoundWith(
+          s,
+          AssimiDirection.agressive
+        );
 
-        return [];
+        wrd.replaceSyllable(0, syls[0]);
+
+        return [wrd];
+      } else if (
+        dir === AssimiDirection.regressive &&
+        adjacentSnds[0].name === TonalSoundTags.initial
+      ) {
+        const s = adjacentSnds[0];
+        const syls = this.morphemes[this.morphemes.length - 1].changeSoundWith(
+          s,
+          AssimiDirection.regressive
+        );
+
+        wrd.popSyllable();
+        wrd.pushSyllable(syls[0]);
+
+        return [wrd];
+      }
     }
+
+    return [];
+  }
+}
+
+export class TonalInsertionLexeme implements Lexeme {
+  word: TonalWord;
+  private forms: Array<TonalWord> = new Array();
+
+  constructor(
+    morphemes: Array<TonalSoundChangingMorpheme>,
+    metaplasm: TonalInflectionMetaplasm
+  ) {
+    if (morphemes.length == 0) this.word = new TonalWord([]);
+    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+
+    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
+  }
+
+  getForms() {
+    // for internal samdhi
+    return this.forms;
+  }
 }
 
 //------------------------------------------------------------------------------
 
 export class TonalInflectionLexemeMaker extends LexemeMaker {
-    constructor(private metaplasm: TonalInflectionMetaplasm) {
-        super();
+  constructor(private metaplasm: TonalInflectionMetaplasm) {
+    super();
+  }
+
+  makeLexemes(morphemes: Array<TonalCombiningMorpheme>) {
+    return this.make(morphemes);
+  }
+
+  protected make(morphemes: Array<TonalCombiningMorpheme>) {
+    let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
+
+    if (morphemes) {
+      isInflStemWithX = this.checkFifth(morphemes);
+      if (isInflStemWithX) return new TonalInflectionLexeme([], this.metaplasm);
     }
 
-    makeLexemes(morphemes: Array<TonalCombiningMorpheme>) {
-        return this.make(morphemes);
-    }
+    return new TonalInflectionLexeme(morphemes, this.metaplasm);
+  }
 
-    protected make(morphemes: Array<TonalCombiningMorpheme>) {
-        let isInflStemWithX: boolean = false; // inflectional stem with x in the middle
-
-        if (morphemes) {
-            isInflStemWithX = this.checkFifth(morphemes);
-            if (isInflStemWithX) return new TonalInflectionLexeme([], this.metaplasm);
+  private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
+    for (let i = 0; i < ms.length; i++) {
+      if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+        if (
+          i < ms.length - 1 &&
+          ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
+          ms[ms.length - 1].syllable.lastSecondLetter.literal !==
+            TonalLetterTags.a
+        ) {
+          if (
+            ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a
+          ) {
+            break;
+          } else {
+            // tonal x can't not appear in them middle of an inflectional stem
+            // if it is not preceding an ay or a
+            return true;
+          }
         }
-
-        return new TonalInflectionLexeme(morphemes, this.metaplasm);
+      }
     }
 
-    private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
-        for (let i = 0; i < ms.length; i++) {
-            if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-                if (
-                    i < ms.length - 1 &&
-                    ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-                    ms[ms.length - 1].syllable.lastSecondLetter.literal !== TonalLetterTags.a
-                ) {
-                    if (ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a) {
-                        break;
-                    } else {
-                        // tonal x can't not appear in them middle of an inflectional stem
-                        // if it is not preceding an ay or a
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
+    return false;
+  }
 }

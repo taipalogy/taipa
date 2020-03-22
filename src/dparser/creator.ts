@@ -5,7 +5,7 @@ import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalZeroCombining, TonalCombiningMetaplasm } from '../morpheme';
 import { TonalDesinenceInflection } from './metaplasm';
 
-/** Create a taiwanese lexeme given a `TonalCombiningMetaplasm`. If metaplasm is not provided, `TonalZeroCombining` is defaulted. Excessive tokens are ignored */
+/** Create a taiwanese lexeme given a `TonalCombiningMetaplasm`. If metaplasm is not provided, `TonalZeroCombining` is defaulted. Excessive tokens are ignored. */
 export function createTonalInflectionLexeme(
   str: string,
   metaplasm?: TonalCombiningMetaplasm
@@ -20,7 +20,7 @@ export function createTonalInflectionLexeme(
   return lx;
 }
 
-/** Create a phrase given a sequence of arbitrary taiwanese words. Tokens are analyzed one by one */
+/** Create a phrase given a sequence of arbitrary taiwanese words regardless of syntax. Tokens are analyzed one by one. */
 export function createTonalPhrase(str: string) {
   const tia = new TonalInflectionAnalyzer();
 
@@ -32,15 +32,12 @@ export function createTonalPhrase(str: string) {
   return new TonalPhrase(lxs.map(it => it.word));
 }
 
+/** Create a compound of type `TonalCompoundPhraseme` in which the preceding word will be inflected and the following word will not. */
 export function createCompoundPhraseme(preceding: string, following: string) {
-  // serial compound
   const tia = new TonalInflectionAnalyzer();
-  const tiph = new TonalInflectionPhrasemeMaker();
+  const tiphm = new TonalInflectionPhrasemeMaker();
 
-  const lexemePreceding = tia.lexAnalyze(
-    preceding,
-    new TonalDesinenceInflection()
-  );
-  const lexemeFollowing = createTonalInflectionLexeme(following);
-  return tiph.makeCompoundPhraseme(lexemePreceding, lexemeFollowing);
+  const lxPreceding = tia.lexAnalyze(preceding, new TonalDesinenceInflection());
+  const lxFollowing = createTonalInflectionLexeme(following);
+  return tiphm.makeCompoundPhraseme(lxPreceding, lxFollowing);
 }
