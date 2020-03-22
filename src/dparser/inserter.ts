@@ -4,6 +4,7 @@ import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
 import { Epenthesis } from './metaplasm';
 
+/** Insert initial m, n, or ng to morpheme ay if the preceding morpheme has final m, n, or ng. */
 export class TonalInserter {
   private readonly tschmm = new TonalSoundChangingMorphemeMaker();
   private readonly gm = new GraphemeMaker(lowerLettersTonal);
@@ -14,10 +15,17 @@ export class TonalInserter {
     return mrphs;
   }
 
-  insert(str: string) {
-    const mrphs = this.morphAnalyze(str);
+  /**
+   *  Create a `TonalInsertionLexeme`. The word has at least 2 syllables for the second one to be inserted an initial.
+   * @param word a word whose second syllable is ay, a, or af.
+   */
+  insertTo(word: string) {
+    const mrphs = this.morphAnalyze(word);
+    // TODO: add initial g
     const lx = new TonalInsertionLexeme(mrphs, new Epenthesis());
 
     return lx;
   }
 }
+
+// TODO: other insertion function?

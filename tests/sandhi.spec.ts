@@ -5,177 +5,195 @@ import { TonalAssimilator } from '../src/dparser/assimilator';
 import { TonalInserter } from '../src/dparser/inserter';
 
 describe('Epenthesis testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('sutflay');
+  const ta = cli.processTonal('sutflay');
 
-    test('check the consonant', () => {
-        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
-    });
+  test('check the consonant', () => {
+    expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
+  });
 });
 
 describe('Epenthesis testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('jiokkxgay');
+  const ta = cli.processTonal('jiokkxgay');
 
-    test('check the consonant', () => {
-        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
-    });
+  test('check the consonant', () => {
+    expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
+  });
 });
 
 describe('Epenthesis testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('qapfbay');
+  const ta = cli.processTonal('qapfbay');
 
-    test('check the consonant', () => {
-        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
-    });
+  test('check the consonant', () => {
+    expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
+  });
 });
 
 describe('Epenthesis testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('qamxmay');
+  const ta = cli.processTonal('qamxmay');
 
-    test('check the consonant', () => {
-        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
-    });
+  test('check the consonant', () => {
+    expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
+  });
 });
 
 describe('Epenthesis testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('soanfnay');
+  const ta = cli.processTonal('soanfnay');
 
-    test('check the consonant', () => {
-        expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
-    });
+  test('check the consonant', () => {
+    expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
+  });
 });
 
 describe('Voiced final testing', () => {
-    const assimi = new TonalAssimilator();
+  const assimi = new TonalAssimilator();
 
-    const lx1 = assimi.assimilateRegressive('lakkwex');
+  const lx1 = assimi.assimilateRegressive('lakkwex');
 
-    test('chech the surface form', () => {
-        expect(lx1.getForms()[0].literal).toEqual('laggwex');
-    });
+  test('chech the surface form', () => {
+    expect(lx1.getForms()[0].literal).toEqual('laggwex');
+  });
 
-    const lx2 = assimi.assimilateRegressive('chappwex');
+  const lx2 = assimi.assimilateRegressive('chappwex');
 
-    test('chech the surface form', () => {
-        expect(lx2.getForms()[0].literal).toEqual('chabbwex');
-    });
+  test('chech the surface form', () => {
+    expect(lx2.getForms()[0].literal).toEqual('chabbwex');
+  });
 });
 
 describe('Epenthesis testing', () => {
-    const inst = new TonalInserter();
+  const inst = new TonalInserter();
 
-    const lx1 = inst.insert('infay');
+  const lx1 = inst.insertTo('qimxay');
 
-    test('check the epenthesis of initial n', () => {
-        expect(lx1.getForms()[0].literal).toEqual('infnay');
-    });
+  test('check the epenthesis of initial m', () => {
+    expect(lx1.getForms()[0].literal).toEqual('qimxmay');
+  });
 
-    const lx2 = inst.insert('qimxay');
+  const lx2 = inst.insertTo('infay');
 
-    test('check the epenthesis of initial m', () => {
-        expect(lx2.getForms()[0].literal).toEqual('qimxmay');
-    });
+  test('check the epenthesis of initial n', () => {
+    expect(lx2.getForms()[0].literal).toEqual('infnay');
+  });
 
-    const lx3 = inst.insert('cangxay');
+  const lx3 = inst.insertTo('cangxay');
 
-    test('check the epenthesis of initial ng', () => {
-        expect(lx3.getForms()[0].literal).toEqual('cangxngay');
-    });
+  test('check the epenthesis of initial ng', () => {
+    expect(lx3.getForms()[0].literal).toEqual('cangxngay');
+  });
 });
 
 describe('Epenthesis testing', () => {
-    const infl = new TonalInflector();
+  const infl = new TonalInflector();
 
-    const lx1 = infl.inflectDesinence('qimxay');
+  const lx1 = infl.inflectDesinence('qimxay');
 
-    test('check the inflected form', () => {
-        expect(lx1.getForms()[0].literal).toEqual('qimxa');
-    });
+  test('check the inflected form', () => {
+    expect(lx1.getForms()[0].literal).toEqual('qimxa');
+  });
 
-    const inst = new TonalInserter();
+  const inst = new TonalInserter();
 
-    const lx2 = inst.insert(lx1.getForms()[0].literal);
+  const lx2 = inst.insertTo(lx1.getForms()[0].literal);
 
-    test('check the epenthesis of initial m', () => {
-        expect(lx2.getForms()[0].literal).toEqual('qimxma');
-    });
+  test('check the epenthesis of initial m. surface form', () => {
+    expect(lx2.getForms()[0].literal).toEqual('qimxma');
+  });
+
+  const lx3 = inst.insertTo('qimza');
+
+  test('check the epenthesis of initial m', () => {
+    expect(lx3.getForms()[0].literal).toEqual('qimzma');
+  });
+
+  const lx4 = inst.insertTo('ginfa');
+
+  test('check the epenthesis of initial n', () => {
+    expect(lx4.getForms()[0].literal).toEqual('ginfna');
+  });
+
+  const lx5 = inst.insertTo('tangza');
+
+  test('check the epenthesis of initial ng', () => {
+    expect(lx5.getForms()[0].literal).toEqual('tangznga');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('siurfsiurzsiur');
+  const ta = cli.processTonal('siurfsiurzsiur');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('siur');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('siur');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('sanfsanfsany');
+  const ta = cli.processTonal('sanfsanfsany');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('sany');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('sany');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('samysamysamw');
+  const ta = cli.processTonal('samysamysamw');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('samw');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('samw');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('sipfsipfsip');
+  const ta = cli.processTonal('sipfsipfsip');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('sip');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('sip');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('angfangwangx');
+  const ta = cli.processTonal('angfangwangx');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('angx');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('angx');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('qufquwquz');
+  const ta = cli.processTonal('qufquwquz');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('quz');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('quz');
+  });
 });
 
 describe('Reduplication testing', () => {
-    const cli = new Client();
+  const cli = new Client();
 
-    const ta = cli.processTonal('sittxsittwsitt');
+  const ta = cli.processTonal('sittxsittwsitt');
 
-    test('check the uncombining form', () => {
-        expect(ta.uncombiningSequences[0]).toContain('sitt');
-    });
+  test('check the uncombining form', () => {
+    expect(ta.uncombiningSequences[0]).toContain('sitt');
+  });
 });
