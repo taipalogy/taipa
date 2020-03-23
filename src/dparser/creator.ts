@@ -20,7 +20,7 @@ export function createTonalInflectionLexeme(
   return lx;
 }
 
-/** Create a phrase given a sequence of arbitrary taiwanese words regardless of syntax. Tokens are analyzed one by one. */
+/** Create a phrase given a sequence of arbitrary words regardless of syntax. Tokens are analyzed one by one. */
 export function createTonalPhrase(str: string) {
   const tia = new TonalInflectionAnalyzer();
 

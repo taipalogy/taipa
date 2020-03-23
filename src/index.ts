@@ -34,7 +34,7 @@ export {
 export { TonalLemmatizationLexeme } from './tonal/lexeme';
 export {
   PhrasalVerbPhraseme,
-  PhrasalVerbTwoPhraseme,
+  PhrasalVerbVppPhraseme,
   TonalMainParticlePhraseme,
   TonalCompoundPhraseme,
   SerialPhraseme,
