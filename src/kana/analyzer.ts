@@ -1,31 +1,41 @@
 import { GraphemeMaker } from '../grapheme';
-import { KanaUncombiningMorphemeMaker, KanaUncombiningMorpheme } from './morpheme';
+import {
+  KanaUncombiningMorphemeMaker,
+  KanaUncombiningMorpheme
+} from './morpheme';
 import { lowerLettersKana } from './kana';
 import { Analyzer } from '../analyzer';
 import { AlphabeticGrapheme } from '../grapheme';
 import { KanaCombiningMetaplasm } from '../morpheme';
 
-//------------------------------------------------------------------------------
-
+/** Analyze a string into graphemes or morphemes */
 export class KanaLemmatizationAnalyzer extends Analyzer {
-    graphAnalyze(str: string) {
-        // graphemic analysis
-        const gm = new GraphemeMaker(lowerLettersKana);
-        return gm.makeGraphemes(str);
+  /**
+   * Analyze a string into graphemes. Graphemic analysis.
+   * @param str a string
+   */
+  graphAnalyze(str: string) {
+    // graphemic analysis
+    const gm = new GraphemeMaker(lowerLettersKana);
+    return gm.makeGraphemes(str);
+  }
+
+  morphAnalyze(str: string): KanaUncombiningMorpheme[];
+  morphAnalyze(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[];
+  /**
+   * Analyze a string or graphemes into morphemes. Morphological analysis.
+   * @param x a string or graphemes
+   */
+  morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
+    // morphological analysis
+    let graphemes: Array<AlphabeticGrapheme> = [];
+    if (typeof x == 'object') {
+      graphemes = x;
+    } else if (typeof x == 'string') {
+      graphemes = this.graphAnalyze(x);
     }
 
-    morphAnalyze(str: string): KanaUncombiningMorpheme[];
-    morphAnalyze(gs: Array<AlphabeticGrapheme>): KanaUncombiningMorpheme[];
-    morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
-        // morphological analysis
-        let graphemes: Array<AlphabeticGrapheme> = [];
-        if (typeof x == 'object') {
-            graphemes = x;
-        } else if (typeof x == 'string') {
-            graphemes = this.graphAnalyze(x);
-        }
-
-        const mm = new KanaUncombiningMorphemeMaker(new KanaCombiningMetaplasm());
-        return mm.makeInputingMorphemes(graphemes);
-    }
+    const mm = new KanaUncombiningMorphemeMaker(new KanaCombiningMetaplasm());
+    return mm.makeInputingMorphemes(graphemes);
+  }
 }

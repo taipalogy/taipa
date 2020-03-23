@@ -196,7 +196,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect to adnominal form. E will be inflected to ez.
+   * Inflect to adnominal form.
    * @param adjectivalNoun main word
    * @param e e, ew, or ez
    */
@@ -207,7 +207,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect to conjunctive form. Lew and lez will be inflected to le.
+   * Inflect to conjunctive form.
    * @param verb main word
    * @param le le, lew, or lez
    */

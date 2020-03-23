@@ -17,6 +17,7 @@ import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
 export class PhrasalVerbPhraseme extends Phraseme {
+  /** Verb + particle */
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
 
@@ -31,57 +32,50 @@ export class PhrasalVerbPhraseme extends Phraseme {
     this.forms = metaplasm.apply(verb, particle);
   }
 
+  /** Get proceeding forms or participle forms */
   getForms() {
     return this.forms;
   }
 }
 
 export class PhrasalVerbVppPhraseme extends Phraseme {
+  /** Verb + particle + particle */
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
 
   constructor(
-    lxVerb: TonalInflectionLexeme,
-    lxParticle: TonalInflectionLexeme,
-    lxParticleTwo: TonalInflectionLexeme,
+    verb: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme,
+    particleTwo: TonalInflectionLexeme,
     metaplasm: TonalPhrasalInflectionMetaplasm
   ) {
     super();
-    this.phrase = new TonalPhrase([
-      lxVerb.word,
-      lxParticle.word,
-      lxParticleTwo.word
-    ]);
+    this.phrase = new TonalPhrase([verb.word, particle.word, particleTwo.word]);
 
-    this.forms = metaplasm.applyVpp(lxVerb, lxParticle, lxParticleTwo);
+    this.forms = metaplasm.applyVpp(verb, particle, particleTwo);
   }
 
+  /** Get proceeding forms, participle forms, or transitive form */
   getForms() {
     return this.forms;
   }
 }
 
 export class TonalCompoundPhraseme extends Phraseme {
-  // separable phrasal verb. separate compound verb. separable verb.
-  // separable phrasal verbs are transitive when main verb and its particles are separated
-  // tiappwsux gifchongwguy. tiappwsux gifsiannzguy
-  // adverb + verb. verb + adverb
+  /** Preceding word is inflected while following word is not. */
   phrase: TonalPhrase;
+  /** Separable phrasal verb. Separate compound verb. Separable verb. Tiappwsux gifchongwguy. Tiappwsux gifsiannzguy. Adverb + verb. Verb + preposition. */
   constructor(
-    lexemePreceding: TonalInflectionLexeme,
-    lexemeFollowing: TonalInflectionLexeme
+    preceding: TonalInflectionLexeme,
+    following: TonalInflectionLexeme
   ) {
     super();
-    this.phrase = new TonalPhrase([
-      lexemePreceding.getForms()[0],
-      lexemeFollowing.word
-    ]);
+    this.phrase = new TonalPhrase([preceding.getForms()[0], following.word]);
   }
 }
 
 export class TonalMainParticlePhraseme extends Phraseme {
-  // main word and its particle
-  // e-adjective. conjunctive form. possesive
+  /** Main word and its particle. E-adjective. Conjunctive form. Possesive case. */
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
 
