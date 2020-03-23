@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { TonalInflector } from '../src/dparser/inflector';
+import { TonalInflector, TonalInflectorOther } from '../src/dparser/inflector';
 import { createTonalInflectionLexeme } from '../src/dparser/creator';
 import { FourthToFirstCombining } from '../src/dparser/metaplasm';
 
@@ -354,6 +354,86 @@ describe('Inflection testing', () => {
   });
 });
 
+describe('Tonal testing, inflection', () => {
+  const infl = new TonalInflectorOther();
+
+  const wrd1 = 'siauzbiett';
+
+  const lx1 = infl.inflectEighthToFirst(wrd1);
+
+  test('check the base form', () => {
+    expect(lx1.word.literal).toEqual(wrd1);
+  });
+
+  test('check the inflected form', () => {
+    expect(lx1.getForms()[0].literal).toEqual('siauzbietf');
+  });
+
+  const wrd2 = 'urhh';
+
+  const lx2 = infl.inflectEighthToSecond(wrd2);
+
+  test('check the base form', () => {
+    expect(lx2.word.literal).toEqual(wrd2);
+  });
+
+  test('check the inflected form', () => {
+    expect(lx2.getForms()[0].literal).toEqual('urhy');
+  });
+});
+
+describe('Inflection testing, empty inputs', () => {
+  const infl = new TonalInflectorOther();
+
+  const inputEmpty: any = '';
+
+  const lx1 = infl.inflectEighthToFirst(inputEmpty);
+
+  test('check the word literal', () => {
+    expect(lx1.word.literal).toEqual('');
+  });
+
+  test('check the number of forms', () => {
+    expect(lx1.getForms().length).toEqual(0);
+  });
+
+  const lx2 = infl.inflectEighthToSecond(inputEmpty);
+
+  test('check the word literal', () => {
+    expect(lx2.word.literal).toEqual('');
+  });
+
+  test('check the number of forms', () => {
+    expect(lx2.getForms().length).toEqual(0);
+  });
+});
+
+describe('Inflection testing, undefined inputs', () => {
+  const infl = new TonalInflectorOther();
+
+  const inputUnd: any = undefined;
+
+  const lx1 = infl.inflectEighthToFirst(inputUnd);
+
+  test('check the word literal', () => {
+    expect(lx1.word.literal).toEqual('');
+  });
+
+  test('check the number of forms', () => {
+    expect(lx1.getForms().length).toEqual(0);
+  });
+
+  const lx2 = infl.inflectEighthToSecond(inputUnd);
+
+  test('check the word literal', () => {
+    expect(lx2.word.literal).toEqual('');
+  });
+
+  test('check the number of forms', () => {
+    expect(lx2.getForms().length).toEqual(0);
+  });
+});
+
 describe('Inflection testing, empty inputs', () => {
   const infl = new TonalInflector();
 
@@ -430,7 +510,7 @@ describe('Inflection testing, empty inputs', () => {
   });
 });
 
-describe('Inflection testing, empty inputs', () => {
+describe('Inflection testing, undefined inputs', () => {
   const infl = new TonalInflector();
 
   const inputUnd: any = undefined;

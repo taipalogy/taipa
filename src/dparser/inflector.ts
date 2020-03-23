@@ -6,7 +6,9 @@ import {
   PhrasalVerbParticleCombining,
   ConjunctiveLeCombining,
   PossesiveExCombining,
-  FirstSeventhCombining
+  FirstSeventhCombining,
+  EighthToSecondCombining,
+  EighthToFirstCombining
 } from './metaplasm';
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
@@ -32,14 +34,21 @@ export class TonalInflector {
     return lx;
   }
 
-  /** Inflect lez and lew to le. */
+  /**
+   * Inflect e to ez.
+   * @param word e, ew, or ez
+   */
   inflectEncliticE(word: string) {
     const ms = this.tia.morphAnalyze(word, new EncliticECombining());
     const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
     return lx;
   }
 
-  /** Inflect 4th tone to 1st tone or 3rd tone accordingly. Inflect laih to laiz. */
+  /**
+   * Inflect 4th tone to 1st tone or 3rd tone accordingly. Inflect laih to laiz.
+   * @param word particle
+   * @param tone f, w, or z
+   */
   inflectPhrasalVerbParticle(word: string, tone: TonalLetterTags) {
     const ms = this.tia.morphAnalyze(
       word,
@@ -49,14 +58,20 @@ export class TonalInflector {
     return lx;
   }
 
-  /** Inflect ez and ew to e. */
+  /**
+   * Inflect lez and lew to le.
+   * @param word lew, lez, or le
+   */
   inflectEncliticLe(word: string) {
     const ms = this.tia.morphAnalyze(word, new ConjunctiveLeCombining());
     const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
     return lx;
   }
 
-  /** inflect ex to ew. */
+  /**
+   * Inflect ex to ew.
+   * @param word ex
+   */
   inflectPossesiveEx(word: string) {
     const ms = this.tia.morphAnalyze(word, new PossesiveExCombining());
     const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -66,17 +81,41 @@ export class TonalInflector {
   /**
    * Inflect 4th tone to either 1st free tone or 7th free tone.
    * @param word 4th checked tone
-   * @param tone 1st or 7th
+   * @param tone f or z
    */
   inflectTo(word: string, tone: TonalLetterTags) {
     const ms = this.tia.morphAnalyze(word, new FirstSeventhCombining(tone));
     const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
     return lx;
   }
-
-  // TODO: EighthToSecondCombining and EighthToFirstCombining
 }
 
+/** Given an 8th tone, inflect it accordingly and create a `TonalInflectionLexeme`. */
+export class TonalInflectorOther {
+  private readonly tia = new TonalInflectionAnalyzer();
+
+  /**
+   * Inflect 8th tone to 1st tone
+   * @param word 8th checked tone
+   */
+  inflectEighthToFirst(word: string) {
+    const ms = this.tia.morphAnalyze(word, new EighthToFirstCombining());
+    const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
+    return lx;
+  }
+
+  /**
+   * Inflect 8th tone to 2nd tone
+   * @param word 8th neutral tone
+   */
+  inflectEighthToSecond(word: string) {
+    const ms = this.tia.morphAnalyze(word, new EighthToSecondCombining());
+    const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
+    return lx;
+  }
+}
+
+/** Given a phrase, inflect it accordingly and create a phraseme. */
 export class TonalPhrasalInflector {
   private readonly infl = new TonalInflector();
   private readonly phm = new TonalInflectionPhrasemeMaker();

@@ -28,4 +28,4 @@ export class TonalInserter {
   }
 }
 
-// TODO: other insertion function?
+// TODO: other insertion functions?
