@@ -327,7 +327,7 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
 
 //------------------------------------------------------------------------------
 
-export class NthCombining extends TonalCombiningMetaplasm {
+export class FirstSeventhCombining extends TonalCombiningMetaplasm {
   constructor(private tone: TonalLetterTags) {
     super();
   }
@@ -345,6 +345,15 @@ export class NthCombining extends TonalCombiningMetaplasm {
         s.pushLetter(
           new AlphabeticLetter(
             lowerLettersTonal.get(TonalLetterTags.z).characters
+          )
+        );
+      } else if (
+        this.tone === TonalLetterTags.zero &&
+        sounds[sounds.length - 1].toString() === TonalLetterTags.t
+      ) {
+        s.pushLetter(
+          new AlphabeticLetter(
+            lowerLettersTonal.get(TonalLetterTags.f).characters
           )
         );
       }
@@ -500,22 +509,16 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
 //------------------------------------------------------------------------------
 
 export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
-  apply(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme
-  ) {
-    if (lexemeVerb.word.literal === '' || lexemeParticle.word.literal === '')
-      return [];
-    if (lexemeParticle.getForms().length > 0) {
-      const forms = lexemeParticle.getForms();
+  apply(verb: TonalInflectionLexeme, particle: TonalInflectionLexeme) {
+    if (verb.word.literal === '' || particle.word.literal === '') return [];
+    if (particle.getForms().length > 0) {
+      const forms = particle.getForms();
       const ret: TonalPhrase[] = [];
-      forms.map(it =>
-        ret.push(new TonalPhrase([lexemeVerb.getForms()[0], it]))
-      );
+      forms.map(it => ret.push(new TonalPhrase([verb.getForms()[0], it])));
       return ret;
-    } else if (lexemeVerb.getForms().length > 0) {
+    } else if (verb.getForms().length > 0) {
       // equivalent to compound in terms of phrasal verb
-      return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeParticle.word])];
+      return [new TonalPhrase([verb.getForms()[0], particle.word])];
     } else {
       return [new TonalPhrase([])];
     }
@@ -537,13 +540,35 @@ export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
     )
       return [];
 
-    if (particle.getForms().length > 0 || particleTwo.getForms.length > 0) {
+    if (particle.getForms().length > 0 || particleTwo.getForms().length > 0) {
       return [
         new TonalPhrase([
           verb.getForms()[0],
           particle.getForms()[0],
           particleTwo.getForms()[0]
         ])
+      ];
+    }
+    return [new TonalPhrase([])];
+  }
+}
+
+export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
+  applyVpp(
+    verb: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme,
+    particleTwo: TonalInflectionLexeme
+  ) {
+    if (
+      verb.word.literal === '' ||
+      particle.word.literal === '' ||
+      particleTwo.word.literal === ''
+    )
+      return [];
+
+    if (verb.getForms().length > 0) {
+      return [
+        new TonalPhrase([verb.getForms()[0], particle.word, particleTwo.word])
       ];
     }
     return [new TonalPhrase([])];
@@ -581,8 +606,17 @@ export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
       particleTwo.word.literal === ''
     )
       return [];
-    if (particle.getForms().length > 0) {
+    if (particle.getForms().length > 0 && particleTwo.getForms().length > 0) {
       const ret: TonalPhrase[] = [];
+      if (verb.getForms().length > 0) {
+        ret.push(
+          new TonalPhrase([
+            verb.getForms()[0],
+            particle.getForms()[0],
+            particleTwo.getForms()[0]
+          ])
+        );
+      }
       return ret;
     }
     return [new TonalPhrase([])];

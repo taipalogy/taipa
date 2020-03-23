@@ -10,7 +10,8 @@ import {
   Conjunctive,
   ConjugateVppToProceeding,
   ConjugateToParticiple,
-  ConjugateVppToParticiple
+  ConjugateVppToParticiple,
+  ConjugateVppToTransitive
 } from './metaplasm';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
@@ -34,53 +35,25 @@ export class PhrasalVerbPhraseme extends Phraseme {
     return this.forms;
   }
 }
-/*
+
 export class PhrasalVerbVppPhraseme extends Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
 
   constructor(
-    verb: TonalInflectionLexeme,
-    particles: TonalInflectionLexeme[],
+    lxVerb: TonalInflectionLexeme,
+    lxParticle: TonalInflectionLexeme,
+    lxParticleTwo: TonalInflectionLexeme,
     metaplasm: TonalPhrasalInflectionMetaplasm
   ) {
     super();
     this.phrase = new TonalPhrase([
-      verb.word,
-      particles[0].word,
-      particles[1].word
+      lxVerb.word,
+      lxParticle.word,
+      lxParticleTwo.word
     ]);
 
-    this.forms = metaplasm.apply(verb, particles[0], particles[1]);
-  }
-
-  getForms() {
-    return this.forms;
-  }
-}
-*/
-export class PhrasalVerbVppPhraseme extends Phraseme {
-  phrase: TonalPhrase;
-  private forms: Array<TonalPhrase> = new Array();
-
-  constructor(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme,
-    lexemeParticleTwo: TonalInflectionLexeme,
-    metaplasm: TonalPhrasalInflectionMetaplasm
-  ) {
-    super();
-    this.phrase = new TonalPhrase([
-      lexemeVerb.word,
-      lexemeParticle.word,
-      lexemeParticleTwo.word
-    ]);
-
-    this.forms = metaplasm.applyVpp(
-      lexemeVerb,
-      lexemeParticle,
-      lexemeParticleTwo
-    );
+    this.forms = metaplasm.applyVpp(lxVerb, lxParticle, lxParticleTwo);
   }
 
   getForms() {
@@ -192,7 +165,7 @@ export class TonalInflectionPhrasemeMaker {
     );
   }
 
-  makePhrasalVerbTwoPhraseme(
+  makePhrasalVerbVppPhraseme(
     lexemeVerb: TonalInflectionLexeme,
     lexemeParticle: TonalInflectionLexeme,
     lexemeParticleTwo: TonalInflectionLexeme
@@ -202,6 +175,19 @@ export class TonalInflectionPhrasemeMaker {
       lexemeParticle,
       lexemeParticleTwo,
       new ConjugateVppToProceeding()
+    );
+  }
+
+  makeTransitiveVppPhraseme(
+    lexemeVerb: TonalInflectionLexeme,
+    lexemeParticle: TonalInflectionLexeme,
+    lexemeParticleTwo: TonalInflectionLexeme
+  ) {
+    return new PhrasalVerbVppPhraseme(
+      lexemeVerb,
+      lexemeParticle,
+      lexemeParticleTwo,
+      new ConjugateVppToTransitive()
     );
   }
 

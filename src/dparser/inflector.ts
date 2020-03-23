@@ -6,7 +6,7 @@ import {
   PhrasalVerbParticleCombining,
   ConjunctiveLeCombining,
   PossesiveExCombining,
-  NthCombining
+  FirstSeventhCombining
 } from './metaplasm';
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
@@ -69,7 +69,7 @@ export class TonalInflector {
    * @param tone 1st or 7th
    */
   inflectTo(word: string, tone: TonalLetterTags) {
-    const ms = this.tia.morphAnalyze(word, new NthCombining(tone));
+    const ms = this.tia.morphAnalyze(word, new FirstSeventhCombining(tone));
     const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
     return lx;
   }
@@ -81,53 +81,79 @@ export class TonalPhrasalInflector {
   private readonly infl = new TonalInflector();
   private readonly phm = new TonalInflectionPhrasemeMaker();
 
-  /** Inflect a phrasal verb to proceeding form. */
-  inflectToProceeding(verb: string, particle: string, particleTwo?: string) {
-    const lexemeVerb = this.infl.inflectDesinence(verb);
+  /**
+   * Inflect a verb-particle phrase to proceeding form.
+   * @param verb main word
+   * @param particle particle
+   */
+  inflectToProceeding(verb: string, particle: string) {
+    const lxVerb = this.infl.inflectDesinence(verb);
     let lxParticle: TonalInflectionLexeme = createTonalInflectionLexeme('');
-    let lxParticleTwo: TonalInflectionLexeme | undefined;
-    if (particleTwo) {
-      if (particle === 'cut' && particleTwo === 'kih') {
-        lxParticle = this.infl.inflectPhrasalVerbParticle(
-          particle,
-          TonalLetterTags.f
-        );
-        lxParticleTwo = this.infl.inflectPhrasalVerbParticle(
-          particleTwo,
-          TonalLetterTags.f
-        );
-      } else if (particle === 'kih' && particleTwo === 'laih') {
-        lxParticle = this.infl.inflectPhrasalVerbParticle(
-          particle,
-          TonalLetterTags.f
-        );
-        lxParticleTwo = this.infl.inflectPhrasalVerbParticle(
-          particleTwo,
-          TonalLetterTags.z
-        );
-      }
-    } else {
-      if (particle === 'kih') {
-        lxParticle = this.infl.inflectPhrasalVerbParticle(
-          particle,
-          TonalLetterTags.f
-        );
-      } else {
-        lxParticle = this.infl.inflectPhrasalVerbParticle(
-          particle,
-          TonalLetterTags.w
-        );
-      }
-    }
-    if (lxParticleTwo) {
-      return this.phm.makePhrasalVerbTwoPhraseme(
-        lexemeVerb,
-        lxParticle,
-        lxParticleTwo
+    if (particle === 'kih') {
+      lxParticle = this.infl.inflectPhrasalVerbParticle(
+        particle,
+        TonalLetterTags.f
       );
     } else {
-      return this.phm.makePhrasalVerbPhraseme(lexemeVerb, lxParticle);
+      lxParticle = this.infl.inflectPhrasalVerbParticle(
+        particle,
+        TonalLetterTags.w
+      );
     }
+    return this.phm.makePhrasalVerbPhraseme(lxVerb, lxParticle);
+  }
+
+  /**
+   * Inflect a verb-particle-particle phrase to proceeding form.
+   * @param verb main word
+   * @param particle particle one
+   * @param particleTwo particle two
+   */
+  inflectVppToProceeding(verb: string, particle: string, particleTwo: string) {
+    const lxVerb = this.infl.inflectDesinence(verb);
+    let lxParticle: TonalInflectionLexeme = createTonalInflectionLexeme('');
+    let lxParticleTwo: TonalInflectionLexeme = createTonalInflectionLexeme('');
+    if (particle === 'cut' && particleTwo === 'kih') {
+      lxParticle = this.infl.inflectPhrasalVerbParticle(
+        particle,
+        TonalLetterTags.f
+      );
+      lxParticleTwo = this.infl.inflectPhrasalVerbParticle(
+        particleTwo,
+        TonalLetterTags.f
+      );
+    } else if (particle === 'kih' && particleTwo === 'laih') {
+      lxParticle = this.infl.inflectPhrasalVerbParticle(
+        particle,
+        TonalLetterTags.f
+      );
+      lxParticleTwo = this.infl.inflectPhrasalVerbParticle(
+        particleTwo,
+        TonalLetterTags.z
+      );
+    }
+    return this.phm.makePhrasalVerbVppPhraseme(
+      lxVerb,
+      lxParticle,
+      lxParticleTwo
+    );
+  }
+
+  /**
+   * Inflect a verb-particle-particle phrase to transitive form.
+   * @param verb main word
+   * @param particle particle one
+   * @param particleTwo particle two
+   */
+  inflectVppToTransitive(verb: string, particle: string, particleTwo: string) {
+    const lxVerb = this.infl.inflectDesinence(verb);
+    const lxParticle = this.infl.inflectDesinence(particle);
+    const lxParticleTwo = this.infl.inflectDesinence(particleTwo);
+    return this.phm.makeTransitiveVppPhraseme(
+      lxVerb,
+      lxParticle,
+      lxParticleTwo
+    );
   }
 
   /**
@@ -152,14 +178,23 @@ export class TonalPhrasalInflector {
     return this.phm.makeConjunctivePhraseme(lexemeVerb, lexemeLe);
   }
 
-  /** Inflect possesive case from teriminal form to adnominal form. */
+  /**
+   * Inflect possesive case from teriminal form to adnominal form.
+   * @param noun main word
+   * @param ex ex
+   */
   inflectPossesive(noun: string, ex: string) {
     const lexemeNoun = createTonalInflectionLexeme(noun);
     const lexemeEx = this.infl.inflectPossesiveEx(ex);
     return this.phm.makePossesivePhraseme(lexemeNoun, lexemeEx);
   }
 
-  /** Inflect a verb-particle phrase to participle form. */
+  /**
+   * Inflect a verb-particle phrase to participle form.
+   * @param verb main word
+   * @param particle particle
+   * @param tone 1st tone or 7th tone
+   * */
   inflectToParticiple(verb: string, particle: string, tone: TonalLetterTags) {
     const lexemeVerb = this.infl.inflectTo(verb, tone);
     const lexemeParticle = this.infl.inflectTo(particle, tone);
