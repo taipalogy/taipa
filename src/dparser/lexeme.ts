@@ -108,11 +108,13 @@ export class TonalAssimilationLexeme implements Lexeme {
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
 
+  /** Get assimilated forms for this lexeme. */
   getForms() {
     // for internal samdhi
     return this.forms;
   }
 
+  /** Get sound-changing morphemes for external sandhi. */
   getMorphemes() {
     // when external sandhi is required, member variable morphemes has to be exposed
     return this.morphemes;

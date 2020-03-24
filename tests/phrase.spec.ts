@@ -103,7 +103,7 @@ describe('Phrasal verb testing, transitive', () => {
 describe('Verb phrase testing, conjunctive', () => {
   const infl = new TonalPhrasalInflector();
 
-  const p = infl.inflectToConjunctive('chez', 'lez');
+  const p = infl.inflectLeToConjunctive('chez', 'lez');
 
   test('check the proceeding form', () => {
     expect(p.getForms()[0].literal).toEqual('chew le');
@@ -318,7 +318,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph5.getForms().length).toEqual(0);
   });
 
-  const ph6 = infl.inflectToConjunctive(inputEmpty, inputEmpty);
+  const ph6 = infl.inflectLeToConjunctive(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph6.phrase.literal).toEqual('');
@@ -415,7 +415,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph5.getForms().length).toEqual(0);
   });
 
-  const ph6 = infl.inflectToConjunctive(inputUnd, inputUnd);
+  const ph6 = infl.inflectLeToConjunctive(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph6.phrase.literal).toEqual('');

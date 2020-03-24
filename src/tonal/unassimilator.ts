@@ -1,3 +1,3 @@
 class Unassimilator {
-    unassimilate(str: string) {}
+  unassimilate(str: string) {}
 }

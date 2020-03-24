@@ -4,7 +4,7 @@ import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
 import { Epenthesis } from './metaplasm';
 
-/** Insert initial m, n, or ng to morpheme ay if the preceding morpheme has final m, n, or ng. */
+/** Insert an initial m, n, or ng to morpheme ay if the preceding morpheme has a final m, n, or ng. */
 export class TonalInserter {
   private readonly tschmm = new TonalSoundChangingMorphemeMaker();
   private readonly gm = new GraphemeMaker(lowerLettersTonal);

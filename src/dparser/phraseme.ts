@@ -75,30 +75,34 @@ export class TonalCompoundPhraseme extends Phraseme {
 }
 
 export class TonalMainParticlePhraseme extends Phraseme {
-  /** Main word and its particle. E-adjective. Conjunctive form. Possesive case. */
+  /** Main word and its particle. */
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
 
+  /** E-adjective. Le form. Terminal form of possesive case. */
   constructor(
-    lexemeAdjectivalNoun: TonalInflectionLexeme,
-    lexemeE: TonalInflectionLexeme,
+    main: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme,
     metaplasm: TonalPhrasalInflectionMetaplasm
   ) {
     super();
-    this.phrase = new TonalPhrase([lexemeAdjectivalNoun.word, lexemeE.word]);
+    this.phrase = new TonalPhrase([main.word, particle.word]);
 
-    this.forms = metaplasm.apply(lexemeAdjectivalNoun, lexemeE);
+    this.forms = metaplasm.apply(main, particle);
   }
 
+  /** Adnominal form. Conjunctive form. */
   getForms() {
     return this.forms;
   }
 }
 
 export class SerialPhraseme extends Phraseme {
+  /** A series of words that are inflected except for the last one. */
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
 
+  /** A series of lexemes. */
   constructor(lexemes: TonalInflectionLexeme[]) {
     super();
     // the base form is equivalent to a compound when there are only 2 words
@@ -123,6 +127,7 @@ export class SerialPhraseme extends Phraseme {
     else this.forms = [];
   }
 
+  /** A series of inflected words. */
   getForms() {
     return this.forms;
   }
@@ -133,15 +138,16 @@ export class TonalAssimilationPhraseme implements Phraseme {
   private forms: Array<TonalPhrase> = new Array();
 
   constructor(
-    lexemePreceding: TonalAssimilationLexeme,
-    lexemeFollowing: TonalAssimilationLexeme,
+    preceding: TonalAssimilationLexeme,
+    following: TonalAssimilationLexeme,
     metaplasm: TonalPhrasalAssimilationMetaplasm
   ) {
-    this.phrase = new TonalPhrase([lexemePreceding.word, lexemeFollowing.word]);
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
 
-    this.forms = metaplasm.apply(lexemePreceding, lexemeFollowing);
+    this.forms = metaplasm.apply(preceding, following);
   }
 
+  /** Assimilated forms. */
   getForms() {
     return this.forms;
   }

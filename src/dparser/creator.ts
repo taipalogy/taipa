@@ -5,7 +5,7 @@ import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalZeroCombining, TonalCombiningMetaplasm } from '../morpheme';
 import { TonalDesinenceInflection } from './metaplasm';
 
-/** Create a taiwanese lexeme given a `TonalCombiningMetaplasm`. If metaplasm is not provided, `TonalZeroCombining` is defaulted. Excessive tokens are ignored. */
+/** Create a lexeme given a `TonalCombiningMetaplasm`. If metaplasm is not provided, `TonalZeroCombining` is defaulted. Excessive tokens are ignored. */
 export function createTonalInflectionLexeme(
   str: string,
   metaplasm?: TonalCombiningMetaplasm

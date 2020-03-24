@@ -16,7 +16,7 @@ import { createTonalInflectionLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
 
-/** Given a word, inflect it accordingly and create a `TonalInflectionLexeme`. */
+/** Inflect a word accordingly and create a `TonalInflectionLexeme`. */
 export class TonalInflector {
   private readonly tia = new TonalInflectionAnalyzer();
 
@@ -90,7 +90,7 @@ export class TonalInflector {
   }
 }
 
-/** Given an 8th tone, inflect it accordingly and create a `TonalInflectionLexeme`. */
+/** Inflect an 8th tone accordingly and create a `TonalInflectionLexeme`. */
 export class TonalInflectorOther {
   private readonly tia = new TonalInflectionAnalyzer();
 
@@ -115,7 +115,7 @@ export class TonalInflectorOther {
   }
 }
 
-/** Given a phrase, inflect it accordingly and create a phraseme. */
+/** Inflect a phrase accordingly and create a phraseme. */
 export class TonalPhrasalInflector {
   private readonly infl = new TonalInflector();
   private readonly phm = new TonalInflectionPhrasemeMaker();
@@ -211,7 +211,7 @@ export class TonalPhrasalInflector {
    * @param verb main word
    * @param le le, lew, or lez
    */
-  inflectToConjunctive(verb: string, le: string) {
+  inflectLeToConjunctive(verb: string, le: string) {
     const lexemeVerb = this.infl.inflectDesinence(verb);
     const lexemeLe = this.infl.inflectEncliticLe(le);
     return this.phm.makeConjunctivePhraseme(lexemeVerb, lexemeLe);
@@ -229,7 +229,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect a verb-particle phrase to participle form.
+   * Inflect a phrasal verb of length 2 to participle form.
    * @param verb main word
    * @param particle particle
    * @param tone 1st tone or 7th tone
@@ -241,7 +241,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect a verb-particle-particle phrase to participle form.
+   * Inflect a phrasal verb of length 3 to participle form.
    * @param verb main word
    * @param particle particle one
    * @param particleTwo particle two

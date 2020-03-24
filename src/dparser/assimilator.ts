@@ -1,58 +1,78 @@
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { GraphemeMaker } from '../grapheme';
 import { lowerLettersTonal } from '../tonal/version2';
-import { TonalZeroInflection } from '../tonal/metaplasm';
+import { TonalZeroAssimilation } from '../tonal/metaplasm';
 import { TonalAssimilationLexeme } from './lexeme';
 import { TonalAssimilationPhrasemeMaker } from './phraseme';
-import { AgressiveInternal, RegressiveInternal, RegressiveExternal, AgressiveExternal } from './metaplasm';
+import {
+  AgressiveInternal,
+  RegressiveInternal,
+  RegressiveExternal,
+  AgressiveExternal
+} from './metaplasm';
 
+/** Assimilation inside a word. */
 export class TonalAssimilator {
-    private readonly tschmm = new TonalSoundChangingMorphemeMaker();
-    private readonly gm = new GraphemeMaker(lowerLettersTonal);
+  private readonly tschmm = new TonalSoundChangingMorphemeMaker();
+  private readonly gm = new GraphemeMaker(lowerLettersTonal);
 
-    private morphAnalyze(str: string) {
-        const gs = this.gm.makeGraphemes(str);
-        const mrphs = this.tschmm.makeMorphemes(gs);
-        return mrphs;
-    }
+  private morphAnalyze(str: string) {
+    const gs = this.gm.makeGraphemes(str);
+    const mrphs = this.tschmm.makeMorphemes(gs);
+    return mrphs;
+  }
 
-    getLexeme(word: string) {
-        const mrphs = this.morphAnalyze(word);
-        const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroInflection());
+  /** Create a `TonalAssimilationLexeme` with no assimilation. */
+  getLexeme(word: string) {
+    const mrphs = this.morphAnalyze(word);
+    const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroAssimilation());
 
-        return lx;
-    }
+    return lx;
+  }
 
-    assimilateAgressive(word: string) {
-        const mrphs = this.morphAnalyze(word);
-        const lx = new TonalAssimilationLexeme(mrphs, new AgressiveInternal());
+  /** Agressive assimilation inside a word. Create a `TonalAssimilationLexeme`. */
+  assimilateAgressive(word: string) {
+    const mrphs = this.morphAnalyze(word);
+    const lx = new TonalAssimilationLexeme(mrphs, new AgressiveInternal());
 
-        return lx;
-    }
+    return lx;
+  }
 
-    assimilateRegressive(word: string) {
-        const mrphs = this.morphAnalyze(word);
-        const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
+  /** Regressive assimilation inside a word. Create a `TonalAssimilationLexeme`. */
+  assimilateRegressive(word: string) {
+    const mrphs = this.morphAnalyze(word);
+    const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
 
-        return lx;
-    }
+    return lx;
+  }
 }
 
+/** Assimilation between 2 words. */
 export class TonalPhrasalAssimilator {
-    private readonly assimi = new TonalAssimilator();
-    private readonly phmk = new TonalAssimilationPhrasemeMaker();
+  private readonly assimi = new TonalAssimilator();
+  private readonly phmk = new TonalAssimilationPhrasemeMaker();
 
-    assimilateAgressive(preceding: string, following: string) {
-        const lxPreceding = this.assimi.getLexeme(preceding);
-        const lxFollowing = this.assimi.getLexeme(following);
+  /** Agressive assimilation between 2 words. Create a `TonalAssimilationPhraseme`. */
+  assimilateAgressive(preceding: string, following: string) {
+    const lxPreceding = this.assimi.getLexeme(preceding);
+    const lxFollowing = this.assimi.getLexeme(following);
 
-        return this.phmk.makePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
-    }
+    return this.phmk.makePhraseme(
+      lxPreceding,
+      lxFollowing,
+      new AgressiveExternal()
+    );
+  }
 
-    assimilateRegressive(preceding: string, following: string) {
-        const lxPreceding = this.assimi.getLexeme(preceding);
-        const lxFollowing = this.assimi.getLexeme(following);
+  /** Regressive assimilation between 2 words. Create a `TonalAssimilationPhraseme`. */
+  assimilateRegressive(preceding: string, following: string) {
+    const lxPreceding = this.assimi.getLexeme(preceding);
+    const lxFollowing = this.assimi.getLexeme(following);
 
-        return this.phmk.makePhraseme(lxPreceding, lxFollowing, new RegressiveExternal());
-    }
+    return this.phmk.makePhraseme(
+      lxPreceding,
+      lxFollowing,
+      new RegressiveExternal()
+    );
+  }
 }

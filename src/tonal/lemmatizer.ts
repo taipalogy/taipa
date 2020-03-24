@@ -1,8 +1,8 @@
 import { TonalLemmatizationAnalyzer } from './analyzer';
 
-/** Given a word, lemmatize it and create a `TonalLemmatizationLexeme`. */
+/** Lemmatize a word and create a `TonalLemmatizationLexeme`. */
 export class TonalLemmatizer {
-  /** lemmatize a word */
+  /** Lemmatize a word. */
   lemmatize(word: string) {
     const tia = new TonalLemmatizationAnalyzer();
     const mrphs = tia.morphAnalyze(word);
