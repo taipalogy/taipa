@@ -224,7 +224,8 @@ describe('Phrasal verb testing, participle form', () => {
 
   const p3 = phva.inflectVppToParticiple(
     'vun',
-    ['cut', 'laih'],
+    'cut',
+    'laih',
     TonalLetterTags.zero
   );
 
@@ -238,7 +239,8 @@ describe('Phrasal verb testing, participle form', () => {
 
   const p4 = phva.inflectVppToParticiple(
     'din',
-    ['lurh', 'laih'],
+    'lurh',
+    'laih',
     TonalLetterTags.z
   );
 
@@ -368,7 +370,8 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
 
   const ph11 = infl.inflectVppToParticiple(
     inputEmpty,
-    [inputEmpty],
+    inputEmpty,
+    inputEmpty,
     inputEmpty
   );
 
@@ -462,7 +465,12 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph10.getForms().length).toEqual(0);
   });
 
-  const ph11 = infl.inflectVppToParticiple(inputUnd, [inputUnd], inputUnd);
+  const ph11 = infl.inflectVppToParticiple(
+    inputUnd,
+    inputUnd,
+    inputUnd,
+    inputUnd
+  );
 
   test('check the empty phrase', () => {
     expect(ph11.phrase.literal).toEqual('');

@@ -196,7 +196,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect to adnominal form.
+   * Inflect e form to adnominal form.
    * @param adjectivalNoun main word
    * @param e e, ew, or ez
    */
@@ -207,7 +207,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect to conjunctive form.
+   * Inflect le form to conjunctive form.
    * @param verb main word
    * @param le le, lew, or lez
    */
@@ -241,23 +241,26 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * inflect a verb-particle-particle phrase to participle form.
+   * Inflect a verb-particle-particle phrase to participle form.
    * @param verb main word
-   * @param particles particle one and particle two
+   * @param particle particle one
+   * @param particleTwo particle two
    * @param tone 1st tone or 7th tone
    */
   inflectVppToParticiple(
     verb: string,
-    particles: string[],
+    particle: string,
+    particleTwo: string,
     tone: TonalLetterTags
   ) {
     const lxVerb = this.infl.inflectTo(verb, tone);
-    const lxParticle = this.infl.inflectTo(particles[0], tone);
-    const lxParticleTwo = this.infl.inflectTo(particles[1], tone);
-    return this.phm.makeVppParticiplePhraseme(lxVerb, [
+    const lxParticle = this.infl.inflectTo(particle, tone);
+    const lxParticleTwo = this.infl.inflectTo(particleTwo, tone);
+    return this.phm.makeVppParticiplePhraseme(
+      lxVerb,
       lxParticle,
       lxParticleTwo
-    ]);
+    );
   }
 
   /** Inflect a series of words. The forms of the last word indicates the whole phrase is in proceeding form or not. */

@@ -234,12 +234,13 @@ export class TonalInflectionPhrasemeMaker {
 
   makeVppParticiplePhraseme(
     verb: TonalInflectionLexeme,
-    particles: TonalInflectionLexeme[]
+    particle: TonalInflectionLexeme,
+    particleTwo: TonalInflectionLexeme
   ) {
     return new PhrasalVerbVppPhraseme(
       verb,
-      particles[0],
-      particles[1],
+      particle,
+      particleTwo,
       new ConjugateVppToParticiple()
     );
   }

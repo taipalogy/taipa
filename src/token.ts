@@ -50,7 +50,7 @@ export class TokenLemmaLookup {
         continue; // defective
       }
       if (
-        doc.tokens[i].tag === Tagset.auxn ||
+        doc.tokens[i].tag === Tagset.psub ||
         doc.tokens[i].tag === Tagset.aux
       ) {
         doc.tokens[i].lemma = doc.tokens[i].text;
@@ -95,7 +95,7 @@ export class TokenLemmaLookup {
       if (doc.tokens[i].tag === Tagset.vb) {
         if (
           i + 1 < doc.tokens.length &&
-          doc.tokens[i + 1].tag === Tagset.auxn
+          doc.tokens[i + 1].tag === Tagset.psub
         ) {
           doc.tokens[i].lemma = doc.tokens[i].text; // copy the base form
           continue;

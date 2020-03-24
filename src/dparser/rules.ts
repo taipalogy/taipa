@@ -55,7 +55,7 @@ export class PhrasalVerbWithEnclitic extends VerbPhrase {
     this.elements.push(verb);
     particle.tag = Tagset.ppv;
     this.elements.push(particle);
-    enclitic.tag = Tagset.auxn;
+    enclitic.tag = Tagset.psub;
     this.elements.push(enclitic);
   }
 }
@@ -65,7 +65,7 @@ export class VerbWithEnclitic extends VerbPhrase {
     super();
     verb.tag = Tagset.vb;
     this.elements.push(verb);
-    enclitic.tag = Tagset.auxn;
+    enclitic.tag = Tagset.psub;
     this.elements.push(enclitic);
   }
 }
