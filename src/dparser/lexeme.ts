@@ -18,8 +18,7 @@ import { Sound } from '../grapheme';
 import { TonalInflectionMetaplasm } from '../tonal/metaplasm';
 import { AssimiDirection } from './metaplasm';
 
-//------------------------------------------------------------------------------
-
+/** A word and its inflected forms. */
 export class TonalInflectionLexeme extends Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
@@ -92,8 +91,7 @@ export class TonalInflectionLexeme extends Lexeme {
   }
 }
 
-//------------------------------------------------------------------------------
-
+/** A word and its assimilated forms. */
 export class TonalAssimilationLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
@@ -171,6 +169,7 @@ export class TonalAssimilationLexeme implements Lexeme {
   }
 }
 
+/** A word and its inserted forms. */
 export class TonalInsertionLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
@@ -190,8 +189,6 @@ export class TonalInsertionLexeme implements Lexeme {
     return this.forms;
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class TonalInflectionLexemeMaker extends LexemeMaker {
   constructor(private metaplasm: TonalInflectionMetaplasm) {

@@ -16,6 +16,7 @@ import {
 import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
+/** A phrase and its inflected forms. */
 export class PhrasalVerbPhraseme extends Phraseme {
   /** Verb + particle */
   phrase: TonalPhrase;
@@ -38,6 +39,7 @@ export class PhrasalVerbPhraseme extends Phraseme {
   }
 }
 
+/** A phrase and its inflected forms. */
 export class PhrasalVerbVppPhraseme extends Phraseme {
   /** Verb + particle + particle */
   phrase: TonalPhrase;
@@ -61,6 +63,7 @@ export class PhrasalVerbVppPhraseme extends Phraseme {
   }
 }
 
+/** A compound. */
 export class TonalCompoundPhraseme extends Phraseme {
   /** Preceding word is inflected while following word is not. */
   phrase: TonalPhrase;
@@ -74,6 +77,7 @@ export class TonalCompoundPhraseme extends Phraseme {
   }
 }
 
+/** A phrase and its inflected forms. */
 export class TonalMainParticlePhraseme extends Phraseme {
   /** Main word and its particle. */
   phrase: TonalPhrase;
@@ -97,6 +101,7 @@ export class TonalMainParticlePhraseme extends Phraseme {
   }
 }
 
+/** A phrase and its inflected forms. */
 export class SerialPhraseme extends Phraseme {
   /** A series of words that are inflected except for the last one. */
   phrase: TonalPhrase;
@@ -133,6 +138,7 @@ export class SerialPhraseme extends Phraseme {
   }
 }
 
+/** A phrase and its assimilated forms. */
 export class TonalAssimilationPhraseme implements Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
