@@ -498,7 +498,7 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
   }
 }
 
-/** Return the proceeding forms of a verb-particle phrase. */
+/** Return the proceeding forms of a phrasal verb of length 2. */
 export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   apply(
     verb: TonalInflectionLexeme,
@@ -519,7 +519,7 @@ export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-/** Return the proceeding forms of a verb-particle-particle phrase. */
+/** Return the proceeding forms of a phrasal verb of length 3. */
 export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
     verb: TonalInflectionLexeme,
@@ -546,7 +546,7 @@ export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-/** Return the transitive forms of a verb-particle-particle phrase. */
+/** Return the transitive forms of a phrasal verb of length 3. */
 export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
     verb: TonalInflectionLexeme,
@@ -569,7 +569,7 @@ export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-/** Return the proceeding forms of a verb-particle phrase. */
+/** Return the proceeding forms of a phrasal verb of length 2. */
 export class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
   apply(
     verb: TonalInflectionLexeme,
@@ -590,7 +590,7 @@ export class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-/** Return the participle forms of a verb-particle-particle phrase. */
+/** Return the participle forms of a phrasal verb of length 3. */
 export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
     verb: TonalInflectionLexeme,

@@ -67,7 +67,7 @@ export class PhrasalVerbVppPhraseme extends Phraseme {
 export class TonalCompoundPhraseme extends Phraseme {
   /** Preceding word is inflected while following word is not. */
   phrase: TonalPhrase;
-  /** Separable phrasal verb. Separate compound verb. Separable verb. Tiappwsux gifchongwguy. Tiappwsux gifsiannzguy. Adverb + verb. Verb + preposition. */
+  /** Separable phrasal verb. Separate compound verb. Separable verb. Tiappwsux gifchongwguy. Tiappwsux gifsiannzguy. Adverb + verb. Prepositional verb. */
   constructor(
     preceding: TonalInflectionLexeme,
     following: TonalInflectionLexeme

@@ -121,7 +121,7 @@ export class TonalPhrasalInflector {
   private readonly phm = new TonalInflectionPhrasemeMaker();
 
   /**
-   * Inflect a verb-particle phrase to proceeding form.
+   * Inflect a phrasal verb of length 2 to proceeding form.
    * @param verb main word
    * @param particle particle
    */
@@ -143,7 +143,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect a verb-particle-particle phrase to proceeding form.
+   * Inflect a phrasal verb of length 3 to proceeding form.
    * @param verb main word
    * @param particle particle one
    * @param particleTwo particle two
@@ -179,7 +179,7 @@ export class TonalPhrasalInflector {
   }
 
   /**
-   * Inflect a verb-particle-particle phrase to transitive form.
+   * Inflect a phrasal verb of length 3 to transitive form.
    * @param verb main word
    * @param particle particle one
    * @param particleTwo particle two
