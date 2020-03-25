@@ -41,8 +41,8 @@ import {
 } from './matcher';
 import { epentheticSounds, tonalsWx } from './collections';
 import {
-  TonalReduplication,
-  CombiningAy,
+  TonalTripleConstruction,
+  UncombiningAy,
   TonalUncombiningForms
 } from './metaplasm';
 
@@ -402,6 +402,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
+  // TODO: isReduplicated2x
   private isReduplicated3x(matches: MatchedPattern[]) {
     if (matches.length == 3) {
       const stms = matches
@@ -633,11 +634,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
       if (this.isCombiningAy(matched)) {
         // ~fa, ~xa, fay, or ~xay
-        morphemes.push(this.createMorpheme(ptn, new CombiningAy()));
+        morphemes.push(this.createMorpheme(ptn, new UncombiningAy()));
       } else if (this.isReduplicated3x(matched)) {
-        // reduplicate by 3
+        // triple construction
         morphemes.push(
-          this.createMorpheme(ptn, new TonalReduplication(matched[2].pattern))
+          this.createMorpheme(
+            ptn,
+            new TonalTripleConstruction(matched[2].pattern)
+          )
         );
       } else {
         morphemes.push(this.createMorpheme(ptn, new TonalUncombiningForms()));

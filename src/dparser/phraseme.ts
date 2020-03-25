@@ -161,87 +161,71 @@ export class TonalAssimilationPhraseme implements Phraseme {
 
 export class TonalInflectionPhrasemeMaker {
   makePhrasalVerbPhraseme(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme
+    verb: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme
   ) {
-    return new PhrasalVerbPhraseme(
-      lexemeVerb,
-      lexemeParticle,
-      new ConjugateToProceeding()
-    );
+    return new PhrasalVerbPhraseme(verb, particle, new ConjugateToProceeding());
   }
 
   makePhrasalVerbVppPhraseme(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme,
-    lexemeParticleTwo: TonalInflectionLexeme
+    verb: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme,
+    particleTwo: TonalInflectionLexeme
   ) {
     return new PhrasalVerbVppPhraseme(
-      lexemeVerb,
-      lexemeParticle,
-      lexemeParticleTwo,
+      verb,
+      particle,
+      particleTwo,
       new ConjugateVppToProceeding()
     );
   }
 
   makeTransitiveVppPhraseme(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme,
-    lexemeParticleTwo: TonalInflectionLexeme
+    verb: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme,
+    particleTwo: TonalInflectionLexeme
   ) {
     return new PhrasalVerbVppPhraseme(
-      lexemeVerb,
-      lexemeParticle,
-      lexemeParticleTwo,
+      verb,
+      particle,
+      particleTwo,
       new ConjugateVppToTransitive()
     );
   }
 
   makeCompoundPhraseme(
-    lexemePreceding: TonalInflectionLexeme,
-    lexemeFollowing: TonalInflectionLexeme
+    preceding: TonalInflectionLexeme,
+    following: TonalInflectionLexeme
   ) {
-    return new TonalCompoundPhraseme(lexemePreceding, lexemeFollowing);
+    return new TonalCompoundPhraseme(preceding, following);
   }
 
   makeAdjectivePhraseme(
-    lexemeAdjectivalNoun: TonalInflectionLexeme,
-    lexemeE: TonalInflectionLexeme
+    adjectivalNoun: TonalInflectionLexeme,
+    e: TonalInflectionLexeme
   ) {
-    return new TonalMainParticlePhraseme(
-      lexemeAdjectivalNoun,
-      lexemeE,
-      new Adnominal()
-    );
+    return new TonalMainParticlePhraseme(adjectivalNoun, e, new Adnominal());
   }
 
   makeConjunctivePhraseme(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeLe: TonalInflectionLexeme
+    verb: TonalInflectionLexeme,
+    le: TonalInflectionLexeme
   ) {
-    return new TonalMainParticlePhraseme(
-      lexemeVerb,
-      lexemeLe,
-      new Conjunctive()
-    );
+    return new TonalMainParticlePhraseme(verb, le, new Conjunctive());
   }
 
   makePossesivePhraseme(
-    lexemeNoun: TonalInflectionLexeme,
-    lexemeEx: TonalInflectionLexeme
+    noun: TonalInflectionLexeme,
+    ex: TonalInflectionLexeme
   ) {
-    return new TonalMainParticlePhraseme(lexemeNoun, lexemeEx, new Adnominal());
+    return new TonalMainParticlePhraseme(noun, ex, new Adnominal());
   }
 
   makeParticiplePhraseme(
-    lexemeVerb: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme
+    verb: TonalInflectionLexeme,
+    particle: TonalInflectionLexeme
   ) {
-    return new PhrasalVerbPhraseme(
-      lexemeVerb,
-      lexemeParticle,
-      new ConjugateToParticiple()
-    );
+    return new PhrasalVerbPhraseme(verb, particle, new ConjugateToParticiple());
   }
 
   makeVppParticiplePhraseme(
@@ -264,14 +248,10 @@ export class TonalInflectionPhrasemeMaker {
 
 export class TonalAssimilationPhrasemeMaker {
   makePhraseme(
-    lexemePreceding: TonalAssimilationLexeme,
-    lexemeFollowing: TonalAssimilationLexeme,
+    preceding: TonalAssimilationLexeme,
+    following: TonalAssimilationLexeme,
     metaplasm: TonalPhrasalAssimilationMetaplasm
   ) {
-    return new TonalAssimilationPhraseme(
-      lexemePreceding,
-      lexemeFollowing,
-      metaplasm
-    );
+    return new TonalAssimilationPhraseme(preceding, following, metaplasm);
   }
 }

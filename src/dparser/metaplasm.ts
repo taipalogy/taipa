@@ -38,7 +38,7 @@ export enum AssimiDirection {
   regressive = 1
 }
 
-/** Combining forms of a syllable. */
+/** Return the combining forms of a syllable. */
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -93,6 +93,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
   }
 }
 
+/** Change to 3rd tone and return it. */
 export class ThirdCombiningForm extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -125,6 +126,7 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
   }
 }
 
+/** Change 4th tone to 1st tone and return it. */
 export class FourthToFirstCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph && allomorph instanceof AllomorphH) {
@@ -142,6 +144,7 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
   }
 }
 
+/** Change 8th tone to 1st tone and return it. */
 export class EighthToFirstCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph && allomorph instanceof CheckedAllomorph) {
@@ -166,6 +169,7 @@ export class EighthToFirstCombining extends TonalCombiningMetaplasm {
   }
 }
 
+/** Change 8th tone to 2nd tone and return it. */
 export class EighthToSecondCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph && allomorph instanceof CheckedAllomorph) {
@@ -190,7 +194,8 @@ export class EighthToSecondCombining extends TonalCombiningMetaplasm {
   }
 }
 
-export class EncliticECombining extends TonalCombiningMetaplasm {
+/** Return the combining forms of enclitic e. */
+export class AdnominalECombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     // 1->7, 7->7, 3->3
     if (allomorph) {
@@ -214,6 +219,7 @@ export class EncliticECombining extends TonalCombiningMetaplasm {
   }
 }
 
+/** Get the combining forms of a phrasal verb particle. */
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
   constructor(private tone: TonalLetterTags) {
     super();
@@ -269,6 +275,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
   }
 }
 
+/** Return the combining forms of enclitic le. */
 export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -289,6 +296,7 @@ export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
   }
 }
 
+/** Return the combining forms of possesive case marker ex. */
 export class PossesiveExCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -307,6 +315,7 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
   }
 }
 
+/** Change 4th tone to either 1st or 7th tone and return it. */
 export class FirstSeventhCombining extends TonalCombiningMetaplasm {
   constructor(private tone: TonalLetterTags) {
     super();
@@ -343,7 +352,7 @@ export class FirstSeventhCombining extends TonalCombiningMetaplasm {
   }
 }
 
-/** Inflection of inflectional suffixes. */
+/** Inflect an inflectional suffix and return the inflected forms. */
 export class TonalDesinenceInflection extends TonalInflectionMetaplasm {
   apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
     if (ms.length > 0 && ms[ms.length - 1]) {
@@ -366,6 +375,7 @@ export class TonalDesinenceInflection extends TonalInflectionMetaplasm {
   }
 }
 
+/** Inflect a transfix and return the inflected forms. */
 export class TransfixInflection extends TonalInflectionMetaplasm {
   apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
     const rets = [];
@@ -385,6 +395,7 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
   }
 }
 
+/** Regressive assimilation inside a word. Return the assimilated forms. */
 export class RegressiveInternal extends TonalAssimilationMetaplasm {
   apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     let tw = new TonalWord(ms.map(x => new TonalSyllable(x.syllable.letters)));
@@ -417,6 +428,7 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
   }
 }
 
+/** Agressive assimilation inside a word. Return the assimilated forms. */
 export class AgressiveInternal extends TonalAssimilationMetaplasm {
   apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     if (ms.length > 1 && ms[ms.length - 2]) {
@@ -450,6 +462,7 @@ export class AgressiveInternal extends TonalAssimilationMetaplasm {
   }
 }
 
+/** Insert an initial m, n, or ng to syllable ay and return the inserted forms. */
 export class Epenthesis extends TonalAssimilationMetaplasm {
   // adding of nasal consonants. insertion
   apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
@@ -477,6 +490,7 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
   }
 }
 
+/** Return the proceeding forms of a verb-particle phrase. */
 export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   apply(verb: TonalInflectionLexeme, particle: TonalInflectionLexeme) {
     if (verb.word.literal === '' || particle.word.literal === '') return [];
@@ -494,6 +508,7 @@ export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
+/** Return the proceeding forms of a verb-particle-particle phrase. */
 export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
     verb: TonalInflectionLexeme,
@@ -520,6 +535,7 @@ export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
+/** Return the transitive forms of a verb-particle-particle phrase. */
 export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
     verb: TonalInflectionLexeme,
@@ -542,6 +558,7 @@ export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
+/** Return the proceeding forms of a verb-particle phrase. */
 export class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
   apply(verb: TonalInflectionLexeme, particle: TonalInflectionLexeme) {
     if (verb.word.literal === '' || particle.word.literal === '') return [];
@@ -559,6 +576,7 @@ export class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
+/** Return the participle forms of a verb-particle-particle phrase. */
 export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
     verb: TonalInflectionLexeme,
@@ -588,63 +606,57 @@ export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
+/** Return the adnominal forms of a possesive or e-adjective. */
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
-  apply(
-    lexemeNoun: TonalInflectionLexeme,
-    lexemeParticle: TonalInflectionLexeme
-  ) {
-    if (lexemeNoun.word.literal === '' || lexemeParticle.word.literal === '')
-      return [];
-    if (lexemeParticle.getForms().length > 0) {
-      return [new TonalPhrase([lexemeNoun.word, lexemeParticle.getForms()[0]])];
+  apply(noun: TonalInflectionLexeme, particle: TonalInflectionLexeme) {
+    if (noun.word.literal === '' || particle.word.literal === '') return [];
+    if (particle.getForms().length > 0) {
+      return [new TonalPhrase([noun.word, particle.getForms()[0]])];
     } else {
       return [new TonalPhrase([])];
     }
   }
 }
 
+/** Return the conjunctive forms of le form. */
 export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
-  apply(lexemeVerb: TonalInflectionLexeme, lexemeLe: TonalInflectionLexeme) {
-    if (lexemeVerb.word.literal === '' || lexemeLe.word.literal === '')
-      return [];
-    if (lexemeLe.getForms().length > 0) {
-      return [
-        new TonalPhrase([lexemeVerb.getForms()[0], lexemeLe.getForms()[0]])
-      ];
-    } else if (lexemeVerb.getForms().length > 0) {
-      return [new TonalPhrase([lexemeVerb.getForms()[0], lexemeLe.word])];
+  apply(verb: TonalInflectionLexeme, le: TonalInflectionLexeme) {
+    if (verb.word.literal === '' || le.word.literal === '') return [];
+    if (le.getForms().length > 0) {
+      return [new TonalPhrase([verb.getForms()[0], le.getForms()[0]])];
+    } else if (verb.getForms().length > 0) {
+      return [new TonalPhrase([verb.getForms()[0], le.word])];
     } else {
       return [new TonalPhrase([])];
     }
   }
 }
 
+/** Agressive assimilation between 2 words. Return the assimilated forms. */
 export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
   apply(
-    lexemePreceding: TonalAssimilationLexeme,
-    lexemeFollowing: TonalAssimilationLexeme
+    preceding: TonalAssimilationLexeme,
+    following: TonalAssimilationLexeme
   ) {
-    const wrds = lexemeFollowing.assimilateWith(
-      lexemePreceding,
-      AssimiDirection.agressive
-    );
+    const wrds = following.assimilateWith(preceding, AssimiDirection.agressive);
     if (wrds.length > 0)
-      return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
+      return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];
   }
 }
 
+/** Regressive assimilation between 2 words. Return the assimilated forms. */
 export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
   apply(
-    lexemePreceding: TonalAssimilationLexeme,
-    lexemeFollowing: TonalAssimilationLexeme
+    preceding: TonalAssimilationLexeme,
+    following: TonalAssimilationLexeme
   ) {
-    const wrds = lexemePreceding.assimilateWith(
-      lexemeFollowing,
+    const wrds = preceding.assimilateWith(
+      following,
       AssimiDirection.regressive
     );
     if (wrds.length > 0)
-      return [new TonalPhrase([lexemePreceding.word].concat(wrds))];
+      return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];
   }
 }

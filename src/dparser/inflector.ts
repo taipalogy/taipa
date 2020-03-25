@@ -2,7 +2,7 @@ import { TonalInflectionAnalyzer } from './analyzer';
 import {
   TonalCombiningForms,
   ThirdCombiningForm,
-  EncliticECombining,
+  AdnominalECombining,
   PhrasalVerbParticleCombining,
   ConjunctiveLeCombining,
   PossesiveExCombining,
@@ -39,7 +39,7 @@ export class TonalInflector {
    * @param word e, ew, or ez
    */
   inflectEncliticE(word: string) {
-    const ms = this.tia.morphAnalyze(word, new EncliticECombining());
+    const ms = this.tia.morphAnalyze(word, new AdnominalECombining());
     const lx = this.tia.lexAnalyze(ms, new TonalDesinenceInflection());
     return lx;
   }
@@ -201,9 +201,9 @@ export class TonalPhrasalInflector {
    * @param e e, ew, or ez
    */
   inflectEToAdnominal(adjectivalNoun: string, e: string) {
-    const lexemeAdjective = createTonalInflectionLexeme(adjectivalNoun);
-    const lexemeE = this.infl.inflectEncliticE(e);
-    return this.phm.makeAdjectivePhraseme(lexemeAdjective, lexemeE);
+    const lxAdjective = createTonalInflectionLexeme(adjectivalNoun);
+    const lxE = this.infl.inflectEncliticE(e);
+    return this.phm.makeAdjectivePhraseme(lxAdjective, lxE);
   }
 
   /**
@@ -212,9 +212,9 @@ export class TonalPhrasalInflector {
    * @param le le, lew, or lez
    */
   inflectLeToConjunctive(verb: string, le: string) {
-    const lexemeVerb = this.infl.inflectDesinence(verb);
-    const lexemeLe = this.infl.inflectEncliticLe(le);
-    return this.phm.makeConjunctivePhraseme(lexemeVerb, lexemeLe);
+    const lxVerb = this.infl.inflectDesinence(verb);
+    const lxLe = this.infl.inflectEncliticLe(le);
+    return this.phm.makeConjunctivePhraseme(lxVerb, lxLe);
   }
 
   /**
@@ -223,9 +223,9 @@ export class TonalPhrasalInflector {
    * @param ex ex
    */
   inflectPossesive(noun: string, ex: string) {
-    const lexemeNoun = createTonalInflectionLexeme(noun);
-    const lexemeEx = this.infl.inflectPossesiveEx(ex);
-    return this.phm.makePossesivePhraseme(lexemeNoun, lexemeEx);
+    const lxNoun = createTonalInflectionLexeme(noun);
+    const lxEx = this.infl.inflectPossesiveEx(ex);
+    return this.phm.makePossesivePhraseme(lxNoun, lxEx);
   }
 
   /**
@@ -235,9 +235,9 @@ export class TonalPhrasalInflector {
    * @param tone 1st tone or 7th tone
    * */
   inflectToParticiple(verb: string, particle: string, tone: TonalLetterTags) {
-    const lexemeVerb = this.infl.inflectTo(verb, tone);
-    const lexemeParticle = this.infl.inflectTo(particle, tone);
-    return this.phm.makeParticiplePhraseme(lexemeVerb, lexemeParticle);
+    const lxVerb = this.infl.inflectTo(verb, tone);
+    const lxParticle = this.infl.inflectTo(particle, tone);
+    return this.phm.makeParticiplePhraseme(lxVerb, lxParticle);
   }
 
   /**

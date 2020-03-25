@@ -21,8 +21,6 @@ import {
 } from './version2';
 import { Sound, AlphabeticLetter } from '../grapheme';
 
-//------------------------------------------------------------------------------
-
 export class TonalInflectionMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
     return [];
@@ -43,8 +41,7 @@ export class TonalLemmatizationMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
 }
 
-//------------------------------------------------------------------------------
-
+/** Get the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -97,9 +94,8 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
-export class CombiningAy extends TonalCombiningMetaplasm {
+/** Get the uncombining forms of the syllable preceding ay */
+export class UncombiningAy extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
       if (allomorph.tonal.toString() === TonalLetterTags.f) {
@@ -172,15 +168,14 @@ export class CombiningAy extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
-export class TonalReduplication extends TonalCombiningMetaplasm {
+/** Return the last syllable of a triple construction as uncombining forms. */
+export class TonalTripleConstruction extends TonalCombiningMetaplasm {
   constructor(private sounds: Sound[]) {
     super();
   }
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
-      // skip the last syllable. it is the baseform
+      // skip the last syllable. it is the base form
       if (
         this.sounds[this.sounds.length - 1].toString() ===
         sounds[sounds.length - 1].toString()
@@ -195,8 +190,7 @@ export class TonalReduplication extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
+/** Lemmatize a word and get its base forms. */
 export class TonalLemmatization extends TonalLemmatizationMetaplasm {
   apply(
     morphemes: Array<TonalUncombiningMorpheme>,
