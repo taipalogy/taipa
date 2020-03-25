@@ -35,15 +35,20 @@ export class TonalAssimilationMetaplasm extends Metaplasm {
   }
 }
 
-export class TonalZeroAssimilation extends TonalInflectionMetaplasm {}
+export class TonalZeroAssimilation extends TonalAssimilationMetaplasm {}
 
 export class TonalLemmatizationMetaplasm extends Metaplasm {
-  apply(morphemes: Array<Morpheme>, inflectionalEnding: InflectionalEnding) {}
+  apply(
+    morphemes: Array<Morpheme>,
+    inflectionalEnding: InflectionalEnding
+  ): TonalWord[] {
+    return [];
+  }
 }
 
-/** Get the uncombining forms of a syllable. */
+/** Return the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
-  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph instanceof FreeAllomorph) {
         if (allomorph instanceof ZeroAllomorph) {
@@ -94,9 +99,9 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   }
 }
 
-/** Get the uncombining forms of the syllable preceding ay */
+/** Return the uncombining forms of the syllable preceding ay */
 export class UncombiningAy extends TonalCombiningMetaplasm {
-  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph.tonal.toString() === TonalLetterTags.f) {
         if (allomorph instanceof FreeAllomorph) {
@@ -173,7 +178,7 @@ export class TonalTripleConstruction extends TonalCombiningMetaplasm {
   constructor(private sounds: Sound[]) {
     super();
   }
-  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       // skip the last syllable. it is the base form
       if (
@@ -190,12 +195,12 @@ export class TonalTripleConstruction extends TonalCombiningMetaplasm {
   }
 }
 
-/** Lemmatize a word and get its base forms. */
+/** Lemmatize a word and return its base forms. */
 export class TonalLemmatization extends TonalLemmatizationMetaplasm {
   apply(
     morphemes: Array<TonalUncombiningMorpheme>,
     inflectionalEnding: InflectionalEnding
-  ) {
+  ): TonalWord[] {
     return this.populateLemmata(morphemes, inflectionalEnding);
   }
 

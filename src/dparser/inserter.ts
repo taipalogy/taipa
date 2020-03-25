@@ -21,7 +21,7 @@ export class TonalInserter {
    */
   insertTo(word: string) {
     const mrphs = this.morphAnalyze(word);
-    // TODO: add initial g
+    // TODO: add initial g. b? l?
     const lx = new TonalInsertionLexeme(mrphs, new Epenthesis());
 
     return lx;
