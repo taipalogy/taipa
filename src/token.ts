@@ -7,12 +7,21 @@ import { Sound } from './grapheme';
 import { TonalLemmatizer } from './tonal/lemmatizer';
 
 export class Token {
+  /** The simple part-of-speech tag. */
   pos: string = '';
+  /** The detailed part-of-speech tag. */
   tag: string = '';
+  /** The base form of the word. */
   lemma: string = '';
+  /** Syntactic dependnecy */
   dep: string = '';
+  /** The head of this token */
   head: Token | undefined = undefined;
 
+  /**
+   * Constructor of Token.
+   * @param text the original word text
+   */
   constructor(public text: string) {}
 }
 

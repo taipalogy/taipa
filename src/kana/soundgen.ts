@@ -1,143 +1,143 @@
-import { Sound, SoundGeneration, pipe } from '../grapheme';
+import { Sound, SoundGeneration, pipeSG } from '../grapheme';
 import {
-    InitialConsonantSet,
-    KanaSoundTags,
-    VowelSet,
-    GerminatedConsonantSet,
-    FinalConsonantSet,
-    SemivowelSet,
-    kanaPositionalSound
+  InitialConsonantSet,
+  KanaSoundTags,
+  VowelSet,
+  GerminatedConsonantSet,
+  FinalConsonantSet,
+  SemivowelSet,
+  kanaPositionalSound
 } from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
-    const sics = new InitialConsonantSet();
+  const sics = new InitialConsonantSet();
 
-    if (sics.includes(sg.letters[sg.sounds.length])) {
-        const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if (ps) {
-            const s = ps(KanaSoundTags.initialConsonant);
-            if (s) sg.sounds.push(s);
-        }
-    } else sg.matching = false;
+  if (sics.includes(sg.letters[sg.sounds.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+    if (ps) {
+      const s = ps(KanaSoundTags.initialConsonant);
+      if (s) sg.sounds.push(s);
+    }
+  } else sg.matching = false;
 
-    return sg;
+  return sg;
 }
 
 function semivowel(sg: SoundGeneration) {
-    const ssvs = new SemivowelSet();
+  const ssvs = new SemivowelSet();
 
-    if (ssvs.includes(sg.letters[sg.sounds.length])) {
-        const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if (ps) {
-            const s = ps(KanaSoundTags.semivowel);
-            if (s) sg.sounds.push(s);
-        }
+  if (ssvs.includes(sg.letters[sg.sounds.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+    if (ps) {
+      const s = ps(KanaSoundTags.semivowel);
+      if (s) sg.sounds.push(s);
     }
+  }
 
-    return sg;
+  return sg;
 }
 
 function vowel(sg: SoundGeneration) {
-    const svs = new VowelSet();
+  const svs = new VowelSet();
 
-    if (svs.includes(sg.letters[sg.sounds.length])) {
-        const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if (ps) {
-            const s = ps(KanaSoundTags.vowel);
-            if (s) sg.sounds.push(s);
-        }
+  if (svs.includes(sg.letters[sg.sounds.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+    if (ps) {
+      const s = ps(KanaSoundTags.vowel);
+      if (s) sg.sounds.push(s);
     }
+  }
 
-    return sg;
+  return sg;
 }
 
 function finalConsonant(sg: SoundGeneration) {
-    const sfcs = new FinalConsonantSet();
+  const sfcs = new FinalConsonantSet();
 
-    if (sfcs.includes(sg.letters[sg.sounds.length])) {
-        const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if (ps) {
-            const s = ps(KanaSoundTags.finalConsonant);
-            if (s) sg.sounds.push(s);
-        }
+  if (sfcs.includes(sg.letters[sg.sounds.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+    if (ps) {
+      const s = ps(KanaSoundTags.finalConsonant);
+      if (s) sg.sounds.push(s);
     }
+  }
 
-    return sg;
+  return sg;
 }
 
 function germinatedConsonant(sg: SoundGeneration) {
-    const sgcs = new GerminatedConsonantSet();
+  const sgcs = new GerminatedConsonantSet();
 
-    if (sgcs.includes(sg.letters[sg.sounds.length])) {
-        const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
-        if (ps) {
-            const s = ps(KanaSoundTags.germinatedConsonant);
-            if (s) sg.sounds.push(s);
-        }
+  if (sgcs.includes(sg.letters[sg.sounds.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+    if (ps) {
+      const s = ps(KanaSoundTags.germinatedConsonant);
+      if (s) sg.sounds.push(s);
     }
+  }
 
-    return sg;
+  return sg;
 }
 
-const scV = pipe(vowel);
-const scCV = pipe(initialConsonant, vowel);
-const scCVC = pipe(initialConsonant, vowel, finalConsonant);
-const scCSV = pipe(initialConsonant, semivowel, vowel);
-const scCCV = pipe(germinatedConsonant, initialConsonant, vowel);
+const scV = pipeSG(vowel);
+const scCV = pipeSG(initialConsonant, vowel);
+const scCVC = pipeSG(initialConsonant, vowel, finalConsonant);
+const scCSV = pipeSG(initialConsonant, semivowel, vowel);
+const scCCV = pipeSG(germinatedConsonant, initialConsonant, vowel);
 
 export class KanaSoundGenerator {
-    readonly sylCompositions = [scV, scCV, scCVC, scCSV, scCCV];
+  readonly sylCompositions = [scV, scCV, scCVC, scCSV, scCCV];
 
-    private genSokuonAndGerminated(letters: string[], lookahead: string) {
-        let strs: Array<string[]> = new Array();
+  private genSokuonAndGerminated(letters: string[], lookahead: string) {
+    let strs: Array<string[]> = new Array();
 
-        strs.push(letters);
+    strs.push(letters);
 
-        // consonant germination
-        if (new GerminatedConsonantSet().includes(letters[0]) == true) {
-            let syl: string[] = new Array();
-            syl.push(letters[0].charAt(0));
-            for (let e of letters) {
-                syl.push(e);
-            }
-            strs.push(syl);
-        }
-
-        // sokuon
-        let fcs = new FinalConsonantSet();
-        for (let e of fcs.sounds) {
-            let syl: string[] = new Array();
-            Object.assign(syl, letters);
-            syl.push(e.toString());
-            if (e.toString() === lookahead) strs.push(syl);
-        }
-
-        return strs;
+    // consonant germination
+    if (new GerminatedConsonantSet().includes(letters[0]) == true) {
+      let syl: string[] = new Array();
+      syl.push(letters[0].charAt(0));
+      for (let e of letters) {
+        syl.push(e);
+      }
+      strs.push(syl);
     }
 
-    generate(letters: string[], lookahead: string) {
-        let strs: Array<string[]> = new Array();
-        let sequences: Array<Sound[]> = new Array(); // to be returned
-
-        strs = this.genSokuonAndGerminated(letters, lookahead);
-
-        //console.log(strs)
-        for (let i in strs) {
-            // generates all needed sounds to be processed
-
-            for (let j = 0; j < this.sylCompositions.length; j++) {
-                let sg = new SoundGeneration();
-                sg.letters = strs[i];
-                //console.log(`j: ${j}`)
-                sg = this.sylCompositions[j](sg);
-                if (sg.letters.length == sg.sounds.length && sg.matching == true) {
-                    sequences.push(sg.sounds);
-                    break;
-                }
-            }
-        }
-        //console.log(sequences)
-
-        return sequences;
+    // sokuon
+    let fcs = new FinalConsonantSet();
+    for (let e of fcs.sounds) {
+      let syl: string[] = new Array();
+      Object.assign(syl, letters);
+      syl.push(e.toString());
+      if (e.toString() === lookahead) strs.push(syl);
     }
+
+    return strs;
+  }
+
+  generate(letters: string[], lookahead: string) {
+    let strs: Array<string[]> = new Array();
+    let sequences: Array<Sound[]> = new Array(); // to be returned
+
+    strs = this.genSokuonAndGerminated(letters, lookahead);
+
+    //console.log(strs)
+    for (let i in strs) {
+      // generates all needed sounds to be processed
+
+      for (let j = 0; j < this.sylCompositions.length; j++) {
+        let sg = new SoundGeneration();
+        sg.letters = strs[i];
+        //console.log(`j: ${j}`)
+        sg = this.sylCompositions[j](sg);
+        if (sg.letters.length == sg.sounds.length && sg.matching == true) {
+          sequences.push(sg.sounds);
+          break;
+        }
+      }
+    }
+    //console.log(sequences)
+
+    return sequences;
+  }
 }

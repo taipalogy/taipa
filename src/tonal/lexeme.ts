@@ -28,16 +28,15 @@ export class FreeAllomorphicEnding extends AllomorphicEnding {}
 
 export class CheckedAllomorphicEnding extends AllomorphicEnding {}
 
+/** A word made of syllables. */
 export class TonalWord extends Word {
   syllables: Array<TonalSyllable>;
   constructor(syllables: Array<TonalSyllable>) {
     super();
     this.syllables = new Array<TonalSyllable>();
     if (syllables != undefined) {
-      let len = syllables.length;
-      for (let i = 0; i < len; i++) {
-        this.pushSyllable(syllables[i]);
-      }
+      this.syllables = syllables;
+      this.concat();
     }
   }
 

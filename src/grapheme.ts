@@ -1,7 +1,5 @@
 import { Character, characters } from './character';
 
-//------------------------------------------------------------------------------
-
 export abstract class Grapheme {}
 
 export class AlphabeticGrapheme extends Grapheme {
@@ -12,8 +10,6 @@ export class AlphabeticGrapheme extends Grapheme {
     this.letter = letter;
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class Letter {
   literal: string = '';
@@ -228,8 +224,6 @@ export class GraphemeMaker {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class Sound {
   name: string = '';
   // an array of character objects. can be used to make a word object.
@@ -270,17 +264,21 @@ export class SetOfSounds {
   }
 }
 
-//------------------------------------------------------------------------------
-
-export const pipe = (
+export const pipeSG = (
   ...fns: Array<(sg: SoundGeneration) => SoundGeneration>
 ) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
 
+/** Sound generation for syllable compositions. */
 export class SoundGeneration {
+  /** The letters to be matched. */
   letters: string[] = [];
-  sounds = new Array<Sound>();
+  /** Matched sounds accumulator. */
+  sounds: Sound[] = new Array<Sound>();
+  /** Indicator.of syllable matching process. */
   matching: boolean = true;
+  /** Will populate `predictions` when set to true. */
   predictive: boolean = false;
+  /** Predicted sounds */
   predictions: Array<Sound[]> = new Array();
   predictEuphonicFinal: boolean = false;
 }

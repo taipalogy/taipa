@@ -167,7 +167,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       (sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
         initialsForEuphonicT.includes(soundFollowingSyllable.toString()))
     ) {
-      // absolute assimilation
+      // absolute assimilation. euphonic tt and t.
       let s: TonalSyllable = new TonalSyllable(
         sounds.map(x => new AlphabeticLetter(x.characters))
       );
@@ -212,6 +212,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       const tss = this.conditionalVoicedFinal(sounds, soundFollowingSyllable);
       if (tss) return tss;
     }
+
+    // TODO: add euphonic hh and h.
+    // TODO: neutrals. pp -> hh. p -> h.
 
     return [];
   }

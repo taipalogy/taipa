@@ -32,15 +32,13 @@ import {
 import { TonalAssimilationLexeme, TonalInflectionLexeme } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
-//------------------------------------------------------------------------------
-
+/** Direction of assimilation. */
 export enum AssimiDirection {
   agressive = 0,
   regressive = 1
 }
 
-//------------------------------------------------------------------------------
-
+/** Combining forms of a syllable. */
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -95,8 +93,6 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class ThirdCombiningForm extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -129,8 +125,6 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class FourthToFirstCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph && allomorph instanceof AllomorphH) {
@@ -147,8 +141,6 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
     return [];
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class EighthToFirstCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
@@ -174,8 +166,6 @@ export class EighthToFirstCombining extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class EighthToSecondCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph && allomorph instanceof CheckedAllomorph) {
@@ -200,8 +190,6 @@ export class EighthToSecondCombining extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class EncliticECombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     // 1->7, 7->7, 3->3
@@ -225,8 +213,6 @@ export class EncliticECombining extends TonalCombiningMetaplasm {
     return [];
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
   constructor(private tone: TonalLetterTags) {
@@ -283,8 +269,6 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -305,8 +289,6 @@ export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class PossesiveExCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     if (allomorph) {
@@ -324,8 +306,6 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
     return [];
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class FirstSeventhCombining extends TonalCombiningMetaplasm {
   constructor(private tone: TonalLetterTags) {
@@ -363,8 +343,7 @@ export class FirstSeventhCombining extends TonalCombiningMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
+/** Inflection of inflectional suffixes. */
 export class TonalDesinenceInflection extends TonalInflectionMetaplasm {
   apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
     if (ms.length > 0 && ms[ms.length - 1]) {
@@ -387,8 +366,6 @@ export class TonalDesinenceInflection extends TonalInflectionMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class TransfixInflection extends TonalInflectionMetaplasm {
   apply(ms: Array<TonalCombiningMorpheme>): TonalWord[] {
     const rets = [];
@@ -407,8 +384,6 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
     return rets;
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class RegressiveInternal extends TonalAssimilationMetaplasm {
   apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
@@ -441,8 +416,6 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
     return [tw];
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class AgressiveInternal extends TonalAssimilationMetaplasm {
   apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
@@ -477,8 +450,6 @@ export class AgressiveInternal extends TonalAssimilationMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class Epenthesis extends TonalAssimilationMetaplasm {
   // adding of nasal consonants. insertion
   apply(ms: Array<TonalSoundChangingMorpheme>): TonalWord[] {
@@ -506,8 +477,6 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   apply(verb: TonalInflectionLexeme, particle: TonalInflectionLexeme) {
     if (verb.word.literal === '' || particle.word.literal === '') return [];
@@ -524,8 +493,6 @@ export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
     }
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
   applyVpp(
@@ -575,8 +542,6 @@ export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
   apply(verb: TonalInflectionLexeme, particle: TonalInflectionLexeme) {
     if (verb.word.literal === '' || particle.word.literal === '') return [];
@@ -623,8 +588,6 @@ export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class Adnominal extends TonalPhrasalInflectionMetaplasm {
   apply(
     lexemeNoun: TonalInflectionLexeme,
@@ -639,8 +602,6 @@ export class Adnominal extends TonalPhrasalInflectionMetaplasm {
     }
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
   apply(lexemeVerb: TonalInflectionLexeme, lexemeLe: TonalInflectionLexeme) {
@@ -658,8 +619,6 @@ export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-//------------------------------------------------------------------------------
-
 export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
   apply(
     lexemePreceding: TonalAssimilationLexeme,
@@ -674,8 +633,6 @@ export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
     return [];
   }
 }
-
-//------------------------------------------------------------------------------
 
 export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
   apply(
