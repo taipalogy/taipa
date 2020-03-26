@@ -34,9 +34,9 @@ export class TokenAnalysis {
   inflectionalEnding: string = '';
   /** Sound sequences. */
   soundSequences: Array<Sound[]> = new Array();
-  /** Block sequences. */
+  /** Syllabic block or syllabary letter sequences. */
   blockSequences: string[] = [];
-  /** Uncombining-form sequences. */
+  /** Uncombining form sequences. */
   uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
 }
 

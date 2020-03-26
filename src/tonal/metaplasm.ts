@@ -173,7 +173,7 @@ export class UncombiningAy extends TonalCombiningMetaplasm {
   }
 }
 
-/** Return the last syllable of a triple construction as uncombining forms. */
+/** Return the last syllable of a double or triple construction as a uncombining form. */
 export class TonalReduplication extends TonalCombiningMetaplasm {
   constructor(private sounds: Sound[]) {
     super();
