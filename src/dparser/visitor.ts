@@ -1,16 +1,11 @@
-/** Orthographic element visitor interface. */
-interface Visitor {
-  visitPhraseme(phraseme: OrthoPhraseme, phrase: string): boolean;
-  visitLexeme(lexeme: OrthoLexeme, word: string): boolean;
-  visitWord(keyword: OrthorWord, word: string): boolean;
-}
+import { Visitor, OrthoElement } from '../interface';
 
 /** Concrete visitor. */
 export class VisitorMatching implements Visitor {
   /**
    * Match a form of a phraseme.
-   * @param phraseme Forms of a phrase.
-   * @param words Phrase to be matched.
+   * @param phraseme A container of forms.
+   * @param phrase The phrase to be matched.
    */
   visitPhraseme(phraseme: OrthoPhraseme, phrase: string) {
     if (phrase === phraseme.base) return true;
@@ -32,13 +27,6 @@ export class VisitorMatching implements Visitor {
     if (word === keyword.base) return true;
     return false;
   }
-}
-
-/** Orthographic element interface. */
-interface OrthoElement {
-  base: string;
-
-  accept(visitor: Visitor, arg: any): boolean;
 }
 
 /** Orthographic phraseme. */

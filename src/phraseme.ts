@@ -4,9 +4,7 @@ import {
   TonalAssimilationLexeme
 } from './dparser/lexeme';
 import { TonalPhrase } from './tonal/phraseme';
-import { Metaplasm } from './metaplasm';
-
-// -----------------------------------------------------------------------------
+import { Metaplasm } from './interface';
 
 export class TonalPhrasalInflectionMetaplasm extends Metaplasm {
   apply(
@@ -36,19 +34,13 @@ export class TonalPhrasalAssimilationMetaplasm extends Metaplasm {
   }
 }
 
-// -----------------------------------------------------------------------------
-
 export class ToneGroup {
   inflectionalEndings: Array<InflectionalEnding> = new Array();
 }
 
 class ToneSandhiGroup extends ToneGroup {}
 
-// -----------------------------------------------------------------------------
-
 export abstract class Phraseme {}
-
-// -----------------------------------------------------------------------------
 
 export class Phrase {
   literal: string = '';

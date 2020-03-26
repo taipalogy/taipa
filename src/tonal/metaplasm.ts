@@ -1,4 +1,4 @@
-import { Metaplasm } from '../metaplasm';
+import { Metaplasm } from '../interface';
 import { Morpheme, TonalCombiningMetaplasm } from '../morpheme';
 import {
   TonalWord,

@@ -1,7 +1,7 @@
 import { AlphabeticLetter, Sound } from './grapheme';
 import { Allomorph } from './tonal/version2';
 import { TonalSyllable } from './tonal/morpheme';
-import { Metaplasm } from './metaplasm';
+import { Metaplasm } from './interface';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
