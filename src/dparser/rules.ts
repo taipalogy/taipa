@@ -17,8 +17,11 @@ import {
   dictOfPhrasalVerbTwos
 } from './dictionary';
 
+/** Construction of a phrase. */
 export class ConstructionOfPhrase {
+  /** Part-of-speech of this phrase. */
   pos: string = '';
+  /** Construction elements of this phrase. */
   elements: Array<ConstructionElement> = new Array();
   constructor(arr: Array<ConstructionElement>) {
     for (let key in arr) {

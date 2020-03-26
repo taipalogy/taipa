@@ -54,10 +54,8 @@ export class Syllable {
   constructor(letters: Array<AlphabeticLetter>) {
     this.letters = new Array();
     if (letters) {
-      const len = letters.length;
-      for (let i = 0; i < len; i++) {
-        this.pushLetter(letters[i]);
-      }
+      this.letters = letters;
+      this.concat();
     }
   }
 

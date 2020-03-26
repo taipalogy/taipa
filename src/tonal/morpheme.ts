@@ -41,7 +41,7 @@ import {
 } from './matcher';
 import { epentheticSounds, tonalsWx } from './collections';
 import {
-  TonalTripleConstruction,
+  TonalReduplication,
   UncombiningAy,
   TonalUncombiningForms
 } from './metaplasm';
@@ -402,8 +402,24 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
-  // TODO: isReduplicated2x
-  private isReduplicated3x(matches: MatchedPattern[]) {
+  private isDoublet(matches: MatchedPattern[]) {
+    if (matches.length == 2) {
+      const stms = matches
+        .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
+        .map(seq => seq.map(s => s.toString()).join(''));
+
+      // TODO: add checks for tone group
+      const tnls = matches
+        .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
+        .map(seq => seq.map(s => s.toString()).join(''));
+
+      // compare 2 strings/lexical stems
+      if (stms[0] === stms[1]) return true; // identical
+    }
+    return false;
+  }
+
+  private isTriplet(matches: MatchedPattern[]) {
     if (matches.length == 3) {
       const stms = matches
         .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
@@ -635,13 +651,15 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       if (this.isCombiningAy(matched)) {
         // ~fa, ~xa, fay, or ~xay
         morphemes.push(this.createMorpheme(ptn, new UncombiningAy()));
-      } else if (this.isReduplicated3x(matched)) {
+      } else if (this.isTriplet(matched)) {
         // triple construction
         morphemes.push(
-          this.createMorpheme(
-            ptn,
-            new TonalTripleConstruction(matched[2].pattern)
-          )
+          this.createMorpheme(ptn, new TonalReduplication(matched[2].pattern))
+        );
+      } else if (this.isDoublet(matched)) {
+        // double construction
+        morphemes.push(
+          this.createMorpheme(ptn, new TonalReduplication(matched[1].pattern))
         );
       } else {
         morphemes.push(this.createMorpheme(ptn, new TonalUncombiningForms()));

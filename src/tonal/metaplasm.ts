@@ -174,13 +174,13 @@ export class UncombiningAy extends TonalCombiningMetaplasm {
 }
 
 /** Return the last syllable of a triple construction as uncombining forms. */
-export class TonalTripleConstruction extends TonalCombiningMetaplasm {
+export class TonalReduplication extends TonalCombiningMetaplasm {
   constructor(private sounds: Sound[]) {
     super();
   }
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
-      // skip the last syllable. it is the base form
+      // skip the last syllable. it is the base form of the preceding 2 syllables.
       if (
         this.sounds[this.sounds.length - 1].toString() ===
         sounds[sounds.length - 1].toString()

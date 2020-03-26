@@ -21,17 +21,19 @@ export class AlphabeticLetter extends Letter {
   constructor(characters: Array<Character>) {
     super();
     this.characters = new Array();
-    if (characters && characters.length > 0) {
-      const len = characters.length;
-      for (let i = 0; i < len; i++) {
-        this.pushCharacter(characters[i]);
-      }
+    if (characters) {
+      this.characters = characters;
+      this.concat();
     }
   }
 
   pushCharacter(c: Character) {
     this.characters.push(c);
-    this.literal += c.character;
+    this.concat();
+  }
+
+  protected concat() {
+    this.literal = this.characters.map(x => (x ? x.character : '')).join('');
   }
 }
 

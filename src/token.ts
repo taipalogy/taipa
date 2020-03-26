@@ -26,11 +26,17 @@ export class Token {
 }
 
 export class TokenAnalysis {
+  /** Analyzed token. */
   word: Word = new Word();
+  /** Base forms of the word. */
   lemmas: Array<Word> = new Array();
+  /** Inflectional suffix. Desinence. */
   inflectionalEnding: string = '';
+  /** Sound sequences. */
   soundSequences: Array<Sound[]> = new Array();
+  /** Block sequences. */
   blockSequences: string[] = [];
+  /** Uncombining-form sequences. */
   uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
 }
 
