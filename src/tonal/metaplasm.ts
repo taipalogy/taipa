@@ -20,31 +20,7 @@ import {
   FreeTonalX
 } from './version2';
 import { Sound, AlphabeticLetter } from '../grapheme';
-
-export class TonalInflectionMetaplasm extends Metaplasm {
-  apply(morphemes: Array<Morpheme>): TonalWord[] {
-    return [];
-  }
-}
-
-export class TonalZeroInflection extends TonalInflectionMetaplasm {}
-
-export class TonalAssimilationMetaplasm extends Metaplasm {
-  apply(morphemes: Array<Morpheme>): TonalWord[] {
-    return [];
-  }
-}
-
-export class TonalZeroAssimilation extends TonalAssimilationMetaplasm {}
-
-export class TonalLemmatizationMetaplasm extends Metaplasm {
-  apply(
-    morphemes: Array<Morpheme>,
-    inflectionalEnding: InflectionalEnding
-  ): TonalWord[] {
-    return [];
-  }
-}
+import { TonalLemmatizationMetaplasm } from '../lexeme';
 
 /** Return the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {

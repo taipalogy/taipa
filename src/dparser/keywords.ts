@@ -1,7 +1,7 @@
 import { POSTags } from './symbols';
 import { createTonalInflectionLexeme } from './creator';
 import { TonalCombiningForms } from './metaplasm';
-import { OrthoLexeme, OrthorWord, VisitorMatching } from './visitor';
+import { OrthoLexeme, OrthoWord, VisitorMatching } from './visitor';
 
 /** Construction element. */
 export class ConstructionElement {
@@ -77,7 +77,7 @@ export class AuxiliaryElement extends ConstructionElement {
 }
 
 export class KeyWords {
-  words: Array<[OrthorWord, ConstructionElement]> = new Array();
+  words: Array<[OrthoWord, ConstructionElement]> = new Array();
   lexemes: Array<[OrthoLexeme, ConstructionElement]> = new Array();
 
   constructor() {
@@ -86,8 +86,8 @@ export class KeyWords {
   }
 
   private createWord(orth: string, pos: POSTags) {
-    const w1 = new OrthorWord();
-    w1.base = orth;
+    const w1 = new OrthoWord();
+    w1.form = orth;
     const ce1 = new ConstructionElement();
     ce1.orth = orth;
     ce1.pos = pos;
@@ -101,9 +101,9 @@ export class KeyWords {
 
   private createLexeme(orth: string, pos: POSTags) {
     const lx1 = new OrthoLexeme();
-    lx1.base = orth;
+    lx1.form = orth;
     const ilx1 = createTonalInflectionLexeme(
-      lx1.base,
+      lx1.form,
       new TonalCombiningForms()
     );
     lx1.inflected.push(ilx1.getForms()[0].literal);

@@ -6,7 +6,7 @@ import {
 } from './morpheme';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
-import { TonalInflectionMetaplasm } from '../tonal/metaplasm';
+import { TonalInflectionMetaplasm } from '../lexeme';
 import { TonalCombiningMetaplasm } from '../morpheme';
 import { TonalCombiningForms } from './metaplasm';
 

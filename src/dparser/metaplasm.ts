@@ -22,7 +22,7 @@ import { AlphabeticLetter, Sound } from '../grapheme';
 import {
   TonalInflectionMetaplasm,
   TonalAssimilationMetaplasm
-} from '../tonal/metaplasm';
+} from '../lexeme';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import {

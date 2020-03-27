@@ -3,35 +3,46 @@ import { Visitor, OrthoElement } from '../interface';
 /** Concrete visitor. */
 export class VisitorMatching implements Visitor {
   /**
-   * Match a form of a phraseme.
-   * @param phraseme A container of forms.
+   * Match the phrase to the forms of a phraseme.
+   * @param phraseme A container of phrase forms.
    * @param phrase The phrase to be matched.
    */
   visitPhraseme(phraseme: OrthoPhraseme, phrase: string) {
-    if (phrase === phraseme.base) return true;
+    if (phrase === phraseme.form) return true;
     if (phraseme.inflected.filter(it => it === phrase).length > 0) return true;
     if (phraseme.assimilated.filter(it => it === phrase).length > 0)
       return true;
     return false;
   }
 
+  /**
+   * Match the word to the forms of a lexeme.
+   * @param lexeme A container of word forms.
+   * @param word The word to be matched.
+   */
   visitLexeme(lexeme: OrthoLexeme, word: string) {
     // match a form of a lexeme
-    if (word === lexeme.base) return true;
+    if (word === lexeme.form) return true;
     if (lexeme.inflected.filter(it => it === word).length > 0) return true;
     if (lexeme.assimilated.filter(it => it === word).length > 0) return true;
     return false;
   }
 
-  visitWord(keyword: OrthorWord, word: string) {
-    if (word === keyword.base) return true;
+  /**
+   * Match the word to the form.
+   * @param orth A container of a form.
+   * @param word The word to be matched.
+   */
+  visitWord(orth: OrthoWord, word: string) {
+    if (word === orth.form) return true;
     return false;
   }
 }
 
 /** Orthographic phraseme. */
 export class OrthoPhraseme implements OrthoElement {
-  base: string = '';
+  /** Base form. */
+  form: string = '';
   inflected: string[] = [];
   assimilated: string[] = [];
 
@@ -42,7 +53,8 @@ export class OrthoPhraseme implements OrthoElement {
 
 /** Orthographic lexeme. */
 export class OrthoLexeme implements OrthoElement {
-  base: string = '';
+  /** Base form. */
+  form: string = '';
   inflected: string[] = [];
   assimilated: string[] = [];
 
@@ -52,8 +64,9 @@ export class OrthoLexeme implements OrthoElement {
 }
 
 /** Orthographic word. */
-export class OrthorWord implements OrthoElement {
-  base: string = '';
+export class OrthoWord implements OrthoElement {
+  /** A word form. */
+  form: string = '';
 
   accept(visitor: Visitor, word: string): boolean {
     return visitor.visitWord(this, word);

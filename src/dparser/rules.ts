@@ -87,7 +87,7 @@ export class PhrasalVerbs {
       .map(it => infl.inflectToProceeding(it[0], it[1]))
       .map(it => {
         const ol = new OrthoPhraseme();
-        ol.base = it.phrase.words[0].literal + ' ' + it.phrase.words[1].literal;
+        ol.form = it.phrase.words[0].literal + ' ' + it.phrase.words[1].literal;
         ol.inflected.push(
           it.getForms()[0].words[0].literal +
             ' ' +
@@ -99,7 +99,7 @@ export class PhrasalVerbs {
       .map(it => infl.inflectVppToProceeding(it[0], it[1], it[2]))
       .map(it => {
         const ol = new OrthoPhraseme();
-        ol.base =
+        ol.form =
           it.phrase.words[0].literal +
           ' ' +
           it.phrase.words[1].literal +
@@ -120,7 +120,7 @@ export class PhrasalVerbs {
     // match any form, return the base one
     const v = new VisitorMatching();
     const arr = this.phvbs.filter(it => it.accept(v, sequence));
-    if (arr.length > 0) return arr[0].base;
+    if (arr.length > 0) return arr[0].form;
     return '';
   }
 }
