@@ -16,19 +16,19 @@ import {
   combiningRules,
   finalOfPhrasalVerbParticle
 } from '../tonal/collections';
-import { TonalCombiningMetaplasm } from '../morpheme';
-import { TonalSyllable } from '../tonal/morpheme';
-import { AlphabeticLetter, Sound } from '../grapheme';
 import {
+  TonalCombiningMetaplasm,
   TonalInflectionMetaplasm,
   TonalAssimilationMetaplasm
-} from '../lexeme';
+} from '../metaplasm';
+import { TonalSyllable } from '../tonal/morpheme';
+import { AlphabeticLetter, Sound } from '../grapheme';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import {
   TonalPhrasalAssimilationMetaplasm,
   TonalPhrasalInflectionMetaplasm
-} from '../phraseme';
+} from '../metaplasm';
 import { TonalAssimilationLexeme, TonalInflectionLexeme } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 

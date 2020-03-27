@@ -1,11 +1,4 @@
-import {
-  Syllable,
-  MorphemeMaker,
-  MatchedPattern,
-  TonalCombiningMetaplasm,
-  RemovingEpenthesisOfAy,
-  Morpheme
-} from '../morpheme';
+import { Syllable, MorphemeMaker, MatchedPattern, Morpheme } from '../morpheme';
 import {
   freeAllomorphUncombiningRules,
   checkedAllomorphs,
@@ -45,6 +38,7 @@ import {
   UncombiningAy,
   TonalUncombiningForms
 } from './metaplasm';
+import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
 
 export function syllabifyTonal(
   letters: Array<AlphabeticLetter>,

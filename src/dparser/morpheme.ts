@@ -1,9 +1,4 @@
-import {
-  TonalCombiningMetaplasm,
-  MatchedPattern,
-  MorphemeMaker,
-  Morpheme
-} from '../morpheme';
+import { MatchedPattern, MorphemeMaker, Morpheme } from '../morpheme';
 import { TonalSyllable, syllabifyTonal } from '../tonal/morpheme';
 import {
   Allomorph,
@@ -27,6 +22,7 @@ import {
   nasalInitialSounds
 } from '../tonal/collections';
 import { AssimiDirection } from './metaplasm';
+import { TonalCombiningMetaplasm } from '../metaplasm';
 
 /** A syllable and its combining forms. */
 export class TonalCombiningMorpheme extends Morpheme {

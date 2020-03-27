@@ -6,8 +6,8 @@ import {
 } from './morpheme';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
-import { TonalInflectionMetaplasm } from '../lexeme';
-import { TonalCombiningMetaplasm } from '../morpheme';
+import { TonalInflectionMetaplasm } from '../metaplasm';
+import { TonalCombiningMetaplasm } from '../metaplasm';
 import { TonalCombiningForms } from './metaplasm';
 
 /** Analyze a string into graphemes, morphemes, or lexeme. */

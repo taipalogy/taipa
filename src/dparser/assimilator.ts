@@ -1,7 +1,7 @@
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { GraphemeMaker } from '../grapheme';
 import { lowerLettersTonal } from '../tonal/version2';
-import { TonalZeroAssimilation } from '../lexeme';
+import { TonalZeroAssimilation } from '../metaplasm';
 import { TonalAssimilationLexeme } from './lexeme';
 import { TonalAssimilationPhrasemeMaker } from './phraseme';
 import {

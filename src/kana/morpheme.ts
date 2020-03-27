@@ -1,10 +1,5 @@
 import { AlphabeticGrapheme, Sound } from '../grapheme';
-import {
-  Syllable,
-  MatchedPattern,
-  KanaCombiningMetaplasm,
-  Morpheme
-} from '../morpheme';
+import { Syllable, MatchedPattern, Morpheme } from '../morpheme';
 import { MorphemeMaker } from '../morpheme';
 import {
   InitialConsonantSet,
@@ -16,6 +11,7 @@ import {
 } from './kana';
 import { AlphabeticLetter } from '../grapheme';
 import { KanaSoundGenerator } from './soundgen';
+import { KanaCombiningMetaplasm } from '../metaplasm';
 
 export class KanaSyllable extends Syllable {}
 

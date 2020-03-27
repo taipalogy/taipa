@@ -1,29 +1,5 @@
 import { AlphabeticLetter, Sound } from './grapheme';
-import { Allomorph } from './tonal/version2';
-import { TonalSyllable } from './tonal/morpheme';
-import { Metaplasm } from './interface';
-
-export class TonalCombiningMetaplasm extends Metaplasm {
-  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
-    return [];
-  }
-}
-
-export class TonalZeroCombining extends TonalCombiningMetaplasm {}
-
-export class RemovingEpenthesisOfAy extends TonalCombiningMetaplasm {
-  applyToLetters(letters: Array<string>) {
-    letters.shift();
-    return letters;
-  }
-  applyToString(str: string) {
-    return str.slice(1, 2);
-  }
-}
-
-export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
-
-export class KanaCombiningMetaplasm extends Metaplasm {}
+import { TonalCombiningMetaplasm } from './metaplasm';
 
 export class MatchedPattern {
   letters: Array<AlphabeticLetter> = new Array();

@@ -6,7 +6,7 @@ import {
 import { lowerLettersKana } from './kana';
 import { Analyzer } from '../analyzer';
 import { AlphabeticGrapheme } from '../grapheme';
-import { KanaCombiningMetaplasm } from '../morpheme';
+import { KanaCombiningMetaplasm } from '../metaplasm';
 
 /** Analyze a string into graphemes or morphemes */
 export class KanaLemmatizationAnalyzer extends Analyzer {

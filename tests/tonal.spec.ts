@@ -2,7 +2,7 @@ import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
-import { TonalZeroCombining } from '../src/morpheme';
+import { TonalZeroCombining } from '../src/metaplasm';
 import {
   EighthToSecondCombining,
   EighthToFirstCombining,

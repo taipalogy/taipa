@@ -1,9 +1,5 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
-import {
-  TonalPhrasalInflectionMetaplasm,
-  TonalPhrasalAssimilationMetaplasm,
-  Phraseme
-} from '../phraseme';
+import { Phraseme } from '../phraseme';
 import {
   Adnominal,
   ConjugateToProceeding,
@@ -15,6 +11,10 @@ import {
 } from './metaplasm';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
+import {
+  TonalPhrasalInflectionMetaplasm,
+  TonalPhrasalAssimilationMetaplasm
+} from '../metaplasm';
 
 /** A phrase and its inflected forms. */
 export class PhrasalVerbPhraseme extends Phraseme {

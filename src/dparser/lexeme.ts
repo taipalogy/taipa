@@ -15,7 +15,7 @@ import {
 } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
 import { Sound } from '../grapheme';
-import { TonalInflectionMetaplasm } from '../lexeme';
+import { TonalInflectionMetaplasm } from '../metaplasm';
 import { AssimiDirection } from './metaplasm';
 
 /** A word and its inflected forms. */

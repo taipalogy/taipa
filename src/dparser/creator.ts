@@ -1,8 +1,8 @@
 import { TonalInflectionAnalyzer } from './analyzer';
 import { TonalPhrase } from '../tonal/phraseme';
-import { TonalZeroInflection } from '../lexeme';
+import { TonalZeroInflection } from '../metaplasm';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
-import { TonalZeroCombining, TonalCombiningMetaplasm } from '../morpheme';
+import { TonalZeroCombining, TonalCombiningMetaplasm } from '../metaplasm';
 import { TonalDesinenceInflection } from './metaplasm';
 
 /** Create a lexeme given a `TonalCombiningMetaplasm`. If metaplasm is not provided, `TonalZeroCombining` is defaulted. Excessive tokens are ignored. */

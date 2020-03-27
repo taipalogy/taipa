@@ -1,5 +1,4 @@
-import { Metaplasm } from '../interface';
-import { Morpheme, TonalCombiningMetaplasm } from '../morpheme';
+import { TonalCombiningMetaplasm } from '../metaplasm';
 import {
   TonalWord,
   InflectionalEnding,
@@ -20,7 +19,7 @@ import {
   FreeTonalX
 } from './version2';
 import { Sound, AlphabeticLetter } from '../grapheme';
-import { TonalLemmatizationMetaplasm } from '../lexeme';
+import { TonalLemmatizationMetaplasm } from '../metaplasm';
 
 /** Return the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
