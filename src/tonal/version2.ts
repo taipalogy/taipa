@@ -1,4 +1,4 @@
-import { Letters, Sound, SetOfSounds } from '../grapheme';
+import { Letters, Sound, SetOfSounds } from '../unit';
 
 export class Morph {}
 

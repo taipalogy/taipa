@@ -5,7 +5,7 @@ export { Client } from './client';
 export { TonalLemmatizationAnalyzer } from './tonal/analyzer';
 export { TonalInflectionAnalyzer } from './dparser/analyzer';
 export { KanaLemmatizationAnalyzer } from './kana/analyzer';
-export { GraphemeMaker } from './grapheme';
+export { GraphemeMaker } from './unit';
 export { lexicalRoots } from './tonal/lexicalroots2';
 export {
   lowerLettersTonal,
@@ -23,7 +23,7 @@ export { TonalPhrasalInflector, TonalInflector } from './dparser/inflector';
 export { TonalInserter } from './dparser/inserter';
 
 export { TokenAnalysis } from './token';
-export { AlphabeticGrapheme } from './grapheme';
+export { AlphabeticGrapheme } from './unit';
 export { TonalCombiningMorpheme } from './dparser/morpheme';
 export { TonalUncombiningMorpheme } from './tonal/morpheme';
 export {
@@ -44,7 +44,7 @@ export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord } from './tonal/lexeme';
 export { TonalPhrase } from './tonal/phraseme';
 
-export { Sound, SoundGeneration } from './grapheme';
+export { Sound, SoundGeneration } from './unit';
 
 export {
   TonalDesinenceInflection,

@@ -1,5 +1,5 @@
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
-import { GraphemeMaker } from '../grapheme';
+import { GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalZeroAssimilation } from '../metaplasm';
 import { TonalAssimilationLexeme } from './lexeme';

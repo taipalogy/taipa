@@ -18,7 +18,7 @@ import {
   FreeTonalZ,
   FreeTonalX
 } from './version2';
-import { Sound, AlphabeticLetter } from '../grapheme';
+import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 
 /** Return the uncombining forms of a syllable. */

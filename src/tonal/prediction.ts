@@ -1,5 +1,5 @@
 import { syllableCompositions } from './soundgen';
-import { SoundGeneration, Sound } from '../grapheme';
+import { SoundGeneration, Sound } from '../unit';
 import { isInLexcialRoots } from './lexicalroots2';
 
 /** Prediction of following letters. If the lexical roots are not present, an empty array will be returned. */

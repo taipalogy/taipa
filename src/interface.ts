@@ -1,5 +1,4 @@
-import { Phrase } from './phraseme';
-import { Word } from './lexeme';
+import { Word, Phrase } from './unit';
 import { OrthoPhraseme, OrthoLexeme, OrthoWord } from './dparser/visitor';
 
 export interface OrthographyFactory {

@@ -1,5 +1,5 @@
 import { TonalWord } from './lexeme';
-import { Phrase } from '../phraseme';
+import { Phrase } from '../unit';
 
 /** A phrase made of words. */
 export class TonalPhrase extends Phrase {

@@ -1,6 +1,5 @@
-import { AlphabeticGrapheme, Sound } from '../grapheme';
-import { Syllable, MatchedPattern, Morpheme } from '../morpheme';
-import { MorphemeMaker } from '../morpheme';
+import { AlphabeticGrapheme, Sound, AlphabeticLetter } from '../unit';
+import { Syllable, MatchedPattern, Morpheme, MorphemeMaker } from '../unit';
 import {
   InitialConsonantSet,
   VowelSet,
@@ -9,7 +8,6 @@ import {
   SemivowelSet,
   gailaigo
 } from './kana';
-import { AlphabeticLetter } from '../grapheme';
 import { KanaSoundGenerator } from './soundgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 

@@ -1,5 +1,5 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
-import { Word, LexemeMaker, Lexeme } from '../lexeme';
+import { Word, LexemeMaker, Lexeme } from '../unit';
 import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2';
 import { TonalAffix } from './version2';
 import { TonalLemmatization } from './metaplasm';

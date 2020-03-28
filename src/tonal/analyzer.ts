@@ -3,7 +3,7 @@ import {
   TonalLemmatizationLexemeMaker,
   TonalLemmatizationLexeme
 } from './lexeme';
-import { AlphabeticGrapheme, GraphemeMaker } from '../grapheme';
+import { AlphabeticGrapheme, GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from './version2';
 import {
   TonalUncombiningMorphemeMaker,

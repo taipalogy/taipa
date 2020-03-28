@@ -1,4 +1,4 @@
-import { Sound, SetOfSounds, Letters } from '../grapheme';
+import { Sound, SetOfSounds, Letters } from '../unit';
 
 enum KanaLetterTags {
   a = 'a',

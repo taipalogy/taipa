@@ -1,4 +1,4 @@
-import { LexemeMaker, Lexeme } from '../lexeme';
+import { LexemeMaker, Lexeme } from '../unit';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import {
   TonalWord,
@@ -14,7 +14,7 @@ import {
   TonalLetterTags
 } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
-import { Sound } from '../grapheme';
+import { Sound } from '../unit';
 import { TonalInflectionMetaplasm } from '../metaplasm';
 import { AssimiDirection } from './metaplasm';
 

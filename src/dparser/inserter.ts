@@ -1,4 +1,4 @@
-import { GraphemeMaker } from '../grapheme';
+import { GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';

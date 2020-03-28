@@ -1,4 +1,4 @@
-import { MatchedPattern, MorphemeMaker, Morpheme } from '../morpheme';
+import { MatchedPattern, MorphemeMaker, Morpheme } from '../unit';
 import { TonalSyllable, syllabifyTonal } from '../tonal/morpheme';
 import {
   Allomorph,
@@ -12,7 +12,7 @@ import {
   combinedCheckedAllomorphs,
   MedialSounds
 } from '../tonal/version2';
-import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
+import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
   initialBghl,
   euphonicTtT,

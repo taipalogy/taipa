@@ -1,11 +1,10 @@
-import { GraphemeMaker } from '../grapheme';
+import { GraphemeMaker, AlphabeticGrapheme } from '../unit';
 import {
   KanaUncombiningMorphemeMaker,
   KanaUncombiningMorpheme
 } from './morpheme';
 import { lowerLettersKana } from './kana';
 import { Analyzer } from '../analyzer';
-import { AlphabeticGrapheme } from '../grapheme';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 /** Analyze a string into graphemes or morphemes */

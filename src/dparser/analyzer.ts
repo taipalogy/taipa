@@ -1,4 +1,4 @@
-import { GraphemeMaker, AlphabeticGrapheme } from '../grapheme';
+import { GraphemeMaker, AlphabeticGrapheme } from '../unit';
 import { Analyzer } from '../analyzer';
 import {
   TonalCombiningMorphemeMaker,

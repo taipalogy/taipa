@@ -1,4 +1,4 @@
-import { Syllable, MorphemeMaker, MatchedPattern, Morpheme } from '../morpheme';
+import { Syllable, MorphemeMaker, MatchedPattern, Morpheme } from '../unit';
 import {
   freeAllomorphUncombiningRules,
   checkedAllomorphs,
@@ -16,7 +16,7 @@ import {
   CheckedAllomorph,
   Allomorph
 } from './version2';
-import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../grapheme';
+import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from './soundgen';
 import { isInLexcialRoots } from './lexicalroots2';
 import {

@@ -1,4 +1,4 @@
-import { Sound, SoundGeneration, pipeSG } from '../grapheme';
+import { Sound, SoundGeneration, pipeSG } from '../unit';
 import {
   InitialConsonantSet,
   KanaSoundTags,

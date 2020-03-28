@@ -1,5 +1,5 @@
 import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
-import { Phraseme } from '../phraseme';
+import { Phraseme } from '../unit';
 import {
   Adnominal,
   ConjugateToProceeding,

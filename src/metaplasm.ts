@@ -1,9 +1,8 @@
 import { Metaplasm } from './interface';
 import { TonalSyllable } from './tonal/morpheme';
 import { Allomorph } from './tonal/version2';
-import { Sound } from './grapheme';
+import { Sound, Morpheme } from './unit';
 import { TonalWord, InflectionalEnding } from './tonal/lexeme';
-import { Morpheme } from './morpheme';
 import { TonalPhrase } from './tonal/phraseme';
 import {
   TonalInflectionLexeme,
