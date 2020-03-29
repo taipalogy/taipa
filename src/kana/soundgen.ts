@@ -1,4 +1,4 @@
-import { Sound, SoundGeneration, pipeSG } from '../unit';
+import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
   InitialConsonantSet,
   KanaSoundTags,
@@ -79,11 +79,11 @@ function germinatedConsonant(sg: SoundGeneration) {
   return sg;
 }
 
-const scV = pipeSG(vowel);
-const scCV = pipeSG(initialConsonant, vowel);
-const scCVC = pipeSG(initialConsonant, vowel, finalConsonant);
-const scCSV = pipeSG(initialConsonant, semivowel, vowel);
-const scCCV = pipeSG(germinatedConsonant, initialConsonant, vowel);
+const scV = sgPipe(vowel);
+const scCV = sgPipe(initialConsonant, vowel);
+const scCVC = sgPipe(initialConsonant, vowel, finalConsonant);
+const scCSV = sgPipe(initialConsonant, semivowel, vowel);
+const scCCV = sgPipe(germinatedConsonant, initialConsonant, vowel);
 
 export class KanaSoundGenerator {
   readonly sylCompositions = [scV, scCV, scCVC, scCSV, scCCV];

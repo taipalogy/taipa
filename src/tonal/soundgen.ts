@@ -1,4 +1,4 @@
-import { Sound, SoundGeneration, pipeSG } from '../unit';
+import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
   MaterLectionisSounds,
   MedialSounds,
@@ -226,37 +226,37 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
 }
 
 // common syllables
-const scV = pipeSG(vowel);
-const scM = pipeSG(materLectionis);
-const scVT = pipeSG(vowel, freeTone);
-const scMT = pipeSG(materLectionis, freeTone);
-//const scMC = pipeSG(materLectionis, neutralFinalConsonant);
-const scCV = pipeSG(initialConsonant, vowel);
-const scVC1 = pipeSG(vowel, stopFinalConsonant);
-const scVC2 = pipeSG(vowel, nasalFinalConsonant);
-const scVCT1 = pipeSG(vowel, stopFinalConsonant, checkedTone);
-const scVCT2 = pipeSG(vowel, nasalFinalConsonant, freeTone);
-const scCVT = pipeSG(initialConsonant, vowel, freeTone);
-const scCVC1 = pipeSG(initialConsonant, vowel, stopFinalConsonant);
-const scCVC2 = pipeSG(initialConsonant, vowel, nasalFinalConsonant);
-const scCVCT1 = pipeSG(
+const scV = sgPipe(vowel);
+const scM = sgPipe(materLectionis);
+const scVT = sgPipe(vowel, freeTone);
+const scMT = sgPipe(materLectionis, freeTone);
+//const scMC = sgPipe(materLectionis, neutralFinalConsonant);
+const scCV = sgPipe(initialConsonant, vowel);
+const scVC1 = sgPipe(vowel, stopFinalConsonant);
+const scVC2 = sgPipe(vowel, nasalFinalConsonant);
+const scVCT1 = sgPipe(vowel, stopFinalConsonant, checkedTone);
+const scVCT2 = sgPipe(vowel, nasalFinalConsonant, freeTone);
+const scCVT = sgPipe(initialConsonant, vowel, freeTone);
+const scCVC1 = sgPipe(initialConsonant, vowel, stopFinalConsonant);
+const scCVC2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant);
+const scCVCT1 = sgPipe(
   initialConsonant,
   vowel,
   stopFinalConsonant,
   checkedTone
 );
-const scCVCT2 = pipeSG(initialConsonant, vowel, nasalFinalConsonant, freeTone);
-//const scCVCC = pipeSG(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant);
+const scCVCT2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant, freeTone);
+//const scCVCC = sgPipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant);
 
 // consonant syllables
-const scCC = pipeSG(initialConsonant, nasalFinalConsonant);
-const scCCT = pipeSG(initialConsonant, nasalFinalConsonant, freeTone);
-const scCCC = pipeSG(
+const scCC = sgPipe(initialConsonant, nasalFinalConsonant);
+const scCCT = sgPipe(initialConsonant, nasalFinalConsonant, freeTone);
+const scCCC = sgPipe(
   initialConsonant,
   nasalFinalConsonant,
   neutralFinalConsonant
 );
-const scCCCT = pipeSG(
+const scCCCT = sgPipe(
   initialConsonant,
   nasalFinalConsonant,
   neutralFinalConsonant,
@@ -264,19 +264,19 @@ const scCCCT = pipeSG(
 );
 
 // nasalization syllables
-const scVN = pipeSG(vowel, nasalization);
-const scVNT = pipeSG(vowel, nasalization, freeTone);
-const scCVN = pipeSG(initialConsonant, vowel, nasalization);
-const scCVNT = pipeSG(initialConsonant, vowel, nasalization, freeTone);
-//const scVNC = pipeSG(vowel, nasalization, neutralFinalConsonant);
-//const scVNCT = pipeSG(vowel, nasalization, neutralFinalConsonant, checkedTone);
-const scCVNC = pipeSG(
+const scVN = sgPipe(vowel, nasalization);
+const scVNT = sgPipe(vowel, nasalization, freeTone);
+const scCVN = sgPipe(initialConsonant, vowel, nasalization);
+const scCVNT = sgPipe(initialConsonant, vowel, nasalization, freeTone);
+//const scVNC = sgPipe(vowel, nasalization, neutralFinalConsonant);
+//const scVNCT = sgPipe(vowel, nasalization, neutralFinalConsonant, checkedTone);
+const scCVNC = sgPipe(
   initialConsonant,
   vowel,
   nasalization,
   neutralFinalConsonant
 );
-const scCVNCT = pipeSG(
+const scCVNCT = sgPipe(
   initialConsonant,
   vowel,
   nasalization,
@@ -285,16 +285,16 @@ const scCVNCT = pipeSG(
 );
 
 // euphonic syllables
-const scVC3 = pipeSG(vowel, euphonicFinalConsonant);
-const scVCT3 = pipeSG(vowel, euphonicFinalConsonant, checkedTone);
-const scCVC3 = pipeSG(initialConsonant, vowel, euphonicFinalConsonant);
-const scCVCT3 = pipeSG(
+const scVC3 = sgPipe(vowel, euphonicFinalConsonant);
+const scVCT3 = sgPipe(vowel, euphonicFinalConsonant, checkedTone);
+const scCVC3 = sgPipe(initialConsonant, vowel, euphonicFinalConsonant);
+const scCVCT3 = sgPipe(
   initialConsonant,
   vowel,
   euphonicFinalConsonant,
   checkedTone
 );
-const scCVCCT = pipeSG(
+const scCVCCT = sgPipe(
   initialConsonant,
   vowel,
   nasalFinalConsonant,

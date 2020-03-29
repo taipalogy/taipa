@@ -331,7 +331,7 @@ export class SetOfSounds {
   }
 }
 
-export const pipeSG = (
+export const sgPipe = (
   ...fns: Array<(sg: SoundGeneration) => SoundGeneration>
 ) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
 

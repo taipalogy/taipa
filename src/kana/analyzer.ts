@@ -4,7 +4,7 @@ import {
   KanaUncombiningMorpheme
 } from './morpheme';
 import { lowerLettersKana } from './kana';
-import { Analyzer } from '../analyzer';
+import { Analyzer } from '../interface';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 /** Analyze a string into graphemes or morphemes */

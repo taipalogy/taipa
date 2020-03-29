@@ -1,5 +1,5 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../unit';
-import { Analyzer } from '../analyzer';
+import { Analyzer } from '../interface';
 import {
   TonalCombiningMorphemeMaker,
   TonalCombiningMorpheme

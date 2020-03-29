@@ -1,4 +1,4 @@
-import { Analyzer } from '../analyzer';
+import { Analyzer } from '../interface';
 import {
   TonalLemmatizationLexemeMaker,
   TonalLemmatizationLexeme

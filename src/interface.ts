@@ -21,3 +21,5 @@ export interface OrthoElement {
 }
 
 export abstract class Metaplasm {}
+
+export abstract class Analyzer {}

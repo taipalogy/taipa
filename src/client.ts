@@ -10,7 +10,7 @@ import { KanaLemmatizationAnalyzer } from './kana/analyzer';
 import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
 
-import { Document, pipeDoc } from './document';
+import { Document, docPipe } from './document';
 import { Token, TokenAnalysis } from './token';
 import { TokenLemmaLookup } from './token';
 
@@ -67,7 +67,7 @@ export class Processor {
       // dependency parsing
       const dpsr = new DependencyParser();
 
-      return pipeDoc(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse);
+      return docPipe(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse);
     };
 
     const pipe = function(text: string) {
