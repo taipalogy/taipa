@@ -1,4 +1,14 @@
-import { TonalPhrasalInflector } from '../src/dparser/inflector';
+import {
+  inflectToProceeding,
+  inflectEToAdnominal,
+  inflectVppToProceeding,
+  inflectVppToTransitive,
+  inflectLeToConjunctive,
+  inflectPossesive,
+  inflectSerial,
+  inflectToParticiple,
+  inflectVppToParticiple
+} from '../src/dparser/inflector';
 import { TonalPhrasalAssimilator } from '../src/dparser/assimilator';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalSyllable } from '../src/tonal/morpheme';
@@ -9,9 +19,7 @@ import {
 } from '../src/dparser/creator';
 
 describe('Phrasal verb testing, transitive', () => {
-  const phva = new TonalPhrasalInflector();
-
-  const ph = phva.inflectToProceeding('koannw', 'diurh');
+  const ph = inflectToProceeding('koannw', 'diurh');
 
   test('check the base form', () => {
     expect(ph.phrase.literal).toEqual('koannw diurh');
@@ -31,9 +39,7 @@ describe('Phrasal verb testing, intransitive', () => {
 });
 
 describe('Adjective testing, adnominal', () => {
-  const phva = new TonalPhrasalInflector();
-
-  const ph = phva.inflectEToAdnominal('sin', 'e');
+  const ph = inflectEToAdnominal('sin', 'e');
 
   test('check the proceeding form', () => {
     expect(ph.getForms()[0].literal).toEqual('sin ez');
@@ -50,9 +56,7 @@ describe('Adjective testing, adnominal', () => {
 });
 
 describe('Phrasal verb testing, transitive, adverbial', () => {
-  const infl = new TonalPhrasalInflector();
-
-  const p1 = infl.inflectToProceeding('lipp', 'kih');
+  const p1 = inflectToProceeding('lipp', 'kih');
 
   test('check the base form', () => {
     expect(p1.phrase.literal).toEqual('lipp kih');
@@ -62,7 +66,7 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
     expect(p1.getForms()[0].literal).toEqual('lippw kihf');
   });
 
-  const p2 = infl.inflectVppToProceeding('tehh', 'cut', 'kih');
+  const p2 = inflectVppToProceeding('tehh', 'cut', 'kih');
 
   test('check the base form', () => {
     expect(p2.phrase.literal).toEqual('tehh cut kih');
@@ -79,7 +83,7 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
     expect(s2.literal).toEqual('ki');
   });
 
-  const p3 = infl.inflectVppToProceeding('tehh', 'kih', 'laih');
+  const p3 = inflectVppToProceeding('tehh', 'kih', 'laih');
 
   test('check the base form', () => {
     expect(p3.phrase.literal).toEqual('tehh kih laih');
@@ -91,9 +95,7 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
 });
 
 describe('Phrasal verb testing, transitive', () => {
-  const infl = new TonalPhrasalInflector();
-
-  const p = infl.inflectVppToTransitive('sa', 'kih', 'laih');
+  const p = inflectVppToTransitive('sa', 'kih', 'laih');
 
   test('check the proceeding form', () => {
     expect(p.getForms()[0].literal).toEqual('saz kih laih');
@@ -101,9 +103,7 @@ describe('Phrasal verb testing, transitive', () => {
 });
 
 describe('Verb phrase testing, conjunctive', () => {
-  const infl = new TonalPhrasalInflector();
-
-  const p = infl.inflectLeToConjunctive('chez', 'lez');
+  const p = inflectLeToConjunctive('chez', 'lez');
 
   test('check the proceeding form', () => {
     expect(p.getForms()[0].literal).toEqual('chew le');
@@ -111,9 +111,7 @@ describe('Verb phrase testing, conjunctive', () => {
 });
 
 describe('Noun phrase testing, possesive', () => {
-  const infl = new TonalPhrasalInflector();
-
-  const fr = infl.inflectPossesive('azbengx', 'ex');
+  const fr = inflectPossesive('azbengx', 'ex');
 
   test('check the proceeding form', () => {
     expect(fr.getForms()[0].literal).toEqual('azbengx ew');
@@ -130,9 +128,7 @@ describe('Noun phrase testing, possesive', () => {
 });
 
 describe('Serial words testing', () => {
-  const infl = new TonalPhrasalInflector();
-
-  const fr = infl.inflectSerial('goay', 'siz', 'chittwlex');
+  const fr = inflectSerial('goay', 'siz', 'chittwlex');
 
   test('check the base form', () => {
     expect(fr.phrase.literal).toEqual('goa siw chittwlex');
@@ -200,9 +196,7 @@ describe('Compound testing', () => {
 });
 
 describe('Phrasal verb testing, participle form', () => {
-  const phva = new TonalPhrasalInflector();
-
-  const p1 = phva.inflectToParticiple('toa', 'kih', TonalLetterTags.zero);
+  const p1 = inflectToParticiple('toa', 'kih', TonalLetterTags.zero);
 
   test('check the base form', () => {
     expect(p1.phrase.literal).toEqual('toa kih');
@@ -212,7 +206,7 @@ describe('Phrasal verb testing, participle form', () => {
     expect(p1.getForms()[0].literal).toEqual('toa ki');
   });
 
-  const p2 = phva.inflectToParticiple('toa', 'kih', TonalLetterTags.z);
+  const p2 = inflectToParticiple('toa', 'kih', TonalLetterTags.z);
 
   test('check the base form', () => {
     expect(p2.phrase.literal).toEqual('toa kih');
@@ -222,33 +216,23 @@ describe('Phrasal verb testing, participle form', () => {
     expect(p2.getForms()[0].literal).toEqual('toaz kiz');
   });
 
-  const p3 = phva.inflectVppToParticiple(
-    'vun',
-    'cut',
-    'laih',
-    TonalLetterTags.zero
-  );
+  const p3 = inflectVppToParticiple('vun', 'cut', 'laih', TonalLetterTags.zero);
 
   test('check the base form', () => {
     expect(p3.phrase.literal).toEqual('vun cut laih');
   });
 
-  test('check the participle form', () => {
+  test('check the participle form, present', () => {
     expect(p3.getForms()[0].literal).toEqual('vun cutf lai');
   });
 
-  const p4 = phva.inflectVppToParticiple(
-    'din',
-    'lurh',
-    'laih',
-    TonalLetterTags.z
-  );
+  const p4 = inflectVppToParticiple('din', 'lurh', 'laih', TonalLetterTags.z);
 
   test('check the base form', () => {
     expect(p4.phrase.literal).toEqual('din lurh laih');
   });
 
-  test('check the participle form', () => {
+  test('check the participle form, perfect', () => {
     expect(p4.getForms()[0].literal).toEqual('dinz lurz laiz');
   });
 });
@@ -296,9 +280,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph3.phrase.literal).toEqual('');
   });
 
-  const infl = new TonalPhrasalInflector();
-
-  const ph4 = infl.inflectEToAdnominal(inputEmpty, inputEmpty);
+  const ph4 = inflectEToAdnominal(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph4.phrase.literal).toEqual('');
@@ -308,7 +290,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph4.getForms().length).toEqual(0);
   });
 
-  const ph5 = infl.inflectPossesive(inputEmpty, inputEmpty);
+  const ph5 = inflectPossesive(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph5.phrase.literal).toEqual('');
@@ -318,7 +300,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph5.getForms().length).toEqual(0);
   });
 
-  const ph6 = infl.inflectLeToConjunctive(inputEmpty, inputEmpty);
+  const ph6 = inflectLeToConjunctive(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph6.phrase.literal).toEqual('');
@@ -328,7 +310,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph6.getForms().length).toEqual(0);
   });
 
-  const ph7 = infl.inflectToProceeding(inputEmpty, inputEmpty);
+  const ph7 = inflectToProceeding(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph7.phrase.literal).toEqual('');
@@ -338,7 +320,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph7.getForms().length).toEqual(0);
   });
 
-  const ph8 = infl.inflectToParticiple(inputEmpty, inputEmpty, inputEmpty);
+  const ph8 = inflectToParticiple(inputEmpty, inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph8.phrase.literal).toEqual('');
@@ -348,7 +330,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph8.getForms().length).toEqual(0);
   });
 
-  const ph9 = infl.inflectSerial(inputEmpty, inputEmpty, inputEmpty);
+  const ph9 = inflectSerial(inputEmpty, inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph9.phrase.literal).toEqual('');
@@ -358,7 +340,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph9.getForms().length).toEqual(0);
   });
 
-  const ph10 = infl.inflectVppToTransitive(inputEmpty, inputEmpty, inputEmpty);
+  const ph10 = inflectVppToTransitive(inputEmpty, inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph10.phrase.literal).toEqual('');
@@ -368,7 +350,7 @@ describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {
     expect(ph10.getForms().length).toEqual(0);
   });
 
-  const ph11 = infl.inflectVppToParticiple(
+  const ph11 = inflectVppToParticiple(
     inputEmpty,
     inputEmpty,
     inputEmpty,
@@ -393,9 +375,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph3.phrase.literal).toEqual('');
   });
 
-  const infl = new TonalPhrasalInflector();
-
-  const ph4 = infl.inflectEToAdnominal(inputUnd, inputUnd);
+  const ph4 = inflectEToAdnominal(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph4.phrase.literal).toEqual('');
@@ -405,7 +385,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph4.getForms().length).toEqual(0);
   });
 
-  const ph5 = infl.inflectPossesive(inputUnd, inputUnd);
+  const ph5 = inflectPossesive(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph5.phrase.literal).toEqual('');
@@ -415,7 +395,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph5.getForms().length).toEqual(0);
   });
 
-  const ph6 = infl.inflectLeToConjunctive(inputUnd, inputUnd);
+  const ph6 = inflectLeToConjunctive(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph6.phrase.literal).toEqual('');
@@ -425,7 +405,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph6.getForms().length).toEqual(0);
   });
 
-  const ph7 = infl.inflectToProceeding(inputUnd, inputUnd);
+  const ph7 = inflectToProceeding(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph7.phrase.literal).toEqual('');
@@ -435,7 +415,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph7.getForms().length).toEqual(0);
   });
 
-  const ph8 = infl.inflectToParticiple(inputUnd, inputUnd, inputUnd);
+  const ph8 = inflectToParticiple(inputUnd, inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph8.phrase.literal).toEqual('');
@@ -445,7 +425,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph8.getForms().length).toEqual(0);
   });
 
-  const ph9 = infl.inflectSerial(inputUnd, inputUnd, inputUnd);
+  const ph9 = inflectSerial(inputUnd, inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph9.phrase.literal).toEqual('');
@@ -455,7 +435,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph9.getForms().length).toEqual(0);
   });
 
-  const ph10 = infl.inflectVppToTransitive(inputUnd, inputUnd, inputUnd);
+  const ph10 = inflectVppToTransitive(inputUnd, inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph10.phrase.literal).toEqual('');
@@ -465,12 +445,7 @@ describe('Phrasal verb testing, undefined input', () => {
     expect(ph10.getForms().length).toEqual(0);
   });
 
-  const ph11 = infl.inflectVppToParticiple(
-    inputUnd,
-    inputUnd,
-    inputUnd,
-    inputUnd
-  );
+  const ph11 = inflectVppToParticiple(inputUnd, inputUnd, inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph11.phrase.literal).toEqual('');

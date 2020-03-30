@@ -3,7 +3,7 @@ import { Tagset } from './dparser/symbols';
 import { TonalWord } from './tonal/lexeme';
 import { PhrasalVerbs } from './dparser/rules';
 import { Sound, Word } from './unit';
-import { TonalLemmatizer } from './tonal/lemmatizer';
+import { lemmatize } from './tonal/lemmatizer';
 
 export class Token {
   /** The simple part-of-speech tag. */
@@ -41,7 +41,7 @@ export class TokenAnalysis {
 
 export class TokenLemmaLookup {
   getTonalLemmas = (doc: Document): Document => {
-    const lmtzr = new TonalLemmatizer();
+    // const lmtzr = new TonalLemmatizer();
     const sophv = new PhrasalVerbs();
     let j: number = 0;
     let k: number = 0;
@@ -123,7 +123,7 @@ export class TokenLemmaLookup {
       }
 
       let lemmas: TonalWord[] = [];
-      lemmas = lmtzr.lemmatize(doc.tokens[i].text).getLemmas();
+      lemmas = lemmatize(doc.tokens[i].text).getLemmas();
       if (lemmas.length > 0) doc.tokens[i].lemma = lemmas[0].literal;
     }
     return doc;

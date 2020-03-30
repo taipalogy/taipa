@@ -1,3 +1,1 @@
-class Uninserter {
-  uninsert(str: string) {}
-}
+export function uninsert(str: string) {}

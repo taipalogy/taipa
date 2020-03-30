@@ -1,10 +1,10 @@
 import { Word, Phrase } from './unit';
 import { OrthoPhraseme, OrthoLexeme, OrthoWord } from './dparser/visitor';
 
-export interface OrthographyFactory {
-  createPhrase?(): Phrase;
-  createWord?(): Word;
-}
+// export interface OrthographyFactory {
+//   createPhrase?(): Phrase;
+//   createWord?(): Word;
+// }
 
 /** Orthographic element visitor interface. */
 export interface Visitor {

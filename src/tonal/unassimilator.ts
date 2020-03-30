@@ -1,3 +1,1 @@
-class Unassimilator {
-  unassimilate(str: string) {}
-}
+export function unassimilate(str: string) {}

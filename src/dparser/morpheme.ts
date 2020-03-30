@@ -15,7 +15,7 @@ import {
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
   initialBghl,
-  euphonicTtT,
+  ttInitialTInitialPairs,
   voicelessVoicedFinals,
   initialsForEuphonicTt,
   initialsForEuphonicT,
@@ -169,7 +169,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       );
       let snd = new Sound();
 
-      const af = euphonicTtT.get(
+      const af = ttInitialTInitialPairs.get(
         sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString()
       );
       if (af) {

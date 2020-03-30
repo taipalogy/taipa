@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import { TokenAnalysis } from '../src/token';
 import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
-import { TonalLemmatizer } from '../src/tonal/lemmatizer';
+import { lemmatize } from '../src/tonal/lemmatizer';
 
 describe('Lemma testing', () => {
   const cli = new Client();
@@ -126,8 +126,8 @@ describe('Lemma testing, empty string as an argument', () => {
     expect(soudnSeqs1.length).toEqual(0);
   });
 
-  const lmtzr = new TonalLemmatizer();
-  const lx1 = lmtzr.lemmatize(inputEmpty);
+  // const lmtzr = new TonalLemmatizer();
+  const lx1 = lemmatize(inputEmpty);
 
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
@@ -163,9 +163,9 @@ describe('Lemma testing, undefined string as an argument', () => {
     expect(soudnSeqs2.length).toEqual(0);
   });
 
-  const lmtzr = new TonalLemmatizer();
+  // const lmtzr = new TonalLemmatizer();
 
-  const lx2 = lmtzr.lemmatize(inputUnd);
+  const lx2 = lemmatize(inputUnd);
 
   test('check the word literal', () => {
     expect(lx2.word.literal).toEqual('');

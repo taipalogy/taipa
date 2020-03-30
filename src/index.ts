@@ -12,15 +12,34 @@ export {
   TonalLetterTags,
   TonalSoundTags
 } from './tonal/version2';
-export { TonalLemmatizer } from './tonal/lemmatizer';
+export { lemmatize } from './tonal/lemmatizer';
 export { TonalAssimilator } from './dparser/assimilator';
 export {
   createTonalPhrase,
   createTonalInflectionLexeme,
   createCompoundPhraseme
 } from './dparser/creator';
-export { TonalPhrasalInflector, TonalInflector } from './dparser/inflector';
-export { TonalInserter } from './dparser/inserter';
+export {
+  inflectDesinence,
+  inflectTransfix,
+  inflectEncliticE,
+  inflectPhrasalVerbParticle,
+  inflectEncliticLe,
+  inflectPossesiveEx,
+  inflectTo,
+  inflectEighthToFirst,
+  inflectEighthToSecond,
+  inflectToProceeding,
+  inflectVppToProceeding,
+  inflectVppToTransitive,
+  inflectEToAdnominal,
+  inflectLeToConjunctive,
+  inflectPossesive,
+  inflectToParticiple,
+  inflectVppToParticiple,
+  inflectSerial
+} from './dparser/inflector';
+export { insertTo } from './dparser/inserter';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';

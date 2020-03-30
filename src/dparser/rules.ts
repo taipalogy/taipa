@@ -8,7 +8,7 @@ import {
   PronounElement
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
-import { TonalPhrasalInflector } from './inflector';
+import { inflectToProceeding, inflectVppToProceeding } from './inflector';
 import { OrthoPhraseme, VisitorMatching } from './visitor';
 import {
   dictOfVerbs,
@@ -44,7 +44,7 @@ class VerbPhrase extends ConstructionOfPhrase {
   }
 }
 
-class PrepositionalPhrase extends ConstructionOfPhrase {}
+class PrepositionPhrase extends ConstructionOfPhrase {}
 class NounPhrase extends ConstructionOfPhrase {}
 
 export class PhrasalVerbWithEnclitic extends VerbPhrase {
@@ -81,10 +81,8 @@ export class PhrasalVerbs {
   }
 
   private populatePhrasemes() {
-    const infl = new TonalPhrasalInflector();
-
     dictOfPhrasalVerbs
-      .map(it => infl.inflectToProceeding(it[0], it[1]))
+      .map(it => inflectToProceeding(it[0], it[1]))
       .map(it => {
         const ol = new OrthoPhraseme();
         ol.form = it.phrase.words[0].literal + ' ' + it.phrase.words[1].literal;
@@ -96,7 +94,7 @@ export class PhrasalVerbs {
         this.phvbs.push(ol);
       });
     dictOfPhrasalVerbTwos
-      .map(it => infl.inflectVppToProceeding(it[0], it[1], it[2]))
+      .map(it => inflectVppToProceeding(it[0], it[1], it[2]))
       .map(it => {
         const ol = new OrthoPhraseme();
         ol.form =

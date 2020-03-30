@@ -1,8 +1,8 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { TonalInflector } from '../src/dparser/inflector';
+import { inflectDesinence } from '../src/dparser/inflector';
 import { TonalAssimilator } from '../src/dparser/assimilator';
-import { TonalInserter } from '../src/dparser/inserter';
+import { insertTo } from '../src/dparser/inserter';
 
 describe('Epenthesis testing', () => {
   const cli = new Client();
@@ -71,21 +71,19 @@ describe('Voiced final testing', () => {
 });
 
 describe('Epenthesis testing', () => {
-  const inst = new TonalInserter();
-
-  const lx1 = inst.insertTo('qimxay');
+  const lx1 = insertTo('qimxay');
 
   test('check the epenthesis of initial m', () => {
     expect(lx1.getForms()[0].literal).toEqual('qimxmay');
   });
 
-  const lx2 = inst.insertTo('infay');
+  const lx2 = insertTo('infay');
 
   test('check the epenthesis of initial n', () => {
     expect(lx2.getForms()[0].literal).toEqual('infnay');
   });
 
-  const lx3 = inst.insertTo('cangxay');
+  const lx3 = insertTo('cangxay');
 
   test('check the epenthesis of initial ng', () => {
     expect(lx3.getForms()[0].literal).toEqual('cangxngay');
@@ -93,35 +91,31 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Epenthesis testing', () => {
-  const infl = new TonalInflector();
-
-  const lx1 = infl.inflectDesinence('qimxay');
+  const lx1 = inflectDesinence('qimxay');
 
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('qimxa');
   });
 
-  const inst = new TonalInserter();
-
-  const lx2 = inst.insertTo(lx1.getForms()[0].literal);
+  const lx2 = insertTo(lx1.getForms()[0].literal);
 
   test('check the epenthesis of initial m. surface form', () => {
     expect(lx2.getForms()[0].literal).toEqual('qimxma');
   });
 
-  const lx3 = inst.insertTo('qimza');
+  const lx3 = insertTo('qimza');
 
   test('check the epenthesis of initial m', () => {
     expect(lx3.getForms()[0].literal).toEqual('qimzma');
   });
 
-  const lx4 = inst.insertTo('ginfa');
+  const lx4 = insertTo('ginfa');
 
   test('check the epenthesis of initial n', () => {
     expect(lx4.getForms()[0].literal).toEqual('ginfna');
   });
 
-  const lx5 = inst.insertTo('tangza');
+  const lx5 = insertTo('tangza');
 
   test('check the epenthesis of initial ng', () => {
     expect(lx5.getForms()[0].literal).toEqual('tangznga');
