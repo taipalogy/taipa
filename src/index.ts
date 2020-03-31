@@ -2,9 +2,12 @@
 export { Client } from './client';
 
 // API
-export { TonalLemmatizationAnalyzer } from './tonal/analyzer';
-export { TonalInflectionAnalyzer } from './dparser/analyzer';
-export { KanaLemmatizationAnalyzer } from './kana/analyzer';
+export {
+  tonalLemmatizationAnalyzer,
+  graphAnalyzeTonal
+} from './tonal/analyzer';
+export { tonalInflectionAnalyzer } from './dparser/analyzer';
+export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
 export { GraphemeMaker } from './unit';
 export { lexicalRoots } from './tonal/lexicalroots2';
 export {
@@ -13,7 +16,13 @@ export {
   TonalSoundTags
 } from './tonal/version2';
 export { lemmatize } from './tonal/lemmatizer';
-export { TonalAssimilator } from './dparser/assimilator';
+export {
+  getNoAssimilation,
+  assimilateAgressiveLexical,
+  assimilateRegressiveLexical,
+  assimilateAgressivePhrasal,
+  assimilateRegressivePhrasal
+} from './dparser/assimilator';
 export {
   createTonalPhrase,
   createTonalInflectionLexeme,

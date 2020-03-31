@@ -1,4 +1,3 @@
-import { Analyzer } from '../interface';
 import {
   TonalLemmatizationLexemeMaker,
   TonalLemmatizationLexeme
@@ -10,50 +9,40 @@ import {
   TonalUncombiningMorpheme
 } from './morpheme';
 
-/** Analyze a string into graphemes, morphemes, or lexeme. */
-export class TonalLemmatizationAnalyzer extends Analyzer {
-  /**
-   * Analyze a string into graphemes. Graphemic analysis.
-   * @param str a string
-   */
-  graphAnalyze(str: string): AlphabeticGrapheme[] {
-    const gm = new GraphemeMaker(lowerLettersTonal);
-    return gm.makeGraphemes(str);
-  }
+/**
+ * Analyze a string into tonal graphemes. Graphemic analysis.
+ * @param str A string
+ */
+export function graphAnalyzeTonal(str: string): AlphabeticGrapheme[] {
+  const gm = new GraphemeMaker(lowerLettersTonal);
+  return gm.makeGraphemes(str);
+}
 
-  morphAnalyze(str: string): TonalUncombiningMorpheme[];
-  morphAnalyze(
-    graphemes: Array<AlphabeticGrapheme>
-  ): TonalUncombiningMorpheme[];
+/** Analyze a string into graphemes, morphemes, or lexeme. */
+export const tonalLemmatizationAnalyzer = {
   /**
    * Analyze a string or graphemes into morphemes. Morphological analysis.
-   * @param x a string or graphemes
+   * @param x A string or graphemes
    */
   morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
-    // morphological analysis
     let gs: AlphabeticGrapheme[] = [];
     if (typeof x == 'object') {
       gs = x;
     } else if (typeof x == 'string') {
-      gs = this.graphAnalyze(x);
+      gs = graphAnalyzeTonal(x);
     }
 
     const mm = new TonalUncombiningMorphemeMaker();
     return mm.makeMorphemes(gs);
-  }
+  },
 
-  lexAnalyze(str: string): TonalLemmatizationLexeme;
-  lexAnalyze(
-    morphemes: Array<TonalUncombiningMorpheme>
-  ): TonalLemmatizationLexeme;
   /**
    * Analyze a string or morphemes into a lexeme. Lexical analysis.
-   * @param x a string or uncombining morphemes
+   * @param x A string or uncombining morphemes
    */
   lexAnalyze(
     x: string | Array<TonalUncombiningMorpheme>
   ): TonalLemmatizationLexeme {
-    // lexical analysis
     let ms: Array<TonalUncombiningMorpheme> = [];
     if (typeof x == 'object') {
       ms = x;
@@ -64,4 +53,4 @@ export class TonalLemmatizationAnalyzer extends Analyzer {
     const lm = new TonalLemmatizationLexemeMaker();
     return lm.makeLexemes(ms);
   }
-}
+};

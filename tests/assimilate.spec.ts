@@ -1,31 +1,31 @@
 import { inflectDesinence } from '../src/dparser/inflector';
 import {
-  TonalAssimilator,
-  TonalPhrasalAssimilator
+  assimilateRegressiveLexical,
+  assimilateAgressiveLexical,
+  assimilateAgressivePhrasal,
+  assimilateRegressivePhrasal
 } from '../src/dparser/assimilator';
 
 describe('Assimilation testing, -b, -g, -h, -l', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx1 = assimi.assimilateRegressive('biettwbongx');
+  const lx1 = assimilateRegressiveLexical('biettwbongx');
 
   test('check the surface form', () => {
     expect(lx1.getForms()[0].literal).toEqual('biellwbongx');
   });
 
-  const lx2 = assimi.assimilateRegressive('chappwgoz');
+  const lx2 = assimilateRegressiveLexical('chappwgoz');
 
   test('check the surface form', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabbwgoz');
   });
 
-  const lx3 = assimi.assimilateRegressive('chipfhoat');
+  const lx3 = assimilateRegressiveLexical('chipfhoat');
 
   test('check the surface form', () => {
     expect(lx3.getForms()[0].literal).toEqual('chibfhoat');
   });
 
-  const lx4 = assimi.assimilateRegressive('okflangx');
+  const lx4 = assimilateRegressiveLexical('okflangx');
 
   test('check the surface form', () => {
     expect(lx4.getForms()[0].literal).toEqual('ogflangx');
@@ -33,15 +33,13 @@ describe('Assimilation testing, -b, -g, -h, -l', () => {
 });
 
 describe('Assimilation testing, euphonic t, tt', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx1 = assimi.assimilateRegressive('bittwpang');
+  const lx1 = assimilateRegressiveLexical('bittwpang');
 
   test('check the surface form', () => {
     expect(lx1.getForms()[0].literal).toEqual('bippwpang');
   });
 
-  const lx2 = assimi.assimilateRegressive('hietfkiw');
+  const lx2 = assimilateRegressiveLexical('hietfkiw');
 
   test('check the surface form', () => {
     expect(lx2.getForms()[0].literal).toEqual('hiekfkiw');
@@ -49,9 +47,7 @@ describe('Assimilation testing, euphonic t, tt', () => {
 });
 
 describe('Assimilation testing, internal sandhi', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx1 = assimi.assimilateRegressive('pokfbuttwqoany');
+  const lx1 = assimilateRegressiveLexical('pokfbuttwqoany');
 
   test('check the surface form', () => {
     expect(lx1.getForms()[0].literal).toEqual('pogfbukkwqoany');
@@ -65,9 +61,7 @@ describe('Assimilation testing, internal sandhi', () => {
 });
 
 describe('Assimilation testing, regressive', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx = assimi.assimilateRegressive('sinzbunx');
+  const lx = assimilateRegressiveLexical('sinzbunx');
 
   test('check the underlying form', () => {
     expect(lx.word.literal).toEqual('sinzbunx');
@@ -79,9 +73,7 @@ describe('Assimilation testing, regressive', () => {
 });
 
 describe('Assimilation testing, agressive, duplifix', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx = assimi.assimilateAgressive('dittwditt');
+  const lx = assimilateAgressiveLexical('dittwditt');
 
   test('check the underlying form', () => {
     expect(lx.word.literal).toEqual('dittwditt');
@@ -93,9 +85,7 @@ describe('Assimilation testing, agressive, duplifix', () => {
 });
 
 describe('Assimilation testing, agressive, duplifix', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx = assimi.assimilateRegressive('hitfnix');
+  const lx = assimilateRegressiveLexical('hitfnix');
 
   test('check the underlying form', () => {
     expect(lx.word.literal).toEqual('hitfnix');
@@ -107,9 +97,7 @@ describe('Assimilation testing, agressive, duplifix', () => {
 });
 
 describe('Assimilation testing, nasalization', () => {
-  const assimi = new TonalAssimilator();
-
-  const lx = assimi.assimilateAgressive('ennxiay');
+  const lx = assimilateAgressiveLexical('ennxiay');
 
   test('check the underlying form', () => {
     expect(lx.word.literal).toEqual('ennxiay');
@@ -123,8 +111,7 @@ describe('Assimilation testing, nasalization', () => {
 describe('Phrasal assmilation testing, 2 empty words, 1 empty phrase', () => {
   const inputEmpty: any = '';
 
-  const assimi = new TonalPhrasalAssimilator();
-  const ph1 = assimi.assimilateAgressive(inputEmpty, inputEmpty);
+  const ph1 = assimilateAgressivePhrasal(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph1.phrase.literal).toEqual('');
@@ -134,7 +121,7 @@ describe('Phrasal assmilation testing, 2 empty words, 1 empty phrase', () => {
     expect(ph1.getForms().length).toEqual(0);
   });
 
-  const ph2 = assimi.assimilateRegressive(inputEmpty, inputEmpty);
+  const ph2 = assimilateRegressivePhrasal(inputEmpty, inputEmpty);
 
   test('check the empty phrase', () => {
     expect(ph2.phrase.literal).toEqual('');
@@ -148,8 +135,7 @@ describe('Phrasal assmilation testing, 2 empty words, 1 empty phrase', () => {
 describe('Phrasal assimilation testing, undefined input', () => {
   const inputUnd: any = undefined;
 
-  const assimi = new TonalPhrasalAssimilator();
-  const ph1 = assimi.assimilateRegressive(inputUnd, inputUnd);
+  const ph1 = assimilateRegressivePhrasal(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph1.phrase.literal).toEqual('');
@@ -159,7 +145,7 @@ describe('Phrasal assimilation testing, undefined input', () => {
     expect(ph1.getForms().length).toEqual(0);
   });
 
-  const ph2 = assimi.assimilateRegressive(inputUnd, inputUnd);
+  const ph2 = assimilateRegressivePhrasal(inputUnd, inputUnd);
 
   test('check the empty phrase', () => {
     expect(ph2.phrase.literal).toEqual('');

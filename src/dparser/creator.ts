@@ -1,4 +1,4 @@
-import { TonalInflectionAnalyzer } from './analyzer';
+import { tonalInflectionAnalyzer } from './analyzer';
 import { TonalPhrase } from '../tonal/phraseme';
 import { TonalZeroInflection } from '../metaplasm';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
@@ -10,7 +10,7 @@ export function createTonalInflectionLexeme(
   str: string,
   metaplasm?: TonalCombiningMetaplasm
 ) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = metaplasm
     ? tia.morphAnalyze(str, metaplasm)
@@ -22,7 +22,7 @@ export function createTonalInflectionLexeme(
 
 /** Create a phrase given a sequence of arbitrary words regardless of syntax. Tokens are analyzed one by one. */
 export function createTonalPhrase(str: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const strs = str.match(/\w+/g);
   const lxs = strs
@@ -34,7 +34,7 @@ export function createTonalPhrase(str: string) {
 
 /** Create a compound of type `TonalCompoundPhraseme` in which the preceding word will be inflected and the following word will not. */
 export function createCompoundPhraseme(preceding: string, following: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
   const tiphm = new TonalInflectionPhrasemeMaker();
 
   const lxPreceding = tia.lexAnalyze(preceding, new TonalDesinenceInflection());

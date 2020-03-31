@@ -636,7 +636,9 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return pattern;
   }
 
-  protected postprocess(matched: MatchedPattern[]): Array<Morpheme> {
+  protected postprocess(
+    matched: MatchedPattern[]
+  ): Array<TonalUncombiningMorpheme> {
     const morphemes = this.createMorphemes();
 
     for (let i in matched) {

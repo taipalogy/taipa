@@ -1,5 +1,6 @@
 import { TonalCombiningMetaplasm } from './metaplasm';
 import { InflectionalEnding } from './tonal/lexeme';
+import { lowerLettersTonal } from './tonal/version2';
 
 export class Character {
   character: string;

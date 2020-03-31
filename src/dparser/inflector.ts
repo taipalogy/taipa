@@ -1,4 +1,4 @@
-import { TonalInflectionAnalyzer } from './analyzer';
+import { tonalInflectionAnalyzer } from './analyzer';
 import {
   TonalCombiningForms,
   ThirdCombiningForm,
@@ -16,18 +16,18 @@ import { createTonalInflectionLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
 
-/** Inflect the inflectional suffix of a word. */
+/** Inflect the inflectional suffix of a word. Lexical inflector. */
 export function inflectDesinence(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new TonalCombiningForms());
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
   return lx;
 }
 
-/** Inflect the transfix of a word. All tonals other than 3rd tone will be changed to 3rd tone. */
+/** Inflect the transfix of a word. All tonals other than 3rd tone will be changed to 3rd tone. Lexical inflector. */
 export function inflectTransfix(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new ThirdCombiningForm());
   const lx = tia.lexAnalyze(ms, new TransfixInflection());
@@ -35,11 +35,11 @@ export function inflectTransfix(word: string) {
 }
 
 /**
- * Inflect e to ez.
+ * Inflect e to ez. Lexical inflector.
  * @param word e, ew, or ez
  */
 export function inflectEncliticE(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new AdnominalECombining());
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -47,7 +47,7 @@ export function inflectEncliticE(word: string) {
 }
 
 /**
- * Inflect 4th tone to 1st tone or 3rd tone accordingly. Inflect laih to laiz.
+ * Inflect 4th tone to 1st tone or 3rd tone accordingly. Inflect laih to laiz. Lexical inflector.
  * @param word particle
  * @param tone f, w, or z
  */
@@ -55,7 +55,7 @@ export function inflectPhrasalVerbParticle(
   word: string,
   tone: TonalLetterTags
 ) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new PhrasalVerbParticleCombining(tone));
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -63,11 +63,11 @@ export function inflectPhrasalVerbParticle(
 }
 
 /**
- * Inflect lez and lew to le.
+ * Inflect lez and lew to le. Lexical inflector.
  * @param word lew, lez, or le
  */
 export function inflectEncliticLe(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new ConjunctiveLeCombining());
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -75,11 +75,11 @@ export function inflectEncliticLe(word: string) {
 }
 
 /**
- * Inflect ex to ew.
+ * Inflect ex to ew. Lexical inflector.
  * @param word ex
  */
 export function inflectPossesiveEx(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new PossesiveExCombining());
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -87,12 +87,12 @@ export function inflectPossesiveEx(word: string) {
 }
 
 /**
- * Inflect 4th tone to either 1st free tone or 7th free tone.
+ * Inflect 4th tone to either 1st free tone or 7th free tone. Lexical inflector.
  * @param word 4th checked tone
  * @param tone f or z
  */
 export function inflectTo(word: string, tone: TonalLetterTags) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new FirstSeventhCombining(tone));
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -100,11 +100,11 @@ export function inflectTo(word: string, tone: TonalLetterTags) {
 }
 
 /**
- * Inflect 8th tone to 1st tone
+ * Inflect 8th tone to 1st tone. Addon inflector.
  * @param word 8th checked tone
  */
 export function inflectEighthToFirst(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new EighthToFirstCombining());
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -112,11 +112,11 @@ export function inflectEighthToFirst(word: string) {
 }
 
 /**
- * Inflect 8th tone to 2nd tone
+ * Inflect 8th tone to 2nd tone. Addon inflector.
  * @param word 8th neutral tone
  */
 export function inflectEighthToSecond(word: string) {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new EighthToSecondCombining());
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
@@ -124,7 +124,7 @@ export function inflectEighthToSecond(word: string) {
 }
 
 /**
- * Inflect a phrasal verb of length 2 to proceeding form.
+ * Inflect a phrasal verb of length 2 to proceeding form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle
  */
@@ -142,7 +142,7 @@ export function inflectToProceeding(verb: string, particle: string) {
 }
 
 /**
- * Inflect a phrasal verb of length 3 to proceeding form.
+ * Inflect a phrasal verb of length 3 to proceeding form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle one
  * @param particleTwo Particle two
@@ -168,7 +168,7 @@ export function inflectVppToProceeding(
 }
 
 /**
- * Inflect a phrasal verb of length 3 to transitive form.
+ * Inflect a phrasal verb of length 3 to transitive form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle one
  * @param particleTwo Particle two
@@ -187,7 +187,7 @@ export function inflectVppToTransitive(
 }
 
 /**
- * Inflect e form to adnominal form.
+ * Inflect e form to adnominal form. Phrasal inflector.
  * @param adjectivalNoun Main word
  * @param e E, ew, or ez
  */
@@ -200,7 +200,7 @@ export function inflectEToAdnominal(adjectivalNoun: string, e: string) {
 }
 
 /**
- * Inflect le form to conjunctive form.
+ * Inflect le form to conjunctive form. Phrasal inflector.
  * @param verb Main word
  * @param le Le, lew, or lez
  */
@@ -213,7 +213,7 @@ export function inflectLeToConjunctive(verb: string, le: string) {
 }
 
 /**
- * Inflect possesive case from teriminal form to adnominal form.
+ * Inflect possesive case from teriminal form to adnominal form. Phrasal inflector.
  * @param noun Main word
  * @param ex Ex
  */
@@ -226,7 +226,7 @@ export function inflectPossesive(noun: string, ex: string) {
 }
 
 /**
- * Inflect a phrasal verb of length 2 to participle form.
+ * Inflect a phrasal verb of length 2 to participle form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle
  * @param tone 1st tone or 7th tone
@@ -244,7 +244,7 @@ export function inflectToParticiple(
 }
 
 /**
- * Inflect a phrasal verb of length 3 to participle form.
+ * Inflect a phrasal verb of length 3 to participle form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle one
  * @param particleTwo Particle two
@@ -264,7 +264,7 @@ export function inflectVppToParticiple(
   return phm.makeVppParticiplePhraseme(lxVerb, lxParticle, lxParticleTwo);
 }
 
-/** Inflect a series of words. The forms of the last word indicates the whole phrase is in proceeding form or not. */
+/** Inflect a series of words. The forms of the last word indicates the whole phrase is in proceeding form or not. Phrasal inflector. */
 export function inflectSerial(...words: string[]) {
   const phm = new TonalInflectionPhrasemeMaker();
 

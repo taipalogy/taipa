@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
-import { TonalInflectionAnalyzer } from '../src/dparser/analyzer';
+import { tonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
+import { tonalInflectionAnalyzer } from '../src/dparser/analyzer';
 import { TonalZeroCombining } from '../src/metaplasm';
 import {
   EighthToSecondCombining,
@@ -122,7 +122,7 @@ describe('Tonal testing, if present or not', () => {
 });
 
 describe('Tonal testing', () => {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const wrd1 = 'chiahh';
 
@@ -174,14 +174,13 @@ describe('Tonal testing', () => {
 });
 
 describe('Tonal testing', () => {
-  const tla = new TonalLemmatizationAnalyzer();
-  const morphemes1 = tla.morphAnalyze('ginfnay');
+  const morphemes1 = tonalLemmatizationAnalyzer.morphAnalyze('ginfnay');
 
   test('check the tonal of the first syllable', () => {
     expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.f);
   });
 
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
   const morphemes2 = tia.morphAnalyze('ginfay', new TonalZeroCombining());
 
   test('check the tonal of the first syllable', () => {
@@ -190,14 +189,13 @@ describe('Tonal testing', () => {
 });
 
 describe('Tonal testing', () => {
-  const tla = new TonalLemmatizationAnalyzer();
-  const morphemes1 = tla.morphAnalyze('qamxmay');
+  const morphemes1 = tonalLemmatizationAnalyzer.morphAnalyze('qamxmay');
 
   test('check the tonal of the first syllable', () => {
     expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.x);
   });
 
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
   const morphemes2 = tia.morphAnalyze('qamxay', new TonalZeroCombining());
 
   test('check the tonal of the first syllable', () => {
@@ -206,7 +204,7 @@ describe('Tonal testing', () => {
 });
 
 describe('Tone group testing of words', () => {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
   const lx3 = tia.lexAnalyze('chiahh', new TonalDesinenceInflection());
   const lx4 = tia.lexAnalyze('ez', new TonalDesinenceInflection());
 
@@ -231,7 +229,7 @@ describe('Tone group testing of words', () => {
 });
 
 describe('Tone group testing of syllables', () => {
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
 
   const ms1 = tia.morphAnalyze('hongwseysew', new TonalCombiningForms());
 
@@ -278,7 +276,7 @@ describe('Tone group testing of phrasal verbs', () => {
     expect(lx2.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.h);
   });
 
-  const tia = new TonalInflectionAnalyzer();
+  const tia = tonalInflectionAnalyzer;
   const lx3 = tia.lexAnalyze('tehh', new TonalDesinenceInflection());
   const lx4 = tia.lexAnalyze('kih', new TonalDesinenceInflection());
   const lx5 = tia.lexAnalyze('laih', new TonalDesinenceInflection());

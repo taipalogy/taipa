@@ -1,6 +1,8 @@
 import { Client } from '../src/client';
-import { TokenAnalysis } from '../src/token';
-import { TonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
+import {
+  tonalLemmatizationAnalyzer,
+  graphAnalyzeTonal
+} from '../src/tonal/analyzer';
 import { lemmatize } from '../src/tonal/lemmatizer';
 
 describe('Lemma testing', () => {
@@ -34,9 +36,7 @@ describe('Lemma testing', () => {
 });
 
 describe('Uncombining form testing, reduplication', () => {
-  const tla = new TonalLemmatizationAnalyzer();
-
-  const ms1 = tla.morphAnalyze('angxxangzangx');
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('angxxangzangx');
 
   test('check the uncombining form, triplet', () => {
     expect(ms1[0].getForms()[0].literal).toEqual('angx');
@@ -46,7 +46,7 @@ describe('Uncombining form testing, reduplication', () => {
     expect(ms1[1].getForms()[0].literal).toEqual('angx');
   });
 
-  const ms2 = tla.morphAnalyze('angzangx');
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('angzangx');
 
   test('check the uncombining form, doublet', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('angx');
@@ -108,19 +108,19 @@ describe('Lemma testing', () => {
 });
 
 describe('Lemma testing, empty string as an argument', () => {
-  const tla = new TonalLemmatizationAnalyzer();
-
   const inputEmpty: any = '';
 
-  const gs2 = tla
-    .graphAnalyze(inputEmpty)
-    .map(x => x.letter && x.letter.literal);
+  const gs2 = graphAnalyzeTonal(inputEmpty).map(
+    x => x.letter && x.letter.literal
+  );
 
   test('given empty string, check the letter literal', () => {
     expect(gs2.length).toEqual(0);
   });
 
-  const soudnSeqs1 = tla.morphAnalyze(inputEmpty).map(x => x.sounds);
+  const soudnSeqs1 = tonalLemmatizationAnalyzer
+    .morphAnalyze(inputEmpty)
+    .map(x => x.sounds);
 
   test('given empty string, check the letter literal', () => {
     expect(soudnSeqs1.length).toEqual(0);
@@ -147,17 +147,19 @@ describe('Lemma testing, empty string as an argument', () => {
 });
 
 describe('Lemma testing, undefined string as an argument', () => {
-  const tla = new TonalLemmatizationAnalyzer();
-
   const inputUnd: any = undefined;
 
-  const gs1 = tla.graphAnalyze(inputUnd).map(x => x.letter && x.letter.literal);
+  const gs1 = graphAnalyzeTonal(inputUnd).map(
+    x => x.letter && x.letter.literal
+  );
 
   test('given undefined string, check the letter literal', () => {
     expect(gs1.length).toEqual(0);
   });
 
-  const soudnSeqs2 = tla.morphAnalyze(inputUnd).map(x => x.sounds);
+  const soudnSeqs2 = tonalLemmatizationAnalyzer
+    .morphAnalyze(inputUnd)
+    .map(x => x.sounds);
 
   test('given undefined string, check the letter literal', () => {
     expect(soudnSeqs2.length).toEqual(0);
