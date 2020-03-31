@@ -9,7 +9,7 @@ import { TonalCombiningMetaplasm } from '../metaplasm';
 import { TonalCombiningForms } from './metaplasm';
 import { graphAnalyzeTonal } from '../tonal/analyzer';
 
-/** Analyze a string into graphemes, morphemes, or lexeme. */
+/** Analyzes a string into morphemes or lexeme. */
 export const tonalInflectionAnalyzer = {
   /**
    * Analyzes a string or graphemes into morphemes. Morphological analysis.

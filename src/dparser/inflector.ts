@@ -16,7 +16,7 @@ import { createTonalInflectionLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
 
-/** Inflect the inflectional suffix of a word. Lexical inflector. */
+/** Inflects the inflectional suffix of a word. Lexical inflector. */
 export function inflectDesinence(word: string) {
   const tia = tonalInflectionAnalyzer;
 
@@ -25,7 +25,7 @@ export function inflectDesinence(word: string) {
   return lx;
 }
 
-/** Inflect the transfix of a word. All tonals other than 3rd tone will be changed to 3rd tone. Lexical inflector. */
+/** Inflects the transfix of a word. All tonals other than 3rd tone will be changed to 3rd tone. Lexical inflector. */
 export function inflectTransfix(word: string) {
   const tia = tonalInflectionAnalyzer;
 
@@ -35,8 +35,8 @@ export function inflectTransfix(word: string) {
 }
 
 /**
- * Inflect e to ez. Lexical inflector.
- * @param word e, ew, or ez
+ * Inflects e to ez. Lexical inflector.
+ * @param word E, ew, or ez
  */
 export function inflectEncliticE(word: string) {
   const tia = tonalInflectionAnalyzer;
@@ -47,9 +47,9 @@ export function inflectEncliticE(word: string) {
 }
 
 /**
- * Inflect 4th tone to 1st tone or 3rd tone accordingly. Inflect laih to laiz. Lexical inflector.
+ * Inflects 4th tone to 1st tone or 3rd tone accordingly. Inflects laih to laiz. Lexical inflector.
  * @param word particle
- * @param tone f, w, or z
+ * @param tone F, w, or z
  */
 export function inflectPhrasalVerbParticle(
   word: string,
@@ -63,8 +63,8 @@ export function inflectPhrasalVerbParticle(
 }
 
 /**
- * Inflect lez and lew to le. Lexical inflector.
- * @param word lew, lez, or le
+ * Inflects lez and lew to le. Lexical inflector.
+ * @param word Lew, lez, or le
  */
 export function inflectEncliticLe(word: string) {
   const tia = tonalInflectionAnalyzer;
@@ -75,8 +75,8 @@ export function inflectEncliticLe(word: string) {
 }
 
 /**
- * Inflect ex to ew. Lexical inflector.
- * @param word ex
+ * Inflects ex to ew. Lexical inflector.
+ * @param word Ex
  */
 export function inflectPossesiveEx(word: string) {
   const tia = tonalInflectionAnalyzer;
@@ -87,9 +87,9 @@ export function inflectPossesiveEx(word: string) {
 }
 
 /**
- * Inflect 4th tone to either 1st free tone or 7th free tone. Lexical inflector.
+ * Inflects 4th tone to either 1st free tone or 7th free tone. Lexical inflector.
  * @param word 4th checked tone
- * @param tone f or z
+ * @param tone F or z
  */
 export function inflectTo(word: string, tone: TonalLetterTags) {
   const tia = tonalInflectionAnalyzer;
@@ -100,7 +100,7 @@ export function inflectTo(word: string, tone: TonalLetterTags) {
 }
 
 /**
- * Inflect 8th tone to 1st tone. Addon inflector.
+ * Inflects 8th tone to 1st tone. Addon inflector.
  * @param word 8th checked tone
  */
 export function inflectEighthToFirst(word: string) {
@@ -112,7 +112,7 @@ export function inflectEighthToFirst(word: string) {
 }
 
 /**
- * Inflect 8th tone to 2nd tone. Addon inflector.
+ * Inflects 8th tone to 2nd tone. Addon inflector.
  * @param word 8th neutral tone
  */
 export function inflectEighthToSecond(word: string) {
@@ -124,7 +124,7 @@ export function inflectEighthToSecond(word: string) {
 }
 
 /**
- * Inflect a phrasal verb of length 2 to proceeding form. Phrasal inflector.
+ * Inflects a phrasal verb of length 2 to proceeding form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle
  */
@@ -142,7 +142,7 @@ export function inflectToProceeding(verb: string, particle: string) {
 }
 
 /**
- * Inflect a phrasal verb of length 3 to proceeding form. Phrasal inflector.
+ * Inflects a phrasal verb of length 3 to proceeding form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle one
  * @param particleTwo Particle two
@@ -168,7 +168,7 @@ export function inflectVppToProceeding(
 }
 
 /**
- * Inflect a phrasal verb of length 3 to transitive form. Phrasal inflector.
+ * Inflects a phrasal verb of length 3 to transitive form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle one
  * @param particleTwo Particle two
@@ -187,7 +187,7 @@ export function inflectVppToTransitive(
 }
 
 /**
- * Inflect e form to adnominal form. Phrasal inflector.
+ * Inflects e form to adnominal form. Phrasal inflector.
  * @param adjectivalNoun Main word
  * @param e E, ew, or ez
  */
@@ -200,7 +200,7 @@ export function inflectEToAdnominal(adjectivalNoun: string, e: string) {
 }
 
 /**
- * Inflect le form to conjunctive form. Phrasal inflector.
+ * Inflects le form to conjunctive form. Phrasal inflector.
  * @param verb Main word
  * @param le Le, lew, or lez
  */
@@ -213,7 +213,7 @@ export function inflectLeToConjunctive(verb: string, le: string) {
 }
 
 /**
- * Inflect possesive case from teriminal form to adnominal form. Phrasal inflector.
+ * Inflects possesive case from teriminal form to adnominal form. Phrasal inflector.
  * @param noun Main word
  * @param ex Ex
  */
@@ -226,7 +226,7 @@ export function inflectPossesive(noun: string, ex: string) {
 }
 
 /**
- * Inflect a phrasal verb of length 2 to participle form. Phrasal inflector.
+ * Inflects a phrasal verb of length 2 to participle form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle
  * @param tone 1st tone or 7th tone
@@ -244,7 +244,7 @@ export function inflectToParticiple(
 }
 
 /**
- * Inflect a phrasal verb of length 3 to participle form. Phrasal inflector.
+ * Inflects a phrasal verb of length 3 to participle form. Phrasal inflector.
  * @param verb Main word
  * @param particle Particle one
  * @param particleTwo Particle two
@@ -264,7 +264,7 @@ export function inflectVppToParticiple(
   return phm.makeVppParticiplePhraseme(lxVerb, lxParticle, lxParticleTwo);
 }
 
-/** Inflect a series of words. The forms of the last word indicates the whole phrase is in proceeding form or not. Phrasal inflector. */
+/** Inflects a series of words. The forms of the last word indicates the whole phrase is in proceeding form or not. Phrasal inflector. */
 export function inflectSerial(...words: string[]) {
   const phm = new TonalInflectionPhrasemeMaker();
 

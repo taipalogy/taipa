@@ -19,7 +19,7 @@ export class Token {
 
   /**
    * Constructor of Token.
-   * @param text the original word text
+   * @param text The text of the token
    */
   constructor(public text: string) {}
 }
@@ -29,7 +29,7 @@ export class TokenAnalysis {
   word: Word = new Word();
   /** Base forms of the word. */
   lemmas: Array<Word> = new Array();
-  /** Inflectional suffix. Desinence. */
+  /** Inflectional suffix. */
   inflectionalEnding: string = '';
   /** Sound sequences. */
   soundSequences: Array<Sound[]> = new Array();

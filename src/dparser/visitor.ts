@@ -3,7 +3,7 @@ import { Visitor, OrthoElement } from '../interface';
 /** Concrete visitor. */
 export class VisitorMatching implements Visitor {
   /**
-   * Match the phrase to the forms of a phraseme.
+   * Matches the phrase to the forms of a phraseme.
    * @param phraseme A container of phrase forms.
    * @param phrase The phrase to be matched.
    */
@@ -16,7 +16,7 @@ export class VisitorMatching implements Visitor {
   }
 
   /**
-   * Match the word to the forms of a lexeme.
+   * Matches the word to the forms of a lexeme.
    * @param lexeme A container of word forms.
    * @param word The word to be matched.
    */
@@ -29,7 +29,7 @@ export class VisitorMatching implements Visitor {
   }
 
   /**
-   * Match the word to the form.
+   * Matches the word to the form.
    * @param orth A container of a form.
    * @param word The word to be matched.
    */

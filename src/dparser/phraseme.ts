@@ -16,7 +16,7 @@ import {
   TonalPhrasalAssimilationMetaplasm
 } from '../metaplasm';
 
-/** A phrase and its inflected forms. */
+/** A phrase of length 2 and its inflected forms. */
 export class PhrasalVerbPhraseme extends Phraseme {
   /** Verb + particle */
   phrase: TonalPhrase;
@@ -33,13 +33,13 @@ export class PhrasalVerbPhraseme extends Phraseme {
     this.forms = metaplasm.apply(verb, particle);
   }
 
-  /** Get proceeding forms or participle forms */
+  /** Returns proceeding forms or participle forms */
   getForms() {
     return this.forms;
   }
 }
 
-/** A phrase and its inflected forms. */
+/** A phrase of length 3 and its inflected forms. */
 export class PhrasalVerbVppPhraseme extends Phraseme {
   /** Verb + particle + particle */
   phrase: TonalPhrase;
@@ -57,7 +57,7 @@ export class PhrasalVerbVppPhraseme extends Phraseme {
     this.forms = metaplasm.applyVpp(verb, particle, particleTwo);
   }
 
-  /** Get proceeding forms, participle forms, or transitive form */
+  /** Returns proceeding forms, participle forms, or transitive form */
   getForms() {
     return this.forms;
   }
@@ -77,7 +77,7 @@ export class TonalCompoundPhraseme extends Phraseme {
   }
 }
 
-/** A phrase and its inflected forms. */
+/** A phrase and its inflected form. */
 export class TonalMainParticlePhraseme extends Phraseme {
   /** Main word and its particle. */
   phrase: TonalPhrase;
@@ -95,13 +95,13 @@ export class TonalMainParticlePhraseme extends Phraseme {
     this.forms = metaplasm.apply(main, particle);
   }
 
-  /** Adnominal form. Conjunctive form. */
+  /** Returns adnominal form or conjunctive form. */
   getForms() {
     return this.forms;
   }
 }
 
-/** A phrase and its inflected forms. */
+/** A phrase and its proceeding forms. */
 export class SerialPhraseme extends Phraseme {
   /** A series of words that are inflected except for the last one. */
   phrase: TonalPhrase;
@@ -132,13 +132,13 @@ export class SerialPhraseme extends Phraseme {
     else this.forms = [];
   }
 
-  /** A series of inflected words. */
+  /** Returna a series of inflected words. */
   getForms() {
     return this.forms;
   }
 }
 
-/** A phrase and its assimilated forms. */
+/** A phrase and its assimilated form. */
 export class TonalAssimilationPhraseme implements Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
@@ -153,7 +153,7 @@ export class TonalAssimilationPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Assimilated forms. */
+  /** Returns assimilated form. */
   getForms() {
     return this.forms;
   }

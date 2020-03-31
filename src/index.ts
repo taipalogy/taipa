@@ -79,4 +79,4 @@ export {
   TonalCombiningForms
 } from './dparser/metaplasm';
 
-export { Prediction } from './tonal/prediction';
+export { predict } from './tonal/prediction';

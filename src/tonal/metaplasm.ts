@@ -21,7 +21,7 @@ import {
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 
-/** Return the uncombining forms of a syllable. */
+/** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
@@ -74,7 +74,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   }
 }
 
-/** Return the uncombining forms of the syllable preceding ay */
+/** Returns the uncombining forms of the syllable preceding ay */
 export class UncombiningAy extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
@@ -148,7 +148,7 @@ export class UncombiningAy extends TonalCombiningMetaplasm {
   }
 }
 
-/** Return the last syllable of a double or triple construction as a uncombining form. */
+/** Returns the last syllable of a double or triple construction as an uncombining form. */
 export class TonalReduplication extends TonalCombiningMetaplasm {
   constructor(private sounds: Sound[]) {
     super();
@@ -170,7 +170,7 @@ export class TonalReduplication extends TonalCombiningMetaplasm {
   }
 }
 
-/** Lemmatize a word and return its base forms. */
+/** Lemmatizes a word and returns its base forms. */
 export class TonalLemmatization extends TonalLemmatizationMetaplasm {
   apply(
     morphemes: Array<TonalUncombiningMorpheme>,

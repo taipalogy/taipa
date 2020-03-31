@@ -1,7 +1,7 @@
 import { tonalLemmatizationAnalyzer } from './analyzer';
 
 /**
- * Lemmatize a word and create a `TonalLemmatizationLexeme`.
+ * Lemmatizes a word.
  * @param word A word to be lemmatized.
  */
 export function lemmatize(word: string) {

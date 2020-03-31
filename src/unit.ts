@@ -1,6 +1,5 @@
 import { TonalCombiningMetaplasm } from './metaplasm';
 import { InflectionalEnding } from './tonal/lexeme';
-import { lowerLettersTonal } from './tonal/version2';
 
 export class Character {
   character: string;
@@ -342,7 +341,7 @@ export class SoundGeneration {
   letters: string[] = [];
   /** Matched sounds accumulator. */
   sounds: Sound[] = new Array<Sound>();
-  /** Indicator.of syllable matching process. */
+  /** Indicator of syllable matching process. */
   matching: boolean = true;
   /** Will populate `predictions` when set to true. */
   predictive: boolean = false;

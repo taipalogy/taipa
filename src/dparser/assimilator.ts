@@ -25,7 +25,7 @@ export function getNoAssimilation(word: string) {
   return lx;
 }
 
-/** Agressive assimilation inside a word. */
+/** Assimilates agressively inside a word. */
 export function assimilateAgressiveLexical(word: string) {
   const mrphs = morphAnalyze(word);
   const lx = new TonalAssimilationLexeme(mrphs, new AgressiveInternal());
@@ -33,7 +33,7 @@ export function assimilateAgressiveLexical(word: string) {
   return lx;
 }
 
-/** Regressive assimilation inside a word. */
+/** Assimilates regressively inside a word. */
 export function assimilateRegressiveLexical(word: string) {
   const mrphs = morphAnalyze(word);
   const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
@@ -41,7 +41,7 @@ export function assimilateRegressiveLexical(word: string) {
   return lx;
 }
 
-/** Agressive assimilation between 2 words. */
+/** Assimilates agressively between 2 words. */
 export function assimilateAgressivePhrasal(
   preceding: string,
   following: string
@@ -53,7 +53,7 @@ export function assimilateAgressivePhrasal(
   return phmk.makePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
 }
 
-/** Regressive assimilation between 2 words. */
+/** Assimilates regressivels between 2 words. */
 export function assimilateRegressivePhrasal(
   preceding: string,
   following: string

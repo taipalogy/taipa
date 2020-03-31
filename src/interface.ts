@@ -1,4 +1,3 @@
-import { Word, Phrase } from './unit';
 import { OrthoPhraseme, OrthoLexeme, OrthoWord } from './dparser/visitor';
 
 /** Orthographic element visitor interface. */

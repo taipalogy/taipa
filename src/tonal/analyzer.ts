@@ -10,7 +10,7 @@ import {
 } from './morpheme';
 
 /**
- * Analyze a string into tonal graphemes. Graphemic analysis.
+ * Analyzes a string into graphemes. Graphemic analysis.
  * @param str A string
  */
 export function graphAnalyzeTonal(str: string): AlphabeticGrapheme[] {
@@ -18,10 +18,10 @@ export function graphAnalyzeTonal(str: string): AlphabeticGrapheme[] {
   return gm.makeGraphemes(str);
 }
 
-/** Analyze a string into graphemes, morphemes, or lexeme. */
+/** Analyzes a string into morphemes or lexeme. */
 export const tonalLemmatizationAnalyzer = {
   /**
-   * Analyze a string or graphemes into morphemes. Morphological analysis.
+   * Analyzes a string or graphemes into morphemes. Morphological analysis.
    * @param x A string or graphemes
    */
   morphAnalyze(x: string | Array<AlphabeticGrapheme>) {
@@ -37,7 +37,7 @@ export const tonalLemmatizationAnalyzer = {
   },
 
   /**
-   * Analyze a string or morphemes into a lexeme. Lexical analysis.
+   * Analyzes a string or morphemes into a lexeme. Lexical analysis.
    * @param x A string or uncombining morphemes
    */
   lexAnalyze(
