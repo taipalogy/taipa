@@ -96,3 +96,14 @@ export class Processor {
     };
   }
 }
+
+export const tokenize = function(text: string) {
+  const arr: Token[] = [];
+  if (text) {
+    const tokens = text.match(/\w+/g);
+    if (tokens) {
+      tokens.filter(x => x != undefined).map(x => arr.push(new Token(x)));
+    }
+  }
+  return arr;
+};
