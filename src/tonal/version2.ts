@@ -94,7 +94,7 @@ export enum TonalLetterTags {
 
   er = 'er',
   ir = 'ir',
-  or = 'or'
+  or = 'or',
 }
 
 export class LettersOfTonal extends Letters {}
@@ -142,7 +142,7 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.h,
   TonalLetterTags.er,
   TonalLetterTags.ir,
-  TonalLetterTags.or
+  TonalLetterTags.or,
 ]);
 
 export enum TonalSoundTags {
@@ -152,7 +152,7 @@ export enum TonalSoundTags {
   stopFinal = 'stopFinal',
   nasalFinal = 'nasalFinal',
   checkedTonal = 'checkedTonal',
-  freeTonal = 'freeTonal'
+  freeTonal = 'freeTonal',
 }
 
 export class Initial extends Sound {
@@ -567,18 +567,18 @@ const psLl = positionalSound([new FinalLL()]);
 const psM = positionalSound([
   new InitialM(),
   new MaterLectionisM(),
-  new FinalM()
+  new FinalM(),
 ]);
 const psN = positionalSound([
   new InitialN(),
   new MaterLectionisN(),
-  new FinalN()
+  new FinalN(),
 ]);
 const psNn = positionalSound([new NasalizationNN()]);
 const psNg = positionalSound([
   new InitialNG(),
   new MaterLectionisNG(),
-  new FinalNG()
+  new FinalNG(),
 ]);
 const psO = positionalSound([new MedialO()]);
 const psOr = positionalSound([new MedialOR()]);
@@ -826,6 +826,7 @@ export const uncombinedCheckedAllomorphs = new Map<string, Allomorph>()
   .set(TonalLetterTags.kk, new AllomorphKK())
   .set(TonalLetterTags.hh, new AllomorphHH());
 
+// TODO: add b, l, g, j, s
 export const combinedCheckedAllomorphs = new Map<string, Allomorph[]>()
   .set(TonalLetterTags.p, [new AllomorphPF()])
   .set(TonalLetterTags.t, [new AllomorphTF()])
@@ -842,7 +843,7 @@ export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>()
   .set(TonalLetterTags.xx, [
     new FreeTonalZ(),
     new FreeTonalF(),
-    new FreeTonalX()
+    new FreeTonalX(),
   ])
   .set(TonalLetterTags.z, [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
   .set(TonalLetterTags.zx, [])
@@ -855,5 +856,5 @@ export const uncombiningRulesAy = new Map<string, Tonal[]>()
   .set(TonalLetterTags.x, [
     new ZeroTonal(),
     new FreeTonalX(),
-    new FreeTonalZ()
+    new FreeTonalZ(),
   ]);

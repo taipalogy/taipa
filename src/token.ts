@@ -7,13 +7,13 @@ import { lemmatize } from './tonal/lemmatizer';
 
 export class Token {
   /** The simple part-of-speech tag. */
-  pos: string = '';
+  pos: string = ''; // upos
   /** The detailed part-of-speech tag. */
-  tag: string = '';
+  tag: string = ''; // xpos
   /** The base form of the word. */
   lemma: string = '';
   /** Syntactic dependnecy */
-  dep: string = '';
+  dep: string = ''; // deprel
   /** The head of this token */
   head: Token | undefined = undefined;
 
@@ -77,7 +77,7 @@ export class TokenLemmaLookup {
           const base = sophv.match([
             doc.tokens[i].text,
             doc.tokens[i + 1].text,
-            doc.tokens[i + 2].text
+            doc.tokens[i + 2].text,
           ]);
           if (base != '') {
             const lemmas = base.split(' ');
@@ -95,7 +95,7 @@ export class TokenLemmaLookup {
 
           const base = sophv.match([
             doc.tokens[i].text,
-            doc.tokens[i + 1].text
+            doc.tokens[i + 1].text,
           ]);
           if (base != '') {
             const lemmas = base.split(' ');

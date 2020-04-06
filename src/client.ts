@@ -10,7 +10,7 @@ import { kanaLemmatizationAnalyzer } from './kana/analyzer';
 import { DependencyParser } from './dparser/parser';
 import { RuleBasedTagger } from './dparser/tagger';
 
-import { Document, docPipe } from './document';
+import { Document } from './document';
 import { Token, TokenAnalysis } from './token';
 import { TokenLemmaLookup } from './token';
 
@@ -55,55 +55,50 @@ export class Client {
   }
 }
 
-export class Processor {
-  load(name: string) {
-    const getPipe = function() {
-      // tagging
-      const tggr = new RuleBasedTagger();
-
-      // lemmatization
-      const lmtzr = new TokenLemmaLookup();
-
-      // dependency parsing
-      const dpsr = new DependencyParser();
-
-      return docPipe(tggr.tag, lmtzr.getTonalLemmas, dpsr.parse);
-    };
-
-    const pipe = function(text: string) {
-      let doc: Document = new Document();
-
-      if (text) {
-        // tokenization
-        const tokens = text.match(/\w+/g);
-        if (tokens) {
-          tokens
-            .filter(x => x != undefined)
-            .map(x => doc.tokens.push(new Token(x)));
-        }
-        doc = getPipe()(doc);
-      }
-
-      return doc;
-    };
-
-    return {
-      add() {},
-      get() {},
-      p(text: string) {
-        return pipe(text);
-      }
-    };
-  }
-}
-
-export const tokenize = function(text: string) {
-  const arr: Token[] = [];
+export const tokenizeSpace = function (text: string) {
+  const tokens: Token[] = [];
   if (text) {
-    const tokens = text.match(/\w+/g);
-    if (tokens) {
-      tokens.filter(x => x != undefined).map(x => arr.push(new Token(x)));
+    const matchArr = text.match(/\w+/g);
+    if (matchArr) {
+      matchArr
+        .filter(it => it != undefined)
+        .map(it => tokens.push(new Token(it)));
     }
   }
-  return arr;
+  return tokens;
+};
+
+export const tokenizePre = function (preTokenized: string[]) {
+  const tokens: Token[] = [];
+  if (preTokenized && preTokenized.length > 0) {
+    preTokenized
+      .filter(it => it != undefined)
+      .map(it => tokens.push(new Token(it)));
+  }
+  return tokens;
+};
+
+export const tagRuleBased = function (doc: Document) {
+  const tgr = new RuleBasedTagger();
+  return tgr.tag(doc);
+};
+
+export const lemmaLookup = function (doc: Document) {
+  const lm = new TokenLemmaLookup();
+  return lm.getTonalLemmas(doc);
+};
+
+export const parseDenpendency = function (doc: Document) {
+  const pa = new DependencyParser();
+  return pa.parse(doc);
+};
+
+export const processor = function process(text: string) {
+  const tokens = tokenizeSpace(text);
+  let docTwo = new Document();
+  docTwo.tokens = tokens;
+  docTwo = tagRuleBased(docTwo);
+  docTwo = lemmaLookup(docTwo);
+  docTwo = parseDenpendency(docTwo);
+  return docTwo;
 };

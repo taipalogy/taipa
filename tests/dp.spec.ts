@@ -1,11 +1,8 @@
-import { Processor } from '../src/client';
+import { processor } from '../src/client';
 import { DependencyLabels } from '../src/dparser/symbols';
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa koannw diurh');
+  const doc = processor('goa koannw diurh');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -32,10 +29,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa koanny diurhhw che');
+  const doc = processor('goa koanny diurhhw che');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -68,10 +62,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa longy diurhhw che');
+  const doc = processor('goa longy diurhhw che');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -104,10 +95,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('che goa koannw diurh');
+  const doc = processor('che goa koannw diurh');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -140,10 +128,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('koannw diurh aw');
+  const doc = processor('koannw diurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -170,10 +155,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('koannw aw');
+  const doc = processor('koannw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -194,10 +176,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('longw aw');
+  const doc = processor('longw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -218,10 +197,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa koannw diurh aw');
+  const doc = processor('goa koannw diurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -254,10 +230,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('pah aw');
+  const doc = processor('pah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -278,10 +251,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('longw diurh aw');
+  const doc = processor('longw diurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -308,10 +278,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('qaz pah aw');
+  const doc = processor('qaz pah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -338,10 +305,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa qaz pah');
+  const doc = processor('goa qaz pah');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -368,10 +332,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa qaz pah aw');
+  const doc = processor('goa qaz pah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -404,10 +365,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const pro = new Processor();
-  const nlp = pro.load('');
-
-  const doc = nlp.p('goa qaz koannw aw');
+  const doc = processor('goa qaz koannw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {

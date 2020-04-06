@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { Processor, tokenize } from './client';
+import { processor } from './client';
 import { Document } from './document';
 import { Token } from './token';
 
@@ -8,13 +8,9 @@ let doc = new Document();
 
 let stdin = process.openStdin();
 
-stdin.addListener('data', function(d) {
-  //   const tokens = tokenize(d.toString().trim());
-  //   console.info(tokens);
+stdin.addListener('data', function (d) {
+  doc = processor(d.toString().trim());
 
-  const pro = new Processor();
-  const nlp = pro.load('');
-  doc = nlp.p(d.toString().trim());
   const ts = doc.tokens;
 
   if (ts.length > 0) {

@@ -20,7 +20,7 @@ export enum POSTags {
   subordinatingConjunction = 'SCONJ',
   symbol = 'SYM',
   verb = 'VERB',
-  other = 'X'
+  other = 'X',
 }
 
 export enum DependencyLabels {
@@ -37,7 +37,8 @@ export enum DependencyLabels {
   case = 'case',
   ccomp = 'ccomp', // multiword expression
   compound = 'compound',
-  compoundPrt = 'compound:prt',
+  compoundPrt = 'compound:prt', // particle verbs
+  // comooundSvc = 'compound:svc', // serial verbs
   cop = 'cop',
   csubj = 'csubj',
   det = 'det',
@@ -55,7 +56,7 @@ export enum DependencyLabels {
   obl = 'obl', // oblique nominal
   prt = 'prt',
   root = 'root',
-  xcomp = 'xcomp'
+  xcomp = 'xcomp',
 }
 
 export enum Tagset {
@@ -88,7 +89,7 @@ export enum Tagset {
   px = 'PX', // prefix
   sx = 'SX', // suffix
   sym = 'SYM', // symbol
-  vb = 'VB' // verb
+  vb = 'VB', // verb
 }
 
 export enum PronType {
@@ -99,5 +100,5 @@ export enum PronType {
 
   dem = 'Dem',
   prs = 'Prs',
-  rel = 'Rel'
+  rel = 'Rel',
 }
