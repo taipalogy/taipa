@@ -32,7 +32,11 @@ export function createTonalPhrase(str: string) {
   return new TonalPhrase(lxs.map(it => it.word));
 }
 
-/** Creates a compound of type `TonalCompoundPhraseme` in which the preceding word will be inflected and the following word will not. */
+/**
+ * Creates a compound in which the preceding word will be inflected and the following word will not.
+ * @param preceding A word that will be inflected.
+ * @param following A word that will not be inflected.
+ */
 export function createCompoundPhraseme(preceding: string, following: string) {
   const tia = tonalInflectionAnalyzer;
   const tiphm = new TonalInflectionPhrasemeMaker();

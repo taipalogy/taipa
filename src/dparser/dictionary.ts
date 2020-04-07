@@ -16,11 +16,5 @@ export const dictOfPhrasalVerbTwos = [
     ['tehh', 'cut', 'kih'],
 ];
 
-interface IDictionary {
-    readonly [index: string]: string[];
-}
-
-// prettier-ignore
-export const dictOfSeperateVVCompounds: IDictionary = {
-    siam: ['qoew'],
-};
+/** Base forms of separate VV compounds. */
+export const dictOfSeperateVVCompounds = [['siamy', 'qoew']];

@@ -5,17 +5,17 @@ import {
   VerbElement,
   ParticleElement,
   PersonalPronounElement,
-  PronounElement
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
 import { inflectToProceeding, inflectVppToProceeding } from './inflector';
-import { OrthoPhraseme, VisitorMatching } from './visitor';
+import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
   dictOfVerbs,
   dictOfPhrasalVerbs,
+  dictOfPhrasalVerbTwos,
   dictOfSeperateVVCompounds,
-  dictOfPhrasalVerbTwos
 } from './dictionary';
+import { createCompoundPhraseme } from './creator';
 
 /** Construction of a phrase. */
 export class ConstructionOfPhrase {
@@ -123,6 +123,37 @@ export class PhrasalVerbs {
   }
 }
 
+export class SeparateCompoundVerbs {
+  compounds: Array<OrthoPhraseme> = new Array();
+
+  constructor() {
+    this.populatePhrasemes();
+  }
+
+  private populatePhrasemes() {
+    dictOfSeperateVVCompounds.map(it => {
+      const oe = new OrthoPhraseme();
+      oe.form = it[0] + ' ' + it[1];
+      oe.inflected.push(createCompoundPhraseme(it[0], it[1]).phrase.literal);
+      this.compounds.push(oe);
+    });
+  }
+
+  matchHead(head: string) {
+    const v = new VisitorMatching();
+    const arr = this.compounds
+      .map(it => {
+        const oe = new OrthoCompoundHead();
+        // assign the inflected form to oe
+        oe.form = it.inflected[0];
+        return oe;
+      })
+      .filter(it => it.accept(v, head));
+    if (arr.length > 0 && arr[0]) return arr[0].form.split(' ')[1];
+    return '';
+  }
+}
+
 class SmallClause extends VerbPhrase {
   constructor(
     verb1: VerbElement,
@@ -184,8 +215,8 @@ export class Rules {
       return [
         new PhrasalVerb([
           new VerbElement(sequence[0]),
-          new ParticleElement(sequence[1])
-        ])
+          new ParticleElement(sequence[1]),
+        ]),
       ];
     }
 
@@ -194,8 +225,8 @@ export class Rules {
         new PhrasalVerb([
           new VerbElement(sequence[0]),
           new ParticleElement(sequence[1]),
-          new ParticleElement(sequence[2])
-        ])
+          new ParticleElement(sequence[2]),
+        ]),
       ];
     }
 
@@ -207,8 +238,8 @@ export class Rules {
         new PhrasalVerb([
           new VerbElement(sequence[0]),
           new ParticleElement(sequence[1]),
-          new ParticleElement(sequence[2])
-        ])
+          new ParticleElement(sequence[2]),
+        ]),
       ];
     }
     return [];
@@ -227,10 +258,9 @@ export class Rules {
   }
 
   seperateMatches(str: string) {
-    const ptcls = dictOfSeperateVVCompounds[str];
-    if (ptcls) {
-      return ptcls[0];
-    }
+    const compounds = new SeparateCompoundVerbs();
+    const ptcl = compounds.matchHead(str);
+    if (ptcl) return ptcl;
   }
 
   matches(sequence: string[]) {

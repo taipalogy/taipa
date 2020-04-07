@@ -40,8 +40,7 @@ export class TokenAnalysis {
 }
 
 export class TokenLemmaLookup {
-  getTonalLemmas = (doc: Document): Document => {
-    // const lmtzr = new TonalLemmatizer();
+  getTonalLemmas(doc: Document): Document {
     const sophv = new PhrasalVerbs();
     let j: number = 0;
     let k: number = 0;
@@ -127,5 +126,5 @@ export class TokenLemmaLookup {
       if (lemmas.length > 0) doc.tokens[i].lemma = lemmas[0].literal;
     }
     return doc;
-  };
+  }
 }
