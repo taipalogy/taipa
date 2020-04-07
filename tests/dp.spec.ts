@@ -1,4 +1,4 @@
-import { processor } from '../src/client';
+import { processor } from '../src/dparser/processor';
 import { DependencyLabels } from '../src/dparser/symbols';
 
 describe('Dependency parsing', () => {

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { processor } from './client';
+import { processor } from './dparser/processor';
 import { Document } from './document';
 import { Token } from './token';
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const client_1 = require("../lib/client")
+const processor_1 = require("../lib/dparser/processor")
 const document_1 = require("../lib/document")
 let doc = new document_1.Document();
 let stdin = process.openStdin();
 stdin.addListener('data', function (d) {
-    doc = client_1.processor(d.toString().trim());
+    doc = processor_1.processor(d.toString().trim());
     const ts = doc.tokens;
     if (ts.length > 0) {
         for (let i = 0; i < ts.length; i++) {
