@@ -213,24 +213,26 @@ export class RuleBasedTagger {
   private match(tokens: Token[]) {
     let toks: string[] = [];
     for (let i in tokens) toks.push(tokens[i].text);
-    /*
-    console.log(tokens);
-    const stack: Array<string[]> = [];
-    const stackExpecting: Array<string[]> = [];
+
+    // console.log(tokens);
+    const stack: string[] = [];
+    let dirO: string = '';
+    let expecting: string = '';
     const secondV = this.rules.seperateMatches(toks[0]);
-    if (secondV) stackExpecting.push([secondV]);
+    if (secondV) expecting = secondV;
 
     if (secondV) {
       toks.map(it => {
-        const kw = this.rules.seperateMatches(it);
-        if (kw) {
-          stack.push([it]);
+        if (secondV && !this.rules.matchKeyWords(it)) {
+          stack.push(it);
         } else {
-          stack[0].push(it);
+          dirO = it;
         }
       });
     }
-*/
+    // console.log(stack);
+    // console.log(dirO);
+
     let beginOfPhrase: number = 0;
     let matched: ConstructionOfPhrase = new ConstructionOfPhrase([]);
     for (let i = 0; i < toks.length; i++) {
