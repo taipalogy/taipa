@@ -18,7 +18,6 @@ import { Document } from '../document';
 export class RuleBasedTagger {
   private phrases: Array<ConstructionOfPhrase> = new Array();
   private readonly rules = new Rules();
-  private stack: Array<string[]> = [];
 
   private generate(sequence: string[], phrases: ConstructionOfPhrase[]) {
     let cps: Array<ConstructionOfPhrase> = new Array();
@@ -64,11 +63,12 @@ export class RuleBasedTagger {
     else if (kw.pos === POSTags.particle) kw.tag = Tagset.padv;
   }
 
-  private matchSeperates(sequence: string[], particle: string) {
+  private matchSeperates(sequence: string[], secondV: string) {
     let phrase: ConstructionOfPhrase = new ConstructionOfPhrase([]);
-    let vs: VerbElement = new VerbElement(sequence[0]);
-    vs.tag = Tagset.vb;
-    phrase.elements.push(vs);
+    let vb: VerbElement = new VerbElement(sequence[0]);
+
+    vb.tag = Tagset.vb;
+    phrase.elements.push(vb);
     phrase.pos = POSTags.verb;
 
     if (sequence.length > 1) {
@@ -81,7 +81,7 @@ export class RuleBasedTagger {
           phrase.elements.push(kw);
         }
 
-        if (sequence[i] === particle) {
+        if (sequence[i] === secondV) {
           let ps: VerbElement = new VerbElement(sequence[i]);
           ps.tag = Tagset.vb;
           phrase.elements.push(ps);
@@ -123,21 +123,20 @@ export class RuleBasedTagger {
     return phrases;
   }
 
-  private phrase(strs: string[], beginOfPhrase: number) {
+  private makePhrases(tokens: string[], beginOfPhrase: number) {
     let sequence: string[] = [];
     let phrss;
 
-    for (let i = beginOfPhrase; i < strs.length; i++) {
-      sequence.push(strs[i]);
+    for (let i = beginOfPhrase; i < tokens.length; i++) {
+      sequence.push(tokens[i]);
     }
 
     phrss = this.rules.matches(sequence);
 
-    const ptcl = this.rules.seperateMatches(sequence[0]);
-    // TODO: current progress
-    this.stack.push([sequence[0]]);
-    if (ptcl) {
-      const sep = this.matchSeperates(sequence, ptcl);
+    const secondV = this.rules.seperateMatches(sequence[0]);
+
+    if (secondV) {
+      const sep = this.matchSeperates(sequence, secondV);
       if (sep) {
         phrss = [];
         phrss = [sep];
@@ -174,20 +173,20 @@ export class RuleBasedTagger {
 
     for (let m in listCP) {
       const min = Math.min(
-        strs.length - beginOfPhrase,
+        tokens.length - beginOfPhrase,
         listCP[m].elements.length
       );
       if (listCP[m].elements.length == min) {
         for (let n = 0; n < min; n++) {
           if (listCP[m].elements[n] != undefined) {
-            if (strs[beginOfPhrase + n] === listCP[m].elements[n].orth) {
+            if (tokens[beginOfPhrase + n] === listCP[m].elements[n].orth) {
               if (n + 1 == min && min > matchedLen) {
                 matchedLen = min;
 
                 for (let q = 0; q < matchedLen; q++) {
                   mp.elements[q] = listCP[m].elements[q];
                   if (listCP[m].elements[q].orth === '') {
-                    mp.elements[q].orth = strs[beginOfPhrase + q];
+                    mp.elements[q].orth = tokens[beginOfPhrase + q];
                   }
                 }
                 mp.pos = listCP[m].pos;
@@ -212,14 +211,31 @@ export class RuleBasedTagger {
   }
 
   private match(tokens: Token[]) {
-    let strs: string[] = [];
-    for (let i in tokens) strs.push(tokens[i].text);
+    let toks: string[] = [];
+    for (let i in tokens) toks.push(tokens[i].text);
+    /*
+    console.log(tokens);
+    const stack: Array<string[]> = [];
+    const stackExpecting: Array<string[]> = [];
+    const secondV = this.rules.seperateMatches(toks[0]);
+    if (secondV) stackExpecting.push([secondV]);
 
+    if (secondV) {
+      toks.map(it => {
+        const kw = this.rules.seperateMatches(it);
+        if (kw) {
+          stack.push([it]);
+        } else {
+          stack[0].push(it);
+        }
+      });
+    }
+*/
     let beginOfPhrase: number = 0;
     let matched: ConstructionOfPhrase = new ConstructionOfPhrase([]);
-    for (let i = 0; i < strs.length; i++) {
+    for (let i = 0; i < toks.length; i++) {
       if (i - beginOfPhrase == 0) {
-        matched = this.phrase(strs, beginOfPhrase);
+        matched = this.makePhrases(toks, beginOfPhrase);
         //console.log(matched)
         if (matched.elements.length) {
           beginOfPhrase += matched.elements.length;

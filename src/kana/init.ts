@@ -8,7 +8,7 @@ import {
   GerminatedConsonantSet,
   InitialConsonantSet,
   hatsuon,
-  gailaigo
+  gailaigo,
 } from './kana';
 import { KanaUncombiningMorpheme } from './morpheme';
 

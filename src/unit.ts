@@ -36,7 +36,7 @@ class Characters {
     'w',
     'x',
     'y',
-    'z'
+    'z',
   ];
   private o: Map<string, Character> = new Map();
 
@@ -188,7 +188,11 @@ export class GraphemeMaker {
 
     //console.log(characters)
     if (characters[beginOfLetter].character === 'n') {
-      if (characters.length - beginOfLetter >= 'nng'.length) {
+      // TODO: need to be broken down into two routines
+      if (
+        characters.length - beginOfLetter >= 'nng'.length &&
+        this.list.length == 43
+      ) {
         if (
           characters[beginOfLetter].character === 'n' &&
           characters[beginOfLetter + 1].character === 'n' &&
@@ -200,6 +204,18 @@ export class GraphemeMaker {
           // special case for 'nng'
 
           // copy the matched letter
+          ms.characters[0] = new Character('n');
+          return ms;
+        }
+      } else if (
+        characters.length - beginOfLetter >= 'ng'.length &&
+        this.list.length == 26
+      ) {
+        if (
+          characters[beginOfLetter].character === 'n' &&
+          characters[beginOfLetter + 1].character === 'g'
+        ) {
+          // handling final n and initial ng in kana
           ms.characters[0] = new Character('n');
           return ms;
         }

@@ -6,7 +6,7 @@ import {
   Hatsuon,
   hiraganaKatakana,
   SemivowelSet,
-  gailaigo
+  gailaigo,
 } from './kana';
 import { KanaSoundGenerator } from './soundgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
@@ -66,10 +66,10 @@ function syllabifyKana(
 
   let list: Array<Sound[]> = new Array();
   if (matched.length > 0) {
-    //console.log(matchedLtrs, lookahead)
+    // console.log(matchedLtrs, lookahead);
     const ksg = new KanaSoundGenerator();
     list = ksg.generate(matchedLtrs, lookahead);
-    // console.log(list)
+    // console.log(list);
   }
 
   let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();

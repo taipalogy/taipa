@@ -28,5 +28,5 @@ export const kanaLemmatizationAnalyzer = {
 
     const mm = new KanaUncombiningMorphemeMaker(new KanaCombiningMetaplasm());
     return mm.makeInputingMorphemes(graphemes);
-  }
+  },
 };
