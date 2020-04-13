@@ -10,7 +10,7 @@ import {
   TonalSoundTags,
   CheckedTonalSounds,
   combinedCheckedAllomorphs,
-  MedialSounds
+  MedialSounds,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
@@ -19,7 +19,8 @@ import {
   voicelessVoicedFinals,
   initialsForEuphonicTt,
   initialsForEuphonicT,
-  nasalInitialSounds
+  nasalInitialSounds,
+  finalBgjlsbbggjjllss,
 } from '../tonal/collections';
 import { AssimiDirection } from './metaplasm';
 import { TonalCombiningMetaplasm } from '../metaplasm';
@@ -62,19 +63,22 @@ export class TonalCombiningMorpheme extends Morpheme {
       new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
       uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
     ) {
-      // in case of final followed by tonal
+      // in case of a final followed by a tonal
       const ams = combinedCheckedAllomorphs.get(
         syllable.lastSecondLetter.literal
       );
 
       if (ams && ams.length > 1) {
-        const it = ams.filter(
-          x => x.tonal.toString() === syllable.lastLetter.literal
+        const ret = ams.filter(
+          it => it.tonal.toString() === syllable.lastLetter.literal
         );
-        return it[0];
+        return ret[0];
       }
-      // return alms[0];
       return new Allomorph();
+    } else if (
+      new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
+      finalBgjlsbbggjjllss.includes(syllable.lastSecondLetter.literal)
+    ) {
     }
 
     if (combinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
@@ -108,7 +112,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         const snds = this.sounds;
         snds.splice(0, 0, sound);
         return [
-          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))
+          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
         ];
       } else if (
         sound.name === TonalSoundTags.initial &&
@@ -123,7 +127,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           snds.splice(0, 1, duplifix);
         }
         return [
-          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))
+          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
         ];
       } else if (
         sound.name === TonalSoundTags.nasalization &&
@@ -136,7 +140,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           snds.push(sound);
         }
         return [
-          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters)))
+          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
         ];
       }
 

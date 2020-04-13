@@ -4,7 +4,7 @@ import { TonalLetterTags } from './version2';
 export const nasalInitialSounds = [
   TonalLetterTags.m.toString(),
   TonalLetterTags.n.toString(),
-  TonalLetterTags.ng.toString()
+  TonalLetterTags.ng.toString(),
 ];
 
 export const combiningRules = new Map<string, TonalLetterTags[]>()
@@ -25,7 +25,7 @@ export const combiningRules = new Map<string, TonalLetterTags[]>()
 // w, x
 export const tonalsWx = [
   TonalLetterTags.w.toString(),
-  TonalLetterTags.x.toString()
+  TonalLetterTags.x.toString(),
 ];
 
 // b, l, g, m, n
@@ -34,14 +34,14 @@ export const epentheticSounds = [
   TonalLetterTags.l.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.m.toString(),
-  TonalLetterTags.n.toString()
+  TonalLetterTags.n.toString(),
 ];
 
 // j, l, s
 export const euphonicFinalsJls = [
   TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
-  TonalLetterTags.s.toString()
+  TonalLetterTags.s.toString(),
 ];
 
 // b, g, k, p
@@ -49,14 +49,14 @@ export const euphonicFinalsBgkp = [
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.k.toString(),
-  TonalLetterTags.p.toString()
+  TonalLetterTags.p.toString(),
 ];
 
 // jj, ll, ss
 export const euphonicFinalsJjllss = [
   TonalLetterTags.jj.toString(),
   TonalLetterTags.ll.toString(),
-  TonalLetterTags.ss.toString()
+  TonalLetterTags.ss.toString(),
 ];
 
 // bb, gg, kk, pp
@@ -64,7 +64,7 @@ export const euphonicFinalsBbggkkpp = [
   TonalLetterTags.bb.toString(),
   TonalLetterTags.gg.toString(),
   TonalLetterTags.kk.toString(),
-  TonalLetterTags.pp.toString()
+  TonalLetterTags.pp.toString(),
 ];
 
 // t
@@ -81,7 +81,7 @@ export const initialsForEuphonicT = [
 
   TonalLetterTags.m.toString(),
   TonalLetterTags.n.toString(),
-  TonalLetterTags.ng.toString()
+  TonalLetterTags.ng.toString(),
 ];
 
 // tt
@@ -96,7 +96,7 @@ export const initialsForEuphonicTt = [
 
   TonalLetterTags.m.toString(),
   TonalLetterTags.n.toString(),
-  TonalLetterTags.ng.toString()
+  TonalLetterTags.ng.toString(),
 ];
 
 export const voicelessVoicedFinals = new Map<string, TonalLetterTags>()
@@ -136,7 +136,7 @@ export const initialBghl = [
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.h.toString(),
-  TonalLetterTags.l.toString()
+  TonalLetterTags.l.toString(),
 ];
 
 // 8 to 1
@@ -149,3 +149,18 @@ export const eighthToFirst = new Map<string, TonalLetterTags>()
 export const finalOfPhrasalVerbParticle = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.h, TonalLetterTags.hh)
   .set(TonalLetterTags.p, TonalLetterTags.pp);
+
+// b, g, j, l, s, bb, gg, jj, ll, ss
+export const finalBgjlsbbggjjllss = [
+  // turn preceding finals to voiced ones
+  TonalLetterTags.b.toString(),
+  TonalLetterTags.g.toString(),
+  TonalLetterTags.j.toString(),
+  TonalLetterTags.l.toString(),
+  TonalLetterTags.s.toString(),
+  TonalLetterTags.bb.toString(),
+  TonalLetterTags.gg.toString(),
+  TonalLetterTags.jj.toString(),
+  TonalLetterTags.ll.toString(),
+  TonalLetterTags.ss.toString(),
+];
