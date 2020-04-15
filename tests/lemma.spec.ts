@@ -1,7 +1,7 @@
 import { Client } from '../src/client';
 import {
   tonalLemmatizationAnalyzer,
-  graphAnalyzeTonal
+  graphAnalyzeTonal,
 } from '../src/tonal/analyzer';
 import { lemmatize } from '../src/tonal/lemmatizer';
 
@@ -51,6 +51,15 @@ describe('Uncombining form testing, reduplication', () => {
   test('check the uncombining form, doublet', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('angx');
   });
+});
+
+describe('Uncombining form testing, reduplication', () => {
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('callxay');
+
+  test('check the uncombining form, surface form', () => {
+    expect(ms1[0].getForms()[0].literal).toEqual('call');
+  });
+  // TODO: add more tests for element 1 and 2
 });
 
 describe('Lemma testing', () => {

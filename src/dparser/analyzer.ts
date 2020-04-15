@@ -1,7 +1,7 @@
 import { AlphabeticGrapheme } from '../unit';
 import {
   TonalCombiningMorphemeMaker,
-  TonalCombiningMorpheme
+  TonalCombiningMorpheme,
 } from './morpheme';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionMetaplasm } from '../metaplasm';
@@ -49,5 +49,5 @@ export const tonalInflectionAnalyzer = {
 
     const lm = new TonalInflectionLexemeMaker(metaplasm);
     return lm.makeLexemes(ms);
-  }
+  },
 };

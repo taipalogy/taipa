@@ -14,7 +14,7 @@ import {
   uncombiningRulesAy,
   InitialSounds,
   CheckedAllomorph,
-  Allomorph
+  Allomorph,
 } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from './soundgen';
@@ -30,13 +30,13 @@ import {
   regexMnngHhWX,
   smMHhW,
   smJlsF,
-  smJjllssWx
+  smJjllssWx,
 } from './matcher';
 import { epentheticSounds, tonalsWx } from './collections';
 import {
   TonalReduplication,
   UncombiningAy,
-  TonalUncombiningForms
+  TonalUncombiningForms,
 } from './metaplasm';
 import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
 
@@ -78,8 +78,10 @@ export function syllabifyTonal(
     } else if (sft.includes(letters[i].literal)) {
       // check tonals is the subset of free tonals
 
-      // console.log('i: %d', i)
-      // console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`)
+      // console.log('i: %d', i);
+      // console.log(
+      //   `i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`
+      // );
 
       // when there are tonals
 
@@ -88,8 +90,11 @@ export function syllabifyTonal(
         letters[i] &&
         letters[i - 1] &&
         (smBgkpF(letters[i - 1].literal, letters[i].literal) ||
-          smBbggkkppWx(letters[i - 1].literal, letters[i].literal))
+          smBbggkkppWx(letters[i - 1].literal, letters[i].literal) ||
+          smJlsF(letters[i - 1].literal, letters[i].literal) ||
+          smJjllssWx(letters[i - 1].literal, letters[i].literal))
       ) {
+        // b, g, bb, gg, l, j, s, ll, jj, ss need to be handled in TonalCombiningMorpheme.assignAllomorph
         // this combining form is not present in the pool.
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
@@ -512,7 +517,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         else if (fnl && len == 2)
           this.euphonicFinalTonals.push({
             index: indx,
-            letters: [fnl[0], fnl[1]]
+            letters: [fnl[0], fnl[1]],
           });
       }
 

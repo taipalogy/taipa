@@ -61,24 +61,21 @@ export class TonalCombiningMorpheme extends Morpheme {
 
     if (
       new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
-      uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal)
+      (uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal) ||
+        finalBgjlsbbggjjllss.includes(syllable.lastSecondLetter.literal))
     ) {
       // in case of a final followed by a tonal
       const ams = combinedCheckedAllomorphs.get(
         syllable.lastSecondLetter.literal
       );
 
-      if (ams && ams.length > 1) {
+      if (ams && ams.length > 0) {
         const ret = ams.filter(
           it => it.tonal.toString() === syllable.lastLetter.literal
         );
         return ret[0];
       }
       return new Allomorph();
-    } else if (
-      new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
-      finalBgjlsbbggjjllss.includes(syllable.lastSecondLetter.literal)
-    ) {
     }
 
     if (combinedFreeAllomorphs.has(syllable.lastLetter.literal)) {
