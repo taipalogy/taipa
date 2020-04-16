@@ -3,7 +3,7 @@ import {
   TonalWord,
   InflectionalEnding,
   FreeInflectionalEnding,
-  CheckedInflectionalEnding
+  CheckedInflectionalEnding,
 } from './lexeme';
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import {
@@ -16,10 +16,12 @@ import {
   uncombiningRulesAy,
   ZeroTonal,
   FreeTonalZ,
-  FreeTonalX
+  FreeTonalX,
+  lowerLettersTonal,
 } from './version2';
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
+import { finalBgjlsbbggjjllss } from './collections';
 
 /** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
@@ -75,7 +77,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 }
 
 /** Returns the uncombining forms of the syllable preceding ay */
-export class UncombiningAy extends TonalCombiningMetaplasm {
+export class UncombiningPrecedingAy extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph.tonal.toString() === TonalLetterTags.f) {
@@ -138,6 +140,11 @@ export class UncombiningAy extends TonalCombiningMetaplasm {
           );
           // pop x
           s.popLetter();
+          if (
+            finalBgjlsbbggjjllss.includes(sounds[sounds.length - 2].toString())
+          ) {
+            // TODO: to implement
+          }
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.y) {

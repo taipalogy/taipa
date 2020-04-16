@@ -27,7 +27,7 @@ import {
   regexJlsF,
   regexMnngHF,
   regexJjllssWx,
-  regexMnngHhWX,
+  regexMnngHhWx,
   smMHhW,
   smJlsF,
   smJjllssWx,
@@ -35,7 +35,7 @@ import {
 import { epentheticSounds, tonalsWx } from './collections';
 import {
   TonalReduplication,
-  UncombiningAy,
+  UncombiningPrecedingAy,
   TonalUncombiningForms,
 } from './metaplasm';
 import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
@@ -571,11 +571,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         2
       );
       return ls;
-    } else if (literal.length > 2 && regexMnngHhWX.test(literal)) {
+    } else if (literal.length > 2 && regexMnngHhWx.test(literal)) {
       const ls = this.preprocessEuphonicFinalTonal(
         letters,
         literal,
-        regexMnngHhWX,
+        regexMnngHhWx,
         2
       );
       return ls;
@@ -651,14 +651,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
       if (this.isCombiningAy(matched)) {
         // ~fa, ~xa, fay, or ~xay
-        morphemes.push(this.createMorpheme(ptn, new UncombiningAy()));
+        morphemes.push(this.createMorpheme(ptn, new UncombiningPrecedingAy()));
       } else if (this.isTriplet(matched)) {
-        // triple construction
+        // triplet construction
         morphemes.push(
           this.createMorpheme(ptn, new TonalReduplication(matched[2].pattern))
         );
       } else if (this.isDoublet(matched)) {
-        // double construction
+        // doublet construction
         morphemes.push(
           this.createMorpheme(ptn, new TonalReduplication(matched[1].pattern))
         );
