@@ -484,6 +484,7 @@ export class FreeTonalSounds extends SetOfSounds {
   }
 }
 
+// TODO: change to factory function
 export class CheckedTonalSounds extends SetOfSounds {
   constructor() {
     super();

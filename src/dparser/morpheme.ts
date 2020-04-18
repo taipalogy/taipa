@@ -62,7 +62,7 @@ export class TonalCombiningMorpheme extends Morpheme {
     if (
       new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
       (uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal) ||
-        finalBgjlsbbggjjllss.includes(syllable.lastSecondLetter.literal))
+        finalBgjlsbbggjjllss.has(syllable.lastSecondLetter.literal))
     ) {
       // in case of a final followed by a tonal
       const ams = combinedCheckedAllomorphs.get(

@@ -21,7 +21,7 @@ import {
 } from './version2';
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
-import { finalBgjlsbbggjjllss } from './collections';
+import { finalBgjlsbbggjjllss, voicedVoicelessFinals } from './collections';
 
 /** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
@@ -69,6 +69,22 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           sounds.map(x => new AlphabeticLetter(x.characters))
         );
         s.popLetter();
+        if (finalBgjlsbbggjjllss.has(s.lastLetter.literal)) {
+          const fnls = finalBgjlsbbggjjllss.get(s.lastLetter.literal);
+          if (fnls) {
+            const clones = fnls.map(it => {
+              const clone: TonalSyllable = Object.create(s);
+              clone.replaceLetter(
+                s.letters.length - 1,
+                lowerLettersTonal.get(it.toString())
+              );
+              return clone;
+            });
+            const ret: TonalSyllable[] = [];
+            clones.map(it => ret.push(it));
+            return clones;
+          }
+        }
         return [s];
       }
     }
@@ -77,7 +93,21 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 }
 
 /** Returns the uncombining forms of the syllable preceding ay */
-export class UncombiningPrecedingAy extends TonalCombiningMetaplasm {
+export class UncombiningPrecedingAyex extends TonalCombiningMetaplasm {
+  undoChangedFinal(syllable: TonalSyllable, sounds: Array<Sound>) {
+    const keysFinalsPrecedingAy = Array.from(voicedVoicelessFinals.keys());
+    if (keysFinalsPrecedingAy.includes(sounds[sounds.length - 2].toString())) {
+      if (voicedVoicelessFinals.has(syllable.lastLetter.literal)) {
+        const ltr = voicedVoicelessFinals.get(syllable.lastLetter.literal);
+        if (ltr)
+          syllable.replaceLetter(
+            syllable.letters.length - 1,
+            lowerLettersTonal.get(ltr)
+          );
+      }
+    }
+  }
+
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph.tonal.toString() === TonalLetterTags.f) {
@@ -102,6 +132,7 @@ export class UncombiningPrecedingAy extends TonalCombiningMetaplasm {
           );
           // pop f
           s.popLetter();
+          this.undoChangedFinal(s, sounds);
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.x) {
@@ -140,11 +171,7 @@ export class UncombiningPrecedingAy extends TonalCombiningMetaplasm {
           );
           // pop x
           s.popLetter();
-          if (
-            finalBgjlsbbggjjllss.includes(sounds[sounds.length - 2].toString())
-          ) {
-            // TODO: to implement
-          }
+          this.undoChangedFinal(s, sounds);
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.y) {

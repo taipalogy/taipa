@@ -56,9 +56,39 @@ describe('Uncombining form testing, reduplication', () => {
 describe('Uncombining form testing, reduplication', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('callxay');
 
-  // test('check the uncombining form', () => {
-  //   expect(ms1[0].getForms()[0].literal).toEqual('catt');
-  // });
+  test('check the uncombining form', () => {
+    expect(ms1[0].getForms()[0].literal).toEqual('catt');
+  });
+
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('caggxay');
+
+  test('check the uncombining form', () => {
+    expect(ms2[0].getForms()[0].literal).toEqual('cakk');
+  });
+
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('abbxay');
+
+  test('check the uncombining form', () => {
+    expect(ms3[0].getForms()[0].literal).toEqual('app');
+  });
+
+  const ms4 = tonalLemmatizationAnalyzer.morphAnalyze('cilfay');
+
+  test('check the uncombining form', () => {
+    expect(ms4[0].getForms()[0].literal).toEqual('cit');
+  });
+
+  const ms5 = tonalLemmatizationAnalyzer.morphAnalyze('degfay');
+
+  test('check the uncombining form', () => {
+    expect(ms5[0].getForms()[0].literal).toEqual('dek');
+  });
+
+  const ms6 = tonalLemmatizationAnalyzer.morphAnalyze('qabfay');
+
+  test('check the uncombining form', () => {
+    expect(ms6[0].getForms()[0].literal).toEqual('qap');
+  });
 });
 
 describe('Lemma testing', () => {

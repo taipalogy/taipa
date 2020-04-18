@@ -99,20 +99,6 @@ export const initialsForEuphonicTt = [
   TonalLetterTags.ng.toString(),
 ];
 
-export const voicelessVoicedFinals = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.k, TonalLetterTags.g)
-  .set(TonalLetterTags.p, TonalLetterTags.b)
-  .set(TonalLetterTags.t, TonalLetterTags.l)
-  .set(TonalLetterTags.kk, TonalLetterTags.gg)
-  .set(TonalLetterTags.pp, TonalLetterTags.bb)
-  .set(TonalLetterTags.tt, TonalLetterTags.ll);
-// .set(TonalLetterTags.g, TonalLetterTags.k)
-// .set(TonalLetterTags.b, TonalLetterTags.p)
-// .set(TonalLetterTags.l, TonalLetterTags.t)
-// .set(TonalLetterTags.gg, TonalLetterTags.kk)
-// .set(TonalLetterTags.bb, TonalLetterTags.pp)
-// .set(TonalLetterTags.ll, TonalLetterTags.tt);
-
 // tt, t
 export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)
@@ -150,17 +136,32 @@ export const finalOfPhrasalVerbParticle = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.h, TonalLetterTags.hh)
   .set(TonalLetterTags.p, TonalLetterTags.pp);
 
-// b, g, j, l, s, bb, gg, jj, ll, ss
-export const finalBgjlsbbggjjllss = [
-  // turn preceding finals to voiced ones
-  TonalLetterTags.b.toString(),
-  TonalLetterTags.g.toString(),
-  TonalLetterTags.j.toString(),
-  TonalLetterTags.l.toString(),
-  TonalLetterTags.s.toString(),
-  TonalLetterTags.bb.toString(),
-  TonalLetterTags.gg.toString(),
-  TonalLetterTags.jj.toString(),
-  TonalLetterTags.ll.toString(),
-  TonalLetterTags.ss.toString(),
-];
+/** turn preceding finals to voiced ones */
+export const voicelessVoicedFinals = new Map<string, string>()
+  .set(TonalLetterTags.p, TonalLetterTags.b)
+  .set(TonalLetterTags.t, TonalLetterTags.l)
+  .set(TonalLetterTags.k, TonalLetterTags.g)
+  .set(TonalLetterTags.pp, TonalLetterTags.bb)
+  .set(TonalLetterTags.tt, TonalLetterTags.ll)
+  .set(TonalLetterTags.kk, TonalLetterTags.gg);
+
+export const voicedVoicelessFinals = new Map<string, TonalLetterTags>()
+  .set(TonalLetterTags.b, TonalLetterTags.p)
+  .set(TonalLetterTags.l, TonalLetterTags.t)
+  .set(TonalLetterTags.g, TonalLetterTags.k)
+  .set(TonalLetterTags.bb, TonalLetterTags.pp)
+  .set(TonalLetterTags.ll, TonalLetterTags.tt)
+  .set(TonalLetterTags.gg, TonalLetterTags.kk);
+
+/** unchanged sounds for b, g, j, l, s, bb, gg, jj, ll, ss */
+export const finalBgjlsbbggjjllss = new Map<string, TonalLetterTags[]>()
+  .set(TonalLetterTags.b, [TonalLetterTags.p, TonalLetterTags.t])
+  .set(TonalLetterTags.g, [TonalLetterTags.k, TonalLetterTags.t])
+  .set(TonalLetterTags.j, [TonalLetterTags.t])
+  .set(TonalLetterTags.l, [TonalLetterTags.l, TonalLetterTags.t])
+  .set(TonalLetterTags.s, [TonalLetterTags.t])
+  .set(TonalLetterTags.bb, [TonalLetterTags.pp, TonalLetterTags.tt])
+  .set(TonalLetterTags.gg, [TonalLetterTags.kk, TonalLetterTags.tt])
+  .set(TonalLetterTags.jj, [TonalLetterTags.tt])
+  .set(TonalLetterTags.ll, [TonalLetterTags.ll, TonalLetterTags.tt])
+  .set(TonalLetterTags.ss, [TonalLetterTags.tt]);

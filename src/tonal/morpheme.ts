@@ -35,7 +35,7 @@ import {
 import { epentheticSounds, tonalsWx } from './collections';
 import {
   TonalReduplication,
-  UncombiningPrecedingAy,
+  UncombiningPrecedingAyex,
   TonalUncombiningForms,
 } from './metaplasm';
 import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
@@ -382,7 +382,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return tum;
   }
 
-  private isCombiningAy(patterns: MatchedPattern[]) {
+  private isCombiningAyex(patterns: MatchedPattern[]) {
     const keysAy = Array.from(uncombiningRulesAy.keys());
 
     if (
@@ -649,9 +649,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     for (let i in matched) {
       const ptn = this.postprocessEuphonicTtT(matched[i]);
 
-      if (this.isCombiningAy(matched)) {
-        // ~fa, ~xa, fay, or ~xay
-        morphemes.push(this.createMorpheme(ptn, new UncombiningPrecedingAy()));
+      if (this.isCombiningAyex(matched)) {
+        // ~fa, ~xa, fay, or ~xay. ex.
+        morphemes.push(
+          this.createMorpheme(ptn, new UncombiningPrecedingAyex())
+        );
       } else if (this.isTriplet(matched)) {
         // triplet construction
         morphemes.push(
@@ -674,6 +676,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     const ltrs = this.preprocess(graphemes);
     const ptns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptns);
+    // TODO: to further check if the lexical roots valid, given the following syllable
 
     return ms;
   }
