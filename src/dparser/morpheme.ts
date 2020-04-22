@@ -8,9 +8,9 @@ import {
   TonalLetterTags,
   tonalPositionalSounds,
   TonalSoundTags,
-  CheckedTonalSounds,
+  checkedTonalSounds,
   combinedCheckedAllomorphs,
-  MedialSounds,
+  medialSounds,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
@@ -60,7 +60,7 @@ export class TonalCombiningMorpheme extends Morpheme {
     }
 
     if (
-      new CheckedTonalSounds().includes(syllable.lastLetter.literal) &&
+      checkedTonalSounds.includes(syllable.lastLetter.literal) &&
       (uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal) ||
         finalBgjlsbbggjjllss.has(syllable.lastSecondLetter.literal))
     ) {
@@ -229,7 +229,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
     if (
       soundFollowingSyllable.name === TonalSoundTags.medial &&
-      new MedialSounds().includes(soundFollowingSyllable.toString())
+      medialSounds.includes(soundFollowingSyllable.toString())
     ) {
       return this.voicedFinal(sounds);
     }

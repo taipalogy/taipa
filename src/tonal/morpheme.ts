@@ -5,16 +5,16 @@ import {
   freeAllomorphs,
   ZeroAllomorph,
   AllomorphX,
-  FreeTonalSounds,
-  StopFinalSounds,
   TonalLetterTags,
   lowerLettersTonal,
   tonalPositionalSounds,
   TonalSoundTags,
   uncombiningRulesAy,
-  InitialSounds,
   CheckedAllomorph,
   Allomorph,
+  freeTonalSounds,
+  initialSounds,
+  stopFinalSounds,
 } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from './soundgen';
@@ -51,8 +51,8 @@ export function syllabifyTonal(
   let begin: number = 0;
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  const sft = new FreeTonalSounds();
-  const ssf = new StopFinalSounds();
+  const sft = freeTonalSounds;
+  const ssf = stopFinalSounds;
   const faurs = freeAllomorphUncombiningRules;
   const ursa = uncombiningRulesAy;
 
@@ -488,7 +488,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
         // in case of hmhhw or hmhhwhmhhw
         // check if the previous letter is a consonant
-        if (new InitialSounds().includes(sub1)) return letters;
+
+        if (initialSounds.includes(sub1)) return letters;
 
         let fnl;
         if (TonalLetterTags.f === arr[i].charAt(arr[i].length - 1)) {

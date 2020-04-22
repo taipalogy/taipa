@@ -9,17 +9,17 @@ import {
   TonalSoundTags,
   lowerLettersTonal,
   AllomorphH,
-  NasalizationSound
+  nasalizationSounds,
 } from '../tonal/version2';
 import {
   eighthToFirst,
   combiningRules,
-  finalOfPhrasalVerbParticle
+  finalOfPhrasalVerbParticle,
 } from '../tonal/collections';
 import {
   TonalCombiningMetaplasm,
   TonalInflectionMetaplasm,
-  TonalAssimilationMetaplasm
+  TonalAssimilationMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -27,7 +27,7 @@ import { TonalWord } from '../tonal/lexeme';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import {
   TonalPhrasalAssimilationMetaplasm,
-  TonalPhrasalInflectionMetaplasm
+  TonalPhrasalInflectionMetaplasm,
 } from '../metaplasm';
 import { TonalAssimilationLexeme, TonalInflectionLexeme } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
@@ -35,7 +35,7 @@ import { TonalPhrase } from '../tonal/phraseme';
 /** Direction of assimilation. */
 export enum AssimiDirection {
   agressive = 0,
-  regressive = 1
+  regressive = 1,
 }
 
 /** Returns the combining forms of a syllable. */
@@ -448,7 +448,7 @@ export class AgressiveInternal extends TonalAssimilationMetaplasm {
         wrd.replaceSyllable(
           wrd.syllables.length - 1,
           morphemes[morphemes.length - 1].changeSoundWith(
-            new NasalizationSound().sounds[0],
+            nasalizationSounds.sounds[0],
             AssimiDirection.agressive
           )[0]
         );
@@ -538,8 +538,8 @@ export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
         new TonalPhrase([
           verb.getForms()[0],
           particle.getForms()[0],
-          particleTwo.getForms()[0]
-        ])
+          particleTwo.getForms()[0],
+        ]),
       ];
     }
     return [new TonalPhrase([])];
@@ -562,7 +562,7 @@ export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
 
     if (verb.getForms().length > 0) {
       return [
-        new TonalPhrase([verb.getForms()[0], particle.word, particleTwo.word])
+        new TonalPhrase([verb.getForms()[0], particle.word, particleTwo.word]),
       ];
     }
     return [new TonalPhrase([])];
@@ -610,7 +610,7 @@ export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
           new TonalPhrase([
             verb.getForms()[0],
             particle.getForms()[0],
-            particleTwo.getForms()[0]
+            particleTwo.getForms()[0],
           ])
         );
       }

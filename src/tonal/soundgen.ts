@@ -1,24 +1,24 @@
 import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
-  MaterLectionisSounds,
-  MedialSounds,
-  InitialSounds,
-  FreeTonalSounds,
-  NeutralFinalSounds,
-  NasalizationSound,
-  StopFinalSounds,
   tonalPositionalSounds,
-  NasalFinalSounds,
   TonalSoundTags,
-  CheckedTonalSounds,
-  EuphonicFinalsBGJKLPS,
-  EuphonicFinalsBBGGJJKKLLPPSS,
-  lowerLettersTonal
+  lowerLettersTonal,
+  checkedTonalSounds,
+  freeTonalSounds,
+  initialSounds,
+  materLectionisSounds,
+  medialSounds,
+  neutralFinalSounds,
+  nasalFinalSounds,
+  nasalizationSounds,
+  stopFinalSounds,
+  euphonicFinalsBGJKLPS,
+  euphonicFinalsBbGgJjKkLlPpSs,
 } from './version2';
 import { combiningRules } from './collections';
 
 function initialConsonant(sg: SoundGeneration) {
-  const sis = new InitialSounds();
+  const sis = initialSounds;
 
   if (sis.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -34,7 +34,7 @@ function initialConsonant(sg: SoundGeneration) {
 function stopFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const ssfs = new StopFinalSounds();
+  const ssfs = stopFinalSounds;
 
   if (ssfs.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -54,7 +54,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
 function neutralFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const snfs = new NeutralFinalSounds();
+  const snfs = neutralFinalSounds;
 
   if (snfs.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -74,7 +74,7 @@ function neutralFinalConsonant(sg: SoundGeneration) {
 function nasalFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const snfs = new NasalFinalSounds();
+  const snfs = nasalFinalSounds;
 
   if (snfs.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -92,7 +92,7 @@ function nasalFinalConsonant(sg: SoundGeneration) {
 }
 
 function vowel(sg: SoundGeneration) {
-  const sms = new MedialSounds();
+  const sms = medialSounds;
 
   let toBePredicted = true;
   let matches: number = 0;
@@ -122,7 +122,7 @@ function vowel(sg: SoundGeneration) {
 }
 
 function materLectionis(sg: SoundGeneration) {
-  const sml = new MaterLectionisSounds();
+  const sml = materLectionisSounds;
 
   if (sml.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -138,7 +138,7 @@ function materLectionis(sg: SoundGeneration) {
 function nasalization(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const sns = new NasalizationSound();
+  const sns = nasalizationSounds;
 
   if (sns.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -158,7 +158,7 @@ function nasalization(sg: SoundGeneration) {
 function freeTone(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const sfts = new FreeTonalSounds();
+  const sfts = freeTonalSounds;
 
   if (sfts.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -178,7 +178,7 @@ function freeTone(sg: SoundGeneration) {
 function checkedTone(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const scts = new CheckedTonalSounds();
+  const scts = checkedTonalSounds;
 
   if (scts.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -198,8 +198,8 @@ function checkedTone(sg: SoundGeneration) {
 function euphonicFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const efBgjklps = new EuphonicFinalsBGJKLPS();
-  const efBbggjjkkllppss = new EuphonicFinalsBBGGJJKKLLPPSS();
+  const efBgjklps = euphonicFinalsBGJKLPS;
+  const efBbggjjkkllppss = euphonicFinalsBbGgJjKkLlPpSs;
 
   if (
     efBgjklps.includes(sg.letters[sg.sounds.length]) ||
@@ -335,12 +335,12 @@ export const syllableCompositions = [
   scVCT3,
   scCVC3,
   scCVCT3,
-  scCVCCT
+  scCVCCT,
 ];
 
 export class TonalSoundGenerator {
   private isStopFinal(str: string) {
-    if (new StopFinalSounds().includes(str)) return true;
+    if (stopFinalSounds.includes(str)) return true;
 
     return false;
   }

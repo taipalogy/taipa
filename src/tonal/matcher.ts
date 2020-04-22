@@ -1,8 +1,8 @@
 import {
-  NasalFinalSounds,
   TonalLetterTags,
-  EuphonicFinalsBBGGJJKKLLPPSS,
-  EuphonicFinalsBGJKLPS,
+  nasalFinalSounds,
+  euphonicFinalsBbGgJjKkLlPpSs,
+  euphonicFinalsBGJKLPS,
 } from './version2';
 import {
   euphonicFinalsBbggkkpp,
@@ -21,7 +21,7 @@ export const smMnngHF = function (
   neutralFinalH: string,
   firstTonalF: string
 ) {
-  const snfs = new NasalFinalSounds();
+  const snfs = nasalFinalSounds;
 
   if (
     snfs.includes(nasalFinal) &&
@@ -58,7 +58,7 @@ export const smMnngHhWx = function (
   neutralFinalHh: string,
   tonalWX: string
 ) {
-  const snfs = new NasalFinalSounds();
+  const snfs = nasalFinalSounds;
 
   if (
     snfs.includes(nasalFinal) &&
@@ -134,7 +134,7 @@ export const smBgjklpsF = function (
   euphonicFinalBgjklps: string,
   firstTonalF: string
 ) {
-  const efs = new EuphonicFinalsBGJKLPS();
+  const efs = euphonicFinalsBGJKLPS;
 
   if (efs.includes(euphonicFinalBgjklps) && TonalLetterTags.f === firstTonalF)
     return true;
@@ -147,7 +147,7 @@ export const smBbggjjkkllppssWx = function (
   euphonicFinalBbggjjkkllppss: string,
   tonalWX: string
 ) {
-  const efs = new EuphonicFinalsBBGGJJKKLLPPSS();
+  const efs = euphonicFinalsBbGgJjKkLlPpSs;
 
   if (efs.includes(euphonicFinalBbggjjkkllppss) && tonalsWx.includes(tonalWX))
     return true;
