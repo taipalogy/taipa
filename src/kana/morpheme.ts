@@ -1,12 +1,12 @@
 import { AlphabeticGrapheme, Sound, AlphabeticLetter } from '../unit';
 import { Syllable, MatchedPattern, Morpheme, MorphemeMaker } from '../unit';
 import {
-  InitialConsonantSet,
-  VowelSet,
-  Hatsuon,
   hiraganaKatakana,
-  SemivowelSet,
   gailaigo,
+  initialConsonantsKana,
+  vowelsKana,
+  semivowelsKana,
+  hatsuonKana,
 } from './kana';
 import { KanaSoundGenerator } from './soundgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
@@ -41,7 +41,7 @@ function syllabifyKana(
   let lookahead = '';
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  const sov = new VowelSet();
+  const sov = vowelsKana;
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
@@ -133,7 +133,7 @@ function syllabifyKana(
       arraysOfLetters[longerEntry].length
     ) {
       if (
-        new Hatsuon().includes(
+        hatsuonKana.includes(
           arraysOfLetters[longerEntry][arraysOfLetters[longerEntry].length - 1]
             .literal
         )
@@ -159,7 +159,7 @@ function syllabifyKana(
       arraysOfLetters[longerEntry].length + 1
     ) {
       if (
-        new InitialConsonantSet().includes(
+        initialConsonantsKana.includes(
           letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal
         ) == true
       ) {
@@ -186,10 +186,10 @@ function syllabifyKana(
       arraysOfLetters[longerEntry].length + 1
     ) {
       if (
-        new VowelSet().includes(
+        vowelsKana.includes(
           letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal
         ) == true ||
-        new SemivowelSet().includes(
+        semivowelsKana.includes(
           letters[beginOfSyllable + arraysOfLetters[longerEntry].length].literal
         ) == true
       ) {

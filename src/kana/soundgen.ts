@@ -1,16 +1,16 @@
 import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
-  InitialConsonantSet,
   KanaSoundTags,
-  VowelSet,
-  GerminatedConsonantSet,
-  FinalConsonantSet,
-  SemivowelSet,
-  kanaPositionalSound
+  kanaPositionalSound,
+  initialConsonantsKana,
+  vowelsKana,
+  germinatedConsonantsKana,
+  semivowelsKana,
+  finalConsonantsKana,
 } from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
-  const sics = new InitialConsonantSet();
+  const sics = initialConsonantsKana;
 
   if (sics.includes(sg.letters[sg.sounds.length])) {
     const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -24,7 +24,7 @@ function initialConsonant(sg: SoundGeneration) {
 }
 
 function semivowel(sg: SoundGeneration) {
-  const ssvs = new SemivowelSet();
+  const ssvs = semivowelsKana;
 
   if (ssvs.includes(sg.letters[sg.sounds.length])) {
     const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -38,7 +38,7 @@ function semivowel(sg: SoundGeneration) {
 }
 
 function vowel(sg: SoundGeneration) {
-  const svs = new VowelSet();
+  const svs = vowelsKana;
 
   if (svs.includes(sg.letters[sg.sounds.length])) {
     const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -52,7 +52,7 @@ function vowel(sg: SoundGeneration) {
 }
 
 function finalConsonant(sg: SoundGeneration) {
-  const sfcs = new FinalConsonantSet();
+  const sfcs = finalConsonantsKana;
 
   if (sfcs.includes(sg.letters[sg.sounds.length])) {
     const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -66,7 +66,7 @@ function finalConsonant(sg: SoundGeneration) {
 }
 
 function germinatedConsonant(sg: SoundGeneration) {
-  const sgcs = new GerminatedConsonantSet();
+  const sgcs = germinatedConsonantsKana;
 
   if (sgcs.includes(sg.letters[sg.sounds.length])) {
     const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
@@ -94,7 +94,7 @@ export class KanaSoundGenerator {
     strs.push(letters);
 
     // consonant germination
-    if (new GerminatedConsonantSet().includes(letters[0]) == true) {
+    if (germinatedConsonantsKana.includes(letters[0]) == true) {
       let syl: string[] = new Array();
       syl.push(letters[0].charAt(0));
       for (let e of letters) {
@@ -104,7 +104,7 @@ export class KanaSoundGenerator {
     }
 
     // sokuon
-    let fcs = new FinalConsonantSet();
+    let fcs = finalConsonantsKana;
     for (let e of fcs.sounds) {
       let syl: string[] = new Array();
       Object.assign(syl, letters);

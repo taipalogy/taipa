@@ -335,17 +335,6 @@ export class Sound {
     return arr;
   }
 }
-// TODO: delete it
-export class SetOfSounds {
-  sounds = new Array<Sound>();
-  includes(str: string) {
-    for (let i in this.sounds) {
-      if (str && this.sounds[i] && str === this.sounds[i].toString())
-        return true;
-    }
-    return false;
-  }
-}
 
 export const setOfSounds = function (sounds: Sound[]) {
   return {

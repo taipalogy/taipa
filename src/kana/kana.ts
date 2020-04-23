@@ -1,4 +1,4 @@
-import { Sound, SetOfSounds, Letters } from '../unit';
+import { Sound, Letters, setOfSounds } from '../unit';
 
 enum KanaLetterTags {
   a = 'a',
@@ -33,7 +33,7 @@ enum KanaLetterTags {
 
   n = 'n',
 
-  ng = 'ng'
+  ng = 'ng',
 }
 
 export class LettersOfKana extends Letters {}
@@ -63,7 +63,7 @@ export let lowerLettersKana = new LettersOfKana([
   KanaLetterTags.w,
   KanaLetterTags.y,
   KanaLetterTags.n,
-  KanaLetterTags.ng
+  KanaLetterTags.ng,
 ]);
 
 export enum KanaSoundTags {
@@ -71,7 +71,7 @@ export enum KanaSoundTags {
   initialConsonant = 'initialConsonant',
   semivowel = 'semivowel',
   vowel = 'vowel',
-  finalConsonant = 'finalConsonant'
+  finalConsonant = 'finalConsonant',
 }
 
 class GerminatedConsonant extends Sound {
@@ -230,87 +230,63 @@ class GerminatedConsonantT extends GerminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.t);
 }
 
-export class InitialConsonantSet extends SetOfSounds {
-  constructor() {
-    super();
-    this.sounds.push(new InitialConsonantB());
-    this.sounds.push(new InitialConsonantC());
-    this.sounds.push(new InitialConsonantCH());
-    this.sounds.push(new InitialConsonantD());
-    this.sounds.push(new InitialConsonantF());
-    this.sounds.push(new InitialConsonantG());
-    this.sounds.push(new InitialConsonantH());
-    this.sounds.push(new InitialConsonantJ());
-    this.sounds.push(new InitialConsonantK());
-    this.sounds.push(new InitialConsonantL());
-    this.sounds.push(new InitialConsonantM());
-    this.sounds.push(new InitialConsonantN());
-    this.sounds.push(new InitialConsonantNG());
-    this.sounds.push(new InitialConsonantP());
-    this.sounds.push(new InitialConsonantR());
-    this.sounds.push(new InitialConsonantS());
-    this.sounds.push(new InitialConsonantT());
-    this.sounds.push(new InitialConsonantV());
-    this.sounds.push(new InitialConsonantW());
-    this.sounds.push(new InitialConsonantY());
-    this.sounds.push(new InitialConsonantZ());
-  }
-}
+export const initialConsonantsKana = setOfSounds([
+  new InitialConsonantB(),
+  new InitialConsonantC(),
+  new InitialConsonantCH(),
+  new InitialConsonantD(),
+  new InitialConsonantF(),
+  new InitialConsonantG(),
+  new InitialConsonantH(),
+  new InitialConsonantJ(),
+  new InitialConsonantK(),
+  new InitialConsonantL(),
+  new InitialConsonantM(),
+  new InitialConsonantN(),
+  new InitialConsonantNG(),
+  new InitialConsonantP(),
+  new InitialConsonantR(),
+  new InitialConsonantS(),
+  new InitialConsonantT(),
+  new InitialConsonantV(),
+  new InitialConsonantW(),
+  new InitialConsonantY(),
+  new InitialConsonantZ(),
+]);
 
-export class VowelSet extends SetOfSounds {
-  constructor() {
-    super();
-    this.sounds.push(new VowelA());
-    this.sounds.push(new VowelI());
-    this.sounds.push(new VowelU());
-    this.sounds.push(new VowelE());
-    this.sounds.push(new VowelO());
-  }
-}
+export const vowelsKana = setOfSounds([
+  new VowelA(),
+  new VowelI(),
+  new VowelU(),
+  new VowelE(),
+  new VowelO(),
+]);
 
-export class GerminatedConsonantSet extends SetOfSounds {
-  constructor() {
-    super();
-    this.sounds.push(new GerminatedConsonantB());
-    this.sounds.push(new GerminatedConsonantC());
-    this.sounds.push(new GerminatedConsonantD());
-    this.sounds.push(new GerminatedConsonantG());
-    this.sounds.push(new GerminatedConsonantK());
-    this.sounds.push(new GerminatedConsonantP());
-    this.sounds.push(new GerminatedConsonantS());
-    this.sounds.push(new GerminatedConsonantT());
-  }
-}
+export const germinatedConsonantsKana = setOfSounds([
+  new GerminatedConsonantB(),
+  new GerminatedConsonantC(),
+  new GerminatedConsonantD(),
+  new GerminatedConsonantG(),
+  new GerminatedConsonantK(),
+  new GerminatedConsonantP(),
+  new GerminatedConsonantS(),
+  new GerminatedConsonantT(),
+]);
 
-export class SemivowelSet extends SetOfSounds {
-  constructor() {
-    super();
-    this.sounds.push(new SemivowelW());
-    this.sounds.push(new SemivowelY());
-  }
-}
+export const semivowelsKana = setOfSounds([new SemivowelW(), new SemivowelY()]);
 
-export class FinalConsonantSet extends SetOfSounds {
-  constructor() {
-    super();
-    this.sounds.push(new FinalConsonantB());
-    this.sounds.push(new FinalConsonantD());
-    this.sounds.push(new FinalConsonantG());
-    this.sounds.push(new FinalConsonantK());
-    this.sounds.push(new FinalConsonantN());
-    this.sounds.push(new FinalConsonantP());
-    this.sounds.push(new FinalConsonantS());
-    this.sounds.push(new FinalConsonantT());
-  }
-}
+export const finalConsonantsKana = setOfSounds([
+  new FinalConsonantB(),
+  new FinalConsonantD(),
+  new FinalConsonantG(),
+  new FinalConsonantK(),
+  new FinalConsonantN(),
+  new FinalConsonantP(),
+  new FinalConsonantS(),
+  new FinalConsonantT(),
+]);
 
-export class Hatsuon extends SetOfSounds {
-  constructor() {
-    super();
-    this.sounds.push(new FinalConsonantN());
-  }
-}
-
+export const hatsuonKana = setOfSounds([new FinalConsonantN()]);
 export function positionalSound(sounds: Sound[]) {
   return (t: KanaSoundTags) => {
     for (let i in sounds) {
@@ -324,24 +300,24 @@ const psA = positionalSound([new VowelA()]);
 const psB = positionalSound([
   new InitialConsonantB(),
   new FinalConsonantB(),
-  new GerminatedConsonantB()
+  new GerminatedConsonantB(),
 ]);
 const psC = positionalSound([
   new InitialConsonantC(),
-  new GerminatedConsonantC()
+  new GerminatedConsonantC(),
 ]);
 const psCh = positionalSound([new InitialConsonantCH()]);
 const psD = positionalSound([
   new InitialConsonantD(),
   new FinalConsonantD(),
-  new GerminatedConsonantD()
+  new GerminatedConsonantD(),
 ]);
 const psE = positionalSound([new VowelE()]);
 const psF = positionalSound([new InitialConsonantF()]);
 const psG = positionalSound([
   new InitialConsonantG(),
   new FinalConsonantG(),
-  new GerminatedConsonantG()
+  new GerminatedConsonantG(),
 ]);
 const psH = positionalSound([new InitialConsonantH()]);
 const psI = positionalSound([new VowelI()]);
@@ -349,7 +325,7 @@ const psJ = positionalSound([new InitialConsonantJ()]);
 const psK = positionalSound([
   new InitialConsonantK(),
   new FinalConsonantK(),
-  new GerminatedConsonantK()
+  new GerminatedConsonantK(),
 ]);
 const psL = positionalSound([new InitialConsonantL()]);
 const psM = positionalSound([new InitialConsonantM()]);
@@ -359,18 +335,18 @@ const psO = positionalSound([new VowelO()]);
 const psP = positionalSound([
   new InitialConsonantP(),
   new FinalConsonantP(),
-  new GerminatedConsonantP()
+  new GerminatedConsonantP(),
 ]);
 const psR = positionalSound([new InitialConsonantR()]);
 const psS = positionalSound([
   new InitialConsonantS(),
   new FinalConsonantS(),
-  new GerminatedConsonantS()
+  new GerminatedConsonantS(),
 ]);
 const psT = positionalSound([
   new InitialConsonantT(),
   new FinalConsonantT(),
-  new GerminatedConsonantT()
+  new GerminatedConsonantT(),
 ]);
 const psU = positionalSound([new VowelU()]);
 const psV = positionalSound([new InitialConsonantV()]);
@@ -416,7 +392,7 @@ export const kogakimoji = new Map<
 
 export const hatsuon = new Map<string, Array<string>>().set(KanaLetterTags.n, [
   'ん',
-  'ン'
+  'ン',
 ]);
 
 export const others = new Map<string, Array<string>>()
@@ -551,11 +527,11 @@ export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.a, ['ぢゃ', 'ヂャ'])
   .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.u, [
     'ぢ゙ゅ',
-    'ヂュ'
+    'ヂュ',
   ])
   .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.o, [
     'ぢ゙ょ',
-    'ヂョ'
+    'ヂョ',
   ])
   .set(KanaLetterTags.b + KanaLetterTags.y + KanaLetterTags.a, ['びゃ', 'ビャ'])
   .set(KanaLetterTags.b + KanaLetterTags.y + KanaLetterTags.u, ['びゅ', 'ビュ'])
@@ -564,7 +540,7 @@ export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.p + KanaLetterTags.y + KanaLetterTags.u, ['ぴゅ', 'ピュ'])
   .set(KanaLetterTags.p + KanaLetterTags.y + KanaLetterTags.o, [
     'ぴょ',
-    'ピョ'
+    'ピョ',
   ]);
 
 export const gailaigo = new Map<string, Array<string>>()
@@ -628,7 +604,7 @@ export const gailaigoY = new Map<string, Array<string>>()
   .set(KanaLetterTags.d + KanaLetterTags.y + KanaLetterTags.e, [
     '',
     'デェ',
-    'ディェ'
+    'ディェ',
   ])
   .set(KanaLetterTags.d + KanaLetterTags.y + KanaLetterTags.o, ['', 'デョ'])
   .set(KanaLetterTags.n + KanaLetterTags.y + KanaLetterTags.i, ['', 'ニィ'])

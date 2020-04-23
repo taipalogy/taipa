@@ -1,14 +1,14 @@
 import {
   kanaPositionalSound,
   lowerLettersKana,
-  Hatsuon,
   kogakimoji,
   hiraganaKatakana,
-  FinalConsonantSet,
-  GerminatedConsonantSet,
-  InitialConsonantSet,
   hatsuon,
   gailaigo,
+  initialConsonantsKana,
+  germinatedConsonantsKana,
+  finalConsonantsKana,
+  hatsuonKana,
 } from './kana';
 import { KanaUncombiningMorpheme } from './morpheme';
 
@@ -51,7 +51,7 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
           previous[previous.length - 1],
           e.syllable.literal[e.syllable.literal.length - 1]
         ) &&
-        new InitialConsonantSet().includes(e.syllable.literal) == false &&
+        initialConsonantsKana.includes(e.syllable.literal) == false &&
         e.syllable.literal.length == 1
       ) {
         // a vowel does not begin with a consonant and is of length 1
@@ -61,7 +61,7 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
         kanaCompositions[2] += ks[1];
       }
     } else if (
-      new FinalConsonantSet().includes(
+      finalConsonantsKana.includes(
         e.syllable.literal[e.syllable.literal.length - 1]
       ) == true
     ) {
@@ -74,9 +74,7 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
         kanaCompositions[2] += ks[1];
       }
       if (
-        new Hatsuon().includes(
-          e.syllable.literal[e.syllable.literal.length - 1]
-        )
+        hatsuonKana.includes(e.syllable.literal[e.syllable.literal.length - 1])
       ) {
         ks = hatsuon.get('n');
         if (ks) {
@@ -98,7 +96,7 @@ export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
 
       if (
         first === second &&
-        new GerminatedConsonantSet().includes(first) == true
+        germinatedConsonantsKana.includes(first) == true
       ) {
         ks = kogakimoji.get('chu');
         if (ks) {
