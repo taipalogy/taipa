@@ -1,6 +1,6 @@
 import { Sound, Letters, setOfSounds } from '../unit';
 
-enum KanaLetterTags {
+export enum KanaLetterTags {
   a = 'a',
   e = 'e',
   i = 'i',

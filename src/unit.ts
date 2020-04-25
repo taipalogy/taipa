@@ -216,6 +216,14 @@ export class GraphemeMaker {
           characters[beginOfLetter + 1].character === 'g'
         ) {
           // handling final n and initial ng in kana
+          if (
+            characters[0].character === 'n' &&
+            characters[beginOfLetter + 1].character === 'g'
+          ) {
+            ms.characters[0] = new Character('n');
+            ms.characters[1] = new Character('g');
+            return ms;
+          }
           ms.characters[0] = new Character('n');
           return ms;
         }

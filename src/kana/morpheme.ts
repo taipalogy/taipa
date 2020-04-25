@@ -7,6 +7,7 @@ import {
   vowelsKana,
   semivowelsKana,
   hatsuonKana,
+  KanaLetterTags,
 } from './kana';
 import { KanaSoundGenerator } from './soundgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
@@ -41,7 +42,7 @@ function syllabifyKana(
   let lookahead = '';
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  const sov = vowelsKana;
+  const vwls = vowelsKana;
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
@@ -50,17 +51,23 @@ function syllabifyKana(
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
       if (i + 1 < letters.length) lookahead = letters[i + 1].literal; // look-ahead
-    } else {
-      if (
-        literal.length == 3 &&
-        literal[0] === literal[1] &&
-        sov.includes(literal[2])
-      ) {
-        // for consonant germination of sokuon
-        matched = literal;
-        ltrs.shift(); // shift the germinated consonants
-        Object.assign(matchedLtrs, ltrs);
-      }
+    } else if (
+      literal.length == 3 &&
+      letters[0].literal === KanaLetterTags.ng &&
+      vowelsKana.includes(letters[1].literal)
+    ) {
+      // ng~
+      matched = literal;
+      Object.assign(matchedLtrs, ltrs);
+    } else if (
+      literal.length == 3 &&
+      literal[0] === literal[1] &&
+      vwls.includes(literal[2])
+    ) {
+      // for consonant germination of sokuon
+      matched = literal;
+      ltrs.shift(); // shift the germinated consonants
+      Object.assign(matchedLtrs, ltrs);
     }
   }
 
@@ -241,8 +248,8 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
     return morphemes;
   }
 
-  makeInputingMorphemes(gs: Array<AlphabeticGrapheme>) {
-    const ltrs = gs.map(it => it.letter);
+  makeMorphemes(graphemes: Array<AlphabeticGrapheme>) {
+    const ltrs = graphemes.map(it => it.letter);
     const ptrns = this.make(ltrs, syllabifyKana);
     const ms = this.postprocess(ptrns);
 

@@ -121,7 +121,7 @@ export class KanaSoundGenerator {
 
     strs = this.genSokuonAndGerminated(letters, lookahead);
 
-    //console.log(strs)
+    // console.log(strs);
     for (let i in strs) {
       // generates all needed sounds to be processed
 
@@ -136,7 +136,7 @@ export class KanaSoundGenerator {
         }
       }
     }
-    //console.log(sequences)
+    // console.log(sequences);
 
     return sequences;
   }

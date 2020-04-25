@@ -9,6 +9,7 @@ import {
   germinatedConsonantsKana,
   finalConsonantsKana,
   hatsuonKana,
+  special,
 } from './kana';
 import { KanaUncombiningMorpheme } from './morpheme';
 
@@ -30,15 +31,18 @@ function lookup(str: string) {
   if (results == undefined) {
     results = gailaigo.get(str);
   }
+  if (results == undefined) {
+    results = special.get(str);
+  }
   return results;
 }
 
-export function getKanaBlocks(ms: KanaUncombiningMorpheme[]): string[] {
+export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
   // string one is hiragana, string two is katakana, string 3 is chouon
   let kanaCompositions: [string, string, string] = ['', '', ''];
   let previous = '';
 
-  for (let e of ms) {
+  for (let e of morphemes) {
     let ks = lookup(e.syllable.literal);
     if (ks != undefined && ks[0] != undefined) {
       // in case the kana is absent, we check against ks[0]
