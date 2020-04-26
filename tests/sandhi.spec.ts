@@ -3,6 +3,7 @@ import { TonalLetterTags } from '../src/tonal/version2';
 import { inflectDesinence } from '../src/dparser/inflector';
 import { assimilateRegressiveLexical } from '../src/dparser/assimilator';
 import { insertTo } from '../src/dparser/inserter';
+import { uninsertFrom } from '../src/tonal/uninserter';
 
 describe('Epenthesis testing', () => {
   const cli = new Client();
@@ -119,7 +120,27 @@ describe('Epenthesis testing', () => {
     expect(lx5.getForms()[0].literal).toEqual('tangznga');
   });
 });
+/*
+describe('Uninsertion testing', () => {
+  const lx1 = uninsertFrom('qimxmay');
 
+  test('check the uninsertion of initial m', () => {
+    expect(lx1.getForms()[0].literal).toEqual('qimxay');
+  });
+
+  const lx2 = uninsertFrom('infnay');
+
+  test('check the uninsertion of initial n', () => {
+    expect(lx2.getForms()[0].literal).toEqual('infay');
+  });
+
+  const lx3 = uninsertFrom('cangxngay');
+
+  test('check the uninsertion of initial ng', () => {
+    expect(lx3.getForms()[0].literal).toEqual('cangxay');
+  });
+});
+*/
 describe('Reduplication testing', () => {
   const cli = new Client();
 

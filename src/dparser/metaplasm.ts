@@ -24,7 +24,11 @@ import {
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
 import { TonalWord } from '../tonal/lexeme';
-import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
+import {
+  TonalCombiningMorpheme,
+  TonalSoundChangingMorpheme,
+  TonalSoundUnchangingMorpheme,
+} from './morpheme';
 import {
   TonalPhrasalAssimilationMetaplasm,
   TonalPhrasalInflectionMetaplasm,
@@ -493,7 +497,15 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
         );
         return [wrd];
       }
+      // TODO: insert to syllable e
     }
+    return [];
+  }
+}
+
+export class Uninsertion extends TonalAssimilationMetaplasm {
+  // removal of nasal consonants
+  apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
     return [];
   }
 }

@@ -6,7 +6,7 @@ import {
   AgressiveInternal,
   RegressiveInternal,
   RegressiveExternal,
-  AgressiveExternal
+  AgressiveExternal,
 } from './metaplasm';
 import { graphAnalyzeTonal } from '../tonal/analyzer';
 
@@ -17,7 +17,7 @@ function morphAnalyze(str: string) {
   return mrphs;
 }
 
-/** Returns a `TonalAssimilationLexeme` with no assimilation. */
+/** Returns a TonalAssimilationLexeme with no assimilation. */
 export function getNoAssimilation(word: string) {
   const mrphs = morphAnalyze(word);
   const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroAssimilation());
@@ -53,7 +53,7 @@ export function assimilateAgressivePhrasal(
   return phmk.makePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
 }
 
-/** Assimilates regressivels between 2 words. */
+/** Assimilates regressively between 2 words. */
 export function assimilateRegressivePhrasal(
   preceding: string,
   following: string

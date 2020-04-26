@@ -6,7 +6,7 @@ import { TonalWord, InflectionalEnding } from './tonal/lexeme';
 import { TonalPhrase } from './tonal/phraseme';
 import {
   TonalInflectionLexeme,
-  TonalAssimilationLexeme
+  TonalAssimilationLexeme,
 } from './dparser/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
@@ -46,6 +46,12 @@ export class TonalAssimilationMetaplasm extends Metaplasm {
 }
 
 export class TonalZeroAssimilation extends TonalAssimilationMetaplasm {}
+
+export class TonalUnassimilationMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
 
 export class TonalLemmatizationMetaplasm extends Metaplasm {
   apply(

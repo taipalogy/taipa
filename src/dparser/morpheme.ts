@@ -261,6 +261,22 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   }
 }
 
+/** A syllable and its sound changing forms. */
+export class TonalSoundUnchangingMorpheme extends Morpheme {
+  syllable: TonalSyllable;
+  sounds: Array<Sound>;
+
+  constructor(syllable: TonalSyllable, sounds: Sound[]) {
+    super();
+    this.syllable = syllable;
+    this.sounds = sounds;
+  }
+
+  changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
+    return [];
+  }
+}
+
 export class TonalCombiningMorphemeMaker extends MorphemeMaker {
   private metaplasm: TonalCombiningMetaplasm;
 
@@ -292,8 +308,10 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
     return morphemes;
   }
 
-  makeMorphemes(gs: Array<AlphabeticGrapheme>): TonalCombiningMorpheme[] {
-    const ltrs = gs.map(it => it.letter);
+  makeMorphemes(
+    graphemes: Array<AlphabeticGrapheme>
+  ): TonalCombiningMorpheme[] {
+    const ltrs = graphemes.map(it => it.letter);
     const ptrns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptrns);
 
@@ -328,8 +346,48 @@ export class TonalSoundChangingMorphemeMaker extends MorphemeMaker {
     return morphemes;
   }
 
-  makeMorphemes(gs: Array<AlphabeticGrapheme>): TonalSoundChangingMorpheme[] {
-    const ltrs = gs.map(it => it.letter);
+  makeMorphemes(
+    graphemes: Array<AlphabeticGrapheme>
+  ): TonalSoundChangingMorpheme[] {
+    const ltrs = graphemes.map(it => it.letter);
+    const ptrns = this.make(ltrs, syllabifyTonal);
+    const ms = this.postprocess(ptrns);
+
+    return ms;
+  }
+}
+
+export class TonalSoundUnchangingMorphemeMaker extends MorphemeMaker {
+  constructor() {
+    super();
+  }
+
+  protected createMorphemes() {
+    return new Array<TonalSoundUnchangingMorpheme>();
+  }
+
+  protected createMorpheme(match: MatchedPattern) {
+    const tcm = new TonalSoundUnchangingMorpheme(
+      new TonalSyllable(match.letters),
+      match.pattern
+    );
+    return tcm;
+  }
+
+  private postprocess(
+    matches: MatchedPattern[]
+  ): Array<TonalSoundUnchangingMorpheme> {
+    let morphemes = this.createMorphemes();
+    for (let i in matches) {
+      morphemes.push(this.createMorpheme(matches[i]));
+    }
+    return morphemes;
+  }
+
+  makeMorphemes(
+    graphemes: Array<AlphabeticGrapheme>
+  ): TonalSoundUnchangingMorpheme[] {
+    const ltrs = graphemes.map(it => it.letter);
     const ptrns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptrns);
 
