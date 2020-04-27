@@ -120,7 +120,7 @@ describe('Epenthesis testing', () => {
     expect(lx5.getForms()[0].literal).toEqual('tangznga');
   });
 });
-/*
+
 describe('Uninsertion testing', () => {
   const lx1 = uninsertFrom('qimxmay');
 
@@ -140,7 +140,7 @@ describe('Uninsertion testing', () => {
     expect(lx3.getForms()[0].literal).toEqual('cangxay');
   });
 });
-*/
+
 describe('Reduplication testing', () => {
   const cli = new Client();
 

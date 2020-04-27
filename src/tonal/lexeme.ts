@@ -45,14 +45,14 @@ export class TonalWord extends Word {
     this.concat();
   }
 
-  pushSyllable(syl: TonalSyllable) {
-    this.syllables.push(syl);
+  pushSyllable(syllable: TonalSyllable) {
+    this.syllables.push(syllable);
     this.concat();
   }
 
-  replaceSyllable(i: number, syl: TonalSyllable) {
+  replaceSyllable(i: number, syllable: TonalSyllable) {
     if (i < this.syllables.length) {
-      this.syllables.splice(i, 1, syl);
+      this.syllables.splice(i, 1, syllable);
     }
     this.concat();
   }

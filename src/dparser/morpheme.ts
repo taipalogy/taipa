@@ -272,8 +272,13 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     this.sounds = sounds;
   }
 
-  changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
-    return [];
+  // changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {return [];}
+  shiftNasal() {
+    const snds = this.sounds;
+    snds.shift();
+    return [
+      new TonalSyllable(snds.map(it => new AlphabeticLetter(it.characters))),
+    ];
   }
 }
 

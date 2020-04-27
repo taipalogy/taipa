@@ -15,6 +15,7 @@ import {
   eighthToFirst,
   combiningRules,
   finalOfPhrasalVerbParticle,
+  nasalInitialSounds,
 } from '../tonal/collections';
 import {
   TonalCombiningMetaplasm,
@@ -479,7 +480,7 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
   apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
       const snds = morphemes[morphemes.length - 2].sounds;
-      let wrd = new TonalWord(
+      const wrd = new TonalWord(
         morphemes.map(x => new TonalSyllable(x.syllable.letters))
       );
       if (
@@ -488,8 +489,8 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
           TonalLetterTags.a
       ) {
         // m, n, ng followed by -ay. pass the preceding nasal to get forms
-        wrd.replaceSyllable(
-          wrd.syllables.length - 1,
+        wrd.popSyllable();
+        wrd.pushSyllable(
           morphemes[morphemes.length - 1].changeSoundWith(
             snds[snds.length - 2],
             AssimiDirection.agressive
@@ -506,6 +507,24 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
 export class Uninsertion extends TonalAssimilationMetaplasm {
   // removal of nasal consonants
   apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
+    if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
+      const snds = morphemes[morphemes.length - 2].sounds;
+      const wrd = new TonalWord(
+        morphemes.map(x => new TonalSyllable(x.syllable.letters))
+      );
+      if (
+        snds[snds.length - 2].name == TonalSoundTags.nasalFinal &&
+        nasalInitialSounds.includes(
+          morphemes[morphemes.length - 1].syllable.letters[0].literal
+        ) &&
+        morphemes[morphemes.length - 1].syllable.letters[1].literal ===
+          TonalLetterTags.a
+      ) {
+        wrd.popSyllable();
+        wrd.pushSyllable(morphemes[morphemes.length - 1].shiftNasal()[0]);
+        return [wrd];
+      }
+    }
     return [];
   }
 }
