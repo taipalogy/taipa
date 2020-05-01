@@ -117,11 +117,12 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.tt + TonalLetterTags.ng, TonalLetterTags.hh);
 
 // b, g, h, l
-export const initialBghl = [
+export const initialsBghjl = [
   // turn preceding finals to voiced ones
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.h.toString(),
+  TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
 ];
 

@@ -3,10 +3,11 @@ import {
   assimilateRegressiveLexical,
   assimilateAgressiveLexical,
   assimilateAgressivePhrasal,
-  assimilateRegressivePhrasal
+  assimilateRegressivePhrasal,
 } from '../src/dparser/assimilator';
+import { unassimilateRegressiveLexical } from '../src/tonal/unassimilator';
 
-describe('Assimilation testing, -b, -g, -h, -l', () => {
+describe('Assimilation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -gg, -ll', () => {
   const lx1 = assimilateRegressiveLexical('biettwbongx');
 
   test('check the surface form', () => {
@@ -29,6 +30,32 @@ describe('Assimilation testing, -b, -g, -h, -l', () => {
 
   test('check the surface form', () => {
     expect(lx4.getForms()[0].literal).toEqual('ogflangx');
+  });
+});
+
+describe('Unassimilation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, -kk, -tt', () => {
+  const lx1 = unassimilateRegressiveLexical('biellwbongx');
+
+  test('check the surface form', () => {
+    expect(lx1.getForms()[0].literal).toEqual('biettwbongx');
+  });
+
+  const lx2 = unassimilateRegressiveLexical('chabbwgoz');
+
+  test('check the surface form', () => {
+    expect(lx2.getForms()[0].literal).toEqual('chappwgoz');
+  });
+
+  const lx3 = unassimilateRegressiveLexical('chibfhoat');
+
+  test('check the surface form', () => {
+    expect(lx3.getForms()[0].literal).toEqual('chipfhoat');
+  });
+
+  const lx4 = unassimilateRegressiveLexical('ogflangx');
+
+  test('check the surface form', () => {
+    expect(lx4.getForms()[0].literal).toEqual('okflangx');
   });
 });
 

@@ -16,6 +16,8 @@ import {
   combiningRules,
   finalOfPhrasalVerbParticle,
   nasalInitialSounds,
+  initialsBghjl,
+  voicedVoicelessFinals,
 } from '../tonal/collections';
 import {
   TonalCombiningMetaplasm,
@@ -504,13 +506,14 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
   }
 }
 
+/** Uninsert an initial m, n, or ng from syllable ~ay */
 export class Uninsertion extends TonalAssimilationMetaplasm {
   // removal of nasal consonants
   apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
       const snds = morphemes[morphemes.length - 2].sounds;
       const wrd = new TonalWord(
-        morphemes.map(x => new TonalSyllable(x.syllable.letters))
+        morphemes.map(it => new TonalSyllable(it.syllable.letters))
       );
       if (
         snds[snds.length - 2].name == TonalSoundTags.nasalFinal &&
@@ -523,6 +526,35 @@ export class Uninsertion extends TonalAssimilationMetaplasm {
         wrd.popSyllable();
         wrd.pushSyllable(morphemes[morphemes.length - 1].shiftNasal()[0]);
         return [wrd];
+      }
+    }
+    return [];
+  }
+}
+
+export class ReverseRegressiveInternal extends TonalAssimilationMetaplasm {
+  apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
+    let wrd = new TonalWord(
+      morphemes.map(it => new TonalSyllable(it.syllable.letters))
+    );
+
+    if (morphemes.length > 1) {
+      for (let i = 1; i < morphemes.length; i++) {
+        // combine b, g, h, j, l with m, n, ng
+        const initialsBghjlmnng = initialsBghjl.concat(nasalInitialSounds);
+        const finalsBglbbggll = Array.from(voicedVoicelessFinals.keys());
+        if (
+          morphemes[i].sounds[0].name === TonalSoundTags.initial &&
+          finalsBglbbggll.includes(
+            morphemes[i - 1].syllable.lastSecondLetter.literal
+          ) &&
+          initialsBghjlmnng.includes(morphemes[i].sounds[0].toString())
+        ) {
+          const syls = morphemes[i - 1].toVoicelessFinal();
+          wrd.shiftSyllable();
+          wrd.unshiftSyllable(syls[0]);
+          return [wrd];
+        }
       }
     }
     return [];

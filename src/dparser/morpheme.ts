@@ -14,13 +14,14 @@ import {
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
-  initialBghl,
+  initialsBghjl,
   ttInitialTInitialPairs,
   voicelessVoicedFinals,
   initialsForEuphonicTt,
   initialsForEuphonicT,
   nasalInitialSounds,
   finalBgjlsbbggjjllss,
+  voicedVoicelessFinals,
 } from '../tonal/collections';
 import { AssimiDirection } from './metaplasm';
 import { TonalCombiningMetaplasm } from '../metaplasm';
@@ -236,7 +237,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
     if (
       soundFollowingSyllable.name === TonalSoundTags.initial &&
-      initialBghl.includes(soundFollowingSyllable.toString())
+      initialsBghjl.includes(soundFollowingSyllable.toString())
     ) {
       return this.voicedFinal(sounds);
     }
@@ -246,8 +247,8 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     const fnl = voicelessVoicedFinals.get(sounds[sounds.length - 2].toString());
 
     if (fnl) {
-      let s: TonalSyllable = new TonalSyllable(
-        sounds.map(x => new AlphabeticLetter(x.characters))
+      const s: TonalSyllable = new TonalSyllable(
+        sounds.map(it => new AlphabeticLetter(it.characters))
       );
       let snd = new Sound();
       const ps = tonalPositionalSounds.get(fnl);
@@ -279,6 +280,30 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     return [
       new TonalSyllable(snds.map(it => new AlphabeticLetter(it.characters))),
     ];
+  }
+
+  toVoicelessFinal() {
+    if (
+      voicedVoicelessFinals.has(this.sounds[this.sounds.length - 2].toString())
+    ) {
+      const fnl = voicedVoicelessFinals.get(
+        this.sounds[this.sounds.length - 2].toString()
+      );
+      if (fnl) {
+        const s: TonalSyllable = new TonalSyllable(
+          this.sounds.map(it => new AlphabeticLetter(it.characters))
+        );
+        let snd = new Sound();
+        const ps = tonalPositionalSounds.get(fnl);
+        if (ps) snd = ps(TonalSoundTags.stopFinal);
+        s.replaceLetter(
+          s.letters.length - 2,
+          new AlphabeticLetter(snd.characters)
+        );
+        return [s];
+      }
+    }
+    return [];
   }
 }
 

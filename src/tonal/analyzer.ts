@@ -1,12 +1,12 @@
 import {
   TonalLemmatizationLexemeMaker,
-  TonalLemmatizationLexeme
+  TonalLemmatizationLexeme,
 } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from './version2';
 import {
   TonalUncombiningMorphemeMaker,
-  TonalUncombiningMorpheme
+  TonalUncombiningMorpheme,
 } from './morpheme';
 
 /**
@@ -52,5 +52,5 @@ export const tonalLemmatizationAnalyzer = {
 
     const lm = new TonalLemmatizationLexemeMaker();
     return lm.makeLexemes(ms);
-  }
+  },
 };

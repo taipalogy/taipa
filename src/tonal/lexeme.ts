@@ -50,6 +50,18 @@ export class TonalWord extends Word {
     this.concat();
   }
 
+  shiftSyllable() {
+    const syl = this.syllables.shift();
+    this.concat();
+    return syl;
+  }
+
+  unshiftSyllable(syllable: TonalSyllable) {
+    const num = this.syllables.unshift(syllable);
+    this.concat();
+    return num;
+  }
+
   replaceSyllable(i: number, syllable: TonalSyllable) {
     if (i < this.syllables.length) {
       this.syllables.splice(i, 1, syllable);

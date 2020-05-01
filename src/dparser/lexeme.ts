@@ -128,7 +128,7 @@ export class TonalAssimilationLexeme implements Lexeme {
 
   assimilateWith(lexeme: TonalAssimilationLexeme, dir: AssimiDirection) {
     const ms = lexeme.getMorphemes();
-    let wrd = new TonalWord(
+    const wrd = new TonalWord(
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
     if (ms.length > 0) {
@@ -198,7 +198,22 @@ export class TonalUnassimilationLexeme implements Lexeme {
     return this.forms;
   }
 
-  unassimilateWith(lexeme: TonalUnassimilationLexeme, dir: AssimiDirection) {}
+  getMorphemes() {
+    // when external sandhi is required, member variable morphemes has to be exposed
+    return this.morphemes;
+  }
+
+  unassimilateWith(lexeme: TonalUnassimilationLexeme, dir: AssimiDirection) {
+    const ms = lexeme.getMorphemes();
+    const wrd = new TonalWord(
+      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
+    );
+    if (ms.length > 0) {
+      const adjacentSnds = ms[ms.length - 1].sounds;
+      if (dir === AssimiDirection.agressive) {
+      }
+    }
+  }
 }
 
 /** A word and its inserted forms. */

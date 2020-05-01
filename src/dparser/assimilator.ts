@@ -10,6 +10,10 @@ import {
 } from './metaplasm';
 import { graphAnalyzeTonal } from '../tonal/analyzer';
 
+/**
+ * Analyzes a string into morphemes. Morphological analysis.
+ * @param str A string
+ */
 function morphAnalyze(str: string) {
   const gs = graphAnalyzeTonal(str);
   const tschmm = new TonalSoundChangingMorphemeMaker();
@@ -17,7 +21,7 @@ function morphAnalyze(str: string) {
   return mrphs;
 }
 
-/** Returns a TonalAssimilationLexeme with no assimilation. */
+/** No internal sandhi. */
 export function getNoAssimilation(word: string) {
   const mrphs = morphAnalyze(word);
   const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroAssimilation());
