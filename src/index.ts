@@ -4,7 +4,7 @@ export { Client } from './client';
 // API
 export {
   tonalLemmatizationAnalyzer,
-  graphAnalyzeTonal
+  graphAnalyzeTonal,
 } from './tonal/analyzer';
 export { tonalInflectionAnalyzer } from './dparser/analyzer';
 export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
@@ -13,20 +13,19 @@ export { lexicalRoots } from './tonal/lexicalroots2';
 export {
   lowerLettersTonal,
   TonalLetterTags,
-  TonalSoundTags
+  TonalSoundTags,
 } from './tonal/version2';
 export { lemmatize } from './tonal/lemmatizer';
 export {
   getNoAssimilation,
-  assimilateAgressiveLexical,
   assimilateRegressiveLexical,
   assimilateAgressivePhrasal,
-  assimilateRegressivePhrasal
+  assimilateRegressivePhrasal,
 } from './dparser/assimilator';
 export {
   createTonalPhrase,
   createTonalInflectionLexeme,
-  createCompoundPhraseme
+  createCompoundPhraseme,
 } from './dparser/creator';
 export {
   inflectDesinence,
@@ -46,7 +45,7 @@ export {
   inflectPossesive,
   inflectToParticiple,
   inflectVppToParticiple,
-  inflectSerial
+  inflectSerial,
 } from './dparser/inflector';
 export { insertTo } from './dparser/inserter';
 
@@ -57,7 +56,7 @@ export { TonalUncombiningMorpheme } from './tonal/morpheme';
 export {
   TonalInflectionLexeme,
   TonalAssimilationLexeme,
-  TonalInsertionLexeme
+  TonalInsertionLexeme,
 } from './dparser/lexeme';
 export { TonalLemmatizationLexeme } from './tonal/lexeme';
 export {
@@ -66,7 +65,7 @@ export {
   TonalMainParticlePhraseme,
   TonalCompoundPhraseme,
   SerialPhraseme,
-  TonalAssimilationPhraseme
+  TonalAssimilationPhraseme,
 } from './dparser/phraseme';
 export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord } from './tonal/lexeme';
@@ -76,7 +75,7 @@ export { Sound, SoundGeneration } from './unit';
 
 export {
   TonalDesinenceInflection,
-  TonalCombiningForms
+  TonalCombiningForms,
 } from './dparser/metaplasm';
 
 export { predict } from './tonal/prediction';

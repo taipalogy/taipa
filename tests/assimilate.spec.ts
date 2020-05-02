@@ -1,7 +1,6 @@
 import { inflectDesinence } from '../src/dparser/inflector';
 import {
   assimilateRegressiveLexical,
-  assimilateAgressiveLexical,
   assimilateAgressivePhrasal,
   assimilateRegressivePhrasal,
 } from '../src/dparser/assimilator';
@@ -10,26 +9,32 @@ import { unassimilateRegressiveLexical } from '../src/tonal/unassimilator';
 describe('Assimilation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -gg, -ll', () => {
   const lx1 = assimilateRegressiveLexical('biettwbongx');
 
-  test('check the surface form', () => {
+  test('check the surface form, -ttwb- to llwb', () => {
     expect(lx1.getForms()[0].literal).toEqual('biellwbongx');
   });
 
   const lx2 = assimilateRegressiveLexical('chappwgoz');
 
-  test('check the surface form', () => {
+  test('check the surface form, -ppwg- to -bbwg-', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabbwgoz');
   });
 
   const lx3 = assimilateRegressiveLexical('chipfhoat');
 
-  test('check the surface form', () => {
+  test('check the surface form, -pfh- to -bfh-', () => {
     expect(lx3.getForms()[0].literal).toEqual('chibfhoat');
   });
 
   const lx4 = assimilateRegressiveLexical('okflangx');
 
-  test('check the surface form', () => {
+  test('check the surface form, -kfl- to -gfl-', () => {
     expect(lx4.getForms()[0].literal).toEqual('ogflangx');
+  });
+
+  const lx5 = assimilateRegressiveLexical('vattwjitt');
+
+  test('check the surface form, -ttwj- to -llwj-', () => {
+    expect(lx5.getForms()[0].literal).toEqual('vallwjitt');
   });
 });
 
@@ -57,6 +62,12 @@ describe('Unassimilation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, -kk, -
   test('check the surface form', () => {
     expect(lx4.getForms()[0].literal).toEqual('okflangx');
   });
+
+  const lx5 = unassimilateRegressiveLexical('vallwjitt');
+
+  test('check the surface form, -llwj- to -ttwj-', () => {
+    expect(lx5.getForms()[0].literal).toEqual('vattwjitt');
+  });
 });
 
 describe('Assimilation testing, euphonic t, tt', () => {
@@ -73,7 +84,7 @@ describe('Assimilation testing, euphonic t, tt', () => {
   });
 });
 
-describe('Assimilation testing, internal sandhi', () => {
+describe('Assimilation testing, internal sandhi, regressive', () => {
   const lx1 = assimilateRegressiveLexical('pokfbuttwqoany');
 
   test('check the surface form', () => {
@@ -99,19 +110,7 @@ describe('Assimilation testing, regressive', () => {
   });
 });
 
-describe('Assimilation testing, agressive, duplifix', () => {
-  const lx = assimilateAgressiveLexical('dittwditt');
-
-  test('check the underlying form', () => {
-    expect(lx.word.literal).toEqual('dittwditt');
-  });
-
-  test('check the surface form', () => {
-    expect(lx.getForms()[0].literal).toEqual('dittwlitt');
-  });
-});
-
-describe('Assimilation testing, agressive, duplifix', () => {
+describe('Assimilation testing, regressive', () => {
   const lx = assimilateRegressiveLexical('hitfnix');
 
   test('check the underlying form', () => {
@@ -120,18 +119,6 @@ describe('Assimilation testing, agressive, duplifix', () => {
 
   test('check the surface form', () => {
     expect(lx.getForms()[0].literal).toEqual('hinhfnix');
-  });
-});
-
-describe('Assimilation testing, nasalization', () => {
-  const lx = assimilateAgressiveLexical('ennxiay');
-
-  test('check the underlying form', () => {
-    expect(lx.word.literal).toEqual('ennxiay');
-  });
-
-  test('check the surface form', () => {
-    expect(lx.getForms()[0].literal).toEqual('ennxianny');
   });
 });
 

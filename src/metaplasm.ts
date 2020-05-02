@@ -7,6 +7,7 @@ import { TonalPhrase } from './tonal/phraseme';
 import {
   TonalInflectionLexeme,
   TonalAssimilationLexeme,
+  TonalInsertionLexeme,
 } from './dparser/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
@@ -53,6 +54,32 @@ export class TonalUnassimilationMetaplasm extends Metaplasm {
   }
 }
 
+export class TonalInsertionMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
+export class TonalUninsertionMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
+export class TonalZeroInsertionMetaplasm extends TonalInsertionMetaplasm {}
+
+export class TonalInfectionMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
+export class TonalMutationMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
 export class TonalLemmatizationMetaplasm extends Metaplasm {
   apply(
     morphemes: Array<Morpheme>,
@@ -85,6 +112,15 @@ export class TonalPhrasalAssimilationMetaplasm extends Metaplasm {
   apply(
     lexemeOne: TonalAssimilationLexeme,
     lexemeTwo: TonalAssimilationLexeme
+  ): TonalPhrase[] {
+    return [];
+  }
+}
+
+export class TonalPhrasalInsertionMetaplasm extends Metaplasm {
+  apply(
+    lexemeOne: TonalInsertionLexeme,
+    lexemeTwo: TonalInsertionLexeme
   ): TonalPhrase[] {
     return [];
   }

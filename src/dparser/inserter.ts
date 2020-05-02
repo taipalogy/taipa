@@ -2,7 +2,17 @@ import { GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
-import { Epenthesis } from './metaplasm';
+import { Epenthesis, insertToEnclitic } from './metaplasm';
+import { TonalInsertionPhrasemeMaker } from './phraseme';
+import { morphAnalyze } from './assimilator';
+import { TonalZeroInsertionMetaplasm } from '../metaplasm';
+
+export function getNoInsertion(word: string) {
+  const mrphs = morphAnalyze(word);
+  const lx = new TonalInsertionLexeme(mrphs, new TonalZeroInsertionMetaplasm());
+
+  return lx;
+}
 
 /**
  * Inserts an initial m, n, or ng to syllable ay if the preceding syllable has a final m, n, or ng.
@@ -20,4 +30,11 @@ export function insertTo(word: string) {
   return lx;
 }
 
-// TODO: other insertion functions?
+// TODO: phrasal inserter for enclitics
+export function insertAgressivePhrasal(preceding: string, following: string) {
+  const lxPreceding = getNoInsertion(preceding);
+  const lxFollowing = getNoInsertion(following);
+  const phmk = new TonalInsertionPhrasemeMaker();
+
+  return phmk.makePhraseme(lxPreceding, lxFollowing, new insertToEnclitic());
+}

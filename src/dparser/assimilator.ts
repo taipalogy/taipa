@@ -1,9 +1,12 @@
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalZeroAssimilation } from '../metaplasm';
-import { TonalAssimilationLexeme } from './lexeme';
+import {
+  TonalAssimilationLexeme,
+  TonalInfectionLexeme,
+  TonalMutationLexeme,
+} from './lexeme';
 import { TonalAssimilationPhrasemeMaker } from './phraseme';
 import {
-  AgressiveInternal,
   RegressiveInternal,
   RegressiveExternal,
   AgressiveExternal,
@@ -14,7 +17,7 @@ import { graphAnalyzeTonal } from '../tonal/analyzer';
  * Analyzes a string into morphemes. Morphological analysis.
  * @param str A string
  */
-function morphAnalyze(str: string) {
+export function morphAnalyze(str: string) {
   const gs = graphAnalyzeTonal(str);
   const tschmm = new TonalSoundChangingMorphemeMaker();
   const mrphs = tschmm.makeMorphemes(gs);
@@ -25,14 +28,6 @@ function morphAnalyze(str: string) {
 export function getNoAssimilation(word: string) {
   const mrphs = morphAnalyze(word);
   const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroAssimilation());
-
-  return lx;
-}
-
-/** Assimilates agressively inside a word. */
-export function assimilateAgressiveLexical(word: string) {
-  const mrphs = morphAnalyze(word);
-  const lx = new TonalAssimilationLexeme(mrphs, new AgressiveInternal());
 
   return lx;
 }

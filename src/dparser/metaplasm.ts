@@ -23,6 +23,12 @@ import {
   TonalCombiningMetaplasm,
   TonalInflectionMetaplasm,
   TonalAssimilationMetaplasm,
+  TonalInfectionMetaplasm,
+  TonalUnassimilationMetaplasm,
+  TonalUninsertionMetaplasm,
+  TonalInsertionMetaplasm,
+  TonalMutationMetaplasm,
+  TonalPhrasalInsertionMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -36,7 +42,11 @@ import {
   TonalPhrasalAssimilationMetaplasm,
   TonalPhrasalInflectionMetaplasm,
 } from '../metaplasm';
-import { TonalAssimilationLexeme, TonalInflectionLexeme } from './lexeme';
+import {
+  TonalAssimilationLexeme,
+  TonalInflectionLexeme,
+  TonalInsertionLexeme,
+} from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
 /** Direction of assimilation. */
@@ -405,8 +415,8 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
 /** Regressive assimilation inside a word. */
 export class RegressiveInternal extends TonalAssimilationMetaplasm {
   apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
-    let tw = new TonalWord(
-      morphemes.map(x => new TonalSyllable(x.syllable.letters))
+    let wrd = new TonalWord(
+      morphemes.map(it => new TonalSyllable(it.syllable.letters))
     );
 
     if (morphemes.length > 1) {
@@ -418,7 +428,7 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
             morphemes[i - 1].syllable.lastSecondLetter.literal ===
               TonalLetterTags.tt)
         ) {
-          tw.replaceSyllable(
+          wrd.replaceSyllable(
             i - 1,
             morphemes[i - 1].changeSoundWith(
               morphemes[i].sounds[0],
@@ -430,54 +440,17 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
             morphemes[i].sounds[0],
             AssimiDirection.regressive
           );
-          if (syls.length) tw.replaceSyllable(i - 1, syls[0]);
+          if (syls.length) wrd.replaceSyllable(i - 1, syls[0]);
         }
       }
     }
 
-    return [tw];
-  }
-}
-
-/** Agressive assimilation inside a word. */
-export class AgressiveInternal extends TonalAssimilationMetaplasm {
-  apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
-    if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
-      const snds = morphemes[morphemes.length - 2].sounds;
-      let wrd = new TonalWord(
-        morphemes.map(x => new TonalSyllable(x.syllable.letters))
-      );
-
-      if (
-        snds.filter(x => x.name === TonalSoundTags.nasalization).length == 1
-      ) {
-        // nasalization of vowels
-        wrd.replaceSyllable(
-          wrd.syllables.length - 1,
-          morphemes[morphemes.length - 1].changeSoundWith(
-            nasalizationSounds.sounds[0],
-            AssimiDirection.agressive
-          )[0]
-        );
-        return [wrd];
-      }
-
-      // duplifix. pass the preceding initial to get forms
-      wrd.replaceSyllable(
-        wrd.syllables.length - 1,
-        morphemes[morphemes.length - 1].changeSoundWith(
-          snds[0],
-          AssimiDirection.agressive
-        )[0]
-      );
-      return [wrd];
-    }
-    return [];
+    return [wrd];
   }
 }
 
 /** Inserts an initial m, n, or ng to syllable ay. */
-export class Epenthesis extends TonalAssimilationMetaplasm {
+export class Epenthesis extends TonalInsertionMetaplasm {
   // adding of nasal consonants. insertion
   apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -507,7 +480,7 @@ export class Epenthesis extends TonalAssimilationMetaplasm {
 }
 
 /** Uninsert an initial m, n, or ng from syllable ~ay */
-export class Uninsertion extends TonalAssimilationMetaplasm {
+export class Uninsertion extends TonalUninsertionMetaplasm {
   // removal of nasal consonants
   apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -532,7 +505,8 @@ export class Uninsertion extends TonalAssimilationMetaplasm {
   }
 }
 
-export class ReverseRegressiveInternal extends TonalAssimilationMetaplasm {
+/** Reverse regressive assimilation inside a word. */
+export class ReverseRegressiveInternal extends TonalUnassimilationMetaplasm {
   apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
     let wrd = new TonalWord(
       morphemes.map(it => new TonalSyllable(it.syllable.letters))
@@ -551,11 +525,57 @@ export class ReverseRegressiveInternal extends TonalAssimilationMetaplasm {
           initialsBghjlmnng.includes(morphemes[i].sounds[0].toString())
         ) {
           const syls = morphemes[i - 1].toVoicelessFinal();
-          wrd.shiftSyllable();
-          wrd.unshiftSyllable(syls[0]);
-          return [wrd];
+          wrd.replaceSyllable(i - 1, syls[0]);
         }
       }
+    }
+    return [wrd];
+  }
+}
+
+export class Infection extends TonalInfectionMetaplasm {
+  apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
+    if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
+      const snds = morphemes[morphemes.length - 2].sounds;
+      const wrd = new TonalWord(
+        morphemes.map(it => new TonalSyllable(it.syllable.letters))
+      );
+
+      if (
+        snds.filter(it => it.name === TonalSoundTags.nasalization).length == 1
+      ) {
+        // nasalization of vowels
+        wrd.replaceSyllable(
+          wrd.syllables.length - 1,
+          morphemes[morphemes.length - 1].changeSoundWith(
+            nasalizationSounds.sounds[0],
+            AssimiDirection.agressive
+          )[0]
+        );
+        return [wrd];
+      }
+    }
+    return [];
+  }
+}
+
+export class ConsonantMutation extends TonalMutationMetaplasm {
+  apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
+    if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
+      const snds = morphemes[morphemes.length - 2].sounds;
+      const wrd = new TonalWord(
+        morphemes.map(it => new TonalSyllable(it.syllable.letters))
+      );
+
+      // duplifix. pass the preceding initial to get forms
+      wrd.replaceSyllable(
+        wrd.syllables.length - 1,
+        morphemes[morphemes.length - 1].changeSoundWith(
+          snds[0],
+          AssimiDirection.agressive
+        )[0]
+      );
+      return [wrd];
     }
     return [];
   }
@@ -735,6 +755,18 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
       following,
       AssimiDirection.regressive
     );
+    if (wrds.length > 0)
+      return [new TonalPhrase([preceding.word].concat(wrds))];
+    return [];
+  }
+}
+
+export class insertToEnclitic extends TonalPhrasalInsertionMetaplasm {
+  apply(
+    preceding: TonalInsertionLexeme,
+    following: TonalInsertionLexeme
+  ): TonalPhrase[] {
+    const wrds = following.insertWith(preceding, AssimiDirection.agressive);
     if (wrds.length > 0)
       return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];

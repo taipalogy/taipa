@@ -1,4 +1,8 @@
-import { TonalInflectionLexeme, TonalAssimilationLexeme } from './lexeme';
+import {
+  TonalInflectionLexeme,
+  TonalAssimilationLexeme,
+  TonalInsertionLexeme,
+} from './lexeme';
 import { Phraseme } from '../unit';
 import {
   Adnominal,
@@ -7,13 +11,14 @@ import {
   ConjugateVppToProceeding,
   ConjugateToParticiple,
   ConjugateVppToParticiple,
-  ConjugateVppToTransitive
+  ConjugateVppToTransitive,
 } from './metaplasm';
 import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 import {
   TonalPhrasalInflectionMetaplasm,
-  TonalPhrasalAssimilationMetaplasm
+  TonalPhrasalAssimilationMetaplasm,
+  TonalPhrasalInsertionMetaplasm,
 } from '../metaplasm';
 
 /** A phrase of length 2 and its inflected forms. */
@@ -253,5 +258,35 @@ export class TonalAssimilationPhrasemeMaker {
     metaplasm: TonalPhrasalAssimilationMetaplasm
   ) {
     return new TonalAssimilationPhraseme(preceding, following, metaplasm);
+  }
+}
+
+export class TonalInsertionPhraseme implements Phraseme {
+  phrase: TonalPhrase;
+  private forms: Array<TonalPhrase> = new Array();
+
+  constructor(
+    preceding: TonalInsertionLexeme,
+    following: TonalInsertionLexeme,
+    metaplasm: TonalPhrasalInsertionMetaplasm
+  ) {
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
+
+    this.forms = metaplasm.apply(preceding, following);
+  }
+
+  /** Returns assimilated form. */
+  getForms() {
+    return this.forms;
+  }
+}
+
+export class TonalInsertionPhrasemeMaker {
+  makePhraseme(
+    preceding: TonalInsertionLexeme,
+    following: TonalInsertionLexeme,
+    metaplasm: TonalPhrasalInsertionMetaplasm
+  ) {
+    return new TonalInsertionPhraseme(preceding, following, metaplasm);
   }
 }

@@ -10,9 +10,6 @@ function morphAnalyze(str: string) {
   return ms;
 }
 
-/** Unassimilates agressively inside a word. */
-export function unassimilateAgressiveLexical(word: string) {}
-
 /** Unassimilates regressively inside a word. */
 export function unassimilateRegressiveLexical(word: string) {
   const ms = morphAnalyze(word);
