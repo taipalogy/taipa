@@ -18,12 +18,6 @@ export function unassimilateRegressiveLexical(word: string) {
   return lx;
 }
 
-/** Unassimilates agressively between 2 words. */
-export function unassimilateAgressivePhrasal(
-  preceding: string,
-  following: string
-) {}
-
 /** Unassimilates regressively between 2 words. */
 export function unassimilateRegressivePhrasal(
   preceding: string,

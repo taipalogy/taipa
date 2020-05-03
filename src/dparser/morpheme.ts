@@ -11,6 +11,7 @@ import {
   checkedTonalSounds,
   combinedCheckedAllomorphs,
   medialSounds,
+  lowerLettersTonal,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
@@ -169,25 +170,18 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       let s: TonalSyllable = new TonalSyllable(
         sounds.map(x => new AlphabeticLetter(x.characters))
       );
-      let snd = new Sound();
 
-      const af = ttInitialTInitialPairs.get(
+      const fnl = ttInitialTInitialPairs.get(
         sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString()
       );
-      if (af) {
-        const ps = tonalPositionalSounds.get(af);
-        if (ps) snd = ps(TonalSoundTags.stopFinal);
-        s.replaceLetter(
-          s.letters.length - 2,
-          new AlphabeticLetter(snd.characters)
-        );
+      if (fnl) {
+        s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
         if (nasalInitialSounds.includes(soundFollowingSyllable.toString())) {
           s.insertLetter(
             s.letters.length - 2,
             new AlphabeticLetter(soundFollowingSyllable.characters)
           );
         }
-
         return [s];
       }
     } else if (

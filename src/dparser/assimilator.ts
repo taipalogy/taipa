@@ -1,16 +1,8 @@
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalZeroAssimilation } from '../metaplasm';
-import {
-  TonalAssimilationLexeme,
-  TonalInfectionLexeme,
-  TonalMutationLexeme,
-} from './lexeme';
+import { TonalAssimilationLexeme } from './lexeme';
 import { TonalAssimilationPhrasemeMaker } from './phraseme';
-import {
-  RegressiveInternal,
-  RegressiveExternal,
-  AgressiveExternal,
-} from './metaplasm';
+import { RegressiveInternal, RegressiveExternal } from './metaplasm';
 import { graphAnalyzeTonal } from '../tonal/analyzer';
 
 /**
@@ -38,18 +30,6 @@ export function assimilateRegressiveLexical(word: string) {
   const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
 
   return lx;
-}
-
-/** Assimilates agressively between 2 words. */
-export function assimilateAgressivePhrasal(
-  preceding: string,
-  following: string
-) {
-  const lxPreceding = getNoAssimilation(preceding);
-  const lxFollowing = getNoAssimilation(following);
-  const phmk = new TonalAssimilationPhrasemeMaker();
-
-  return phmk.makePhraseme(lxPreceding, lxFollowing, new AgressiveExternal());
 }
 
 /** Assimilates regressively between 2 words. */

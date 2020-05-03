@@ -755,8 +755,7 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
       following,
       AssimiDirection.regressive
     );
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
+    if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
     return [];
   }
 }

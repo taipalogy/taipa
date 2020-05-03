@@ -19,7 +19,6 @@ export { lemmatize } from './tonal/lemmatizer';
 export {
   getNoAssimilation,
   assimilateRegressiveLexical,
-  assimilateAgressivePhrasal,
   assimilateRegressivePhrasal,
 } from './dparser/assimilator';
 export {

@@ -19,3 +19,5 @@ export function uninsertFrom(word: string) {
 
   return lx;
 }
+
+export function uninsertPhrasalFrom(preceding: string, following: string) {}

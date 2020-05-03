@@ -1,7 +1,6 @@
 import { inflectDesinence } from '../src/dparser/inflector';
 import {
   assimilateRegressiveLexical,
-  assimilateAgressivePhrasal,
   assimilateRegressivePhrasal,
 } from '../src/dparser/assimilator';
 import { unassimilateRegressiveLexical } from '../src/tonal/unassimilator';
@@ -96,6 +95,18 @@ describe('Assimilation testing, internal sandhi, regressive', () => {
   test('check the inflected form', () => {
     expect(lx2.getForms()[0].literal).toEqual('pogfbukkwqoan');
   });
+
+  const lx3 = assimilateRegressiveLexical('cutfgoaz');
+
+  test('check the surface form', () => {
+    expect(lx3.getForms()[0].literal).toEqual('cugfgoaz');
+  });
+
+  const lx4 = assimilateRegressiveLexical('vutfjinx');
+
+  test('check the surface form', () => {
+    expect(lx4.getForms()[0].literal).toEqual('vujfjinx');
+  });
 });
 
 describe('Assimilation testing, regressive', () => {
@@ -122,18 +133,48 @@ describe('Assimilation testing, regressive', () => {
   });
 });
 
-describe('Phrasal assmilation testing, 2 empty words, 1 empty phrase', () => {
+describe('Assimilation testing, regressive, phrasal', () => {
+  const phr = assimilateRegressivePhrasal('chittw', 'giahh');
+
+  test('check the underlying form', () => {
+    expect(phr.phrase.literal).toEqual('chittw giahh');
+  });
+
+  test('check the surface form', () => {
+    expect(phr.getForms()[0].literal).toEqual('chiggw giahh');
+  });
+});
+
+describe('Assmilation testing, 1 empty word', () => {
   const inputEmpty: any = '';
 
-  const ph1 = assimilateAgressivePhrasal(inputEmpty, inputEmpty);
+  const phr1 = assimilateRegressiveLexical(inputEmpty);
 
   test('check the empty phrase', () => {
-    expect(ph1.phrase.literal).toEqual('');
+    expect(phr1.word.literal).toEqual('');
   });
 
-  test('check the number of other forms of an empty phrase', () => {
-    expect(ph1.getForms().length).toEqual(0);
+  test('check the number of other forms of an empty word', () => {
+    expect(phr1.getForms().length).toEqual(0);
   });
+});
+
+describe('Assmilation testing, undefined input', () => {
+  const inputUnd: any = undefined;
+
+  const phr1 = assimilateRegressiveLexical(inputUnd);
+
+  test('check the empty phrase', () => {
+    expect(phr1.word.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an undefined word', () => {
+    expect(phr1.getForms().length).toEqual(0);
+  });
+});
+
+describe('Phrasal assmilation testing, 2 empty words, 1 empty phrase', () => {
+  const inputEmpty: any = '';
 
   const ph2 = assimilateRegressivePhrasal(inputEmpty, inputEmpty);
 
@@ -155,17 +196,7 @@ describe('Phrasal assimilation testing, undefined input', () => {
     expect(ph1.phrase.literal).toEqual('');
   });
 
-  test('check the number of other forms of an empty phrase', () => {
+  test('check the number of other forms of an undefined phrase', () => {
     expect(ph1.getForms().length).toEqual(0);
-  });
-
-  const ph2 = assimilateRegressivePhrasal(inputUnd, inputUnd);
-
-  test('check the empty phrase', () => {
-    expect(ph2.phrase.literal).toEqual('');
-  });
-
-  test('check the number of other forms of an empty phrase', () => {
-    expect(ph2.getForms().length).toEqual(0);
   });
 });
