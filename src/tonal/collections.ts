@@ -60,66 +60,70 @@ export const euphonicFinalsJjllss = [
 ];
 
 // bb, gg, kk, pp
-export const euphonicFinalsBbggkkpp = [
+export const finalsBBggkkpp = [
   TonalLetterTags.bb.toString(),
   TonalLetterTags.gg.toString(),
   TonalLetterTags.kk.toString(),
   TonalLetterTags.pp.toString(),
 ];
 
-// t
-export const initialsForEuphonicT = [
-  TonalLetterTags.p.toString(),
-  TonalLetterTags.k.toString(),
-  TonalLetterTags.b.toString(),
-  TonalLetterTags.g.toString(),
+export const initialsForT = {
+  p: TonalLetterTags.p.toString(),
+  k: TonalLetterTags.k.toString(),
+  b: TonalLetterTags.b.toString(),
+  g: TonalLetterTags.g.toString(),
 
-  TonalLetterTags.j.toString(),
-  TonalLetterTags.q.toString(),
-  TonalLetterTags.s.toString(),
-  TonalLetterTags.v.toString(),
+  j: TonalLetterTags.j.toString(),
+  q: TonalLetterTags.q.toString(),
+  s: TonalLetterTags.s.toString(),
+  v: TonalLetterTags.v.toString(),
 
-  TonalLetterTags.m.toString(),
-  TonalLetterTags.n.toString(),
-  TonalLetterTags.ng.toString(),
-];
+  m: TonalLetterTags.m.toString(),
+  n: TonalLetterTags.n.toString(),
+  ng: TonalLetterTags.ng.toString(),
+};
 
-// tt
-export const initialsForEuphonicTt = [
-  TonalLetterTags.p.toString(),
-  TonalLetterTags.k.toString(),
-  TonalLetterTags.g.toString(),
+export const initialsForTT = {
+  p: TonalLetterTags.p.toString(),
+  k: TonalLetterTags.k.toString(),
+  g: TonalLetterTags.g.toString(),
 
-  TonalLetterTags.q.toString(),
-  TonalLetterTags.s.toString(),
-  TonalLetterTags.v.toString(),
+  b: TonalLetterTags.b.toString(),
+  j: TonalLetterTags.j.toString(),
 
-  TonalLetterTags.m.toString(),
-  TonalLetterTags.n.toString(),
-  TonalLetterTags.ng.toString(),
-];
+  q: TonalLetterTags.q.toString(),
+  s: TonalLetterTags.s.toString(),
+  v: TonalLetterTags.v.toString(),
+
+  m: TonalLetterTags.m.toString(),
+  n: TonalLetterTags.n.toString(),
+  ng: TonalLetterTags.ng.toString(),
+};
 
 // tt, t
 export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.t + TonalLetterTags.p, TonalLetterTags.p)
-  .set(TonalLetterTags.t + TonalLetterTags.v, TonalLetterTags.p)
-  .set(TonalLetterTags.t + TonalLetterTags.k, TonalLetterTags.k)
-  .set(TonalLetterTags.t + TonalLetterTags.q, TonalLetterTags.k)
-  .set(TonalLetterTags.t + TonalLetterTags.g, TonalLetterTags.g)
-  .set(TonalLetterTags.t + TonalLetterTags.j, TonalLetterTags.j)
-  .set(TonalLetterTags.t + TonalLetterTags.m, TonalLetterTags.h)
-  .set(TonalLetterTags.t + TonalLetterTags.n, TonalLetterTags.h)
-  .set(TonalLetterTags.t + TonalLetterTags.ng, TonalLetterTags.h)
-  .set(TonalLetterTags.tt + TonalLetterTags.p, TonalLetterTags.pp)
-  .set(TonalLetterTags.tt + TonalLetterTags.v, TonalLetterTags.pp)
-  .set(TonalLetterTags.tt + TonalLetterTags.k, TonalLetterTags.kk)
-  .set(TonalLetterTags.tt + TonalLetterTags.q, TonalLetterTags.kk)
-  .set(TonalLetterTags.tt + TonalLetterTags.g, TonalLetterTags.gg)
-  .set(TonalLetterTags.tt + TonalLetterTags.m, TonalLetterTags.hh)
-  .set(TonalLetterTags.tt + TonalLetterTags.n, TonalLetterTags.hh)
-  .set(TonalLetterTags.tt + TonalLetterTags.ng, TonalLetterTags.hh);
+  .set(TonalLetterTags.t + initialsForT.p, TonalLetterTags.p)
+  .set(TonalLetterTags.t + initialsForT.v, TonalLetterTags.p)
+  .set(TonalLetterTags.t + initialsForT.k, TonalLetterTags.k)
+  .set(TonalLetterTags.t + initialsForT.q, TonalLetterTags.k)
+  .set(TonalLetterTags.t + initialsForT.g, TonalLetterTags.g)
+  .set(TonalLetterTags.t + initialsForT.j, TonalLetterTags.j)
+  .set(TonalLetterTags.t + initialsForT.m, TonalLetterTags.h)
+  .set(TonalLetterTags.t + initialsForT.n, TonalLetterTags.h)
+  .set(TonalLetterTags.t + initialsForT.ng, TonalLetterTags.h)
+  .set(TonalLetterTags.tt + initialsForTT.p, TonalLetterTags.pp)
+  .set(TonalLetterTags.tt + initialsForTT.v, TonalLetterTags.pp)
+  .set(TonalLetterTags.tt + initialsForTT.k, TonalLetterTags.kk)
+  .set(TonalLetterTags.tt + initialsForTT.q, TonalLetterTags.kk)
+  .set(TonalLetterTags.tt + initialsForTT.g, TonalLetterTags.gg)
+  .set(TonalLetterTags.tt + initialsForTT.b, TonalLetterTags.ll)
+  .set(TonalLetterTags.tt + initialsForTT.j, TonalLetterTags.ll)
+  .set(TonalLetterTags.tt + initialsForTT.s, TonalLetterTags.ss)
+  .set(TonalLetterTags.tt + initialsForTT.m, TonalLetterTags.hh)
+  .set(TonalLetterTags.tt + initialsForTT.n, TonalLetterTags.hh)
+  .set(TonalLetterTags.tt + initialsForTT.ng, TonalLetterTags.hh);
 
-// b, g, h, l
+// b, g, h, j, l
 export const initialsBghjl = [
   // turn preceding finals to voiced ones
   TonalLetterTags.b.toString(),

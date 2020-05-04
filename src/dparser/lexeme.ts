@@ -138,9 +138,8 @@ export class TonalAssimilationLexeme implements Lexeme {
         adjacentSnds[0].name === TonalSoundTags.initial
       ) {
         const s = adjacentSnds[0];
-        const syls = this.morphemes[this.morphemes.length - 1].changeSoundWith(
-          s,
-          AssimiDirection.regressive
+        const syls = this.morphemes[this.morphemes.length - 1].changeFinalTtt(
+          s
         );
 
         wrd.popSyllable();

@@ -430,15 +430,11 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
         ) {
           wrd.replaceSyllable(
             i - 1,
-            morphemes[i - 1].changeSoundWith(
-              morphemes[i].sounds[0],
-              AssimiDirection.regressive
-            )[0]
+            morphemes[i - 1].changeWithFollowing(morphemes[i].sounds[0])[0]
           );
         } else {
-          const syls = morphemes[i - 1].changeSoundWith(
-            morphemes[i].sounds[0],
-            AssimiDirection.regressive
+          const syls = morphemes[i - 1].changeWithFollowing(
+            morphemes[i].sounds[0]
           );
           if (syls.length) wrd.replaceSyllable(i - 1, syls[0]);
         }

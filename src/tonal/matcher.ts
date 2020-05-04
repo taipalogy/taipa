@@ -5,7 +5,7 @@ import {
   euphonicFinalsBGJKLPS,
 } from './version2';
 import {
-  euphonicFinalsBbggkkpp,
+  finalsBBggkkpp,
   euphonicFinalsJjllss,
   euphonicFinalsBgkp,
   euphonicFinalsJls,
@@ -121,7 +121,7 @@ export const smBbggkkppWx = function (
   tonalWX: string
 ) {
   if (
-    euphonicFinalsBbggkkpp.includes(euphonicFinalBbggjjkkllppss) &&
+    finalsBBggkkpp.includes(euphonicFinalBbggjjkkllppss) &&
     tonalsWx.includes(tonalWX)
   )
     return true;

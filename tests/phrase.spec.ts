@@ -9,7 +9,6 @@ import {
   inflectToParticiple,
   inflectVppToParticiple,
 } from '../src/dparser/inflector';
-import { assimilateAgressivePhrasal } from '../src/dparser/assimilator';
 import { insertAgressivePhrasal } from '../src/dparser/inserter';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalSyllable } from '../src/tonal/morpheme';

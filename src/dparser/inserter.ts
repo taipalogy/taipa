@@ -4,11 +4,11 @@ import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
 import { Epenthesis, insertToEnclitic } from './metaplasm';
 import { TonalInsertionPhrasemeMaker } from './phraseme';
-import { morphAnalyze } from './assimilator';
+import { morphAnalyzeChanging } from './assimilator';
 import { TonalZeroInsertionMetaplasm } from '../metaplasm';
 
 export function getNoInsertion(word: string) {
-  const mrphs = morphAnalyze(word);
+  const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalInsertionLexeme(mrphs, new TonalZeroInsertionMetaplasm());
 
   return lx;

@@ -8,7 +8,7 @@ import { unassimilateRegressiveLexical } from '../src/tonal/unassimilator';
 describe('Assimilation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -gg, -ll', () => {
   const lx1 = assimilateRegressiveLexical('biettwbongx');
 
-  test('check the surface form, -ttwb- to llwb', () => {
+  test('check the surface form, -ttwb- to -llwb-', () => {
     expect(lx1.getForms()[0].literal).toEqual('biellwbongx');
   });
 

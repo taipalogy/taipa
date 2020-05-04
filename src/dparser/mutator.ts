@@ -1,8 +1,8 @@
 import { TonalMutationLexeme } from './lexeme';
-import { morphAnalyze } from './assimilator';
+import { morphAnalyzeChanging } from './assimilator';
 
 export function mutateAgressiveLexical(word: string) {
-  const ms = morphAnalyze(word);
+  const ms = morphAnalyzeChanging(word);
   const lx = new TonalMutationLexeme(ms);
 
   return lx;

@@ -9,7 +9,7 @@ import { graphAnalyzeTonal } from '../tonal/analyzer';
  * Analyzes a string into morphemes. Morphological analysis.
  * @param str A string
  */
-export function morphAnalyze(str: string) {
+export function morphAnalyzeChanging(str: string) {
   const gs = graphAnalyzeTonal(str);
   const tschmm = new TonalSoundChangingMorphemeMaker();
   const mrphs = tschmm.makeMorphemes(gs);
@@ -18,7 +18,7 @@ export function morphAnalyze(str: string) {
 
 /** No internal sandhi. */
 export function getNoAssimilation(word: string) {
-  const mrphs = morphAnalyze(word);
+  const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalAssimilationLexeme(mrphs, new TonalZeroAssimilation());
 
   return lx;
@@ -26,7 +26,7 @@ export function getNoAssimilation(word: string) {
 
 /** Assimilates regressively inside a word. */
 export function assimilateRegressiveLexical(word: string) {
-  const mrphs = morphAnalyze(word);
+  const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
 
   return lx;

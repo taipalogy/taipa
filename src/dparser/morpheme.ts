@@ -18,11 +18,11 @@ import {
   initialsBghjl,
   ttInitialTInitialPairs,
   voicelessVoicedFinals,
-  initialsForEuphonicTt,
-  initialsForEuphonicT,
+  initialsForT,
   nasalInitialSounds,
   finalBgjlsbbggjjllss,
   voicedVoicelessFinals,
+  initialsForTT,
 } from '../tonal/collections';
 import { AssimiDirection } from './metaplasm';
 import { TonalCombiningMetaplasm } from '../metaplasm';
@@ -142,11 +142,47 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
         ];
       }
-
-      // internal sandhi. regressive assimilation
-      return this.regAssimilate(this.sounds, sound);
     }
     return [];
+  }
+
+  changeFinalTtt(soundFollowingSyllable: Sound) {
+    // absolute assimilation. regressive
+    if (
+      (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
+        Array.from(Object.values(initialsForTT)).includes(
+          soundFollowingSyllable.toString()
+        )) ||
+      (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.t &&
+        Array.from(Object.values(initialsForT)).includes(
+          soundFollowingSyllable.toString()
+        ))
+    ) {
+      let s: TonalSyllable = new TonalSyllable(
+        this.sounds.map(x => new AlphabeticLetter(x.characters))
+      );
+
+      const fnl = ttInitialTInitialPairs.get(
+        this.sounds[this.sounds.length - 2].toString() +
+          soundFollowingSyllable.toString()
+      );
+      if (fnl) {
+        s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
+        if (nasalInitialSounds.includes(soundFollowingSyllable.toString())) {
+          s.insertLetter(
+            s.letters.length - 2,
+            new AlphabeticLetter(soundFollowingSyllable.characters)
+          );
+        }
+        return [s];
+      }
+    }
+    return [];
+  }
+
+  changeWithFollowing(soundOfSyllable: Sound) {
+    // internal sandhi. regressive assimilation
+    return this.regAssimilate(this.sounds, soundOfSyllable);
   }
 
   private regAssimilate(
@@ -160,31 +196,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       return [];
     }
 
+    const ret = this.changeFinalTtt(soundFollowingSyllable);
+    if (ret.length > 0) return ret;
     if (
-      (sounds[sounds.length - 2].toString() === TonalLetterTags.tt &&
-        initialsForEuphonicTt.includes(soundFollowingSyllable.toString())) ||
-      (sounds[sounds.length - 2].toString() === TonalLetterTags.t &&
-        initialsForEuphonicT.includes(soundFollowingSyllable.toString()))
-    ) {
-      // absolute assimilation. euphonic tt and t.
-      let s: TonalSyllable = new TonalSyllable(
-        sounds.map(x => new AlphabeticLetter(x.characters))
-      );
-
-      const fnl = ttInitialTInitialPairs.get(
-        sounds[sounds.length - 2].toString() + soundFollowingSyllable.toString()
-      );
-      if (fnl) {
-        s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
-        if (nasalInitialSounds.includes(soundFollowingSyllable.toString())) {
-          s.insertLetter(
-            s.letters.length - 2,
-            new AlphabeticLetter(soundFollowingSyllable.characters)
-          );
-        }
-        return [s];
-      }
-    } else if (
       soundFollowingSyllable.toString() === TonalLetterTags.b &&
       sounds[sounds.length - 2].toString() === TonalLetterTags.n
     ) {
@@ -233,6 +247,8 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       soundFollowingSyllable.name === TonalSoundTags.initial &&
       initialsBghjl.includes(soundFollowingSyllable.toString())
     ) {
+      console.log(this.sounds.map(it => it.toString()));
+
       return this.voicedFinal(sounds);
     }
   }
