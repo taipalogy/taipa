@@ -476,7 +476,7 @@ export const stopFinalSounds = setOfSounds([
   new FinalHH(),
 ]);
 
-export const euphonicFinalsBGJKLPS = setOfSounds([
+export const stopFinalSoundsBgjklps = setOfSounds([
   new FinalB(),
   new FinalG(),
   new FinalJ(),
@@ -486,7 +486,7 @@ export const euphonicFinalsBGJKLPS = setOfSounds([
   new FinalS(),
 ]);
 
-export const euphonicFinalsBbGgJjKkLlPpSs = setOfSounds([
+export const stopFinalSoundsBBggjjkkllppss = setOfSounds([
   new FinalBB(),
   new FinalGG(),
   new FinalJJ(),

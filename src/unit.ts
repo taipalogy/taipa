@@ -373,7 +373,7 @@ export class SoundGeneration {
   predictive: boolean = false;
   /** Predicted sounds */
   predictions: Array<Sound[]> = new Array();
-  predictEuphonicFinal: boolean = false;
+  predictSandhiFinal: boolean = false;
 }
 
 export class MatchedPattern {

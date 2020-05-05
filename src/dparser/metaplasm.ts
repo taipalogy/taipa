@@ -5,7 +5,6 @@ import {
   AllomorphY,
   CheckedAllomorph,
   TonalLetterTags,
-  tonalPositionalSounds,
   TonalSoundTags,
   lowerLettersTonal,
   AllomorphH,
@@ -15,7 +14,7 @@ import {
   eighthToFirst,
   combiningRules,
   finalOfPhrasalVerbParticle,
-  nasalInitialSounds,
+  nasalInitials,
   initialsBghjl,
   voicedVoicelessFinals,
 } from '../tonal/collections';
@@ -114,27 +113,23 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
 export class ThirdCombiningForm extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
-      let s: TonalSyllable = new TonalSyllable(
+      const s: TonalSyllable = new TonalSyllable(
         sounds.map(x => new AlphabeticLetter(x.characters))
       );
-      const ps = tonalPositionalSounds.get(TonalLetterTags.w);
-      let snd = new Sound();
 
       if (allomorph instanceof FreeAllomorph) {
-        if (ps) snd = ps(TonalSoundTags.freeTonal);
         if (allomorph instanceof ZeroAllomorph) {
-          s.pushLetter(new AlphabeticLetter(snd.characters));
+          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
         } else {
           s.popLetter();
-          s.pushLetter(new AlphabeticLetter(snd.characters));
+          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
         }
       } else if (allomorph instanceof CheckedAllomorph) {
-        if (ps) snd = ps(TonalSoundTags.checkedTonal);
         if (allomorph.tonal.toString()) {
           s.popLetter();
-          s.pushLetter(new AlphabeticLetter(snd.characters));
+          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
         } else {
-          s.pushLetter(new AlphabeticLetter(snd.characters));
+          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
         }
       }
       return [s];
@@ -494,7 +489,7 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
       );
       if (
         snds[snds.length - 2].name == TonalSoundTags.nasalFinal &&
-        nasalInitialSounds.includes(
+        nasalInitials.includes(
           morphemes[morphemes.length - 1].syllable.letters[0].literal
         ) &&
         morphemes[morphemes.length - 1].syllable.letters[1].literal ===
@@ -519,7 +514,7 @@ export class ReverseRegressiveInternal extends TonalUnassimilationMetaplasm {
     if (morphemes.length > 1) {
       for (let i = 1; i < morphemes.length; i++) {
         // combine b, g, h, j, l with m, n, ng
-        const initialsBghjlmnng = initialsBghjl.concat(nasalInitialSounds);
+        const initialsBghjlmnng = initialsBghjl.concat(nasalInitials);
         const finalsBglbbggll = Array.from(voicedVoicelessFinals.keys());
         if (
           morphemes[i].sounds[0].name === TonalSoundTags.initial &&

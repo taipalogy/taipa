@@ -1,15 +1,15 @@
 import {
   TonalLetterTags,
-  nasalFinalSounds,
-  euphonicFinalsBbGgJjKkLlPpSs,
-  euphonicFinalsBGJKLPS,
+  stopFinalSoundsBBggjjkkllppss,
+  stopFinalSoundsBgjklps,
 } from './version2';
 import {
   finalsBBggkkpp,
-  euphonicFinalsJjllss,
-  euphonicFinalsBgkp,
-  euphonicFinalsJls,
+  finalsJJllss,
+  finalsBgkp,
+  finalsJls,
   tonalsWx,
+  nasalFinals,
 } from './collections';
 
 // mhf, nhf, nghf
@@ -21,10 +21,8 @@ export const smMnngHF = function (
   neutralFinalH: string,
   firstTonalF: string
 ) {
-  const snfs = nasalFinalSounds;
-
   if (
-    snfs.includes(nasalFinal) &&
+    nasalFinals.includes(nasalFinal) &&
     TonalLetterTags.h === neutralFinalH &&
     TonalLetterTags.f === firstTonalF
   )
@@ -53,15 +51,13 @@ export const smMHhW = function (
 };
 
 // mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
-export const smMnngHhWx = function (
+export const smMnngHHWx = function (
   nasalFinal: string,
   neutralFinalHh: string,
   tonalWX: string
 ) {
-  const snfs = nasalFinalSounds;
-
   if (
-    snfs.includes(nasalFinal) &&
+    nasalFinals.includes(nasalFinal) &&
     TonalLetterTags.hh === neutralFinalHh &&
     tonalsWx.includes(tonalWX)
   )
@@ -74,25 +70,16 @@ export const smMnngHhWx = function (
 export const regexJlsF = /(j|l|s)f/g;
 
 // jf, lf, sf
-export const smJlsF = function (euphonicFinalJls: string, firstTonalF: string) {
-  if (
-    euphonicFinalsJls.includes(euphonicFinalJls) &&
-    TonalLetterTags.f === firstTonalF
-  )
+export const smJlsF = function (finalJls: string, firstTonalF: string) {
+  if (finalsJls.includes(finalJls) && TonalLetterTags.f === firstTonalF)
     return true;
 
   return false;
 };
 
 // bf, gf, kf, pf
-export const smBgkpF = function (
-  euphonicFinalBgjklps: string,
-  firstTonalF: string
-) {
-  if (
-    euphonicFinalsBgkp.includes(euphonicFinalBgjklps) &&
-    TonalLetterTags.f === firstTonalF
-  )
+export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
+  if (finalsBgkp.includes(finalBgkp) && TonalLetterTags.f === firstTonalF)
     return true;
 
   return false;
@@ -102,14 +89,8 @@ export const smBgkpF = function (
 export const regexJjllssWx = /(jj|ll|ss)(w|x)/g;
 
 // jjw, jjx, llw, llx, ssw, ssx
-export const smJjllssWx = function (
-  euphonicFinalJjllss: string,
-  tonalWX: string
-) {
-  if (
-    euphonicFinalsJjllss.includes(euphonicFinalJjllss) &&
-    tonalsWx.includes(tonalWX)
-  )
+export const smJJllssWx = function (finalJJllss: string, tonalWX: string) {
+  if (finalsJJllss.includes(finalJJllss) && tonalsWx.includes(tonalWX))
     return true;
 
   return false;
@@ -117,11 +98,11 @@ export const smJjllssWx = function (
 
 // bbw, bbx, ggw, ggx, kkw, kkx, ppw, ppx
 export const smBbggkkppWx = function (
-  euphonicFinalBbggjjkkllppss: string,
+  finalBBggjjkkllppss: string,
   tonalWX: string
 ) {
   if (
-    finalsBBggkkpp.includes(euphonicFinalBbggjjkkllppss) &&
+    finalsBBggkkpp.includes(finalBBggjjkkllppss) &&
     tonalsWx.includes(tonalWX)
   )
     return true;
@@ -130,13 +111,11 @@ export const smBbggkkppWx = function (
 };
 
 // bf, gf, jf, kf, lf, pf, sf
-export const smBgjklpsF = function (
-  euphonicFinalBgjklps: string,
-  firstTonalF: string
-) {
-  const efs = euphonicFinalsBGJKLPS;
-
-  if (efs.includes(euphonicFinalBgjklps) && TonalLetterTags.f === firstTonalF)
+export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
+  if (
+    stopFinalSoundsBgjklps.includes(finalBgjklps) &&
+    TonalLetterTags.f === firstTonalF
+  )
     return true;
 
   return false;
@@ -144,12 +123,12 @@ export const smBgjklpsF = function (
 
 // bbw, bbx, ggw, ggx, jjw, jjx, kkw, kkx, llw, llx, ppw, ppx, ssw, ssx
 export const smBbggjjkkllppssWx = function (
-  euphonicFinalBbggjjkkllppss: string,
+  finalBBggjjkkllppss: string,
   tonalWX: string
 ) {
-  const efs = euphonicFinalsBbGgJjKkLlPpSs;
+  const efs = stopFinalSoundsBBggjjkkllppss;
 
-  if (efs.includes(euphonicFinalBbggjjkkllppss) && tonalsWx.includes(tonalWX))
+  if (efs.includes(finalBBggjjkkllppss) && tonalsWx.includes(tonalWX))
     return true;
 
   return false;

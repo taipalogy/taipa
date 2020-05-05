@@ -6,7 +6,6 @@ import {
   combinedFreeAllomorphs,
   uncombinedCheckedAllomorphs,
   TonalLetterTags,
-  tonalPositionalSounds,
   TonalSoundTags,
   checkedTonalSounds,
   combinedCheckedAllomorphs,
@@ -19,12 +18,11 @@ import {
   ttInitialTInitialPairs,
   voicelessVoicedFinals,
   initialsForFinalT,
-  nasalInitialSounds,
   finalBgjlsbbggjjllss,
   voicedVoicelessFinals,
   initialsForTT,
+  nasalInitials,
 } from '../tonal/collections';
-import { AssimiDirection } from './metaplasm';
 import { TonalCombiningMetaplasm } from '../metaplasm';
 
 /** A syllable and its combining forms. */
@@ -137,11 +135,12 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       if (sound.name === TonalSoundTags.initial) {
         const snds = this.sounds;
         if (snds[0].toString() === sound.toString()) {
-          let duplifix = new Sound();
-          const ps = tonalPositionalSounds.get(TonalLetterTags.l);
-          if (ps) duplifix = ps(TonalSoundTags.initial);
+          const s: TonalSyllable = new TonalSyllable(
+            this.sounds.map(it => new AlphabeticLetter(it.characters))
+          );
 
-          snds.splice(0, 1, duplifix);
+          s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.l));
+          return [s];
         }
         return [
           new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
@@ -163,8 +162,8 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           soundFollowingSyllable.toString()
         ))
     ) {
-      let s: TonalSyllable = new TonalSyllable(
-        this.sounds.map(x => new AlphabeticLetter(x.characters))
+      const s: TonalSyllable = new TonalSyllable(
+        this.sounds.map(it => new AlphabeticLetter(it.characters))
       );
 
       const fnl = ttInitialTInitialPairs.get(
@@ -173,7 +172,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       );
       if (fnl) {
         s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
-        if (nasalInitialSounds.includes(soundFollowingSyllable.toString())) {
+        if (nasalInitials.includes(soundFollowingSyllable.toString())) {
           s.insertLetter(
             s.letters.length - 2,
             new AlphabeticLetter(soundFollowingSyllable.characters)
@@ -212,15 +211,12 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.n
     ) {
       // replace final n with final m
-      let s: TonalSyllable = new TonalSyllable(
+      const s: TonalSyllable = new TonalSyllable(
         this.sounds.map(it => new AlphabeticLetter(it.characters))
       );
-      let snd = new Sound();
-      const ps = tonalPositionalSounds.get(TonalLetterTags.m);
-      if (ps) snd = ps(TonalSoundTags.nasalFinal);
       s.replaceLetter(
         s.letters.length - 2,
-        new AlphabeticLetter(snd.characters)
+        lowerLettersTonal.get(TonalLetterTags.m)
       );
       return [s];
     }
@@ -234,7 +230,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   ) {
     if (
       soundFollowingSyllable.name === TonalSoundTags.initial &&
-      nasalInitialSounds.includes(soundFollowingSyllable.toString())
+      nasalInitials.includes(soundFollowingSyllable.toString())
     ) {
       return this.voicedFinal(sounds);
     }
@@ -261,13 +257,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       const s: TonalSyllable = new TonalSyllable(
         sounds.map(it => new AlphabeticLetter(it.characters))
       );
-      let snd = new Sound();
-      const ps = tonalPositionalSounds.get(fnl);
-      if (ps) snd = ps(TonalSoundTags.stopFinal);
-      s.replaceLetter(
-        s.letters.length - 2,
-        new AlphabeticLetter(snd.characters)
-      );
+      s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
       return [s];
     }
   }
@@ -304,13 +294,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
         const s: TonalSyllable = new TonalSyllable(
           this.sounds.map(it => new AlphabeticLetter(it.characters))
         );
-        let snd = new Sound();
-        const ps = tonalPositionalSounds.get(fnl);
-        if (ps) snd = ps(TonalSoundTags.stopFinal);
-        s.replaceLetter(
-          s.letters.length - 2,
-          new AlphabeticLetter(snd.characters)
-        );
+        s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
         return [s];
       }
     }

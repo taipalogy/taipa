@@ -1,11 +1,15 @@
 import { TonalLetterTags } from './version2';
 
 // m, n, ng
-export const nasalInitialSounds = [
+const nasals = [
   TonalLetterTags.m.toString(),
   TonalLetterTags.n.toString(),
   TonalLetterTags.ng.toString(),
 ];
+
+export const nasalInitials = nasals;
+
+export const nasalFinals = nasals;
 
 export const combiningRules = new Map<string, TonalLetterTags[]>()
   .set(TonalLetterTags.zero, [TonalLetterTags.z])
@@ -38,14 +42,14 @@ export const epentheticSounds = [
 ];
 
 // j, l, s
-export const euphonicFinalsJls = [
+export const finalsJls = [
   TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
   TonalLetterTags.s.toString(),
 ];
 
 // b, g, k, p
-export const euphonicFinalsBgkp = [
+export const finalsBgkp = [
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.k.toString(),
@@ -53,7 +57,7 @@ export const euphonicFinalsBgkp = [
 ];
 
 // jj, ll, ss
-export const euphonicFinalsJjllss = [
+export const finalsJJllss = [
   TonalLetterTags.jj.toString(),
   TonalLetterTags.ll.toString(),
   TonalLetterTags.ss.toString(),

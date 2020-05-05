@@ -69,7 +69,7 @@ describe('Unassimilation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, -kk, -
   });
 });
 
-describe('Assimilation testing, euphonic t, tt', () => {
+describe('Assimilation testing, sandhi tt, t', () => {
   const lx1 = assimilateRegressiveLexical('bittwpang');
 
   test('check the surface form', () => {

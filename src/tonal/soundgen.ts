@@ -12,15 +12,13 @@ import {
   nasalFinalSounds,
   nasalizationSounds,
   stopFinalSounds,
-  euphonicFinalsBGJKLPS,
-  euphonicFinalsBbGgJjKkLlPpSs,
+  stopFinalSoundsBgjklps,
+  stopFinalSoundsBBggjjkkllppss,
 } from './version2';
 import { combiningRules } from './collections';
 
 function initialConsonant(sg: SoundGeneration) {
-  const sis = initialSounds;
-
-  if (sis.includes(sg.letters[sg.sounds.length])) {
+  if (initialSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.initial);
@@ -34,9 +32,7 @@ function initialConsonant(sg: SoundGeneration) {
 function stopFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const ssfs = stopFinalSounds;
-
-  if (ssfs.includes(sg.letters[sg.sounds.length])) {
+  if (stopFinalSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.stopFinal);
@@ -45,7 +41,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.sounds.length && sg.predictive)
-      sg.predictions.push(ssfs.sounds);
+      sg.predictions.push(stopFinalSounds.sounds);
   }
 
   return sg;
@@ -54,9 +50,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
 function neutralFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const snfs = neutralFinalSounds;
-
-  if (snfs.includes(sg.letters[sg.sounds.length])) {
+  if (neutralFinalSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.stopFinal);
@@ -65,7 +59,7 @@ function neutralFinalConsonant(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.sounds.length && sg.predictive)
-      sg.predictions.push(snfs.sounds);
+      sg.predictions.push(neutralFinalSounds.sounds);
   }
 
   return sg;
@@ -74,9 +68,7 @@ function neutralFinalConsonant(sg: SoundGeneration) {
 function nasalFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const snfs = nasalFinalSounds;
-
-  if (snfs.includes(sg.letters[sg.sounds.length])) {
+  if (nasalFinalSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.nasalFinal);
@@ -85,20 +77,18 @@ function nasalFinalConsonant(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.sounds.length && sg.predictive)
-      sg.predictions.push(snfs.sounds);
+      sg.predictions.push(nasalFinalSounds.sounds);
   }
 
   return sg;
 }
 
 function vowel(sg: SoundGeneration) {
-  const sms = medialSounds;
-
   let toBePredicted = true;
   let matches: number = 0;
   for (let i = sg.sounds.length; i < sg.letters.length; i++) {
     // console.log(`sg.sounds.length: ${sg.sounds.length}`);
-    if (sms.includes(sg.letters[i])) {
+    if (medialSounds.includes(sg.letters[i])) {
       toBePredicted = false;
       const ps = tonalPositionalSounds.get(sg.letters[i]);
       if (ps) {
@@ -114,7 +104,8 @@ function vowel(sg: SoundGeneration) {
   }
 
   if (toBePredicted) {
-    if (sg.predictive && sg.letters.length > 0) sg.predictions.push(sms.sounds);
+    if (sg.predictive && sg.letters.length > 0)
+      sg.predictions.push(medialSounds.sounds);
     sg.matching = false;
   }
 
@@ -122,9 +113,7 @@ function vowel(sg: SoundGeneration) {
 }
 
 function materLectionis(sg: SoundGeneration) {
-  const sml = materLectionisSounds;
-
-  if (sml.includes(sg.letters[sg.sounds.length])) {
+  if (materLectionisSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.medial);
@@ -138,9 +127,7 @@ function materLectionis(sg: SoundGeneration) {
 function nasalization(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const sns = nasalizationSounds;
-
-  if (sns.includes(sg.letters[sg.sounds.length])) {
+  if (nasalizationSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.nasalization);
@@ -149,7 +136,7 @@ function nasalization(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.sounds.length && sg.predictive)
-      sg.predictions.push(sns.sounds);
+      sg.predictions.push(nasalizationSounds.sounds);
   }
 
   return sg;
@@ -158,9 +145,7 @@ function nasalization(sg: SoundGeneration) {
 function freeTone(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const sfts = freeTonalSounds;
-
-  if (sfts.includes(sg.letters[sg.sounds.length])) {
+  if (freeTonalSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.freeTonal);
@@ -169,7 +154,7 @@ function freeTone(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.sounds.length && sg.predictive)
-      sg.predictions.push(sfts.sounds);
+      sg.predictions.push(freeTonalSounds.sounds);
   }
 
   return sg;
@@ -178,9 +163,7 @@ function freeTone(sg: SoundGeneration) {
 function checkedTone(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const scts = checkedTonalSounds;
-
-  if (scts.includes(sg.letters[sg.sounds.length])) {
+  if (checkedTonalSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
       const s = ps(TonalSoundTags.checkedTonal);
@@ -189,21 +172,18 @@ function checkedTone(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.sounds.length && sg.predictive)
-      sg.predictions.push(scts.sounds);
+      sg.predictions.push(checkedTonalSounds.sounds);
   }
 
   return sg;
 }
 
-function euphonicFinalConsonant(sg: SoundGeneration) {
+function sandhiFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  const efBgjklps = euphonicFinalsBGJKLPS;
-  const efBbggjjkkllppss = euphonicFinalsBbGgJjKkLlPpSs;
-
   if (
-    efBgjklps.includes(sg.letters[sg.sounds.length]) ||
-    efBbggjjkkllppss.includes(sg.letters[sg.sounds.length])
+    stopFinalSoundsBgjklps.includes(sg.letters[sg.sounds.length]) ||
+    stopFinalSoundsBBggjjkkllppss.includes(sg.letters[sg.sounds.length])
   ) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
@@ -215,10 +195,10 @@ function euphonicFinalConsonant(sg: SoundGeneration) {
     if (
       sg.letters.length == sg.sounds.length &&
       sg.predictive &&
-      sg.predictEuphonicFinal
+      sg.predictSandhiFinal
     ) {
-      sg.predictions.push(efBgjklps.sounds);
-      sg.predictions.push(efBbggjjkkllppss.sounds);
+      sg.predictions.push(stopFinalSoundsBgjklps.sounds);
+      sg.predictions.push(stopFinalSoundsBBggjjkkllppss.sounds);
     }
   }
 
@@ -284,14 +264,14 @@ const scCVNCT = sgPipe(
   checkedTone
 );
 
-// euphonic syllables
-const scVC3 = sgPipe(vowel, euphonicFinalConsonant);
-const scVCT3 = sgPipe(vowel, euphonicFinalConsonant, checkedTone);
-const scCVC3 = sgPipe(initialConsonant, vowel, euphonicFinalConsonant);
+// sandhi syllables
+const scVC3 = sgPipe(vowel, sandhiFinalConsonant);
+const scVCT3 = sgPipe(vowel, sandhiFinalConsonant, checkedTone);
+const scCVC3 = sgPipe(initialConsonant, vowel, sandhiFinalConsonant);
 const scCVCT3 = sgPipe(
   initialConsonant,
   vowel,
-  euphonicFinalConsonant,
+  sandhiFinalConsonant,
   checkedTone
 );
 const scCVCCT = sgPipe(

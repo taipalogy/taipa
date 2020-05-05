@@ -4,7 +4,7 @@ import { TokenAnalysis } from '../src/token';
 import { tonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
 import { TonalUncombiningMorpheme } from '../src/tonal/morpheme';
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -19,7 +19,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -34,7 +34,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -49,7 +49,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -64,7 +64,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const mfs: TonalUncombiningMorpheme[] = tonalLemmatizationAnalyzer.morphAnalyze(
     'habbwliy'
   );
@@ -79,7 +79,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -94,7 +94,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -109,7 +109,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -124,7 +124,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -139,7 +139,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -154,7 +154,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -169,7 +169,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -180,7 +180,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -191,7 +191,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -206,7 +206,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -221,7 +221,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -236,7 +236,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -251,7 +251,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, stop final, checked tonal', () => {
+describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -266,7 +266,7 @@ describe('Euphonic change testing, stop final, checked tonal', () => {
   });
 });
 
-describe('Euphonic change testing, nasal final, neutral final, checked tonal', () => {
+describe('Sandhi final testing, nasal final, neutral final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -285,7 +285,7 @@ describe('Euphonic change testing, nasal final, neutral final, checked tonal', (
   });
 });
 
-describe('Euphonic change testing, nasal final, neutral final, checked tonal', () => {
+describe('Sandhi final testing, nasal final, neutral final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -304,7 +304,7 @@ describe('Euphonic change testing, nasal final, neutral final, checked tonal', (
   });
 });
 
-describe('Euphonic change testing, nasal final, neutral final, checked tonal', () => {
+describe('Sandhi final testing, nasal final, neutral final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -323,7 +323,7 @@ describe('Euphonic change testing, nasal final, neutral final, checked tonal', (
   });
 });
 
-describe('Euphonic change testing, nasal final, neutral final, checked tonal', () => {
+describe('Sandhi final testing, nasal final, neutral final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
@@ -342,7 +342,7 @@ describe('Euphonic change testing, nasal final, neutral final, checked tonal', (
   });
 });
 
-describe('Euphonic change testing, nasal final, neutral final, checked tonal', () => {
+describe('Sandhi final testing, nasal final, neutral final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
