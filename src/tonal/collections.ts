@@ -67,7 +67,7 @@ export const finalsBBggkkpp = [
   TonalLetterTags.pp.toString(),
 ];
 
-export const initialsForT = {
+export const initialsForFinalT = {
   p: TonalLetterTags.p.toString(),
   k: TonalLetterTags.k.toString(),
   b: TonalLetterTags.b.toString(),
@@ -102,15 +102,15 @@ export const initialsForTT = {
 
 // tt, t
 export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.t + initialsForT.p, TonalLetterTags.p)
-  .set(TonalLetterTags.t + initialsForT.v, TonalLetterTags.p)
-  .set(TonalLetterTags.t + initialsForT.k, TonalLetterTags.k)
-  .set(TonalLetterTags.t + initialsForT.q, TonalLetterTags.k)
-  .set(TonalLetterTags.t + initialsForT.g, TonalLetterTags.g)
-  .set(TonalLetterTags.t + initialsForT.j, TonalLetterTags.j)
-  .set(TonalLetterTags.t + initialsForT.m, TonalLetterTags.h)
-  .set(TonalLetterTags.t + initialsForT.n, TonalLetterTags.h)
-  .set(TonalLetterTags.t + initialsForT.ng, TonalLetterTags.h)
+  .set(TonalLetterTags.t + initialsForFinalT.p, TonalLetterTags.p)
+  .set(TonalLetterTags.t + initialsForFinalT.v, TonalLetterTags.p)
+  .set(TonalLetterTags.t + initialsForFinalT.k, TonalLetterTags.k)
+  .set(TonalLetterTags.t + initialsForFinalT.q, TonalLetterTags.k)
+  .set(TonalLetterTags.t + initialsForFinalT.g, TonalLetterTags.g)
+  .set(TonalLetterTags.t + initialsForFinalT.j, TonalLetterTags.j)
+  .set(TonalLetterTags.t + initialsForFinalT.m, TonalLetterTags.h)
+  .set(TonalLetterTags.t + initialsForFinalT.n, TonalLetterTags.h)
+  .set(TonalLetterTags.t + initialsForFinalT.ng, TonalLetterTags.h)
   .set(TonalLetterTags.tt + initialsForTT.p, TonalLetterTags.pp)
   .set(TonalLetterTags.tt + initialsForTT.v, TonalLetterTags.pp)
   .set(TonalLetterTags.tt + initialsForTT.k, TonalLetterTags.kk)

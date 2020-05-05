@@ -18,7 +18,7 @@ import {
   initialsBghjl,
   ttInitialTInitialPairs,
   voicelessVoicedFinals,
-  initialsForT,
+  initialsForFinalT,
   nasalInitialSounds,
   finalBgjlsbbggjjllss,
   voicedVoicelessFinals,
@@ -101,37 +101,23 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     this.sounds = sounds;
   }
 
-  changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {
+  insertNasal(sound: Sound) {
     if (sound) {
-      if (
-        sound.name === TonalSoundTags.nasalFinal &&
-        dir === AssimiDirection.agressive
-      ) {
-        // agressive assimilation of nasals, both internal and external sandhi
+      if (sound.name === TonalSoundTags.nasalFinal) {
+        // insertion of nasals, both internal and external sandhi
         const snds = this.sounds;
         snds.splice(0, 0, sound);
         return [
           new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
         ];
-      } else if (
-        sound.name === TonalSoundTags.initial &&
-        dir === AssimiDirection.agressive
-      ) {
-        const snds = this.sounds;
-        if (snds[0].toString() === sound.toString()) {
-          let duplifix = new Sound();
-          const ps = tonalPositionalSounds.get(TonalLetterTags.l);
-          if (ps) duplifix = ps(TonalSoundTags.initial);
+      }
+    }
+    return [];
+  }
 
-          snds.splice(0, 1, duplifix);
-        }
-        return [
-          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
-        ];
-      } else if (
-        sound.name === TonalSoundTags.nasalization &&
-        dir === AssimiDirection.agressive
-      ) {
+  infect(sound: Sound) {
+    if (sound) {
+      if (sound.name === TonalSoundTags.nasalization) {
         const snds = this.sounds;
         if (snds[snds.length - 1].name === TonalSoundTags.freeTonal) {
           snds.splice(snds.length - 1, 0, sound);
@@ -146,7 +132,26 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  changeFinalTtt(soundFollowingSyllable: Sound) {
+  mutateConsonant(sound: Sound) {
+    if (sound) {
+      if (sound.name === TonalSoundTags.initial) {
+        const snds = this.sounds;
+        if (snds[0].toString() === sound.toString()) {
+          let duplifix = new Sound();
+          const ps = tonalPositionalSounds.get(TonalLetterTags.l);
+          if (ps) duplifix = ps(TonalSoundTags.initial);
+
+          snds.splice(0, 1, duplifix);
+        }
+        return [
+          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
+        ];
+      }
+    }
+    return [];
+  }
+
+  private changeFinalTtt(soundFollowingSyllable: Sound) {
     // absolute assimilation. regressive
     if (
       (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
@@ -154,7 +159,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           soundFollowingSyllable.toString()
         )) ||
       (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.t &&
-        Array.from(Object.values(initialsForT)).includes(
+        Array.from(Object.values(initialsForFinalT)).includes(
           soundFollowingSyllable.toString()
         ))
     ) {
@@ -180,31 +185,35 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  changeWithFollowing(soundOfSyllable: Sound) {
-    // internal sandhi. regressive assimilation
-    return this.regAssimilate(this.sounds, soundOfSyllable);
+  changeFinalPtkppttkk(soundFollowingSyllable: Sound) {
+    const ret = this.changeFinalTtt(soundFollowingSyllable);
+    if (ret.length > 0) return ret;
+
+    // TODO: add hh and h.
+
+    const tss = this.conditionalVoicedFinal(
+      this.sounds,
+      soundFollowingSyllable
+    );
+    if (tss) return tss;
+    return [];
   }
 
-  private regAssimilate(
-    sounds: Sound[],
-    soundFollowingSyllable: Sound
-  ): Array<TonalSyllable> {
+  changeFinalN(soundFollowingSyllable: Sound): Array<TonalSyllable> {
     if (
-      sounds[sounds.length - 2].name != TonalSoundTags.stopFinal &&
-      sounds[sounds.length - 2].name != TonalSoundTags.nasalFinal
+      this.sounds[this.sounds.length - 2].name != TonalSoundTags.stopFinal &&
+      this.sounds[this.sounds.length - 2].name != TonalSoundTags.nasalFinal
     ) {
       return [];
     }
 
-    const ret = this.changeFinalTtt(soundFollowingSyllable);
-    if (ret.length > 0) return ret;
     if (
       soundFollowingSyllable.toString() === TonalLetterTags.b &&
-      sounds[sounds.length - 2].toString() === TonalLetterTags.n
+      this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.n
     ) {
       // replace final n with final m
       let s: TonalSyllable = new TonalSyllable(
-        sounds.map(x => new AlphabeticLetter(x.characters))
+        this.sounds.map(it => new AlphabeticLetter(it.characters))
       );
       let snd = new Sound();
       const ps = tonalPositionalSounds.get(TonalLetterTags.m);
@@ -214,13 +223,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         new AlphabeticLetter(snd.characters)
       );
       return [s];
-    } else {
-      const tss = this.conditionalVoicedFinal(sounds, soundFollowingSyllable);
-      if (tss) return tss;
     }
-
-    // TODO: add euphonic hh and h.
-    // TODO: neutrals. pp -> hh. p -> h.
 
     return [];
   }
@@ -247,8 +250,6 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       soundFollowingSyllable.name === TonalSoundTags.initial &&
       initialsBghjl.includes(soundFollowingSyllable.toString())
     ) {
-      console.log(this.sounds.map(it => it.toString()));
-
       return this.voicedFinal(sounds);
     }
   }

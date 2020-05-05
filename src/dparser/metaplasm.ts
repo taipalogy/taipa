@@ -428,15 +428,26 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
             morphemes[i - 1].syllable.lastSecondLetter.literal ===
               TonalLetterTags.tt)
         ) {
-          wrd.replaceSyllable(
-            i - 1,
-            morphemes[i - 1].changeWithFollowing(morphemes[i].sounds[0])[0]
-          );
-        } else {
-          const syls = morphemes[i - 1].changeWithFollowing(
+          const syls = morphemes[i - 1].changeFinalPtkppttkk(
             morphemes[i].sounds[0]
           );
-          if (syls.length) wrd.replaceSyllable(i - 1, syls[0]);
+          if (syls && syls.length > 0) {
+            wrd.replaceSyllable(i - 1, syls[0]);
+          }
+        } else if (
+          morphemes[i].sounds[0].toString() === TonalLetterTags.b &&
+          morphemes[i - 1].syllable.lastSecondLetter.literal ===
+            TonalLetterTags.n
+        ) {
+          const syls = morphemes[i - 1].changeFinalN(morphemes[i].sounds[0]);
+          if (syls && syls.length > 0) {
+            wrd.replaceSyllable(i - 1, syls[0]);
+          }
+        } else {
+          const syls = morphemes[i - 1].changeFinalPtkppttkk(
+            morphemes[i].sounds[0]
+          );
+          if (syls && syls.length > 0) wrd.replaceSyllable(i - 1, syls[0]);
         }
       }
     }
@@ -462,10 +473,7 @@ export class Epenthesis extends TonalInsertionMetaplasm {
         // m, n, ng followed by -ay. pass the preceding nasal to get forms
         wrd.popSyllable();
         wrd.pushSyllable(
-          morphemes[morphemes.length - 1].changeSoundWith(
-            snds[snds.length - 2],
-            AssimiDirection.agressive
-          )[0]
+          morphemes[morphemes.length - 1].insertNasal(snds[snds.length - 2])[0]
         );
         return [wrd];
       }
@@ -543,9 +551,8 @@ export class Infection extends TonalInfectionMetaplasm {
         // nasalization of vowels
         wrd.replaceSyllable(
           wrd.syllables.length - 1,
-          morphemes[morphemes.length - 1].changeSoundWith(
-            nasalizationSounds.sounds[0],
-            AssimiDirection.agressive
+          morphemes[morphemes.length - 1].infect(
+            nasalizationSounds.sounds[0]
           )[0]
         );
         return [wrd];
@@ -566,10 +573,7 @@ export class ConsonantMutation extends TonalMutationMetaplasm {
       // duplifix. pass the preceding initial to get forms
       wrd.replaceSyllable(
         wrd.syllables.length - 1,
-        morphemes[morphemes.length - 1].changeSoundWith(
-          snds[0],
-          AssimiDirection.agressive
-        )[0]
+        morphemes[morphemes.length - 1].mutateConsonant(snds[0])[0]
       );
       return [wrd];
     }

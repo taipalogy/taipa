@@ -138,12 +138,14 @@ export class TonalAssimilationLexeme implements Lexeme {
         adjacentSnds[0].name === TonalSoundTags.initial
       ) {
         const s = adjacentSnds[0];
-        const syls = this.morphemes[this.morphemes.length - 1].changeFinalTtt(
-          s
-        );
+        const syls = this.morphemes[
+          this.morphemes.length - 1
+        ].changeFinalPtkppttkk(s);
 
-        wrd.popSyllable();
-        wrd.pushSyllable(syls[0]);
+        if (syls && syls.length > 0) {
+          wrd.popSyllable();
+          wrd.pushSyllable(syls[0]);
+        }
 
         return [wrd];
       }
@@ -239,9 +241,10 @@ export class TonalInsertionLexeme implements Lexeme {
         ) {
           s = adjacentSnds[adjacentSnds.length - 1];
         }
-        const syls = this.morphemes[0].changeSoundWith(
-          s,
-          AssimiDirection.agressive
+        const syls = this.morphemes[0].insertNasal(
+          s
+          // ,
+          // AssimiDirection.agressive
         );
 
         wrd.replaceSyllable(0, syls[0]);
