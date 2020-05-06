@@ -150,7 +150,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  private changeFinalTtt(soundFollowingSyllable: Sound) {
+  private changeFinalTTt(soundFollowingSyllable: Sound) {
     // absolute assimilation. regressive
     if (
       (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
@@ -184,18 +184,65 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  changeFinalPtkppttkk(soundFollowingSyllable: Sound) {
-    const ret = this.changeFinalTtt(soundFollowingSyllable);
-    if (ret.length > 0) return ret;
-
-    // TODO: add hh and h.
-
-    const tss = this.conditionalVoicedFinal(
-      this.sounds,
-      soundFollowingSyllable
-    );
-    if (tss) return tss;
+  changeFinalHHh(soundFollowingSyllable: Sound) {
+    // TODO: add sandhi hh and h.
     return [];
+  }
+  changeFinalPPp(soundFollowingSyllable: Sound) {
+    // TODO: neutrals. pp -> hh. p -> h.
+    return [];
+  }
+
+  withInitialMnng(soundFollowingSyllable: Sound) {
+    if (
+      soundFollowingSyllable.name === TonalSoundTags.initial &&
+      nasalInitials.includes(soundFollowingSyllable.toString())
+    ) {
+      return this.voicedFinal(this.sounds);
+    }
+
+    return [];
+  }
+
+  withInitialBghjl(soundFollowingSyllable: Sound) {
+    if (
+      soundFollowingSyllable.name === TonalSoundTags.medial &&
+      medialSounds.includes(soundFollowingSyllable.toString())
+    ) {
+      return this.voicedFinal(this.sounds);
+    }
+
+    return [];
+  }
+
+  withMedial(soundFollowingSyllable: Sound) {
+    if (
+      soundFollowingSyllable.name === TonalSoundTags.initial &&
+      initialsBghjl.includes(soundFollowingSyllable.toString())
+    ) {
+      return this.voicedFinal(this.sounds);
+    }
+    return [];
+  }
+
+  changeFinalPtkppttkk(soundFollowingSyllable: Sound) {
+    const sandhiTTt = this.changeFinalTTt(soundFollowingSyllable);
+    if (sandhiTTt.length > 0) return sandhiTTt;
+
+    const sandhiHHh = this.changeFinalHHh(soundFollowingSyllable);
+    if (sandhiHHh.length > 0) return sandhiHHh;
+
+    const sandhiPPp = this.changeFinalPPp(soundFollowingSyllable);
+    if (sandhiPPp.length > 0) return sandhiPPp;
+
+    const voicedWithMnng = this.withInitialMnng(soundFollowingSyllable);
+    if (voicedWithMnng.length > 0) return voicedWithMnng;
+
+    const voicedWithMedial = this.withMedial(soundFollowingSyllable);
+    if (voicedWithMedial.length > 0) return voicedWithMedial;
+
+    const voicedWithBghjl = this.withInitialBghjl(soundFollowingSyllable);
+    if (voicedWithBghjl.length > 0) return voicedWithBghjl;
   }
 
   changeFinalN(soundFollowingSyllable: Sound): Array<TonalSyllable> {
@@ -224,32 +271,6 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  private conditionalVoicedFinal(
-    sounds: Sound[],
-    soundFollowingSyllable: Sound
-  ) {
-    if (
-      soundFollowingSyllable.name === TonalSoundTags.initial &&
-      nasalInitials.includes(soundFollowingSyllable.toString())
-    ) {
-      return this.voicedFinal(sounds);
-    }
-
-    if (
-      soundFollowingSyllable.name === TonalSoundTags.medial &&
-      medialSounds.includes(soundFollowingSyllable.toString())
-    ) {
-      return this.voicedFinal(sounds);
-    }
-
-    if (
-      soundFollowingSyllable.name === TonalSoundTags.initial &&
-      initialsBghjl.includes(soundFollowingSyllable.toString())
-    ) {
-      return this.voicedFinal(sounds);
-    }
-  }
-
   private voicedFinal(sounds: Sound[]) {
     const fnl = voicelessVoicedFinals.get(sounds[sounds.length - 2].toString());
 
@@ -260,6 +281,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
       return [s];
     }
+    return [];
   }
 }
 
@@ -274,8 +296,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     this.sounds = sounds;
   }
 
-  // changeSoundWith(sound: Sound, dir: AssimiDirection): TonalSyllable[] {return [];}
-  shiftNasal() {
+  uninsertNasal() {
     const snds = this.sounds;
     snds.shift();
     return [

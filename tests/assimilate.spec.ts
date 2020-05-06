@@ -109,7 +109,7 @@ describe('Assimilation testing, internal sandhi, regressive', () => {
   });
 });
 
-describe('Assimilation testing, regressive', () => {
+describe('Assimilation testing, internal sandhi, regressive', () => {
   const lx = assimilateRegressiveLexical('sinzbunx');
 
   test('check the underlying form', () => {
@@ -119,9 +119,39 @@ describe('Assimilation testing, regressive', () => {
   test('check the surface form', () => {
     expect(lx.getForms()[0].literal).toEqual('simzbunx');
   });
+
+  const lx2 = assimilateRegressiveLexical('dekfnax');
+
+  test('check the underlying form, n-', () => {
+    expect(lx2.word.literal).toEqual('dekfnax');
+  });
+
+  test('check the surface form, n-', () => {
+    expect(lx2.getForms()[0].literal).toEqual('degfnax');
+  });
+  /*
+  const lx3 = assimilateRegressiveLexical('qekfngiz');
+
+  test('check the underlying form, ng-', () => {
+    expect(lx3.word.literal).toEqual('qekfngiz');
+  });
+
+  test('check the surface form, ng-', () => {
+    expect(lx3.getForms()[0].literal).toEqual('qegfngiz');
+  });
+*/
+  const lx4 = assimilateRegressiveLexical('qekkwmngx');
+
+  test('check the underlying form, m-', () => {
+    expect(lx4.word.literal).toEqual('qekkwmngx');
+  });
+
+  test('check the surface form, m-', () => {
+    expect(lx4.getForms()[0].literal).toEqual('qeggwmngx');
+  });
 });
 
-describe('Assimilation testing, regressive', () => {
+describe('Assimilation testing, internal sandhi, regressive', () => {
   const lx = assimilateRegressiveLexical('hitfnix');
 
   test('check the underlying form', () => {

@@ -1,7 +1,7 @@
 export function isInLexcialRoots(strToFind: string) {
-    if (lexicalRoots.includes(strToFind)) return true;
-    if (extraLexicalRoots.includes(strToFind)) return true;
-    return false;
+  if (lexicalRoots.includes(strToFind)) return true;
+  if (extraLexicalRoots.includes(strToFind)) return true;
+  return false;
 }
 
 // prettier-ignore
@@ -29,33 +29,6 @@ const toBeVerified = [
     'toehh', 'tom', 'tomz',
 
     'virt',
-]
-
-// prettier-ignore
-const extraLexicalRoots = [
-    'aih',
-    
-    'coaih',
-    
-    'dngh',
-
-    'gehh', 'gih', 'giuh', 'gimw',
-	
-    'homz',
-
-    'jip',
-
-	'kiaih', 'kuih',
-
-    'laih', 'langh', 'lip', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
-
-    'mnghh',
-
-    'n',
-
-    'oh', 'op',
-
-    'sangh', 'sennh', 'sienh', 'sinnh',
 ]
 
 // prettier-ignore
@@ -103,6 +76,33 @@ const addonLexicalRoots = [
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
     'vainny', 'vainnx', 'vainnz', 'vor', 'vory', 'vorw', 'vorx', 'vorz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
+]
+
+// prettier-ignore
+const extraLexicalRoots = [
+    'aih',
+    
+    'coaih',
+    
+    'dngh',
+
+    'gehh', 'gih', 'giuh', 'gimw',
+	
+    'homz',
+
+    'jip',
+
+	'kiaih', 'kuih',
+
+    'laih', 'langh', 'lip', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+
+    'mnghh',
+
+    'n',
+
+    'oh', 'op',
+
+    'sangh', 'sennh', 'sienh', 'sinnh',
 ]
 
 // prettier-ignore

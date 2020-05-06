@@ -496,7 +496,7 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
           TonalLetterTags.a
       ) {
         wrd.popSyllable();
-        wrd.pushSyllable(morphemes[morphemes.length - 1].shiftNasal()[0]);
+        wrd.pushSyllable(morphemes[morphemes.length - 1].uninsertNasal()[0]);
         return [wrd];
       }
     }
