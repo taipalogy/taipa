@@ -48,12 +48,6 @@ import {
 } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
-/** Direction of assimilation. */
-export enum AssimiDirection {
-  agressive = 0,
-  regressive = 1,
-}
-
 /** Returns the combining forms of a syllable. */
 export class TonalCombiningForms extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
@@ -727,29 +721,13 @@ export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-/** Assimilates agressively between 2 words. */
-export class AgressiveExternal extends TonalPhrasalAssimilationMetaplasm {
-  apply(
-    preceding: TonalAssimilationLexeme,
-    following: TonalAssimilationLexeme
-  ): TonalPhrase[] {
-    const wrds = following.assimilateWith(preceding, AssimiDirection.agressive);
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
-    return [];
-  }
-}
-
 /** Assimilates regressively between 2 words. */
 export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
   apply(
     preceding: TonalAssimilationLexeme,
     following: TonalAssimilationLexeme
   ): TonalPhrase[] {
-    const wrds = preceding.assimilateWith(
-      following,
-      AssimiDirection.regressive
-    );
+    const wrds = preceding.assimilateWith(following);
     if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
     return [];
   }
@@ -760,7 +738,7 @@ export class insertToEnclitic extends TonalPhrasalInsertionMetaplasm {
     preceding: TonalInsertionLexeme,
     following: TonalInsertionLexeme
   ): TonalPhrase[] {
-    const wrds = following.insertWith(preceding, AssimiDirection.agressive);
+    const wrds = following.insertWith(preceding);
     if (wrds.length > 0)
       return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];
