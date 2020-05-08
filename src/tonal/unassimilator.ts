@@ -1,17 +1,32 @@
 import { TonalUnassimilationLexeme } from '../dparser/lexeme';
 import { graphAnalyzeTonal } from './analyzer';
 import { TonalSoundUnchangingMorphemeMaker } from '../dparser/morpheme';
-import { ReverseRegressiveInternal } from '../dparser/metaplasm';
+import {
+  ReverseRegressiveInternal,
+  ReverseRegressiveExternal,
+} from '../dparser/metaplasm';
+import { TonalZeroUnassimilation } from '../metaplasm';
+import { TonalUnassimilationPhrasemeMaker } from '../dparser/phraseme';
 
-function morphAnalyzeUnchanging(str: string) {
+export function morphAnalyzeUnchanging(str: string) {
   const gs = graphAnalyzeTonal(str);
   const mm = new TonalSoundUnchangingMorphemeMaker();
   const ms = mm.makeMorphemes(gs);
   return ms;
 }
 
+export function getNoUnassimilation(word: string) {
+  const mrphs = morphAnalyzeUnchanging(word);
+  const lx = new TonalUnassimilationLexeme(
+    mrphs,
+    new TonalZeroUnassimilation()
+  );
+
+  return lx;
+}
+
 /** Unassimilates regressively inside a word. */
-export function unassimilateRegressiveLexical(word: string) {
+export function unassimilateLexical(word: string) {
   const ms = morphAnalyzeUnchanging(word);
   const lx = new TonalUnassimilationLexeme(ms, new ReverseRegressiveInternal());
 
@@ -22,4 +37,13 @@ export function unassimilateRegressiveLexical(word: string) {
 export function unassimilateRegressivePhrasal(
   preceding: string,
   following: string
-) {}
+) {
+  const lxPreceding = getNoUnassimilation(preceding);
+  const lxFollowing = getNoUnassimilation(following);
+  const phmk = new TonalUnassimilationPhrasemeMaker();
+  return phmk.makePhraseme(
+    lxPreceding,
+    lxFollowing,
+    new ReverseRegressiveExternal()
+  );
+}

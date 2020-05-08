@@ -1,9 +1,6 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { inflectDesinence } from '../src/dparser/inflector';
 import { assimilateRegressiveLexical } from '../src/dparser/assimilator';
-import { insertTo } from '../src/dparser/inserter';
-import { uninsertFrom } from '../src/tonal/uninserter';
 
 describe('Epenthesis testing', () => {
   const cli = new Client();
@@ -66,78 +63,6 @@ describe('Voiced final testing', () => {
 
   test('chech the surface form', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabbwex');
-  });
-});
-
-describe('Epenthesis testing', () => {
-  const lx1 = insertTo('qimxay');
-
-  test('check the epenthesis of initial m', () => {
-    expect(lx1.getForms()[0].literal).toEqual('qimxmay');
-  });
-
-  const lx2 = insertTo('infay');
-
-  test('check the epenthesis of initial n', () => {
-    expect(lx2.getForms()[0].literal).toEqual('infnay');
-  });
-
-  const lx3 = insertTo('cangxay');
-
-  test('check the epenthesis of initial ng', () => {
-    expect(lx3.getForms()[0].literal).toEqual('cangxngay');
-  });
-});
-
-describe('Epenthesis testing', () => {
-  const lx1 = inflectDesinence('qimxay');
-
-  test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('qimxa');
-  });
-
-  const lx2 = insertTo(lx1.getForms()[0].literal);
-
-  test('check the epenthesis of initial m. surface form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('qimxma');
-  });
-
-  const lx3 = insertTo('qimza');
-
-  test('check the epenthesis of initial m', () => {
-    expect(lx3.getForms()[0].literal).toEqual('qimzma');
-  });
-
-  const lx4 = insertTo('ginfa');
-
-  test('check the epenthesis of initial n', () => {
-    expect(lx4.getForms()[0].literal).toEqual('ginfna');
-  });
-
-  const lx5 = insertTo('tangza');
-
-  test('check the epenthesis of initial ng', () => {
-    expect(lx5.getForms()[0].literal).toEqual('tangznga');
-  });
-});
-
-describe('Uninsertion testing', () => {
-  const lx1 = uninsertFrom('qimxmay');
-
-  test('check the uninsertion of initial m', () => {
-    expect(lx1.getForms()[0].literal).toEqual('qimxay');
-  });
-
-  const lx2 = uninsertFrom('infnay');
-
-  test('check the uninsertion of initial n', () => {
-    expect(lx2.getForms()[0].literal).toEqual('infay');
-  });
-
-  const lx3 = uninsertFrom('cangxngay');
-
-  test('check the uninsertion of initial ng', () => {
-    expect(lx3.getForms()[0].literal).toEqual('cangxay');
   });
 });
 

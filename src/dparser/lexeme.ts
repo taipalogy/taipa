@@ -186,6 +186,7 @@ export class TonalUnassimilationLexeme implements Lexeme {
     if (ms.length > 0) {
       const adjacentSnds = ms[ms.length - 1].sounds;
     }
+    return [];
   }
 }
 
@@ -261,6 +262,9 @@ export class TonalUninsertionLexeme implements Lexeme {
   getForms() {
     // for internal samdhi
     return this.forms;
+  }
+  uninsertWith(lexeme: TonalUninsertionLexeme) {
+    return [];
   }
 }
 

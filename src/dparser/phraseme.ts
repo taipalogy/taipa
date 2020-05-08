@@ -2,6 +2,8 @@ import {
   TonalInflectionLexeme,
   TonalAssimilationLexeme,
   TonalInsertionLexeme,
+  TonalUninsertionLexeme,
+  TonalUnassimilationLexeme,
 } from './lexeme';
 import { Phraseme } from '../unit';
 import {
@@ -19,6 +21,8 @@ import {
   TonalPhrasalInflectionMetaplasm,
   TonalPhrasalAssimilationMetaplasm,
   TonalPhrasalInsertionMetaplasm,
+  TonalPhrasalUninsertionMetaplasm,
+  TonalPhrasalUnassimilationMetaplasm,
 } from '../metaplasm';
 
 /** A phrase of length 2 and its inflected forms. */
@@ -164,6 +168,26 @@ export class TonalAssimilationPhraseme implements Phraseme {
   }
 }
 
+export class TonalUnassimilationPhraseme implements Phraseme {
+  phrase: TonalPhrase;
+  private forms: Array<TonalPhrase> = new Array();
+
+  constructor(
+    preceding: TonalUnassimilationLexeme,
+    following: TonalUnassimilationLexeme,
+    metaplasm: TonalPhrasalUnassimilationMetaplasm
+  ) {
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
+
+    this.forms = metaplasm.apply(preceding, following);
+  }
+
+  /** Returns assimilated form. */
+  getForms() {
+    return this.forms;
+  }
+}
+
 export class TonalInflectionPhrasemeMaker {
   makePhrasalVerbPhraseme(
     verb: TonalInflectionLexeme,
@@ -261,6 +285,16 @@ export class TonalAssimilationPhrasemeMaker {
   }
 }
 
+export class TonalUnassimilationPhrasemeMaker {
+  makePhraseme(
+    preceding: TonalUnassimilationLexeme,
+    following: TonalUnassimilationLexeme,
+    metaplasm: TonalPhrasalUnassimilationMetaplasm
+  ) {
+    return new TonalUnassimilationPhraseme(preceding, following, metaplasm);
+  }
+}
+
 export class TonalInsertionPhraseme implements Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
@@ -275,7 +309,7 @@ export class TonalInsertionPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns assimilated form. */
+  /** Returns inserted form. */
   getForms() {
     return this.forms;
   }
@@ -288,5 +322,35 @@ export class TonalInsertionPhrasemeMaker {
     metaplasm: TonalPhrasalInsertionMetaplasm
   ) {
     return new TonalInsertionPhraseme(preceding, following, metaplasm);
+  }
+}
+
+export class TonalUninsertionPhraseme implements Phraseme {
+  phrase: TonalPhrase;
+  private forms: Array<TonalPhrase> = new Array();
+
+  constructor(
+    preceding: TonalUninsertionLexeme,
+    following: TonalUninsertionLexeme,
+    metaplasm: TonalPhrasalUninsertionMetaplasm
+  ) {
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
+
+    this.forms = metaplasm.apply(preceding, following);
+  }
+
+  /** Returns inserted form. */
+  getForms() {
+    return this.forms;
+  }
+}
+
+export class TonalUninsertionPhrasemeMaker {
+  makePhraseme(
+    preceding: TonalUninsertionLexeme,
+    following: TonalUninsertionLexeme,
+    metaplasm: TonalPhrasalUninsertionMetaplasm
+  ) {
+    return new TonalUninsertionPhraseme(preceding, following, metaplasm);
   }
 }

@@ -28,6 +28,8 @@ import {
   TonalInsertionMetaplasm,
   TonalMutationMetaplasm,
   TonalPhrasalInsertionMetaplasm,
+  TonalPhrasalUninsertionMetaplasm,
+  TonalPhrasalUnassimilationMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -45,6 +47,8 @@ import {
   TonalAssimilationLexeme,
   TonalInflectionLexeme,
   TonalInsertionLexeme,
+  TonalUninsertionLexeme,
+  TonalUnassimilationLexeme,
 } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
@@ -733,12 +737,35 @@ export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
   }
 }
 
-export class insertToEnclitic extends TonalPhrasalInsertionMetaplasm {
+export class ReverseRegressiveExternal extends TonalPhrasalUnassimilationMetaplasm {
+  apply(
+    preceding: TonalUnassimilationLexeme,
+    following: TonalUnassimilationLexeme
+  ): TonalPhrase[] {
+    const wrds = preceding.unassimilateWith(following);
+    if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
+    return [];
+  }
+}
+
+export class InsertToEnclitic extends TonalPhrasalInsertionMetaplasm {
   apply(
     preceding: TonalInsertionLexeme,
     following: TonalInsertionLexeme
   ): TonalPhrase[] {
     const wrds = following.insertWith(preceding);
+    if (wrds.length > 0)
+      return [new TonalPhrase([preceding.word].concat(wrds))];
+    return [];
+  }
+}
+
+export class UninsertFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
+  apply(
+    preceding: TonalUninsertionLexeme,
+    following: TonalUninsertionLexeme
+  ): TonalPhrase[] {
+    const wrds = following.uninsertWith(preceding);
     if (wrds.length > 0)
       return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];

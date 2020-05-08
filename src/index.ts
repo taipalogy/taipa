@@ -46,7 +46,7 @@ export {
   inflectVppToParticiple,
   inflectSerial,
 } from './dparser/inflector';
-export { insertTo } from './dparser/inserter';
+export { insertToAffix } from './dparser/inserter';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';

@@ -1,7 +1,7 @@
 import { TonalInfectionLexeme } from './lexeme';
 import { morphAnalyzeChanging } from './assimilator';
 
-export function infectAgressiveLexical(word: string) {
+export function infectFollowingLexical(word: string) {
   const ms = morphAnalyzeChanging(word);
   const lx = new TonalInfectionLexeme(ms);
 
