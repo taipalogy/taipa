@@ -1,7 +1,7 @@
-import { mutateAgressiveLexical } from '../src/dparser/mutator';
+import { mutateFollowingAffix } from '../src/dparser/mutator';
 
 describe('Consonant mutation testing, agressive, duplifix', () => {
-  const lx = mutateAgressiveLexical('dittwditt');
+  const lx = mutateFollowingAffix('dittwditt');
 
   test('check the underlying form', () => {
     expect(lx.word.literal).toEqual('dittwditt');

@@ -78,7 +78,19 @@ export class TonalInfectionMetaplasm extends Metaplasm {
   }
 }
 
+export class TonalUninfectionMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
 export class TonalMutationMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
+export class TonalUnmutationMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
     return [];
   }

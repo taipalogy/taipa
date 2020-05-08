@@ -30,6 +30,8 @@ import {
   TonalPhrasalInsertionMetaplasm,
   TonalPhrasalUninsertionMetaplasm,
   TonalPhrasalUnassimilationMetaplasm,
+  TonalUnmutationMetaplasm,
+  TonalUninfectionMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -555,6 +557,31 @@ export class Infection extends TonalInfectionMetaplasm {
   }
 }
 
+export class Uninfection extends TonalUninfectionMetaplasm {
+  apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
+    if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
+      const snds = morphemes[morphemes.length - 2].sounds;
+      const wrd = new TonalWord(
+        morphemes.map(it => new TonalSyllable(it.syllable.letters))
+      );
+
+      if (
+        snds.filter(it => it.name === TonalSoundTags.nasalization).length == 1
+      ) {
+        // nasalization of vowels
+        wrd.replaceSyllable(
+          wrd.syllables.length - 1,
+          morphemes[morphemes.length - 1].uninfect(
+            nasalizationSounds.sounds[0]
+          )[0]
+        );
+        return [wrd];
+      }
+    }
+    return [];
+  }
+}
+
 export class ConsonantMutation extends TonalMutationMetaplasm {
   apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -567,6 +594,25 @@ export class ConsonantMutation extends TonalMutationMetaplasm {
       wrd.replaceSyllable(
         wrd.syllables.length - 1,
         morphemes[morphemes.length - 1].mutateConsonant(snds[0])[0]
+      );
+      return [wrd];
+    }
+    return [];
+  }
+}
+
+export class ConsonantUnmutation extends TonalUnmutationMetaplasm {
+  apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
+    if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
+      const snds = morphemes[morphemes.length - 2].sounds;
+      const wrd = new TonalWord(
+        morphemes.map(it => new TonalSyllable(it.syllable.letters))
+      );
+
+      // duplifix. pass the preceding initial to get forms
+      wrd.replaceSyllable(
+        wrd.syllables.length - 1,
+        morphemes[morphemes.length - 1].unmutateConsonant(snds[0])[0]
       );
       return [wrd];
     }

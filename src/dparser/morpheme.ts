@@ -326,6 +326,14 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     }
     return [];
   }
+
+  unmutateConsonant(initial: Sound) {
+    return [];
+  }
+
+  uninfect(nasalization: Sound) {
+    return [];
+  }
 }
 
 export class TonalCombiningMorphemeMaker extends MorphemeMaker {
