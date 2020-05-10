@@ -1,7 +1,7 @@
-import { infectFollowingLexical } from '../src/dparser/infector';
+import { infectFollowingSyllable } from '../src/dparser/infector';
 
 describe('Infection testing, nasalization', () => {
-  const lx = infectFollowingLexical('ennxiay');
+  const lx = infectFollowingSyllable('ennxiay');
 
   test('check the underlying form', () => {
     expect(lx.word.literal).toEqual('ennxiay');

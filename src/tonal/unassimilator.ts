@@ -26,7 +26,7 @@ export function getNoUnassimilation(word: string) {
 }
 
 /** Unassimilates regressively inside a word. */
-export function unassimilateLexical(word: string) {
+export function unassimilateRegressiveInternal(word: string) {
   const ms = morphAnalyzeUnchanging(word);
   const lx = new TonalUnassimilationLexeme(ms, new ReverseRegressiveInternal());
 
@@ -34,7 +34,7 @@ export function unassimilateLexical(word: string) {
 }
 
 /** Unassimilates regressively between 2 words. */
-export function unassimilateRegressivePhrasal(
+export function unassimilateRegressiveExternal(
   preceding: string,
   following: string
 ) {

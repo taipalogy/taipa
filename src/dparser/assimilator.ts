@@ -25,7 +25,7 @@ export function getNoAssimilation(word: string) {
 }
 
 /** Assimilates regressively inside a word. */
-export function assimilateRegressiveLexical(word: string) {
+export function assimilateRegressiveInternal(word: string) {
   const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalAssimilationLexeme(mrphs, new RegressiveInternal());
 
@@ -33,7 +33,7 @@ export function assimilateRegressiveLexical(word: string) {
 }
 
 /** Assimilates regressively between 2 words. */
-export function assimilateRegressivePhrasal(
+export function assimilateRegressiveExternal(
   preceding: string,
   following: string
 ) {

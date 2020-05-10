@@ -21,7 +21,7 @@ export function getNoUninsertion(word: string) {
  * Uninserts an initial m, n, or ng from syllable ~ay if the preceding syllable has a final m, n, or ng.
  * @param word A word whose second syllable is may, nay, ngay, ma, na, nga, maf, naf, or ngaf. The word has at least 2 syllables for the second one to be uninserted an initial.
  */
-export function uninsertFromAffix(word: string) {
+export function uninsertFromSyllable(word: string) {
   const mm = new TonalSoundUnchangingMorphemeMaker();
   const gm = new GraphemeMaker(lowerLettersTonal);
   const gs = gm.makeGraphemes(word);

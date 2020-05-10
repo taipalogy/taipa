@@ -18,8 +18,8 @@ export {
 export { lemmatize } from './tonal/lemmatizer';
 export {
   getNoAssimilation,
-  assimilateRegressiveLexical,
-  assimilateRegressivePhrasal,
+  assimilateRegressiveInternal,
+  assimilateRegressiveExternal,
 } from './dparser/assimilator';
 export {
   createTonalPhrase,
@@ -46,7 +46,7 @@ export {
   inflectVppToParticiple,
   inflectSerial,
 } from './dparser/inflector';
-export { insertToAffix } from './dparser/inserter';
+export { insertToSyllable } from './dparser/inserter';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';
