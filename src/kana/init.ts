@@ -10,6 +10,7 @@ import {
   finalConsonantsKana,
   hatsuonKana,
   special,
+  KanaLetterTags,
 } from './kana';
 import { KanaUncombiningMorpheme } from './morpheme';
 
@@ -21,20 +22,22 @@ export function checkNumberOfLettersKana() {
 
 function checkChouon(previousLetter: string, nextLetter: string): boolean {
   if (previousLetter === nextLetter) return true;
-  if (previousLetter === 'e' && nextLetter === 'i') return true;
-  if (previousLetter === 'o' && nextLetter === 'u') return true;
+  if (previousLetter === KanaLetterTags.e && nextLetter === KanaLetterTags.i)
+    return true;
+  if (previousLetter === KanaLetterTags.o && nextLetter === KanaLetterTags.u)
+    return true;
   return false;
 }
 
 function lookup(str: string) {
-  let results = hiraganaKatakana.get(str);
-  if (results == undefined) {
-    results = gailaigo.get(str);
+  let kanas = hiraganaKatakana.get(str);
+  if (kanas == undefined) {
+    kanas = gailaigo.get(str);
   }
-  if (results == undefined) {
-    results = special.get(str);
+  if (kanas == undefined) {
+    kanas = special.get(str);
   }
-  return results;
+  return kanas;
 }
 
 export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {

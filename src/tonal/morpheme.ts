@@ -51,23 +51,29 @@ export function syllabifyTonal(
   let begin: number = 0;
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  const sft = freeTonalSounds;
-  const ssf = stopFinalSounds;
+  // const sft = freeTonalSounds;
+  // const ssf = stopFinalSounds;
   const faurs = freeAllomorphUncombiningRules;
   const ursa = uncombiningRulesAy;
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
     ltrs.push(letters[i].literal);
-    //console.log(`begining of the loop: ${literal}. ${ltrs}`)
-    if (isInLexcialRoots(literal) && sft.includes(letters[i].literal)) {
-      //console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
+    // console.log(`begining of the loop: ${literal}. ${ltrs}`);
+    if (
+      isInLexcialRoots(literal) &&
+      freeTonalSounds.includes(letters[i].literal)
+    ) {
+      // console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
       if (begin === beginOfSyllable) {
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
       }
       break;
-    } else if (isInLexcialRoots(literal) && ssf.includes(letters[i].literal)) {
+    } else if (
+      isInLexcialRoots(literal) &&
+      stopFinalSounds.includes(letters[i].literal)
+    ) {
       //console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
       //console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
       if (begin === beginOfSyllable) {
@@ -75,7 +81,7 @@ export function syllabifyTonal(
         Object.assign(matchedLtrs, ltrs);
       }
       break;
-    } else if (sft.includes(letters[i].literal)) {
+    } else if (freeTonalSounds.includes(letters[i].literal)) {
       // check tonals is the subset of free tonals
 
       // console.log('i: %d', i);
@@ -156,7 +162,7 @@ export function syllabifyTonal(
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
       begin = beginOfSyllable;
-      //console.log(matched)
+      // console.log(matched);
     } else {
       //console.log('no matched for syllabifyTonal:' + ltrs)
 
@@ -166,7 +172,7 @@ export function syllabifyTonal(
         // for surface form gg whose underlying form could be tt or kk.
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
-      } else if (!sft.includes(letters[i].literal)) {
+      } else if (!freeTonalSounds.includes(letters[i].literal)) {
         // free first tone without a free tonal
         const rules = faurs.get(TonalLetterTags.zero);
         const tnls = !rules ? [] : rules;
@@ -188,7 +194,7 @@ export function syllabifyTonal(
   }
 
   // console.log(`literal: ${literal}. matched: ${matched}`)
-  // console.log(matchedLtrs)
+  // console.log(matchedLtrs);
 
   if (matched.length > 0 && literal.length > matched.length) {
     // when ~ay is longer than ~a by one letter y
@@ -215,7 +221,7 @@ export function syllabifyTonal(
     }
   }
 
-  //console.log(list)
+  // console.log(list);
 
   let matchedLen = 0;
   let mp = new MatchedPattern();

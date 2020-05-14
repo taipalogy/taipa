@@ -368,7 +368,7 @@ export class TonalSoundGenerator {
         }
       }
     }
-    //console.log(sequences)
+    // console.log(letters, sequences);
     return sequences;
   }
 }

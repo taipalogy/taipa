@@ -1,6 +1,7 @@
 export function isInLexcialRoots(strToFind: string) {
   if (lexicalRoots.includes(strToFind)) return true;
   if (extraLexicalRoots.includes(strToFind)) return true;
+  if (addonTaiwaneseSyllabary.includes(strToFind)) return true;
   return false;
 }
 
@@ -76,6 +77,15 @@ const addonLexicalRoots = [
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
     'vainny', 'vainnx', 'vainnz', 'vor', 'vory', 'vorw', 'vorx', 'vorz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
+]
+
+// prettier-ignore
+const addonTaiwaneseSyllabary = [
+    'ga', /*'gi', 'gu',*/ 'ge', 'go',
+
+    'ir',
+
+    'or',
 ]
 
 // prettier-ignore

@@ -13,6 +13,9 @@ export function checkNumberOfLetterTonal() {
   }
 }
 
+const combiningDotBelow = '\u0323';
+const combiningDoubleMacron = '\u035e';
+
 function lookup(morphemes: TonalUncombiningMorpheme[]) {
   const ret = morphemes.map(it => {
     if (it.sounds[0].name === TonalSoundTags.initial) {
@@ -22,30 +25,31 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             it.sounds[0].toString() + it.sounds[1].toString()
           )
         ) {
-          const results = hiraganaKatakana.get(
+          const kanas = hiraganaKatakana.get(
             it.sounds[0].toString() + it.sounds[1].toString()
           );
-          const uni = '\u0323';
-          if (results) {
+          if (kanas) {
             if (voicedInitials.includes(it.sounds[0].toString())) {
-              return results[1];
+              return kanas[1];
             }
-            return results[1] + uni;
+            return kanas[1] + combiningDotBelow;
           }
         } else {
-          const results = mappingKana.get(
+          const kanas = mappingKana.get(
             it.sounds[0].toString() + it.sounds[1].toString()
           );
-          if (results) {
-            return results[1];
+          if (kanas) {
+            return kanas[1];
           }
         }
       }
     } else if (it.sounds[0].name === TonalSoundTags.medial) {
-      // console.log(it.sounds[0].toString());
       if (hiraganaKatakana.has(it.sounds[0].toString())) {
-        const results = hiraganaKatakana.get(it.sounds[0].toString());
-        if (results) return results[1];
+        const kanas = hiraganaKatakana.get(it.sounds[0].toString());
+        if (kanas) return kanas[1];
+      } else if (mappingKana.has(it.sounds[0].toString())) {
+        const kanas = mappingKana.get(it.sounds[0].toString());
+        if (kanas) return kanas[1] + combiningDoubleMacron;
       }
     }
     return '';
@@ -53,8 +57,8 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
   return ret;
 }
 
-/** Get Taiwanese Kana blocks */
-export function getTKanaBlocks(morphemes: TonalUncombiningMorpheme[]) {
+/** Get Taiwanese Kana blocks. */
+export function getTaiKanaBlocks(morphemes: TonalUncombiningMorpheme[]) {
   const kanaSequences: [string] = [''];
   kanaSequences[0] = lookup(morphemes)[0];
   return kanaSequences;
@@ -62,7 +66,30 @@ export function getTKanaBlocks(morphemes: TonalUncombiningMorpheme[]) {
 
 const voicedInitials = [TonalLetterTags.g.toString()];
 
-const mappingKana = new Map().set(
-  TonalLetterTags.q + KanaLetterTags.a,
-  hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.a)
-);
+const mappingKana = new Map()
+  .set(
+    TonalLetterTags.q + KanaLetterTags.a,
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.a)
+  )
+  .set(
+    TonalLetterTags.q + KanaLetterTags.i,
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.i)
+  )
+  .set(
+    TonalLetterTags.q + KanaLetterTags.u,
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.u)
+  )
+  .set(
+    TonalLetterTags.q + KanaLetterTags.e,
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.e)
+  )
+  .set(
+    TonalLetterTags.q + KanaLetterTags.o,
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.o)
+  )
+  .set(TonalLetterTags.ir, hiraganaKatakana.get(KanaLetterTags.u))
+  .set(TonalLetterTags.or, hiraganaKatakana.get(KanaLetterTags.o))
+  .set(
+    TonalLetterTags.ur,
+    hiraganaKatakana.get(KanaLetterTags.w + KanaLetterTags.o)
+  );
