@@ -38,65 +38,65 @@ function lookup(str: string) {
 }
 
 export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
-  // string one is hiragana, string two is katakana, string 3 is chouon
-  let kanaCompositions: [string, string, string] = ['', '', ''];
+  // string one is hiragana, string two is katakana, string three is chouon
+  const kanaSequences: [string, string, string] = ['', '', ''];
   let previous = '';
 
-  for (let e of morphemes) {
-    let ks = lookup(e.syllable.literal);
+  for (let m of morphemes) {
+    let ks = lookup(m.syllable.literal);
     if (ks != undefined && ks[0] != undefined) {
       // in case the kana is absent, we check against ks[0]
-      kanaCompositions[0] += ks[0];
-      kanaCompositions[1] += ks[1];
+      kanaSequences[0] += ks[0];
+      kanaSequences[1] += ks[1];
 
       if (
         previous.length > 0 &&
         checkChouon(
           previous[previous.length - 1],
-          e.syllable.literal[e.syllable.literal.length - 1]
+          m.syllable.literal[m.syllable.literal.length - 1]
         ) &&
-        initialConsonantsKana.includes(e.syllable.literal) == false &&
-        e.syllable.literal.length == 1
+        initialConsonantsKana.includes(m.syllable.literal) == false &&
+        m.syllable.literal.length == 1
       ) {
         // a vowel does not begin with a consonant and is of length 1
         // a vowel follows a previous vowel
-        kanaCompositions[2] += 'ー';
+        kanaSequences[2] += 'ー';
       } else {
-        kanaCompositions[2] += ks[1];
+        kanaSequences[2] += ks[1];
       }
     } else if (
       finalConsonantsKana.includes(
-        e.syllable.literal[e.syllable.literal.length - 1]
+        m.syllable.literal[m.syllable.literal.length - 1]
       ) == true
     ) {
       ks = lookup(
-        e.syllable.literal.substring(0, e.syllable.literal.length - 1)
+        m.syllable.literal.substring(0, m.syllable.literal.length - 1)
       );
       if (ks != undefined && ks[0] != undefined) {
-        kanaCompositions[0] += ks[0];
-        kanaCompositions[1] += ks[1];
-        kanaCompositions[2] += ks[1];
+        kanaSequences[0] += ks[0];
+        kanaSequences[1] += ks[1];
+        kanaSequences[2] += ks[1];
       }
       if (
-        hatsuonKana.includes(e.syllable.literal[e.syllable.literal.length - 1])
+        hatsuonKana.includes(m.syllable.literal[m.syllable.literal.length - 1])
       ) {
         ks = hatsuon.get('n');
         if (ks) {
-          kanaCompositions[0] += ks[0];
-          kanaCompositions[1] += ks[1];
-          kanaCompositions[2] += ks[1];
+          kanaSequences[0] += ks[0];
+          kanaSequences[1] += ks[1];
+          kanaSequences[2] += ks[1];
         }
       } else {
         ks = kogakimoji.get('chu');
         if (ks) {
-          kanaCompositions[0] += ks[0];
-          kanaCompositions[1] += ks[1];
-          kanaCompositions[2] += ks[1];
+          kanaSequences[0] += ks[0];
+          kanaSequences[1] += ks[1];
+          kanaSequences[2] += ks[1];
         }
       }
     } else {
-      let first = e.syllable.literal[0];
-      let second = e.syllable.literal[1];
+      let first = m.syllable.literal[0];
+      let second = m.syllable.literal[1];
 
       if (
         first === second &&
@@ -104,27 +104,27 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
       ) {
         ks = kogakimoji.get('chu');
         if (ks) {
-          kanaCompositions[0] += ks[0];
-          kanaCompositions[1] += ks[1];
-          kanaCompositions[2] += ks[1];
+          kanaSequences[0] += ks[0];
+          kanaSequences[1] += ks[1];
+          kanaSequences[2] += ks[1];
         }
 
         ks = hiraganaKatakana.get(
-          e.syllable.literal.substring(1, e.syllable.literal.length)
+          m.syllable.literal.substring(1, m.syllable.literal.length)
         );
         if (ks) {
-          kanaCompositions[0] += ks[0];
-          kanaCompositions[1] += ks[1];
-          kanaCompositions[2] += ks[1];
+          kanaSequences[0] += ks[0];
+          kanaSequences[1] += ks[1];
+          kanaSequences[2] += ks[1];
         }
       }
     }
 
-    previous = e.syllable.literal;
+    previous = m.syllable.literal;
   }
 
   // remove duplicates
-  if (kanaCompositions[1] === kanaCompositions[2]) kanaCompositions[2] = '';
+  if (kanaSequences[1] === kanaSequences[2]) kanaSequences[2] = '';
 
-  return kanaCompositions;
+  return kanaSequences;
 }

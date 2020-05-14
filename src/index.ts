@@ -15,6 +15,7 @@ export {
   TonalLetterTags,
   TonalSoundTags,
 } from './tonal/version2';
+export { KanaLetterTags } from './kana/kana';
 export { lemmatize } from './tonal/lemmatizer';
 export {
   getNoAssimilation,

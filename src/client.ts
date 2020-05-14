@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from './tonal/lexeme';
-import { checkNumberOfLetterTonal } from './tonal/init';
+import { checkNumberOfLetterTonal, getTKanaBlocks } from './tonal/init';
 import { tonalLemmatizationAnalyzer } from './tonal/analyzer';
 import { TonalUncombiningMorpheme } from './tonal/morpheme';
 
@@ -38,6 +38,8 @@ export class Client {
       ta.word = lexeme.word;
       ta.lemmas = lexeme.getLemmas();
       ta.inflectionalEnding = lexeme.getInflectionalEnding();
+
+      ta.blockSequences = getTKanaBlocks(morphemes);
 
       for (let m of morphemes) {
         ta.soundSequences.push(m.sounds);
