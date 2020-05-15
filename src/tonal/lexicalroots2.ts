@@ -81,11 +81,15 @@ const addonLexicalRoots = [
 
 // prettier-ignore
 const addonTaiwaneseSyllabary = [
-    'ga', /*'gi', 'gu',*/ 'ge', 'go',
+    'ga', 'ge',  /*'gi',*/  'gir', 'go', 'gor',/*'gu',*/ 'gur',
 
     'ir',
 
+    'kir', 'kor',
+
     'or',
+
+    'qir', 'qor',
 ]
 
 // prettier-ignore
