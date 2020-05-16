@@ -21,7 +21,7 @@ export function predict(strs: string[]) {
 
   const dupes: Array<[string, string]> = new Array();
   soundSeqs.map(i => i.map(j => dupes.push([j.toString(), j.name])));
-  let dedupes = dupes.reduce(function(
+  const dedupes = dupes.reduce(function (
     accumulator: Array<[string, string]>,
     curr: [string, string]
   ) {

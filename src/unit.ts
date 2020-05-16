@@ -367,7 +367,7 @@ export class SoundGeneration {
   letters: string[] = [];
   /** Matched sounds accumulator. */
   sounds: Sound[] = new Array<Sound>();
-  /** Indicator of syllable matching process. */
+  /** flag for syllable matching process. */
   matching: boolean = true;
   /** Will populate `predictions` when set to true. */
   predictive: boolean = false;
