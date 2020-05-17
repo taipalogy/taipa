@@ -395,7 +395,7 @@ export const hatsuon = new Map<string, Array<string>>().set(KanaLetterTags.n, [
   'ン',
 ]);
 
-export const others = new Map<string, Array<string>>()
+export const otherKanas = new Map<string, Array<string>>()
   .set(KanaLetterTags.a, ['ぁ', 'ァ'])
   .set(KanaLetterTags.i, ['ぃ', 'ィ'])
   .set(KanaLetterTags.u, ['ぅ', 'ゥ'])

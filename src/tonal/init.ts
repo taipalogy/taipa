@@ -5,7 +5,13 @@ import {
   TonalLetterTags,
 } from './version2';
 import { TonalUncombiningMorpheme } from './morpheme';
-import { hiraganaKatakana, KanaLetterTags } from '../kana/kana';
+import {
+  hiraganaKatakana,
+  KanaLetterTags,
+  otherKanas,
+  kogakimoji,
+  hatsuon,
+} from '../kana/kana';
 
 export function checkNumberOfLetterTonal() {
   if (tonalPositionalSounds.size !== lowerLettersTonal.size) {
@@ -100,6 +106,21 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             }
           }
         }
+      } else if (mor.sounds[i].name === TonalSoundTags.nasalization) {
+        const sliced = kanas.slice(1);
+        kanas = '';
+        kanas = mappingNasalization.get(mor.sounds[0].toString()) + sliced;
+      } else if (
+        mor.sounds[i].name === TonalSoundTags.freeTonal ||
+        mor.sounds[i].name === TonalSoundTags.checkedTonal
+      ) {
+        kanas += mappingToneLetter.get(mor.sounds[i].toString());
+      } else if (mor.sounds[i].name === TonalSoundTags.stopFinal) {
+        const got = mappingStopFinal.get(mor.sounds[i].toString());
+        if (got && got[1]) kanas += got[1];
+      } else if (mor.sounds[i].name === TonalSoundTags.nasalFinal) {
+        const got = mappingNasalFinal.get(mor.sounds[i].toString());
+        if (got && got[1]) kanas += got[1];
       }
     }
   }
@@ -220,3 +241,35 @@ const mappingInitialG = new Map<string, string[] | undefined>()
     TonalLetterTags.or,
     hiraganaKatakana.get(KanaLetterTags.g + KanaLetterTags.o)
   );
+
+const mappingStopFinal = new Map<string, string[] | undefined>()
+  .set(TonalLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
+  .set(TonalLetterTags.t, kogakimoji.get(KanaLetterTags.ch + KanaLetterTags.u))
+  .set(TonalLetterTags.k, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u));
+
+const mappingNasalFinal = new Map<string, string[] | undefined>()
+  .set(
+    TonalLetterTags.m,
+    hiraganaKatakana.get(KanaLetterTags.m + KanaLetterTags.u)
+  )
+  .set(
+    TonalLetterTags.n,
+    hiraganaKatakana.get(KanaLetterTags.n + KanaLetterTags.u)
+  )
+  .set(TonalLetterTags.ng, hatsuon.get(KanaLetterTags.n));
+
+const mappingNasalization = new Map()
+  .set(TonalLetterTags.a, '㋐')
+  .set(TonalLetterTags.i, '㋑')
+  .set(TonalLetterTags.u, '㋒')
+  .set(TonalLetterTags.e, '㋓')
+  .set(TonalLetterTags.o, '㋔');
+
+const mappingToneLetter = new Map()
+  .set(TonalLetterTags.f, '⍭') // apl functional symbol stile tilde (U+236D)
+  .set(TonalLetterTags.y, '⎛') // left parenthesis upper hook (U+239B)
+  .set(TonalLetterTags.w, '⎝') // left parenthesis lower hook (U+239D)
+  .set(TonalLetterTags.x, '⟨') // mathematical left angle bracket (U+27E8)
+  .set(TonalLetterTags.zx, '⟩') // mathematical left angle bracket (U+27E8)
+  .set(TonalLetterTags.z, '⎸') // left vertical box line (U+23B8)
+  .set(TonalLetterTags.xx, '⫽'); // double solidus operator (U+2AFD)
