@@ -5,133 +5,102 @@ import { KanaUncombiningMorpheme } from '../src/kana/morpheme';
 
 describe('Kana testing', () => {
   const cli = new Client();
-  let doc = new TokenAnalysis();
 
-  doc = cli.processKana('forumosa');
-
-  test('kanas', () => {
-    expect(doc.blockSequences[1]).toEqual('フォルモサ');
-  });
-});
-
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('takasago');
+  const ta1 = cli.processKana('forumosa');
 
   test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('たかさご');
-    expect(doc.blockSequences[1]).toEqual('タカサゴ');
+    expect(ta1.blockSequences[1]).toEqual('フォルモサ');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('taiwankun');
+  const ta2 = cli.processKana('takasago');
 
   test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('たいわんくん');
-    expect(doc.blockSequences[1]).toEqual('タイワンクン');
+    expect(ta2.blockSequences[0]).toEqual('たかさご');
+    expect(ta2.blockSequences[1]).toEqual('タカサゴ');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('taggu');
+  const ta3 = cli.processKana('taiwankun');
 
   test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('たっぐ');
-    expect(doc.blockSequences[1]).toEqual('タッグ');
+    expect(ta3.blockSequences[0]).toEqual('たいわんくん');
+    expect(ta3.blockSequences[1]).toEqual('タイワンクン');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('ggu');
+  const ta4 = cli.processKana('taggu');
 
   test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('っぐ');
-    expect(doc.blockSequences[1]).toEqual('ッグ');
+    expect(ta4.blockSequences[0]).toEqual('たっぐ');
+    expect(ta4.blockSequences[1]).toEqual('タッグ');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('paddo');
+  const ta5 = cli.processKana('ggu');
 
   test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('ぱっど');
-    expect(doc.blockSequences[1]).toEqual('パッド');
+    expect(ta5.blockSequences[0]).toEqual('っぐ');
+    expect(ta5.blockSequences[1]).toEqual('ッグ');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('ddo');
+  const ta6 = cli.processKana('paddo');
 
   test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('っど');
-    expect(doc.blockSequences[1]).toEqual('ッド');
+    expect(ta6.blockSequences[0]).toEqual('ぱっど');
+    expect(ta6.blockSequences[1]).toEqual('パッド');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('di');
+  const ta7 = cli.processKana('ddo');
 
   test('kanas', () => {
-    expect(doc.blockSequences[1]).toEqual('ディ');
+    expect(ta7.blockSequences[0]).toEqual('っど');
+    expect(ta7.blockSequences[1]).toEqual('ッド');
   });
-});
 
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
+  const ta8 = cli.processKana('di');
 
-  doc = cli.processKana('nyuusu');
+  test('kanas', () => {
+    expect(ta8.blockSequences[1]).toEqual('ディ');
+  });
+
+  const ta9 = cli.processKana('nyuusu');
 
   test('kana chouon', () => {
-    expect(doc.blockSequences[0]).toEqual('にゅうす');
-    expect(doc.blockSequences[1]).toEqual('ニュウス');
-    expect(doc.blockSequences[2]).toEqual('ニュース');
+    expect(ta9.blockSequences[0]).toEqual('にゅうす');
+    expect(ta9.blockSequences[1]).toEqual('ニュウス');
+    expect(ta9.blockSequences[2]).toEqual('ニュース');
+  });
+
+  const ta10 = cli.processKana('yayuyo');
+
+  test('kanas', () => {
+    expect(ta10.blockSequences[0]).toEqual('やゆよ');
+    expect(ta10.blockSequences[1]).toEqual('ヤユヨ');
+  });
+
+  const ta11 = cli.processKana('roumaji');
+
+  test('kanas', () => {
+    expect(ta11.blockSequences[0]).toEqual('ろうまじ');
+    expect(ta11.blockSequences[1]).toEqual('ロウマジ');
+    expect(ta11.blockSequences[2]).toEqual('ローマジ');
+  });
+
+  const ta12 = cli.processKana('rongu');
+
+  test('kanas', () => {
+    expect(ta12.blockSequences[0]).toEqual('ろんぐ');
+    expect(ta12.blockSequences[1]).toEqual('ロング');
+  });
+
+  const ta13 = cli.processKana('wawiwewo');
+
+  test('kanas', () => {
+    expect(ta13.blockSequences[0]).toEqual('わゐゑを');
+    expect(ta13.blockSequences[1]).toEqual('ワヰヱヲ');
   });
 });
 
 describe('Kana testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
-
-  doc = cli.processKana('yayuyo');
-
-  test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('やゆよ');
-    expect(doc.blockSequences[1]).toEqual('ヤユヨ');
-  });
-});
-
-describe('Kana testing', () => {
-  const cli = new Client();
-  let doc = new TokenAnalysis();
-
-  doc = cli.processKana('wawiwewo');
-
-  test('kanas', () => {
-    expect(doc.blockSequences[0]).toEqual('わゐゑを');
-    expect(doc.blockSequences[1]).toEqual('ワヰヱヲ');
-  });
 });
 
 describe('Kana testing', () => {

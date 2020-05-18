@@ -20,7 +20,8 @@ export function checkNumberOfLetterTonal() {
 }
 
 const combiningDotBelow = '\u0323';
-const combiningDoubleMacron = '\u035e';
+// const combiningDoubleMacron = '\u035e';
+const combiningConjoiningMacron = '\ufe26';
 
 function handleAspiration(str: string, sound: string) {
   const buffer = kanaInitials(getMap(sound))(str);
@@ -61,7 +62,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                   mor.sounds[0].toString()
                 ) +
                 mapped[1] +
-                combiningDoubleMacron;
+                combiningConjoiningMacron;
             }
           } else if (mor.sounds[i].toString() === TonalLetterTags.ur) {
             const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
@@ -96,7 +97,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             ) {
               const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
               if (mapped) {
-                kanas += mapped[1] + combiningDoubleMacron;
+                kanas += mapped[1] + combiningConjoiningMacron;
               }
             } else if (mor.sounds[i].toString() === TonalLetterTags.ur) {
               const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
@@ -173,6 +174,15 @@ const kanaInitials = function (map: Map<string, string[] | undefined>) {
     return [];
   };
 };
+
+const mappingToneLetter = new Map()
+  .set(TonalLetterTags.f, '⍭') // apl functional symbol stile tilde (U+236D)
+  .set(TonalLetterTags.y, '⎛') // left parenthesis upper hook (U+239B)
+  .set(TonalLetterTags.w, '⎝') // left parenthesis lower hook (U+239D)
+  .set(TonalLetterTags.x, '⟨') // mathematical left angle bracket (U+27E8)
+  .set(TonalLetterTags.zx, '⟩') // mathematical left angle bracket (U+27E8)
+  .set(TonalLetterTags.z, '⎸') // left vertical box line (U+23B8)
+  .set(TonalLetterTags.xx, '⫽'); // double solidus operator (U+2AFD)
 
 const mappingInitialK = new Map<string, string[] | undefined>()
   .set(
@@ -258,18 +268,9 @@ const mappingNasalFinal = new Map<string, string[] | undefined>()
   )
   .set(TonalLetterTags.ng, hatsuon.get(KanaLetterTags.n));
 
-const mappingNasalization = new Map()
+const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.a, '㋐')
   .set(TonalLetterTags.i, '㋑')
   .set(TonalLetterTags.u, '㋒')
   .set(TonalLetterTags.e, '㋓')
   .set(TonalLetterTags.o, '㋔');
-
-const mappingToneLetter = new Map()
-  .set(TonalLetterTags.f, '⍭') // apl functional symbol stile tilde (U+236D)
-  .set(TonalLetterTags.y, '⎛') // left parenthesis upper hook (U+239B)
-  .set(TonalLetterTags.w, '⎝') // left parenthesis lower hook (U+239D)
-  .set(TonalLetterTags.x, '⟨') // mathematical left angle bracket (U+27E8)
-  .set(TonalLetterTags.zx, '⟩') // mathematical left angle bracket (U+27E8)
-  .set(TonalLetterTags.z, '⎸') // left vertical box line (U+23B8)
-  .set(TonalLetterTags.xx, '⫽'); // double solidus operator (U+2AFD)
