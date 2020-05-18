@@ -12,6 +12,7 @@ import {
   kogakimoji,
   hatsuon,
 } from '../kana/kana';
+import { Sound } from '../unit';
 
 export function checkNumberOfLetterTonal() {
   if (tonalPositionalSounds.size !== lowerLettersTonal.size) {
@@ -38,89 +39,134 @@ function getMap(str: string) {
   return mappingInitialK;
 }
 
+function insertIAndReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
+  if (sounds[i - 1].name === TonalSoundTags.medial) {
+    if (sounds[0].toString() === TonalLetterTags.e) {
+      // insert kana for i before kana for e
+      const got = hiraganaKatakana.get(KanaLetterTags.i);
+      if (got) {
+        kanas = got[1] + kanas;
+      }
+    }
+  }
+  if (kanas.length > 1) {
+    // replace the kana before the final with a smaller one
+    const got = otherKanas.get(sounds[i - 1].toString());
+    if (got) {
+      const sliced = kanas.slice(0, kanas.length - 1);
+      kanas = '';
+      kanas = sliced + got[1];
+    }
+  }
+  return kanas;
+}
+
 function lookup(morphemes: TonalUncombiningMorpheme[]) {
   let seqs: string[] = [];
   let kanas = '';
-  for (const mor of morphemes) {
-    for (let i = 0; i < mor.sounds.length; i++) {
-      if (mor.sounds[i].name === TonalSoundTags.initial) {
-        const initials = kanaInitials(getMap(mor.sounds[i].toString()))();
+  for (const mr of morphemes) {
+    for (let i = 0; i < mr.sounds.length; i++) {
+      if (mr.sounds[i].name === TonalSoundTags.initial) {
+        const initials = kanaInitials(getMap(mr.sounds[i].toString()))();
         initials.map(it => seqs.push(it));
-      } else if (mor.sounds[i].name === TonalSoundTags.medial) {
-        if (mor.sounds[0].name === TonalSoundTags.initial) {
+      } else if (mr.sounds[i].name === TonalSoundTags.medial) {
+        if (mr.sounds[0].name === TonalSoundTags.initial) {
           // remove all of the initials previously populated with kanaInitials
           seqs = [];
           if (
-            mor.sounds[i].toString() === TonalLetterTags.or ||
-            mor.sounds[i].toString() === TonalLetterTags.ir
+            mr.sounds[i].toString() === TonalLetterTags.or ||
+            mr.sounds[i].toString() === TonalLetterTags.ir
           ) {
-            const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
+            const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
             if (mapped) {
               kanas +=
                 handleAspiration(
-                  mor.sounds[i].toString(),
-                  mor.sounds[0].toString()
+                  mr.sounds[i].toString(),
+                  mr.sounds[0].toString()
                 ) +
                 mapped[1] +
                 combiningConjoiningMacron;
             }
-          } else if (mor.sounds[i].toString() === TonalLetterTags.ur) {
-            const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
+          } else if (mr.sounds[i].toString() === TonalLetterTags.ur) {
+            const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
             if (mapped) {
               kanas +=
                 handleAspiration(
-                  mor.sounds[i].toString(),
-                  mor.sounds[0].toString()
+                  mr.sounds[i].toString(),
+                  mr.sounds[0].toString()
                 ) + mapped[1];
             }
           } else {
             if (i > 1) {
-              const tuple = hiraganaKatakana.get(mor.sounds[i].toString());
+              const tuple = hiraganaKatakana.get(mr.sounds[i].toString());
               if (tuple) {
                 kanas = kanas + tuple[1];
               }
             } else {
               kanas += handleAspiration(
-                mor.sounds[i].toString(),
-                mor.sounds[0].toString()
+                mr.sounds[i].toString(),
+                mr.sounds[0].toString()
               );
             }
           }
         } else {
-          const tuple = hiraganaKatakana.get(mor.sounds[i].toString());
+          if (
+            i > 1 &&
+            mr.sounds[i].name === TonalSoundTags.medial &&
+            mr.sounds[i - 1].name === TonalSoundTags.medial &&
+            mr.sounds[i - 2].name === TonalSoundTags.medial
+          ) {
+            // replace the middle medial with a small kana
+            const sliced = kanas.slice(0, i - 1);
+            const got = otherKanas.get(mr.sounds[i - 1].toString());
+            if (got) {
+              kanas = sliced + got[1];
+            }
+          }
+
+          const tuple = hiraganaKatakana.get(mr.sounds[i].toString());
           if (tuple) {
             kanas = kanas + tuple[1];
+            if (
+              i == 0 &&
+              mr.sounds[0].name === TonalSoundTags.medial &&
+              mr.sounds.length == 1
+            ) {
+              kanas = kanas + tuple[1];
+            }
           } else {
             if (
-              mor.sounds[i].toString() === TonalLetterTags.or ||
-              mor.sounds[i].toString() === TonalLetterTags.ir
+              mr.sounds[i].toString() === TonalLetterTags.or ||
+              mr.sounds[i].toString() === TonalLetterTags.ir
             ) {
-              const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
+              const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1] + combiningConjoiningMacron;
               }
-            } else if (mor.sounds[i].toString() === TonalLetterTags.ur) {
-              const mapped = mappingTaiKanaToKana.get(mor.sounds[i].toString());
+            } else if (mr.sounds[i].toString() === TonalLetterTags.ur) {
+              const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1];
               }
             }
           }
         }
-      } else if (mor.sounds[i].name === TonalSoundTags.nasalization) {
+      } else if (mr.sounds[i].name === TonalSoundTags.nasalization) {
         const sliced = kanas.slice(1);
         kanas = '';
-        kanas = mappingNasalization.get(mor.sounds[0].toString()) + sliced;
+        kanas = mappingNasalization.get(mr.sounds[0].toString()) + sliced;
       } else if (
-        mor.sounds[i].name === TonalSoundTags.freeTonal ||
-        mor.sounds[i].name === TonalSoundTags.checkedTonal
+        mr.sounds[i].name === TonalSoundTags.freeTonal ||
+        mr.sounds[i].name === TonalSoundTags.checkedTonal
       ) {
-        kanas += mappingToneLetter.get(mor.sounds[i].toString());
-      } else if (mor.sounds[i].name === TonalSoundTags.stopFinal) {
-        const got = mappingStopFinal.get(mor.sounds[i].toString());
+        kanas += mappingToneLetter.get(mr.sounds[i].toString());
+      } else if (mr.sounds[i].name === TonalSoundTags.stopFinal) {
+        kanas = insertIAndReplaceWithSmall(kanas, mr.sounds, i);
+        const got = mappingStopFinal.get(mr.sounds[i].toString());
         if (got && got[1]) kanas += got[1];
-      } else if (mor.sounds[i].name === TonalSoundTags.nasalFinal) {
-        const got = mappingNasalFinal.get(mor.sounds[i].toString());
+      } else if (mr.sounds[i].name === TonalSoundTags.nasalFinal) {
+        kanas = insertIAndReplaceWithSmall(kanas, mr.sounds, i);
+        const got = mappingNasalFinal.get(mr.sounds[i].toString());
         if (got && got[1]) kanas += got[1];
       }
     }

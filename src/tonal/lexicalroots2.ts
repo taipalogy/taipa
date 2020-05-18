@@ -83,7 +83,7 @@ const addonLexicalRoots = [
 const addonTaiwaneseSyllabary = [
     'ga', 'ge',  /*'gi',*/  'gir', 'go', 'gor',/*'gu',*/ 'gur',
 
-    'ir',
+    'iak', 'ionn', 'ir',
 
     'kir', 'kor',
 
