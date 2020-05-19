@@ -81,9 +81,11 @@ const addonLexicalRoots = [
 
 // prettier-ignore
 const addonTaiwaneseSyllabary = [
+    'er', 'erng',
+
     'ga', 'ge',  /*'gi',*/  'gir', 'go', 'gor',/*'gu',*/ 'gur',
 
-    'iak', 'ionn', 'ir',
+    'iak', 'ionn', 'ir', 'iri', 'irn',
 
     'kir', 'kor',
 

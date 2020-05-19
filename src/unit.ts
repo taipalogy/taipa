@@ -174,7 +174,7 @@ export class GraphemeMaker {
       }
     }
 
-    let graphemes = this.make(characters);
+    const graphemes = this.make(characters);
     return graphemes;
   }
 
@@ -260,11 +260,10 @@ export class GraphemeMaker {
 
   private make(characters: Array<Character>) {
     let graphemes: Array<AlphabeticGrapheme> = new Array();
-    //console.log("metadata letter array length %d. ", letters.length);
     let beginOfLetter: number = 0;
     let letters: Array<AlphabeticLetter> = new Array();
     for (let i = 0; i < characters.length; i++) {
-      //console.log("examining character: %s. length of characters: %d", characters[i].symbol, characters.length);
+      // console.log('examining character: %s. length of characters: %d', characters[i].character, characters.length);
       //console.log("metadata letter array looping.");
 
       if (i - beginOfLetter == 0) {
@@ -278,7 +277,7 @@ export class GraphemeMaker {
 
         if (ms.matchedLength > 0) {
           for (let key in candidates) {
-            //console.log(candidates[key].literal + ' - ' + ms.toString())
+            // console.log(candidates[key].literal + ' - ' + ms.toString());
             if (
               candidates[key].literal ===
               new AlphabeticLetter(ms.characters).literal

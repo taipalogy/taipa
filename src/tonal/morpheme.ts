@@ -51,10 +51,6 @@ export function syllabifyTonal(
   let begin: number = 0;
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  // const sft = freeTonalSounds;
-  // const ssf = stopFinalSounds;
-  const faurs = freeAllomorphUncombiningRules;
-  const ursa = uncombiningRulesAy;
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
@@ -123,10 +119,10 @@ export function syllabifyTonal(
       }
 
       // tone sandhi of free allomorph
-      const rulesFa = faurs.get(letters[i].literal);
+      const rulesFa = freeAllomorphUncombiningRules.get(letters[i].literal);
       const tnlsFa = !rulesFa ? [] : rulesFa.map(x => x.toString());
       // tone sandhi of ay
-      const rulesAy = ursa.get(letters[i].literal);
+      const rulesAy = uncombiningRulesAy.get(letters[i].literal);
       const tnlsAy = !rulesAy ? [] : rulesAy.map(x => x.toString());
       // merge the above twoo arrays
       const tnls = tnlsFa.concat(
@@ -174,7 +170,7 @@ export function syllabifyTonal(
         Object.assign(matchedLtrs, ltrs);
       } else if (!freeTonalSounds.includes(letters[i].literal)) {
         // free first tone without a free tonal
-        const rules = faurs.get(TonalLetterTags.zero);
+        const rules = freeAllomorphUncombiningRules.get(TonalLetterTags.zero);
         const tnls = !rules ? [] : rules;
         for (let t of tnls) {
           // append second tonal letter
@@ -193,7 +189,7 @@ export function syllabifyTonal(
     }
   }
 
-  // console.log(`literal: ${literal}. matched: ${matched}`)
+  // console.log(`literal: ${literal}. matched: ${matched}`);
   // console.log(matchedLtrs);
 
   if (matched.length > 0 && literal.length > matched.length) {

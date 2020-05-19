@@ -418,6 +418,7 @@ export const medialSounds = setOfSounds([
   new MedialUR(),
   new MedialIR(),
   new MedialOR(),
+  new MedialER(),
 ]);
 
 export const materLectionisSounds = setOfSounds([

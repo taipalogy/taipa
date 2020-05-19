@@ -21,8 +21,7 @@ export function checkNumberOfLetterTonal() {
 }
 
 const combiningDotBelow = '\u0323';
-// const combiningDoubleMacron = '\u035e';
-const combiningConjoiningMacron = '\ufe26';
+const combiningOverline = '\u0305';
 
 function handleAspiration(str: string, sound: string) {
   const buffer = kanaInitials(getMap(sound))(str);
@@ -85,7 +84,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                   mr.sounds[0].toString()
                 ) +
                 mapped[1] +
-                combiningConjoiningMacron;
+                combiningOverline;
             }
           } else if (mr.sounds[i].toString() === TonalLetterTags.ur) {
             const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
@@ -132,6 +131,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               mr.sounds[0].name === TonalSoundTags.medial &&
               mr.sounds.length == 1
             ) {
+              // reduplicate the kana
               kanas = kanas + tuple[1];
             }
           } else {
@@ -141,9 +141,20 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             ) {
               const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
               if (mapped) {
-                kanas += mapped[1] + combiningConjoiningMacron;
+                kanas += mapped[1] + combiningOverline;
+                if (
+                  i == 0 &&
+                  mr.sounds[0].name === TonalSoundTags.medial &&
+                  mr.sounds.length == 1
+                ) {
+                  // reduplicate the kana
+                  kanas += mapped[1] + combiningOverline;
+                }
               }
-            } else if (mr.sounds[i].toString() === TonalLetterTags.ur) {
+            } else if (
+              mr.sounds[i].toString() === TonalLetterTags.ur ||
+              mr.sounds[i].toString() === TonalLetterTags.er
+            ) {
               const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1];
@@ -193,7 +204,8 @@ const mappingTaiKanaToKana = new Map<string, string[] | undefined>()
   .set(
     TonalLetterTags.ur,
     hiraganaKatakana.get(KanaLetterTags.w + KanaLetterTags.o)
-  );
+  )
+  .set(TonalLetterTags.er, hiraganaKatakana.get(KanaLetterTags.e));
 
 const kanaInitials = function (map: Map<string, string[] | undefined>) {
   return function (following?: string) {
