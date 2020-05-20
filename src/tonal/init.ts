@@ -60,6 +60,23 @@ function insertIAndReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
   return kanas;
 }
 
+function reduplicateKana(
+  kanas: string,
+  sounds: Sound[],
+  i: number,
+  str: string
+) {
+  if (
+    i == 0 &&
+    sounds[0].name === TonalSoundTags.medial &&
+    sounds.length == 1
+  ) {
+    // reduplicate the kana
+    kanas = kanas + str;
+  }
+  return kanas;
+}
+
 function lookup(morphemes: TonalUncombiningMorpheme[]) {
   let seqs: string[] = [];
   let kanas = '';
@@ -123,17 +140,23 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             }
           }
 
-          const tuple = hiraganaKatakana.get(mr.sounds[i].toString());
+          let tuple;
+          if (
+            mr.sounds[i].toString() === TonalLetterTags.o &&
+            i == 0 &&
+            mr.sounds.length > 1 &&
+            mr.sounds[i + 1].name === TonalSoundTags.medial
+          ) {
+            // map o to wo
+            tuple = hiraganaKatakana.get(KanaLetterTags.w + KanaLetterTags.o);
+          } else {
+            // map o to o
+            tuple = hiraganaKatakana.get(mr.sounds[i].toString());
+          }
           if (tuple) {
             kanas = kanas + tuple[1];
-            if (
-              i == 0 &&
-              mr.sounds[0].name === TonalSoundTags.medial &&
-              mr.sounds.length == 1
-            ) {
-              // reduplicate the kana
-              kanas = kanas + tuple[1];
-            }
+
+            kanas = reduplicateKana(kanas, mr.sounds, i, tuple[1]);
           } else {
             if (
               mr.sounds[i].toString() === TonalLetterTags.or ||
@@ -142,14 +165,12 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1] + combiningOverline;
-                if (
-                  i == 0 &&
-                  mr.sounds[0].name === TonalSoundTags.medial &&
-                  mr.sounds.length == 1
-                ) {
-                  // reduplicate the kana
-                  kanas += mapped[1] + combiningOverline;
-                }
+                kanas = reduplicateKana(
+                  kanas,
+                  mr.sounds,
+                  i,
+                  mapped[1] + combiningOverline
+                );
               }
             } else if (
               mr.sounds[i].toString() === TonalLetterTags.ur ||
@@ -158,6 +179,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1];
+                kanas = reduplicateKana(kanas, mr.sounds, i, mapped[1]);
               }
             }
           }

@@ -58,47 +58,6 @@ describe('Taiwanese kana testing, a', () => {
   });
 });
 
-describe('Taiwanese kana testing, nasalization', () => {
-  const cli = new Client();
-
-  const ta1 = cli.processTonal('enn');
-
-  test('kanas', () => {
-    expect(ta1.blockSequences[0]).toEqual('㋓');
-  });
-
-  const ta2 = cli.processTonal('ianny');
-
-  test('kanas', () => {
-    expect(ta2.blockSequences[0]).toEqual('㋑ア⎛');
-  });
-
-  const ta3 = cli.processTonal('annw');
-
-  test('kanas', () => {
-    expect(ta3.blockSequences[0]).toEqual('㋐⎝');
-  });
-
-  const ta4 = cli.processTonal('iunnx');
-
-  test('kanas', () => {
-    expect(ta4.blockSequences[0]).toEqual('㋑ウ⟨');
-  });
-
-  const ta5 = cli.processTonal('ainnz');
-
-  test('kanas', () => {
-    expect(ta5.blockSequences[0]).toEqual('㋐イ⎸');
-  });
-  /*
-  const ta6 = cli.processTonal('hiannh');
-
-  test('kanas', () => {
-    expect(ta6.blockSequences[0]).toEqual('㋪ァ');
-  });
-  */
-});
-
 describe('Taiwanese kana testing, i', () => {
   const cli = new Client();
 
@@ -281,4 +240,147 @@ describe('Taiwanese kana testing, e', () => {
   test('kanas', () => {
     expect(ta2.blockSequences[0]).toEqual('エン');
   });
+});
+
+describe('Taiwanese kana testing, o', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('o');
+
+  test('kanas', () => {
+    expect(ta1.blockSequences[0]).toEqual('オオ');
+  });
+
+  const ta2 = cli.processTonal('ok');
+
+  test('kanas', () => {
+    expect(ta2.blockSequences[0]).toEqual('オㇰ');
+  });
+
+  const ta3 = cli.processTonal('op');
+
+  test('kanas', () => {
+    expect(ta3.blockSequences[0]).toEqual('オㇷ゚');
+  });
+
+  const ta4 = cli.processTonal('om');
+
+  test('kanas', () => {
+    expect(ta4.blockSequences[0]).toEqual('オム');
+  });
+
+  const ta5 = cli.processTonal('ong');
+
+  test('kanas', () => {
+    expect(ta5.blockSequences[0]).toEqual('オン');
+  });
+});
+
+describe('Taiwanese kana testing, or', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('ore');
+
+  test('kanas', () => {
+    expect(ta1.blockSequences[0]).toEqual('オ̅エ');
+  });
+
+  const ta2 = cli.processTonal('or');
+
+  test('kanas', () => {
+    expect(ta2.blockSequences[0]).toEqual('オ̅オ̅');
+  });
+});
+
+describe('Taiwanese kana testing, ur', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('oa');
+
+  test('kanas', () => {
+    expect(ta1.blockSequences[0]).toEqual('ヲア');
+  });
+
+  const ta2 = cli.processTonal('oai');
+
+  test('kanas', () => {
+    expect(ta2.blockSequences[0]).toEqual('ヲァイ');
+  });
+
+  const ta3 = cli.processTonal('oak');
+
+  test('kanas', () => {
+    expect(ta3.blockSequences[0]).toEqual('ヲァㇰ');
+  });
+
+  const ta4 = cli.processTonal('oat');
+
+  test('kanas', () => {
+    expect(ta4.blockSequences[0]).toEqual('ヲァッ');
+  });
+
+  const ta5 = cli.processTonal('oan');
+
+  test('kanas', () => {
+    expect(ta5.blockSequences[0]).toEqual('ヲァヌ');
+  });
+
+  const ta6 = cli.processTonal('oang');
+
+  test('kanas', () => {
+    expect(ta6.blockSequences[0]).toEqual('ヲァン');
+  });
+
+  const ta7 = cli.processTonal('oe');
+
+  test('kanas', () => {
+    expect(ta7.blockSequences[0]).toEqual('ヲエ');
+  });
+
+  const ta8 = cli.processTonal('ur');
+
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('ヲヲ');
+  });
+});
+
+describe('Taiwanese kana testing, nasalization', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('enn');
+
+  test('kanas', () => {
+    expect(ta1.blockSequences[0]).toEqual('㋓');
+  });
+
+  const ta2 = cli.processTonal('ianny');
+
+  test('kanas', () => {
+    expect(ta2.blockSequences[0]).toEqual('㋑ア⎛');
+  });
+
+  const ta3 = cli.processTonal('annw');
+
+  test('kanas', () => {
+    expect(ta3.blockSequences[0]).toEqual('㋐⎝');
+  });
+
+  const ta4 = cli.processTonal('iunnx');
+
+  test('kanas', () => {
+    expect(ta4.blockSequences[0]).toEqual('㋑ウ⟨');
+  });
+
+  const ta5 = cli.processTonal('ainnz');
+
+  test('kanas', () => {
+    expect(ta5.blockSequences[0]).toEqual('㋐イ⎸');
+  });
+  /*
+  const ta6 = cli.processTonal('hiannh');
+
+  test('kanas', () => {
+    expect(ta6.blockSequences[0]).toEqual('㋪ァ');
+  });
+  */
 });

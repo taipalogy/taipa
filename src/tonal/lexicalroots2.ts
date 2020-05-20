@@ -1,7 +1,7 @@
 export function isInLexcialRoots(strToFind: string) {
   if (lexicalRoots.includes(strToFind)) return true;
   if (extraLexicalRoots.includes(strToFind)) return true;
-  if (addonTaiwaneseSyllabary.includes(strToFind)) return true;
+  if (addonLexicalRootsForSyllabary.includes(strToFind)) return true;
   return false;
 }
 
@@ -80,7 +80,8 @@ const addonLexicalRoots = [
 ]
 
 // prettier-ignore
-const addonTaiwaneseSyllabary = [
+const addonLexicalRootsForSyllabary = [
+    // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
     'er', 'erng',
 
     'ga', 'ge',  /*'gi',*/  'gir', 'go', 'gor',/*'gu',*/ 'gur',
@@ -89,9 +90,11 @@ const addonTaiwaneseSyllabary = [
 
     'kir', 'kor',
 
-    'or',
+    'or', 'ore',
 
     'qir', 'qor',
+    
+    'oa', 'oak',
 ]
 
 // prettier-ignore
