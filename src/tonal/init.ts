@@ -123,6 +123,13 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 mr.sounds[i].toString(),
                 mr.sounds[0].toString()
               );
+              if (mr.sounds.length == 2) {
+                const got = hiraganaKatakana.get(mr.sounds[i].toString());
+                if (got) {
+                  // get the extra vowel kana and append it
+                  kanas += got[1];
+                }
+              }
             }
           }
         } else {
