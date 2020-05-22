@@ -92,7 +92,7 @@ const addonLexicalRootsForSyllabary = [
 
     'or', 'ore',
 
-    'qir', 'qor',
+    'qiak', 'qiang', 'qio', 'qip', 'qir', 'qit', 'qiur', 'qor',
     
     'oa', 'oak',
 ]

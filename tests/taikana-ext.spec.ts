@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 
-describe('Taiwanese kana testing, nasalization', () => {
+describe('Taiwanese kana testing, nn, nasalization', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('enn');

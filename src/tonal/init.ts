@@ -105,17 +105,39 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             }
           } else if (mr.sounds[i].toString() === TonalLetterTags.ur) {
             const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
-            if (mapped) {
+            if (mapped && mr.sounds[i - 1].name == TonalSoundTags.initial) {
+              // if the preceding letter is an initial
               kanas +=
                 handleAspiration(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 ) + mapped[1];
+            } else if (mapped) {
+              // if the preceding letter is not an initial
+              const got = mappingTaiKanaToKana.get(mr.sounds[i].toString());
+              if (got) {
+                kanas += got[1];
+              }
             }
           } else {
             if (i > 1) {
               const tuple = hiraganaKatakana.get(mr.sounds[i].toString());
               if (tuple) {
+                if (
+                  i > 2 &&
+                  mr.sounds[i - 1].name === TonalSoundTags.medial &&
+                  mr.sounds[i - 2].name === TonalSoundTags.medial
+                ) {
+                  const got = otherKanas.get(mr.sounds[i - 1].toString());
+                  if (got) {
+                    // replace the middle medial with a small kana
+                    const sliced = kanas.slice(0, i - 2);
+                    const got = otherKanas.get(mr.sounds[i - 1].toString());
+                    if (got) {
+                      kanas = sliced + got[1];
+                    }
+                  }
+                }
                 kanas = kanas + tuple[1];
               }
             } else {
@@ -123,10 +145,18 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 mr.sounds[i].toString(),
                 mr.sounds[0].toString()
               );
+
+              if (mr.sounds[i].toString() === TonalLetterTags.e) {
+                // for letter e, an extra kana small e is appended to the preceding -i
+                const got = otherKanas.get(mr.sounds[i].toString());
+                if (got) {
+                  kanas += got[1];
+                }
+              }
               if (mr.sounds.length == 2) {
                 const got = hiraganaKatakana.get(mr.sounds[i].toString());
                 if (got) {
-                  // get the extra vowel kana and append it
+                  // get the same kana character and append it
                   kanas += got[1];
                 }
               }
@@ -286,7 +316,7 @@ const mappingInitialK = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.e,
-    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.e)
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.i)
   )
   .set(
     TonalLetterTags.o,
