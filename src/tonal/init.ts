@@ -24,11 +24,11 @@ const combiningDotBelow = '\u0323';
 const combiningOverline = '\u0305';
 
 function handleAspiration(str: string, sound: string) {
-  const buffer = kanaInitials(getMap(sound))(str);
+  const got = kanaInitials(getMap(sound))(str);
   if (aspiratedInitials.includes(sound)) {
-    return buffer[0] + combiningDotBelow;
+    return got[0] + combiningDotBelow;
   } else if (unaspiratedInitials.includes(sound)) {
-    return buffer[0];
+    return got[0];
   }
   return '';
 }
@@ -141,18 +141,33 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 kanas = kanas + tuple[1];
               }
             } else {
-              kanas += handleAspiration(
-                mr.sounds[i].toString(),
-                mr.sounds[0].toString()
-              );
-
-              if (mr.sounds[i].toString() === TonalLetterTags.e) {
-                // for letter e, an extra kana small e is appended to the preceding -i
-                const got = otherKanas.get(mr.sounds[i].toString());
-                if (got) {
-                  kanas += got[1];
+              if (
+                mr.sounds[i].toString() === TonalLetterTags.e &&
+                mr.sounds.filter(
+                  it =>
+                    it.name === TonalSoundTags.nasalFinal ||
+                    it.name === TonalSoundTags.stopFinal
+                ).length > 0
+              ) {
+                // if there is a final, e should be replaced with i for retrieving initial kana
+                kanas += handleAspiration(
+                  TonalLetterTags.i,
+                  mr.sounds[0].toString()
+                );
+                if (mr.sounds[i].toString() === TonalLetterTags.e) {
+                  // for letter e, an extra kana small e is appended to the preceding -i
+                  const got = otherKanas.get(mr.sounds[i].toString());
+                  if (got) {
+                    kanas += got[1];
+                  }
                 }
+              } else {
+                kanas += handleAspiration(
+                  mr.sounds[i].toString(),
+                  mr.sounds[0].toString()
+                );
               }
+
               if (mr.sounds.length == 2) {
                 const got = hiraganaKatakana.get(mr.sounds[i].toString());
                 if (got) {
@@ -235,6 +250,14 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
         const got = mappingStopFinal.get(mr.sounds[i].toString());
         if (got && got[1]) kanas += got[1];
       } else if (mr.sounds[i].name === TonalSoundTags.nasalFinal) {
+        if (i == 1 && mr.sounds[0].name === TonalSoundTags.initial) {
+          // remove all of the initials previously populated with kanaInitials
+          seqs = [];
+          const got = kanaInitials(getMap(mr.sounds[i].toString()))(
+            TonalLetterTags.ng
+          );
+          kanas += got[0];
+        }
         kanas = insertIAndReplaceWithSmall(kanas, mr.sounds, i);
         const got = mappingNasalFinal.get(mr.sounds[i].toString());
         if (got && got[1]) kanas += got[1];
@@ -316,7 +339,7 @@ const mappingInitialK = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.e,
-    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.i)
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.e)
   )
   .set(
     TonalLetterTags.o,
@@ -333,6 +356,10 @@ const mappingInitialK = new Map<string, string[] | undefined>()
   .set(
     TonalLetterTags.or,
     hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.o)
+  )
+  .set(
+    TonalLetterTags.ng,
+    hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.u)
   );
 
 const mappingInitialG = new Map<string, string[] | undefined>()
