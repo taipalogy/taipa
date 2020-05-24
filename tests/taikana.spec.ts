@@ -107,6 +107,12 @@ describe('Taiwanese kana testing, vowels', () => {
   test('kanas', () => {
     expect(ta8.blockSequences[0]).toEqual('ヲヲ');
   });
+
+  const ta9 = cli.processTonal('oai');
+
+  test('kanas', () => {
+    expect(ta9.blockSequences[0]).toEqual('ヲァイ');
+  });
 });
 
 describe('Taiwanese kana testing, e and er', () => {
@@ -156,5 +162,15 @@ describe('Taiwanese kana testing, reduplication of vowels', () => {
 
   test('kanas', () => {
     expect(ta1.blockSequences[0]).toEqual('カア');
+  });
+});
+
+describe('Taiwanese kana testing, reduplication of vowels', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('gore');
+
+  test('kanas', () => {
+    expect(ta1.blockSequences[0]).toEqual('ゴォ̅エ');
   });
 });

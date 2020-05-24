@@ -84,7 +84,7 @@ const addonLexicalRootsForSyllabary = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
     'er', 'erng',
 
-    'ga', 'gai', 'gak', 'gang', 'gap', 'ge',  /*'gi',*/  'gir', 'go', 'gor',/*'gu',*/ 'gur',
+    'ga', 'gai', 'gak', 'gang', 'gap', 'ge',  /*'gi',*/  'gir', 'go', 'goe', 'gok', 'goat', 'gong', 'gor', 'gore',/*'gu',*/ 'gur',
 
     'iak', 'ionn', 'ir', 'iri', 'irn',
 
@@ -92,7 +92,7 @@ const addonLexicalRootsForSyllabary = [
 
     'or', 'ore',
 
-    'qiak', 'qiang', 'qio', 'qip', 'qir', 'qit', 'qiur', 'qor',
+    'qiak', 'qiang', 'qio', 'qip', 'qir', 'qiri', 'qirn', 'qit', 'qiur', 'qor',
     
     'oa', 'oak',
 ]
