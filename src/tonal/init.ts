@@ -23,11 +23,13 @@ export function checkNumberOfLetterTonal() {
 const combiningDotBelow = '\u0323';
 const combiningOverline = '\u0305';
 
-function handleAspiration(str: string, sound: string) {
+function handleCombiningDotBelow(str: string, sound: string) {
   const got = kanaInitials(getMap(sound))(str);
   if (aspiratedInitials.includes(sound)) {
     return got[0] + combiningDotBelow;
   } else if (unaspiratedInitials.includes(sound)) {
+    return got[0];
+  } else if (otherInitials.includes(sound)) {
     return got[0];
   }
   return '';
@@ -35,10 +37,15 @@ function handleAspiration(str: string, sound: string) {
 
 function getMap(str: string) {
   if (str === KanaLetterTags.g) return mappingInitialG;
+  if (str === KanaLetterTags.h) return mappingInitialH;
   return mappingInitialK;
 }
 
-function insertIAndReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
+function insertIAndReplaceEWithSmall(
+  kanas: string,
+  sounds: Sound[],
+  i: number
+) {
   if (sounds[i - 1].name === TonalSoundTags.medial) {
     if (sounds[0].toString() === TonalLetterTags.e) {
       // insert kana for i before kana for e
@@ -82,7 +89,7 @@ function replacwWithSmall(kanas: string, sounds: Sound[], i: number) {
   if (sounds[i - 1].toString() === TonalLetterTags.or) {
     // an extra vowel is already been appended to the initial kana
     // when there is an initial and followed by a vowel, an or kana should be replaced with a small form
-    const mapped = mappingTaiKanaToSmallForm.get(sounds[i - 1].toString());
+    const mapped = mappingMedialSmallForm.get(sounds[i - 1].toString());
     if (mapped) {
       kanas = sliced + mapped[1] + combiningOverline;
     }
@@ -112,10 +119,10 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             mr.sounds[i].toString() === TonalLetterTags.or ||
             mr.sounds[i].toString() === TonalLetterTags.ir
           ) {
-            const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
+            const mapped = mappingMedial.get(mr.sounds[i].toString());
             if (mapped) {
               kanas +=
-                handleAspiration(
+                handleCombiningDotBelow(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 ) +
@@ -123,19 +130,19 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 combiningOverline;
             }
           } else if (mr.sounds[i].toString() === TonalLetterTags.ur) {
-            const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
+            const mapped = mappingMedial.get(mr.sounds[i].toString());
             if (mapped && mr.sounds[i - 1].name == TonalSoundTags.initial) {
               // if the preceding letter is an initial
               kanas +=
-                handleAspiration(
+                handleCombiningDotBelow(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 ) + mapped[1];
             } else if (mapped) {
               // if the preceding letter is not an initial
-              const got = mappingTaiKanaToKana.get(mr.sounds[i].toString());
-              if (got) {
-                kanas += got[1];
+              const mapped = mappingMedial.get(mr.sounds[i].toString());
+              if (mapped) {
+                kanas += mapped[1];
               }
             }
           } else {
@@ -170,7 +177,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 ).length > 0
               ) {
                 // if there is a final, e should be replaced with i for retrieving initial kana
-                kanas += handleAspiration(
+                kanas += handleCombiningDotBelow(
                   TonalLetterTags.i,
                   mr.sounds[0].toString()
                 );
@@ -182,7 +189,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                   }
                 }
               } else {
-                kanas += handleAspiration(
+                kanas += handleCombiningDotBelow(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 );
@@ -230,7 +237,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               mr.sounds[i].toString() === TonalLetterTags.or ||
               mr.sounds[i].toString() === TonalLetterTags.ir
             ) {
-              const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
+              const mapped = mappingMedial.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1] + combiningOverline;
                 kanas = reduplicateKana(
@@ -244,7 +251,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               mr.sounds[i].toString() === TonalLetterTags.ur ||
               mr.sounds[i].toString() === TonalLetterTags.er
             ) {
-              const mapped = mappingTaiKanaToKana.get(mr.sounds[i].toString());
+              const mapped = mappingMedial.get(mr.sounds[i].toString());
               if (mapped) {
                 kanas += mapped[1];
                 kanas = reduplicateKana(kanas, mr.sounds, i, mapped[1]);
@@ -253,18 +260,49 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
           }
         }
       } else if (mr.sounds[i].name === TonalSoundTags.nasalization) {
-        const sliced = kanas.slice(1);
-        kanas = '';
-        kanas = mappingNasalization.get(mr.sounds[0].toString()) + sliced;
+        if (mr.sounds[0].name === TonalSoundTags.initial) {
+          const sliced = kanas.slice(1);
+          kanas =
+            mappingNasalization.get(
+              mr.sounds[0].toString() + mr.sounds[1].toString()
+            ) + sliced;
+        } else {
+          const sliced = kanas.slice(1);
+          // kanas = '';
+          kanas = mappingNasalization.get(mr.sounds[0].toString()) + sliced;
+        }
       } else if (
         mr.sounds[i].name === TonalSoundTags.freeTonal ||
         mr.sounds[i].name === TonalSoundTags.checkedTonal
       ) {
         kanas += mappingToneLetter.get(mr.sounds[i].toString());
       } else if (mr.sounds[i].name === TonalSoundTags.stopFinal) {
-        kanas = insertIAndReplaceWithSmall(kanas, mr.sounds, i);
-        const got = mappingStopFinal.get(mr.sounds[i].toString());
-        if (got && got[1]) kanas += got[1];
+        kanas = insertIAndReplaceEWithSmall(kanas, mr.sounds, i);
+        const mappedFinal = mappingStopFinal.get(mr.sounds[i].toString());
+        if (mappedFinal && mappedFinal[1]) {
+          // stop finals p, t, k
+          kanas += mappedFinal[1];
+          if (
+            mr.sounds[mr.sounds.length - 1].name != TonalSoundTags.checkedTonal
+          ) {
+            const mapped = mappingToneLetter.get(mr.sounds[i].toString());
+            if (mapped) {
+              kanas += mapped[0];
+            }
+          }
+        } else {
+          // stop final h
+          const sliced = kanas.slice(0, kanas.length - 1);
+          const medials = mr.sounds.filter(
+            it => it.name === TonalSoundTags.medial
+          );
+          const mapped = mappingMedialSmallForm.get(
+            medials[medials.length - 1].toString()
+          );
+          if (mapped) {
+            kanas = sliced + mapped[1];
+          }
+        }
       } else if (mr.sounds[i].name === TonalSoundTags.nasalFinal) {
         if (i == 1 && mr.sounds[0].name === TonalSoundTags.initial) {
           // remove all of the initials previously populated with kanaInitials
@@ -274,7 +312,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
           );
           kanas += got[0];
         }
-        kanas = insertIAndReplaceWithSmall(kanas, mr.sounds, i);
+        kanas = insertIAndReplaceEWithSmall(kanas, mr.sounds, i);
         const got = mappingNasalFinal.get(mr.sounds[i].toString());
         if (got && got[1]) kanas += got[1];
       }
@@ -295,8 +333,9 @@ const unaspiratedInitials = [
   TonalLetterTags.q.toString(),
   TonalLetterTags.g.toString(),
 ];
+const otherInitials = [TonalLetterTags.h.toString()];
 
-const mappingTaiKanaToKana = new Map<string, string[] | undefined>()
+const mappingMedial = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.ir, hiraganaKatakana.get(KanaLetterTags.u))
   .set(TonalLetterTags.or, hiraganaKatakana.get(KanaLetterTags.o))
   .set(
@@ -305,10 +344,10 @@ const mappingTaiKanaToKana = new Map<string, string[] | undefined>()
   )
   .set(TonalLetterTags.er, hiraganaKatakana.get(KanaLetterTags.e));
 
-const mappingTaiKanaToSmallForm = new Map<string, string[] | undefined>().set(
-  TonalLetterTags.or,
-  otherKanas.get(KanaLetterTags.o)
-);
+const mappingMedialSmallForm = new Map<string, string[] | undefined>()
+  .set(TonalLetterTags.a, otherKanas.get(KanaLetterTags.a))
+  .set(TonalLetterTags.or, otherKanas.get(KanaLetterTags.o))
+  .set(TonalLetterTags.ur, otherKanas.get(KanaLetterTags.w + KanaLetterTags.o));
 
 const kanaInitials = function (map: Map<string, string[] | undefined>) {
   return function (following?: string) {
@@ -343,7 +382,13 @@ const mappingToneLetter = new Map()
   .set(TonalLetterTags.x, '⟨') // mathematical left angle bracket (U+27E8)
   .set(TonalLetterTags.zx, '⟩') // mathematical left angle bracket (U+27E8)
   .set(TonalLetterTags.z, '⎸') // left vertical box line (U+23B8)
-  .set(TonalLetterTags.xx, '⫽'); // double solidus operator (U+2AFD)
+  .set(TonalLetterTags.xx, '⫽') // double solidus operator (U+2AFD)
+  .set(TonalLetterTags.kk, '﹅');
+
+const mappingInitialH = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.i,
+  hiraganaKatakana.get(KanaLetterTags.h + KanaLetterTags.i)
+);
 
 const mappingInitialK = new Map<string, string[] | undefined>()
   .set(
@@ -420,7 +465,10 @@ const mappingInitialG = new Map<string, string[] | undefined>()
 const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
   .set(TonalLetterTags.t, kogakimoji.get(KanaLetterTags.ch + KanaLetterTags.u))
-  .set(TonalLetterTags.k, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u));
+  .set(TonalLetterTags.k, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u))
+  .set(TonalLetterTags.pp, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
+  .set(TonalLetterTags.tt, kogakimoji.get(KanaLetterTags.ch + KanaLetterTags.u))
+  .set(TonalLetterTags.kk, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u));
 
 const mappingNasalFinal = new Map<string, string[] | undefined>()
   .set(
@@ -438,4 +486,5 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.i, '㋑')
   .set(TonalLetterTags.u, '㋒')
   .set(TonalLetterTags.e, '㋓')
-  .set(TonalLetterTags.o, '㋔');
+  .set(TonalLetterTags.o, '㋔')
+  .set(TonalLetterTags.h + TonalLetterTags.i, '㋪');
