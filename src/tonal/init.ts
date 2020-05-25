@@ -23,13 +23,17 @@ export function checkNumberOfLetterTonal() {
 const combiningDotBelow = '\u0323';
 const combiningOverline = '\u0305';
 
-function handleCombiningDotBelow(str: string, sound: string) {
+function handleCombiningDotBelowOverline(str: string, sound: string) {
   const got = kanaInitials(mappingInitial.get(sound))(str);
   if (initialWithCombiningDotBelow.aspirated.includes(sound)) {
     return got[0] + combiningDotBelow;
   } else if (initialWithCombiningDotBelow.unaspirated.includes(sound)) {
     return got[0];
   } else if (initialWithCombiningDotBelow.others.includes(sound)) {
+    if (initialWithCombiningOverline.includes(sound)) {
+      return got[0] + combiningOverline;
+    }
+
     return got[0];
   }
   return '';
@@ -133,7 +137,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             const mapped = mappingMedial.get(mr.sounds[i].toString());
             if (mapped) {
               kanas +=
-                handleCombiningDotBelow(
+                handleCombiningDotBelowOverline(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 ) +
@@ -145,7 +149,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             if (mapped && mr.sounds[i - 1].name == TonalSoundTags.initial) {
               // if the preceding letter is an initial
               kanas +=
-                handleCombiningDotBelow(
+                handleCombiningDotBelowOverline(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 ) + mapped[1];
@@ -188,7 +192,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 ).length > 0
               ) {
                 // if there is a final, e should be replaced with i for retrieving initial kana
-                kanas += handleCombiningDotBelow(
+                kanas += handleCombiningDotBelowOverline(
                   TonalLetterTags.i,
                   mr.sounds[0].toString()
                 );
@@ -200,7 +204,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                   }
                 }
               } else {
-                kanas += handleCombiningDotBelow(
+                kanas += handleCombiningDotBelowOverline(
                   mr.sounds[i].toString(),
                   mr.sounds[0].toString()
                 );
@@ -363,10 +367,16 @@ const kanaInitials = function (map?: Map<string, string[] | undefined>) {
   };
 };
 
+const initialWithCombiningOverline = [TonalLetterTags.ch.toString()];
+
 const initialWithCombiningDotBelow = {
   aspirated: [TonalLetterTags.k.toString()],
   unaspirated: [TonalLetterTags.q.toString(), TonalLetterTags.g.toString()],
-  others: [TonalLetterTags.h.toString(), TonalLetterTags.s.toString()],
+  others: [
+    TonalLetterTags.h.toString(),
+    TonalLetterTags.s.toString(),
+    TonalLetterTags.ch.toString(),
+  ],
 };
 
 const mappingMedial = new Map<string, string[] | undefined>()
@@ -414,6 +424,11 @@ const mappingNasalFinal = new Map<string, string[] | undefined>()
     hiraganaKatakana.get(KanaLetterTags.n + KanaLetterTags.u)
   )
   .set(TonalLetterTags.ng, hatsuon.get(KanaLetterTags.n));
+
+const mappingInitialCh = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.a)
+);
 
 const mappingInitialG = new Map<string, string[] | undefined>()
   .set(
@@ -498,6 +513,7 @@ const mappingInitialS = new Map<string, string[] | undefined>().set(
 );
 
 const mappingInitial = new Map<string, Map<string, string[] | undefined>>()
+  .set(TonalLetterTags.ch, mappingInitialCh)
   .set(KanaLetterTags.g, mappingInitialG)
   .set(KanaLetterTags.h, mappingInitialH)
   .set(KanaLetterTags.k, mappingInitialK)
