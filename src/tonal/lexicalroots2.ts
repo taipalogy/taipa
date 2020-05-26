@@ -82,7 +82,7 @@ const addonLexicalRoots = [
 // prettier-ignore
 const addonLexicalRootsForSyllabary = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
-    'chap',
+    'chap', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore',
     
     'er', 'erng',
 
@@ -90,13 +90,17 @@ const addonLexicalRootsForSyllabary = [
 
     'iak', 'ionn', 'ir', 'iri', 'irn',
 
+    'je', 'jek', 'jeng', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'joa', 'joe', 'jor', 'jun',
+
     'kir', 'kor',
 
     'or', 'ore',
 
-    'qiak', 'qiang', 'qio', 'qip', 'qir', 'qiri', 'qirn', 'qit', 'qiur', 'qor',
+    'qen', 'qet', 'qiak', 'qiang', 'qio', 'qip', 'qir', 'qiri', 'qirn', 'qit', 'qiur', 'qor',
     
     'oa', 'oak',
+
+    'sir', 'siri', 'sop', 'sor', 'sore',
 ]
 
 // prettier-ignore
@@ -183,7 +187,7 @@ export const lexicalRoots = [
     'cho', 'choy', 'choz', 'chu', 'chuy', 'chuw', 'chux', 'chuxz', 'choay',
     'choax', 'choaz', 'choah', 'choahh', 'choainnz', 'choan', 'choany',
     'choanw', 'choanx', 'choanz', 'choann', 'choanny', 'choannw', 'choannx',
-    'choannz', 'chutt', 'choew', 'choez', 'chuh', 'chui', 'chuiy', 'chuiw',
+    'choannz', 'choat', 'choew', 'choez', 'chuh', 'chui', 'chuiy', 'chuiw',
     'chuix', 'chuiz', 'chun', 'chuny', 'chunw', 'chunx', 'chunz', 'chut',
     'chutt', 
 

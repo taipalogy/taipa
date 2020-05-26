@@ -191,7 +191,7 @@ describe('Taiwanese kana testing, small form', () => {
   test('kanas', () => {
     expect(ta3.blockSequences[0]).toEqual('ヲァイ');
   });
-  /*
+
   const ta4 = cli.processTonal('siri');
 
   test('kanas', () => {
@@ -203,7 +203,6 @@ describe('Taiwanese kana testing, small form', () => {
   test('kanas', () => {
     expect(ta5.blockSequences[0]).toEqual('キ' + '\u{0323}' + '\u{1b166}');
   });
-  */
 });
 
 describe('Taiwanese kana testing, tone letter of check tones', () => {

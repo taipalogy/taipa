@@ -29,14 +29,14 @@ describe('Prediction testing', () => {
   const prs1 = predict(grs1.map(x => x.letter).map(y => y.literal));
 
   test('check the length of predictions', () => {
-    expect(prs1.length).toEqual(7);
+    expect(prs1.length).toEqual(9);
   });
 
   const grs2 = gm.makeGraphemes('so');
   const prs2 = predict(grs2.map(x => x.letter).map(y => y.literal));
 
   test('check the length of predictions', () => {
-    expect(prs2.length).toEqual(5);
+    expect(prs2.length).toEqual(6);
   });
 
   const grs3 = gm.makeGraphemes('soa');
