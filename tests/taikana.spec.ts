@@ -146,6 +146,19 @@ describe('Taiwanese kana testing, e and er', () => {
   test('kanas', () => {
     expect(ta6.blockSequences[0]).toEqual('ケエ');
   });
+  /*
+  const ta7 = cli.processTonal('qet');
+
+  test('kanas', () => {
+    expect(ta7.blockSequences[0]).toEqual('ケッ');
+  });
+
+  const ta8 = cli.processTonal('qen');
+
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('ケヌ');
+  });
+  */
 });
 
 describe('Taiwanese kana testing, reduplication of vowels', () => {
@@ -178,6 +191,19 @@ describe('Taiwanese kana testing, small form', () => {
   test('kanas', () => {
     expect(ta3.blockSequences[0]).toEqual('ヲァイ');
   });
+  /*
+  const ta4 = cli.processTonal('siri');
+
+  test('kanas', () => {
+    expect(ta4.blockSequences[0]).toEqual('スゥ̅イ');
+  });
+
+  const ta5 = cli.processTonal('kiurh');
+
+  test('kanas', () => {
+    expect(ta5.blockSequences[0]).toEqual('キ' + '\u{0323}' + '\u{1b166}');
+  });
+  */
 });
 
 describe('Taiwanese kana testing, tone letter of check tones', () => {
