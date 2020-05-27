@@ -15,7 +15,7 @@ const toBeVerified = [
 
     'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt',
 
-    'len', 'lirey',
+    'len', 'lirey',  'lng',
 
     'mah',
 
@@ -82,7 +82,7 @@ const addonLexicalRoots = [
 // prettier-ignore
 const addonLexicalRootsForSyllabary = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
-    'chap', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore',
+    'chap', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore', 'coa', 'coai', 'coang', 'coat', 'com', 'cor', 'core',
     
     'er', 'erng',
 

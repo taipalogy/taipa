@@ -463,10 +463,27 @@ const mappingNasalFinal = new Map<string, string[] | undefined>()
   )
   .set(TonalLetterTags.ng, hatsuon.get(KanaLetterTags.n));
 
-const mappingInitialC = new Map<string, string[] | undefined>().set(
-  TonalLetterTags.a,
-  hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
-);
+const mappingInitialC = new Map<string, string[] | undefined>()
+  .set(
+    TonalLetterTags.a,
+    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.a)
+  )
+  .set(
+    TonalLetterTags.e,
+    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.e)
+  )
+  .set(
+    TonalLetterTags.o,
+    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
+  )
+  .set(
+    TonalLetterTags.or,
+    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
+  )
+  .set(
+    TonalLetterTags.ur,
+    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
+  );
 
 const mappingInitialCh = new Map<string, string[] | undefined>()
   .set(
