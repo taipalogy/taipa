@@ -36,7 +36,7 @@ describe('Taiwanese kana testing, nn, nasalization', () => {
   const ta6 = cli.processTonal('hiannh');
 
   test('kanas', () => {
-    expect(ta6.blockSequences[0]).toEqual('㋪ァ');
+    expect(ta6.blockSequences[0]).toEqual('㋪ァ⦾');
   });
 });
 
@@ -114,7 +114,7 @@ describe('Taiwanese kana testing, e and er', () => {
   const ta1 = cli.processTonal('ek');
 
   test('kanas', () => {
-    expect(ta1.blockSequences[0]).toEqual('イェㇰ');
+    expect(ta1.blockSequences[0]).toEqual('イェㇰ⦾');
   });
 
   const ta2 = cli.processTonal('eng');
@@ -132,7 +132,7 @@ describe('Taiwanese kana testing, e and er', () => {
   const ta4 = cli.processTonal('qek');
 
   test('kanas', () => {
-    expect(ta4.blockSequences[0]).toEqual('キェㇰ');
+    expect(ta4.blockSequences[0]).toEqual('キェㇰ⦾');
   });
 
   const ta5 = cli.processTonal('qeng');
@@ -201,7 +201,9 @@ describe('Taiwanese kana testing, small form', () => {
   const ta5 = cli.processTonal('kiurh');
 
   test('kanas', () => {
-    expect(ta5.blockSequences[0]).toEqual('キ' + '\u{0323}' + '\u{1b166}');
+    expect(ta5.blockSequences[0]).toEqual(
+      'キ' + '\u{0323}' + '\u{1b166}' + '⦾'
+    );
   });
 });
 
@@ -211,7 +213,7 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
   const ta1 = cli.processTonal('qiok');
 
   test('kanas', () => {
-    expect(ta1.blockSequences[0]).toEqual('キォㇰ');
+    expect(ta1.blockSequences[0]).toEqual('キォㇰ⦾');
   });
 
   const ta2 = cli.processTonal('qiokk');
@@ -240,13 +242,19 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
   const ta6 = cli.processTonal('qiurh');
 
   test('kanas', () => {
-    expect(ta6.blockSequences[0]).toEqual('キ' + '\u{1b166}');
+    expect(ta6.blockSequences[0]).toEqual('キ' + '\u{1b166}' + '⦾');
   });
 
   const ta7 = cli.processTonal('qiurhy');
 
   test('kanas', () => {
     expect(ta7.blockSequences[0]).toEqual('キ' + '\u{1b166}' + '⎛');
+  });
+
+  const ta8 = cli.processTonal('changxx');
+
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('サ̅ン⫽');
   });
 });
 

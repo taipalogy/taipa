@@ -148,7 +148,7 @@ export const finalOfPhrasalVerbParticle = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.h, TonalLetterTags.hh)
   .set(TonalLetterTags.p, TonalLetterTags.pp);
 
-/** turn preceding finals to voiced ones */
+/** Turn preceding finals to voiced ones. Unvoiced to voiced */
 export const voicelessVoicedFinals = new Map<string, string>()
   .set(TonalLetterTags.p, TonalLetterTags.b)
   .set(TonalLetterTags.t, TonalLetterTags.l)
@@ -177,3 +177,15 @@ export const finalBgjlsbbggjjllss = new Map<string, TonalLetterTags[]>()
   .set(TonalLetterTags.jj, [TonalLetterTags.tt])
   .set(TonalLetterTags.ll, [TonalLetterTags.ll, TonalLetterTags.tt])
   .set(TonalLetterTags.ss, [TonalLetterTags.tt]);
+
+export const fourthFinals = [
+  TonalLetterTags.p.toString(),
+  TonalLetterTags.t.toString(),
+  TonalLetterTags.k.toString(),
+  TonalLetterTags.h.toString(),
+  TonalLetterTags.b.toString(),
+  TonalLetterTags.g.toString(),
+  TonalLetterTags.j.toString(),
+  TonalLetterTags.l.toString(),
+  TonalLetterTags.s.toString(),
+];
