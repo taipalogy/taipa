@@ -31,9 +31,11 @@ function handleCombiningDotBelowOverline(medial: string, sound: string) {
       return got[0] + combiningOverline + combiningDotBelow;
     }
     return got[0] + combiningDotBelow;
-  } else if (initialWithCombiningDotBelow.unaspirated.includes(sound)) {
+  } else if (
+    initialWithCombiningDotBelow.withoutADotOrOverline.includes(sound)
+  ) {
     return got[0];
-  } else if (initialWithCombiningDotBelow.others.includes(sound)) {
+  } else if (initialWithCombiningDotBelow.withOverline.includes(sound)) {
     if (initialWithCombiningOverline.includes(sound)) {
       return got[0] + combiningOverline;
     }
@@ -264,9 +266,9 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             // map o to o
             tuple = hiraganaKatakana.get(mr.sounds[i].toString());
           }
+
           if (tuple) {
             kanas = kanas + tuple[1];
-
             kanas = reduplicateKana(kanas, mr.sounds, i, tuple[1]);
           } else {
             if (
@@ -291,6 +293,11 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               if (mapped) {
                 kanas += mapped[1];
                 kanas = reduplicateKana(kanas, mr.sounds, i, mapped[1]);
+              }
+            } else if (mr.sounds[i].toString() === TonalLetterTags.ng) {
+              const mapped = mappingMedial.get(mr.sounds[i].toString());
+              if (mapped) {
+                kanas += mapped[1];
               }
             }
           }
@@ -400,18 +407,26 @@ const initialWithCombiningOverline = [
 
 const initialWithCombiningDotBelow = {
   // whether the dot should be combined
-  aspirated: [TonalLetterTags.k.toString(), TonalLetterTags.c.toString()],
-  unaspirated: [
+  aspirated: [
+    // with a dot
+    TonalLetterTags.k.toString(),
+    TonalLetterTags.c.toString(),
+    TonalLetterTags.p.toString(),
+  ],
+  withoutADotOrOverline: [
     TonalLetterTags.q.toString(),
     TonalLetterTags.g.toString(),
     TonalLetterTags.b.toString(),
-  ],
-  others: [
+    TonalLetterTags.v.toString(),
+    TonalLetterTags.j.toString(),
+    TonalLetterTags.l.toString(),
     TonalLetterTags.h.toString(),
     TonalLetterTags.s.toString(),
-    TonalLetterTags.ch.toString(),
-    TonalLetterTags.j.toString(),
+    TonalLetterTags.m.toString(),
+    TonalLetterTags.n.toString(),
+    TonalLetterTags.ng.toString(),
   ],
+  withOverline: [TonalLetterTags.ch.toString(), TonalLetterTags.d.toString()],
 };
 
 const mappingMedial = new Map<string, string[] | undefined>()
@@ -421,7 +436,8 @@ const mappingMedial = new Map<string, string[] | undefined>()
     TonalLetterTags.ur,
     hiraganaKatakana.get(KanaLetterTags.w + KanaLetterTags.o)
   )
-  .set(TonalLetterTags.er, hiraganaKatakana.get(KanaLetterTags.e));
+  .set(TonalLetterTags.er, hiraganaKatakana.get(KanaLetterTags.e))
+  .set(TonalLetterTags.ng, hatsuon.get(KanaLetterTags.n));
 
 const smallFormIRor = [
   TonalLetterTags.ir.toString(),
@@ -512,28 +528,6 @@ const mappingInitialC = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.ur,
-    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
-  );
-
-const mappingInitialCh = new Map<string, string[] | undefined>()
-  .set(
-    TonalLetterTags.a,
-    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.a)
-  )
-  .set(
-    TonalLetterTags.e,
-    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.e)
-  )
-  .set(
-    TonalLetterTags.ur,
-    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
-  )
-  .set(
-    TonalLetterTags.o,
-    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
-  )
-  .set(
-    TonalLetterTags.or,
     hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.o)
   );
 
@@ -645,6 +639,31 @@ const mappingInitialK = new Map<string, string[] | undefined>()
     hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.u)
   );
 
+const mappingInitialL = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.a)
+);
+
+const mappingInitialM = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.m + KanaLetterTags.a)
+);
+
+const mappingInitialN = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.n + KanaLetterTags.a)
+);
+
+const mappingInitialNG = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.g + KanaLetterTags.a)
+);
+
+const mappingInitialP = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.p + KanaLetterTags.a)
+);
+
 const mappingInitialS = new Map<string, string[] | undefined>()
   .set(
     TonalLetterTags.a,
@@ -683,13 +702,26 @@ const mappingInitialS = new Map<string, string[] | undefined>()
     hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.u)
   );
 
+const mappingInitialT = new Map<string, string[] | undefined>().set(
+  TonalLetterTags.a,
+  hiraganaKatakana.get(KanaLetterTags.t + KanaLetterTags.a)
+);
+
 const mappingInitial = new Map<string, Map<string, string[] | undefined>>()
   .set(TonalLetterTags.b, mappingInitialB)
   .set(TonalLetterTags.c, mappingInitialC)
-  .set(TonalLetterTags.ch, mappingInitialCh)
-  .set(KanaLetterTags.g, mappingInitialG)
-  .set(KanaLetterTags.h, mappingInitialH)
-  .set(KanaLetterTags.j, mappingInitialJ)
-  .set(KanaLetterTags.k, mappingInitialK)
+  .set(TonalLetterTags.ch, mappingInitialC)
+  .set(TonalLetterTags.d, mappingInitialT)
+  .set(TonalLetterTags.g, mappingInitialG)
+  .set(TonalLetterTags.h, mappingInitialH)
+  .set(TonalLetterTags.j, mappingInitialJ)
+  .set(TonalLetterTags.k, mappingInitialK)
+  .set(TonalLetterTags.l, mappingInitialL)
+  .set(TonalLetterTags.m, mappingInitialM)
+  .set(TonalLetterTags.n, mappingInitialN)
+  .set(TonalLetterTags.ng, mappingInitialNG)
+  .set(TonalLetterTags.p, mappingInitialP)
   .set(TonalLetterTags.q, mappingInitialK)
-  .set(KanaLetterTags.s, mappingInitialS);
+  .set(TonalLetterTags.s, mappingInitialS)
+  .set(TonalLetterTags.t, mappingInitialT)
+  .set(TonalLetterTags.v, mappingInitialP);

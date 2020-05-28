@@ -83,7 +83,7 @@ const addonLexicalRoots = [
 const addonLexicalRootsForSyllabary = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
     'bam',
-    
+
     'chap', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore', 'coa', 'coai', 'coang', 'coat', 'com', 'cor', 'core',
     
     'er', 'erng',
@@ -95,6 +95,8 @@ const addonLexicalRootsForSyllabary = [
     'je', 'jek', 'jeng', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'joa', 'joe', 'jor', 'jun',
 
     'kir', 'kor',
+
+    'nga',
 
     'or', 'ore',
 
