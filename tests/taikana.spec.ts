@@ -38,6 +38,31 @@ describe('Taiwanese kana testing, nn, nasalization', () => {
   test('kanas', () => {
     expect(ta6.blockSequences[0]).toEqual('㋪ァ⦾');
   });
+  /*
+  const ta7 = cli.processTonal('siakfpannz');
+
+  test('kanas', () => {
+    expect(ta7.blockSequences[0]).toEqual('');
+  });
+
+  const ta8 = cli.processTonal('coann');
+
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('');
+  });
+  */
+
+  const ta7 = cli.processTonal('ng');
+
+  test('kanas', () => {
+    expect(ta7.blockSequences[0]).toEqual('ン');
+  });
+
+  const ta8 = cli.processTonal('nga');
+
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('カ゚ア');
+  });
 });
 
 describe('Taiwanese kana testing, consonants', () => {
@@ -105,6 +130,12 @@ describe('Taiwanese kana testing, vowels', () => {
 
   test('kanas', () => {
     expect(ta8.blockSequences[0]).toEqual('ヲヲ');
+  });
+
+  const ta9 = cli.processTonal('irn');
+
+  test('kanas', () => {
+    expect(ta9.blockSequences[0]).toEqual('ウ̅ヌ');
   });
 });
 
@@ -255,6 +286,130 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
 
   test('kanas', () => {
     expect(ta8.blockSequences[0]).toEqual('サ̅ン⫽');
+  });
+});
+
+describe('Taiwanese kana testing, initials', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('cha');
+
+  test('kanas, サ̅ア', () => {
+    expect(ta1.blockSequences[0]).toEqual('サ̅ア');
+  });
+
+  const ta2 = cli.processTonal('ca');
+
+  test('kanas, サ̣̅ア', () => {
+    expect(ta2.blockSequences[0]).toEqual('サ' + '\u0305' + '\u0323' + 'ア');
+  });
+
+  const ta3 = cli.processTonal('da');
+
+  test('kanas, タア', () => {
+    expect(ta3.blockSequences[0]).toEqual('タア');
+  });
+
+  const ta4 = cli.processTonal('ta');
+
+  test('kanas, タ̣ア', () => {
+    expect(ta4.blockSequences[0]).toEqual('タ' + '\u0323' + 'ア');
+  });
+
+  const ta5 = cli.processTonal('chi');
+
+  test('kanas, チイ', () => {
+    expect(ta5.blockSequences[0]).toEqual('チイ');
+  });
+
+  const ta6 = cli.processTonal('ci');
+
+  test('kanas, チ̣イ', () => {
+    expect(ta6.blockSequences[0]).toEqual('チ' + '\u0323' + 'イ');
+  });
+
+  const ta7 = cli.processTonal('di');
+
+  test('kanas, チ̅イ', () => {
+    expect(ta7.blockSequences[0]).toEqual('チ' + '\u0305' + 'イ');
+  });
+
+  const ta8 = cli.processTonal('ti');
+
+  test('kanas, チ̣̅イ', () => {
+    expect(ta8.blockSequences[0]).toEqual('チ' + '\u0305' + '\u0323' + 'イ');
+  });
+
+  const ta9 = cli.processTonal('chu');
+
+  test('kanas, ツウ', () => {
+    expect(ta9.blockSequences[0]).toEqual('ツウ');
+  });
+
+  const ta10 = cli.processTonal('cu');
+
+  test('kanas, ツ̣ウ', () => {
+    expect(ta10.blockSequences[0]).toEqual('ツ' + '\u0323' + 'ウ');
+  });
+
+  const ta11 = cli.processTonal('du');
+
+  test('kanas, ツ̅ウ', () => {
+    expect(ta11.blockSequences[0]).toEqual('ツ' + '\u0305' + 'ウ');
+  });
+
+  const ta12 = cli.processTonal('tu');
+
+  test('kanas, ツ̣̅ウ', () => {
+    expect(ta12.blockSequences[0]).toEqual('ツ' + '\u0305' + '\u0323' + 'ウ');
+  });
+
+  const ta13 = cli.processTonal('che');
+
+  test('kanas, セ̅エ', () => {
+    expect(ta13.blockSequences[0]).toEqual('セ' + '\u0305' + 'エ');
+  });
+
+  const ta14 = cli.processTonal('ce');
+
+  test('kanas, セ̣̅エ', () => {
+    expect(ta14.blockSequences[0]).toEqual('セ' + '\u0305' + '\u0323' + 'エ');
+  });
+
+  const ta15 = cli.processTonal('de');
+
+  test('kanas, テエ', () => {
+    expect(ta15.blockSequences[0]).toEqual('テエ');
+  });
+
+  const ta16 = cli.processTonal('te');
+
+  test('kanas, テ̣エ', () => {
+    expect(ta16.blockSequences[0]).toEqual('テ' + '\u0323' + 'エ');
+  });
+
+  const ta17 = cli.processTonal('cho');
+
+  test('kanas, ソ̅オ', () => {
+    expect(ta17.blockSequences[0]).toEqual('ソ' + '\u0305' + 'オ');
+  });
+
+  const ta18 = cli.processTonal('co');
+
+  test('kanas, ソ̣̅オ', () => {
+    expect(ta18.blockSequences[0]).toEqual('ソ' + '\u0305' + '\u0323' + 'オ');
+  });
+
+  const ta19 = cli.processTonal('do');
+
+  test('kanas, トオ', () => {
+    expect(ta19.blockSequences[0]).toEqual('トオ');
+  });
+
+  const ta20 = cli.processTonal('to');
+
+  test('kanas, ト̣オ', () => {
+    expect(ta20.blockSequences[0]).toEqual('ト' + '\u0323' + 'オ');
   });
 });
 

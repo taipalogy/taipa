@@ -11,7 +11,7 @@ const toBeVerified = [
 
     'dom',
     
-    'hioh', 'hoang',
+    'hioh',
 
     'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt',
 
@@ -82,13 +82,15 @@ const addonLexicalRoots = [
 // prettier-ignore
 const addonLexicalRootsForSyllabary = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
-    'bam',
+    'bam', 'bek', 'biet', 'bit', 'biu', 'boa', 'boat', 'bor',
 
     'chap', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore', 'coa', 'coai', 'coang', 'coat', 'com', 'cor', 'core',
     
     'er', 'erng',
 
     'ga', 'gai', 'gak', 'gang', 'gap', 'ge',  /*'gi',*/  'gir', 'go', 'goe', 'gok', 'goat', 'gong', 'gor', 'gore',/*'gu',*/ 'gur',
+
+    'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'hoai', 'hoang', 'hop', 'hor', 'hore',
 
     'iak', 'ionn', 'ir', 'iri', 'irn',
 
@@ -105,6 +107,10 @@ const addonLexicalRootsForSyllabary = [
     'oa', 'oak',
 
     'sir', 'siri', 'sop', 'sor', 'sore',
+
+    'ta',
+
+    'via', 'viang', 'viri', 'voa', 'vor',
 ]
 
 // prettier-ignore
