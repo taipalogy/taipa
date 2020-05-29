@@ -720,10 +720,39 @@ const mappingInitialK = new Map<string, string[] | undefined>()
     hiraganaKatakana.get(KanaLetterTags.k + KanaLetterTags.u)
   );
 
-const mappingInitialL = new Map<string, string[] | undefined>().set(
-  TonalLetterTags.a,
-  hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.a)
-);
+const mappingInitialL = new Map<string, string[] | undefined>()
+  .set(
+    TonalLetterTags.a,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.a)
+  )
+  .set(
+    TonalLetterTags.e,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.e)
+  )
+  .set(
+    TonalLetterTags.i,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.i)
+  )
+  .set(
+    TonalLetterTags.o,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.o)
+  )
+  .set(
+    TonalLetterTags.u,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.u)
+  )
+  .set(
+    TonalLetterTags.ir,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.u)
+  )
+  .set(
+    TonalLetterTags.ur,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.o)
+  )
+  .set(
+    TonalLetterTags.or,
+    hiraganaKatakana.get(KanaLetterTags.r + KanaLetterTags.o)
+  );
 
 const mappingInitialM = new Map<string, string[] | undefined>().set(
   TonalLetterTags.a,

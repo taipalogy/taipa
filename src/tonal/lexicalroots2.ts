@@ -98,6 +98,8 @@ const addonLexicalRootsForSyllabary = [
 
     'kir', 'kor',
 
+    'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'loa', 'loat', 'loe', 'lop', 'lom', 'lor', 'lore',
+
     'nga',
 
     'or', 'ore',
