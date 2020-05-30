@@ -84,7 +84,11 @@ const addonLexicalRootsForSyllabary = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
     'bam', 'bek', 'biet', 'bit', 'biu', 'boa', 'boat', 'bor',
 
-    'chap', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore', 'coa', 'coai', 'coang', 'coat', 'com', 'cor', 'core',
+    'coa', 'coai', 'coang', 'coat', 'com', 'cor', 'core',
+
+    'chap', 'chiak', 'chio', 'chir', 'chiri', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore',
+
+    'diang', 'dim', 'dio', 'dir', 'diri', 'diur', 'doa', 'doe', 'dom', 'dor', 'dore', 'dut',
     
     'er', 'erng',
 
@@ -100,6 +104,10 @@ const addonLexicalRootsForSyllabary = [
 
     'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'loa', 'loat', 'loe', 'lop', 'lom', 'lor', 'lore',
 
+    'm', 'mia', 'min', 'moai', 'moe', 'mu',
+
+    'nio', 'no', 'nui',
+
     'nga',
 
     'or', 'ore',
@@ -110,7 +118,7 @@ const addonLexicalRootsForSyllabary = [
 
     'sir', 'siri', 'sop', 'sor', 'sore',
 
-    'ta',
+    'ta', 'tia',
 
     'via', 'viang', 'viri', 'voa', 'vor',
 ]

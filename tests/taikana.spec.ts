@@ -70,14 +70,20 @@ describe('Taiwanese kana testing, consonants', () => {
 
   const ta1 = cli.processTonal('q');
 
-  test('kanas, this lexical root is not available', () => {
+  test('kanas, this lexical root is not available. not a mater lectionis', () => {
     expect(ta1.blockSequences[0]).toEqual('');
   });
 
-  const ta5 = cli.processTonal('qng');
+  const ta2 = cli.processTonal('qng');
 
   test('kanas, an initial followed by a nasal final', () => {
-    expect(ta5.blockSequences[0]).toEqual('クン');
+    expect(ta2.blockSequences[0]).toEqual('クン');
+  });
+
+  const ta3 = cli.processTonal('m');
+
+  test('kanas, a mater lectionis', () => {
+    expect(ta3.blockSequences[0]).toEqual('ム');
   });
 });
 
