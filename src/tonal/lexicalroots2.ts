@@ -115,7 +115,7 @@ const addonLexicalRootsForSyllabary = [
     'qen', 'qet', 'qiak', 'qiang', 'qio', 'qip', 'qir', 'qiri', 'qirn', 'qit', 'qiur', 'qor',
     
     'oa', 'oak',
-
+    
     'sir', 'siri', 'sop', 'sor', 'sore',
 
     'ta', 'tia',

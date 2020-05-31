@@ -226,7 +226,12 @@ const scCVCT1 = sgPipe(
   checkedTone
 );
 const scCVCT2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant, freeTone);
-//const scCVCC = sgPipe(initialConsonant, vowel, nasalFinalConsonant, neutralFinalConsonant);
+const scCVCC = sgPipe(
+  initialConsonant,
+  vowel,
+  nasalFinalConsonant,
+  neutralFinalConsonant
+);
 
 // consonant syllables
 const scCC = sgPipe(initialConsonant, nasalFinalConsonant);
@@ -282,40 +287,18 @@ const scCVCCT = sgPipe(
   checkedTone
 );
 
-// syllable compositions or patterns
+// prettier-ignore
 export const syllableCompositions = [
-  scV,
-  scM,
-  scVT,
-  scMT,
-  scCV,
-  scVC1,
-  scVC2,
-  scVCT1,
-  scVCT2,
-  scCVT,
-  scCVC1,
-  scCVC2,
-  scCVCT1,
-  scCVCT2,
+  // syllable compositions or patterns
 
-  scCC,
-  scCCT,
-  scCCC,
-  scCCCT,
+  scV,  scM, scVT, scMT, scCV, scVC1, scVC2, scVCT1, scVCT2, scCVT, scCVC1,
+  scCVC2, scCVCT1, scCVCT2, scCVCC,
 
-  scVN,
-  scVNT,
-  scCVN,
-  scCVNT,
-  scCVNC,
-  scCVNCT,
+  scCC, scCCT, scCCC, scCCCT,
 
-  scVC3,
-  scVCT3,
-  scCVC3,
-  scCVCT3,
-  scCVCCT,
+  scVN, scVNT, scCVN, scCVNT, scCVNC, scCVNCT,
+
+  scVC3, scVCT3, scCVC3, scCVCT3, scCVCCT,
 ];
 
 export class TonalSoundGenerator {

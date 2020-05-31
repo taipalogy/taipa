@@ -85,6 +85,24 @@ describe('Taiwanese kana testing, consonants', () => {
   test('kanas, a mater lectionis', () => {
     expect(ta3.blockSequences[0]).toEqual('ム');
   });
+
+  const ta4 = cli.processTonal('hm');
+
+  test('kanas, an initial followed by a nasal final', () => {
+    expect(ta4.blockSequences[0]).toEqual('フム');
+  });
+
+  const ta5 = cli.processTonal('mnghhwqiannz');
+
+  test('kanas, an initial followed by a nasal final', () => {
+    expect(ta5.blockSequences[0]).toEqual('ム' + '\u{1b167}' + '⎝㋖ア⎸');
+  });
+
+  const ta6 = cli.processTonal('mihhwqiannz');
+
+  test('kanas, an initial followed by a nasal final', () => {
+    expect(ta6.blockSequences[0]).toEqual('ミィ⎝㋖ア⎸');
+  });
 });
 
 describe('Taiwanese kana testing, vowels', () => {
@@ -293,6 +311,42 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
   test('kanas', () => {
     expect(ta8.blockSequences[0]).toEqual('サ̅ン⫽');
   });
+  /*
+  const ta9 = cli.processTonal('sangh');
+
+  test('kanas', () => {
+    expect(ta9.blockSequences[0]).toEqual('サ' + '\u{1b167}' + '⦾');
+  });
+*/
+  const ta20 = cli.processTonal('chi');
+
+  test('kanas', () => {
+    expect(ta20.blockSequences[0]).toEqual('チイ');
+  });
+
+  const ta21 = cli.processTonal('chiy');
+
+  test('kanas', () => {
+    expect(ta21.blockSequences[0]).toEqual('チイ⎛');
+  });
+
+  const ta22 = cli.processTonal('chiw');
+
+  test('kanas', () => {
+    expect(ta22.blockSequences[0]).toEqual('チイ⎝');
+  });
+
+  const ta23 = cli.processTonal('chix');
+
+  test('kanas', () => {
+    expect(ta23.blockSequences[0]).toEqual('チイ⟨');
+  });
+
+  const ta24 = cli.processTonal('chiz');
+
+  test('kanas', () => {
+    expect(ta24.blockSequences[0]).toEqual('チイ⎸');
+  });
 });
 
 describe('Taiwanese kana testing, initials', () => {
@@ -422,5 +476,9 @@ describe('Taiwanese kana testing, initials', () => {
 describe('Taiwanese kana testing, unicode', () => {
   test('kanas, katakana letter small letter wo', () => {
     expect('\ud82c\udd66').toEqual('\u{1b166}');
+  });
+
+  test('kanas, katakana letter small letter n', () => {
+    expect('\ud82c\udd67').toEqual('\u{1b167}');
   });
 });
