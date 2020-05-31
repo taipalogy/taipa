@@ -401,6 +401,9 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               }
             }
           }
+          if (fourthFinals.includes(mr.sounds[i].toString())) {
+            checkedKanasWithoutBullet = kanas;
+          }
           kanas = handleToneSymbolForFourthEighth(kanas, mr.sounds, i);
         }
       } else if (mr.sounds[i].name === TonalSoundTags.nasalFinal) {
@@ -425,7 +428,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
     }
   }
   seqs.push(kanas);
-  if (checkedKanasWithoutBullet.length > 0)
+  if (checkedKanasWithoutBullet.length > 0 && morphemes.length == 1)
     seqs.push(checkedKanasWithoutBullet);
   return seqs;
 }
@@ -605,6 +608,10 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.u, '㋒')
   .set(TonalLetterTags.e, '㋓')
   .set(TonalLetterTags.o, '㋔')
+  .set(TonalLetterTags.k + TonalLetterTags.a, '㋕')
+  .set(TonalLetterTags.s + TonalLetterTags.a, '㋚')
+  .set(TonalLetterTags.c + TonalLetterTags.o, '㋞')
+  .set(TonalLetterTags.p + TonalLetterTags.a, '㋩゚')
   .set(TonalLetterTags.q + TonalLetterTags.i, '㋖')
   .set(TonalLetterTags.h + TonalLetterTags.i, '㋪');
 
