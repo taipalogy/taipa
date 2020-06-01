@@ -38,7 +38,10 @@ export function uninsertFromSyllable(word: string) {
  * @param preceding The preceding word
  * @param following The following word. The enclitic.
  */
-export function uninsertFromParticle(preceding: string, following: string) {
+export function uninsertFromFollowingWord(
+  preceding: string,
+  following: string
+) {
   const lxPreceding = getNoUninsertion(preceding);
   const lxFollowing = getNoUninsertion(following);
   const phmk = new TonalUninsertionPhrasemeMaker();

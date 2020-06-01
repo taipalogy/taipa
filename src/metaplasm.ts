@@ -10,6 +10,8 @@ import {
   TonalInsertionLexeme,
   TonalUninsertionLexeme,
   TonalUnassimilationLexeme,
+  TonalUninfectionLexeme,
+  TonalUnmutationLexeme,
 } from './dparser/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
@@ -84,6 +86,12 @@ export class TonalUninfectionMetaplasm extends Metaplasm {
   }
 }
 
+export class TonalZeroUninfectionMetaplasm extends Metaplasm {
+  apply(morphemes: Array<Morpheme>): TonalWord[] {
+    return [];
+  }
+}
+
 export class TonalMutationMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
     return [];
@@ -95,6 +103,8 @@ export class TonalUnmutationMetaplasm extends Metaplasm {
     return [];
   }
 }
+
+export class TonalZeroUnmutationMetaplasm extends TonalUnmutationMetaplasm {}
 
 export class TonalLemmatizationMetaplasm extends Metaplasm {
   apply(
@@ -155,6 +165,24 @@ export class TonalPhrasalUninsertionMetaplasm extends Metaplasm {
   apply(
     lexemeOne: TonalUninsertionLexeme,
     lexemeTwo: TonalUninsertionLexeme
+  ): TonalPhrase[] {
+    return [];
+  }
+}
+
+export class TonalPhrasalUninfectionMetaplasm extends Metaplasm {
+  apply(
+    lexemeOne: TonalUninfectionLexeme,
+    lexemeTwo: TonalUninfectionLexeme
+  ): TonalPhrase[] {
+    return [];
+  }
+}
+
+export class TonalPhrasalUnmutationMetaplasm extends Metaplasm {
+  apply(
+    lexemeOne: TonalUnmutationLexeme,
+    lexemeTwo: TonalUnmutationLexeme
   ): TonalPhrase[] {
     return [];
   }

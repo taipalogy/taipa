@@ -32,6 +32,8 @@ import {
   TonalPhrasalUnassimilationMetaplasm,
   TonalUnmutationMetaplasm,
   TonalUninfectionMetaplasm,
+  TonalPhrasalUninfectionMetaplasm,
+  TonalPhrasalUnmutationMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -51,6 +53,8 @@ import {
   TonalInsertionLexeme,
   TonalUninsertionLexeme,
   TonalUnassimilationLexeme,
+  TonalUninfectionLexeme,
+  TonalUnmutationLexeme,
 } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
@@ -620,6 +624,18 @@ export class ConsonantUnmutation extends TonalUnmutationMetaplasm {
   }
 }
 
+export class ConsonantUnmutationExternal extends TonalPhrasalUnmutationMetaplasm {
+  apply(
+    preceding: TonalUnmutationLexeme,
+    following: TonalUnmutationLexeme
+  ): TonalPhrase[] {
+    const wrds = following.unmutatWith(preceding);
+    if (wrds.length > 0)
+      return [new TonalPhrase([preceding.word].concat(wrds))];
+    return [];
+  }
+}
+
 /** Returns the proceeding forms of a phrasal verb of length 2. */
 export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   apply(
@@ -812,6 +828,18 @@ export class UninsertFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
     following: TonalUninsertionLexeme
   ): TonalPhrase[] {
     const wrds = following.uninsertWith(preceding);
+    if (wrds.length > 0)
+      return [new TonalPhrase([preceding.word].concat(wrds))];
+    return [];
+  }
+}
+
+export class UninfectExternal extends TonalPhrasalUninfectionMetaplasm {
+  apply(
+    preceding: TonalUninfectionLexeme,
+    following: TonalUninfectionLexeme
+  ): TonalPhrase[] {
+    const wrds = following.uninfectWith(preceding);
     if (wrds.length > 0)
       return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];

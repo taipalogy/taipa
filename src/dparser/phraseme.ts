@@ -4,6 +4,8 @@ import {
   TonalInsertionLexeme,
   TonalUninsertionLexeme,
   TonalUnassimilationLexeme,
+  TonalUninfectionLexeme,
+  TonalUnmutationLexeme,
 } from './lexeme';
 import { Phraseme } from '../unit';
 import {
@@ -23,6 +25,8 @@ import {
   TonalPhrasalInsertionMetaplasm,
   TonalPhrasalUninsertionMetaplasm,
   TonalPhrasalUnassimilationMetaplasm,
+  TonalPhrasalUninfectionMetaplasm,
+  TonalPhrasalUnmutationMetaplasm,
 } from '../metaplasm';
 
 /** A phrase of length 2 and its inflected forms. */
@@ -352,5 +356,65 @@ export class TonalUninsertionPhrasemeMaker {
     metaplasm: TonalPhrasalUninsertionMetaplasm
   ) {
     return new TonalUninsertionPhraseme(preceding, following, metaplasm);
+  }
+}
+
+export class TonalUninfectionPhraseme implements Phraseme {
+  phrase: TonalPhrase;
+  private forms: Array<TonalPhrase> = new Array();
+
+  constructor(
+    preceding: TonalUninfectionLexeme,
+    following: TonalUninfectionLexeme,
+    metaplasm: TonalPhrasalUninfectionMetaplasm
+  ) {
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
+
+    this.forms = metaplasm.apply(preceding, following);
+  }
+
+  /** Returns inserted form. */
+  getForms() {
+    return this.forms;
+  }
+}
+
+export class TonalUninfectionPhrasemeMaker {
+  makePhraseme(
+    preceding: TonalUninfectionLexeme,
+    following: TonalUninfectionLexeme,
+    metaplasm: TonalPhrasalUninfectionMetaplasm
+  ) {
+    return new TonalUninfectionPhraseme(preceding, following, metaplasm);
+  }
+}
+
+export class TonalUnmutationPhraseme implements Phraseme {
+  phrase: TonalPhrase;
+  private forms: Array<TonalPhrase> = new Array();
+
+  constructor(
+    preceding: TonalUnmutationLexeme,
+    following: TonalUnmutationLexeme,
+    metaplasm: TonalPhrasalUnmutationMetaplasm
+  ) {
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
+
+    this.forms = metaplasm.apply(preceding, following);
+  }
+
+  /** Returns inserted form. */
+  getForms() {
+    return this.forms;
+  }
+}
+
+export class TonalUnmutationPhrasemeMaker {
+  makePhraseme(
+    preceding: TonalUnmutationLexeme,
+    following: TonalUnmutationLexeme,
+    metaplasm: TonalPhrasalUnmutationMetaplasm
+  ) {
+    return new TonalUnmutationPhraseme(preceding, following, metaplasm);
   }
 }

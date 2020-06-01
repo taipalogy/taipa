@@ -23,6 +23,8 @@ import {
   TonalInflectionMetaplasm,
   TonalAssimilationMetaplasm,
   TonalInsertionMetaplasm,
+  TonalInfectionMetaplasm,
+  TonalUnmutationMetaplasm,
 } from '../metaplasm';
 import {
   Infection,
@@ -268,6 +270,7 @@ export class TonalUninsertionLexeme implements Lexeme {
     // for internal samdhi
     return this.forms;
   }
+
   uninsertWith(lexeme: TonalUninsertionLexeme) {
     return [];
   }
@@ -294,16 +297,23 @@ export class TonalUninfectionLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
 
-  constructor(morphemes: Array<TonalSoundUnchangingMorpheme>) {
+  constructor(
+    morphemes: Array<TonalSoundUnchangingMorpheme>,
+    metaplasm: TonalInfectionMetaplasm
+  ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
     else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-    if (morphemes.length > 0) this.forms = new Uninfection().apply(morphemes);
+    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
 
   getForms() {
     // for internal samdhi
     return this.forms;
+  }
+
+  uninfectWith(lexeme: TonalUninfectionLexeme) {
+    return [];
   }
 }
 
@@ -329,17 +339,23 @@ export class TonalUnmutationLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
 
-  constructor(morphemes: Array<TonalSoundUnchangingMorpheme>) {
+  constructor(
+    morphemes: Array<TonalSoundUnchangingMorpheme>,
+    metaplasm: TonalUnmutationMetaplasm
+  ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
     else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-    if (morphemes.length > 0)
-      this.forms = new ConsonantUnmutation().apply(morphemes);
+    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
 
   getForms() {
     // for internal samdhi
     return this.forms;
+  }
+
+  unmutatWith(lexeme: TonalUnmutationLexeme) {
+    return [];
   }
 }
 
