@@ -209,13 +209,18 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 kanas = kanas + got[1];
               }
             } else {
+              const nasalizations = mr.sounds.filter(
+                i => i.name === TonalSoundTags.nasalization
+              );
+              const finals = mr.sounds.filter(
+                it =>
+                  it.name === TonalSoundTags.nasalFinal ||
+                  it.name === TonalSoundTags.stopFinal
+              );
               if (
                 mr.sounds[i].toString() === TonalLetterTags.e &&
-                mr.sounds.filter(
-                  it =>
-                    it.name === TonalSoundTags.nasalFinal ||
-                    it.name === TonalSoundTags.stopFinal
-                ).length > 0
+                finals.length > 0 &&
+                nasalizations.length == 0
               ) {
                 const lastLetter = mr.sounds[mr.sounds.length - 1].toString();
                 const lastSecondLetter = mr.sounds[
@@ -373,6 +378,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
           const nasalFinals = mr.sounds.filter(
             it => it.name === TonalSoundTags.nasalFinal
           );
+
           if (medials.length > 0) {
             let mapped;
             if (nasalFinals.length == 0) {
@@ -385,6 +391,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 mr.sounds[mr.sounds.length - 2].toString()
               );
             }
+
             if (mapped) {
               kanas = sliced + mapped[1];
             }
@@ -561,11 +568,19 @@ const stopFinalsPPttkkbbggjjllssptkbgjls = [
 
 const mappingMedialSmallForm = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.a, otherKanas.get(KanaLetterTags.a))
+  .set(TonalLetterTags.i, otherKanas.get(KanaLetterTags.i))
+  .set(TonalLetterTags.e, otherKanas.get(KanaLetterTags.e))
   .set(TonalLetterTags.or, otherKanas.get(KanaLetterTags.o))
   .set(TonalLetterTags.ur, otherKanas.get(KanaLetterTags.w + KanaLetterTags.o))
   .set(TonalLetterTags.ir, otherKanas.get(KanaLetterTags.u))
-  .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n))
-  .set(TonalLetterTags.i, otherKanas.get(KanaLetterTags.i));
+  .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n));
+
+// ⤆ leftwards double arrow from bar (U+2906)
+// ⭅ leftwards quadruple arrow (U+2B45)
+// ⤇ rightwards double arrow from bar (U+2907)
+// ⭆ rightwards quadruple arrow (U+2B46)
+// ⦾ circled white bullet (U+29BE)
+// ﹅ sesame dot (U+FE45)
 
 const mappingSymbolForTones = new Map()
   .set(TonalLetterTags.f, '⍭') // apl functional symbol stile tilde (U+236D)
@@ -575,24 +590,24 @@ const mappingSymbolForTones = new Map()
   .set(TonalLetterTags.zx, '⟩') // mathematical left angle bracket (U+27E8)
   .set(TonalLetterTags.z, '⎸') // left vertical box line (U+23B8)
   .set(TonalLetterTags.xx, '⫽') // double solidus operator (U+2AFD)
-  .set(TonalLetterTags.p, '⦾') // circled white bullet (U+29BE)
-  .set(TonalLetterTags.t, '⦾')
-  .set(TonalLetterTags.k, '⦾')
-  .set(TonalLetterTags.h, '⦾')
-  .set(TonalLetterTags.b, '⦾')
-  .set(TonalLetterTags.g, '⦾')
-  .set(TonalLetterTags.j, '⦾')
-  .set(TonalLetterTags.l, '⦾')
-  .set(TonalLetterTags.s, '⦾')
-  .set(TonalLetterTags.pp, '﹅') // sesame dot (U+FE45)
-  .set(TonalLetterTags.tt, '﹅')
-  .set(TonalLetterTags.kk, '﹅')
-  .set(TonalLetterTags.hh, '﹅')
-  .set(TonalLetterTags.bb, '﹅')
-  .set(TonalLetterTags.gg, '﹅')
-  .set(TonalLetterTags.jj, '﹅')
-  .set(TonalLetterTags.ll, '﹅')
-  .set(TonalLetterTags.ss, '﹅');
+  .set(TonalLetterTags.p, '⟸') // long leftwards double arrow (U+27F8)
+  .set(TonalLetterTags.t, '⟸')
+  .set(TonalLetterTags.k, '⟸')
+  .set(TonalLetterTags.h, '⟸')
+  .set(TonalLetterTags.b, '⟸')
+  .set(TonalLetterTags.g, '⟸')
+  .set(TonalLetterTags.j, '⟸')
+  .set(TonalLetterTags.l, '⟸')
+  .set(TonalLetterTags.s, '⟸')
+  .set(TonalLetterTags.pp, '⟹') // long rightwards double arrow (U+27F9)
+  .set(TonalLetterTags.tt, '⟹')
+  .set(TonalLetterTags.kk, '⟹')
+  .set(TonalLetterTags.hh, '⟹')
+  .set(TonalLetterTags.bb, '⟹')
+  .set(TonalLetterTags.gg, '⟹')
+  .set(TonalLetterTags.jj, '⟹')
+  .set(TonalLetterTags.ll, '⟹')
+  .set(TonalLetterTags.ss, '⟹');
 
 const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
@@ -610,10 +625,14 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.o, '㋔')
   .set(TonalLetterTags.k + TonalLetterTags.a, '㋕')
   .set(TonalLetterTags.s + TonalLetterTags.a, '㋚')
+  .set(TonalLetterTags.s + TonalLetterTags.i, '㋛')
+  .set(TonalLetterTags.s + TonalLetterTags.e, '㋝')
   .set(TonalLetterTags.c + TonalLetterTags.o, '㋞')
   .set(TonalLetterTags.p + TonalLetterTags.a, '㋩゚')
   .set(TonalLetterTags.q + TonalLetterTags.i, '㋖')
-  .set(TonalLetterTags.h + TonalLetterTags.i, '㋪');
+  .set(TonalLetterTags.q + TonalLetterTags.o, '㋙')
+  .set(TonalLetterTags.h + TonalLetterTags.i, '㋪')
+  .set(TonalLetterTags.h + TonalLetterTags.o, '㋭');
 
 const mappingNasalFinal = new Map<string, string[] | undefined>()
   .set(
