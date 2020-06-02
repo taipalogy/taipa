@@ -426,6 +426,9 @@ export const otherKanas = new Map<string, Array<string>>()
   .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ'])
   .set(KanaLetterTags.w + KanaLetterTags.o, ['', '\u{1b166}'])
   .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ'])
+  .set(KanaLetterTags.b + KanaLetterTags.u, ['', 'ㇷ゙'])
+  .set(KanaLetterTags.g + KanaLetterTags.u, ['', 'ㇰ゙'])
+  .set(KanaLetterTags.j + KanaLetterTags.u, ['', 'ㇲ゙'])
   .set(KanaLetterTags.n, ['', '\u{1B167}']);
 
 export const hiraganaKatakana = new Map<string, Array<string>>()
