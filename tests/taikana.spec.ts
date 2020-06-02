@@ -268,9 +268,6 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
 
   test('kanas', () => {
     expect(ta1.blockSequences[0]).toEqual('キォㇰ⟸');
-  });
-
-  test('kanas', () => {
     expect(ta1.blockSequences[1]).toEqual('キォㇰ');
   });
 
@@ -297,13 +294,11 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
   test('kanas', () => {
     expect(ta5.blockSequences[0]).toEqual('キォㇰ⎝');
   });
+
   const ta6 = cli.processTonal('qiurh');
 
   test('kanas', () => {
     expect(ta6.blockSequences[0]).toEqual('キ' + '\u{1b166}' + '⟸');
-  });
-
-  test('kanas', () => {
     expect(ta6.blockSequences[1]).toEqual('キ' + '\u{1b166}');
   });
 

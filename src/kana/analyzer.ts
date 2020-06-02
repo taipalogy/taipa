@@ -1,4 +1,4 @@
-import { GraphemeMaker, AlphabeticGrapheme } from '../unit';
+import { GraphemeMaker, AlphabeticGrapheme, KanaHandler } from '../unit';
 import { KanaUncombiningMorphemeMaker } from './morpheme';
 import { lowerLettersKana } from './kana';
 import { KanaCombiningMetaplasm } from '../metaplasm';
@@ -8,7 +8,7 @@ import { KanaCombiningMetaplasm } from '../metaplasm';
  * @param str A string
  */
 export function graphAnalyzeKana(str: string) {
-  const gm = new GraphemeMaker(lowerLettersKana);
+  const gm = new GraphemeMaker(lowerLettersKana, new KanaHandler());
   return gm.makeGraphemes(str);
 }
 
