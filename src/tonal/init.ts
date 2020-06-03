@@ -579,13 +579,6 @@ const mappingMedialSmallForm = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.ir, otherKanas.get(KanaLetterTags.u))
   .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n));
 
-// ⟸ long leftwards double arrow (U+27F8)
-// ⟹ long rightwards double arrow (U+27F9)
-// ⭅ leftwards quadruple arrow (U+2B45)
-// ⭆ rightwards quadruple arrow (U+2B46)
-// ⦾ circled white bullet (U+29BE)
-// ﹅ sesame dot (U+FE45)
-
 const mappingSymbolForTones = new Map()
   .set(TonalLetterTags.f, '⍭') // apl functional symbol stile tilde (U+236D)
   .set(TonalLetterTags.y, '⎛') // left parenthesis upper hook (U+239B)

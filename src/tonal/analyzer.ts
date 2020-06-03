@@ -2,7 +2,7 @@ import {
   TonalLemmatizationLexemeMaker,
   TonalLemmatizationLexeme,
 } from './lexeme';
-import { AlphabeticGrapheme, GraphemeMaker, TonalHandler } from '../unit';
+import { AlphabeticGrapheme, GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from './version2';
 import {
   TonalUncombiningMorphemeMaker,
@@ -14,7 +14,7 @@ import {
  * @param str A string
  */
 export function graphAnalyzeTonal(str: string): AlphabeticGrapheme[] {
-  const gm = new GraphemeMaker(lowerLettersTonal, new TonalHandler());
+  const gm = new GraphemeMaker(lowerLettersTonal);
   return gm.makeGraphemes(str);
 }
 

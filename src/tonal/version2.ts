@@ -1,4 +1,10 @@
-import { Letters, Sound, setOfSounds } from '../unit';
+import {
+  Letters,
+  Sound,
+  setOfSounds,
+  Character,
+  MatchedSequence,
+} from '../unit';
 
 export class Morph {}
 
@@ -97,7 +103,32 @@ export enum TonalLetterTags {
   or = 'or',
 }
 
-export class LettersOfTonal extends Letters {}
+export class LettersOfTonal extends Letters {
+  handleN(
+    characters: Character[],
+    beginOfLetter: number,
+    listLength: number
+  ): MatchedSequence {
+    let ms = new MatchedSequence();
+    if (characters.length - beginOfLetter >= 'nng'.length && listLength == 43) {
+      if (
+        characters[beginOfLetter].character === 'n' &&
+        characters[beginOfLetter + 1].character === 'n' &&
+        characters[beginOfLetter + 2].character === 'g'
+      ) {
+        // at the beginning of a letter, we should always prefer 'n' to 'nn'
+        // 'nn' is not able to begin a syllable
+        // 'ng' has higher associativity than 'nn' when in 'nng'
+        // special case for 'nng'
+
+        // copy the matched letter
+        ms.characters[0] = new Character('n');
+        return ms;
+      }
+    }
+    return ms;
+  }
+}
 
 export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.a,

@@ -1,4 +1,4 @@
-import { GraphemeMaker, TonalHandler } from '../src/unit';
+import { GraphemeMaker } from '../src/unit';
 import { lowerLettersTonal, TonalLetterTags } from '../src/tonal/version2';
 import { TonalCombiningMorphemeMaker } from '../src/dparser/morpheme';
 import { TonalCombiningForms } from '../src/dparser/metaplasm';
@@ -14,7 +14,7 @@ describe('Suprafix testing, of length 2', () => {
     ],
   };
 
-  const gm = new GraphemeMaker(lowerLettersTonal, new TonalHandler());
+  const gm = new GraphemeMaker(lowerLettersTonal);
   const gs = gm.makeGraphemes('lole');
 
   gs.splice(2, 0, gm.makeGraphemes(st.patterns[0][0].toString())[0]);
@@ -50,7 +50,7 @@ describe('Suprafix testing, of length 2', () => {
 });
 
 describe('Simulfix testing', () => {
-  const gm = new GraphemeMaker(lowerLettersTonal, new TonalHandler());
+  const gm = new GraphemeMaker(lowerLettersTonal);
   const gs = gm.makeGraphemes('qirn');
 
   gs.splice(1, 1, gm.makeGraphemes('i')[0]);
@@ -70,7 +70,7 @@ describe('Simulfix testing', () => {
 });
 
 describe('Duplifix testing', () => {
-  const gm = new GraphemeMaker(lowerLettersTonal, new TonalHandler());
+  const gm = new GraphemeMaker(lowerLettersTonal);
   const gs = gm.makeGraphemes('dittwditt');
 
   test('check the letter', () => {

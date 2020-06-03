@@ -1,4 +1,10 @@
-import { Sound, Letters, setOfSounds } from '../unit';
+import {
+  Sound,
+  Letters,
+  setOfSounds,
+  Character,
+  MatchedSequence,
+} from '../unit';
 
 export enum KanaLetterTags {
   a = 'a',
@@ -36,7 +42,35 @@ export enum KanaLetterTags {
   ng = 'ng',
 }
 
-export class LettersOfKana extends Letters {}
+export class LettersOfKana extends Letters {
+  handleN(
+    characters: Character[],
+    beginOfLetter: number,
+    listLength: number
+  ): MatchedSequence {
+    let ms = new MatchedSequence();
+    if (characters.length - beginOfLetter >= 'ng'.length && listLength == 26) {
+      if (
+        characters[beginOfLetter].character === 'n' &&
+        characters[beginOfLetter + 1].character === 'g'
+      ) {
+        // handling final n and initial ng in kana
+        if (
+          characters[0].character === 'n' &&
+          characters[beginOfLetter + 1].character === 'g'
+        ) {
+          ms.characters[0] = new Character('n');
+          ms.characters[1] = new Character('g');
+          return ms;
+        }
+        ms.characters[0] = new Character('n');
+        return ms;
+      }
+    }
+    return ms;
+  }
+}
+
 export let lowerLettersKana = new LettersOfKana([
   KanaLetterTags.a,
   KanaLetterTags.e,

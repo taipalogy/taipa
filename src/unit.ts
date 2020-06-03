@@ -139,6 +139,14 @@ export class Letters {
     this.o.set(e, new AlphabeticLetter(carr));
   }
 
+  handleN(
+    characters: Character[],
+    beginOfLetter: number,
+    listLength: number
+  ): MatchedSequence {
+    return new MatchedSequence();
+  }
+
   get(key: string): AlphabeticLetter {
     let value = this.o.get(key);
     if (value) {
@@ -156,75 +164,11 @@ export class Letters {
   }
 }
 
-abstract class Handler {
-  abstract handleN(
-    characters: Character[],
-    beginOfLetter: number,
-    listLength: number
-  ): MatchedSequence;
-}
-
-export class TonalHandler extends Handler {
-  handleN(
-    characters: Character[],
-    beginOfLetter: number,
-    listLength: number
-  ): MatchedSequence {
-    let ms = new MatchedSequence();
-    if (characters.length - beginOfLetter >= 'nng'.length && listLength == 43) {
-      if (
-        characters[beginOfLetter].character === 'n' &&
-        characters[beginOfLetter + 1].character === 'n' &&
-        characters[beginOfLetter + 2].character === 'g'
-      ) {
-        // at the beginning of a letter, we should always prefer 'n' to 'nn'
-        // 'nn' is not able to begin a syllable
-        // 'ng' has higher associativity than 'nn' when in 'nng'
-        // special case for 'nng'
-
-        // copy the matched letter
-        ms.characters[0] = new Character('n');
-        return ms;
-      }
-    }
-    return ms;
-  }
-}
-
-export class KanaHandler extends Handler {
-  handleN(
-    characters: Character[],
-    beginOfLetter: number,
-    listLength: number
-  ): MatchedSequence {
-    let ms = new MatchedSequence();
-    if (characters.length - beginOfLetter >= 'ng'.length && listLength == 26) {
-      if (
-        characters[beginOfLetter].character === 'n' &&
-        characters[beginOfLetter + 1].character === 'g'
-      ) {
-        // handling final n and initial ng in kana
-        if (
-          characters[0].character === 'n' &&
-          characters[beginOfLetter + 1].character === 'g'
-        ) {
-          ms.characters[0] = new Character('n');
-          ms.characters[1] = new Character('g');
-          return ms;
-        }
-        ms.characters[0] = new Character('n');
-        return ms;
-      }
-    }
-    return ms;
-  }
-}
-
 /** Turn a string into graphemes. */
 export class GraphemeMaker {
   protected listOfLetters: Array<AlphabeticLetter> = new Array();
 
-  constructor(lowerLetters: Letters, private handler: Handler) {
+  constructor(private lowerLetters: Letters) {
     this.listOfLetters = new Array();
     this.listOfLetters = Array.from(lowerLetters.values);
   }
@@ -253,7 +197,8 @@ export class GraphemeMaker {
 
     //console.log(characters)
     if (characters[beginOfLetter].character === 'n') {
-      ms = this.handler.handleN(
+      // ms = this.handler.handleN(
+      ms = this.lowerLetters.handleN(
         characters,
         beginOfLetter,
         this.listOfLetters.length

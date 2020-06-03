@@ -1,4 +1,4 @@
-import { GraphemeMaker, TonalHandler } from '../unit';
+import { GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
@@ -20,7 +20,7 @@ export function getNoInsertion(word: string) {
  */
 export function insertToSyllable(word: string) {
   const tschmm = new TonalSoundChangingMorphemeMaker();
-  const gm = new GraphemeMaker(lowerLettersTonal, new TonalHandler());
+  const gm = new GraphemeMaker(lowerLettersTonal);
   const gs = gm.makeGraphemes(word);
   const mrphs = tschmm.makeMorphemes(gs);
 
