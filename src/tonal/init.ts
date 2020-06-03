@@ -100,14 +100,18 @@ function replicateVowel(
   str: string
 ) {
   if (
-    i == 0 &&
-    sounds[0].name === TonalSoundTags.medial &&
-    ((sounds.length == 1 &&
-      sounds[sounds.length - 1].name === TonalSoundTags.medial) ||
-      (sounds.length == 2 &&
-        sounds[sounds.length - 1].name === TonalSoundTags.freeTonal))
+    (i == 0 &&
+      sounds[0].name === TonalSoundTags.medial &&
+      (sounds.length == 1 ||
+        (sounds.length == 2 &&
+          sounds[sounds.length - 1].name === TonalSoundTags.freeTonal) ||
+        sounds[sounds.length - 1].name === TonalSoundTags.nasalization)) ||
+    (sounds.length == 3 &&
+      sounds[sounds.length - 2].name === TonalSoundTags.nasalization &&
+      sounds[sounds.length - 1].name === TonalSoundTags.freeTonal)
   ) {
     // reduplicate the vowel for open syllables without an initial
+    // in case of nasalization
     kanas = kanas + str;
   }
 
@@ -575,9 +579,9 @@ const mappingMedialSmallForm = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.ir, otherKanas.get(KanaLetterTags.u))
   .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n));
 
-// ⤆ leftwards double arrow from bar (U+2906)
+// ⟸ long leftwards double arrow (U+27F8)
+// ⟹ long rightwards double arrow (U+27F9)
 // ⭅ leftwards quadruple arrow (U+2B45)
-// ⤇ rightwards double arrow from bar (U+2907)
 // ⭆ rightwards quadruple arrow (U+2B46)
 // ⦾ circled white bullet (U+29BE)
 // ﹅ sesame dot (U+FE45)
@@ -590,24 +594,24 @@ const mappingSymbolForTones = new Map()
   .set(TonalLetterTags.zx, '⟩') // mathematical left angle bracket (U+27E8)
   .set(TonalLetterTags.z, '⎸') // left vertical box line (U+23B8)
   .set(TonalLetterTags.xx, '⫽') // double solidus operator (U+2AFD)
-  .set(TonalLetterTags.p, '⟸') // long leftwards double arrow (U+27F8)
-  .set(TonalLetterTags.t, '⟸')
-  .set(TonalLetterTags.k, '⟸')
-  .set(TonalLetterTags.h, '⟸')
-  .set(TonalLetterTags.b, '⟸')
-  .set(TonalLetterTags.g, '⟸')
-  .set(TonalLetterTags.j, '⟸')
-  .set(TonalLetterTags.l, '⟸')
-  .set(TonalLetterTags.s, '⟸')
-  .set(TonalLetterTags.pp, '⟹') // long rightwards double arrow (U+27F9)
-  .set(TonalLetterTags.tt, '⟹')
-  .set(TonalLetterTags.kk, '⟹')
-  .set(TonalLetterTags.hh, '⟹')
-  .set(TonalLetterTags.bb, '⟹')
-  .set(TonalLetterTags.gg, '⟹')
-  .set(TonalLetterTags.jj, '⟹')
-  .set(TonalLetterTags.ll, '⟹')
-  .set(TonalLetterTags.ss, '⟹');
+  .set(TonalLetterTags.p, '⤆') // leftwards double arrow from bar (U+2906)
+  .set(TonalLetterTags.t, '⤆')
+  .set(TonalLetterTags.k, '⤆')
+  .set(TonalLetterTags.h, '⤆')
+  .set(TonalLetterTags.b, '⤆')
+  .set(TonalLetterTags.g, '⤆')
+  .set(TonalLetterTags.j, '⤆')
+  .set(TonalLetterTags.l, '⤆')
+  .set(TonalLetterTags.s, '⤆')
+  .set(TonalLetterTags.pp, '⤇') // rightwards double arrow from bar (U+2907)
+  .set(TonalLetterTags.tt, '⤇')
+  .set(TonalLetterTags.kk, '⤇')
+  .set(TonalLetterTags.hh, '⤇')
+  .set(TonalLetterTags.bb, '⤇')
+  .set(TonalLetterTags.gg, '⤇')
+  .set(TonalLetterTags.jj, '⤇')
+  .set(TonalLetterTags.ll, '⤇')
+  .set(TonalLetterTags.ss, '⤇');
 
 const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
@@ -633,17 +637,45 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.e, '㋓')
   .set(TonalLetterTags.o, '㋔')
   .set(TonalLetterTags.k + TonalLetterTags.a, '㋕')
+  .set(TonalLetterTags.k + TonalLetterTags.i, '㋖')
+  .set(TonalLetterTags.k + TonalLetterTags.e, '㋘')
   .set(TonalLetterTags.k + TonalLetterTags.o, '㋙')
   .set(TonalLetterTags.s + TonalLetterTags.a, '㋚')
   .set(TonalLetterTags.s + TonalLetterTags.i, '㋛')
   .set(TonalLetterTags.s + TonalLetterTags.e, '㋝')
   .set(TonalLetterTags.s + TonalLetterTags.o, '㋞')
+  .set(TonalLetterTags.c + TonalLetterTags.a, '㋚')
+  .set(TonalLetterTags.c + TonalLetterTags.i, '㋠')
+  .set(TonalLetterTags.c + TonalLetterTags.e, '㋝')
   .set(TonalLetterTags.c + TonalLetterTags.o, '㋞')
-  .set(TonalLetterTags.p + TonalLetterTags.a, '㋩゚')
+  .set(TonalLetterTags.ch + TonalLetterTags.a, '㋚')
+  .set(TonalLetterTags.ch + TonalLetterTags.i, '㋠')
+  .set(TonalLetterTags.ch + TonalLetterTags.e, '㋝')
+  .set(TonalLetterTags.ch + TonalLetterTags.o, '㋞')
+  .set(TonalLetterTags.d + TonalLetterTags.a, '㋟')
+  .set(TonalLetterTags.d + TonalLetterTags.i, '㋠')
+  .set(TonalLetterTags.d + TonalLetterTags.e, '㋢')
+  .set(TonalLetterTags.d + TonalLetterTags.o, '㋣')
+  .set(TonalLetterTags.p + TonalLetterTags.a, '㋩' + '\u{309a}')
+  .set(TonalLetterTags.p + TonalLetterTags.e, '㋬' + '\u{309a}')
+  .set(TonalLetterTags.p + TonalLetterTags.i, '㋪' + '\u{309a}')
+  .set(TonalLetterTags.p + TonalLetterTags.o, '㋭' + '\u{309a}')
+  .set(TonalLetterTags.q + TonalLetterTags.a, '㋕')
   .set(TonalLetterTags.q + TonalLetterTags.i, '㋖')
+  .set(TonalLetterTags.q + TonalLetterTags.e, '㋘')
   .set(TonalLetterTags.q + TonalLetterTags.o, '㋙')
+  .set(TonalLetterTags.h + TonalLetterTags.a, '㋩')
   .set(TonalLetterTags.h + TonalLetterTags.i, '㋪')
-  .set(TonalLetterTags.h + TonalLetterTags.o, '㋭');
+  .set(TonalLetterTags.h + TonalLetterTags.e, '㋬')
+  .set(TonalLetterTags.h + TonalLetterTags.o, '㋭')
+  .set(TonalLetterTags.t + TonalLetterTags.a, '㋟')
+  .set(TonalLetterTags.t + TonalLetterTags.e, '㋢')
+  .set(TonalLetterTags.t + TonalLetterTags.i, '㋠')
+  .set(TonalLetterTags.t + TonalLetterTags.o, '㋣')
+  .set(TonalLetterTags.v + TonalLetterTags.a, '㋩' + '\u{309a}') // ㋩゚
+  .set(TonalLetterTags.v + TonalLetterTags.i, '㋪' + '\u{309a}') // ㋪゚
+  .set(TonalLetterTags.v + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
+  .set(TonalLetterTags.v + TonalLetterTags.o, '㋭' + '\u{309a}'); // ㋭゚
 
 const mappingNasalFinal = new Map<string, string[] | undefined>()
   .set(

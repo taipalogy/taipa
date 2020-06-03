@@ -425,11 +425,12 @@ export const otherKanas = new Map<string, Array<string>>()
   .set(KanaLetterTags.y + KanaLetterTags.o, ['ょ', 'ョ'])
   .set(KanaLetterTags.w + KanaLetterTags.a, ['ゎ', 'ヮ'])
   .set(KanaLetterTags.w + KanaLetterTags.o, ['', '\u{1b166}'])
-  .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ'])
-  .set(KanaLetterTags.b + KanaLetterTags.u, ['', 'ㇷ゙'])
-  .set(KanaLetterTags.g + KanaLetterTags.u, ['', 'ㇰ゙'])
-  .set(KanaLetterTags.j + KanaLetterTags.u, ['', 'ㇲ゙'])
-  .set(KanaLetterTags.n, ['', '\u{1B167}']);
+  .set(KanaLetterTags.b + KanaLetterTags.u, ['', 'ㇷ゙']) // 'ㇷ'+ '\u{3099}'
+  .set(KanaLetterTags.g + KanaLetterTags.u, ['', 'ㇰ゙']) // 'ㇰ'+ '\u{3099}'
+  .set(KanaLetterTags.j + KanaLetterTags.u, ['', 'ㇲ゙']) // 'ㇲ'+ '\u{3099}'
+  .set(KanaLetterTags.n, ['', '\u{1B167}'])
+  .set(KanaLetterTags.j + KanaLetterTags.i, ['ぢ', 'ヂ'])
+  .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ']);
 
 export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.a, ['あ', 'ア'])

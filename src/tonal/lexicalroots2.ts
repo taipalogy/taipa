@@ -29,7 +29,7 @@ const toBeVerified = [
 
     'toehh', 'tom', 'tomz',
 
-    'virt',
+    'vann', 'virt',
 ]
 
 // prettier-ignore
