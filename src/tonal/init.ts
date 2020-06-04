@@ -97,7 +97,7 @@ function replicateVowel(
   kanas: string,
   sounds: Sound[],
   i: number,
-  str: string
+  replica: string
 ) {
   if (
     (i == 0 &&
@@ -108,11 +108,23 @@ function replicateVowel(
         sounds[sounds.length - 1].name === TonalSoundTags.nasalization)) ||
     (sounds.length == 3 &&
       sounds[sounds.length - 2].name === TonalSoundTags.nasalization &&
-      sounds[sounds.length - 1].name === TonalSoundTags.freeTonal)
+      sounds[sounds.length - 1].name === TonalSoundTags.freeTonal) ||
+    (sounds.length == 2 &&
+      sounds[0].name === TonalSoundTags.medial &&
+      (sounds[1].toString() === TonalLetterTags.h ||
+        sounds[1].toString() === TonalLetterTags.hh)) ||
+    (sounds.length == 3 &&
+      sounds[0].name === TonalSoundTags.medial &&
+      (sounds[1].toString() === TonalLetterTags.h ||
+        sounds[1].toString() === TonalLetterTags.hh) &&
+      sounds[2].name === TonalSoundTags.checkedTonal)
   ) {
     // reduplicate the vowel for open syllables without an initial
-    // in case of nasalization
-    kanas = kanas + str;
+    // in case of a, e, ax, ex.
+    // in case of enn, ennx
+    // in case of ah, ehh
+    // in case of ahy
+    kanas = kanas + replica;
   }
 
   return kanas;
@@ -1002,10 +1014,11 @@ const mappingInitialN = new Map<string, string[] | undefined>()
     hiraganaKatakana.get(KanaLetterTags.n + KanaLetterTags.u)
   );
 
-const mappingInitialNG = new Map<string, string[] | undefined>().set(
-  TonalLetterTags.a,
-  special.get(KanaLetterTags.ng + KanaLetterTags.a)
-);
+const mappingInitialNG = new Map<string, string[] | undefined>()
+  .set(TonalLetterTags.a, special.get(KanaLetterTags.ng + KanaLetterTags.a))
+  .set(TonalLetterTags.i, special.get(KanaLetterTags.ng + KanaLetterTags.i))
+  .set(TonalLetterTags.e, special.get(KanaLetterTags.ng + KanaLetterTags.e))
+  .set(TonalLetterTags.o, special.get(KanaLetterTags.ng + KanaLetterTags.o));
 
 const mappingInitialP = new Map<string, string[] | undefined>()
   .set(

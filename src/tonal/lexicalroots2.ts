@@ -92,7 +92,7 @@ const addonLexicalRootsForSyllabary = [
     
     'er', 'erng',
 
-    'ga', 'gai', 'gak', 'gang', 'gap', 'ge',  /*'gi',*/  'gir', 'go', 'goe', 'gok', 'goat', 'gong', 'gor', 'gore',/*'gu',*/ 'gur',
+    'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gir', 'go', 'goe', 'gok', 'goat', 'gong', 'gor', 'gore', 'gur',
 
     'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'hoai', 'hoang', 'hop', 'hor', 'hore',
 
