@@ -9,7 +9,7 @@ import {
   inflectToParticiple,
   inflectVppToParticiple,
 } from '../src/dparser/inflector';
-import { insertToParticle } from '../src/dparser/inserter';
+import { insertToFollowingWord } from '../src/dparser/inserter';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TonalSyllable } from '../src/tonal/morpheme';
 import {
@@ -47,7 +47,7 @@ describe('Adjective testing, adnominal', () => {
 
   const frase = ph.getForms()[0].literal;
   const words = frase.split(' ');
-  const ph4 = insertToParticle(words[0], words[1]);
+  const ph4 = insertToFollowingWord(words[0], words[1]);
 
   test('check the assimilated form', () => {
     expect(ph4.getForms()[0].literal).toEqual('sin nez');
@@ -118,7 +118,7 @@ describe('Noun phrase testing, possesive', () => {
 
   const frase = fr.getForms()[0].literal;
   const words = frase.split(' ');
-  const phm = insertToParticle(words[0], words[1]);
+  const phm = insertToFollowingWord(words[0], words[1]);
 
   test('check the assimilated form', () => {
     expect(phm.getForms()[0].literal).toEqual('azbengx ngew');

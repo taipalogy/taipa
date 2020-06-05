@@ -18,7 +18,7 @@ export function getNoInsertion(word: string) {
  * Inserts an initial m, n, or ng to syllable ay if the preceding syllable has a final m, n, or ng.
  * @param word A word whose second syllable is ay, a, or af. The word has at least 2 syllables for the second one to be inserted an initial.
  */
-export function insertToSyllable(word: string) {
+export function insertToFollowingSyllable(word: string) {
   const tschmm = new TonalSoundChangingMorphemeMaker();
   const gm = new GraphemeMaker(lowerLettersTonal);
   const gs = gm.makeGraphemes(word);
@@ -31,7 +31,7 @@ export function insertToSyllable(word: string) {
 }
 
 // TODO: phrasal inserter for enclitics
-export function insertToParticle(preceding: string, following: string) {
+export function insertToFollowingWord(preceding: string, following: string) {
   const lxPreceding = getNoInsertion(preceding);
   const lxFollowing = getNoInsertion(following);
   const phmk = new TonalInsertionPhrasemeMaker();

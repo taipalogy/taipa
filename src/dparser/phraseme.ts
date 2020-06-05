@@ -6,6 +6,8 @@ import {
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalUnmutationLexeme,
+  TonalInfectionLexeme,
+  TonalMutationLexeme,
 } from './lexeme';
 import { Phraseme } from '../unit';
 import {
@@ -26,7 +28,9 @@ import {
   TonalPhrasalUninsertionMetaplasm,
   TonalPhrasalUnassimilationMetaplasm,
   TonalPhrasalUninfectionMetaplasm,
-  TonalPhrasalUnmutationMetaplasm,
+  // TonalPhrasalUnmutationMetaplasm,
+  TonalPhrasalInfectionMetaplasm,
+  // TonalPhrasalMutationMetaplasm,
 } from '../metaplasm';
 
 /** A phrase of length 2 and its inflected forms. */
@@ -359,6 +363,36 @@ export class TonalUninsertionPhrasemeMaker {
   }
 }
 
+export class TonalInfectionPhraseme implements Phraseme {
+  phrase: TonalPhrase;
+  private forms: Array<TonalPhrase> = new Array();
+
+  constructor(
+    preceding: TonalInfectionLexeme,
+    following: TonalInfectionLexeme,
+    metaplasm: TonalPhrasalInfectionMetaplasm
+  ) {
+    this.phrase = new TonalPhrase([preceding.word, following.word]);
+
+    this.forms = metaplasm.apply(preceding, following);
+  }
+
+  /** Returns inserted form. */
+  getForms() {
+    return this.forms;
+  }
+}
+
+export class TonalInfectionPhrasemeMaker {
+  makePhraseme(
+    preceding: TonalInfectionLexeme,
+    following: TonalInfectionLexeme,
+    metaplasm: TonalPhrasalInfectionMetaplasm
+  ) {
+    return new TonalInfectionPhraseme(preceding, following, metaplasm);
+  }
+}
+
 export class TonalUninfectionPhraseme implements Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
@@ -386,35 +420,5 @@ export class TonalUninfectionPhrasemeMaker {
     metaplasm: TonalPhrasalUninfectionMetaplasm
   ) {
     return new TonalUninfectionPhraseme(preceding, following, metaplasm);
-  }
-}
-
-export class TonalUnmutationPhraseme implements Phraseme {
-  phrase: TonalPhrase;
-  private forms: Array<TonalPhrase> = new Array();
-
-  constructor(
-    preceding: TonalUnmutationLexeme,
-    following: TonalUnmutationLexeme,
-    metaplasm: TonalPhrasalUnmutationMetaplasm
-  ) {
-    this.phrase = new TonalPhrase([preceding.word, following.word]);
-
-    this.forms = metaplasm.apply(preceding, following);
-  }
-
-  /** Returns inserted form. */
-  getForms() {
-    return this.forms;
-  }
-}
-
-export class TonalUnmutationPhrasemeMaker {
-  makePhraseme(
-    preceding: TonalUnmutationLexeme,
-    following: TonalUnmutationLexeme,
-    metaplasm: TonalPhrasalUnmutationMetaplasm
-  ) {
-    return new TonalUnmutationPhraseme(preceding, following, metaplasm);
   }
 }

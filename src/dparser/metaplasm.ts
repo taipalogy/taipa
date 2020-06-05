@@ -33,7 +33,7 @@ import {
   TonalUnmutationMetaplasm,
   TonalUninfectionMetaplasm,
   TonalPhrasalUninfectionMetaplasm,
-  TonalPhrasalUnmutationMetaplasm,
+  TonalPhrasalInfectionMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -55,6 +55,8 @@ import {
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalUnmutationLexeme,
+  TonalInfectionLexeme,
+  TonalMutationLexeme,
 } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
@@ -283,7 +285,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
         }
         ret.push(syl);
 
-        // free form of the syllable could be handle outside of this routine by popping f/w and h/hh
+        // TODO: free form of the syllable could be handle outside of this routine by popping f/w and h/hh
         return ret;
       }
     }
@@ -624,18 +626,6 @@ export class ConsonantUnmutation extends TonalUnmutationMetaplasm {
   }
 }
 
-export class ConsonantUnmutationExternal extends TonalPhrasalUnmutationMetaplasm {
-  apply(
-    preceding: TonalUnmutationLexeme,
-    following: TonalUnmutationLexeme
-  ): TonalPhrase[] {
-    const wrds = following.unmutatWith(preceding);
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
-    return [];
-  }
-}
-
 /** Returns the proceeding forms of a phrasal verb of length 2. */
 export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
   apply(
@@ -828,6 +818,18 @@ export class UninsertFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
     following: TonalUninsertionLexeme
   ): TonalPhrase[] {
     const wrds = following.uninsertWith(preceding);
+    if (wrds.length > 0)
+      return [new TonalPhrase([preceding.word].concat(wrds))];
+    return [];
+  }
+}
+
+export class InfectExternal extends TonalPhrasalInfectionMetaplasm {
+  apply(
+    preceding: TonalInfectionLexeme,
+    following: TonalInfectionLexeme
+  ): TonalPhrase[] {
+    const wrds = following.infectWith(preceding);
     if (wrds.length > 0)
       return [new TonalPhrase([preceding.word].concat(wrds))];
     return [];

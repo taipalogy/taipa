@@ -47,7 +47,7 @@ export {
   inflectVppToParticiple,
   inflectSerial,
 } from './dparser/inflector';
-export { insertToSyllable } from './dparser/inserter';
+export { insertToFollowingSyllable } from './dparser/inserter';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';

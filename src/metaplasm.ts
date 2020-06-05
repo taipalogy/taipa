@@ -11,7 +11,7 @@ import {
   TonalUninsertionLexeme,
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
-  TonalUnmutationLexeme,
+  TonalInfectionLexeme,
 } from './dparser/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
@@ -57,7 +57,7 @@ export class TonalUnassimilationMetaplasm extends Metaplasm {
 }
 
 export class TonalZeroAssimilation extends TonalAssimilationMetaplasm {}
-export class TonalZeroUnassimilation extends TonalAssimilationMetaplasm {}
+export class TonalZeroUnassimilation extends TonalUnassimilationMetaplasm {}
 
 export class TonalInsertionMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
@@ -86,11 +86,8 @@ export class TonalUninfectionMetaplasm extends Metaplasm {
   }
 }
 
-export class TonalZeroUninfectionMetaplasm extends Metaplasm {
-  apply(morphemes: Array<Morpheme>): TonalWord[] {
-    return [];
-  }
-}
+export class TonalZeroInfectionMetaplasm extends TonalInfectionMetaplasm {}
+export class TonalZeroUninfectionMetaplasm extends TonalUninfectionMetaplasm {}
 
 export class TonalMutationMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
@@ -104,6 +101,7 @@ export class TonalUnmutationMetaplasm extends Metaplasm {
   }
 }
 
+export class TonalZeroMutationMetaplasm extends TonalMutationMetaplasm {}
 export class TonalZeroUnmutationMetaplasm extends TonalUnmutationMetaplasm {}
 
 export class TonalLemmatizationMetaplasm extends Metaplasm {
@@ -170,19 +168,19 @@ export class TonalPhrasalUninsertionMetaplasm extends Metaplasm {
   }
 }
 
-export class TonalPhrasalUninfectionMetaplasm extends Metaplasm {
+export class TonalPhrasalInfectionMetaplasm extends Metaplasm {
   apply(
-    lexemeOne: TonalUninfectionLexeme,
-    lexemeTwo: TonalUninfectionLexeme
+    lexemeOne: TonalInfectionLexeme,
+    lexemeTwo: TonalInfectionLexeme
   ): TonalPhrase[] {
     return [];
   }
 }
 
-export class TonalPhrasalUnmutationMetaplasm extends Metaplasm {
+export class TonalPhrasalUninfectionMetaplasm extends Metaplasm {
   apply(
-    lexemeOne: TonalUnmutationLexeme,
-    lexemeTwo: TonalUnmutationLexeme
+    lexemeOne: TonalUninfectionLexeme,
+    lexemeTwo: TonalUninfectionLexeme
   ): TonalPhrase[] {
     return [];
   }

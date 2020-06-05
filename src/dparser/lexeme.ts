@@ -25,6 +25,8 @@ import {
   TonalInsertionMetaplasm,
   TonalInfectionMetaplasm,
   TonalUnmutationMetaplasm,
+  TonalUninfectionMetaplasm,
+  TonalMutationMetaplasm,
 } from '../metaplasm';
 import {
   Infection,
@@ -280,16 +282,23 @@ export class TonalInfectionLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
 
-  constructor(morphemes: Array<TonalSoundChangingMorpheme>) {
+  constructor(
+    morphemes: Array<TonalSoundChangingMorpheme>,
+    metaplasm: TonalInfectionMetaplasm
+  ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
     else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-    if (morphemes.length > 0) this.forms = new Infection().apply(morphemes);
+    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
 
   getForms() {
     // for internal samdhi
     return this.forms;
+  }
+
+  infectWith(lexeme: TonalInfectionLexeme) {
+    return [];
   }
 }
 
@@ -299,7 +308,7 @@ export class TonalUninfectionLexeme implements Lexeme {
 
   constructor(
     morphemes: Array<TonalSoundUnchangingMorpheme>,
-    metaplasm: TonalInfectionMetaplasm
+    metaplasm: TonalUninfectionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
     else this.word = new TonalWord(morphemes.map(x => x.syllable));
@@ -321,17 +330,23 @@ export class TonalMutationLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
 
-  constructor(morphemes: Array<TonalSoundChangingMorpheme>) {
+  constructor(
+    morphemes: Array<TonalSoundChangingMorpheme>,
+    metaplasm: TonalMutationMetaplasm
+  ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
     else this.word = new TonalWord(morphemes.map(x => x.syllable));
 
-    if (morphemes.length > 0)
-      this.forms = new ConsonantMutation().apply(morphemes);
+    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
 
   getForms() {
     // for internal samdhi
     return this.forms;
+  }
+
+  mutateWith(lexeme: TonalMutationLexeme) {
+    return [];
   }
 }
 
@@ -354,7 +369,7 @@ export class TonalUnmutationLexeme implements Lexeme {
     return this.forms;
   }
 
-  unmutatWith(lexeme: TonalUnmutationLexeme) {
+  unmutateWith(lexeme: TonalUnmutationLexeme) {
     return [];
   }
 }
