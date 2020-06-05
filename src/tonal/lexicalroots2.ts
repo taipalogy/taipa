@@ -145,6 +145,8 @@ const extraLexicalRoots = [
 
     'n',
 
+    'ngh',
+
     'oh', 'op',
 
     'sangh', 'sennh', 'sienh', 'sinnh',

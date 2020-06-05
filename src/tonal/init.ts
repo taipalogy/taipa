@@ -426,7 +426,10 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             }
 
             if (mapped) {
-              kanas = sliced + mapped[1];
+              if (mr.sounds[0].name === TonalSoundTags.initial) {
+                // except for ngh which has no initials. the same for mhf, nhf, nghf, mhhw, nhhw, nghhw.
+                kanas = sliced + mapped[1];
+              }
             }
           } else if (medials.length == 0) {
             const nasalFinals = mr.sounds.filter(
@@ -442,7 +445,15 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             }
           }
           if (fourthFinals.includes(mr.sounds[i].toString())) {
-            checkedKanasWithoutBullet = kanas;
+            if (
+              !(
+                mr.sounds[0].toString() === TonalLetterTags.ng &&
+                mr.sounds[1].toString() === TonalLetterTags.h
+              )
+            ) {
+              // except for ngh
+              checkedKanasWithoutBullet = kanas;
+            }
           }
           kanas = handleToneSymbolForFourthEighth(kanas, mr.sounds, i);
         }
