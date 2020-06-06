@@ -331,6 +331,17 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   }
 
   unmutateConsonant(initial: Sound) {
+    if (
+      initial.name === TonalSoundTags.initial &&
+      initial.toString() === TonalLetterTags.d
+    ) {
+      // l -> d
+      const s: TonalSyllable = new TonalSyllable(
+        this.sounds.map(it => new AlphabeticLetter(it.characters))
+      );
+      s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.d));
+      return [s];
+    }
     return [];
   }
 

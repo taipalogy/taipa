@@ -432,9 +432,9 @@ export abstract class MorphemeMaker {
           //console.log('no matched syllables found. the syllable might need to be added')
         }
 
-        //console.log("matchedLen: %d", msp.matchedLength);
-        //console.log(msp.pattern);
-        //console.log(msp.letters)
+        // console.log('matchedLen: %d', msp.matchedLength);
+        // console.log(msp.pattern);
+        // console.log(msp.letters);
 
         if (msp.letters.length > 0) {
           for (let j in msp.letters) {

@@ -139,7 +139,7 @@ const extraLexicalRoots = [
 
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'lip', 'lih', 'lit', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'lip', 'lih', 'lit', 'litt', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
 
     'mnghh',
 

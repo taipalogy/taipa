@@ -14,7 +14,6 @@ describe('Consonant mutation testing, agressive, duplifix', () => {
 });
 
 describe('Consonant mutation testing, agressive, duplifix', () => {
-  /*
   const lx = unmutateInitialFollowingSyllable('dittwlitt');
 
   test('check the surface form', () => {
@@ -24,5 +23,4 @@ describe('Consonant mutation testing, agressive, duplifix', () => {
   test('check the underlying form', () => {
     expect(lx.getForms()[0].literal).toEqual('dittwditt');
   });
-  */
 });
