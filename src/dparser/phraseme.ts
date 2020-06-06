@@ -5,9 +5,7 @@ import {
   TonalUninsertionLexeme,
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
-  TonalUnmutationLexeme,
   TonalInfectionLexeme,
-  TonalMutationLexeme,
 } from './lexeme';
 import { Phraseme } from '../unit';
 import {
@@ -28,9 +26,7 @@ import {
   TonalPhrasalUninsertionMetaplasm,
   TonalPhrasalUnassimilationMetaplasm,
   TonalPhrasalUninfectionMetaplasm,
-  // TonalPhrasalUnmutationMetaplasm,
   TonalPhrasalInfectionMetaplasm,
-  // TonalPhrasalMutationMetaplasm,
 } from '../metaplasm';
 
 /** A phrase of length 2 and its inflected forms. */

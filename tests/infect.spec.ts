@@ -20,8 +20,7 @@ describe('Infection testing, nasalization', () => {
 });
 
 describe('Infection testing, nasalization', () => {
-  /*
-  const lx = uninfectFollowingSyllable('ennxiay');
+  const lx = uninfectFollowingSyllable('ennxianny');
 
   test('check the surface form', () => {
     expect(lx.word.literal).toEqual('ennxianny');
@@ -30,11 +29,9 @@ describe('Infection testing, nasalization', () => {
   test('check the underlying form', () => {
     expect(lx.getForms()[0].literal).toEqual('ennxiay');
   });
-  */
 });
 
 describe('Infection testing, nasalization', () => {
-  /*
   const phr = infectFollowingWord('cinn', 'e');
 
   test('check the underlying form', () => {
@@ -44,11 +41,9 @@ describe('Infection testing, nasalization', () => {
   test('check the surface form', () => {
     expect(phr.getForms()[0].literal).toEqual('cinn enn');
   });
-  */
 });
 
 describe('Infection testing, nasalization', () => {
-  /*
   const phr = uninfectFollowingWord('cinn', 'enn');
 
   test('check the surface form', () => {
@@ -58,5 +53,4 @@ describe('Infection testing, nasalization', () => {
   test('check the underlying form', () => {
     expect(phr.getForms()[0].literal).toEqual('cinn e');
   });
-  */
 });

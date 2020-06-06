@@ -11,6 +11,7 @@ import {
   combinedCheckedAllomorphs,
   medialSounds,
   lowerLettersTonal,
+  nasalizationSounds,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
@@ -113,14 +114,15 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  infect(nasalization: Sound) {
-    if (nasalization) {
-      if (nasalization.name === TonalSoundTags.nasalization) {
+  infect() {
+    const n = nasalizationSounds.sounds[0];
+    if (n) {
+      if (n.name === TonalSoundTags.nasalization) {
         const snds = this.sounds;
         if (snds[snds.length - 1].name === TonalSoundTags.freeTonal) {
-          snds.splice(snds.length - 1, 0, nasalization);
+          snds.splice(snds.length - 1, 0, n);
         } else if (snds[snds.length - 1].name === TonalSoundTags.medial) {
-          snds.push(nasalization);
+          snds.push(n);
         }
         return [
           new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
@@ -310,6 +312,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   }
 
   toVoicelessFinal() {
+    // unvoiced
     if (
       voicedVoicelessFinals.has(this.sounds[this.sounds.length - 2].toString())
     ) {
@@ -331,7 +334,18 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     return [];
   }
 
-  uninfect(nasalization: Sound) {
+  uninfect() {
+    const n = this.sounds.filter(i => i.name === TonalSoundTags.nasalization);
+    if (n.length == 1) {
+      let snds = this.sounds.filter(
+        i => i.name !== TonalSoundTags.nasalization
+      );
+      const s: TonalSyllable = new TonalSyllable(
+        snds.map(it => new AlphabeticLetter(it.characters))
+      );
+      return [s];
+    }
+
     return [];
   }
 }

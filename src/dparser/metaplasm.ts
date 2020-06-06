@@ -54,9 +54,7 @@ import {
   TonalUninsertionLexeme,
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
-  TonalUnmutationLexeme,
   TonalInfectionLexeme,
-  TonalMutationLexeme,
 } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
@@ -552,9 +550,7 @@ export class Infection extends TonalInfectionMetaplasm {
         // nasalization of vowels
         wrd.replaceSyllable(
           wrd.syllables.length - 1,
-          morphemes[morphemes.length - 1].infect(
-            nasalizationSounds.sounds[0]
-          )[0]
+          morphemes[morphemes.length - 1].infect()[0]
         );
         return [wrd];
       }
@@ -577,9 +573,7 @@ export class Uninfection extends TonalUninfectionMetaplasm {
         // nasalization of vowels
         wrd.replaceSyllable(
           wrd.syllables.length - 1,
-          morphemes[morphemes.length - 1].uninfect(
-            nasalizationSounds.sounds[0]
-          )[0]
+          morphemes[morphemes.length - 1].uninfect()[0]
         );
         return [wrd];
       }

@@ -28,12 +28,6 @@ import {
   TonalUninfectionMetaplasm,
   TonalMutationMetaplasm,
 } from '../metaplasm';
-import {
-  Infection,
-  ConsonantMutation,
-  ConsonantUnmutation,
-  Uninfection,
-} from './metaplasm';
 
 /** A word and its inflected forms. */
 export class TonalInflectionLexeme extends Lexeme {
@@ -283,7 +277,7 @@ export class TonalInfectionLexeme implements Lexeme {
   private forms: Array<TonalWord> = new Array();
 
   constructor(
-    morphemes: Array<TonalSoundChangingMorpheme>,
+    private morphemes: Array<TonalSoundChangingMorpheme>,
     metaplasm: TonalInfectionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
@@ -297,7 +291,27 @@ export class TonalInfectionLexeme implements Lexeme {
     return this.forms;
   }
 
-  infectWith(lexeme: TonalInfectionLexeme) {
+  getMorphemes() {
+    // when external sandhi is required, member variable morphemes has to be exposed
+    return this.morphemes;
+  }
+
+  infectWith(preceding: TonalInfectionLexeme) {
+    const ms = preceding.getMorphemes();
+    const wrd = new TonalWord(
+      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
+    );
+    if (
+      ms.length > 0 &&
+      ms[ms.length - 1].sounds.filter(
+        i => i.name === TonalSoundTags.nasalization
+      ).length > 0
+    ) {
+      // if there is a nasalization in the preceding word
+      const syls = this.morphemes[0].infect();
+      wrd.replaceSyllable(0, syls[0]);
+      return [wrd];
+    }
     return [];
   }
 }
@@ -307,7 +321,7 @@ export class TonalUninfectionLexeme implements Lexeme {
   private forms: Array<TonalWord> = new Array();
 
   constructor(
-    morphemes: Array<TonalSoundUnchangingMorpheme>,
+    private morphemes: Array<TonalSoundUnchangingMorpheme>,
     metaplasm: TonalUninfectionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
@@ -321,7 +335,24 @@ export class TonalUninfectionLexeme implements Lexeme {
     return this.forms;
   }
 
-  uninfectWith(lexeme: TonalUninfectionLexeme) {
+  uninfectWith(preceding: TonalUninfectionLexeme) {
+    const snds = this.morphemes[this.morphemes.length - 1].sounds;
+    const wrd = new TonalWord(
+      this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
+    );
+    const n = preceding.morphemes[preceding.morphemes.length - 1].sounds.filter(
+      i => i.name === TonalSoundTags.nasalization
+    );
+
+    if (
+      n.length == 1 &&
+      snds.filter(it => it.name === TonalSoundTags.nasalization).length == 1
+    ) {
+      // if there is a nasalization in thre preceding word and the current word
+      wrd.replaceSyllable(0, this.morphemes[0].uninfect()[0]);
+      return [wrd];
+    }
+
     return [];
   }
 }
