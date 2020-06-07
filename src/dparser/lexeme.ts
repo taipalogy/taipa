@@ -468,12 +468,7 @@ export class TonalInflectionLexemeMaker extends LexemeMaker {
   private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
     for (let i = 0; i < ms.length; i++) {
       if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
-        if (
-          i < ms.length - 1 &&
-          ms[ms.length - 1].syllable.lastLetter.literal !== TonalLetterTags.y &&
-          ms[ms.length - 1].syllable.lastSecondLetter.literal !==
-            TonalLetterTags.a
-        ) {
+        if (i < ms.length - 1 && !ms[ms.length - 1].isAy()) {
           if (
             ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a
           ) {

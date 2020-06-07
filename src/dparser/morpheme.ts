@@ -53,6 +53,15 @@ export class TonalCombiningMorpheme extends Morpheme {
     return this.forms;
   }
 
+  isAy() {
+    if (
+      this.sounds[this.sounds.length - 1].toString() === TonalLetterTags.y &&
+      this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.a
+    )
+      return true;
+    return false;
+  }
+
   private assignAllomorph(syllable: TonalSyllable): Allomorph {
     if (uncombinedCheckedAllomorphs.has(syllable.lastLetter.literal)) {
       const am = uncombinedCheckedAllomorphs.get(syllable.lastLetter.literal);
@@ -98,6 +107,10 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     super();
     this.syllable = syllable;
     this.sounds = sounds;
+  }
+
+  get lastSecondLetter() {
+    return this.sounds[this.sounds.length - 2].toString();
   }
 
   insertNasal(sound: Sound) {
@@ -317,6 +330,10 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     super();
     this.syllable = syllable;
     this.sounds = sounds;
+  }
+
+  get lastSecondLetter() {
+    return this.sounds[this.sounds.length - 2].toString();
   }
 
   uninsertNasal() {

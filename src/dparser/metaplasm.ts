@@ -426,10 +426,8 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
       for (let i = 1; i < morphemes.length; i++) {
         if (
           morphemes[i].sounds[0].name === TonalSoundTags.initial &&
-          (morphemes[i - 1].syllable.lastSecondLetter.literal ===
-            TonalLetterTags.t ||
-            morphemes[i - 1].syllable.lastSecondLetter.literal ===
-              TonalLetterTags.tt)
+          (morphemes[i - 1].lastSecondLetter === TonalLetterTags.t ||
+            morphemes[i - 1].lastSecondLetter === TonalLetterTags.tt)
         ) {
           const syls = morphemes[i - 1].changeFinalPtkppttkk(
             morphemes[i].sounds[0]
@@ -439,8 +437,7 @@ export class RegressiveInternal extends TonalAssimilationMetaplasm {
           }
         } else if (
           morphemes[i].sounds[0].toString() === TonalLetterTags.b &&
-          morphemes[i - 1].syllable.lastSecondLetter.literal ===
-            TonalLetterTags.n
+          morphemes[i - 1].lastSecondLetter === TonalLetterTags.n
         ) {
           const syls = morphemes[i - 1].changeFinalN(morphemes[i].sounds[0]);
           if (syls && syls.length > 0) {
@@ -526,9 +523,7 @@ export class ReverseRegressiveInternal extends TonalUnassimilationMetaplasm {
         const finalsBglbbggll = Array.from(voicedVoicelessFinals.keys());
         if (
           morphemes[i].sounds[0].name === TonalSoundTags.initial &&
-          finalsBglbbggll.includes(
-            morphemes[i - 1].syllable.lastSecondLetter.literal
-          ) &&
+          finalsBglbbggll.includes(morphemes[i - 1].lastSecondLetter) &&
           initialsBghjlmnng.includes(morphemes[i].sounds[0].toString())
         ) {
           const syls = morphemes[i - 1].toVoicelessFinal();
