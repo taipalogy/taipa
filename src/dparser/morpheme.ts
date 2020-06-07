@@ -132,7 +132,8 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  mutateConsonant(sound: Sound) {
+  /** Mutate initial consonants. */
+  mutateInitialConsonant(sound: Sound) {
     if (sound) {
       if (sound.name === TonalSoundTags.initial) {
         const snds = this.sounds;
@@ -148,6 +149,20 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
         ];
       }
+    }
+    return [];
+  }
+
+  mutateFinalConsonant(sound: Sound) {
+    if (sound) {
+      const snds = this.sounds;
+      const syl: TonalSyllable = new TonalSyllable(
+        this.sounds.map(i => new AlphabeticLetter(i.characters))
+      );
+      const idx = snds.findIndex(i => i.name === TonalSoundTags.stopFinal);
+      syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.gg));
+
+      return [syl];
     }
     return [];
   }
@@ -185,16 +200,17 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  changeFinalHHh(initial: Sound) {
+  private changeFinalHHh(initial: Sound) {
     // TODO: add sandhi hh and h.
     return [];
   }
-  changeFinalPPp(initial: Sound) {
+
+  private changeFinalPPp(initial: Sound) {
     // TODO: neutrals. pp -> hh. p -> h.
     return [];
   }
 
-  changeWithInitialMnng(initial: Sound) {
+  private changeWithInitialMnng(initial: Sound) {
     if (
       initial.name === TonalSoundTags.initial &&
       nasalInitials.includes(initial.toString())
@@ -205,7 +221,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  changeWithMedial(medial: Sound) {
+  private changeWithMedial(medial: Sound) {
     if (
       medial.name === TonalSoundTags.medial &&
       medialSounds.includes(medial.toString())
@@ -216,7 +232,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     return [];
   }
 
-  changeWithInitialBghjl(initial: Sound) {
+  private changeWithInitialBghjl(initial: Sound) {
     if (
       initial.name === TonalSoundTags.initial &&
       initialsBghjl.includes(initial.toString())

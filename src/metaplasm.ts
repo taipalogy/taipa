@@ -12,6 +12,8 @@ import {
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalInfectionLexeme,
+  TonalMutationLexeme,
+  TonalUnmutationLexeme,
 } from './dparser/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
@@ -181,6 +183,24 @@ export class TonalPhrasalUninfectionMetaplasm extends Metaplasm {
   apply(
     lexemeOne: TonalUninfectionLexeme,
     lexemeTwo: TonalUninfectionLexeme
+  ): TonalPhrase[] {
+    return [];
+  }
+}
+
+export class TonalPhrasalMutationMetaplasm extends Metaplasm {
+  apply(
+    lexemeOne: TonalMutationLexeme,
+    lexemeTwo: TonalMutationLexeme
+  ): TonalPhrase[] {
+    return [];
+  }
+}
+
+export class TonalPhrasalUnmutationMetaplasm extends Metaplasm {
+  apply(
+    lexemeOne: TonalUnmutationLexeme,
+    lexemeTwo: TonalUnmutationLexeme
   ): TonalPhrase[] {
     return [];
   }

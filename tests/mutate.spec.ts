@@ -1,4 +1,7 @@
-import { mutateInitialFollowingSyllable } from '../src/dparser/mutator';
+import {
+  mutateInitialFollowingSyllable,
+  mutateFinalOfPrecedingWord,
+} from '../src/dparser/mutator';
 import { unmutateInitialFollowingSyllable } from '../src/tonal/unmutator';
 
 describe('Consonant mutation testing, agressive, duplifix', () => {
@@ -22,5 +25,17 @@ describe('Consonant mutation testing, agressive, duplifix', () => {
 
   test('check the underlying form', () => {
     expect(lx.getForms()[0].literal).toEqual('dittwditt');
+  });
+});
+
+describe('Consonant mutation testing, regressive, final consonant', () => {
+  const phr = mutateFinalOfPrecedingWord('chittw', 'giahh');
+
+  test('check the underlying form', () => {
+    expect(phr.phrase.literal).toEqual('chittw giahh');
+  });
+
+  test('check the surface form', () => {
+    expect(phr.getForms()[0].literal).toEqual('chiggw giahh');
   });
 });

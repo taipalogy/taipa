@@ -34,6 +34,8 @@ import {
   TonalUninfectionMetaplasm,
   TonalPhrasalUninfectionMetaplasm,
   TonalPhrasalInfectionMetaplasm,
+  TonalPhrasalMutationMetaplasm,
+  TonalPhrasalUnmutationMetaplasm,
 } from '../metaplasm';
 import { TonalSyllable } from '../tonal/morpheme';
 import { AlphabeticLetter, Sound } from '../unit';
@@ -55,6 +57,8 @@ import {
   TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalInfectionLexeme,
+  TonalMutationLexeme,
+  TonalUnmutationLexeme,
 } from './lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 
@@ -593,7 +597,7 @@ export class ConsonantMutation extends TonalMutationMetaplasm {
       // duplifix. pass the preceding initial to get forms
       wrd.replaceSyllable(
         wrd.syllables.length - 1,
-        morphemes[morphemes.length - 1].mutateConsonant(snds[0])[0]
+        morphemes[morphemes.length - 1].mutateInitialConsonant(snds[0])[0]
       );
       return [wrd];
     }
@@ -609,7 +613,7 @@ export class ConsonantUnmutation extends TonalUnmutationMetaplasm {
         morphemes.map(it => new TonalSyllable(it.syllable.letters))
       );
 
-      // duplifix. pass the preceding initial to get forms
+      // pass the initial of the following word to get forms
       wrd.replaceSyllable(
         wrd.syllables.length - 1,
         morphemes[morphemes.length - 1].unmutateConsonant(snds[0])[0]
@@ -838,6 +842,28 @@ export class UninfectExternal extends TonalPhrasalUninfectionMetaplasm {
     const wrds = following.uninfectWith(preceding);
     if (wrds.length > 0)
       return [new TonalPhrase([preceding.word].concat(wrds))];
+    return [];
+  }
+}
+
+export class FinalConsonantMutation extends TonalPhrasalMutationMetaplasm {
+  apply(
+    preceding: TonalMutationLexeme,
+    following: TonalMutationLexeme
+  ): TonalPhrase[] {
+    const wrds = preceding.mutateWith(following);
+    if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
+    return [];
+  }
+}
+
+export class FinalConsonantUnmutation extends TonalPhrasalUnmutationMetaplasm {
+  apply(
+    preceding: TonalUnmutationLexeme,
+    following: TonalUnmutationLexeme
+  ): TonalPhrase[] {
+    const wrds = preceding.unmutateWith(following);
+    if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
     return [];
   }
 }
