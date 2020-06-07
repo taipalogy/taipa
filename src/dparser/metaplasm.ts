@@ -616,7 +616,7 @@ export class ConsonantUnmutation extends TonalUnmutationMetaplasm {
       // pass the initial of the following word to get forms
       wrd.replaceSyllable(
         wrd.syllables.length - 1,
-        morphemes[morphemes.length - 1].unmutateConsonant(snds[0])[0]
+        morphemes[morphemes.length - 1].unmutateInitialConsonant(snds[0])[0]
       );
       return [wrd];
     }
@@ -804,8 +804,7 @@ export class InsertToEnclitic extends TonalPhrasalInsertionMetaplasm {
     following: TonalInsertionLexeme
   ): TonalPhrase[] {
     const wrds = following.insertWith(preceding);
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
+    if (wrds.length > 0) return [new TonalPhrase([preceding.word, wrds[0]])];
     return [];
   }
 }
@@ -816,8 +815,7 @@ export class UninsertFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
     following: TonalUninsertionLexeme
   ): TonalPhrase[] {
     const wrds = following.uninsertWith(preceding);
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
+    if (wrds.length > 0) return [new TonalPhrase([preceding.word, wrds[0]])];
     return [];
   }
 }
@@ -828,8 +826,7 @@ export class InfectExternal extends TonalPhrasalInfectionMetaplasm {
     following: TonalInfectionLexeme
   ): TonalPhrase[] {
     const wrds = following.infectWith(preceding);
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
+    if (wrds.length > 0) return [new TonalPhrase([preceding.word, wrds[0]])];
     return [];
   }
 }
@@ -840,8 +837,7 @@ export class UninfectExternal extends TonalPhrasalUninfectionMetaplasm {
     following: TonalUninfectionLexeme
   ): TonalPhrase[] {
     const wrds = following.uninfectWith(preceding);
-    if (wrds.length > 0)
-      return [new TonalPhrase([preceding.word].concat(wrds))];
+    if (wrds.length > 0) return [new TonalPhrase([preceding.word, wrds[0]])];
     return [];
   }
 }

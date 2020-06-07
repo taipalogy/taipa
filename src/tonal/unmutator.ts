@@ -17,14 +17,17 @@ function getNoUnmutation(word: string) {
   return lx;
 }
 
-export function unmutateInitialFollowingSyllable(word: string) {
+export function unmutateInitialOfFollowingSyllable(word: string) {
   const ms = morphAnalyzeUnchanging(word);
   const lx = new TonalUnmutationLexeme(ms, new ConsonantUnmutation());
 
   return lx;
 }
 
-export function uninfectFollowingWord(preceding: string, following: string) {
+export function unmutateFinalOfPrecedingWord(
+  preceding: string,
+  following: string
+) {
   const lxPreceding = getNoUnmutation(preceding);
   const lxFollowing = getNoUnmutation(following);
   const phmk = new TonalUnmutationPhrasemeMaker();

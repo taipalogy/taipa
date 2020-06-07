@@ -346,7 +346,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     return [];
   }
 
-  unmutateConsonant(initial: Sound) {
+  unmutateInitialConsonant(initial: Sound) {
     if (
       initial.name === TonalSoundTags.initial &&
       initial.toString() === TonalLetterTags.d
@@ -358,6 +358,25 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
       s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.d));
       return [s];
     }
+    return [];
+  }
+
+  unmutateFinalConsonant(initial: Sound) {
+    if (
+      initial.name === TonalSoundTags.initial &&
+      initial.toString() === TonalLetterTags.g
+    ) {
+      // gg -> tt
+      const syl: TonalSyllable = new TonalSyllable(
+        this.sounds.map(it => new AlphabeticLetter(it.characters))
+      );
+      const idx = this.sounds.findIndex(
+        i => i.name === TonalSoundTags.stopFinal
+      );
+      syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.tt));
+      return [syl];
+    }
+
     return [];
   }
 

@@ -406,7 +406,7 @@ export class TonalUnmutationLexeme implements Lexeme {
   private forms: Array<TonalWord> = new Array();
 
   constructor(
-    morphemes: Array<TonalSoundUnchangingMorpheme>,
+    private morphemes: Array<TonalSoundUnchangingMorpheme>,
     metaplasm: TonalUnmutationMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
@@ -421,6 +421,26 @@ export class TonalUnmutationLexeme implements Lexeme {
   }
 
   unmutateWith(following: TonalUnmutationLexeme) {
+    const snds = this.morphemes[this.morphemes.length - 1].sounds;
+    const fnls = snds.filter(i => i.name === TonalSoundTags.stopFinal);
+    const wrd = new TonalWord(
+      this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
+    );
+
+    if (following.morphemes[0].sounds[0].toString() === TonalLetterTags.g) {
+      if (
+        fnls[0].toString() === TonalLetterTags.gg ||
+        fnls[0].toString() === TonalLetterTags.g
+      ) {
+        wrd.replaceSyllable(
+          0,
+          this.morphemes[0].unmutateFinalConsonant(
+            following.morphemes[0].sounds[0]
+          )[0]
+        );
+        return [wrd];
+      }
+    }
     return [];
   }
 }

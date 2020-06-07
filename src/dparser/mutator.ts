@@ -11,7 +11,7 @@ export function getNoMutation(word: string) {
   return lx;
 }
 
-export function mutateInitialFollowingSyllable(word: string) {
+export function mutateInitialOfFollowingSyllable(word: string) {
   const ms = morphAnalyzeChanging(word);
   const lx = new TonalMutationLexeme(ms, new ConsonantMutation());
 
