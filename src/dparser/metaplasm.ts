@@ -477,7 +477,7 @@ export class Epenthesis extends TonalInsertionMetaplasm {
         );
         return [wrd];
       }
-      // TODO: insert to syllable e
+      // TODO: insert to syllable e. e.g. laggwex -> laggwgex
     }
     return [];
   }
@@ -815,7 +815,7 @@ export class UninsertFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
   }
 }
 
-export class InfectExternal extends TonalPhrasalInfectionMetaplasm {
+export class InfectionExternal extends TonalPhrasalInfectionMetaplasm {
   apply(
     preceding: TonalInfectionLexeme,
     following: TonalInfectionLexeme
@@ -826,7 +826,7 @@ export class InfectExternal extends TonalPhrasalInfectionMetaplasm {
   }
 }
 
-export class UninfectExternal extends TonalPhrasalUninfectionMetaplasm {
+export class UninfectionExternal extends TonalPhrasalUninfectionMetaplasm {
   apply(
     preceding: TonalUninfectionLexeme,
     following: TonalUninfectionLexeme

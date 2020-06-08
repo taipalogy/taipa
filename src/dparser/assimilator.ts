@@ -24,6 +24,8 @@ export function getNoAssimilation(word: string) {
   return lx;
 }
 
+// TODO: need to differentiate assimilation between consonant mutation
+
 /** Assimilates regressively inside a word. */
 export function assimilateRegressiveInternal(word: string) {
   const mrphs = morphAnalyzeChanging(word);

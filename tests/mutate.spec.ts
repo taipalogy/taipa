@@ -19,7 +19,7 @@ describe('Consonant mutation testing, agressive, duplifix', () => {
   });
 });
 
-describe('Consonant mutation testing, agressive, duplifix', () => {
+describe('Consonant unmutation testing, agressive, duplifix', () => {
   const lx = unmutateInitialOfFollowingSyllable('dittwlitt');
 
   test('check the surface form', () => {
@@ -43,7 +43,7 @@ describe('Consonant mutation testing, regressive, final consonant', () => {
   });
 });
 
-describe('Consonant mutation testing, regressive, final consonant', () => {
+describe('Consonant unmutation testing, regressive, final consonant', () => {
   const phr = unmutateFinalOfPrecedingWord('chiggw', 'giahh');
 
   test('check the underlying form', () => {

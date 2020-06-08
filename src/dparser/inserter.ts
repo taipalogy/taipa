@@ -30,7 +30,6 @@ export function insertToFollowingSyllable(word: string) {
   return lx;
 }
 
-// TODO: phrasal inserter for enclitics
 export function insertToFollowingWord(preceding: string, following: string) {
   const lxPreceding = getNoInsertion(preceding);
   const lxFollowing = getNoInsertion(following);

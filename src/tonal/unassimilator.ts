@@ -25,6 +25,8 @@ export function getNoUnassimilation(word: string) {
   return lx;
 }
 
+// TODO: need to differentiate unassimilation between consonant unmutation
+
 /** Unassimilates regressively inside a word. */
 export function unassimilateRegressiveInternal(word: string) {
   const ms = morphAnalyzeUnchanging(word);

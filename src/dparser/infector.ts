@@ -1,7 +1,7 @@
 import { TonalInfectionLexeme } from './lexeme';
 import { morphAnalyzeChanging } from './assimilator';
 import { TonalZeroInfectionMetaplasm } from '../metaplasm';
-import { Infection, InfectExternal } from './metaplasm';
+import { Infection, InfectionExternal } from './metaplasm';
 import { TonalInfectionPhrasemeMaker } from './phraseme';
 
 export function getNoInfection(word: string) {
@@ -22,5 +22,5 @@ export function infectFollowingWord(preceding: string, following: string) {
   const lxPreceding = getNoInfection(preceding);
   const lxFollowing = getNoInfection(following);
   const phmk = new TonalInfectionPhrasemeMaker();
-  return phmk.makePhraseme(lxPreceding, lxFollowing, new InfectExternal());
+  return phmk.makePhraseme(lxPreceding, lxFollowing, new InfectionExternal());
 }

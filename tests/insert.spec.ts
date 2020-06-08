@@ -1,6 +1,12 @@
-import { insertToFollowingSyllable } from '../src/dparser/inserter';
+import {
+  insertToFollowingSyllable,
+  insertToFollowingWord,
+} from '../src/dparser/inserter';
 import { inflectDesinence } from '../src/dparser/inflector';
-import { uninsertFromSyllable } from '../src/tonal/uninserter';
+import {
+  uninsertFromSyllable,
+  uninsertFromFollowingWord,
+} from '../src/tonal/uninserter';
 
 describe('Epenthesis testing', () => {
   const lx1 = insertToFollowingSyllable('qimxay');
@@ -71,5 +77,29 @@ describe('Uninsertion testing', () => {
 
   test('check the uninsertion of initial ng', () => {
     expect(lx3.getForms()[0].literal).toEqual('cangxay');
+  });
+});
+
+describe('Insertion testing', () => {
+  const lx1 = insertToFollowingWord('lim', 'a');
+
+  test('check the underlying form', () => {
+    expect(lx1.phrase.literal).toEqual('lim a');
+  });
+
+  test('check the surface form', () => {
+    expect(lx1.getForms()[0].literal).toEqual('lim ma');
+  });
+});
+
+describe('Uninsertion testing', () => {
+  const lx1 = uninsertFromFollowingWord('lim', 'ma');
+
+  test('check the surface form', () => {
+    expect(lx1.phrase.literal).toEqual('lim ma');
+  });
+
+  test('check the underlying form', () => {
+    expect(lx1.getForms()[0].literal).toEqual('lim a');
   });
 });

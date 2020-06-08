@@ -1,7 +1,7 @@
 import { morphAnalyzeUnchanging } from './unassimilator';
 import { TonalUninfectionLexeme } from '../dparser/lexeme';
 import { TonalUninfectionPhrasemeMaker } from '../dparser/phraseme';
-import { UninfectExternal, Uninfection } from '../dparser/metaplasm';
+import { UninfectionExternal, Uninfection } from '../dparser/metaplasm';
 import { TonalZeroUninfectionMetaplasm } from '../metaplasm';
 
 export function getNoUninfection(word: string) {
@@ -25,5 +25,5 @@ export function uninfectFollowingWord(preceding: string, following: string) {
   const lxPreceding = getNoUninfection(preceding);
   const lxFollowing = getNoUninfection(following);
   const phmk = new TonalUninfectionPhrasemeMaker();
-  return phmk.makePhraseme(lxPreceding, lxFollowing, new UninfectExternal());
+  return phmk.makePhraseme(lxPreceding, lxFollowing, new UninfectionExternal());
 }

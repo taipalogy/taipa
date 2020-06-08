@@ -19,7 +19,7 @@ describe('Infection testing, nasalization', () => {
   });
 });
 
-describe('Infection testing, nasalization', () => {
+describe('Uninfection testing, nasalization', () => {
   const lx = uninfectFollowingSyllable('ennxianny');
 
   test('check the surface form', () => {
@@ -43,7 +43,7 @@ describe('Infection testing, nasalization', () => {
   });
 });
 
-describe('Infection testing, nasalization', () => {
+describe('Uninfection testing, nasalization', () => {
   const phr = uninfectFollowingWord('cinn', 'enn');
 
   test('check the surface form', () => {
