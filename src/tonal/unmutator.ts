@@ -2,7 +2,8 @@ import { morphAnalyzeUnchanging } from './unassimilator';
 import { TonalUnmutationLexeme } from '../dparser/lexeme';
 import {
   ConsonantUnmutation,
-  FinalConsonantUnmutation,
+  FinalConsonantUnmutationExternal,
+  FinalConsonantUnmutationInternal,
 } from '../dparser/metaplasm';
 import { TonalZeroUnmutationMetaplasm } from '../metaplasm';
 import { TonalUnmutationPhrasemeMaker } from '../dparser/phraseme';
@@ -17,6 +18,7 @@ function getNoUnmutation(word: string) {
   return lx;
 }
 
+/** Unmutates the initial of the following syllable. */
 export function unmutateInitialOfFollowingSyllable(word: string) {
   const ms = morphAnalyzeUnchanging(word);
   const lx = new TonalUnmutationLexeme(ms, new ConsonantUnmutation());
@@ -24,6 +26,18 @@ export function unmutateInitialOfFollowingSyllable(word: string) {
   return lx;
 }
 
+/** Unmutates the final of the preceding syllable. */
+export function unmutateFinalOfPrecedingSyllable(word: string) {
+  const ms = morphAnalyzeUnchanging(word);
+  const lx = new TonalUnmutationLexeme(
+    ms,
+    new FinalConsonantUnmutationInternal()
+  );
+
+  return lx;
+}
+
+/** Unmutates the final of the preceding word. */
 export function unmutateFinalOfPrecedingWord(
   preceding: string,
   following: string
@@ -34,6 +48,6 @@ export function unmutateFinalOfPrecedingWord(
   return phmk.makePhraseme(
     lxPreceding,
     lxFollowing,
-    new FinalConsonantUnmutation()
+    new FinalConsonantUnmutationExternal()
   );
 }

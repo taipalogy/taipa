@@ -1,9 +1,14 @@
 import { TonalMutationLexeme } from './lexeme';
 import { morphAnalyzeChanging } from './assimilator';
-import { ConsonantMutation, FinalConsonantMutation } from './metaplasm';
+import {
+  ConsonantMutation,
+  FinalConsonantMutationExternal,
+  FinalConsonantMutationInternal,
+} from './metaplasm';
 import { TonalZeroMutationMetaplasm } from '../metaplasm';
 import { TonalMutationPhrasemeMaker } from './phraseme';
 
+/** No internal sandhi. */
 export function getNoMutation(word: string) {
   const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalMutationLexeme(mrphs, new TonalZeroMutationMetaplasm());
@@ -11,6 +16,7 @@ export function getNoMutation(word: string) {
   return lx;
 }
 
+/** Mutates the initial of the following syllable. */
 export function mutateInitialOfFollowingSyllable(word: string) {
   const ms = morphAnalyzeChanging(word);
   const lx = new TonalMutationLexeme(ms, new ConsonantMutation());
@@ -18,6 +24,18 @@ export function mutateInitialOfFollowingSyllable(word: string) {
   return lx;
 }
 
+/** Mutates the final of the preceding syllable. */
+export function mutateFinalOfPrecedingSyllable(word: string) {
+  const mrphs = morphAnalyzeChanging(word);
+  const lx = new TonalMutationLexeme(
+    mrphs,
+    new FinalConsonantMutationInternal()
+  );
+
+  return lx;
+}
+
+/** Mutates the final of the preceding word. */
 export function mutateFinalOfPrecedingWord(
   preceding: string,
   following: string
@@ -28,6 +46,6 @@ export function mutateFinalOfPrecedingWord(
   return phmk.makePhraseme(
     lxPreceding,
     lxFollowing,
-    new FinalConsonantMutation()
+    new FinalConsonantMutationExternal()
   );
 }

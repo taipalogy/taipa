@@ -21,7 +21,6 @@ import { TonalSyllable } from '../tonal/morpheme';
 import { Sound } from '../unit';
 import {
   TonalInflectionMetaplasm,
-  TonalAssimilationMetaplasm,
   TonalInsertionMetaplasm,
   TonalInfectionMetaplasm,
   TonalUnmutationMetaplasm,
@@ -102,97 +101,6 @@ export class TonalInflectionLexeme extends Lexeme {
   }
 }
 
-/** A word and its assimilated forms. */
-export class TonalAssimilationLexeme implements Lexeme {
-  word: TonalWord;
-  private forms: Array<TonalWord> = new Array();
-
-  constructor(
-    private morphemes: Array<TonalSoundChangingMorpheme>,
-    metaplasm: TonalAssimilationMetaplasm
-  ) {
-    if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
-
-    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
-  }
-
-  /** Get assimilated forms for this lexeme. */
-  getForms() {
-    // for internal samdhi
-    return this.forms;
-  }
-
-  /** Get sound-changing morphemes for external sandhi. */
-  getMorphemes() {
-    // when external sandhi is required, member variable morphemes has to be exposed
-    return this.morphemes;
-  }
-
-  assimilateWith(lexeme: TonalAssimilationLexeme) {
-    const ms = lexeme.getMorphemes();
-    const wrd = new TonalWord(
-      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
-    );
-    if (ms.length > 0) {
-      const adjacentSnds = ms[ms.length - 1].sounds;
-      if (adjacentSnds[0].name === TonalSoundTags.initial) {
-        const s = adjacentSnds[0];
-        const syls = this.morphemes[
-          this.morphemes.length - 1
-        ].changeFinalPtkppttkk(s);
-
-        if (syls && syls.length > 0) {
-          wrd.popSyllable();
-          wrd.pushSyllable(syls[0]);
-        }
-
-        return [wrd];
-      }
-    }
-
-    return [];
-  }
-}
-
-/** A word and its unassimilated forms. */
-export class TonalUnassimilationLexeme implements Lexeme {
-  word: TonalWord;
-  private forms: Array<TonalWord> = new Array();
-
-  constructor(
-    private morphemes: Array<TonalSoundUnchangingMorpheme>,
-    metaplasm: TonalAssimilationMetaplasm
-  ) {
-    if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
-
-    if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
-  }
-
-  /** Get unassimilated forms for this lexeme. */
-  getForms() {
-    // for internal samdhi
-    return this.forms;
-  }
-
-  getMorphemes() {
-    // when external sandhi is required, member variable morphemes has to be exposed
-    return this.morphemes;
-  }
-
-  unassimilateWith(lexeme: TonalUnassimilationLexeme) {
-    const ms = lexeme.getMorphemes();
-    const wrd = new TonalWord(
-      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
-    );
-    if (ms.length > 0) {
-      const adjacentSnds = ms[ms.length - 1].sounds;
-    }
-    return [];
-  }
-}
-
 /** A word and its inserted forms. */
 export class TonalInsertionLexeme implements Lexeme {
   word: TonalWord;
@@ -213,18 +121,13 @@ export class TonalInsertionLexeme implements Lexeme {
     return this.forms;
   }
 
-  getMorphemes() {
-    // when external sandhi is required, member variable morphemes has to be exposed
-    return this.morphemes;
-  }
-
   insertWith(preceding: TonalInsertionLexeme) {
-    const ms = preceding.getMorphemes();
     const wrd = new TonalWord(
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
-    if (ms.length > 0) {
-      const adjacentSnds = ms[ms.length - 1].sounds;
+    if (preceding.morphemes.length > 0) {
+      const adjacentSnds =
+        preceding.morphemes[preceding.morphemes.length - 1].sounds;
       let s = new Sound();
       if (
         adjacentSnds[adjacentSnds.length - 1].name ===
@@ -267,19 +170,13 @@ export class TonalUninsertionLexeme implements Lexeme {
     return this.forms;
   }
 
-  getMorphemes() {
-    // when external sandhi is required, member variable morphemes has to be exposed
-    return this.morphemes;
-  }
-
   uninsertWith(preceding: TonalUninsertionLexeme) {
-    const ms = preceding.getMorphemes();
     const wrd = new TonalWord(
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
-    const snds = ms[ms.length - 1].sounds;
-    if (ms.length > 0) {
-      const adjacentSnds = ms[ms.length - 1].sounds;
+    if (preceding.morphemes.length > 0) {
+      const adjacentSnds =
+        preceding.morphemes[preceding.morphemes.length - 1].sounds;
       let s = new Sound();
       if (
         (adjacentSnds[adjacentSnds.length - 1].name ===
@@ -319,19 +216,13 @@ export class TonalInfectionLexeme implements Lexeme {
     return this.forms;
   }
 
-  getMorphemes() {
-    // when external sandhi is required, member variable morphemes has to be exposed
-    return this.morphemes;
-  }
-
   infectWith(preceding: TonalInfectionLexeme) {
-    const ms = preceding.getMorphemes();
     const wrd = new TonalWord(
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
     if (
-      ms.length > 0 &&
-      ms[ms.length - 1].sounds.filter(
+      preceding.morphemes.length > 0 &&
+      preceding.morphemes[preceding.morphemes.length - 1].sounds.filter(
         i => i.name === TonalSoundTags.nasalization
       ).length > 0
     ) {
@@ -364,27 +255,30 @@ export class TonalUninfectionLexeme implements Lexeme {
   }
 
   uninfectWith(preceding: TonalUninfectionLexeme) {
-    const snds = this.morphemes[this.morphemes.length - 1].sounds;
     const wrd = new TonalWord(
       this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
     );
-    const n = preceding.morphemes[preceding.morphemes.length - 1].sounds.filter(
-      i => i.name === TonalSoundTags.nasalization
-    );
+    if (preceding.morphemes.length > 0) {
+      const adjacentSnds = this.morphemes[this.morphemes.length - 1].sounds;
+      const n = preceding.morphemes[
+        preceding.morphemes.length - 1
+      ].sounds.filter(i => i.name === TonalSoundTags.nasalization);
 
-    if (
-      n.length == 1 &&
-      snds.filter(it => it.name === TonalSoundTags.nasalization).length == 1
-    ) {
-      // if there is a nasalization in thre preceding word and the current word
-      wrd.replaceSyllable(0, this.morphemes[0].uninfect()[0]);
-      return [wrd];
+      if (
+        n.length == 1 &&
+        adjacentSnds.filter(it => it.name === TonalSoundTags.nasalization)
+          .length == 1
+      ) {
+        // if there is a nasalization in thre preceding word and the current word
+        wrd.replaceSyllable(0, this.morphemes[0].uninfect()[0]);
+        return [wrd];
+      }
     }
-
     return [];
   }
 }
 
+/** A word and its mutated forms. */
 export class TonalMutationLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
@@ -405,23 +299,24 @@ export class TonalMutationLexeme implements Lexeme {
   }
 
   mutateWith(following: TonalMutationLexeme) {
-    const snds = this.morphemes[this.morphemes.length - 1].sounds;
-    const fnls = snds.filter(i => i.name === TonalSoundTags.stopFinal);
     const wrd = new TonalWord(
       this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
     );
 
-    if (following.morphemes[0].sounds[0].toString() === TonalLetterTags.g) {
-      if (
-        fnls[0].toString() === TonalLetterTags.tt ||
-        fnls[0].toString() === TonalLetterTags.t
-      ) {
-        wrd.replaceSyllable(
-          0,
-          this.morphemes[0].mutateFinalConsonant(
-            following.morphemes[0].sounds[0]
-          )[0]
-        );
+    if (following.morphemes.length > 0) {
+      const adjacentSnds =
+        following.morphemes[following.morphemes.length - 1].sounds;
+      if (adjacentSnds[0].name === TonalSoundTags.initial) {
+        const s = adjacentSnds[0];
+        const syls = this.morphemes[
+          this.morphemes.length - 1
+        ].changeFinalPtkppttkk(s);
+
+        if (syls && syls.length > 0) {
+          wrd.popSyllable();
+          wrd.pushSyllable(syls[0]);
+        }
+
         return [wrd];
       }
     }
@@ -429,6 +324,7 @@ export class TonalMutationLexeme implements Lexeme {
   }
 }
 
+/** A word and its unmutated forms. */
 export class TonalUnmutationLexeme implements Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();

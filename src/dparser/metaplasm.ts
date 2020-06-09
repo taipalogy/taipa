@@ -8,7 +8,6 @@ import {
   TonalSoundTags,
   lowerLettersTonal,
   AllomorphH,
-  nasalizationSounds,
 } from '../tonal/version2';
 import {
   eighthToFirst,
@@ -21,15 +20,12 @@ import {
 import {
   TonalCombiningMetaplasm,
   TonalInflectionMetaplasm,
-  TonalAssimilationMetaplasm,
   TonalInfectionMetaplasm,
-  TonalUnassimilationMetaplasm,
   TonalUninsertionMetaplasm,
   TonalInsertionMetaplasm,
   TonalMutationMetaplasm,
   TonalPhrasalInsertionMetaplasm,
   TonalPhrasalUninsertionMetaplasm,
-  TonalPhrasalUnassimilationMetaplasm,
   TonalUnmutationMetaplasm,
   TonalUninfectionMetaplasm,
   TonalPhrasalUninfectionMetaplasm,
@@ -45,16 +41,11 @@ import {
   TonalSoundChangingMorpheme,
   TonalSoundUnchangingMorpheme,
 } from './morpheme';
+import { TonalPhrasalInflectionMetaplasm } from '../metaplasm';
 import {
-  TonalPhrasalAssimilationMetaplasm,
-  TonalPhrasalInflectionMetaplasm,
-} from '../metaplasm';
-import {
-  TonalAssimilationLexeme,
   TonalInflectionLexeme,
   TonalInsertionLexeme,
   TonalUninsertionLexeme,
-  TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalInfectionLexeme,
   TonalMutationLexeme,
@@ -415,47 +406,6 @@ export class TransfixInflection extends TonalInflectionMetaplasm {
   }
 }
 
-/** Regressive assimilation inside a word. */
-export class RegressiveInternal extends TonalAssimilationMetaplasm {
-  apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
-    let wrd = new TonalWord(
-      morphemes.map(it => new TonalSyllable(it.syllable.letters))
-    );
-
-    if (morphemes.length > 1) {
-      for (let i = 1; i < morphemes.length; i++) {
-        if (
-          morphemes[i].sounds[0].name === TonalSoundTags.initial &&
-          (morphemes[i - 1].lastSecondLetter === TonalLetterTags.t ||
-            morphemes[i - 1].lastSecondLetter === TonalLetterTags.tt)
-        ) {
-          const syls = morphemes[i - 1].changeFinalPtkppttkk(
-            morphemes[i].sounds[0]
-          );
-          if (syls && syls.length > 0) {
-            wrd.replaceSyllable(i - 1, syls[0]);
-          }
-        } else if (
-          morphemes[i].sounds[0].toString() === TonalLetterTags.b &&
-          morphemes[i - 1].lastSecondLetter === TonalLetterTags.n
-        ) {
-          const syls = morphemes[i - 1].changeFinalN(morphemes[i].sounds[0]);
-          if (syls && syls.length > 0) {
-            wrd.replaceSyllable(i - 1, syls[0]);
-          }
-        } else {
-          const syls = morphemes[i - 1].changeFinalPtkppttkk(
-            morphemes[i].sounds[0]
-          );
-          if (syls && syls.length > 0) wrd.replaceSyllable(i - 1, syls[0]);
-        }
-      }
-    }
-
-    return [wrd];
-  }
-}
-
 /** Inserts an initial m, n, or ng to syllable ay. */
 export class Epenthesis extends TonalInsertionMetaplasm {
   // adding of nasal consonants. insertion
@@ -506,32 +456,6 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
       }
     }
     return [];
-  }
-}
-
-/** Reverse regressive assimilation inside a word. */
-export class ReverseRegressiveInternal extends TonalUnassimilationMetaplasm {
-  apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
-    let wrd = new TonalWord(
-      morphemes.map(it => new TonalSyllable(it.syllable.letters))
-    );
-
-    if (morphemes.length > 1) {
-      for (let i = 1; i < morphemes.length; i++) {
-        // combine b, g, h, j, l with m, n, ng
-        const initialsBghjlmnng = initialsBghjl.concat(nasalInitials);
-        const finalsBglbbggll = Array.from(voicedVoicelessFinals.keys());
-        if (
-          morphemes[i].sounds[0].name === TonalSoundTags.initial &&
-          finalsBglbbggll.includes(morphemes[i - 1].lastSecondLetter) &&
-          initialsBghjlmnng.includes(morphemes[i].sounds[0].toString())
-        ) {
-          const syls = morphemes[i - 1].toVoicelessFinal();
-          wrd.replaceSyllable(i - 1, syls[0]);
-        }
-      }
-    }
-    return [wrd];
   }
 }
 
@@ -770,30 +694,7 @@ export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
-/** Assimilates regressively between 2 words. */
-export class RegressiveExternal extends TonalPhrasalAssimilationMetaplasm {
-  apply(
-    preceding: TonalAssimilationLexeme,
-    following: TonalAssimilationLexeme
-  ): TonalPhrase[] {
-    const wrds = preceding.assimilateWith(following);
-    if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
-    return [];
-  }
-}
-
-export class ReverseRegressiveExternal extends TonalPhrasalUnassimilationMetaplasm {
-  apply(
-    preceding: TonalUnassimilationLexeme,
-    following: TonalUnassimilationLexeme
-  ): TonalPhrase[] {
-    const wrds = preceding.unassimilateWith(following);
-    if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
-    return [];
-  }
-}
-
-export class InsertToEnclitic extends TonalPhrasalInsertionMetaplasm {
+export class InsertionToEnclitic extends TonalPhrasalInsertionMetaplasm {
   apply(
     preceding: TonalInsertionLexeme,
     following: TonalInsertionLexeme
@@ -804,7 +705,7 @@ export class InsertToEnclitic extends TonalPhrasalInsertionMetaplasm {
   }
 }
 
-export class UninsertFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
+export class UninsertionFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
   apply(
     preceding: TonalUninsertionLexeme,
     following: TonalUninsertionLexeme
@@ -837,7 +738,8 @@ export class UninfectionExternal extends TonalPhrasalUninfectionMetaplasm {
   }
 }
 
-export class FinalConsonantMutation extends TonalPhrasalMutationMetaplasm {
+/** Consonant mutation of the final of the preceding word. */
+export class FinalConsonantMutationExternal extends TonalPhrasalMutationMetaplasm {
   apply(
     preceding: TonalMutationLexeme,
     following: TonalMutationLexeme
@@ -848,7 +750,8 @@ export class FinalConsonantMutation extends TonalPhrasalMutationMetaplasm {
   }
 }
 
-export class FinalConsonantUnmutation extends TonalPhrasalUnmutationMetaplasm {
+/** Consonant unmutation of the final of the preceding word. */
+export class FinalConsonantUnmutationExternal extends TonalPhrasalUnmutationMetaplasm {
   apply(
     preceding: TonalUnmutationLexeme,
     following: TonalUnmutationLexeme
@@ -856,5 +759,72 @@ export class FinalConsonantUnmutation extends TonalPhrasalUnmutationMetaplasm {
     const wrds = preceding.unmutateWith(following);
     if (wrds.length > 0) return [new TonalPhrase([wrds[0], following.word])];
     return [];
+  }
+}
+
+/** Consonant mutation of the final of the preceding syllable. */
+export class FinalConsonantMutationInternal extends TonalMutationMetaplasm {
+  apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
+    let wrd = new TonalWord(
+      morphemes.map(it => new TonalSyllable(it.syllable.letters))
+    );
+
+    if (morphemes.length > 1) {
+      for (let i = 1; i < morphemes.length; i++) {
+        if (
+          morphemes[i].sounds[0].name === TonalSoundTags.initial &&
+          (morphemes[i - 1].lastSecondLetter === TonalLetterTags.t ||
+            morphemes[i - 1].lastSecondLetter === TonalLetterTags.tt)
+        ) {
+          const syls = morphemes[i - 1].changeFinalPtkppttkk(
+            morphemes[i].sounds[0]
+          );
+          if (syls && syls.length > 0) {
+            wrd.replaceSyllable(i - 1, syls[0]);
+          }
+        } else if (
+          morphemes[i].sounds[0].toString() === TonalLetterTags.b &&
+          morphemes[i - 1].lastSecondLetter === TonalLetterTags.n
+        ) {
+          const syls = morphemes[i - 1].changeFinalN(morphemes[i].sounds[0]);
+          if (syls && syls.length > 0) {
+            wrd.replaceSyllable(i - 1, syls[0]);
+          }
+        } else {
+          const syls = morphemes[i - 1].changeFinalPtkppttkk(
+            morphemes[i].sounds[0]
+          );
+          if (syls && syls.length > 0) wrd.replaceSyllable(i - 1, syls[0]);
+        }
+      }
+    }
+
+    return [wrd];
+  }
+}
+
+/** Consonant unmutation of the final of the preceding syllable. */
+export class FinalConsonantUnmutationInternal extends TonalUnmutationMetaplasm {
+  apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
+    let wrd = new TonalWord(
+      morphemes.map(it => new TonalSyllable(it.syllable.letters))
+    );
+
+    if (morphemes.length > 1) {
+      for (let i = 1; i < morphemes.length; i++) {
+        // combine b, g, h, j, l with m, n, ng
+        const initialsBghjlmnng = initialsBghjl.concat(nasalInitials);
+        const finalsBglbbggll = Array.from(voicedVoicelessFinals.keys());
+        if (
+          morphemes[i].sounds[0].name === TonalSoundTags.initial &&
+          finalsBglbbggll.includes(morphemes[i - 1].lastSecondLetter) &&
+          initialsBghjlmnng.includes(morphemes[i].sounds[0].toString())
+        ) {
+          const syls = morphemes[i - 1].toVoicelessFinal();
+          wrd.replaceSyllable(i - 1, syls[0]);
+        }
+      }
+    }
+    return [wrd];
   }
 }

@@ -6,10 +6,8 @@ import { TonalWord, InflectionalEnding } from './tonal/lexeme';
 import { TonalPhrase } from './tonal/phraseme';
 import {
   TonalInflectionLexeme,
-  TonalAssimilationLexeme,
   TonalInsertionLexeme,
   TonalUninsertionLexeme,
-  TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalInfectionLexeme,
   TonalMutationLexeme,
@@ -57,9 +55,6 @@ export class TonalUnassimilationMetaplasm extends Metaplasm {
     return [];
   }
 }
-
-export class TonalZeroAssimilation extends TonalAssimilationMetaplasm {}
-export class TonalZeroUnassimilation extends TonalUnassimilationMetaplasm {}
 
 export class TonalInsertionMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
@@ -133,24 +128,6 @@ export class TonalPhrasalInflectionMetaplasm extends Metaplasm {
 }
 
 export class TonalPhrasalZeroInflection extends TonalPhrasalInflectionMetaplasm {}
-
-export class TonalPhrasalAssimilationMetaplasm extends Metaplasm {
-  apply(
-    lexemeOne: TonalAssimilationLexeme,
-    lexemeTwo: TonalAssimilationLexeme
-  ): TonalPhrase[] {
-    return [];
-  }
-}
-
-export class TonalPhrasalUnassimilationMetaplasm extends Metaplasm {
-  apply(
-    lexemeOne: TonalUnassimilationLexeme,
-    lexemeTwo: TonalUnassimilationLexeme
-  ): TonalPhrase[] {
-    return [];
-  }
-}
 
 export class TonalPhrasalInsertionMetaplasm extends Metaplasm {
   apply(

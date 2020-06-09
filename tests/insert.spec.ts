@@ -4,7 +4,7 @@ import {
 } from '../src/dparser/inserter';
 import { inflectDesinence } from '../src/dparser/inflector';
 import {
-  uninsertFromSyllable,
+  uninsertFromFollowingSyllable,
   uninsertFromFollowingWord,
 } from '../src/tonal/uninserter';
 
@@ -61,19 +61,19 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Uninsertion testing', () => {
-  const lx1 = uninsertFromSyllable('qimxmay');
+  const lx1 = uninsertFromFollowingSyllable('qimxmay');
 
   test('check the uninsertion of initial m', () => {
     expect(lx1.getForms()[0].literal).toEqual('qimxay');
   });
 
-  const lx2 = uninsertFromSyllable('infnay');
+  const lx2 = uninsertFromFollowingSyllable('infnay');
 
   test('check the uninsertion of initial n', () => {
     expect(lx2.getForms()[0].literal).toEqual('infay');
   });
 
-  const lx3 = uninsertFromSyllable('cangxngay');
+  const lx3 = uninsertFromFollowingSyllable('cangxngay');
 
   test('check the uninsertion of initial ng', () => {
     expect(lx3.getForms()[0].literal).toEqual('cangxay');
@@ -101,5 +101,101 @@ describe('Uninsertion testing', () => {
 
   test('check the underlying form', () => {
     expect(lx1.getForms()[0].literal).toEqual('lim a');
+  });
+});
+
+describe('Insertion testing, 1 empty word', () => {
+  const inputEmpty: any = '';
+
+  const phr1 = insertToFollowingSyllable(inputEmpty);
+
+  test('check the empty phrase', () => {
+    expect(phr1.word.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an empty word', () => {
+    expect(phr1.getForms().length).toEqual(0);
+  });
+
+  const phr2 = uninsertFromFollowingSyllable(inputEmpty);
+
+  test('check the empty phrase', () => {
+    expect(phr2.word.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an empty word', () => {
+    expect(phr2.getForms().length).toEqual(0);
+  });
+});
+
+describe('Insertion testing, undefined input', () => {
+  const inputUnd: any = undefined;
+
+  const phr1 = insertToFollowingSyllable(inputUnd);
+
+  test('check the empty phrase', () => {
+    expect(phr1.word.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an undefined word', () => {
+    expect(phr1.getForms().length).toEqual(0);
+  });
+
+  const phr2 = uninsertFromFollowingSyllable(inputUnd);
+
+  test('check the empty phrase', () => {
+    expect(phr2.word.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an undefined word', () => {
+    expect(phr2.getForms().length).toEqual(0);
+  });
+});
+
+describe('Phrasal insertion testing, 2 empty words, 1 empty phrase', () => {
+  const inputEmpty: any = '';
+
+  const ph1 = insertToFollowingWord(inputEmpty, inputEmpty);
+
+  test('check the empty phrase', () => {
+    expect(ph1.phrase.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an empty phrase', () => {
+    expect(ph1.getForms().length).toEqual(0);
+  });
+
+  const ph2 = uninsertFromFollowingWord(inputEmpty, inputEmpty);
+
+  test('check the empty phrase', () => {
+    expect(ph2.phrase.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an empty phrase', () => {
+    expect(ph2.getForms().length).toEqual(0);
+  });
+});
+
+describe('Phrasal insertion testing, undefined input', () => {
+  const inputUnd: any = undefined;
+
+  const ph1 = insertToFollowingWord(inputUnd, inputUnd);
+
+  test('check the empty phrase', () => {
+    expect(ph1.phrase.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an undefined phrase', () => {
+    expect(ph1.getForms().length).toEqual(0);
+  });
+
+  const ph2 = uninsertFromFollowingWord(inputUnd, inputUnd);
+
+  test('check the empty phrase', () => {
+    expect(ph2.phrase.literal).toEqual('');
+  });
+
+  test('check the number of other forms of an undefined phrase', () => {
+    expect(ph2.getForms().length).toEqual(0);
   });
 });

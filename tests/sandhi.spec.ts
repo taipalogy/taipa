@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { assimilateRegressiveInternal } from '../src/dparser/assimilator';
+import { mutateFinalOfPrecedingSyllable } from '../src/dparser/mutator';
 
 describe('Epenthesis testing', () => {
   const cli = new Client();
@@ -53,13 +53,13 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Voiced final testing', () => {
-  const lx1 = assimilateRegressiveInternal('lakkwex');
+  const lx1 = mutateFinalOfPrecedingSyllable('lakkwex');
 
   test('chech the surface form', () => {
     expect(lx1.getForms()[0].literal).toEqual('laggwex');
   });
 
-  const lx2 = assimilateRegressiveInternal('chappwex');
+  const lx2 = mutateFinalOfPrecedingSyllable('chappwex');
 
   test('chech the surface form', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabbwex');

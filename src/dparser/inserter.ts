@@ -2,7 +2,7 @@ import { GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
-import { Epenthesis, InsertToEnclitic } from './metaplasm';
+import { Epenthesis, InsertionToEnclitic } from './metaplasm';
 import { TonalInsertionPhrasemeMaker } from './phraseme';
 import { morphAnalyzeChanging } from './assimilator';
 import { TonalZeroInsertionMetaplasm } from '../metaplasm';
@@ -35,5 +35,5 @@ export function insertToFollowingWord(preceding: string, following: string) {
   const lxFollowing = getNoInsertion(following);
   const phmk = new TonalInsertionPhrasemeMaker();
 
-  return phmk.makePhraseme(lxPreceding, lxFollowing, new InsertToEnclitic());
+  return phmk.makePhraseme(lxPreceding, lxFollowing, new InsertionToEnclitic());
 }

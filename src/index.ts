@@ -18,11 +18,6 @@ export {
 export { KanaLetterTags } from './kana/kana';
 export { lemmatize } from './tonal/lemmatizer';
 export {
-  getNoAssimilation,
-  assimilateRegressiveInternal,
-  assimilateRegressiveExternal,
-} from './dparser/assimilator';
-export {
   createTonalPhrase,
   createTonalInflectionLexeme,
   createCompoundPhraseme,
@@ -55,7 +50,7 @@ export { TonalCombiningMorpheme } from './dparser/morpheme';
 export { TonalUncombiningMorpheme } from './tonal/morpheme';
 export {
   TonalInflectionLexeme,
-  TonalAssimilationLexeme,
+  // TonalAssimilationLexeme,
   TonalInsertionLexeme,
 } from './dparser/lexeme';
 export { TonalLemmatizationLexeme } from './tonal/lexeme';
@@ -65,7 +60,6 @@ export {
   TonalMainParticlePhraseme,
   TonalCompoundPhraseme,
   SerialPhraseme,
-  TonalAssimilationPhraseme,
 } from './dparser/phraseme';
 export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord } from './tonal/lexeme';

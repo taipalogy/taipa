@@ -1,9 +1,7 @@
 import {
   TonalInflectionLexeme,
-  TonalAssimilationLexeme,
   TonalInsertionLexeme,
   TonalUninsertionLexeme,
-  TonalUnassimilationLexeme,
   TonalUninfectionLexeme,
   TonalInfectionLexeme,
   TonalMutationLexeme,
@@ -23,10 +21,8 @@ import { TonalWord } from '../tonal/lexeme';
 import { TonalPhrase } from '../tonal/phraseme';
 import {
   TonalPhrasalInflectionMetaplasm,
-  TonalPhrasalAssimilationMetaplasm,
   TonalPhrasalInsertionMetaplasm,
   TonalPhrasalUninsertionMetaplasm,
-  TonalPhrasalUnassimilationMetaplasm,
   TonalPhrasalUninfectionMetaplasm,
   TonalPhrasalInfectionMetaplasm,
   TonalPhrasalMutationMetaplasm,
@@ -155,47 +151,6 @@ export class SerialPhraseme extends Phraseme {
   }
 }
 
-/** A phrase and its assimilated form. */
-export class TonalAssimilationPhraseme implements Phraseme {
-  phrase: TonalPhrase;
-  private forms: Array<TonalPhrase> = new Array();
-
-  constructor(
-    preceding: TonalAssimilationLexeme,
-    following: TonalAssimilationLexeme,
-    metaplasm: TonalPhrasalAssimilationMetaplasm
-  ) {
-    this.phrase = new TonalPhrase([preceding.word, following.word]);
-
-    this.forms = metaplasm.apply(preceding, following);
-  }
-
-  /** Returns assimilated form. */
-  getForms() {
-    return this.forms;
-  }
-}
-
-export class TonalUnassimilationPhraseme implements Phraseme {
-  phrase: TonalPhrase;
-  private forms: Array<TonalPhrase> = new Array();
-
-  constructor(
-    preceding: TonalUnassimilationLexeme,
-    following: TonalUnassimilationLexeme,
-    metaplasm: TonalPhrasalUnassimilationMetaplasm
-  ) {
-    this.phrase = new TonalPhrase([preceding.word, following.word]);
-
-    this.forms = metaplasm.apply(preceding, following);
-  }
-
-  /** Returns assimilated form. */
-  getForms() {
-    return this.forms;
-  }
-}
-
 export class TonalInflectionPhrasemeMaker {
   makePhrasalVerbPhraseme(
     verb: TonalInflectionLexeme,
@@ -280,26 +235,6 @@ export class TonalInflectionPhrasemeMaker {
 
   makeSerialPhraseme(lexemes: TonalInflectionLexeme[]) {
     return new SerialPhraseme(lexemes);
-  }
-}
-
-export class TonalAssimilationPhrasemeMaker {
-  makePhraseme(
-    preceding: TonalAssimilationLexeme,
-    following: TonalAssimilationLexeme,
-    metaplasm: TonalPhrasalAssimilationMetaplasm
-  ) {
-    return new TonalAssimilationPhraseme(preceding, following, metaplasm);
-  }
-}
-
-export class TonalUnassimilationPhrasemeMaker {
-  makePhraseme(
-    preceding: TonalUnassimilationLexeme,
-    following: TonalUnassimilationLexeme,
-    metaplasm: TonalPhrasalUnassimilationMetaplasm
-  ) {
-    return new TonalUnassimilationPhraseme(preceding, following, metaplasm);
   }
 }
 
@@ -423,6 +358,7 @@ export class TonalUninfectionPhrasemeMaker {
   }
 }
 
+/** A phrase and its mutated form. */
 export class TonalMutationPhraseme implements Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
@@ -453,6 +389,7 @@ export class TonalMutationPhrasemeMaker {
   }
 }
 
+/** A phrase and its unmutated form. */
 export class TonalUnmutationPhraseme implements Phraseme {
   phrase: TonalPhrase;
   private forms: Array<TonalPhrase> = new Array();
