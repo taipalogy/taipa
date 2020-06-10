@@ -70,7 +70,7 @@ export class PhrasalVerbVppPhraseme extends Phraseme {
     this.forms = metaplasm.applyVpp(verb, particle, particleTwo);
   }
 
-  /** Returns proceeding forms, participle forms, or transitive form */
+  /** Returns proceeding forms, participle forms, or transitive forms. */
   getForms() {
     return this.forms;
   }
@@ -90,7 +90,7 @@ export class TonalCompoundPhraseme extends Phraseme {
   }
 }
 
-/** A phrase and its inflected form. */
+/** A phrase and its inflected forms. */
 export class TonalMainParticlePhraseme extends Phraseme {
   /** Main word and its particle. */
   phrase: TonalPhrase;
@@ -108,7 +108,7 @@ export class TonalMainParticlePhraseme extends Phraseme {
     this.forms = metaplasm.apply(main, particle);
   }
 
-  /** Returns adnominal form or conjunctive form. */
+  /** Returns adnominal forms or conjunctive forms. */
   getForms() {
     return this.forms;
   }
@@ -252,7 +252,7 @@ export class TonalInsertionPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns inserted form. */
+  /** Returns inserted forms. */
   getForms() {
     return this.forms;
   }
@@ -282,7 +282,7 @@ export class TonalUninsertionPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns inserted form. */
+  /** Returns uninserted forms. */
   getForms() {
     return this.forms;
   }
@@ -312,7 +312,7 @@ export class TonalInfectionPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns inserted form. */
+  /** Returns infected forms. */
   getForms() {
     return this.forms;
   }
@@ -342,7 +342,7 @@ export class TonalUninfectionPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns inserted form. */
+  /** Returns uninfected forms. */
   getForms() {
     return this.forms;
   }
@@ -373,7 +373,7 @@ export class TonalMutationPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns inserted form. */
+  /** Returns mutated forms. */
   getForms() {
     return this.forms;
   }
@@ -404,7 +404,7 @@ export class TonalUnmutationPhraseme implements Phraseme {
     this.forms = metaplasm.apply(preceding, following);
   }
 
-  /** Returns inserted form. */
+  /** Returns unmutated forms. */
   getForms() {
     return this.forms;
   }

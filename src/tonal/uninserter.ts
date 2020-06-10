@@ -7,7 +7,7 @@ import { TonalUninsertionPhrasemeMaker } from '../dparser/phraseme';
 import { morphAnalyzeUnchanging } from '../tonal/unassimilator';
 import { TonalZeroUninsertionMetaplasm } from '../metaplasm';
 
-export function getNoUninsertion(word: string) {
+function getNoUninsertion(word: string) {
   const mrphs = morphAnalyzeUnchanging(word);
   const lx = new TonalUninsertionLexeme(
     mrphs,
@@ -34,7 +34,7 @@ export function uninsertFromFollowingSyllable(word: string) {
 }
 
 /**
- * Uninsert from the enclitic.
+ * Uninsert an initial from the enclitic.
  * @param preceding The preceding word
  * @param following The following word. The enclitic.
  */

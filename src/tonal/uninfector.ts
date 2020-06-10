@@ -14,6 +14,7 @@ export function getNoUninfection(word: string) {
   return lx;
 }
 
+/** Uninfect the following syllable which is infected by a nasalization. */
 export function uninfectFollowingSyllable(word: string) {
   const ms = morphAnalyzeUnchanging(word);
   const lx = new TonalUninfectionLexeme(ms, new Uninfection());
@@ -21,6 +22,7 @@ export function uninfectFollowingSyllable(word: string) {
   return lx;
 }
 
+/** Uninfect the following word which is infected by a nasalization. */
 export function uninfectFollowingWord(preceding: string, following: string) {
   const lxPreceding = getNoUninfection(preceding);
   const lxFollowing = getNoUninfection(following);

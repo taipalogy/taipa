@@ -44,18 +44,6 @@ export class TonalInflectionMetaplasm extends Metaplasm {
 
 export class TonalZeroInflection extends TonalInflectionMetaplasm {}
 
-export class TonalAssimilationMetaplasm extends Metaplasm {
-  apply(morphemes: Array<Morpheme>): TonalWord[] {
-    return [];
-  }
-}
-
-export class TonalUnassimilationMetaplasm extends Metaplasm {
-  apply(morphemes: Array<Morpheme>): TonalWord[] {
-    return [];
-  }
-}
-
 export class TonalInsertionMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
     return [];

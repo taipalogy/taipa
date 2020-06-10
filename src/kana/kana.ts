@@ -463,8 +463,8 @@ export const otherKanas = new Map<string, Array<string>>()
   .set(KanaLetterTags.g + KanaLetterTags.u, ['', 'ㇰ゙']) // 'ㇰ'+ '\u{3099}'
   .set(KanaLetterTags.j + KanaLetterTags.u, ['', 'ㇲ゙']) // 'ㇲ'+ '\u{3099}'
   .set(KanaLetterTags.n, ['', '\u{1B167}'])
-  .set(KanaLetterTags.j + KanaLetterTags.i, ['ぢ', 'ヂ'])
-  .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ']);
+  .set(KanaLetterTags.j + KanaLetterTags.i, ['ぢ', 'ヂ']) // moved from hiraganaKatakana
+  .set(KanaLetterTags.z + KanaLetterTags.u, ['づ', 'ヅ']); // moved from hiraganaKatakana
 
 export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.a, ['あ', 'ア'])

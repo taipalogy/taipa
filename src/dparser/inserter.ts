@@ -7,7 +7,7 @@ import { TonalInsertionPhrasemeMaker } from './phraseme';
 import { morphAnalyzeChanging } from './assimilator';
 import { TonalZeroInsertionMetaplasm } from '../metaplasm';
 
-export function getNoInsertion(word: string) {
+function getNoInsertion(word: string) {
   const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalInsertionLexeme(mrphs, new TonalZeroInsertionMetaplasm());
 
@@ -30,6 +30,11 @@ export function insertToFollowingSyllable(word: string) {
   return lx;
 }
 
+/**
+ * Insert an initial to the enclitic.
+ * @param preceding Thre preceding word.
+ * @param following The following word. The enclitic.
+ */
 export function insertToFollowingWord(preceding: string, following: string) {
   const lxPreceding = getNoInsertion(preceding);
   const lxFollowing = getNoInsertion(following);

@@ -459,6 +459,7 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
   }
 }
 
+/** Infect the following syllable with nasalization. */
 export class Infection extends TonalInfectionMetaplasm {
   apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -482,6 +483,7 @@ export class Infection extends TonalInfectionMetaplasm {
   }
 }
 
+/** Uninfect the following syllable which is infected by a nasalization. */
 export class Uninfection extends TonalUninfectionMetaplasm {
   apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -505,6 +507,7 @@ export class Uninfection extends TonalUninfectionMetaplasm {
   }
 }
 
+/** Mutate the initial of the following syllable with the initial of the preceding syllable. */
 export class ConsonantMutation extends TonalMutationMetaplasm {
   apply(morphemes: Array<TonalSoundChangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -524,6 +527,7 @@ export class ConsonantMutation extends TonalMutationMetaplasm {
   }
 }
 
+/** Unmutate the initial of the following syllable with the initial of the preceding syllable. */
 export class ConsonantUnmutation extends TonalUnmutationMetaplasm {
   apply(morphemes: Array<TonalSoundUnchangingMorpheme>): TonalWord[] {
     if (morphemes.length > 1 && morphemes[morphemes.length - 2]) {
@@ -694,6 +698,7 @@ export class Conjunctive extends TonalPhrasalInflectionMetaplasm {
   }
 }
 
+/** Insert an initial to the enclitic. */
 export class InsertionToEnclitic extends TonalPhrasalInsertionMetaplasm {
   apply(
     preceding: TonalInsertionLexeme,
@@ -705,6 +710,7 @@ export class InsertionToEnclitic extends TonalPhrasalInsertionMetaplasm {
   }
 }
 
+/** Uninsert an initial from the enclitic. */
 export class UninsertionFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
   apply(
     preceding: TonalUninsertionLexeme,
@@ -716,6 +722,7 @@ export class UninsertionFromEnclitic extends TonalPhrasalUninsertionMetaplasm {
   }
 }
 
+/** Infect the following word with a nasalization. */
 export class InfectionExternal extends TonalPhrasalInfectionMetaplasm {
   apply(
     preceding: TonalInfectionLexeme,
@@ -727,6 +734,7 @@ export class InfectionExternal extends TonalPhrasalInfectionMetaplasm {
   }
 }
 
+/** Uninfect the following word which is infected by a nasalization. */
 export class UninfectionExternal extends TonalPhrasalUninfectionMetaplasm {
   apply(
     preceding: TonalUninfectionLexeme,

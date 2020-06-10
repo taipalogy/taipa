@@ -8,8 +8,7 @@ import {
 import { TonalZeroMutationMetaplasm } from '../metaplasm';
 import { TonalMutationPhrasemeMaker } from './phraseme';
 
-/** No internal sandhi. */
-export function getNoMutation(word: string) {
+function getNoMutation(word: string) {
   const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalMutationLexeme(mrphs, new TonalZeroMutationMetaplasm());
 

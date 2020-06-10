@@ -166,10 +166,9 @@ export class Letters {
 
 /** Turn a string into graphemes. */
 export class GraphemeMaker {
-  protected listOfLetters: Array<AlphabeticLetter> = new Array();
+  private listOfLetters: Array<AlphabeticLetter> = new Array();
 
   constructor(private lowerLetters: Letters) {
-    this.listOfLetters = new Array();
     this.listOfLetters = Array.from(lowerLetters.values);
   }
 
