@@ -278,7 +278,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
         }
         ret.push(syl);
 
-        // TODO: free form of the syllable could be handle outside of this routine by popping f/w and h/hh
+        // TODO: free form of the syllable could be handle outside of this routine by popping out f/w and h/hh
         return ret;
       }
     }

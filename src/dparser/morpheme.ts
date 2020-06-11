@@ -214,7 +214,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   }
 
   private changeFinalHHh(initial: Sound) {
-    // TODO: add sandhi hh and h.
+    // TODO: mutate consonants hh and h.
     return [];
   }
 
