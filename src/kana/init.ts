@@ -11,6 +11,7 @@ import {
   hatsuonKana,
   special,
   KanaLetterTags,
+  otherKanas,
 } from './kana';
 import { KanaUncombiningMorpheme } from './morpheme';
 
@@ -42,10 +43,13 @@ function lookup(str: string) {
 
 export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
   // string one is hiragana, string two is katakana, string three is chouon
-  const kanaSequences: [string, string, string] = ['', '', ''];
+  const kanaSequences: string[] = []; //[string, string, string] = ['', '', ''];
+  kanaSequences[0] = '';
+  kanaSequences[1] = '';
+  kanaSequences[2] = '';
   let previous = '';
 
-  for (let m of morphemes) {
+  for (const m of morphemes) {
     let ks = lookup(m.syllable.literal);
     if (ks != undefined && ks[0] != undefined) {
       // in case the kana is absent, we check against ks[0]
@@ -66,6 +70,13 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
         kanaSequences[2] += 'ー';
       } else {
         kanaSequences[2] += ks[1];
+      }
+      if (morphemes.length == 1 && otherKanas.has(m.syllable.literal)) {
+        const got = otherKanas.get(m.syllable.literal);
+        if (got) {
+          kanaSequences.push(got[0]);
+          kanaSequences.push(got[1]);
+        }
       }
     } else if (
       finalConsonantsKana.includes(

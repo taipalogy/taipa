@@ -43,16 +43,13 @@ export {
   inflectSerial,
 } from './dparser/inflector';
 export { insertToFollowingSyllable } from './dparser/inserter';
+export { mutateFinalOfPrecedingSyllable } from './dparser/mutator';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';
 export { TonalCombiningMorpheme } from './dparser/morpheme';
 export { TonalUncombiningMorpheme } from './tonal/morpheme';
-export {
-  TonalInflectionLexeme,
-  // TonalAssimilationLexeme,
-  TonalInsertionLexeme,
-} from './dparser/lexeme';
+export { TonalInflectionLexeme, TonalInsertionLexeme } from './dparser/lexeme';
 export { TonalLemmatizationLexeme } from './tonal/lexeme';
 export {
   PhrasalVerbPhraseme,
