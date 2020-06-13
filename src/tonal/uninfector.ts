@@ -1,4 +1,4 @@
-import { morphAnalyzeUnchanging } from './unassimilator';
+import { morphAnalyzeUnchanging } from './analyzer';
 import { TonalUninfectionLexeme } from '../dparser/lexeme';
 import { TonalUninfectionPhrasemeMaker } from '../dparser/phraseme';
 import { UninfectionExternal, Uninfection } from '../dparser/metaplasm';

@@ -1,5 +1,5 @@
 import { TonalMutationLexeme } from './lexeme';
-import { morphAnalyzeChanging } from './assimilator';
+import { morphAnalyzeChanging } from './analyzer';
 import {
   ConsonantMutation,
   FinalConsonantMutationExternal,

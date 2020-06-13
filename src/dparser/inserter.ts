@@ -4,7 +4,7 @@ import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
 import { Epenthesis, InsertionToEnclitic } from './metaplasm';
 import { TonalInsertionPhrasemeMaker } from './phraseme';
-import { morphAnalyzeChanging } from './assimilator';
+import { morphAnalyzeChanging } from './analyzer';
 import { TonalZeroInsertionMetaplasm } from '../metaplasm';
 
 function getNoInsertion(word: string) {

@@ -1,5 +1,5 @@
 import { TonalInfectionLexeme } from './lexeme';
-import { morphAnalyzeChanging } from './assimilator';
+import { morphAnalyzeChanging } from './analyzer';
 import { TonalZeroInfectionMetaplasm } from '../metaplasm';
 import { Infection, InfectionExternal } from './metaplasm';
 import { TonalInfectionPhrasemeMaker } from './phraseme';

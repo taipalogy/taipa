@@ -4,7 +4,7 @@ import { TonalUninsertionLexeme } from '../dparser/lexeme';
 import { TonalSoundUnchangingMorphemeMaker } from '../dparser/morpheme';
 import { Uninsertion, UninsertionFromEnclitic } from '../dparser/metaplasm';
 import { TonalUninsertionPhrasemeMaker } from '../dparser/phraseme';
-import { morphAnalyzeUnchanging } from '../tonal/unassimilator';
+import { morphAnalyzeUnchanging } from './analyzer';
 import { TonalZeroUninsertionMetaplasm } from '../metaplasm';
 
 function getNoUninsertion(word: string) {

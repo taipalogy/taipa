@@ -2,12 +2,24 @@ import { AlphabeticGrapheme } from '../unit';
 import {
   TonalCombiningMorphemeMaker,
   TonalCombiningMorpheme,
+  TonalSoundChangingMorphemeMaker,
 } from './morpheme';
 import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionMetaplasm } from '../metaplasm';
 import { TonalCombiningMetaplasm } from '../metaplasm';
 import { TonalCombiningForms } from './metaplasm';
 import { graphAnalyzeTonal } from '../tonal/analyzer';
+
+/**
+ * Analyzes a string into morphemes. Morphological analysis.
+ * @param str A word.
+ */
+export function morphAnalyzeChanging(str: string) {
+  const gs = graphAnalyzeTonal(str);
+  const tschmm = new TonalSoundChangingMorphemeMaker();
+  const mrphs = tschmm.makeMorphemes(gs);
+  return mrphs;
+}
 
 /** Analyzes a string into morphemes or lexeme. */
 export const tonalInflectionAnalyzer = {

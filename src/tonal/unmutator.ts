@@ -1,4 +1,4 @@
-import { morphAnalyzeUnchanging } from './unassimilator';
+import { morphAnalyzeUnchanging } from './analyzer';
 import { TonalUnmutationLexeme } from '../dparser/lexeme';
 import {
   ConsonantUnmutation,
