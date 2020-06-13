@@ -528,6 +528,8 @@ const initialWithCombiningOverline = [
   TonalLetterTags.ch.toString() + TonalLetterTags.e.toString(),
   TonalLetterTags.c.toString() + TonalLetterTags.e.toString(),
   TonalLetterTags.ch.toString() + TonalLetterTags.o.toString(),
+  TonalLetterTags.ch.toString() + TonalLetterTags.or.toString(),
+  TonalLetterTags.ch.toString() + TonalLetterTags.ur.toString(),
   TonalLetterTags.c.toString() + TonalLetterTags.o.toString(),
   TonalLetterTags.d.toString() + TonalLetterTags.i.toString(),
   TonalLetterTags.t.toString() + TonalLetterTags.i.toString(),
@@ -898,6 +900,10 @@ const mappingInitialJ = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.ir,
+    hiraganaKatakana.get(KanaLetterTags.z + KanaLetterTags.u)
+  )
+  .set(
+    TonalLetterTags.ur,
     hiraganaKatakana.get(KanaLetterTags.z + KanaLetterTags.u)
   );
 

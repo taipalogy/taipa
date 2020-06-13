@@ -98,7 +98,7 @@ const addonLexicalRootsForSyllabary = [
 
     'iak', 'ionn', 'ir', 'iri', 'irn',
 
-    'je', 'jek', 'jeng', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'joa', 'joe', 'jor', 'jun',
+    'je', 'jek', 'jeng', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'joa', 'joe', 'jor', 'jun', 'jur',
 
     'kir', 'kor',
 
@@ -115,10 +115,12 @@ const addonLexicalRootsForSyllabary = [
     'qen', 'qet', 'qiak', 'qiang', 'qio', 'qip', 'qir', 'qiri', 'qirn', 'qit', 'qiur', 'qor',
     
     'oa', 'oak',
+
+    'por',
     
     'sir', 'siri', 'sop', 'sor', 'sore',
 
-    'ta', 'tia',
+    'ta', 'tia', 'tor',
 
     'via', 'viang', 'viri', 'voa', 'vor',
 ]

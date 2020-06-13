@@ -30,7 +30,7 @@ function checkChouon(previousLetter: string, nextLetter: string): boolean {
   return false;
 }
 
-function lookup(str: string) {
+function lookUp(str: string) {
   let kanas = hiraganaKatakana.get(str);
   if (kanas == undefined) {
     kanas = gailaigo.get(str);
@@ -39,6 +39,12 @@ function lookup(str: string) {
     kanas = special.get(str);
   }
   return kanas;
+}
+
+function lookUpOtherKanas(str: string) {
+  if (otherKanas.has(str)) {
+    return otherKanas.get(str);
+  }
 }
 
 export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
@@ -50,7 +56,7 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
   let previous = '';
 
   for (const m of morphemes) {
-    let ks = lookup(m.syllable.literal);
+    let ks = lookUp(m.syllable.literal);
     if (ks != undefined && ks[0] != undefined) {
       // in case the kana is absent, we check against ks[0]
       kanaSequences[0] += ks[0];
@@ -71,11 +77,11 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
       } else {
         kanaSequences[2] += ks[1];
       }
-      if (morphemes.length == 1 && otherKanas.has(m.syllable.literal)) {
-        const got = otherKanas.get(m.syllable.literal);
+      if (morphemes.length == 1) {
+        const got = lookUpOtherKanas(m.syllable.literal);
         if (got) {
-          kanaSequences.push(got[0]);
-          kanaSequences.push(got[1]);
+          if (got[0]) kanaSequences.push(got[0]);
+          if (got[1]) kanaSequences.push(got[1]);
         }
       }
     } else if (
@@ -83,7 +89,7 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
         m.syllable.literal[m.syllable.literal.length - 1]
       ) == true
     ) {
-      ks = lookup(
+      ks = lookUp(
         m.syllable.literal.substring(0, m.syllable.literal.length - 1)
       );
       if (ks != undefined && ks[0] != undefined) {

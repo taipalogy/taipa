@@ -356,7 +356,7 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta1 = cli.processTonal('cha');
 
-  test('kanas, サ̅ア', () => {
+  test('kanas', () => {
     expect(ta1.blockSequences[0]).toEqual('サ̅ア');
   });
 
@@ -368,7 +368,7 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta3 = cli.processTonal('da');
 
-  test('kanas, タア', () => {
+  test('kanas', () => {
     expect(ta3.blockSequences[0]).toEqual('タア');
   });
 
@@ -380,7 +380,7 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta5 = cli.processTonal('chi');
 
-  test('kanas, チイ', () => {
+  test('kanas', () => {
     expect(ta5.blockSequences[0]).toEqual('チイ');
   });
 
@@ -392,8 +392,8 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta7 = cli.processTonal('di');
 
-  test('kanas, チ̅イ', () => {
-    expect(ta7.blockSequences[0]).toEqual('チ' + '\u0305' + 'イ');
+  test('kanas', () => {
+    expect(ta7.blockSequences[0]).toEqual('チ̅イ');
   });
 
   const ta8 = cli.processTonal('ti');
@@ -404,7 +404,7 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta9 = cli.processTonal('chu');
 
-  test('kanas, ツウ', () => {
+  test('kanas', () => {
     expect(ta9.blockSequences[0]).toEqual('ツウ');
   });
 
@@ -416,8 +416,8 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta11 = cli.processTonal('du');
 
-  test('kanas, ツ̅ウ', () => {
-    expect(ta11.blockSequences[0]).toEqual('ツ' + '\u0305' + 'ウ');
+  test('kanas', () => {
+    expect(ta11.blockSequences[0]).toEqual('ツ̅ウ');
   });
 
   const ta12 = cli.processTonal('tu');
@@ -428,8 +428,8 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta13 = cli.processTonal('che');
 
-  test('kanas, セ̅エ', () => {
-    expect(ta13.blockSequences[0]).toEqual('セ' + '\u0305' + 'エ');
+  test('kanas', () => {
+    expect(ta13.blockSequences[0]).toEqual('セ̅エ');
   });
 
   const ta14 = cli.processTonal('ce');
@@ -440,7 +440,7 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta15 = cli.processTonal('de');
 
-  test('kanas, テエ', () => {
+  test('kanas', () => {
     expect(ta15.blockSequences[0]).toEqual('テエ');
   });
 
@@ -452,8 +452,8 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta17 = cli.processTonal('cho');
 
-  test('kanas, ソ̅オ', () => {
-    expect(ta17.blockSequences[0]).toEqual('ソ' + '\u0305' + 'オ');
+  test('kanas', () => {
+    expect(ta17.blockSequences[0]).toEqual('ソ̅オ');
   });
 
   const ta18 = cli.processTonal('co');
@@ -464,7 +464,7 @@ describe('Taiwanese kana testing, initials', () => {
 
   const ta19 = cli.processTonal('do');
 
-  test('kanas, トオ', () => {
+  test('kanas', () => {
     expect(ta19.blockSequences[0]).toEqual('トオ');
   });
 
