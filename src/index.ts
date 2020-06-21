@@ -63,6 +63,9 @@ export { TonalWord } from './tonal/lexeme';
 export { TonalPhrase } from './tonal/phraseme';
 
 export { Sound, SoundGeneration } from './unit';
+export {  initialSounds,
+  nasalizationSounds,
+  medialSounds } from './tonal/version2'
 
 export {
   TonalDesinenceInflection,

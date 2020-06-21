@@ -7,8 +7,8 @@ A library for analyzing and processing Taiwanese language. This library consists
 - inflection
 - morpheme-based morphological analysis
 - graphemic analysis
-- assimilation
-- insertion
+- surface form and underlying form
+- hiragana, katakana, and Taiwanese kana
 
 ## Client
 

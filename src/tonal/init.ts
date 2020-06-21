@@ -29,17 +29,17 @@ const combiningDotBelow = '\u0323';
 function handleCombiningDotBelowOverline(initial: string, medial: string) {
   const got = kanaInitials(mappingInitial.get(initial))(medial);
   if (got && got[0]) {
-    if (initialWithCombiningDotBelow.aspirated.includes(initial)) {
-      if (initialWithCombiningOverline.includes(initial + medial)) {
+    if (initialsWithCombiningDotBelow.aspirated.includes(initial)) {
+      if (freeSyllablesWithCombiningOverline.includes(initial + medial)) {
         return got[0] + combiningOverline + combiningDotBelow;
       }
       return got[0] + combiningDotBelow;
     } else if (
-      initialWithCombiningDotBelow.withoutADotOrOverline.includes(initial)
+      initialsWithCombiningDotBelow.withoutADotOrOverline.includes(initial)
     ) {
       return got[0];
-    } else if (initialWithCombiningDotBelow.withOverline.includes(initial)) {
-      if (initialWithCombiningOverline.includes(initial + medial)) {
+    } else if (initialsWithCombiningDotBelow.withAnOverline.includes(initial)) {
+      if (freeSyllablesWithCombiningOverline.includes(initial + medial)) {
         return got[0] + combiningOverline;
       }
       return got[0];
@@ -522,7 +522,7 @@ const kanaInitials = function (map?: Map<string, string[] | undefined>) {
   };
 };
 
-const initialWithCombiningOverline = [
+const freeSyllablesWithCombiningOverline = [
   TonalLetterTags.ch.toString() + TonalLetterTags.a.toString(),
   TonalLetterTags.c.toString() + TonalLetterTags.a.toString(),
   TonalLetterTags.ch.toString() + TonalLetterTags.e.toString(),
@@ -540,7 +540,7 @@ const initialWithCombiningOverline = [
   TonalLetterTags.d.toString() + TonalLetterTags.ir.toString(),
 ];
 
-const initialWithCombiningDotBelow = {
+const initialsWithCombiningDotBelow = {
   // whether the dot should be combined
   aspirated: [
     // with a dot
@@ -562,7 +562,7 @@ const initialWithCombiningDotBelow = {
     TonalLetterTags.n.toString(),
     TonalLetterTags.ng.toString(),
   ],
-  withOverline: [
+  withAnOverline: [
     TonalLetterTags.ch.toString(),
     TonalLetterTags.c.toString(),
     TonalLetterTags.d.toString(),
