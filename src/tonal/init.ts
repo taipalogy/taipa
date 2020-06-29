@@ -426,7 +426,10 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             }
 
             if (mapped) {
-              if (mr.sounds[0].name === TonalSoundTags.initial) {
+              if (
+                mr.sounds[0].name === TonalSoundTags.initial ||
+                mr.sounds[0].name === TonalSoundTags.medial
+              ) {
                 // except for ngh which has no initials. the same for mhf, nhf, nghf, mhhw, nhhw, nghhw.
                 kanas = sliced + mapped[1];
               }
