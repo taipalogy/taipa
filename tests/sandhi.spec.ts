@@ -135,3 +135,51 @@ describe('Reduplication testing', () => {
     expect(ta.uncombiningSequences[0]).toContain('sitt');
   });
 });
+
+describe('Consonant mutation testing, sandhi pp', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('sannzamhhwqauy');
+
+  test('check the uncombining form', () => {
+    expect(ta1.uncombiningSequences[1]).toContain('app');
+  });
+
+  test('check the consonant', () => {
+    expect(ta1.soundSequences[1][1].toString()).toEqual(TonalLetterTags.m);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.hh);
+  });
+
+  const ta2 = cli.processTonal('hinhfnix');
+
+  test('check the uncombining form', () => {
+    expect(ta2.uncombiningSequences[0]).toContain('hit');
+  });
+
+  test('check the consonant', () => {
+    expect(ta2.soundSequences[0][2].toString()).toEqual(TonalLetterTags.n);
+    expect(ta2.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+  });
+
+  const ta3 = cli.processTonal('vunghfngoz');
+
+  test('check the uncombining form', () => {
+    expect(ta3.uncombiningSequences[0]).toContain('vut');
+  });
+
+  test('check the consonant', () => {
+    expect(ta3.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ng);
+    expect(ta3.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+  });
+
+  const ta4 = cli.processTonal('chimhhwmix');
+
+  test('check the uncombining form', () => {
+    expect(ta4.uncombiningSequences[0]).toContain('chitt');
+  });
+
+  test('check the consonant', () => {
+    expect(ta4.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
+    expect(ta4.soundSequences[0][3].toString()).toEqual(TonalLetterTags.hh);
+  });
+});

@@ -18,13 +18,22 @@ import {
   FreeTonalZ,
   FreeTonalX,
   lowerLettersTonal,
+  neutralFinalSounds,
+  TonalSoundTags,
 } from './version2';
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
-import { finalBgjlsbbggjjllss, voicedVoicelessFinals } from './collections';
+import {
+  finalsBgjlsbbggjjllss,
+  voicedVoicelessFinals,
+  nasalFinals,
+} from './collections';
 
 /** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
+  constructor(private soundsFollowing: Sound[]) {
+    super();
+  }
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph instanceof FreeAllomorph) {
@@ -68,9 +77,9 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         const s: TonalSyllable = new TonalSyllable(
           sounds.map(x => new AlphabeticLetter(x.characters))
         );
-        s.popLetter();
-        if (finalBgjlsbbggjjllss.has(s.lastLetter.literal)) {
-          const fnls = finalBgjlsbbggjjllss.get(s.lastLetter.literal);
+        s.popLetter(); // pop out the tonal
+        if (finalsBgjlsbbggjjllss.has(s.lastLetter.literal)) {
+          const fnls = finalsBgjlsbbggjjllss.get(s.lastLetter.literal);
           if (fnls) {
             const clones = fnls.map(it => {
               const clone: TonalSyllable = Object.create(s);
@@ -83,6 +92,41 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             const ret: TonalSyllable[] = [];
             clones.map(it => ret.push(it));
             return clones;
+          }
+        } else if (
+          sounds.filter(it => it.name === TonalSoundTags.medial).length > 0 &&
+          nasalFinals.includes(s.lastSecondLetter.literal) &&
+          neutralFinalSounds.includes(s.lastLetter.literal)
+        ) {
+          // if there is no medials, e.g. hmhh, hngh, just bypass this block
+          // mhh, mh, nhh, nh, nghh, ngh
+          if (
+            this.soundsFollowing[0].name === TonalSoundTags.initial &&
+            s.lastSecondLetter.literal === this.soundsFollowing[0].toString()
+          ) {
+            // change to -tt or -t
+            const ntrl = s.letters[s.letters.length - 1].literal;
+            s.popLetter(); // pop the neutral
+            s.popLetter(); // pop the nasal
+            const clone: TonalSyllable = Object.create(s);
+            if (ntrl === TonalLetterTags.hh) {
+              clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.tt));
+            } else {
+              clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.t));
+            }
+            return [clone];
+          } else {
+            // change to -pp or -p
+            const ntrl = s.letters[s.letters.length - 1].literal;
+            s.popLetter(); // pop the neutral
+            s.popLetter(); // pop the nasal
+            const clone: TonalSyllable = Object.create(s);
+            if (ntrl === TonalLetterTags.hh) {
+              clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.pp));
+            } else {
+              clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.p));
+            }
+            return [clone];
           }
         }
         return [s];
@@ -184,19 +228,20 @@ export class UncombiningPrecedingAyex extends TonalCombiningMetaplasm {
 
 /** Returns the last syllable of a double or triple construction as an uncombining form. */
 export class TonalReduplication extends TonalCombiningMetaplasm {
-  constructor(private sounds: Sound[]) {
+  constructor(private soundsLastSyllable: Sound[]) {
     super();
   }
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       // skip the last syllable. it is the base form of the preceding 2 syllables.
       if (
-        this.sounds[this.sounds.length - 1].toString() ===
-        sounds[sounds.length - 1].toString()
+        this.soundsLastSyllable[
+          this.soundsLastSyllable.length - 1
+        ].toString() === sounds[sounds.length - 1].toString()
       )
         return [];
       const s: TonalSyllable = new TonalSyllable(
-        this.sounds.map(it => new AlphabeticLetter(it.characters))
+        this.soundsLastSyllable.map(it => new AlphabeticLetter(it.characters))
       );
       return [s];
     }

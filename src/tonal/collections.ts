@@ -166,7 +166,7 @@ export const voicedVoicelessFinals = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.gg, TonalLetterTags.kk);
 
 /** unchanged sounds for b, g, j, l, s, bb, gg, jj, ll, ss */
-export const finalBgjlsbbggjjllss = new Map<string, TonalLetterTags[]>()
+export const finalsBgjlsbbggjjllss = new Map<string, TonalLetterTags[]>()
   .set(TonalLetterTags.b, [TonalLetterTags.p, TonalLetterTags.t])
   .set(TonalLetterTags.g, [TonalLetterTags.k, TonalLetterTags.t])
   .set(TonalLetterTags.j, [TonalLetterTags.t])
@@ -188,4 +188,11 @@ export const fourthFinals = [
   TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
   TonalLetterTags.s.toString(),
+];
+
+export const sandhiFinalsPPpttt = [
+  TonalLetterTags.p.toString(),
+  TonalLetterTags.pp.toString(),
+  TonalLetterTags.t.toString(),
+  TonalLetterTags.tt.toString(),
 ];

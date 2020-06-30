@@ -32,7 +32,7 @@ import {
   smJlsF,
   smJJllssWx,
 } from './matcher';
-import { epentheticSounds, tonalsWx } from './collections';
+import { epentheticSounds, tonalsWx, sandhiFinalsPPpttt } from './collections';
 import {
   TonalReduplication,
   UncombiningPrecedingAyex,
@@ -503,6 +503,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           );
         } else if (tonalsWx.includes(arr[i].charAt(arr[i].length - 1))) {
           if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.w) {
+            // 5th tone
             if (sub2[0] === arr[0][0]) {
               literal = sub1.concat(
                 TonalLetterTags.tt + TonalLetterTags.w,
@@ -515,6 +516,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
               );
             }
           } else if (arr[i].charAt(arr[i].length - 1) === TonalLetterTags.x) {
+            // 3rd tone
             if (sub2[0] === arr[0][0]) {
               literal = sub1.concat(
                 TonalLetterTags.tt + TonalLetterTags.x,
@@ -636,7 +638,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return ltrs;
   }
 
-  private postprocessSandhiTTt(
+  private postprocessSandhiPPpttt(
     pattern: MatchedPattern,
     lenPrecedingLetters: number
   ) {
@@ -658,14 +660,9 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       }
     } else if (
       this.sandhiFinalTonals.length > 0 &&
-      (pattern.letters[pattern.letters.length - 2].literal ===
-        TonalLetterTags.t ||
-        pattern.letters[pattern.letters.length - 2].literal ===
-          TonalLetterTags.tt ||
-        pattern.letters[pattern.letters.length - 2].literal ===
-          TonalLetterTags.p ||
-        pattern.letters[pattern.letters.length - 2].literal ===
-          TonalLetterTags.pp)
+      sandhiFinalsPPpttt.includes(
+        pattern.letters[pattern.letters.length - 2].literal
+      )
     ) {
       // if there is a tonal
       const fnl = this.sandhiFinalTonals.pop();
@@ -685,13 +682,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           );
           const snd1 = tonalPositionalSounds.get(fnl.letters[0].literal);
           const snd2 = tonalPositionalSounds.get(fnl.letters[1].literal);
-          if (snd1 && snd2)
+          if (snd1 && snd2) {
             pattern.pattern.splice(
               fnl.index - lenPrecedingLetters,
               1,
               snd1(TonalSoundTags.nasalFinal),
               snd2(TonalSoundTags.stopFinal)
             );
+          }
         }
       }
     }
@@ -704,11 +702,12 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     const morphemes = this.createMorphemes();
 
     for (let i = 0; i < matched.length; i++) {
-      // accumulate the lenght of letters preceding the sandhi finals
+      // accumulate the lenght of letters preceding the current syllable
       const lenPrecedingLetters: number = matched
-        .map((v, j) => (j < i ? v.letters.length : 0))
-        .reduce((prev, v) => prev + v);
-      const ptn = this.postprocessSandhiTTt(matched[i], lenPrecedingLetters);
+        .map((val, j) => (j < i ? val.letters.length : 0))
+        .reduce((prev, val) => prev + val);
+
+      const ptn = this.postprocessSandhiPPpttt(matched[i], lenPrecedingLetters);
 
       if (this.isCombiningAyex(matched)) {
         // ~fa, ~xa, fay, or ~xay. ex.
@@ -726,7 +725,20 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           this.createMorpheme(ptn, new TonalReduplication(matched[1].pattern))
         );
       } else {
-        morphemes.push(this.createMorpheme(ptn, new TonalUncombiningForms()));
+        if (i < matched.length - 1) {
+          // pass the sounds of the following syllable to unchange sounds accordingly
+          morphemes.push(
+            this.createMorpheme(
+              ptn,
+              new TonalUncombiningForms(matched[i + 1].pattern)
+            )
+          );
+        } else {
+          // no sandhi sounds to unchange, just pass an empty array
+          morphemes.push(
+            this.createMorpheme(ptn, new TonalUncombiningForms([]))
+          );
+        }
       }
     }
 
