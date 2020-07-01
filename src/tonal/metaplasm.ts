@@ -101,6 +101,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           // if there is no medials, e.g. hmhh, hngh, just bypass this block
           // mhh, mh, nhh, nh, nghh, ngh
           if (
+            this.soundsFollowing[0] &&
             this.soundsFollowing[0].name === TonalSoundTags.initial &&
             s.lastSecondLetter.literal === this.soundsFollowing[0].toString()
           ) {
@@ -115,7 +116,8 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.t));
             }
             return [clone];
-          } else {
+          } else if (this.soundsFollowing[0]) {
+            // there has to be a following syllable for this syllable to change form
             // change to -pp or -p
             const ntrl = s.letters[s.letters.length - 1].literal;
             s.popLetter(); // pop the neutral

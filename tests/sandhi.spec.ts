@@ -161,7 +161,7 @@ describe('Consonant mutation testing, sandhi pp', () => {
     expect(ta2.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
-  const ta3 = cli.processTonal('vunghfngoz');
+  const ta3 = cli.processTonal('vunghfngay');
 
   test('check the uncombining form', () => {
     expect(ta3.uncombiningSequences[0]).toContain('vut');

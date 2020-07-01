@@ -389,6 +389,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     if (
       patterns.length == 2 &&
+      !regexMnngHF.test(patterns[0].letters.map(it => it.literal).join('')) &&
       keysAy.filter(
         it => it === patterns[patterns.length - 2].lastLetter.literal
       ).length > 0 &&
@@ -398,6 +399,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           TonalLetterTags.y) ||
         patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.a)
     ) {
+      // bypass sandhi t. e.g. vunghf~
       return true;
     }
     return false;
