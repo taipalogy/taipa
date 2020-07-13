@@ -69,7 +69,9 @@ function insertIReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
       // insert kana for i before kana for e
       const got = hiraganaKatakana.get(KanaLetterTags.i);
       if (got) {
-        kanas = got[1] + kanas;
+        const slicedHead = kanas.slice(0, kanas.length - 1);
+        const slicedTail = kanas.slice(kanas.length - 1);
+        kanas = slicedHead + got[1] + slicedTail;
       }
     }
   }
@@ -134,10 +136,10 @@ function replaceWithSmall(kanas: string, sounds: Sound[], i: number) {
   if (smallFormIRor.includes(sounds[i - 1].toString())) {
     // an extra vowel is already been appended to the initial kana
     // when there is an initial and followed by a vowel, an or kana should be replaced with a small form
-    const mapped = mappingMedialSmallForm.get(sounds[i - 1].toString());
-    if (mapped) {
+    const got = mappingMedialSmallForm.get(sounds[i - 1].toString());
+    if (got) {
       const sliced = kanas.slice(0, kanas.length - 2);
-      kanas = sliced + mapped[1] + combiningOverline;
+      kanas = sliced + got[1] + combiningOverline;
     }
   } else {
     const sliced = kanas.slice(0, kanas.length - 1);
@@ -233,18 +235,20 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                   it.name === TonalSoundTags.nasalFinal ||
                   it.name === TonalSoundTags.stopFinal
               );
+
               if (
                 mr.sounds[i].toString() === TonalLetterTags.e &&
                 finals.length > 0 &&
                 nasalizations.length == 0
               ) {
                 const finalsForEToKanaIE = mr.sounds.filter(
-                  i =>
-                    (i.name === TonalSoundTags.stopFinal &&
-                      finalsForEKegekkeggeng.includes(i.toString())) ||
-                    (i.name === TonalSoundTags.nasalFinal &&
-                      finalsForEKegekkeggeng.includes(i.toString()))
+                  it =>
+                    (it.name === TonalSoundTags.stopFinal &&
+                      finalsForEKegekkeggeng.includes(it.toString())) ||
+                    (it.name === TonalSoundTags.nasalFinal &&
+                      finalsForEKegekkeggeng.includes(it.toString()))
                 );
+
                 if (finalsForEToKanaIE.length > 0) {
                   // if there is a final, e should be replaced with i for retrieving initial kana
                   // in the case of ~eng or -ek
@@ -265,12 +269,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                     mr.sounds[0].toString(),
                     mr.sounds[i].toString()
                   );
-
-                  const got = hiraganaKatakana.get(mr.sounds[i].toString());
-                  if (got && got[1]) {
-                    // replicate the vowel and append it
-                    kanas += got[1];
-                  }
+                  // we don't retrieve an extra kana e
                 }
               } else {
                 kanas += handleCombiningDotBelowOverline(

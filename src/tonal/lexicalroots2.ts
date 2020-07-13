@@ -129,6 +129,8 @@ const addonLexicalRootsForSyllabary = [
 const extraLexicalRoots = [
     'aih',
     
+    'burh',
+
     'coaih',
     
     'dngh',
