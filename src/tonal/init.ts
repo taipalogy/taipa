@@ -66,7 +66,7 @@ function handleToneSymbolForFourthEighth(
 function insertIReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
   if (sounds[i - 1].name === TonalSoundTags.medial) {
     if (sounds[0].toString() === TonalLetterTags.e) {
-      // insert kana for i before kana for e
+      // insert a kana i before kana e
       const got = hiraganaKatakana.get(KanaLetterTags.i);
       if (got) {
         const slicedHead = kanas.slice(0, kanas.length - 1);

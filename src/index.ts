@@ -73,3 +73,5 @@ export {
 } from './dparser/metaplasm';
 
 export { predict } from './tonal/prediction';
+
+export { syllableCompositions } from './tonal/soundgen'

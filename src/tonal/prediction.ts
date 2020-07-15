@@ -3,13 +3,13 @@ import { SoundGeneration, Sound } from '../unit';
 import { isInLexcialRoots } from './lexicalroots2';
 
 /** Predicts the following letters. Return them as an array of strings when available. If the lexical roots are not present, an empty array will be returned. */
-export function predict(strs: string[]) {
+export function predict(letters: string[]) {
   const soundSeqs: Array<Sound[]> = new Array();
 
   for (let j = 0; j < syllableCompositions.length; j++) {
     let sg = new SoundGeneration();
     sg.predictive = true;
-    sg.letters = strs;
+    sg.letters = letters;
     sg = syllableCompositions[j](sg);
 
     if (sg.letters.length != sg.sounds.length || sg.matching != true) {
@@ -34,7 +34,7 @@ export function predict(strs: string[]) {
 
   // for valid predictions
   const predictions = dedupes.filter(x =>
-    isInLexcialRoots(strs.join('') + x[0])
+    isInLexcialRoots(letters.join('') + x[0])
   );
 
   return predictions;
