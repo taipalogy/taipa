@@ -3,7 +3,7 @@ import { SoundGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from './analyzer';
 
 export function tokenizeLurzmafjiz(str: string) {
-  const soundSeqs: Array<Sound[]> = new Array();
+  const soundSeqs: Array<Array<Sound[]>> = new Array();
 
   const letters = graphAnalyzeTonal(str).map(x => x.letter && x.letter.literal);
 
@@ -50,8 +50,8 @@ export function tokenizeLurzmafjiz(str: string) {
       // break while loop
       break;
     } else if (accumulatedSeqs.length > 0) {
-      accumulatedSeqs.map(it => soundSeqs.push(it));
+      soundSeqs.push(accumulatedSeqs);
     }
   }
-  return soundSeqs.map(x => x.map(y => y.toString()).join(''));
+  return soundSeqs.map(x => x.map(y => y));
 }
