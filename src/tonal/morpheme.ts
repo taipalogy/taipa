@@ -70,8 +70,8 @@ export function syllabifyTonal(
       isInLexcialRoots(literal) &&
       stopFinalSounds.includes(letters[i].literal)
     ) {
-      //console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
-      //console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
+      // console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
+      // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
       if (begin === beginOfSyllable) {
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
@@ -118,7 +118,7 @@ export function syllabifyTonal(
         break;
       }
 
-      // tone sandhi of free allomorph
+      // tone change of free allomorphs
       const rulesFa = freeAllomorphUncombiningRules.get(letters[i].literal);
       const tnlsFa = !rulesFa ? [] : rulesFa.map(x => x.toString());
       // tone sandhi of ay
@@ -128,7 +128,7 @@ export function syllabifyTonal(
       const tnls = tnlsFa.concat(
         tnlsAy.filter(item => tnlsFa.indexOf(item) < 0)
       );
-      //console.log(ts)
+      // console.log(tnls)
       if (tnls.length > 0) {
         for (let t of tnls) {
           //console.log(lit + t.toString())
@@ -160,7 +160,7 @@ export function syllabifyTonal(
       begin = beginOfSyllable;
       // console.log(matched);
     } else {
-      //console.log('no matched for syllabifyTonal:' + ltrs)
+      // console.log('no matched for syllabifyTonal:' + ltrs)
 
       // when there are no tonals
 
@@ -580,7 +580,18 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       // append tt to sliced letters
       ls.push(lowerLettersTonal.get(TonalLetterTags.tt));
       return ls;
+    } else if (
+      letters.length > 0 &&
+      letters[letters.length - 1].literal === TonalLetterTags.b &&
+      isInLexcialRoots(slicedLiteral + TonalLetterTags.p)
+    ) {
+      // for surface form b whose underlying form is p
+      const ls = this.preprocessSandhiFinal(letters);
+      // append tt to sliced letters
+      ls.push(lowerLettersTonal.get(TonalLetterTags.p));
+      return ls;
     }
+
     return letters;
   }
 
@@ -648,7 +659,10 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       (pattern.letters[pattern.letters.length - 1].literal ===
         TonalLetterTags.t ||
         pattern.letters[pattern.letters.length - 1].literal ===
-          TonalLetterTags.tt) &&
+          TonalLetterTags.tt ||
+        pattern.letters[pattern.letters.length - 1].literal ===
+        TonalLetterTags.p)
+          &&
       this.sandhiFinals.length > 0
     ) {
       // if there isn't a tonal

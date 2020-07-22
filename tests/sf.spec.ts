@@ -51,16 +51,21 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
 describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
-  let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('chibfhoat');
+  const ta1 = cli.processTonal('chibfhoat');
 
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.b);
+    expect(ta1.soundSequences[0][2].toString()).toEqual(TonalLetterTags.b);
   });
 
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(ta1.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+  });
+
+  const ta2 = cli.processTonal('jib');
+
+  test('check the stop final', () => {
+    expect(ta2.soundSequences[0][2].toString()).toEqual(TonalLetterTags.b);
   });
 });
 

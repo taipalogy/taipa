@@ -19,7 +19,7 @@ export function tokenizeLurzmafjiz(str: string) {
           let sg = new SoundGeneration();
           // the letter at position i is exclusive
           sg.letters = letters.slice(beginOfSyllable, i);
-          // TODO: continue the loop when the compositions of letters at the end doesn't match patterns/regexes
+          // TODO: continue the loop when the sequences of letters at the end fail to match syllable patterns
           // console.log(sg.letters, beginOfSyllable, i, j);
           sg = syllableCompositions[j](sg);
 
