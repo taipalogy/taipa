@@ -196,3 +196,15 @@ export const sandhiFinalsPPpttt = [
   TonalLetterTags.t.toString(),
   TonalLetterTags.tt.toString(),
 ];
+
+/** map eighth checked finals to fourth ones */
+export const eighthToFourthFinals = new Map<string, TonalLetterTags>()
+  .set(TonalLetterTags.bb, TonalLetterTags.b)
+  .set(TonalLetterTags.gg, TonalLetterTags.g)
+  .set(TonalLetterTags.hh, TonalLetterTags.h)
+  .set(TonalLetterTags.jj, TonalLetterTags.j)
+  .set(TonalLetterTags.kk, TonalLetterTags.k)
+  .set(TonalLetterTags.ll, TonalLetterTags.l)
+  .set(TonalLetterTags.pp, TonalLetterTags.p)
+  .set(TonalLetterTags.ss, TonalLetterTags.s)
+  .set(TonalLetterTags.tt, TonalLetterTags.t)
