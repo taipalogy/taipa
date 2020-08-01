@@ -17,10 +17,27 @@ export const combiningRules = new Map<string, TonalLetterTags[]>()
   .set(TonalLetterTags.w, [TonalLetterTags.y])
   .set(TonalLetterTags.x, [TonalLetterTags.z, TonalLetterTags.w])
   .set(TonalLetterTags.z, [TonalLetterTags.w])
-  .set(TonalLetterTags.p, [TonalLetterTags.f])
-  .set(TonalLetterTags.t, [TonalLetterTags.f])
-  .set(TonalLetterTags.k, [TonalLetterTags.f])
-  .set(TonalLetterTags.h, [TonalLetterTags.y, TonalLetterTags.f])
+  .set(TonalLetterTags.p, [
+    TonalLetterTags.f,
+    TonalLetterTags.w,
+    TonalLetterTags.x,
+  ])
+  .set(TonalLetterTags.t, [
+    TonalLetterTags.f,
+    TonalLetterTags.w,
+    TonalLetterTags.x,
+  ])
+  .set(TonalLetterTags.k, [
+    TonalLetterTags.f,
+    TonalLetterTags.w,
+    TonalLetterTags.x,
+  ])
+  .set(TonalLetterTags.h, [
+    TonalLetterTags.y,
+    TonalLetterTags.f,
+    TonalLetterTags.w,
+    TonalLetterTags.x,
+  ])
   .set(TonalLetterTags.pp, [TonalLetterTags.w, TonalLetterTags.x])
   .set(TonalLetterTags.tt, [TonalLetterTags.w, TonalLetterTags.x])
   .set(TonalLetterTags.kk, [TonalLetterTags.w, TonalLetterTags.x])
@@ -207,4 +224,4 @@ export const eighthToFourthFinals = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.ll, TonalLetterTags.l)
   .set(TonalLetterTags.pp, TonalLetterTags.p)
   .set(TonalLetterTags.ss, TonalLetterTags.s)
-  .set(TonalLetterTags.tt, TonalLetterTags.t)
+  .set(TonalLetterTags.tt, TonalLetterTags.t);

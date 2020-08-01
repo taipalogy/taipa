@@ -137,6 +137,8 @@ const extraLexicalRoots = [
     
     'dngh',
 
+    'en',
+
     'gehh', 'gih', 'giuh', 'gimw',
 	
     'homz',

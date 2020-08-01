@@ -224,6 +224,18 @@ describe('Taiwanese kana testing, e and er', () => {
   test('kanas', () => {
     expect(ta10.blockSequences[0]).toEqual('チ𛅦⎝イェン');
   });
+
+  const ta11 = cli.processTonal('ien');
+
+  test('kanas', () => {
+    expect(ta11.blockSequences[0]).toEqual('イェヌ');
+  });
+
+  const ta12 = cli.processTonal('en');
+
+  test('kanas', () => {
+    expect(ta12.blockSequences[0]).toEqual('エヌ');
+  });
 });
 
 describe('Taiwanese kana testing, reduplication of vowels', () => {
