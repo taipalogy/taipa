@@ -65,10 +65,10 @@ describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -g
     expect(lx1.getForms()[0].literal).toEqual('biellwbongx');
   });
 
-  const lx2 = mutateFinalOfPrecedingSyllable('chappwgoz');
+  const lx2 = mutateFinalOfPrecedingSyllable('chapwgoz');
 
   test('check the surface form, -ppwg- to -bbwg-', () => {
-    expect(lx2.getForms()[0].literal).toEqual('chabbwgoz');
+    expect(lx2.getForms()[0].literal).toEqual('chabwgoz');
   });
 
   const lx3 = mutateFinalOfPrecedingSyllable('chipfhoat');
@@ -91,10 +91,10 @@ describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -g
 });
 
 describe('Consonant unmutation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, -kk, -tt', () => {
-  const lx1 = unmutateFinalOfPrecedingSyllable('biellwbongx');
+  const lx1 = unmutateFinalOfPrecedingSyllable('bielwbongx');
 
   test('check the surface form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('biettwbongx');
+    expect(lx1.getForms()[0].literal).toEqual('bietwbongx');
   });
 
   const lx2 = unmutateFinalOfPrecedingSyllable('chabbwgoz');
@@ -115,10 +115,10 @@ describe('Consonant unmutation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, 
     expect(lx4.getForms()[0].literal).toEqual('okflangx');
   });
 
-  const lx5 = unmutateFinalOfPrecedingSyllable('vallwjitt');
+  const lx5 = unmutateFinalOfPrecedingSyllable('valwjitt');
 
   test('check the surface form, -llwj- to -ttwj-', () => {
-    expect(lx5.getForms()[0].literal).toEqual('vattwjitt');
+    expect(lx5.getForms()[0].literal).toEqual('vatwjitt');
   });
 });
 

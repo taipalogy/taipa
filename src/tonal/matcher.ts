@@ -5,7 +5,7 @@ import {
 } from './version2';
 import {
   finalsBBggkkpp,
-  finalsJJllss,
+  finalsLs,
   finalsBgkp,
   finalsJls,
   tonalsWx,
@@ -32,17 +32,17 @@ export const smMnngHF = function (
 };
 
 // mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
-export const regexMnngHhWx = /(m|ng?)hh(w|x)/g;
+export const regexMnngHWx = /(m|ng?)h(w|x)/g;
 
 // mhhw
-export const smMHhW = function (
+export const smMHW = function (
   nasalFinal: string,
   neutralFinalHh: string,
   thirdTonalW: string
 ) {
   if (
     nasalFinal === TonalLetterTags.m &&
-    neutralFinalHh === TonalLetterTags.hh &&
+    neutralFinalHh === TonalLetterTags.h &&
     thirdTonalW === TonalLetterTags.w
   )
     return true;
@@ -51,14 +51,14 @@ export const smMHhW = function (
 };
 
 // mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
-export const smMnngHHWx = function (
+export const smMnngHWx = function (
   nasalFinal: string,
-  neutralFinalHh: string,
+  neutralFinalH: string,
   tonalWX: string
 ) {
   if (
     nasalFinals.includes(nasalFinal) &&
-    TonalLetterTags.hh === neutralFinalHh &&
+    TonalLetterTags.h === neutralFinalH &&
     tonalsWx.includes(tonalWX)
   )
     return true;
@@ -85,29 +85,27 @@ export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
   return false;
 };
 
-// jjw, jjx, llw, llx, ssw, ssx
-export const regexJjllssWx = /(jj|ll|ss)(w|x)/g;
+// llw, llx, ssw
+export const regexJjllssWx = /(j|l|s)(w|x)/g; // TODO: remove j and rename variable
 
-// jjw, jjx, llw, llx, ssw, ssx
-export const smJJllssWx = function (finalJJllss: string, tonalWX: string) {
-  if (finalsJJllss.includes(finalJJllss) && tonalsWx.includes(tonalWX))
-    return true;
+// llw, llx, ssw
+export const smLsWx = function (finalLs: string, tonalWX: string) {
+  if (finalsLs.includes(finalLs) && tonalsWx.includes(tonalWX)) return true;
 
   return false;
 };
 
-// bbw, bbx, ggw, ggx, kkw, kkx, ppw, ppx
-export const smBbggkkppWx = function (
-  finalBBggjjkkllppss: string,
-  tonalWX: string
-) {
-  if (
-    finalsBBggkkpp.includes(finalBBggjjkkllppss) &&
-    tonalsWx.includes(tonalWX)
-  )
-    return true;
+// bw, bx, gw, gx, kw, kx, pw, px
+export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
+  if (finalsBgkp.includes(finalBgkp) && tonalsWx.includes(tonalWX)) return true;
 
   return false;
+};
+
+// bbw, ggw, kkw, ppw
+export const smBBggkkppW = function (finalBBggkkpp: string, tonalW: string) {
+  if (finalsBBggkkpp.includes(finalBBggkkpp) && tonalsWx.includes(tonalW))
+    return true;
 };
 
 // bf, gf, jf, kf, lf, pf, sf
@@ -121,8 +119,9 @@ export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
   return false;
 };
 
-// bbw, bbx, ggw, ggx, jjw, jjx, kkw, kkx, llw, llx, ppw, ppx, ssw, ssx
+// bbw, bbx, ggw, ggx, kkw, kkx, llw, llx, ppw, ppx, ssw
 export const smBbggjjkkllppssWx = function (
+  // TODO: remove jj
   finalBBggjjkkllppss: string,
   tonalWX: string
 ) {

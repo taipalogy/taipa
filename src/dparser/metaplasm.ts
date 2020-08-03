@@ -16,6 +16,7 @@ import {
   nasalInitials,
   initialsBghjl,
   voicedVoicelessFinals,
+  eighthToFourthFinals,
 } from '../tonal/collections';
 import {
   TonalCombiningMetaplasm,
@@ -94,6 +95,14 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
         const rets = [];
         if (tos) {
           for (let k = 0; k < tos.length; k++) {
+            if (allomorph.final.toString().length == 2) {
+              // 8th finals are of length 2
+              s.popLetter(); // pop the 8th final
+              const got = eighthToFourthFinals.get(allomorph.final.toString());
+              if (got) {
+                s.pushLetter(lowerLettersTonal.get(got)); // push the 4th final
+              }
+            }
             s.pushLetter(
               new AlphabeticLetter(lowerLettersTonal.get(tos[k]).characters)
             );

@@ -62,7 +62,7 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
   });
 
   test('check the proceeding form', () => {
-    expect(p1.getForms()[0].literal).toEqual('lippw kihf');
+    expect(p1.getForms()[0].literal).toEqual('lipw kihf');
   });
 
   const p2 = inflectVppToProceeding('tehh', 'cut', 'kih');
@@ -72,7 +72,7 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
   });
 
   test('check the proceeding form', () => {
-    expect(p2.getForms()[0].literal).toEqual('tehhw cutf kihf');
+    expect(p2.getForms()[0].literal).toEqual('tehw cutf kihf');
   });
 
   let s2 = new TonalSyllable(p2.getForms()[0].words[2].syllables[0].letters);
@@ -89,7 +89,7 @@ describe('Phrasal verb testing, transitive, adverbial', () => {
   });
 
   test('check the proceeding form', () => {
-    expect(p3.getForms()[0].literal).toEqual('tehhw kihf laiz');
+    expect(p3.getForms()[0].literal).toEqual('tehw kihf laiz');
   });
 });
 
@@ -165,7 +165,7 @@ describe('Compound testing', () => {
   const p5 = createCompoundPhraseme('chiahh', 'vay');
 
   test('separable verb', () => {
-    expect(p5.phrase.literal).toEqual('chiahhw vay');
+    expect(p5.phrase.literal).toEqual('chiahw vay');
   });
 
   const p8 = createCompoundPhraseme('lamx', 'me');

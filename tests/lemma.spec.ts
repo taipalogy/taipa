@@ -14,14 +14,14 @@ describe('Lemma testing', () => {
     expect(t1.lemmas.length).toEqual(0);
   });
 
-  const t2 = cli.processTonal('suzjippwhoatf');
+  const t2 = cli.processTonal('suzjipwhoatf');
 
   test('check the number of lemmata', () => {
     expect(t2.lemmas.length).toEqual(1);
   });
 
   test('check the lemma', () => {
-    expect(t2.lemmas[0].literal).toEqual('suzjippwhoat');
+    expect(t2.lemmas[0].literal).toEqual('suzjipwhoat');
   });
 
   const t3 = cli.processTonal('goa');
@@ -54,19 +54,19 @@ describe('Uncombining form testing, reduplication', () => {
 });
 
 describe('Uncombining form testing, reduplication', () => {
-  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('callxay');
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('calxay');
 
   test('check the uncombining form', () => {
     expect(ms1[0].getForms()[0].literal).toEqual('catt');
   });
 
-  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('caggxay');
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('cagxay');
 
   test('check the uncombining form', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('cakk');
   });
 
-  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('abbxay');
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('abxay');
 
   test('check the uncombining form', () => {
     expect(ms3[0].getForms()[0].literal).toEqual('app');

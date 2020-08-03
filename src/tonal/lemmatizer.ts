@@ -5,7 +5,7 @@ import { tonalLemmatizationAnalyzer } from './analyzer';
  * @param word A word to be lemmatized.
  */
 export function lemmatize(word: string) {
-  const mrphs = tonalLemmatizationAnalyzer.morphAnalyze(word);
-  const lx = tonalLemmatizationAnalyzer.lexAnalyze(mrphs);
+  const ms = tonalLemmatizationAnalyzer.morphAnalyze(word);
+  const lx = tonalLemmatizationAnalyzer.lexAnalyze(ms);
   return lx;
 }

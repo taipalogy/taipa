@@ -23,10 +23,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('jisswsix');
+  doc = cli.processTonal('jiswsix');
 
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ss);
+    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.s);
   });
 
   test('check the tonal', () => {
@@ -101,16 +101,16 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
 describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
-  let doc = new TokenAnalysis();
+  let ta = new TokenAnalysis();
 
-  doc = cli.processTonal('vallwjipp');
+  ta = cli.processTonal('valwjitt');
 
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ll);
+    expect(ta.soundSequences[0][2].toString()).toEqual(TonalLetterTags.l);
   });
 
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(ta.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
   });
 });
 
@@ -200,10 +200,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('callxlay');
+  doc = cli.processTonal('calxlay');
 
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ll);
+    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.l);
   });
 
   test('check the tonal', () => {
@@ -275,14 +275,14 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('chimhhwmix');
+  doc = cli.processTonal('chimhwmix');
 
   test('check the nasal final', () => {
     expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
   });
 
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.hh);
+    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
   test('check the checked tonal', () => {
@@ -294,14 +294,14 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('binhhwngx');
+  doc = cli.processTonal('binhwngx');
 
   test('check the nasal final', () => {
     expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.n);
   });
 
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.hh);
+    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
   test('check the checked tonal', () => {

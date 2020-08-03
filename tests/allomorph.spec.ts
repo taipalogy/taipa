@@ -21,21 +21,21 @@ describe('Allomorph testing', () => {
   });
 
   const ms3 = tonalInflectionAnalyzer.morphAnalyze(
-    'cattxay',
+    'catxay',
     new TonalCombiningForms()
   );
 
   test('check the allomorph', () => {
-    expect(ms3[0].allomorph.toString()).toEqual('ttx');
+    expect(ms3[0].allomorph.toString()).toEqual('tx');
   });
 
   const ms4 = tonalInflectionAnalyzer.morphAnalyze(
-    'callxay',
+    'calxay',
     new TonalCombiningForms()
   );
 
   test('check the allomorph', () => {
-    expect(ms4[0].allomorph.toString()).toEqual('llx');
+    expect(ms4[0].allomorph.toString()).toEqual('lx');
   });
 
   const ms5 = tonalInflectionAnalyzer.morphAnalyze(
@@ -66,12 +66,12 @@ describe('Allomorph testing', () => {
   });
 
   const ms8 = tonalInflectionAnalyzer.morphAnalyze(
-    'chisswsix',
+    'chiswsix',
     new TonalCombiningForms()
   );
 
   test('check the allomorph', () => {
-    expect(ms8[0].allomorph.toString()).toEqual('ssw');
+    expect(ms8[0].allomorph.toString()).toEqual('sw');
   });
 
   const ms9 = tonalInflectionAnalyzer.morphAnalyze(
@@ -101,15 +101,6 @@ describe('Allomorph testing', () => {
     expect(ms11[0].allomorph.toString()).toEqual('ttw');
   });
 
-  const ms12 = tonalInflectionAnalyzer.morphAnalyze(
-    'chijjwjiz',
-    new TonalCombiningForms()
-  );
-
-  test('check the allomorph', () => {
-    expect(ms12[0].allomorph.toString()).toEqual('jjw');
-  });
-
   const ms13 = tonalInflectionAnalyzer.morphAnalyze(
     'qapfay',
     new TonalCombiningForms()
@@ -129,12 +120,12 @@ describe('Allomorph testing', () => {
   });
 
   const ms15 = tonalInflectionAnalyzer.morphAnalyze(
-    'chappwex',
+    'chapwex',
     new TonalCombiningForms()
   );
 
   test('check the allomorph', () => {
-    expect(ms15[0].allomorph.toString()).toEqual('ppw');
+    expect(ms15[0].allomorph.toString()).toEqual('pw');
   });
 
   const ms16 = tonalInflectionAnalyzer.morphAnalyze(

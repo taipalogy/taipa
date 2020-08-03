@@ -125,11 +125,12 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('amhhw');
+  const word = 'amhw';
+  const lx = lemmatize(word);
 
   // there is no tests for vcc. e.g. amhh
   test('check the syllable composition. vcct.', () => {
-    expect(lx.word.literal).toEqual('amhhw');
+    expect(lx.word.literal).toEqual(word);
   });
 });
 

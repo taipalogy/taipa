@@ -59,10 +59,16 @@ describe('Voiced final testing', () => {
     expect(lx1.getForms()[0].literal).toEqual('laggwex');
   });
 
-  const lx2 = mutateFinalOfPrecedingSyllable('chappwex');
+  const lx2 = mutateFinalOfPrecedingSyllable('chapwex');
 
   test('chech the surface form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('chabbwex');
+    expect(lx2.getForms()[0].literal).toEqual('chabwex');
+  });
+
+  const lx3 = mutateFinalOfPrecedingSyllable('chitwex');
+
+  test('chech the surface form', () => {
+    expect(lx3.getForms()[0].literal).toEqual('chilwex');
   });
 });
 
@@ -129,7 +135,7 @@ describe('Reduplication testing', () => {
 describe('Reduplication testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('sittxsittwsitt');
+  const ta = cli.processTonal('sitxsitwsitt');
 
   test('check the uncombining form', () => {
     expect(ta.uncombiningSequences[0]).toContain('sitt');
@@ -139,7 +145,7 @@ describe('Reduplication testing', () => {
 describe('Consonant mutation testing, sandhi pp', () => {
   const cli = new Client();
 
-  const ta1 = cli.processTonal('sannzamhhwqauy');
+  const ta1 = cli.processTonal('sannzamhwqauy');
 
   test('check the uncombining form', () => {
     expect(ta1.uncombiningSequences[1]).toContain('app');
@@ -147,7 +153,7 @@ describe('Consonant mutation testing, sandhi pp', () => {
 
   test('check the consonant', () => {
     expect(ta1.soundSequences[1][1].toString()).toEqual(TonalLetterTags.m);
-    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.hh);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta2 = cli.processTonal('hinhfnix');
@@ -172,7 +178,7 @@ describe('Consonant mutation testing, sandhi pp', () => {
     expect(ta3.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
-  const ta4 = cli.processTonal('chimhhwmix');
+  const ta4 = cli.processTonal('chimhwmix');
 
   test('check the uncombining form', () => {
     expect(ta4.uncombiningSequences[0]).toContain('chitt');
@@ -180,6 +186,6 @@ describe('Consonant mutation testing, sandhi pp', () => {
 
   test('check the consonant', () => {
     expect(ta4.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
-    expect(ta4.soundSequences[0][3].toString()).toEqual(TonalLetterTags.hh);
+    expect(ta4.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 });

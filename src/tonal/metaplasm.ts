@@ -75,8 +75,9 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
         if (allomorph.tonal.toString() === '') return [];
         const s: TonalSyllable = new TonalSyllable(
-          sounds.map(x => new AlphabeticLetter(x.characters))
+          sounds.map(it => new AlphabeticLetter(it.characters))
         );
+        const fnl = s.letters[s.letters.length - 1].literal;
         s.popLetter(); // pop out the tonal
         if (finalsBgjlsbbggjjllss.has(s.lastLetter.literal)) {
           const fnls = finalsBgjlsbbggjjllss.get(s.lastLetter.literal);
@@ -105,12 +106,12 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             this.soundsFollowing[0].name === TonalSoundTags.initial &&
             s.lastSecondLetter.literal === this.soundsFollowing[0].toString()
           ) {
-            // change to -tt or -t
-            const ntrl = s.letters[s.letters.length - 1].literal;
+            // unchange to -tt or -t
             s.popLetter(); // pop the neutral
             s.popLetter(); // pop the nasal
             const clone: TonalSyllable = Object.create(s);
-            if (ntrl === TonalLetterTags.hh) {
+            // if (ntrl === TonalLetterTags.hh) {
+            if (fnl === TonalLetterTags.w) {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.tt));
             } else {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.t));
@@ -118,12 +119,12 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             return [clone];
           } else if (this.soundsFollowing[0]) {
             // there has to be a following syllable for this syllable to change form
-            // change to -pp or -p
-            const ntrl = s.letters[s.letters.length - 1].literal;
+            // unchange to -pp or -p
             s.popLetter(); // pop the neutral
             s.popLetter(); // pop the nasal
             const clone: TonalSyllable = Object.create(s);
-            if (ntrl === TonalLetterTags.hh) {
+            // if (ntrl === TonalLetterTags.hh) {
+            if (fnl === TonalLetterTags.w) {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.pp));
             } else {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.p));
@@ -140,15 +141,21 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 
 /** Returns the uncombining forms of the syllable preceding ay */
 export class UncombiningPrecedingAyex extends TonalCombiningMetaplasm {
-  undoChangedFinal(syllable: TonalSyllable, sounds: Array<Sound>) {
+  private undoChangedFinal(syllable: TonalSyllable, sounds: Array<Sound>) {
     const keysFinalsPrecedingAy = Array.from(voicedVoicelessFinals.keys());
     if (keysFinalsPrecedingAy.includes(sounds[sounds.length - 2].toString())) {
-      if (voicedVoicelessFinals.has(syllable.lastLetter.literal)) {
-        const ltr = voicedVoicelessFinals.get(syllable.lastLetter.literal);
-        if (ltr)
+      if (
+        voicedVoicelessFinals.has(
+          syllable.lastLetter.literal + sounds[sounds.length - 1].toString()
+        )
+      ) {
+        const fnl = voicedVoicelessFinals.get(
+          syllable.lastLetter.literal + sounds[sounds.length - 1].toString()
+        );
+        if (fnl)
           syllable.replaceLetter(
             syllable.letters.length - 1,
-            lowerLettersTonal.get(ltr)
+            lowerLettersTonal.get(fnl)
           );
       }
     }
@@ -269,8 +276,8 @@ export class TonalLemmatization extends TonalLemmatizationMetaplasm {
         const ret = [];
         const arr = morphemes[morphemes.length - 1].getForms();
 
-        for (let key in arr) {
-          const wrd = new TonalWord(morphemes.map(x => x.syllable));
+        for (const key in arr) {
+          const wrd = new TonalWord(morphemes.map(it => it.syllable));
           wrd.popSyllable();
           wrd.pushSyllable(arr[key]);
           ret.push(wrd);
@@ -278,7 +285,7 @@ export class TonalLemmatization extends TonalLemmatizationMetaplasm {
         return ret;
       } else if (inflectionalEnding instanceof CheckedInflectionalEnding) {
         if (morphemes[morphemes.length - 1].getForms().length == 0) return [];
-        const wrd = new TonalWord(morphemes.map(x => x.syllable));
+        const wrd = new TonalWord(morphemes.map(it => it.syllable));
         wrd.popSyllable();
         wrd.pushSyllable(morphemes[morphemes.length - 1].getForms()[0]);
         return [wrd];

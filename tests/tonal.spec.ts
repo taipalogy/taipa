@@ -7,7 +7,7 @@ import {
   EighthToSecondCombining,
   EighthToFirstCombining,
   TonalCombiningForms,
-  TonalDesinenceInflection
+  TonalDesinenceInflection,
 } from '../src/dparser/metaplasm';
 import { createTonalInflectionLexeme } from '../src/dparser/creator';
 
@@ -68,7 +68,7 @@ describe('Tonal testing', () => {
     expect(t9.soundSequences[0][3].toString()).toEqual(TonalLetterTags.z);
   });
 
-  const t10 = cli.processTonal('siappwjipp');
+  const t10 = cli.processTonal('siapwjipp');
 
   test('check the tone letter', () => {
     expect(t10.soundSequences[0][4].toString()).toEqual(TonalLetterTags.w);

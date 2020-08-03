@@ -58,7 +58,7 @@ export const epentheticSounds = [
   TonalLetterTags.n.toString(),
 ];
 
-// j, l, s
+// j, l, s for first checked tones
 export const finalsJls = [
   TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
@@ -73,11 +73,10 @@ export const finalsBgkp = [
   TonalLetterTags.p.toString(),
 ];
 
-// jj, ll, ss
-export const finalsJJllss = [
-  TonalLetterTags.jj.toString(),
-  TonalLetterTags.ll.toString(),
-  TonalLetterTags.ss.toString(),
+// l, s for third and fifth checked tones
+export const finalsLs = [
+  TonalLetterTags.l.toString(),
+  TonalLetterTags.s.toString(),
 ];
 
 // bb, gg, kk, pp
@@ -175,10 +174,16 @@ export const voicelessVoicedFinals = new Map<string, string>()
   .set(TonalLetterTags.kk, TonalLetterTags.gg);
 
 export const voicedVoicelessFinals = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.b, TonalLetterTags.p)
+  .set(TonalLetterTags.b, TonalLetterTags.p) // external sandhi
   .set(TonalLetterTags.l, TonalLetterTags.t)
   .set(TonalLetterTags.g, TonalLetterTags.k)
-  .set(TonalLetterTags.bb, TonalLetterTags.pp)
+  .set(TonalLetterTags.b + TonalLetterTags.f, TonalLetterTags.p) // internal sandhi
+  .set(TonalLetterTags.b + TonalLetterTags.x, TonalLetterTags.pp)
+  .set(TonalLetterTags.l + TonalLetterTags.f, TonalLetterTags.t)
+  .set(TonalLetterTags.l + TonalLetterTags.x, TonalLetterTags.tt)
+  .set(TonalLetterTags.g + TonalLetterTags.f, TonalLetterTags.k)
+  .set(TonalLetterTags.g + TonalLetterTags.x, TonalLetterTags.kk)
+  .set(TonalLetterTags.bb, TonalLetterTags.pp) // external sandhi
   .set(TonalLetterTags.ll, TonalLetterTags.tt)
   .set(TonalLetterTags.gg, TonalLetterTags.kk);
 

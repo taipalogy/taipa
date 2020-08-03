@@ -10,7 +10,7 @@ import {
   inflectPhrasalVerbParticle,
   inflectEncliticLe,
   inflectPossesiveEx,
-  inflectTo
+  inflectTo,
 } from '../src/dparser/inflector';
 import { createTonalInflectionLexeme } from '../src/dparser/creator';
 import { FourthToFirstCombining } from '../src/dparser/metaplasm';
@@ -94,12 +94,12 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('sekfhappw');
+  doc = cli.processTonal('sekfhapw');
 
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('sekfhapp');
+    expect(l.substr(0, l.length - en.length)).toEqual('sekfhap');
   });
 
   test('check the inflectional ending', () => {
@@ -224,7 +224,7 @@ describe('Inflection testing, absent lexical roots', () => {
     expect(tw3.getForms().length).toEqual(2);
   });
 
-  const str = 'chimhhw';
+  const str = 'chimhw';
   const tw4 = inflectDesinence(str);
 
   test('check the word', () => {
@@ -264,16 +264,16 @@ describe('Inflection testing', () => {
   const lx1 = inflectDesinence('giapp');
 
   test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('giappw');
+    expect(lx1.getForms()[0].literal).toEqual('giapw');
   });
 
   test('check the inflected form', () => {
-    expect(lx1.getForms()[1].literal).toEqual('giappx');
+    expect(lx1.getForms()[1].literal).toEqual('giapx');
   });
 });
 
 describe('Inflection testing', () => {
-  const lx1 = inflectDesinence('cattx');
+  const lx1 = inflectDesinence('catx');
 
   test('check the length of inflected forms', () => {
     expect(lx1.getForms().length).toEqual(0);

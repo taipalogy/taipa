@@ -76,7 +76,7 @@ export class TonalCombiningMorpheme extends Morpheme {
     ) {
       // in case of a final followed by a tonal
       const ams = combinedCheckedAllomorphs.get(
-        syllable.lastSecondLetter.literal
+        syllable.lastSecondLetter.literal + syllable.lastLetter.literal
       );
 
       if (ams && ams.length > 0) {
