@@ -90,7 +90,6 @@ export enum TonalLetterTags {
 
   bb = 'bb',
   gg = 'gg',
-  jj = 'jj', // TODO: to be removed
   ll = 'll',
   ss = 'ss',
 
@@ -166,7 +165,6 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.hh,
   TonalLetterTags.bb,
   TonalLetterTags.gg,
-  TonalLetterTags.jj,
   TonalLetterTags.ll,
   TonalLetterTags.ss,
   TonalLetterTags.f,
@@ -408,10 +406,6 @@ class FinalGG extends StopFinal {
   characters = this.makeCharacters(TonalLetterTags.gg);
 }
 
-class FinalJJ extends StopFinal {
-  characters = this.makeCharacters(TonalLetterTags.jj);
-}
-
 class FinalSS extends StopFinal {
   characters = this.makeCharacters(TonalLetterTags.ss);
 }
@@ -520,10 +514,10 @@ export const stopFinalSoundsBgjklps = setOfSounds([
   new FinalS(),
 ]);
 
+// TODO: to be renamed
 export const stopFinalSoundsBBggjjkkllppss = setOfSounds([
   new FinalBB(),
   new FinalGG(),
-  new FinalJJ(),
   new FinalKK(),
   new FinalLL(),
   new FinalPP(),
@@ -555,7 +549,6 @@ const psHh = positionalSound([new FinalHH()]);
 const psI = positionalSound([new MedialI()]);
 const psIr = positionalSound([new MedialIR()]);
 const psJ = positionalSound([new InitialJ(), new FinalJ()]);
-const psJj = positionalSound([new FinalJJ()]);
 const psK = positionalSound([new InitialK(), new FinalK()]);
 const psKk = positionalSound([new FinalKK()]);
 const psL = positionalSound([new InitialL(), new FinalL()]);
@@ -615,7 +608,6 @@ export const tonalPositionalSounds = new Map<
   .set(TonalLetterTags.i, psI)
   .set(TonalLetterTags.ir, psIr)
   .set(TonalLetterTags.j, psJ)
-  .set(TonalLetterTags.jj, psJj)
   .set(TonalLetterTags.k, psK)
   .set(TonalLetterTags.kk, psKk)
   .set(TonalLetterTags.l, psL)
@@ -751,28 +743,18 @@ class AllomorphHW extends CheckedAllomorph {
   tonal = new CheckedTonalW();
 }
 
-class AllomorphPPW extends CheckedAllomorph {
-  final = new FinalPP();
+class AllomorphTW extends CheckedAllomorph {
+  final = new FinalT();
   tonal = new CheckedTonalW();
 }
 
-class AllomorphTTW extends CheckedAllomorph {
-  final = new FinalTT();
+class AllomorphKW extends CheckedAllomorph {
+  final = new FinalK();
   tonal = new CheckedTonalW();
 }
 
-class AllomorphKKW extends CheckedAllomorph {
-  final = new FinalKK();
-  tonal = new CheckedTonalW();
-}
-
-class AllomorphHHW extends CheckedAllomorph {
-  final = new FinalHH();
-  tonal = new CheckedTonalW();
-}
-
-class AllomorphPPX extends CheckedAllomorph {
-  final = new FinalPP();
+class AllomorphPX extends CheckedAllomorph {
+  final = new FinalP();
   tonal = new CheckedTonalX();
 }
 
@@ -780,19 +762,14 @@ class AllomorphTX extends CheckedAllomorph {
   final = new FinalT();
   tonal = new CheckedTonalX();
 }
-/*
-class AllomorphTTX extends CheckedAllomorph {
-  final = new FinalTT();
-  tonal = new CheckedTonalX();
-}
-*/
-class AllomorphKKX extends CheckedAllomorph {
-  final = new FinalKK();
+
+class AllomorphKX extends CheckedAllomorph {
+  final = new FinalK();
   tonal = new CheckedTonalX();
 }
 
-class AllomorphHHX extends CheckedAllomorph {
-  final = new FinalHH();
+class AllomorphHX extends CheckedAllomorph {
+  final = new FinalH();
   tonal = new CheckedTonalX();
 }
 
@@ -821,18 +798,18 @@ class AllomorphSF extends CheckedAllomorph {
   tonal = new CheckedTonalF();
 }
 
-class AllomorphBBW extends CheckedAllomorph {
-  final = new FinalBB();
+class AllomorphBW extends CheckedAllomorph {
+  final = new FinalB();
   tonal = new CheckedTonalW();
 }
 
-class AllomorphGGW extends CheckedAllomorph {
-  final = new FinalGG();
+class AllomorphGW extends CheckedAllomorph {
+  final = new FinalG();
   tonal = new CheckedTonalW();
 }
 
-class AllomorphLLW extends CheckedAllomorph {
-  final = new FinalLL();
+class AllomorphLW extends CheckedAllomorph {
+  final = new FinalL();
   tonal = new CheckedTonalW();
 }
 
@@ -841,18 +818,8 @@ class AllomorphSW extends CheckedAllomorph {
   tonal = new CheckedTonalW();
 }
 
-class AllomorphSSW extends CheckedAllomorph {
-  final = new FinalSS();
-  tonal = new CheckedTonalW();
-}
-
 class AllomorphBX extends CheckedAllomorph {
   final = new FinalB();
-  tonal = new CheckedTonalX();
-}
-
-class AllomorphBBX extends CheckedAllomorph {
-  final = new FinalBB();
   tonal = new CheckedTonalX();
 }
 
@@ -861,18 +828,8 @@ class AllomorphGX extends CheckedAllomorph {
   tonal = new CheckedTonalX();
 }
 
-class AllomorphGGX extends CheckedAllomorph {
-  final = new FinalGG();
-  tonal = new CheckedTonalX();
-}
-
 class AllomorphLX extends CheckedAllomorph {
   final = new FinalL();
-  tonal = new CheckedTonalX();
-}
-
-class AllomorphLLX extends CheckedAllomorph {
-  final = new FinalLL();
   tonal = new CheckedTonalX();
 }
 
@@ -895,27 +852,21 @@ export const checkedAllomorphs = new Map<string, Allomorph>()
   .set(TonalLetterTags.l + TonalLetterTags.f, new AllomorphLF())
   .set(TonalLetterTags.s + TonalLetterTags.f, new AllomorphSF())
   .set(TonalLetterTags.h + TonalLetterTags.y, new AllomorphHY())
+  .set(TonalLetterTags.p + TonalLetterTags.w, new AllomorphPW())
+  .set(TonalLetterTags.t + TonalLetterTags.w, new AllomorphTW())
+  .set(TonalLetterTags.k + TonalLetterTags.w, new AllomorphKW())
   .set(TonalLetterTags.h + TonalLetterTags.w, new AllomorphHW())
+  .set(TonalLetterTags.b + TonalLetterTags.w, new AllomorphBW())
+  .set(TonalLetterTags.g + TonalLetterTags.w, new AllomorphGW())
+  .set(TonalLetterTags.l + TonalLetterTags.w, new AllomorphLW())
   .set(TonalLetterTags.s + TonalLetterTags.w, new AllomorphSW())
+  .set(TonalLetterTags.p + TonalLetterTags.x, new AllomorphPX())
+  .set(TonalLetterTags.t + TonalLetterTags.x, new AllomorphTX())
+  .set(TonalLetterTags.k + TonalLetterTags.x, new AllomorphKX())
+  .set(TonalLetterTags.h + TonalLetterTags.x, new AllomorphHX())
   .set(TonalLetterTags.b + TonalLetterTags.x, new AllomorphBX())
   .set(TonalLetterTags.g + TonalLetterTags.x, new AllomorphGX())
-  .set(TonalLetterTags.l + TonalLetterTags.x, new AllomorphLX())
-  .set(TonalLetterTags.pp + TonalLetterTags.w, new AllomorphPPW())
-  .set(TonalLetterTags.tt + TonalLetterTags.w, new AllomorphTTW())
-  .set(TonalLetterTags.kk + TonalLetterTags.w, new AllomorphKKW())
-  .set(TonalLetterTags.hh + TonalLetterTags.w, new AllomorphHHW())
-  .set(TonalLetterTags.bb + TonalLetterTags.w, new AllomorphBBW())
-  .set(TonalLetterTags.gg + TonalLetterTags.w, new AllomorphGGW())
-  .set(TonalLetterTags.ll + TonalLetterTags.w, new AllomorphLLW())
-  .set(TonalLetterTags.ss + TonalLetterTags.w, new AllomorphSSW())
-  .set(TonalLetterTags.pp + TonalLetterTags.x, new AllomorphPPX())
-  // .set(TonalLetterTags.tt + TonalLetterTags.x, new AllomorphTTX())
-  .set(TonalLetterTags.t + TonalLetterTags.x, new AllomorphTX())
-  .set(TonalLetterTags.kk + TonalLetterTags.x, new AllomorphKKX())
-  .set(TonalLetterTags.hh + TonalLetterTags.x, new AllomorphHHX())
-  .set(TonalLetterTags.bb + TonalLetterTags.x, new AllomorphBBX())
-  .set(TonalLetterTags.gg + TonalLetterTags.x, new AllomorphGGX())
-  .set(TonalLetterTags.ll + TonalLetterTags.x, new AllomorphLLX());
+  .set(TonalLetterTags.l + TonalLetterTags.x, new AllomorphLX());
 
 export const combinedFreeAllomorphs = new Map<string, Allomorph>()
   .set(TonalLetterTags.w, new AllomorphW())
@@ -936,51 +887,31 @@ export const uncombinedCheckedAllomorphs = new Map<string, Allomorph>()
   .set(TonalLetterTags.hh, new AllomorphHH());
 
 export const combinedCheckedAllomorphs = new Map<string, Allomorph[]>()
-  // .set(TonalLetterTags.p, [new AllomorphPF(), new AllomorphPW()])
   .set(TonalLetterTags.p + TonalLetterTags.f, [new AllomorphPF()])
   .set(TonalLetterTags.p + TonalLetterTags.w, [new AllomorphPW()])
-  // .set(TonalLetterTags.t, [new AllomorphTF()])
+  .set(TonalLetterTags.p + TonalLetterTags.x, [new AllomorphPX()])
   .set(TonalLetterTags.t + TonalLetterTags.f, [new AllomorphTF()])
-  // .set(TonalLetterTags.k, [new AllomorphKF()])
+  .set(TonalLetterTags.t + TonalLetterTags.w, [new AllomorphTW()])
+  .set(TonalLetterTags.t + TonalLetterTags.x, [new AllomorphTX()])
   .set(TonalLetterTags.k + TonalLetterTags.f, [new AllomorphKF()])
-  // .set(TonalLetterTags.h, [new AllomorphHF(), new AllomorphHY()])
+  .set(TonalLetterTags.k + TonalLetterTags.w, [new AllomorphKW()])
+  .set(TonalLetterTags.k + TonalLetterTags.x, [new AllomorphKX()])
   .set(TonalLetterTags.h + TonalLetterTags.f, [new AllomorphHF()])
   .set(TonalLetterTags.h + TonalLetterTags.y, [new AllomorphHY()])
-  // .set(TonalLetterTags.b, [new AllomorphBF()])
+  .set(TonalLetterTags.h + TonalLetterTags.w, [new AllomorphHW()])
+  .set(TonalLetterTags.h + TonalLetterTags.x, [new AllomorphHX()])
   .set(TonalLetterTags.b + TonalLetterTags.f, [new AllomorphBF()])
-  // .set(TonalLetterTags.g, [new AllomorphGF()])
+  .set(TonalLetterTags.b + TonalLetterTags.w, [new AllomorphBW()])
+  .set(TonalLetterTags.b + TonalLetterTags.x, [new AllomorphBX()])
   .set(TonalLetterTags.g + TonalLetterTags.f, [new AllomorphGF()])
-  // .set(TonalLetterTags.j, [new AllomorphJF()])
+  .set(TonalLetterTags.g + TonalLetterTags.w, [new AllomorphGW()])
+  .set(TonalLetterTags.g + TonalLetterTags.x, [new AllomorphGX()])
   .set(TonalLetterTags.j + TonalLetterTags.f, [new AllomorphJF()])
-  // .set(TonalLetterTags.l, [new AllomorphLF()])
   .set(TonalLetterTags.l + TonalLetterTags.f, [new AllomorphLF()])
+  .set(TonalLetterTags.l + TonalLetterTags.w, [new AllomorphLW()])
   .set(TonalLetterTags.l + TonalLetterTags.x, [new AllomorphLX()])
-  // .set(TonalLetterTags.s, [new AllomorphSF()])
   .set(TonalLetterTags.s + TonalLetterTags.f, [new AllomorphSF()])
-  .set(TonalLetterTags.s + TonalLetterTags.w, [new AllomorphSW()])
-  // .set(TonalLetterTags.pp, [new AllomorphPPW(), new AllomorphPPX()])
-  .set(TonalLetterTags.pp + TonalLetterTags.w, [new AllomorphPPW()])
-  .set(TonalLetterTags.pp + TonalLetterTags.x, [new AllomorphPPX()])
-  // .set(TonalLetterTags.tt, [new AllomorphTTW(), new AllomorphTTX()])
-  .set(TonalLetterTags.tt + TonalLetterTags.w, [new AllomorphTTW()])
-  // .set(TonalLetterTags.tt + TonalLetterTags.x, [new AllomorphTTX()])
-  .set(TonalLetterTags.t + TonalLetterTags.x, [new AllomorphTX()])
-  // .set(TonalLetterTags.kk, [new AllomorphKKW(), new AllomorphKKX()])
-  .set(TonalLetterTags.kk + TonalLetterTags.w, [new AllomorphKKW()])
-  .set(TonalLetterTags.kk + TonalLetterTags.x, [new AllomorphKKX()])
-  // .set(TonalLetterTags.hh, [new AllomorphHHW(), new AllomorphHHX()])
-  .set(TonalLetterTags.hh + TonalLetterTags.w, [new AllomorphHHW()])
-  .set(TonalLetterTags.hh + TonalLetterTags.x, [new AllomorphHHX()])
-  // .set(TonalLetterTags.bb, [new AllomorphBBW(), new AllomorphBBX()])
-  .set(TonalLetterTags.bb + TonalLetterTags.w, [new AllomorphBBW()])
-  .set(TonalLetterTags.bb + TonalLetterTags.x, [new AllomorphBBX()])
-  // .set(TonalLetterTags.gg, [new AllomorphGGW(), new AllomorphGGX()])
-  .set(TonalLetterTags.gg + TonalLetterTags.w, [new AllomorphGGW()])
-  .set(TonalLetterTags.gg + TonalLetterTags.x, [new AllomorphGGX()])
-  // .set(TonalLetterTags.ll, [new AllomorphLLW(), new AllomorphLLX()])
-  .set(TonalLetterTags.ll + TonalLetterTags.w, [new AllomorphLLW()])
-  .set(TonalLetterTags.ll + TonalLetterTags.x, [new AllomorphLLX()])
-  .set(TonalLetterTags.ss + TonalLetterTags.w, [new AllomorphSSW()]);
+  .set(TonalLetterTags.s + TonalLetterTags.w, [new AllomorphSW()]);
 
 export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>()
   .set(TonalLetterTags.f, [new FreeTonalY()])

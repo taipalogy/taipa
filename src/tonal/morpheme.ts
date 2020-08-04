@@ -290,8 +290,8 @@ export class TonalUncombiningMorpheme extends Morpheme {
     this.metaplasm = metaplasm;
 
     // assign allomorph for each syllable
-    this.allomorph = this.assignAllomorph(this.syllable);
     this.sounds = sounds;
+    this.allomorph = this.assignAllomorph(this.syllable, this.sounds);
     this.forms = this.metaplasm.apply(this.sounds, this.allomorph);
   }
 
@@ -299,25 +299,28 @@ export class TonalUncombiningMorpheme extends Morpheme {
     return this.forms;
   }
 
-  private assignAllomorph(syllable: TonalSyllable): Allomorph {
+  private assignAllomorph(syllable: TonalSyllable, sounds: Sound[]): Allomorph {
     let allomorph: Allomorph = new ZeroAllomorph();
     // assign the matched allomorph for this syllable
-    let aoas: Array<Allomorph> = []; // array of allomorphs
+    let las: Array<Allomorph> = []; // list of allomorphs
 
+    const s: TonalSyllable = new TonalSyllable(
+      sounds.map(it => new AlphabeticLetter(it.characters))
+    );
     const keys = Array.from(checkedAllomorphs.keys());
     for (let k = 0; k < keys.length; k++) {
       const am = checkedAllomorphs.get(keys[k]);
       if (am && am instanceof CheckedAllomorph) {
         if (am.tonal) {
           if (
-            am.tonal.toString() === syllable.lastLetter.literal &&
-            am.final.toString() === syllable.lastSecondLetter.literal
+            am.tonal.toString() === s.lastLetter.literal &&
+            am.final.toString() === s.lastSecondLetter.literal
           ) {
-            aoas.push(am);
+            las.push(am);
             break;
           } else {
-            if (am.final.toString() === syllable.lastLetter.literal) {
-              aoas.push(am);
+            if (am.final.toString() === s.lastLetter.literal) {
+              las.push(am);
               break;
             }
           }
@@ -325,32 +328,46 @@ export class TonalUncombiningMorpheme extends Morpheme {
       }
     }
 
-    if (aoas.length > 0) {
+    if (las.length > 0) {
       // there is only one match after processing, we just assign it
-      let ret = aoas.shift();
+      const ret = las.shift();
       if (ret) return ret;
     }
 
     // after matching with checked allomorphs, we go on matching free allomorphs
-    aoas = [];
-    if (freeAllomorphs.has(syllable.lastLetter.literal)) {
-      const am = freeAllomorphs.get(syllable.lastLetter.literal);
-      if (am) aoas.push(am);
-      else aoas.push(new Allomorph());
+    las = [];
+    if (freeAllomorphs.has(s.lastLetter.literal)) {
+      const am = freeAllomorphs.get(s.lastLetter.literal);
+      const stpFnls = sounds.filter(it => it.name === TonalSoundTags.stopFinal);
+      const chkttnls = sounds.filter(
+        it => it.name === TonalSoundTags.checkedTonal
+      );
+
+      if (
+        am &&
+        !(
+          stpFnls.length == 1 &&
+          stpFnls[0].toString().length == 2 &&
+          chkttnls.length == 1
+        )
+      ) {
+        // when 8th finals *not* followed by a tonal
+        las.push(am);
+      } else las.push(new Allomorph());
     }
 
-    if (aoas.length == 0) {
+    if (las.length == 0) {
       // tone 1 has no allomorph
       allomorph = new ZeroAllomorph();
-    } else if (aoas.length == 1) {
+    } else if (las.length == 1) {
       // are there multiple allomorphs? there should be only one.
-      for (let i = 0; i < aoas.length; i++) {
-        if (aoas[i].tonal.toString() === new AllomorphX().tonal.toString()) {
+      for (let i = 0; i < las.length; i++) {
+        if (las[i].tonal.toString() === new AllomorphX().tonal.toString()) {
           // this syllable is already in base form
           // in order to display this inflectional ending, we have to assign
-          allomorph = aoas[i];
+          allomorph = las[i];
         } else {
-          allomorph = aoas[i];
+          allomorph = las[i];
         }
       }
     }
@@ -758,6 +775,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
       const ptn = this.postprocessSandhiPPpttt(matched[i], lenPrecedingLetters);
 
+      // TODO: add one condition for transfix inflection
       if (this.isCombiningAyex(matched)) {
         // ~fa, ~xa, fay, or ~xay. ex.
         morphemes.push(

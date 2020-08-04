@@ -15,7 +15,7 @@ describe('Epenthesis testing', () => {
 describe('Epenthesis testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('jiokkxgay');
+  const ta = cli.processTonal('jiokxgay');
 
   test('check the consonant', () => {
     expect(ta.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
@@ -53,10 +53,10 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Voiced final testing', () => {
-  const lx1 = mutateFinalOfPrecedingSyllable('lakkwex');
+  const lx1 = mutateFinalOfPrecedingSyllable('lakwex');
 
   test('chech the surface form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('laggwex');
+    expect(lx1.getForms()[0].literal).toEqual('lagwex');
   });
 
   const lx2 = mutateFinalOfPrecedingSyllable('chapwex');

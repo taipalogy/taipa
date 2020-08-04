@@ -123,12 +123,12 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('kakfsittw');
+  doc = cli.processTonal('kakfsitw');
 
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('kakfsitt');
+    expect(l.substr(0, l.length - en.length)).toEqual('kakfsit');
   });
 
   test('check the inflectional ending', () => {
@@ -152,12 +152,12 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('qeysiokkw');
+  doc = cli.processTonal('qeysiokw');
 
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('qeysiokk');
+    expect(l.substr(0, l.length - en.length)).toEqual('qeysiok');
   });
 
   test('check the inflectional ending', () => {
@@ -182,10 +182,10 @@ describe('Inflection testing', () => {
 });
 
 describe('Inflection testing', () => {
-  const tw = inflectTransfix('damwvurhhxoay');
+  const tw = inflectTransfix('damwvurhxoay');
 
   test('check the inflected form', () => {
-    expect(tw.getForms()[0].literal).toEqual('damwvurhhwoaw');
+    expect(tw.getForms()[0].literal).toEqual('damwvurhwoaw');
   });
 });
 
@@ -285,7 +285,7 @@ describe('Inflection testing', () => {
 });
 
 describe('Inflection testing', () => {
-  const lx1 = inflectDesinence('ekkw');
+  const lx1 = inflectDesinence('ekw');
 
   test('check the length of inflected forms', () => {
     expect(lx1.getForms().length).toEqual(0);
@@ -317,18 +317,18 @@ describe('Inflection testing', () => {
 });
 
 describe('Inflection testing', () => {
-  const lx1 = inflectTransfix('chittwvoexiay');
+  const lx1 = inflectTransfix('chitwvoexiay');
 
   test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('chittwvoewiaw');
+    expect(lx1.getForms()[0].literal).toEqual('chitwvoewiaw');
   });
 });
 
 describe('Inflection testing', () => {
-  const lx1 = inflectTransfix('damwvurhhxoay');
+  const lx1 = inflectTransfix('damwvurhxoay');
 
   test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('damwvurhhwoaw');
+    expect(lx1.getForms()[0].literal).toEqual('damwvurhwoaw');
   });
 });
 

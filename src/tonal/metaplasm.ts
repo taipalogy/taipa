@@ -27,6 +27,7 @@ import {
   finalsBgjlsbbggjjllss,
   voicedVoicelessFinals,
   nasalFinals,
+  fourthToEighthFinals,
 } from './collections';
 
 /** Returns the uncombining forms of a syllable. */
@@ -79,6 +80,19 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         );
         const fnl = s.letters[s.letters.length - 1].literal;
         s.popLetter(); // pop out the tonal
+        // TODO: improve comparisons and conditions
+        // if (
+        //   (fnl === TonalLetterTags.w || fnl === TonalLetterTags.x) &&
+        //   (s.lastLetter.literal === TonalLetterTags.p ||
+        //     s.lastLetter.literal === TonalLetterTags.t ||
+        //     s.lastLetter.literal === TonalLetterTags.k ||
+        //     s.lastLetter.literal === TonalLetterTags.h)
+        // ) {
+        //   const fnl = s.lastLetter.literal;
+        //   s.popLetter(); // pop the final
+        //   const got = fourthToEighthFinals.get(fnl);
+        //   if (got) s.pushLetter(lowerLettersTonal.get(got));
+        // } else
         if (finalsBgjlsbbggjjllss.has(s.lastLetter.literal)) {
           const fnls = finalsBgjlsbbggjjllss.get(s.lastLetter.literal);
           if (fnls) {

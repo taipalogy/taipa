@@ -598,6 +598,7 @@ const smallFormIRor = [
   TonalLetterTags.or.toString(),
 ];
 
+// TODO: to be renamed
 const stopFinalsPPttkkbbggjjllssptkbgjls = [
   TonalLetterTags.p.toString(),
   TonalLetterTags.t.toString(),
@@ -612,7 +613,6 @@ const stopFinalsPPttkkbbggjjllssptkbgjls = [
   TonalLetterTags.s.toString(),
   TonalLetterTags.bb.toString(),
   TonalLetterTags.gg.toString(),
-  TonalLetterTags.jj.toString(),
   TonalLetterTags.ll.toString(),
   TonalLetterTags.ss.toString(),
 ];
@@ -651,7 +651,6 @@ const mappingSymbolForTones = new Map()
   .set(TonalLetterTags.hh, '⤇')
   .set(TonalLetterTags.bb, '⤇')
   .set(TonalLetterTags.gg, '⤇')
-  .set(TonalLetterTags.jj, '⤇')
   .set(TonalLetterTags.ll, '⤇')
   .set(TonalLetterTags.ss, '⤇');
 
