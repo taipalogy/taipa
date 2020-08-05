@@ -97,7 +97,7 @@ describe('Taiwanese kana testing, consonants', () => {
     expect(ta5.blockSequences[0]).toEqual('ム' + '\u{1b167}' + '⎝㋖ア⎸');
   });
 
-  const ta6 = cli.processTonal('mihhwqiannz');
+  const ta6 = cli.processTonal('mihwqiannz');
 
   test('kanas, an initial followed by a nasal final', () => {
     expect(ta6.blockSequences[0]).toEqual('ミィ⎝㋖ア⎸');
@@ -219,7 +219,7 @@ describe('Taiwanese kana testing, e and er', () => {
     expect(ta9.blockSequences[0]).toEqual('リイ⎝イェㇰ⤆');
   });
 
-  const ta10 = cli.processTonal('chiurhhweng');
+  const ta10 = cli.processTonal('chiurhweng');
 
   test('kanas', () => {
     expect(ta10.blockSequences[0]).toEqual('チ𛅦⎝イェン');

@@ -35,22 +35,22 @@ describe('Consonant unmutation testing, agressive, duplifix', () => {
 });
 
 describe('Consonant mutation testing, regressive, final consonant', () => {
-  const phr = mutateFinalOfPrecedingWord('chittw', 'giahh');
+  const phr = mutateFinalOfPrecedingWord('chitw', 'giahh');
 
   test('check the underlying form', () => {
-    expect(phr.phrase.literal).toEqual('chittw giahh');
+    expect(phr.phrase.literal).toEqual('chitw giahh');
   });
 
   test('check the surface form', () => {
-    expect(phr.getForms()[0].literal).toEqual('chiggw giahh');
+    expect(phr.getForms()[0].literal).toEqual('chigw giahh');
   });
 });
 
 describe('Consonant unmutation testing, regressive, final consonant', () => {
-  const phr = unmutateFinalOfPrecedingWord('chiggw', 'giahh');
+  const phr = unmutateFinalOfPrecedingWord('chigw', 'giahh');
 
   test('check the underlying form', () => {
-    expect(phr.phrase.literal).toEqual('chiggw giahh');
+    expect(phr.phrase.literal).toEqual('chigw giahh');
   });
 
   test('check the surface form', () => {
@@ -67,7 +67,7 @@ describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -g
 
   const lx2 = mutateFinalOfPrecedingSyllable('chapwgoz');
 
-  test('check the surface form, -ppwg- to -bbwg-', () => {
+  test('check the surface form, -ppwg- to -bwg-', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabwgoz');
   });
 
@@ -97,10 +97,10 @@ describe('Consonant unmutation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, 
     expect(lx1.getForms()[0].literal).toEqual('bietwbongx');
   });
 
-  const lx2 = unmutateFinalOfPrecedingSyllable('chabbwgoz');
+  const lx2 = unmutateFinalOfPrecedingSyllable('chabwgoz');
 
   test('check the surface form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('chappwgoz');
+    expect(lx2.getForms()[0].literal).toEqual('chapwgoz');
   });
 
   const lx3 = unmutateFinalOfPrecedingSyllable('chibfhoat');
@@ -137,16 +137,16 @@ describe('Consonant mutation testing, sandhi tt, t', () => {
 });
 
 describe('Consonant mutation testing, internal sandhi, regressive', () => {
-  const lx1 = mutateFinalOfPrecedingSyllable('pokfbuttwqoany');
+  const lx1 = mutateFinalOfPrecedingSyllable('pokfbutwqoany');
 
   test('check the surface form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('pogfbukkwqoany');
+    expect(lx1.getForms()[0].literal).toEqual('pogfbukwqoany');
   });
 
   const lx2 = inflectDesinence(lx1.getForms()[0].literal);
 
   test('check the inflected form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('pogfbukkwqoan');
+    expect(lx2.getForms()[0].literal).toEqual('pogfbukwqoan');
   });
 
   const lx3 = mutateFinalOfPrecedingSyllable('cutfgoaz');

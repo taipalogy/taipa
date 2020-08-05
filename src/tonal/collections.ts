@@ -188,7 +188,9 @@ export const voicedVoicelessFinals = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.gg, TonalLetterTags.kk);
 
 /** unchanged sounds for b, g, j, l, s, bb, gg, ll, ss */
-export const finalsBgjlsbbggjjllss = new Map<string, TonalLetterTags[]>()
+export const finalsBgjlsbbggllss = new Map<string, TonalLetterTags[]>()
+  // keys are for the has method
+  // keys and values are for the get method. keys are finals plus no tonals
   .set(TonalLetterTags.b, [TonalLetterTags.p, TonalLetterTags.t])
   .set(TonalLetterTags.g, [TonalLetterTags.k, TonalLetterTags.t])
   .set(TonalLetterTags.j, [TonalLetterTags.t])
@@ -197,7 +199,29 @@ export const finalsBgjlsbbggjjllss = new Map<string, TonalLetterTags[]>()
   .set(TonalLetterTags.bb, [TonalLetterTags.pp, TonalLetterTags.tt])
   .set(TonalLetterTags.gg, [TonalLetterTags.kk, TonalLetterTags.tt])
   .set(TonalLetterTags.ll, [TonalLetterTags.ll, TonalLetterTags.tt])
-  .set(TonalLetterTags.ss, [TonalLetterTags.tt]);
+  .set(TonalLetterTags.ss, [TonalLetterTags.tt])
+  // both keys and values are for the has method
+  // the has method will not reach these pairs
+  .set(TonalLetterTags.s + TonalLetterTags.w, [TonalLetterTags.tt])
+  .set(TonalLetterTags.b + TonalLetterTags.f, [
+    TonalLetterTags.p,
+    TonalLetterTags.t,
+  ])
+  .set(TonalLetterTags.g + TonalLetterTags.f, [
+    TonalLetterTags.k,
+    TonalLetterTags.t,
+  ])
+  .set(TonalLetterTags.j + TonalLetterTags.f, [TonalLetterTags.t])
+  .set(TonalLetterTags.l + TonalLetterTags.f, [TonalLetterTags.t])
+  .set(TonalLetterTags.g + TonalLetterTags.w, [
+    TonalLetterTags.kk,
+    TonalLetterTags.tt,
+  ])
+  .set(TonalLetterTags.g + TonalLetterTags.x, [
+    TonalLetterTags.kk,
+    TonalLetterTags.tt,
+  ])
+  .set(TonalLetterTags.l + TonalLetterTags.w, [TonalLetterTags.tt]);
 
 export const fourthFinals = [
   TonalLetterTags.p.toString(),

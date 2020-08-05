@@ -80,7 +80,7 @@ describe('Tonal testing', () => {
     expect(t11.soundSequences[0][2].toString()).toEqual(TonalLetterTags.z);
   });
 
-  const t12 = cli.processTonal('mihhwqiannz');
+  const t12 = cli.processTonal('mihwqiannz');
 
   test('check the tone letter', () => {
     expect(t12.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);

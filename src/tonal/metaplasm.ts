@@ -24,7 +24,7 @@ import {
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 import {
-  finalsBgjlsbbggjjllss,
+  finalsBgjlsbbggllss,
   voicedVoicelessFinals,
   nasalFinals,
   fourthToEighthFinals,
@@ -79,24 +79,28 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           sounds.map(it => new AlphabeticLetter(it.characters))
         );
         const fnl = s.letters[s.letters.length - 1].literal;
+        const nslFnls = sounds.filter(
+          it => it.name === TonalSoundTags.nasalFinal
+        );
         s.popLetter(); // pop out the tonal
-        // TODO: improve comparisons and conditions
-        // if (
-        //   (fnl === TonalLetterTags.w || fnl === TonalLetterTags.x) &&
-        //   (s.lastLetter.literal === TonalLetterTags.p ||
-        //     s.lastLetter.literal === TonalLetterTags.t ||
-        //     s.lastLetter.literal === TonalLetterTags.k ||
-        //     s.lastLetter.literal === TonalLetterTags.h)
-        // ) {
-        //   const fnl = s.lastLetter.literal;
-        //   s.popLetter(); // pop the final
-        //   const got = fourthToEighthFinals.get(fnl);
-        //   if (got) s.pushLetter(lowerLettersTonal.get(got));
-        // } else
-        if (finalsBgjlsbbggjjllss.has(s.lastLetter.literal)) {
-          const fnls = finalsBgjlsbbggjjllss.get(s.lastLetter.literal);
-          if (fnls) {
-            const clones = fnls.map(it => {
+        if (
+          nslFnls.length == 0 &&
+          (fnl === TonalLetterTags.w || fnl === TonalLetterTags.x) &&
+          Array.from(fourthToEighthFinals.keys()).includes(s.lastLetter.literal)
+        ) {
+          // in case of no internal sandhi
+          const fnl = s.lastLetter.literal;
+          s.popLetter(); // pop the 4th final
+          const got = fourthToEighthFinals.get(fnl);
+          if (got) s.pushLetter(lowerLettersTonal.get(got)); // push the 8th final
+        } else if (finalsBgjlsbbggllss.has(s.lastLetter.literal)) {
+          // in case of internal or external sandhi
+          const fnlsOfLemma = finalsBgjlsbbggllss.get(
+            s.lastLetter.literal + fnl
+          );
+          // console.log(s, allomorph, fnl, fnlsOfLemma);
+          if (fnlsOfLemma) {
+            const clones = fnlsOfLemma.map(it => {
               const clone: TonalSyllable = Object.create(s);
               clone.replaceLetter(
                 s.letters.length - 1,
@@ -113,6 +117,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           nasalFinals.includes(s.lastSecondLetter.literal) &&
           neutralFinalSounds.includes(s.lastLetter.literal)
         ) {
+          // in case of internal sandhi of p or t
           // if there is no medials, e.g. hmhh, hngh, just bypass this block
           // mhh, mh, nhh, nh, nghh, ngh
           if (

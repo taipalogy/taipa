@@ -23,7 +23,6 @@ import {
   smMnngHF,
   smMnngHWx,
   smBgkpF,
-  smBBggkkppW,
   regexJlsF,
   regexMnngHF,
   regexJjllssWx,
@@ -93,7 +92,6 @@ export function syllabifyTonal(
         letters[i - 1] &&
         (smBgkpF(letters[i - 1].literal, letters[i].literal) ||
           smBgkpWx(letters[i - 1].literal, letters[i].literal) ||
-          smBBggkkppW(letters[i - 1].literal, letters[i].literal) ||
           smJlsF(letters[i - 1].literal, letters[i].literal) ||
           smLsWx(letters[i - 1].literal, letters[i].literal))
       ) {
@@ -434,7 +432,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
         .map(seq => seq.map(s => s.toString()).join(''));
 
-      // TODO: add tests and conditions for checked tones
       // compare 2 strings/lexical stems
       if (stems[0] === stems[1]) return true; // identical
     }

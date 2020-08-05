@@ -514,8 +514,7 @@ export const stopFinalSoundsBgjklps = setOfSounds([
   new FinalS(),
 ]);
 
-// TODO: to be renamed
-export const stopFinalSoundsBBggjjkkllppss = setOfSounds([
+export const stopFinalSoundsBBggkkllppss = setOfSounds([
   new FinalBB(),
   new FinalGG(),
   new FinalKK(),

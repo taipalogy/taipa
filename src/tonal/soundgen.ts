@@ -13,7 +13,7 @@ import {
   nasalizationSounds,
   stopFinalSounds,
   stopFinalSoundsBgjklps,
-  stopFinalSoundsBBggjjkkllppss,
+  stopFinalSoundsBBggkkllppss,
 } from './version2';
 import { combiningRules } from './collections';
 
@@ -183,7 +183,7 @@ function sandhiFinalConsonant(sg: SoundGeneration) {
 
   if (
     stopFinalSoundsBgjklps.includes(sg.letters[sg.sounds.length]) ||
-    stopFinalSoundsBBggjjkkllppss.includes(sg.letters[sg.sounds.length])
+    stopFinalSoundsBBggkkllppss.includes(sg.letters[sg.sounds.length])
   ) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
     if (ps) {
@@ -198,7 +198,7 @@ function sandhiFinalConsonant(sg: SoundGeneration) {
       sg.predictSandhiFinal
     ) {
       sg.predictions.push(stopFinalSoundsBgjklps.sounds);
-      sg.predictions.push(stopFinalSoundsBBggjjkkllppss.sounds);
+      sg.predictions.push(stopFinalSoundsBBggkkllppss.sounds);
     }
   }
 

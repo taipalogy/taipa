@@ -1,6 +1,6 @@
 import {
   TonalLetterTags,
-  stopFinalSoundsBBggjjkkllppss,
+  stopFinalSoundsBBggkkllppss,
   stopFinalSoundsBgjklps,
 } from './version2';
 import {
@@ -102,32 +102,12 @@ export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
   return false;
 };
 
-// bbw, ggw, kkw, ppw
-export const smBBggkkppW = function (finalBBggkkpp: string, tonalW: string) {
-  if (finalsBBggkkpp.includes(finalBBggkkpp) && tonalsWx.includes(tonalW))
-    return true;
-};
-
 // bf, gf, jf, kf, lf, pf, sf
 export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
   if (
     stopFinalSoundsBgjklps.includes(finalBgjklps) &&
     TonalLetterTags.f === firstTonalF
   )
-    return true;
-
-  return false;
-};
-
-// bbw, bbx, ggw, ggx, kkw, kkx, llw, llx, ppw, ppx, ssw
-export const smBbggjjkkllppssWx = function (
-  // TODO: remove jj
-  finalBBggjjkkllppss: string,
-  tonalWX: string
-) {
-  const efs = stopFinalSoundsBBggjjkkllppss;
-
-  if (efs.includes(finalBBggjjkkllppss) && tonalsWx.includes(tonalWX))
     return true;
 
   return false;
