@@ -26,7 +26,7 @@ describe('Phrasal verb testing, transitive', () => {
   });
 
   test('check the proceeding form', () => {
-    expect(ph.getForms()[0].literal).toEqual('koanny diurhhw');
+    expect(ph.getForms()[0].literal).toEqual('koanny diurhw');
   });
 });
 
@@ -126,14 +126,14 @@ describe('Noun phrase testing, possesive', () => {
 });
 
 describe('Serial words testing', () => {
-  const fr = inflectSerial('goay', 'siz', 'chittwlex');
+  const fr = inflectSerial('goay', 'siz', 'chitwlex');
 
   test('check the base form', () => {
-    expect(fr.phrase.literal).toEqual('goa siw chittwlex');
+    expect(fr.phrase.literal).toEqual('goa siw chitwlex');
   });
 
   test('check the proceeding form', () => {
-    expect(fr.getForms()[0].literal).toEqual('goa siw chittwlez');
+    expect(fr.getForms()[0].literal).toEqual('goa siw chitwlez');
   });
 });
 

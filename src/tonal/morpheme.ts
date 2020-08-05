@@ -25,7 +25,7 @@ import {
   smBgkpF,
   regexJlsF,
   regexMnngHF,
-  regexJjllssWx,
+  regexLsWx,
   regexMnngHWx,
   smMHW,
   smJlsF,
@@ -51,11 +51,26 @@ export function syllabifyTonal(
   let begin: number = 0;
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
+  let literalRoot4thFinal = '';
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
     ltrs.push(letters[i].literal);
     // console.log(`begining of the loop: ${literal}. ${ltrs}`);
+    if (
+      i + 1 < letters.length &&
+      TonalLetterTags.h === letters[i].literal &&
+      TonalLetterTags.w === letters[i + 1].literal
+    ) {
+      // restore the lexical roots for 4th finals, which is 8th finals
+      literalRoot4thFinal =
+        literalRoot4thFinal.slice(0, literalRoot4thFinal.length) +
+        TonalLetterTags.hh;
+      // TODO: improve the above line for p, t, k
+    } else {
+      literalRoot4thFinal = literalRoot4thFinal + letters[i].literal;
+    }
+
     if (
       isInLexcialRoots(literal) &&
       freeTonalSounds.includes(letters[i].literal)
@@ -67,13 +82,13 @@ export function syllabifyTonal(
       }
       break;
     } else if (
-      isInLexcialRoots(literal) &&
+      isInLexcialRoots(literalRoot4thFinal) &&
       stopFinalSounds.includes(letters[i].literal)
     ) {
-      // console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`)
+      // console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`);
       // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
       if (begin === beginOfSyllable) {
-        matched = literal;
+        matched = literal; // assign literal instead of literalRoot4thFinal
         Object.assign(matchedLtrs, ltrs);
       }
       break;
@@ -95,7 +110,7 @@ export function syllabifyTonal(
           smJlsF(letters[i - 1].literal, letters[i].literal) ||
           smLsWx(letters[i - 1].literal, letters[i].literal))
       ) {
-        // b, g, bb, gg, l, j, s, ll, jj, ss need to be handled in TonalCombiningMorpheme.assignAllomorph
+        // b, g, bb, gg, l, j, s, ll, ss need to be handled in TonalCombiningMorpheme.assignAllomorph
         // this combining form is not present in the pool.
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
@@ -111,7 +126,7 @@ export function syllabifyTonal(
           letters[i].literal
         )
       ) {
-        // for lexical roots end with ~mhhw.
+        // for lexical roots end with ~mhw.
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
         break;
@@ -484,7 +499,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     len: number
   ) {
     const matchedStrs = literal.match(regex);
-    // console.log(arr);
+    // console.log(matchedStrs);
 
     let indx = -1;
     if (len == 1) {
@@ -523,7 +538,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         const head = literal.substring(0, idxl);
         const tail = literal.substring(idxl + matchedStrs[i].length);
 
-        // in case of hmhhw or hmhhwhmhhw
+        // in case of hmhw or hmhwhmhw
         // check if the previous letter is a consonant
 
         if (initialSounds.includes(head)) return letters;
@@ -654,11 +669,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         1
       );
       return ls;
-    } else if (literal.length > 1 && regexJjllssWx.test(literal)) {
+    } else if (literal.length > 1 && regexLsWx.test(literal)) {
       const ls = this.preprocessSandhiFinalTonal(
         letters,
         literal,
-        regexJjllssWx,
+        regexLsWx,
         1
       );
       return ls;

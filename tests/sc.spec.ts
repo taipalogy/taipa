@@ -159,10 +159,10 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('hmhhw');
+  const lx = lemmatize('hmhw');
 
   test('check the syllable composition. ccct.', () => {
-    expect(lx.word.literal).toEqual('hmhhw');
+    expect(lx.word.literal).toEqual('hmhw');
   });
 });
 

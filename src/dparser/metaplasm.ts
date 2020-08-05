@@ -12,7 +12,6 @@ import {
 import {
   eighthToFirst,
   combiningRules,
-  finalOfPhrasalVerbParticle,
   nasalInitials,
   initialsBghjl,
   voicedVoicelessFinals,
@@ -247,13 +246,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
 
   private toThird(syllable: TonalSyllable, final: string) {
     let s: TonalSyllable = new TonalSyllable(syllable.letters);
-    s.popLetter();
-    const fnl = finalOfPhrasalVerbParticle.get(final);
-    if (fnl) {
-      // h -> hh, p -> pp
-      s.pushLetter(lowerLettersTonal.get(fnl));
-      s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
-    }
+    s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
     return s;
   }
 
@@ -273,7 +266,7 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       let s: TonalSyllable = new TonalSyllable(
-        sounds.map(x => new AlphabeticLetter(x.characters))
+        sounds.map(it => new AlphabeticLetter(it.characters))
       );
       if (allomorph instanceof CheckedAllomorph) {
         const ret: TonalSyllable[] = [];
@@ -436,7 +429,7 @@ export class Epenthesis extends TonalInsertionMetaplasm {
         );
         return [wrd];
       }
-      // TODO: insert to syllable e. e.g. laggwex -> laggwgex
+      // TODO: insert to syllable e. e.g. lagwex -> lagwgex
     }
     return [];
   }

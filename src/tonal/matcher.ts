@@ -31,10 +31,10 @@ export const smMnngHF = function (
   return false;
 };
 
-// mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
+// mhw, mhx, nhw, nhx, nghw, nghx
 export const regexMnngHWx = /(m|ng?)h(w|x)/g;
 
-// mhhw
+// mhw
 export const smMHW = function (
   nasalFinal: string,
   neutralFinalHh: string,
@@ -50,7 +50,7 @@ export const smMHW = function (
   return false;
 };
 
-// mhhw, mhhx, nhhw, nhhx, nghhw, nghhx
+// mhw, mhx, nhw, nhx, nghw, nghx
 export const smMnngHWx = function (
   nasalFinal: string,
   neutralFinalH: string,
@@ -85,10 +85,10 @@ export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
   return false;
 };
 
-// llw, llx, ssw
-export const regexJjllssWx = /(j|l|s)(w|x)/g; // TODO: remove j and rename variable
+// lw, lx, sw. there is no sx
+export const regexLsWx = /(l|s)(w|x)/g;
 
-// llw, llx, ssw
+// lw, lx, sw
 export const smLsWx = function (finalLs: string, tonalWX: string) {
   if (finalsLs.includes(finalLs) && tonalsWx.includes(tonalWX)) return true;
 

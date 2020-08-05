@@ -181,7 +181,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   }
 
   private changeFinalTTt(initial: Sound) {
-    // absolute assimilation. regressive
+    // absolute assimilation, except for t or tt followed by j. regressive
     if (
       (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
         Array.from(Object.values(initialsForTT)).includes(
@@ -196,9 +196,18 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         this.sounds.map(it => new AlphabeticLetter(it.characters))
       );
 
-      const fnl = ttInitialTInitialPairs.get(
+      let fnl = ttInitialTInitialPairs.get(
         this.sounds[this.sounds.length - 2].toString() + initial.toString()
       );
+      if (!fnl && initial.toString() === TonalLetterTags.j) {
+        // this block is dedicated to -tfj- and -twj-, since there is only -jfj- but not -jwj-
+        // TODO: need to clarify if there is -jwj-
+        fnl = ttInitialTInitialPairs.get(
+          this.sounds[this.sounds.length - 2].toString() +
+            this.sounds[this.sounds.length - 1] +
+            initial.toString()
+        );
+      }
       if (fnl) {
         s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
         if (nasalInitials.includes(initial.toString())) {

@@ -313,8 +313,8 @@ export class TonalSoundGenerator {
   }
 
   private genChecked(ltrs: string[]) {
-    // TODO: if the 3rd and 5th checked tones would be changed to px, tx, kx,
-    // hx, pw, tw, kw, and hw, edit the rules in combiningRules
+    // TODO: if the 3rd and 5th checked tones would be changed to -ppx, -ttx, -kkx,
+    // -hhx, -ppw, -ttw, -kkw, and -hhw, edit the rules in combiningRules
     const tos = combiningRules.get(ltrs[ltrs.length - 1]);
     let strs: Array<string[]> = new Array();
 

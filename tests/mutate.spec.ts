@@ -11,26 +11,26 @@ import {
 import { inflectDesinence } from '../src/dparser/inflector';
 
 describe('Consonant mutation testing, agressive, duplifix', () => {
-  const lx = mutateInitialOfFollowingSyllable('dittwditt');
+  const lx = mutateInitialOfFollowingSyllable('ditwditt');
 
   test('check the underlying form', () => {
-    expect(lx.word.literal).toEqual('dittwditt');
+    expect(lx.word.literal).toEqual('ditwditt');
   });
 
   test('check the surface form', () => {
-    expect(lx.getForms()[0].literal).toEqual('dittwlitt');
+    expect(lx.getForms()[0].literal).toEqual('ditwlitt');
   });
 });
 
 describe('Consonant unmutation testing, agressive, duplifix', () => {
-  const lx = unmutateInitialOfFollowingSyllable('dittwlitt');
+  const lx = unmutateInitialOfFollowingSyllable('ditwlitt');
 
   test('check the surface form', () => {
-    expect(lx.word.literal).toEqual('dittwlitt');
+    expect(lx.word.literal).toEqual('ditwlitt');
   });
 
   test('check the underlying form', () => {
-    expect(lx.getForms()[0].literal).toEqual('dittwditt');
+    expect(lx.getForms()[0].literal).toEqual('ditwditt');
   });
 });
 
@@ -59,15 +59,15 @@ describe('Consonant unmutation testing, regressive, final consonant', () => {
 });
 
 describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -gg, -ll', () => {
-  const lx1 = mutateFinalOfPrecedingSyllable('biettwbongx');
+  const lx1 = mutateFinalOfPrecedingSyllable('bietwbongx');
 
-  test('check the surface form, -ttwb- to -llwb-', () => {
-    expect(lx1.getForms()[0].literal).toEqual('biellwbongx');
+  test('check the surface form, -twb- to -lwb-', () => {
+    expect(lx1.getForms()[0].literal).toEqual('bielwbongx');
   });
 
   const lx2 = mutateFinalOfPrecedingSyllable('chapwgoz');
 
-  test('check the surface form, -ppwg- to -bwg-', () => {
+  test('check the surface form, -pwg- to -bwg-', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabwgoz');
   });
 
@@ -83,10 +83,10 @@ describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -g
     expect(lx4.getForms()[0].literal).toEqual('ogflangx');
   });
 
-  const lx5 = mutateFinalOfPrecedingSyllable('vattwjitt');
+  const lx5 = mutateFinalOfPrecedingSyllable('vatwjitt');
 
-  test('check the surface form, -ttwj- to -llwj-', () => {
-    expect(lx5.getForms()[0].literal).toEqual('vallwjitt');
+  test('check the surface form, -twj- to -lwj-', () => {
+    expect(lx5.getForms()[0].literal).toEqual('valwjitt');
   });
 });
 
@@ -117,16 +117,16 @@ describe('Consonant unmutation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, 
 
   const lx5 = unmutateFinalOfPrecedingSyllable('valwjitt');
 
-  test('check the surface form, -llwj- to -ttwj-', () => {
+  test('check the surface form, -lwj- to -twj-', () => {
     expect(lx5.getForms()[0].literal).toEqual('vatwjitt');
   });
 });
 
 describe('Consonant mutation testing, sandhi tt, t', () => {
-  const lx1 = mutateFinalOfPrecedingSyllable('bittwpang');
+  const lx1 = mutateFinalOfPrecedingSyllable('bitwpang');
 
   test('check the surface form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('bippwpang');
+    expect(lx1.getForms()[0].literal).toEqual('bipwpang');
   });
 
   const lx2 = mutateFinalOfPrecedingSyllable('hietfkiw');
@@ -193,14 +193,14 @@ describe('Consonant mutation testing, internal sandhi, regressive', () => {
     expect(lx3.getForms()[0].literal).toEqual('qegfngiz');
   });
 */
-  const lx4 = mutateFinalOfPrecedingSyllable('qekkwmngx');
+  const lx4 = mutateFinalOfPrecedingSyllable('qekwmngx');
 
   test('check the underlying form, m-', () => {
-    expect(lx4.word.literal).toEqual('qekkwmngx');
+    expect(lx4.word.literal).toEqual('qekwmngx');
   });
 
   test('check the surface form, m-', () => {
-    expect(lx4.getForms()[0].literal).toEqual('qeggwmngx');
+    expect(lx4.getForms()[0].literal).toEqual('qegwmngx');
   });
 });
 

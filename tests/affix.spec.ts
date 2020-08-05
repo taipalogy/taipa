@@ -71,7 +71,7 @@ describe('Simulfix testing', () => {
 
 describe('Duplifix testing', () => {
   const gm = new GraphemeMaker(lowerLettersTonal);
-  const gs = gm.makeGraphemes('dittwditt');
+  const gs = gm.makeGraphemes('ditwditt');
 
   test('check the letter', () => {
     expect(gs[4].letter.literal).toEqual(TonalLetterTags.d);

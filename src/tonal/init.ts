@@ -283,7 +283,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 const stopFinalsExceptForHHh = mr.sounds.filter(
                   it =>
                     it.name === TonalSoundTags.stopFinal &&
-                    stopFinalsPPttkkbbggjjllssptkbgjls.includes(it.toString())
+                    stopFinalsPPttkkbbggllssptkbgjls.includes(it.toString())
                 );
                 const nasalFinals = mr.sounds.filter(
                   it => it.name === TonalSoundTags.nasalFinal
@@ -421,7 +421,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             } else if (
               mr.sounds[mr.sounds.length - 3].name === TonalSoundTags.nasalFinal
             ) {
-              // in case of mhf, nhf, nghf, mhhw, nhhw, nghhw
+              // in case of mhf, nhf, nghf, mhw, nhw, nghw
               mapped = mappingMedialSmallForm.get(
                 mr.sounds[mr.sounds.length - 3].toString()
               );
@@ -432,7 +432,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 mr.sounds[0].name === TonalSoundTags.initial ||
                 mr.sounds[0].name === TonalSoundTags.medial
               ) {
-                // except for ngh which has no initials. the same for mhf, nhf, nghf, mhhw, nhhw, nghhw.
+                // except for ngh which has no initials. the same for mhf, nhf, nghf, mhw, nhw, nghw.
                 kanas = sliced + mapped[1];
               }
             }
@@ -440,6 +440,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             const nasalFinals = mr.sounds.filter(
               it => it.name === TonalSoundTags.nasalFinal
             );
+
             if (nasalFinals.length > 0) {
               const mapped = mappingMedialSmallForm.get(
                 nasalFinals[0].toString()
@@ -598,8 +599,7 @@ const smallFormIRor = [
   TonalLetterTags.or.toString(),
 ];
 
-// TODO: to be renamed
-const stopFinalsPPttkkbbggjjllssptkbgjls = [
+const stopFinalsPPttkkbbggllssptkbgjls = [
   TonalLetterTags.p.toString(),
   TonalLetterTags.t.toString(),
   TonalLetterTags.k.toString(),

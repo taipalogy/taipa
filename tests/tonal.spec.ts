@@ -14,7 +14,7 @@ import { createTonalInflectionLexeme } from '../src/dparser/creator';
 describe('Tonal testing', () => {
   const cli = new Client();
 
-  const t1 = cli.processTonal('damwvurhhxoay');
+  const t1 = cli.processTonal('damwvurhxoay');
 
   test('check the tone letter', () => {
     expect(t1.soundSequences[1][3].toString()).toEqual(TonalLetterTags.x);
@@ -50,7 +50,7 @@ describe('Tonal testing', () => {
     expect(t6.soundSequences[2][2].toString()).toEqual(TonalLetterTags.z);
   });
 
-  const t7 = cli.processTonal('daiwjittwvunfdeyqok');
+  const t7 = cli.processTonal('daiwjitwvunfdeyqok');
 
   test('check the tone letter', () => {
     expect(t7.soundSequences[2][3].toString()).toEqual(TonalLetterTags.f);
@@ -86,7 +86,7 @@ describe('Tonal testing', () => {
     expect(t12.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
   });
 
-  const t13 = cli.processTonal('bakkwchiu');
+  const t13 = cli.processTonal('bakwchiu');
 
   test('check the tone letter', () => {
     expect(t13.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);

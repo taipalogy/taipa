@@ -45,60 +45,48 @@ describe('Ay testing', () => {
 describe('Ay testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('appxbay');
+  const ta1 = cli.processTonal('apxbay');
 
   test('check the free tonal y', () => {
-    expect(ta.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
+  });
+
+  const ta2 = cli.processTonal('apxay');
+
+  test('check the free tonal y', () => {
+    expect(ta2.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
   });
 });
 
 describe('Ay testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('appxay');
+  const ta1 = cli.processTonal('dekxgay');
 
   test('check the free tonal y', () => {
-    expect(ta.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
+  });
+
+  const ta2 = cli.processTonal('dekxay');
+
+  test('check the free tonal y', () => {
+    expect(ta2.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
   });
 });
 
 describe('Ay testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('dekkxgay');
+  const ta1 = cli.processTonal('catxlay');
 
   test('check the free tonal y', () => {
-    expect(ta.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
   });
-});
 
-describe('Ay testing', () => {
-  const cli = new Client();
-
-  const ta = cli.processTonal('dekkxay');
+  const ta2 = cli.processTonal('catxay');
 
   test('check the free tonal y', () => {
-    expect(ta.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
-  });
-});
-
-describe('Ay testing', () => {
-  const cli = new Client();
-
-  const ta = cli.processTonal('cattxlay');
-
-  test('check the free tonal y', () => {
-    expect(ta.soundSequences[1][2].toString()).toEqual(TonalLetterTags.y);
-  });
-});
-
-describe('Ay testing', () => {
-  const cli = new Client();
-
-  const ta = cli.processTonal('cattxay');
-
-  test('check the free tonal y', () => {
-    expect(ta.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
+    expect(ta2.soundSequences[1][1].toString()).toEqual(TonalLetterTags.y);
   });
 });
 

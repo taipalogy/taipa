@@ -127,7 +127,14 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.t + initialsForFinalT.k, TonalLetterTags.k)
   .set(TonalLetterTags.t + initialsForFinalT.q, TonalLetterTags.k)
   .set(TonalLetterTags.t + initialsForFinalT.g, TonalLetterTags.g)
-  .set(TonalLetterTags.t + initialsForFinalT.j, TonalLetterTags.j)
+  .set(
+    TonalLetterTags.t + TonalLetterTags.f + initialsForFinalT.j,
+    TonalLetterTags.j
+  )
+  .set(
+    TonalLetterTags.t + TonalLetterTags.w + initialsForFinalT.j,
+    TonalLetterTags.l
+  )
   .set(TonalLetterTags.t + initialsForFinalT.m, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialsForFinalT.n, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialsForFinalT.ng, TonalLetterTags.h)
@@ -159,10 +166,6 @@ export const eighthToFirst = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.tt, TonalLetterTags.t)
   .set(TonalLetterTags.kk, TonalLetterTags.k)
   .set(TonalLetterTags.hh, TonalLetterTags.h);
-
-export const finalOfPhrasalVerbParticle = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.h, TonalLetterTags.hh)
-  .set(TonalLetterTags.p, TonalLetterTags.pp);
 
 /** Turn preceding finals to voiced ones. Unvoiced to voiced */
 export const voicelessVoicedFinals = new Map<string, string>()
@@ -223,6 +226,7 @@ export const finalsBgjlsbbggllss = new Map<string, TonalLetterTags[]>()
   ])
   .set(TonalLetterTags.l + TonalLetterTags.w, [TonalLetterTags.tt]);
 
+// TODO: change to an object. checkout initialsForTT and initialsForT.
 export const fourthFinals = [
   TonalLetterTags.p.toString(),
   TonalLetterTags.t.toString(),
