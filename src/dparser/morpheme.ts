@@ -184,13 +184,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     // absolute assimilation, except for t or tt followed by j. regressive
     if (
       (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
-        Array.from(Object.values(initialsForTT)).includes(
-          initial.toString()
-        )) ||
+        Object.values(initialsForTT).includes(initial.toString())) ||
       (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.t &&
-        Array.from(Object.values(initialsForFinalT)).includes(
-          initial.toString()
-        ))
+        Object.values(initialsForFinalT).includes(initial.toString()))
     ) {
       const s: TonalSyllable = new TonalSyllable(
         this.sounds.map(it => new AlphabeticLetter(it.characters))

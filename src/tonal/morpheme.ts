@@ -32,7 +32,12 @@ import {
   smLsWx,
   smBgkpWx,
 } from './matcher';
-import { epentheticSounds, tonalsWx, sandhiFinalsPPpttt } from './collections';
+import {
+  epentheticSounds,
+  tonalsWx,
+  sandhiFinalsPPpttt,
+  fourthToEighthFinals,
+} from './collections';
 import {
   TonalReduplication,
   UncombiningPrecedingAyex,
@@ -57,16 +62,20 @@ export function syllabifyTonal(
     literal = literal + letters[i].literal;
     ltrs.push(letters[i].literal);
     // console.log(`begining of the loop: ${literal}. ${ltrs}`);
+    const had = fourthToEighthFinals.has(letters[i].literal);
     if (
       i + 1 < letters.length &&
-      TonalLetterTags.h === letters[i].literal &&
+      had &&
       TonalLetterTags.w === letters[i + 1].literal
     ) {
+      const got = fourthToEighthFinals.get(letters[i].literal);
       // restore the lexical roots for 4th finals, which is 8th finals
-      literalRoot4thFinal =
-        literalRoot4thFinal.slice(0, literalRoot4thFinal.length) +
-        TonalLetterTags.hh;
-      // TODO: improve the above line for p, t, k
+      if (got) {
+        // since it is 4th finals, length of 4th final is one, just slice one character
+        literalRoot4thFinal =
+          literalRoot4thFinal.slice(0, literalRoot4thFinal.length) + got;
+        // console.log(`literalRoot4thFinal: ${literalRoot4thFinal}`);
+      }
     } else {
       literalRoot4thFinal = literalRoot4thFinal + letters[i].literal;
     }
@@ -85,8 +94,8 @@ export function syllabifyTonal(
       isInLexcialRoots(literalRoot4thFinal) &&
       stopFinalSounds.includes(letters[i].literal)
     ) {
-      // console.log(`i: ${i}, literal: ${literal}, stopFinal: ${letters[i].literal}`);
-      // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`)
+      // console.log(`i: ${i}, literal: ${literal}, literalRoot4thFinal: ${literalRoot4thFinal}, stopFinal: ${letters[i].literal}`);
+      // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`);
       if (begin === beginOfSyllable) {
         matched = literal; // assign literal instead of literalRoot4thFinal
         Object.assign(matchedLtrs, ltrs);

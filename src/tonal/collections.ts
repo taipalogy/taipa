@@ -226,18 +226,17 @@ export const finalsBgjlsbbggllss = new Map<string, TonalLetterTags[]>()
   ])
   .set(TonalLetterTags.l + TonalLetterTags.w, [TonalLetterTags.tt]);
 
-// TODO: change to an object. checkout initialsForTT and initialsForT.
-export const fourthFinals = [
-  TonalLetterTags.p.toString(),
-  TonalLetterTags.t.toString(),
-  TonalLetterTags.k.toString(),
-  TonalLetterTags.h.toString(),
-  TonalLetterTags.b.toString(),
-  TonalLetterTags.g.toString(),
-  TonalLetterTags.j.toString(),
-  TonalLetterTags.l.toString(),
-  TonalLetterTags.s.toString(),
-];
+export const fourthFinals = {
+  p: TonalLetterTags.p.toString(),
+  t: TonalLetterTags.t.toString(),
+  k: TonalLetterTags.k.toString(),
+  h: TonalLetterTags.h.toString(),
+  b: TonalLetterTags.b.toString(),
+  g: TonalLetterTags.g.toString(),
+  j: TonalLetterTags.j.toString(),
+  l: TonalLetterTags.l.toString(),
+  s: TonalLetterTags.s.toString(),
+};
 
 export const fourthToEighthFinals = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.p, TonalLetterTags.pp)
@@ -253,12 +252,12 @@ export const sandhiFinalsPPpttt = [
 ];
 
 /** map eighth checked finals to fourth ones */
-export const eighthToFourthFinals = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.bb, TonalLetterTags.b)
-  .set(TonalLetterTags.gg, TonalLetterTags.g)
-  .set(TonalLetterTags.hh, TonalLetterTags.h)
-  .set(TonalLetterTags.kk, TonalLetterTags.k)
-  .set(TonalLetterTags.ll, TonalLetterTags.l)
-  .set(TonalLetterTags.pp, TonalLetterTags.p)
-  .set(TonalLetterTags.ss, TonalLetterTags.s)
-  .set(TonalLetterTags.tt, TonalLetterTags.t);
+export const eighthToFourthFinals = new Map<string, string>()
+  .set(TonalLetterTags.bb, fourthFinals.b.toString())
+  .set(TonalLetterTags.gg, fourthFinals.g.toString())
+  .set(TonalLetterTags.hh, fourthFinals.h.toString())
+  .set(TonalLetterTags.kk, fourthFinals.k.toString())
+  .set(TonalLetterTags.ll, fourthFinals.l.toString())
+  .set(TonalLetterTags.pp, fourthFinals.p.toString())
+  .set(TonalLetterTags.ss, fourthFinals.s.toString())
+  .set(TonalLetterTags.tt, fourthFinals.t.toString());

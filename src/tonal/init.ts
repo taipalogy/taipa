@@ -391,7 +391,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
         if (mappedFinal && mappedFinal[1]) {
           // stop finals p, t, k, pp, tt, kk
           kanas += mappedFinal[1];
-          if (fourthFinals.includes(mr.sounds[i].toString())) {
+          if (Object.values(fourthFinals).includes(mr.sounds[i].toString())) {
             checkedKanasWithoutBullet = kanas;
           }
           kanas = handleToneSymbolForFourthEighth(kanas, mr.sounds, i);
@@ -450,7 +450,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
               }
             }
           }
-          if (fourthFinals.includes(mr.sounds[i].toString())) {
+          if (Object.values(fourthFinals).includes(mr.sounds[i].toString())) {
             if (
               !(
                 mr.sounds[0].toString() === TonalLetterTags.ng &&
