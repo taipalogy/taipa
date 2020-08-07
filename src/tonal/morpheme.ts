@@ -39,9 +39,10 @@ import {
   fourthToEighthFinals,
 } from './collections';
 import {
-  TonalReduplication,
-  UncombiningPrecedingAyex,
+  LastSyllableForms,
+  PrecedingAyexUncombining,
   TonalUncombiningForms,
+  TransfixUncombining,
 } from './metaplasm';
 import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
 
@@ -424,20 +425,21 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return tum;
   }
 
-  private isCombiningAyex(patterns: MatchedPattern[]) {
+  private isCombiningAyex(syllables: MatchedPattern[]) {
     const keysAy = Array.from(uncombiningRulesAy.keys());
 
     if (
-      patterns.length == 2 &&
-      !regexMnngHF.test(patterns[0].letters.map(it => it.literal).join('')) &&
+      syllables.length == 2 &&
+      !regexMnngHF.test(syllables[0].letters.map(it => it.literal).join('')) &&
       keysAy.filter(
-        it => it === patterns[patterns.length - 2].lastLetter.literal
+        it => it === syllables[syllables.length - 2].lastLetter.literal
       ).length > 0 &&
-      ((patterns[patterns.length - 1].lastSecondLetter.literal ===
+      ((syllables[syllables.length - 1].lastSecondLetter.literal ===
         TonalLetterTags.a &&
-        patterns[patterns.length - 1].lastLetter.literal ===
+        syllables[syllables.length - 1].lastLetter.literal ===
           TonalLetterTags.y) ||
-        patterns[patterns.length - 1].lastLetter.literal === TonalLetterTags.a)
+        syllables[syllables.length - 1].lastLetter.literal ===
+          TonalLetterTags.a)
     ) {
       // bypass sandhi t. e.g. vunghf~
       return true;
@@ -445,16 +447,30 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
-  private isDoublet(matches: MatchedPattern[]) {
-    if (matches.length == 2) {
-      const stems = matches
+  private isTransfixInflection(syllables: MatchedPattern[]) {
+    // TODO: there are not many of them. make a tiny dictionary to cover the ocurrences
+    const thirds = syllables
+      .map(it => it.pattern.filter(snd => snd.toString() === TonalLetterTags.w))
+      .map(seq => seq.map(snd => snd.toString()))
+      .filter(arr => arr.length > 0);
+    const endingAw: boolean =
+      syllables[syllables.length - 1].lastSecondLetter.literal ===
+      TonalLetterTags.a;
+    if (syllables.length > 1 && thirds.length == syllables.length && endingAw)
+      return true;
+    return false;
+  }
+
+  private isDoublet(syllables: MatchedPattern[]) {
+    if (syllables.length == 2) {
+      const stems = syllables
         .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
         .map(seq => seq.map(s => s.toString()).join(''));
 
       // TODO: add checks for tone group
-      const tnls = matches
+      const tnls = syllables
         .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
-        .map(seq => seq.map(s => s.toString()).join(''));
+        .map(seq => seq.map(snd => snd.toString()).join(''));
 
       // compare 2 strings/lexical stems
       if (stems[0] === stems[1]) return true; // identical
@@ -462,24 +478,24 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
-  private isTriplet(matches: MatchedPattern[]) {
-    if (matches.length == 3) {
-      const stems = matches
+  private isTriplet(syllables: MatchedPattern[]) {
+    if (syllables.length == 3) {
+      const stems = syllables
         .map(it =>
           it.pattern.filter(
-            s =>
-              s.name !== TonalSoundTags.freeTonal &&
-              s.name !== TonalSoundTags.checkedTonal
+            snd =>
+              snd.name !== TonalSoundTags.freeTonal &&
+              snd.name !== TonalSoundTags.checkedTonal
           )
         )
-        .map(seq => seq.map(s => s.toString()).join(''));
+        .map(seq => seq.map(snd => snd.toString()).join(''));
 
-      const fnls = matches
+      const fnls = syllables
         .map(it => it.pattern.filter(s => s.name === TonalSoundTags.stopFinal))
         .map(seq => seq.map(s => s.toString()).join(''));
 
       // TODO: add checks for tone group
-      const tnls = matches
+      const tnls = syllables
         .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
         .map(seq => seq.map(s => s.toString()).join(''));
 
@@ -796,22 +812,23 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
       const ptn = this.postprocessSandhiPPpttt(matched[i], lenPrecedingLetters);
 
-      // TODO: add one condition for transfix inflection
       if (this.isCombiningAyex(matched)) {
         // ~fa, ~xa, fay, or ~xay. ex.
         morphemes.push(
-          this.createMorpheme(ptn, new UncombiningPrecedingAyex())
+          this.createMorpheme(ptn, new PrecedingAyexUncombining())
         );
       } else if (this.isTriplet(matched)) {
-        // triplet construction
+        // triplet construction. pass the last syllable as an argument
         morphemes.push(
-          this.createMorpheme(ptn, new TonalReduplication(matched[2].pattern))
+          this.createMorpheme(ptn, new LastSyllableForms(matched[2].pattern))
         );
       } else if (this.isDoublet(matched)) {
-        // doublet construction
+        // doublet construction. pass the last syllable as an argument
         morphemes.push(
-          this.createMorpheme(ptn, new TonalReduplication(matched[1].pattern))
+          this.createMorpheme(ptn, new LastSyllableForms(matched[1].pattern))
         );
+      } else if (this.isTransfixInflection(matched)) {
+        morphemes.push(this.createMorpheme(ptn, new TransfixUncombining()));
       } else {
         if (i < matched.length - 1) {
           // pass the sounds of the following syllable to unchange sounds accordingly

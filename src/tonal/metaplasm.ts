@@ -159,7 +159,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 }
 
 /** Returns the uncombining forms of the syllable preceding ay */
-export class UncombiningPrecedingAyex extends TonalCombiningMetaplasm {
+export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
   private undoChangedFinal(syllable: TonalSyllable, sounds: Array<Sound>) {
     const keysFinalsPrecedingAy = Array.from(voicedVoicelessFinals.keys());
     if (keysFinalsPrecedingAy.includes(sounds[sounds.length - 2].toString())) {
@@ -255,10 +255,11 @@ export class UncombiningPrecedingAyex extends TonalCombiningMetaplasm {
 }
 
 /** Returns the last syllable of a double or triple construction as an uncombining form. */
-export class TonalReduplication extends TonalCombiningMetaplasm {
+export class LastSyllableForms extends TonalCombiningMetaplasm {
   constructor(private soundsLastSyllable: Sound[]) {
     super();
   }
+
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       // skip the last syllable. it is the base form of the preceding 2 syllables.
@@ -272,6 +273,48 @@ export class TonalReduplication extends TonalCombiningMetaplasm {
         this.soundsLastSyllable.map(it => new AlphabeticLetter(it.characters))
       );
       return [s];
+    }
+    return [];
+  }
+}
+
+/** Returns the uncombining forms of a transfix inflected syllable. */
+export class TransfixUncombining extends TonalCombiningMetaplasm {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
+    if (allomorph) {
+      const vowelA = sounds.filter(it => it.toString() === TonalLetterTags.a);
+      const chkFnls = sounds.filter(
+        it => it.name === TonalSoundTags.checkedTonal
+      );
+      const s: TonalSyllable = new TonalSyllable(
+        sounds.map(it => new AlphabeticLetter(it.characters))
+      );
+
+      if (vowelA.length == 1) {
+        // aw -> ay
+        s.popLetter(); // pop letter w
+        s.pushLetter(lowerLettersTonal.get(TonalLetterTags.y));
+        return [s];
+      } else if (chkFnls.length == 1) {
+        // checked tones
+        s.popLetter(); // pop letter w
+        const clone: TonalSyllable = Object.create(s);
+        clone.popLetter(); // pop final t
+        clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.tt));
+        return [s, clone];
+      } else {
+        // in case of free tones other than aw, return the other four free tones
+        s.popLetter(); // pop letter w. 1st tone
+        const clone2: TonalSyllable = Object.create(s); // 2nd tone
+        const clone5: TonalSyllable = Object.create(s); // 5th tone
+        const clone7: TonalSyllable = Object.create(s); // 7th tone
+        clone2.pushLetter(lowerLettersTonal.get(TonalLetterTags.y));
+        clone5.popLetter(); // letter y was also pushed to clone5, so we have to pop it out. bug?
+        clone5.pushLetter(lowerLettersTonal.get(TonalLetterTags.x));
+        clone7.popLetter(); // letter y was also pushed to clone7, so we have to pop it out. bug?
+        clone7.pushLetter(lowerLettersTonal.get(TonalLetterTags.z));
+        return [s, clone2, clone5, clone7];
+      }
     }
     return [];
   }
