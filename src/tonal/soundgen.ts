@@ -66,7 +66,8 @@ function neutralFinalConsonant(sg: SoundGeneration) {
 }
 
 function nasalFinalConsonant(sg: SoundGeneration) {
-  if (!sg.matching) return sg;
+  // check out the length of letters like we do in the loop in function vowel
+  if (!sg.matching || sg.letters.length == 0) return sg;
 
   if (nasalFinalSounds.includes(sg.letters[sg.sounds.length])) {
     const ps = tonalPositionalSounds.get(sg.letters[sg.sounds.length]);
@@ -84,12 +85,12 @@ function nasalFinalConsonant(sg: SoundGeneration) {
 }
 
 function vowel(sg: SoundGeneration) {
+  // this variable has impact on the return values of lurzmafjiz tokenizer
   let toBePredicted = true;
   let matches: number = 0;
   for (let i = sg.sounds.length; i < sg.letters.length; i++) {
-    // console.log(`sg.sounds.length: ${sg.sounds.length}`);
     if (medialSounds.includes(sg.letters[i])) {
-      toBePredicted = false;
+      toBePredicted = true;
       const ps = tonalPositionalSounds.get(sg.letters[i]);
       if (ps) {
         const s = ps(TonalSoundTags.medial);
@@ -106,7 +107,7 @@ function vowel(sg: SoundGeneration) {
   if (toBePredicted) {
     if (sg.predictive && sg.letters.length > 0)
       sg.predictions.push(medialSounds.sounds);
-    sg.matching = false;
+    sg.matching = true;
   }
 
   return sg;
@@ -142,7 +143,7 @@ function nasalization(sg: SoundGeneration) {
   return sg;
 }
 
-function freeTone(sg: SoundGeneration) {
+function freeTonal(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (freeTonalSounds.includes(sg.letters[sg.sounds.length])) {
@@ -160,7 +161,7 @@ function freeTone(sg: SoundGeneration) {
   return sg;
 }
 
-function checkedTone(sg: SoundGeneration) {
+function checkedTonal(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (checkedTonalSounds.includes(sg.letters[sg.sounds.length])) {
@@ -208,24 +209,24 @@ function sandhiFinalConsonant(sg: SoundGeneration) {
 // common syllables
 const scV = sgPipe(vowel);
 const scM = sgPipe(materLectionis);
-const scVT = sgPipe(vowel, freeTone);
-const scMT = sgPipe(materLectionis, freeTone);
+const scVT = sgPipe(vowel, freeTonal);
+const scMT = sgPipe(materLectionis, freeTonal);
 const scMC = sgPipe(materLectionis, neutralFinalConsonant);
 const scCV = sgPipe(initialConsonant, vowel);
 const scVC1 = sgPipe(vowel, stopFinalConsonant);
 const scVC2 = sgPipe(vowel, nasalFinalConsonant);
-const scVCT1 = sgPipe(vowel, stopFinalConsonant, checkedTone);
-const scVCT2 = sgPipe(vowel, nasalFinalConsonant, freeTone);
-const scCVT = sgPipe(initialConsonant, vowel, freeTone);
+const scVCT1 = sgPipe(vowel, stopFinalConsonant, checkedTonal);
+const scVCT2 = sgPipe(vowel, nasalFinalConsonant, freeTonal);
+const scCVT = sgPipe(initialConsonant, vowel, freeTonal);
 const scCVC1 = sgPipe(initialConsonant, vowel, stopFinalConsonant);
 const scCVC2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant);
 const scCVCT1 = sgPipe(
   initialConsonant,
   vowel,
   stopFinalConsonant,
-  checkedTone
+  checkedTonal
 );
-const scCVCT2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant, freeTone);
+const scCVCT2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant, freeTonal);
 const scCVCC = sgPipe(
   initialConsonant,
   vowel,
@@ -236,12 +237,12 @@ const scVCCT = sgPipe(
   vowel,
   nasalFinalConsonant,
   neutralFinalConsonant,
-  checkedTone
+  checkedTonal
 );
 
 // consonant syllables
 const scCC = sgPipe(initialConsonant, nasalFinalConsonant);
-const scCCT = sgPipe(initialConsonant, nasalFinalConsonant, freeTone);
+const scCCT = sgPipe(initialConsonant, nasalFinalConsonant, freeTonal);
 const scCCC = sgPipe(
   initialConsonant,
   nasalFinalConsonant,
@@ -251,14 +252,14 @@ const scCCCT = sgPipe(
   initialConsonant,
   nasalFinalConsonant,
   neutralFinalConsonant,
-  checkedTone
+  checkedTonal
 );
 
 // nasalization syllables
 const scVN = sgPipe(vowel, nasalization);
-const scVNT = sgPipe(vowel, nasalization, freeTone);
+const scVNT = sgPipe(vowel, nasalization, freeTonal);
 const scCVN = sgPipe(initialConsonant, vowel, nasalization);
-const scCVNT = sgPipe(initialConsonant, vowel, nasalization, freeTone);
+const scCVNT = sgPipe(initialConsonant, vowel, nasalization, freeTonal);
 const scCVNC = sgPipe(
   initialConsonant,
   vowel,
@@ -270,25 +271,25 @@ const scCVNCT = sgPipe(
   vowel,
   nasalization,
   neutralFinalConsonant,
-  checkedTone
+  checkedTonal
 );
 
 // sandhi syllables
 const scVC3 = sgPipe(vowel, sandhiFinalConsonant);
-const scVCT3 = sgPipe(vowel, sandhiFinalConsonant, checkedTone);
+const scVCT3 = sgPipe(vowel, sandhiFinalConsonant, checkedTonal);
 const scCVC3 = sgPipe(initialConsonant, vowel, sandhiFinalConsonant);
 const scCVCT3 = sgPipe(
   initialConsonant,
   vowel,
   sandhiFinalConsonant,
-  checkedTone
+  checkedTonal
 );
 const scCVCCT = sgPipe(
   initialConsonant,
   vowel,
   nasalFinalConsonant,
   neutralFinalConsonant,
-  checkedTone
+  checkedTonal
 );
 
 // prettier-ignore
