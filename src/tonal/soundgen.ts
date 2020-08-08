@@ -85,7 +85,9 @@ function nasalFinalConsonant(sg: SoundGeneration) {
 }
 
 function vowel(sg: SoundGeneration) {
-  // this variable has impact on the return values of lurzmafjiz tokenizer
+  // we need the below line when the preceding initial consonant is not matched
+  if (!sg.matching) return sg;
+
   let toBePredicted = true;
   let matches: number = 0;
   for (let i = sg.sounds.length; i < sg.letters.length; i++) {
@@ -105,8 +107,9 @@ function vowel(sg: SoundGeneration) {
   }
 
   if (toBePredicted) {
-    if (sg.predictive && sg.letters.length > 0)
+    if (sg.predictive && sg.letters.length > 0) {
       sg.predictions.push(medialSounds.sounds);
+    }
     sg.matching = true;
   }
 
