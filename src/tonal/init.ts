@@ -25,6 +25,7 @@ export function checkNumberOfLetterTonal() {
 
 const combiningOverline = '\u0305';
 const combiningDotBelow = '\u0323';
+const combiningSemiVoiced = '\u309A'; // combining katakana-hiragana semi-voiced sound mark
 
 function handleCombiningDotBelowOverline(initial: string, medial: string) {
   const got = kanaInitials(mappingInitial.get(initial))(medial);
@@ -63,7 +64,12 @@ function handleToneSymbolForFourthEighth(
   return kanas;
 }
 
-function insertIReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
+function insertIReplaceWithSmall(
+  kanas: string,
+  sounds: Sound[],
+  i: number,
+  beginOfSyllable: number
+) {
   if (
     sounds[i - 1].name === TonalSoundTags.medial &&
     sounds[sounds.length - 1].toString() !== TonalLetterTags.n
@@ -79,9 +85,14 @@ function insertIReplaceWithSmall(kanas: string, sounds: Sound[], i: number) {
     }
   }
 
-  if (kanas.length > 1) {
+  if (
+    kanas.length - beginOfSyllable > 1 &&
+    kanas[kanas.length - 1] !== combiningDotBelow &&
+    kanas[kanas.length - 1] !== combiningSemiVoiced
+  ) {
+    // TODO: the comparisons for diacritic may not be elegant. comparisons are needed for -h and -hh
     // replace the kana before the final with a smaller one
-    const medials = sounds.filter(i => i.name === TonalSoundTags.medial);
+    const medials = sounds.filter(it => it.name === TonalSoundTags.medial);
     if (
       (medials.length > 0 && medials[0].toString() === TonalLetterTags.e) ||
       medials.length > 1
@@ -146,6 +157,7 @@ function replaceWithSmall(kanas: string, sounds: Sound[], i: number) {
     }
   } else {
     const sliced = kanas.slice(0, kanas.length - 1);
+
     // replace the middle medial with a small form.
     const got = otherKanas.get(sounds[i - 1].toString());
     if (got) {
@@ -159,15 +171,13 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
   let seqs: string[] = [];
   let kanas = '';
   let checkedKanasWithoutBullet = '';
-  let idxNasalization = 0;
+  let beginOfSyllable = 0; // beginning of the nasalized syllable
   for (const mr of morphemes) {
     for (let i = 0; i < mr.sounds.length; i++) {
-      if (
-        i == 0 &&
-        mr.sounds.filter(i => i.name === TonalSoundTags.nasalization).length > 0
-      ) {
-        idxNasalization = kanas.length; // beginning of the nasalized syllable
+      if (i == 0) {
+        beginOfSyllable = kanas.length;
       }
+
       if (mr.sounds[i].name === TonalSoundTags.initial) {
         const initials = kanaInitials(
           mappingInitial.get(mr.sounds[i].toString())
@@ -368,8 +378,8 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
           }
         }
       } else if (mr.sounds[i].name === TonalSoundTags.nasalization) {
-        const slicedHead = kanas.slice(0, idxNasalization);
-        const slicedTail = kanas.slice(idxNasalization + 1, kanas.length);
+        const slicedHead = kanas.slice(0, beginOfSyllable);
+        const slicedTail = kanas.slice(beginOfSyllable + 1, kanas.length);
         if (mr.sounds[0].name === TonalSoundTags.initial) {
           const got = mappingNasalization.get(
             mr.sounds[0].toString() + mr.sounds[1].toString()
@@ -386,7 +396,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
         kanas += mappingSymbolForTones.get(mr.sounds[i].toString());
       } else if (mr.sounds[i].name === TonalSoundTags.stopFinal) {
         // syllable finals
-        kanas = insertIReplaceWithSmall(kanas, mr.sounds, i);
+        kanas = insertIReplaceWithSmall(kanas, mr.sounds, i, beginOfSyllable);
         const mappedFinal = mappingStopFinal.get(mr.sounds[i].toString());
         if (mappedFinal && mappedFinal[1]) {
           // stop finals p, t, k, pp, tt, kk
@@ -397,7 +407,21 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
           kanas = handleToneSymbolForFourthEighth(kanas, mr.sounds, i);
         } else {
           // stop final h, hh
-          const sliced = kanas.slice(0, kanas.length - 1);
+          let sliced = '';
+          const kanasCurrSyl = kanas.slice(beginOfSyllable);
+          if (
+            kanasCurrSyl.length == 1 ||
+            (kanasCurrSyl.length == 2 &&
+              kanas[kanas.length - 1] === combiningDotBelow) ||
+            kanas[kanas.length - 1] === combiningSemiVoiced
+          ) {
+            // in case of neh for an initial kana without a diacritic
+            // in case of keh, ngeh for an initial kana plus a diacritic
+            sliced = kanas.slice(0, kanas.length);
+          } else {
+            // in case of 2 kanas, to replace the later one
+            sliced = kanas.slice(0, kanas.length - 1);
+          }
           const medials = mr.sounds.filter(
             it => it.name === TonalSoundTags.medial
           );
@@ -433,7 +457,12 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                 mr.sounds[0].name === TonalSoundTags.medial
               ) {
                 // except for ngh which has no initials. the same for mhf, nhf, nghf, mhw, nhw, nghw.
-                kanas = sliced + mapped[1];
+                if (sliced.length == 0) {
+                  // in case of ngeh or ngehh
+                  kanas = kanas + sliced + mapped[1];
+                } else {
+                  kanas = sliced + mapped[1];
+                }
               }
             }
           } else if (medials.length == 0) {
@@ -478,7 +507,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
             );
           }
         }
-        kanas = insertIReplaceWithSmall(kanas, mr.sounds, i);
+        kanas = insertIReplaceWithSmall(kanas, mr.sounds, i, beginOfSyllable);
         const got = mappingNasalFinal.get(mr.sounds[i].toString());
         if (got && got[1]) kanas += got[1];
       }

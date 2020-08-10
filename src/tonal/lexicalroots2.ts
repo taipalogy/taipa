@@ -7,31 +7,37 @@ export function isInLexcialRoots(strToFind: string) {
 
 // prettier-ignore
 const toBeVerified = [
-    'burhh',
+    'buhh', 'burhh',
     
-    'cett', 'choa',
+    'cett', 'choa', 'chiauhh', 'ciauhh',
 
     'dom',
+
+    'gunx',
     
     'hioh',
 
     'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt',
 
+    'kihh', 'kiauhh',
+
     'len', 'lirey',  'lng',
 
     'mah',
 
-    'na',
+    'na', 'ngihh',
 
     'oehh',
 
-    'qanh', 'qih', 'qoaiz', 'qngh',
+    'pitt',
 
-    'simh',
+    'qanh', 'qih', 'qngh', 'qoaiz', 'qoatt',
+
+    'sauhh', 'sokk',
 
     'toehh', 'tom', 'tomz',
 
-    'vann', 'virt',
+    'vann', 'vihh', 'virt',
 ]
 
 // prettier-ignore
@@ -133,7 +139,7 @@ const extraLexicalRoots = [
     
     'burh',
 
-    'coaih',
+    'coaih', 'choatt',
     
     'dngh',
 

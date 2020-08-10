@@ -498,6 +498,34 @@ describe('Taiwanese kana testing, initials', () => {
   });
 });
 
+describe('Taiwanese kana testing, neutral finals', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('ngehh');
+
+  test('kanas', () => {
+    expect(ta1.blockSequences[0]).toEqual('ケ゚ェ⤇');
+  });
+
+  const ta2 = cli.processTonal('neh');
+
+  test('kanas', () => {
+    expect(ta2.blockSequences[0]).toEqual('ネェ⤆');
+  });
+
+  const ta3 = cli.processTonal('keh');
+
+  test('kanas, ケ̣ェ⤆', () => {
+    expect(ta3.blockSequences[0]).toEqual('ケ' + '\u0323' + 'ェ⤆');
+  });
+
+  const ta4 = cli.processTonal('sehwsehh');
+
+  test('kanas', () => {
+    expect(ta4.blockSequences[0]).toEqual('セェ⎝セェ⤇');
+  });
+});
+
 describe('Taiwanese kana testing, unicode', () => {
   test('kanas, katakana letter small letter wo', () => {
     expect('\ud82c\udd66').toEqual('\u{1b166}');
