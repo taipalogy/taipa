@@ -443,6 +443,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     ) {
       // bypass sandhi t. e.g. vunghf~
       return true;
+    } else if (syllables.length == 3) {
     }
     return false;
   }

@@ -160,23 +160,27 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
 
 /** Returns the uncombining forms of the syllable preceding ay */
 export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
-  private undoChangedFinal(syllable: TonalSyllable, sounds: Array<Sound>) {
-    const keysFinalsPrecedingAy = Array.from(voicedVoicelessFinals.keys());
-    if (keysFinalsPrecedingAy.includes(sounds[sounds.length - 2].toString())) {
-      if (
-        voicedVoicelessFinals.has(
-          syllable.lastLetter.literal + sounds[sounds.length - 1].toString()
-        )
-      ) {
-        const fnl = voicedVoicelessFinals.get(
-          syllable.lastLetter.literal + sounds[sounds.length - 1].toString()
+  private getUncombiningForms(syllable: TonalSyllable, sounds: Array<Sound>) {
+    if (voicedVoicelessFinals.has(sounds[sounds.length - 2].toString())) {
+      // in case of sandhi finals
+      const fnl = voicedVoicelessFinals.get(
+        syllable.lastLetter.literal + sounds[sounds.length - 1].toString()
+      );
+      if (fnl)
+        syllable.replaceLetter(
+          syllable.letters.length - 1,
+          lowerLettersTonal.get(fnl)
         );
-        if (fnl)
-          syllable.replaceLetter(
-            syllable.letters.length - 1,
-            lowerLettersTonal.get(fnl)
-          );
-      }
+    } else if (
+      fourthToEighthFinals.has(sounds[sounds.length - 2].toString()) &&
+      sounds[sounds.length - 1].toString() === TonalLetterTags.x
+    ) {
+      const fnl = fourthToEighthFinals.get(syllable.lastLetter.literal);
+      if (fnl)
+        syllable.replaceLetter(
+          syllable.letters.length - 1,
+          lowerLettersTonal.get(fnl)
+        );
     }
   }
 
@@ -204,7 +208,7 @@ export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
           );
           // pop f
           s.popLetter();
-          this.undoChangedFinal(s, sounds);
+          this.getUncombiningForms(s, sounds);
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.x) {
@@ -241,9 +245,8 @@ export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
           const s: TonalSyllable = new TonalSyllable(
             sounds.map(it => new AlphabeticLetter(it.characters))
           );
-          // pop x
-          s.popLetter();
-          this.undoChangedFinal(s, sounds);
+          s.popLetter(); // pop x
+          this.getUncombiningForms(s, sounds);
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.y) {

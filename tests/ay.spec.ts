@@ -1,6 +1,5 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { TokenAnalysis } from '../src/token';
 
 describe('Ay testing', () => {
   const cli = new Client();
@@ -156,7 +155,7 @@ describe('Ay testing, uncombining form of the first syllable', () => {
   const ta = cli.processTonal('hiurhxay');
 
   test('check the uncombining form', () => {
-    expect(ta.uncombiningSequences[0]).toContain('hiurh');
+    expect(ta.uncombiningSequences[0]).toContain('hiurhh');
   });
 });
 
@@ -176,7 +175,7 @@ describe('Ay testing, uncombining form of the first syllable', () => {
   const ta = cli.processTonal('voatxay');
 
   test('check the uncombining form', () => {
-    expect(ta.uncombiningSequences[0]).toContain('voat');
+    expect(ta.uncombiningSequences[0]).toContain('voatt');
   });
 });
 
@@ -196,7 +195,7 @@ describe('Ay testing, uncombining form of the first syllable', () => {
   const ta = cli.processTonal('lokxay');
 
   test('check the uncombining form', () => {
-    expect(ta.uncombiningSequences[0]).toContain('lok');
+    expect(ta.uncombiningSequences[0]).toContain('lokk');
   });
 });
 
@@ -216,6 +215,6 @@ describe('Ay testing, uncombining form of the first syllable', () => {
   const ta = cli.processTonal('liapxay');
 
   test('check the uncombining form', () => {
-    expect(ta.uncombiningSequences[0]).toContain('liap');
+    expect(ta.uncombiningSequences[0]).toContain('liapp');
   });
 });

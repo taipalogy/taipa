@@ -2,7 +2,7 @@ import { syllableCompositions } from './soundgen';
 import { SoundGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from './analyzer';
 
-export function tokenizeLurzmafjiz(str: string) {
+export function tokenizeLatinSyllable(str: string) {
   const soundSeqs: Array<Array<Sound[]>> = new Array();
 
   const letters = graphAnalyzeTonal(str).map(x => x.letter && x.letter.literal);
