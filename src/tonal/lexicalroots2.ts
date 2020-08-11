@@ -7,7 +7,7 @@ export function isInLexcialRoots(strToFind: string) {
 
 // prettier-ignore
 const toBeVerified = [
-    'buhh', 'burhh',
+    'baih', 'buhh', 'burhh',
     
     'cett', 'choa', 'chiauhh', 'ciauhh',
 

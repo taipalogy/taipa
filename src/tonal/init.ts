@@ -90,7 +90,7 @@ function insertIReplaceWithSmall(
     kanas[kanas.length - 1] !== combiningDotBelow &&
     kanas[kanas.length - 1] !== combiningSemiVoiced
   ) {
-    // TODO: the comparisons for diacritic may not be elegant. comparisons are needed for -h and -hh
+    // TODO: the comparisons for diacritic may not work out elegantly. comparisons are needed for -h and -hh
     // replace the kana before the final with a smaller one
     const medials = sounds.filter(it => it.name === TonalSoundTags.medial);
     if (
