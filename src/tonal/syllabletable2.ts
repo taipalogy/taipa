@@ -1,7 +1,7 @@
-export function isInLexcialRoots(strToFind: string) {
-  if (lexicalRoots.includes(strToFind)) return true;
-  if (extraLexicalRoots.includes(strToFind)) return true;
-  if (addonLexicalRootsForSyllabary.includes(strToFind)) return true;
+export function isInSyllableTable(strToFind: string) {
+  if (basicSyllables.includes(strToFind)) return true;
+  if (extraSyllables.includes(strToFind)) return true;
+  if (addonSyllabogramSyllables.includes(strToFind)) return true;
   return false;
 }
 
@@ -41,7 +41,7 @@ const toBeVerified = [
 ]
 
 // prettier-ignore
-const addonLexicalRoots = [
+const addonSyllables = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
     'borh', 'borhh', 'borx', 'bory', 'borz',
@@ -88,7 +88,7 @@ const addonLexicalRoots = [
 ]
 
 // prettier-ignore
-const addonLexicalRootsForSyllabary = [
+const addonSyllabogramSyllables = [
     // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
     'bam', 'bek', 'biet', 'bit', 'biu', 'boa', 'boat', 'bor',
 
@@ -134,7 +134,7 @@ const addonLexicalRootsForSyllabary = [
 ]
 
 // prettier-ignore
-const extraLexicalRoots = [
+const extraSyllables = [
     'aih',
     
     'burh',
@@ -167,7 +167,7 @@ const extraLexicalRoots = [
 ]
 
 // prettier-ignore
-export const lexicalRoots = [
+export const basicSyllables = [
     'a', 'ay', 'az', 'ah', 'ahh', 'ai', 'aiy', 'aiw', 'ainnz', 'ak', 'am',
     'amy', 'amw', 'amx', 'amz', 'an', 'any', 'anw', 'anx', 'anz', 'ang',
     'angw', 'angx', 'angz', 'annw', 'annx', 'annz', 'ap', 'app', 'at', 'au',

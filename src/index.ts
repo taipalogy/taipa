@@ -9,7 +9,7 @@ export {
 export { tonalInflectionAnalyzer } from './dparser/analyzer';
 export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
 export { GraphemeMaker } from './unit';
-export { lexicalRoots } from './tonal/lexicalroots2';
+export { basicSyllables } from './tonal/syllabletable2';
 export {
   lowerLettersTonal,
   TonalLetterTags,
@@ -63,9 +63,11 @@ export { TonalWord } from './tonal/lexeme';
 export { TonalPhrase } from './tonal/phraseme';
 
 export { Sound, SoundGeneration } from './unit';
-export {  initialSounds,
+export {
+  initialSounds,
   nasalizationSounds,
-  medialSounds } from './tonal/version2'
+  medialSounds,
+} from './tonal/version2';
 
 export {
   TonalDesinenceInflection,
@@ -74,6 +76,6 @@ export {
 
 export { predict } from './tonal/prediction';
 
-export { syllableCompositions } from './tonal/soundgen'
+export { syllableCompositions } from './tonal/soundgen';
 
-export { tokenizeLatinSyllable } from './tonal/tokenizer'
+export { tokenizeLatinSyllable } from './tonal/tokenizer';

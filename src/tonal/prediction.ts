@@ -1,6 +1,6 @@
 import { syllableCompositions } from './soundgen';
 import { SoundGeneration, Sound } from '../unit';
-import { isInLexcialRoots } from './lexicalroots2';
+import { isInSyllableTable } from './syllabletable2';
 
 /** Predicts the following letters. Return them as an array of strings when available. If the lexical roots are not present, an empty array will be returned. */
 export function predict(letters: string[]) {
@@ -34,7 +34,7 @@ export function predict(letters: string[]) {
 
   // for valid predictions
   const predictions = dedupes.filter(x =>
-    isInLexcialRoots(letters.join('') + x[0])
+    isInSyllableTable(letters.join('') + x[0])
   );
 
   return predictions;

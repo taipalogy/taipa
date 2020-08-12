@@ -1,6 +1,6 @@
 import { characters } from '../src/unit';
 import { lowerLettersTonal } from '../src/tonal/version2';
-import { lexicalRoots } from '../src/tonal/lexicalroots2';
+import { basicSyllables } from '../src/tonal/syllabletable2';
 
 describe('Basic testing', () => {
   test('check the number of characters', () => {
@@ -12,6 +12,6 @@ describe('Basic testing', () => {
   });
 
   test('check the number of lexical roots', () => {
-    expect(lexicalRoots.length).toEqual(2209);
+    expect(basicSyllables.length).toEqual(2209);
   });
 });

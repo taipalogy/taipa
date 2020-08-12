@@ -18,7 +18,7 @@ import {
 } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from './soundgen';
-import { isInLexcialRoots } from './lexicalroots2';
+import { isInSyllableTable } from './syllabletable2';
 import {
   smMnngHF,
   smMnngHWx,
@@ -82,7 +82,7 @@ export function syllabifyTonal(
     }
 
     if (
-      isInLexcialRoots(literal) &&
+      isInSyllableTable(literal) &&
       freeTonalSounds.includes(letters[i].literal)
     ) {
       // console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
@@ -92,7 +92,7 @@ export function syllabifyTonal(
       }
       break;
     } else if (
-      isInLexcialRoots(literalRoot4thFinal) &&
+      isInSyllableTable(literalRoot4thFinal) &&
       stopFinalSounds.includes(letters[i].literal)
     ) {
       // console.log(`i: ${i}, literal: ${literal}, literalRoot4thFinal: ${literalRoot4thFinal}, stopFinal: ${letters[i].literal}`);
@@ -157,7 +157,7 @@ export function syllabifyTonal(
         for (let t of tnls) {
           //console.log(lit + t.toString())
           if (
-            isInLexcialRoots(
+            isInSyllableTable(
               letters
                 .slice(beginOfSyllable, i)
                 .map(x => x.literal)
@@ -178,7 +178,7 @@ export function syllabifyTonal(
         matched = '';
         matchedLtrs = [];
       }
-    } else if (isInLexcialRoots(literal)) {
+    } else if (isInSyllableTable(literal)) {
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
       begin = beginOfSyllable;
@@ -199,7 +199,7 @@ export function syllabifyTonal(
         for (let t of tnls) {
           // append second tonal letter
           // check the uncombining forms
-          if (isInLexcialRoots(literal + t.toString())) {
+          if (isInSyllableTable(literal + t.toString())) {
             // if the free first tone's lemma is included
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
@@ -235,7 +235,7 @@ export function syllabifyTonal(
       const rea = new RemovingEpenthesisOfAy();
       const done = rea.applyToString(literal);
       //console.log(done.toString())
-      if (epentheticSounds.includes(ltrs[0]) && isInLexcialRoots(done)) {
+      if (epentheticSounds.includes(ltrs[0]) && isInSyllableTable(done)) {
         list = tsg.generate(ltrs);
       }
     }
@@ -661,8 +661,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     if (
       letters.length > 0 &&
       letters[letters.length - 1].literal === TonalLetterTags.gg &&
-      isInLexcialRoots(slicedLiteral + TonalLetterTags.tt) &&
-      !isInLexcialRoots(slicedLiteral + TonalLetterTags.kk)
+      isInSyllableTable(slicedLiteral + TonalLetterTags.tt) &&
+      !isInSyllableTable(slicedLiteral + TonalLetterTags.kk)
     ) {
       // for surface form gg whose underlying form is tt but not kk
       const ls = this.preprocessSandhiFinal(letters);
@@ -672,7 +672,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     } else if (
       letters.length > 0 &&
       letters[letters.length - 1].literal === TonalLetterTags.b &&
-      isInLexcialRoots(slicedLiteral + TonalLetterTags.p)
+      isInSyllableTable(slicedLiteral + TonalLetterTags.p)
     ) {
       // for surface form b whose underlying form is p
       const ls = this.preprocessSandhiFinal(letters);
