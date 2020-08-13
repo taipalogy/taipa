@@ -1,7 +1,7 @@
 export function isInSyllableTable(strToFind: string) {
   if (basicSyllables.includes(strToFind)) return true;
   if (extraSyllables.includes(strToFind)) return true;
-  if (addonSyllabogramSyllables.includes(strToFind)) return true;
+  if (syllabicHeadwords.includes(strToFind)) return true;
   return false;
 }
 
@@ -12,8 +12,6 @@ const toBeVerified = [
     'cett', 'choa', 'chiauhh', 'ciauhh',
 
     'dom',
-
-    'gunx',
     
     'hioh',
 
@@ -88,8 +86,8 @@ const addonSyllables = [
 ]
 
 // prettier-ignore
-const addonSyllabogramSyllables = [
-    // TODO: some lexical roots may not be found in Taiwanese but present in dictionary. need to further check
+const syllabicHeadwords = [
+    // TODO: some syllabic forms may not be found in Taiwanese but present in dictionary as headwords. need to further check
     'bam', 'bek', 'biet', 'bit', 'biu', 'boa', 'boat', 'bor',
 
     'coa', 'coai', 'coang', 'coat', 'com', 'cor', 'core',
@@ -145,7 +143,8 @@ const extraSyllables = [
 
     'en',
 
-    'gehh', 'gih', 'giuh', 'gimw',
+    'gehh', 'gih', 'giuh', 'gimw', 'gunx',
+
 	
     'homz',
 

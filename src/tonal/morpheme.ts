@@ -37,6 +37,7 @@ import {
   tonalsWx,
   sandhiFinalsPPpttt,
   fourthToEighthFinals,
+  nasalInitials,
 } from './collections';
 import {
   LastSyllableForms,
@@ -428,23 +429,62 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isCombiningAyex(syllables: MatchedPattern[]) {
     const keysAy = Array.from(uncombiningRulesAy.keys());
 
-    if (
-      syllables.length == 2 &&
-      !regexMnngHF.test(syllables[0].letters.map(it => it.literal).join('')) &&
-      keysAy.filter(
-        it => it === syllables[syllables.length - 2].lastLetter.literal
-      ).length > 0 &&
-      ((syllables[syllables.length - 1].lastSecondLetter.literal ===
-        TonalLetterTags.a &&
+    // bug?
+    // console.log(regexMnngHF.test('vunghf')); // true
+    // console.log(regexMnngHF.test('vunghfngay')); // false
+    // console.log(regexMnngHF.test('cunhf')) // true
+    // console.log(regexMnngHF.test('cunhfmiax')) // false
+
+    if (syllables.length == 2) {
+      // TODO: syllable.length == 3; syllables.length == 4; in PrecedingAyexUncombining
+      const nslFnlLast2nd = syllables[syllables.length - 2].pattern.filter(
+        it => it.name === TonalSoundTags.nasalFinal
+      );
+      const stpFnlH = syllables[syllables.length - 2].pattern.filter(
+        it =>
+          it.name === TonalSoundTags.stopFinal &&
+          it.toString() === TonalLetterTags.h
+      );
+      const tnl = syllables[syllables.length - 2].pattern.filter(
+        it =>
+          (it.name === TonalSoundTags.nasalFinal ||
+            it.name === TonalSoundTags.checkedTonal) &&
+          keysAy.includes(it.toString())
+      );
+      const nslInitLast = syllables[syllables.length - 1].pattern.filter(
+        it =>
+          it.name === TonalSoundTags.initial &&
+          nasalInitials.includes(it.toString())
+      );
+
+      // ending ay
+      const endingAy =
+        syllables[syllables.length - 1].lastSecondLetter.literal ===
+          TonalLetterTags.a &&
         syllables[syllables.length - 1].lastLetter.literal ===
-          TonalLetterTags.y) ||
+          TonalLetterTags.y;
+      // ending a is the proceeding form of ay
+      const endingA =
         syllables[syllables.length - 1].lastLetter.literal ===
-          TonalLetterTags.a)
-    ) {
-      // bypass sandhi t. e.g. vunghf~
-      return true;
-    } else if (syllables.length == 3) {
+        TonalLetterTags.a;
+
+      if (
+        !(
+          nslFnlLast2nd.length == 1 &&
+          stpFnlH.length == 1 &&
+          tnl.length == 1
+        ) &&
+        (endingAy || endingA)
+      ) {
+        // bypass sandhi t. e.g. vunghf~.
+        if (nslInitLast.length == 1 && nslFnlLast2nd.length == 0) {
+          // in case of words like vutfngay
+          return false;
+        }
+        return true;
+      }
     }
+
     return false;
   }
 
