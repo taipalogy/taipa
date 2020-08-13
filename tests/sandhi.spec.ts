@@ -142,7 +142,7 @@ describe('Reduplication testing', () => {
   });
 });
 
-describe('Consonant mutation testing, sandhi pp', () => {
+describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('sannzamhwqauy');
