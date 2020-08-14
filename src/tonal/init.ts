@@ -167,6 +167,79 @@ function replaceWithSmall(kanas: string, sounds: Sound[], i: number) {
   return kanas;
 }
 
+function compose(morphemes: TonalUncombiningMorpheme[]) {
+  let kanaSeqs: string[] = [];
+  let kanas: string[] = new Array(morphemes.length);
+  let kanas4thToneWoArrow = '';
+
+  for (let i = 0; i < morphemes.length; i++) {
+    const initl = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.initial
+    );
+    const mdls = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.medial
+    );
+    const nslFnl = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.nasalFinal
+    );
+    const stpFnl = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.stopFinal
+    );
+    const frTnl = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.freeTonal
+    );
+    const chkTnl = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.checkedTonal
+    );
+    const nslz = morphemes[i].sounds.filter(
+      it => it.name === TonalSoundTags.nasalization
+    );
+
+    // initialize for this morpheme
+    kanas[i] = '';
+
+    if (initl.length == 1) {
+      if (mdls.length > 0) {
+        for (let j = 0; j < mdls.length; j++) {
+          if (voewlsIRor.includes(mdls[j].toString())) {
+            kanas[i] +=
+              handleCombiningDotBelowOverline(
+                initl[0].toString(),
+                mdls[j].toString()
+              ) + kanaIRor(mdls);
+          } else if (mdls[j].toString() === TonalLetterTags.ur) {
+            const mapped = mappingMedial.get(mdls[j].toString());
+            if (mapped && j == 0) {
+              // if the preceding letter is an initial
+              kanas[i] +=
+                handleCombiningDotBelowOverline(
+                  initl[0].toString(),
+                  mdls[j].toString()
+                ) + mapped[1];
+            } else if (mapped) {
+              console.log(kanas);
+              // if the preceding letter is not an initial
+              const mapped = mappingMedial.get(mdls[j].toString());
+              if (mapped) {
+                kanas[i] += mapped[1];
+                console.log(kanas);
+              }
+            }
+          } else {
+            kanas[i] += handleCombiningDotBelowOverline(
+              initl[0].toString(),
+              mdls[j].toString()
+            );
+          }
+        }
+      }
+    }
+  }
+
+  kanaSeqs.push(kanas.join(''));
+  return kanaSeqs;
+}
+
 function lookup(morphemes: TonalUncombiningMorpheme[]) {
   let seqs: string[] = [];
   let kanas = '';
@@ -522,6 +595,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
 /** Get Taiwanese Kana blocks. */
 export function getTaiKanaBlocks(morphemes: TonalUncombiningMorpheme[]) {
   const kanaSequences: string[] = lookup(morphemes);
+  // const kanaSequences: string[] = compose(morphemes);
   return kanaSequences;
 }
 
@@ -555,6 +629,22 @@ const kanaInitials = function (map?: Map<string, string[] | undefined>) {
     }
     return [];
   };
+};
+
+const kanaIRor = function (medials: Sound[]) {
+  if (medials.length == 1) {
+    const mapped = mappingMedial.get(medials[0].toString());
+    if (mapped) {
+      return mapped[1] + combiningOverline;
+    }
+  } else if (medials.length == 2) {
+    // return small form
+    const mapped = mappingMedialSmallForm.get(medials[0].toString());
+    if (mapped) {
+      return mapped[1] + combiningOverline;
+    }
+  }
+  return '';
 };
 
 const freeSyllablesWithCombiningOverline = [
@@ -624,6 +714,11 @@ const mappingMedial = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.ng, hatsuon.get(KanaLetterTags.n));
 
 const smallFormIRor = [
+  TonalLetterTags.ir.toString(),
+  TonalLetterTags.or.toString(),
+];
+
+const voewlsIRor = [
   TonalLetterTags.ir.toString(),
   TonalLetterTags.or.toString(),
 ];
