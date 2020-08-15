@@ -145,14 +145,13 @@ const extraSyllables = [
 
     'gehh', 'gih', 'giuh', 'gimw', 'gunx',
 
-	
     'homz',
 
     'jip',
 
 	'kiaih', 'kuih',
 
-    'laih', 'langh', 'lip', 'lih', 'lit', 'litt', 'loaih', 'loaiz', 'loeh', 'loeih', 'lurih',
+    'laih', 'langh', 'lip', 'lih', 'lit', 'litt', 'loaih', 'loaiz', 'loeh',
 
     'mnghh',
 

@@ -4,6 +4,7 @@ import {
   TonalSoundTags,
   TonalLetterTags,
   materLectionisSounds,
+  neutralFinalSounds,
 } from './version2';
 import { TonalUncombiningMorpheme } from './morpheme';
 import {
@@ -167,6 +168,15 @@ function replaceWithSmall(kanas: string, sounds: Sound[], i: number) {
   return kanas;
 }
 
+function getSmallKanaVowel(medial: string) {
+  const got = otherKanas.get(medial);
+  if (got && got[1]) {
+    // get the small form of the vowel and append it
+    return got[1];
+  }
+  return '';
+}
+
 function compose(morphemes: TonalUncombiningMorpheme[]) {
   let kanaSeqs: string[] = [];
   let kanas: string[] = new Array(morphemes.length);
@@ -194,6 +204,19 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
     const nslz = morphemes[i].sounds.filter(
       it => it.name === TonalSoundTags.nasalization
     );
+    const finalsForEToKanaIE = stpFnl
+      .filter(
+        it =>
+          it.name === TonalSoundTags.stopFinal &&
+          finalsForEKegekkeggeng.includes(it.toString())
+      )
+      .concat(
+        nslFnl.filter(
+          it =>
+            it.name === TonalSoundTags.nasalFinal &&
+            finalsForEKegekkeggeng.includes(it.toString())
+        )
+      );
 
     // initialize for this morpheme
     kanas[i] = '';
@@ -217,22 +240,74 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                   mdls[j].toString()
                 ) + mapped[1];
             } else if (mapped) {
-              console.log(kanas);
               // if the preceding letter is not an initial
               const mapped = mappingMedial.get(mdls[j].toString());
               if (mapped) {
                 kanas[i] += mapped[1];
-                console.log(kanas);
               }
             }
           } else {
-            kanas[i] += handleCombiningDotBelowOverline(
-              initl[0].toString(),
-              mdls[j].toString()
-            );
+            if (
+              mdls[j].toString() === TonalLetterTags.e &&
+              nslFnl.length + stpFnl.length > 0 &&
+              nslz.length == 0 &&
+              finalsForEToKanaIE.length == 1
+            ) {
+              // if there is a final, i should be used to retrieve initial kana
+              // in the case of ~eng or -ek
+              kanas[i] += handleCombiningDotBelowOverline(
+                initl[0].toString(),
+                TonalLetterTags.i
+              );
+              if (mdls[j].toString() === TonalLetterTags.e) {
+                // for letter e, an extra kana small e is appended to the preceding -i-
+                kanas[i] += getSmallKanaVowel(mdls[j].toString());
+              }
+            } else {
+              if (j > 0) {
+                if (stpFnl.length == 1) {
+                  // more that one vowels. e.g. goehh
+                  kanas[i] += getSmallKanaVowel(mdls[j].toString());
+                } else {
+                  const kn = hiraganaKatakana.get(mdls[j].toString());
+                  if (kn && kn[1]) kanas[i] += kn[1];
+                }
+              } else {
+                // the first vowel. e.g. gehh, goehh
+                kanas[i] += handleCombiningDotBelowOverline(
+                  initl[0].toString(),
+                  mdls[j].toString()
+                );
+
+                if (
+                  nslFnl.length == 0 &&
+                  mdls.length == 1 &&
+                  stpFnl.length == 0
+                ) {
+                  // open syllables with an initial
+                  const kn = hiraganaKatakana.get(mdls[j].toString());
+                  if (kn && kn[1]) {
+                    // replicate the vowel and append it
+                    kanas[i] += kn[1];
+                  }
+                } else if (
+                  nslFnl.length == 0 &&
+                  mdls.length == 1 &&
+                  stpFnl.length == 1 &&
+                  neutralFinalSounds.includes(stpFnl[0].toString())
+                ) {
+                  kanas[i] += getSmallKanaVowel(mdls[j].toString());
+                }
+              }
+            }
           }
         }
+      } else {
+        // there is no medials
       }
+    }
+
+    if (initl.length == 0) {
     }
   }
 
@@ -379,7 +454,7 @@ function lookup(morphemes: TonalUncombiningMorpheme[]) {
                   nasalFinals.length == 0 &&
                   medials.length == 1
                 ) {
-                  // open syllables with an initial, except for ~h, ~hh
+                  // open syllables with an initial and closed syllables end in ~h, ~hh
                   const got = hiraganaKatakana.get(mr.sounds[i].toString());
                   if (got && got[1]) {
                     // replicate the vowel and append it
