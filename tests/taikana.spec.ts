@@ -627,6 +627,21 @@ describe('Taiwanese kana testing, sandhi final', () => {
   test('kanas', () => {
     expect(ta5.blockSequences[0]).toEqual('チㇽ⎝エエ⟨');
   });
+
+  const ta6 = cli.processTonal('chimhwmix');
+  test('kanas', () => {
+    expect(ta6.blockSequences[0]).toEqual('チㇺ⎝ミイ⟨');
+  });
+
+  const ta7 = cli.processTonal('chinhwnix');
+  test('kanas', () => {
+    expect(ta7.blockSequences[0]).toEqual('チㇴ⎝ニイ⟨');
+  });
+
+  const ta8 = cli.processTonal('vunghfngay');
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('プ' + '\u{1b167}' + '⍭カ゚ア⎛');
+  });
 });
 
 describe('Taiwanese kana testing, unicode', () => {

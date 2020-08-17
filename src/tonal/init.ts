@@ -660,6 +660,7 @@ const mappingNasalFinal = new Map<string, string[] | undefined>()
 
 const mappingSmallNasalFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.m, otherKanas.get(KanaLetterTags.m + KanaLetterTags.u))
+  .set(TonalLetterTags.n, otherKanas.get(KanaLetterTags.n + KanaLetterTags.u))
   .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n));
 
 const mappingInitialB = new Map<string, string[] | undefined>()
