@@ -53,7 +53,7 @@ describe('Uncombining form testing, reduplication', () => {
   });
 });
 
-describe('Uncombining form testing, reduplication', () => {
+describe('Uncombining form testing, ay', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('calxay');
 
   test('check the uncombining form', () => {
@@ -88,6 +88,19 @@ describe('Uncombining form testing, reduplication', () => {
 
   test('check the uncombining form', () => {
     expect(ms6[0].getForms()[0].literal).toEqual('qap');
+  });
+
+  const ms7 = tonalLemmatizationAnalyzer.morphAnalyze('daiwdongxay');
+
+  test('check the uncombining form, 3-syllable word', () => {
+    expect(ms7[0].getForms()[0].literal).toEqual('daiz');
+  });
+
+  const ms8 = tonalLemmatizationAnalyzer.morphAnalyze('ngzaftaixay');
+
+  test('check the uncombining form, 4-syllable word', () => {
+    expect(ms8[0].getForms()[0].literal).toEqual('ngx');
+    expect(ms8[1].getForms()[0].literal).toEqual('ay');
   });
 });
 
@@ -202,8 +215,6 @@ describe('Lemma testing, undefined string as an argument', () => {
   test('given undefined string, check the letter literal', () => {
     expect(soudnSeqs2.length).toEqual(0);
   });
-
-  // const lmtzr = new TonalLemmatizer();
 
   const lx2 = lemmatize(inputUnd);
 

@@ -426,7 +426,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return tum;
   }
 
-  private isCombiningAyex(syllables: MatchedPattern[]) {
+  private isCombiningAy(syllables: MatchedPattern[]) {
     const keysAy = Array.from(uncombiningRulesAy.keys());
 
     // bug?
@@ -435,7 +435,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     // console.log(regexMnngHF.test('cunhf')) // true
     // console.log(regexMnngHF.test('cunhfmiax')) // false
 
-    if (syllables.length == 2) {
+    if (syllables.length >= 2) {
       // TODO: syllable.length == 3; syllables.length == 4; in PrecedingAyexUncombining
       const nslFnlLast2nd = syllables[syllables.length - 2].pattern.filter(
         it => it.name === TonalSoundTags.nasalFinal
@@ -853,11 +853,37 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
       const ptn = this.postprocessSandhiPPpttt(matched[i], lenPrecedingLetters);
 
-      if (this.isCombiningAyex(matched)) {
-        // ~fa, ~xa, fay, or ~xay. ex.
+      if (this.isCombiningAy(matched) && matched.length == 2) {
+        // ~fa, ~xa, fay, or ~xay. only 2 syllables
         morphemes.push(
           this.createMorpheme(ptn, new PrecedingAyexUncombining())
         );
+      } else if (
+        this.isCombiningAy(matched) &&
+        (matched.length == 3 || matched.length == 4)
+      ) {
+        // ~fa, ~xa, fay, or ~xay. more than 2 syllables
+        if (i == matched.length - 2 || i == matched.length - 1)
+          // the last 2 syllables
+          morphemes.push(
+            this.createMorpheme(ptn, new PrecedingAyexUncombining())
+          );
+        else if (i == matched.length - 3)
+          // the first syllable of a 3-syllable word or the 2nd syllable of a 4-syllable word
+          morphemes.push(
+            this.createMorpheme(
+              ptn,
+              new TonalUncombiningForms(matched[i + 1].pattern)
+            )
+          );
+        else if (matched.length == 4 && i == matched.length - 4)
+          // the first syllable of a 4-syllable word
+          morphemes.push(
+            this.createMorpheme(
+              ptn,
+              new TonalUncombiningForms(matched[i + 1].pattern)
+            )
+          );
       } else if (this.isTriplet(matched)) {
         // triplet construction. pass the last syllable as an argument
         morphemes.push(

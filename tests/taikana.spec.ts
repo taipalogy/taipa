@@ -179,45 +179,43 @@ describe('Taiwanese kana testing, ur', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('urh');
-
   test('kanas', () => {
     expect(ta1.blockSequences[0]).toEqual('ヲ' + '\u{1b166}' + '⤆');
   });
 
   const ta2 = cli.processTonal('urhy');
-
   test('kanas', () => {
     expect(ta2.blockSequences[0]).toEqual('ヲ' + '\u{1b166}' + '⎛');
   });
 
   const ta3 = cli.processTonal('iur');
-
   test('kanas', () => {
     expect(ta3.blockSequences[0]).toEqual('イヲ');
   });
 
   const ta4 = cli.processTonal('iurh');
-
   test('kanas', () => {
     expect(ta4.blockSequences[0]).toEqual('イ' + '\u{1b166}' + '⤆');
   });
 
   const ta5 = cli.processTonal('iurhy');
-
   test('kanas', () => {
     expect(ta5.blockSequences[0]).toEqual('イ' + '\u{1b166}' + '⎛');
   });
 
   const ta6 = cli.processTonal('chiur');
-
   test('kanas', () => {
     expect(ta6.blockSequences[0]).toEqual('チヲ');
   });
 
   const ta7 = cli.processTonal('urx');
-
   test('kanas', () => {
     expect(ta7.blockSequences[0]).toEqual('ヲヲ⟨');
+  });
+
+  const ta8 = cli.processTonal('durw');
+  test('kanas', () => {
+    expect(ta8.blockSequences[0]).toEqual('トヲ⎝');
   });
 });
 

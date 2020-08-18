@@ -165,7 +165,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
               handleCombiningDotBelowOverline(
                 initl[0].toString(),
                 mdls[j].toString()
-              ) + kanaIRor(mdls, stpFnl.length, nslFnl.length);
+              ) + getKanaIRor(mdls, stpFnl.length + nslFnl.length == 1);
           } else if (mdls[j].toString() === TonalLetterTags.ur) {
             if (j == 0) {
               // if the preceding letter is an initial
@@ -176,6 +176,9 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
               kanas[i] += initialKana;
               if (stpFnl.length == 1) {
                 const kn = mappingMedialSmallForm.get(mdls[j].toString());
+                if (kn) kanas[i] += kn[1];
+              } else {
+                const kn = mappingMedial.get(mdls[j].toString());
                 if (kn) kanas[i] += kn[1];
               }
             } else {
@@ -319,7 +322,10 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                   neutralFinalSounds.includes(stpFnl[0].toString())
                 ) {
                   // in case of orh, use kanaIRor to get one extra small kana
-                  kanas[i] += kanaIRor(mdls, stpFnl.length, nslFnl.length);
+                  kanas[i] += getKanaIRor(
+                    mdls,
+                    stpFnl.length + nslFnl.length == 1
+                  );
                 } else {
                   // there replicated kana other than ir, or
                   kanas[i] += getReplicatedKanaVowel(
@@ -470,15 +476,11 @@ const kanaInitials = function (map?: Map<string, string[] | undefined>) {
   };
 };
 
-const kanaIRor = function (
-  medials: Sound[],
-  lenStopFinals: number,
-  lenNasalFinals: number
-) {
+const getKanaIRor = function (medials: Sound[], hasOneFinal: boolean) {
   if (medials.length == 1) {
     const kn = mappingMedial.get(medials[0].toString());
     if (kn) {
-      if (lenStopFinals == 1 || lenNasalFinals == 1) {
+      if (hasOneFinal) {
         const sml = mappingMedialSmallForm.get(medials[0].toString());
         if (sml) {
           return sml[1] + combiningOverline;
