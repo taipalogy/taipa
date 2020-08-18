@@ -109,7 +109,10 @@ export class LettersOfTonal extends Letters {
     listLength: number
   ): MatchedSequence {
     let ms = new MatchedSequence();
-    if (characters.length - beginOfLetter >= 'nng'.length && listLength == 43) {
+    if (
+      characters.length - beginOfLetter >= 'nng'.length &&
+      listLength == lowerLettersTonal.size
+    ) {
       if (
         characters[beginOfLetter].character === 'n' &&
         characters[beginOfLetter + 1].character === 'n' &&

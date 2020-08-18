@@ -56,63 +56,64 @@ describe('Taiwanese kana testing, consonants', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('q');
-
   test('kanas, this lexical root is not available. not a mater lectionis', () => {
     expect(ta1.blockSequences[0]).toEqual('');
   });
 
   const ta2 = cli.processTonal('qng');
-
   test('kanas, an initial followed by a nasal final', () => {
     expect(ta2.blockSequences[0]).toEqual('クン');
   });
 
   const ta3 = cli.processTonal('m');
-
   test('kanas, a mater lectionis', () => {
     expect(ta3.blockSequences[0]).toEqual('ム');
   });
 
   const ta4 = cli.processTonal('hm');
-
   test('kanas, an initial followed by a nasal final', () => {
     expect(ta4.blockSequences[0]).toEqual('フム');
   });
 
   const ta5 = cli.processTonal('mnghwqiannz');
-
   test('kanas, an initial followed by a nasal final', () => {
     expect(ta5.blockSequences[0]).toEqual('ム' + '\u{1b167}' + '⎝㋖ア⎸');
   });
 
   const ta6 = cli.processTonal('mihwqiannz');
-
   test('kanas, an initial followed by a nasal final', () => {
     expect(ta6.blockSequences[0]).toEqual('ミィ⎝㋖ア⎸');
   });
 
   const ta7 = cli.processTonal('hmh');
-
   test('kanas, an initial followed by a nasal final', () => {
     expect(ta7.blockSequences[0]).toEqual('フㇺ⤆');
   });
 
   const ta8 = cli.processTonal('sngh');
-
   test('kanas', () => {
     expect(ta8.blockSequences[0]).toEqual('ス' + '\u{1b167}' + '⤆');
   });
 
   const ta9 = cli.processTonal('ng');
-
   test('kanas', () => {
     expect(ta9.blockSequences[0]).toEqual('ン');
   });
 
   const ta10 = cli.processTonal('nga');
-
   test('kanas', () => {
     expect(ta10.blockSequences[0]).toEqual('カ゚ア');
+  });
+  /*
+  const ta11 = cli.processTonal('chm');
+  test('kanas', () => {
+    expect(ta11.blockSequences[0]).toEqual('ツム');
+  });
+  */
+
+  const ta12 = cli.processTonal('nngz');
+  test('kanas', () => {
+    expect(ta12.blockSequences[0]).toEqual('ヌン⎸');
   });
 });
 
@@ -340,6 +341,17 @@ describe('Taiwanese kana testing, small form', () => {
   test('kanas', () => {
     expect(ta6.blockSequences[0]).toEqual('コ' + '\u{0323}' + 'ァヌ⎛');
   });
+  /*
+  const ta7 = cli.processTonal('orh');
+  test('kanas, reduplication of vowels', () => {
+    expect(ta7.blockSequences[0]).toEqual('オ̅ォ̅⤆');
+  });
+  
+  const ta8 = cli.processTonal('borh');
+  test('kanas, reduplication of vowels', () => {
+    expect(ta8.blockSequences[0]).toEqual('ボォ̅⤆');
+  });
+  */
 });
 
 describe('Taiwanese kana testing, tone letter of check tones', () => {
@@ -598,6 +610,12 @@ describe('Taiwanese kana testing, neutral finals', () => {
   test('kanas', () => {
     expect(ta8.blockSequences[0]).toEqual('㋬ェ⤆');
   });
+  /*
+  const ta9 = cli.processTonal('ennh');
+  test('kanas', () => {
+    expect(ta9.blockSequences[0]).toEqual('㋓ェ⤆');
+  });
+  */
 });
 
 describe('Taiwanese kana testing, sandhi final', () => {

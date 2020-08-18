@@ -49,7 +49,10 @@ export class LettersOfKana extends Letters {
     listLength: number
   ): MatchedSequence {
     let ms = new MatchedSequence();
-    if (characters.length - beginOfLetter >= 'ng'.length && listLength == 26) {
+    if (
+      characters.length - beginOfLetter >= 'ng'.length &&
+      listLength == lowerLettersKana.size
+    ) {
       if (
         characters[beginOfLetter].character === 'n' &&
         characters[beginOfLetter + 1].character === 'g'

@@ -261,6 +261,7 @@ const scCCCT = sgPipe(
 // nasalization syllables
 const scVN = sgPipe(vowel, nasalization);
 const scVNT = sgPipe(vowel, nasalization, freeTonal);
+const scVNC = sgPipe(vowel, nasalization, neutralFinalConsonant);
 const scCVN = sgPipe(initialConsonant, vowel, nasalization);
 const scCVNT = sgPipe(initialConsonant, vowel, nasalization, freeTonal);
 const scCVNC = sgPipe(
@@ -304,7 +305,7 @@ export const syllableCompositions = [
 
   scCC, scCCT, scCCC, scCCCT,
 
-  scVN, scVNT, scCVN, scCVNT, scCVNC, scCVNCT,
+  scVN, scVNT, scVNC, scCVN, scCVNT, scCVNC, scCVNCT,
 
   scVC3, scVCT3, scCVC3, scCVCT3, scCVCCT,
 ];
