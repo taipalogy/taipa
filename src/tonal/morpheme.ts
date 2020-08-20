@@ -436,7 +436,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     // console.log(regexMnngHF.test('cunhfmiax')) // false
 
     if (syllables.length >= 2) {
-      // TODO: syllable.length == 3; syllables.length == 4; in PrecedingAyexUncombining
       const nslFnlLast2nd = syllables[syllables.length - 2].pattern.filter(
         it => it.name === TonalSoundTags.nasalFinal
       );
@@ -921,7 +920,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     const ltrs = this.preprocess(graphemes);
     const ptns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptns);
-    // TODO: to further check if the lexical roots valid, given the following syllable
+    // TODO: to further check if the syllable is valid, given the following syllable
 
     return ms;
   }

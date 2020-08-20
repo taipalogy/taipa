@@ -39,3 +39,5 @@ export function predict(letters: string[]) {
 
   return predictions;
 }
+
+// TODO: add a predict function to cover those skipped syllables in basicSyllables

@@ -9,7 +9,6 @@ export {
 export { tonalInflectionAnalyzer } from './dparser/analyzer';
 export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
 export { GraphemeMaker } from './unit';
-export { basicSyllables } from './tonal/syllabletable2';
 export {
   lowerLettersTonal,
   TonalLetterTags,

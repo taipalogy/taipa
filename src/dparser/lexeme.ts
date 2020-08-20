@@ -33,7 +33,7 @@ export class TonalInflectionLexeme extends Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
   private allomorphicEnding: AllomorphicEnding;
-  // TODO: should a member variable root-affix be added and passed to metaplasm. check out member sounds in morpheme
+  // TODO: word patterns for tiapwsux chongwtaiwgiy, ay, etc.. check out member sounds in morpheme.
 
   constructor(
     morphemes: Array<TonalCombiningMorpheme>,
