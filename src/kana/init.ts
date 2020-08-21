@@ -21,6 +21,24 @@ export function checkNumberOfLettersKana() {
   }
 }
 
+function getKanasFollowingSmallChu(key: string) {
+  let kanaSequences: string[] = ['', '', ''];
+  let ks = kogakimoji.get('chu');
+  if (ks) {
+    kanaSequences[0] += ks[0];
+    kanaSequences[1] += ks[1];
+    kanaSequences[2] += ks[1];
+  }
+
+  ks = hiraganaKatakana.get(key);
+  if (ks) {
+    kanaSequences[0] += ks[0];
+    kanaSequences[1] += ks[1];
+    kanaSequences[2] += ks[1];
+  }
+  return kanaSequences;
+}
+
 function checkChouon(previousLetter: string, nextLetter: string): boolean {
   if (previousLetter === nextLetter) return true;
   if (previousLetter === KanaLetterTags.e && nextLetter === KanaLetterTags.i)
@@ -49,7 +67,7 @@ function lookUpOtherKanas(str: string) {
 
 export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
   // string one is hiragana, string two is katakana, string three is chouon
-  const kanaSequences: string[] = []; //[string, string, string] = ['', '', ''];
+  const kanaSequences: string[] = [];
   kanaSequences[0] = '';
   kanaSequences[1] = '';
   kanaSequences[2] = '';
@@ -122,21 +140,23 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
         first === second &&
         germinatedConsonantsKana.includes(first) == true
       ) {
-        ks = kogakimoji.get('chu');
-        if (ks) {
-          kanaSequences[0] += ks[0];
-          kanaSequences[1] += ks[1];
-          kanaSequences[2] += ks[1];
-        }
-
-        ks = hiraganaKatakana.get(
-          m.syllable.literal.substring(1, m.syllable.literal.length)
+        const ret = getKanasFollowingSmallChu(
+          m.sounds[1].toString() + m.sounds[2].toString()
         );
-        if (ks) {
-          kanaSequences[0] += ks[0];
-          kanaSequences[1] += ks[1];
-          kanaSequences[2] += ks[1];
-        }
+        kanaSequences[0] += ret[0];
+        kanaSequences[1] += ret[1];
+        kanaSequences[2] += ret[1];
+      } else if (
+        m.sounds[0].toString() === KanaLetterTags.t &&
+        m.sounds[1].toString() === KanaLetterTags.ch &&
+        germinatedConsonantsKana.includes(m.sounds[0].toString()) == true
+      ) {
+        const ret = getKanasFollowingSmallChu(
+          m.sounds[1].toString() + m.sounds[2].toString()
+        );
+        kanaSequences[0] += ret[0];
+        kanaSequences[1] += ret[1];
+        kanaSequences[2] += ret[1];
       }
     }
 

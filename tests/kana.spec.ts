@@ -89,13 +89,12 @@ describe('Kana testing', () => {
     expect(ta14.blockSequences[0]).toEqual('みっつ');
     expect(ta14.blockSequences[1]).toEqual('ミッツ');
   });
-  /*
+
   const ta15 = cli.processKana('tchu');
   test('kanas', () => {
     expect(ta15.blockSequences[0]).toEqual('っつ');
     expect(ta15.blockSequences[1]).toEqual('ッツ');
   });
-  */
 });
 
 describe('Kana testing, syllabification', () => {

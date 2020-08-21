@@ -64,9 +64,18 @@ function syllabifyKana(
       literal[0] === literal[1] &&
       vwls.includes(literal[2])
     ) {
-      // for consonant germination of sokuon
+      // for consonant germination of sokuon. e.g. ggu, kku, ppa, etc.
       matched = literal;
       ltrs.shift(); // shift the germinated consonants
+      Object.assign(matchedLtrs, ltrs);
+    } else if (
+      ltrs.length == 3 &&
+      ltrs[0] === KanaLetterTags.t &&
+      ltrs[1] === KanaLetterTags.ch &&
+      vwls.includes(ltrs[2])
+    ) {
+      matched = literal;
+      // no need to shift the germinated consonant? check out the above block
       Object.assign(matchedLtrs, ltrs);
     } else if (hatsuonKana.includes(lookAhead) && i == 1) {
       if (
