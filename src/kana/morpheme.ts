@@ -39,7 +39,7 @@ function syllabifyKana(
 ) {
   let literal = '';
   let matched = '';
-  let lookahead = '';
+  let lookAhead = '';
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
   const vwls = vowelsKana;
@@ -50,13 +50,13 @@ function syllabifyKana(
     if (hiraganaKatakana.has(literal) || gailaigo.has(literal)) {
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
-      if (i + 1 < letters.length) lookahead = letters[i + 1].literal; // look-ahead
+      if (i + 1 < letters.length) lookAhead = letters[i + 1].literal; // look-ahead
     } else if (
       literal.length == 3 &&
       letters[0].literal === KanaLetterTags.ng &&
       vowelsKana.includes(letters[1].literal)
     ) {
-      // ng~
+      // ng-
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
     } else if (
@@ -68,14 +68,24 @@ function syllabifyKana(
       matched = literal;
       ltrs.shift(); // shift the germinated consonants
       Object.assign(matchedLtrs, ltrs);
+    } else if (hatsuonKana.includes(lookAhead) && i == 1) {
+      if (
+        letters.length > 2 &&
+        initialConsonantsKana.includes(letters[2].literal)
+      ) {
+        matched = literal;
+        Object.assign(matchedLtrs, ltrs);
+        lookAhead = letters[i + 1].literal; // look-ahead
+      }
+      // console.log(lookAhead, i);
     }
   }
 
   let list: Array<Sound[]> = new Array();
   if (matched.length > 0) {
-    // console.log(matchedLtrs, lookahead);
+    // console.log(matchedLtrs, lookAhead);
     const ksg = new KanaSoundGenerator();
-    list = ksg.generate(matchedLtrs, lookahead);
+    list = ksg.generate(matchedLtrs, lookAhead);
     // console.log(list);
   }
 

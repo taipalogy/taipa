@@ -7,6 +7,7 @@ import {
   germinatedConsonantsKana,
   semivowelsKana,
   finalConsonantsKana,
+  hatsuonKana,
 } from './kana';
 
 function initialConsonant(sg: SoundGeneration) {
@@ -51,6 +52,20 @@ function vowel(sg: SoundGeneration) {
   return sg;
 }
 
+function hatsuon(sg: SoundGeneration) {
+  const sfcs = hatsuonKana;
+
+  if (sfcs.includes(sg.letters[sg.sounds.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+    if (ps) {
+      const s = ps(KanaSoundTags.finalConsonant);
+      if (s) sg.sounds.push(s);
+    }
+  }
+
+  return sg;
+}
+
 function finalConsonant(sg: SoundGeneration) {
   const sfcs = finalConsonantsKana;
 
@@ -81,12 +96,13 @@ function germinatedConsonant(sg: SoundGeneration) {
 
 const scV = sgPipe(vowel);
 const scCV = sgPipe(initialConsonant, vowel);
+const scVC = sgPipe(vowel, hatsuon);
 const scCVC = sgPipe(initialConsonant, vowel, finalConsonant);
 const scCSV = sgPipe(initialConsonant, semivowel, vowel);
 const scCCV = sgPipe(germinatedConsonant, initialConsonant, vowel);
 
 export class KanaSoundGenerator {
-  readonly sylCompositions = [scV, scCV, scCVC, scCSV, scCCV];
+  readonly sylCompositions = [scV, scCV, scVC, scCVC, scCSV, scCCV];
 
   private genSokuonAndGerminated(letters: string[], lookahead: string) {
     let strs: Array<string[]> = new Array();

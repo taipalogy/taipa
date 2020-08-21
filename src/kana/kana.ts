@@ -324,6 +324,7 @@ export const finalConsonantsKana = setOfSounds([
 ]);
 
 export const hatsuonKana = setOfSounds([new FinalConsonantN()]);
+
 export function positionalSound(sounds: Sound[]) {
   return (t: KanaSoundTags) => {
     for (let i in sounds) {
