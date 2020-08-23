@@ -155,4 +155,10 @@ describe('NGay testing, uncombining form of the first syllable', () => {
   test('check the uncombining form', () => {
     expect(ta1.uncombiningSequences[0]).toContain('vut');
   });
+
+  const ta2 = cli.processTonal('angzchoay');
+
+  test('check the uncombining form', () => {
+    expect(ta2.uncombiningSequences[0]).toContain('angx');
+  });
 });

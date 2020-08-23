@@ -480,6 +480,20 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           // in case of words like vutfngay
           return false;
         }
+        const initLast = syllables[syllables.length - 1].pattern.filter(
+          it =>
+            it.name === TonalSoundTags.initial &&
+            initialSounds.includes(it.toString())
+        );
+        if (
+          stpFnlH.length == 0 &&
+          nslFnlLast2nd.length == 1 &&
+          initLast.length == 1 &&
+          nslFnlLast2nd[0].toString() != initLast[0].toString()
+        ) {
+          // in case of words like angzchoay, ngzchoay
+          return false;
+        }
         return true;
       }
     }
