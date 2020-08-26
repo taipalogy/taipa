@@ -261,3 +261,9 @@ export const eighthToFourthFinals = new Map<string, string>()
   .set(TonalLetterTags.pp, fourthFinals.p.toString())
   .set(TonalLetterTags.ss, fourthFinals.s.toString())
   .set(TonalLetterTags.tt, fourthFinals.t.toString());
+
+export const impossibleSequences = [
+  TonalLetterTags.d.toString(),
+  TonalLetterTags.q.toString(),
+  TonalLetterTags.v.toString(),
+];

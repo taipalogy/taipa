@@ -9,7 +9,7 @@ export function isInSyllableTable(syllable: string) {
 const toBeVerified = [
     'baih', 'buhh', 'burhh',
     
-    'cett', 'choa', 'chiauhh', 'ciauhh',
+    'cett', 'changxx', 'choa', 'chiauhh', 'ciauhh',
 
     'dom',
     
