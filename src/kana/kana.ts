@@ -1,7 +1,7 @@
 import {
   Sound,
   Letters,
-  setOfSounds,
+  letterSequence,
   Character,
   MatchedSequence,
 } from '../unit';
@@ -74,7 +74,7 @@ export class LettersOfKana extends Letters {
   }
 }
 
-export let lowerLettersKana = new LettersOfKana([
+export const lowerLettersKana = new LettersOfKana([
   KanaLetterTags.a,
   KanaLetterTags.e,
   KanaLetterTags.i,
@@ -103,7 +103,7 @@ export let lowerLettersKana = new LettersOfKana([
   KanaLetterTags.ng,
 ]);
 
-export enum KanaSoundTags {
+export enum KanaSpellingTags {
   germinatedConsonant = 'germinatedConsonant',
   initialConsonant = 'initialConsonant',
   semivowel = 'semivowel',
@@ -112,19 +112,19 @@ export enum KanaSoundTags {
 }
 
 class GerminatedConsonant extends Sound {
-  name = KanaSoundTags.germinatedConsonant;
+  name = KanaSpellingTags.germinatedConsonant;
 }
 class InitialConsonant extends Sound {
-  name = KanaSoundTags.initialConsonant;
+  name = KanaSpellingTags.initialConsonant;
 }
 class Semivowel extends Sound {
-  name = KanaSoundTags.semivowel;
+  name = KanaSpellingTags.semivowel;
 }
 class Vowel extends Sound {
-  name = KanaSoundTags.vowel;
+  name = KanaSpellingTags.vowel;
 }
 class FinalConsonant extends Sound {
-  name = KanaSoundTags.finalConsonant;
+  name = KanaSpellingTags.finalConsonant;
 }
 
 class InitialConsonantB extends InitialConsonant {
@@ -267,7 +267,7 @@ class GerminatedConsonantT extends GerminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.t);
 }
 
-export const initialConsonantsKana = setOfSounds([
+export const initialConsonantsKana = letterSequence([
   new InitialConsonantB(),
   new InitialConsonantC(),
   new InitialConsonantCH(),
@@ -291,7 +291,7 @@ export const initialConsonantsKana = setOfSounds([
   new InitialConsonantZ(),
 ]);
 
-export const vowelsKana = setOfSounds([
+export const vowelsKana = letterSequence([
   new VowelA(),
   new VowelI(),
   new VowelU(),
@@ -299,7 +299,7 @@ export const vowelsKana = setOfSounds([
   new VowelO(),
 ]);
 
-export const germinatedConsonantsKana = setOfSounds([
+export const germinatedConsonantsKana = letterSequence([
   new GerminatedConsonantB(),
   new GerminatedConsonantC(),
   new GerminatedConsonantD(),
@@ -310,9 +310,12 @@ export const germinatedConsonantsKana = setOfSounds([
   new GerminatedConsonantT(),
 ]);
 
-export const semivowelsKana = setOfSounds([new SemivowelW(), new SemivowelY()]);
+export const semivowelsKana = letterSequence([
+  new SemivowelW(),
+  new SemivowelY(),
+]);
 
-export const finalConsonantsKana = setOfSounds([
+export const finalConsonantsKana = letterSequence([
   new FinalConsonantB(),
   new FinalConsonantD(),
   new FinalConsonantG(),
@@ -323,10 +326,10 @@ export const finalConsonantsKana = setOfSounds([
   new FinalConsonantT(),
 ]);
 
-export const hatsuonKana = setOfSounds([new FinalConsonantN()]);
+export const hatsuonKana = letterSequence([new FinalConsonantN()]);
 
 export function positionalSound(sounds: Sound[]) {
-  return (t: KanaSoundTags) => {
+  return (t: KanaSpellingTags) => {
     for (let i in sounds) {
       if (sounds[i].name === t) return sounds[i];
     }
@@ -394,7 +397,7 @@ const psZ = positionalSound([new InitialConsonantZ()]);
 
 export const kanaPositionalSound = new Map<
   string,
-  (t: KanaSoundTags) => Sound
+  (t: KanaSpellingTags) => Sound
 >()
   .set(KanaLetterTags.a, psA)
   .set(KanaLetterTags.b, psB)

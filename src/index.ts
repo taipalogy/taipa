@@ -8,11 +8,12 @@ export {
 } from './tonal/analyzer';
 export { tonalInflectionAnalyzer } from './dparser/analyzer';
 export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
+export { graphAnalyzeHangul } from './hangul/analyzer';
 export { GraphemeMaker } from './unit';
 export {
   lowerLettersTonal,
   TonalLetterTags,
-  TonalSoundTags,
+  TonalSpellingTags,
 } from './tonal/version2';
 export { KanaLetterTags } from './kana/kana';
 export { lemmatize } from './tonal/lemmatizer';
@@ -61,11 +62,11 @@ export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord } from './tonal/lexeme';
 export { TonalPhrase } from './tonal/phraseme';
 
-export { Sound, SoundGeneration } from './unit';
+export { Sound, SpellingGeneration as SoundGeneration } from './unit';
 export {
-  initialSounds,
-  nasalizationSounds,
-  medialSounds,
+  initialsTonal,
+  nasalizationTonal as nasalizationsTonal,
+  vowelsTonal,
 } from './tonal/version2';
 
 export {
@@ -75,6 +76,6 @@ export {
 
 export { predict } from './tonal/prediction';
 
-export { syllableCompositions } from './tonal/soundgen';
+export { syllableCompositions } from './tonal/spellgen';
 
 export { tokenizeLatinSyllable } from './tonal/tokenizer';

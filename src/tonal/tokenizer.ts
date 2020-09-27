@@ -1,9 +1,10 @@
-import { syllableCompositions } from './soundgen';
-import { SoundGeneration, Sound } from '../unit';
+import { syllableCompositions } from './spellgen';
+import { SpellingGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from './analyzer';
-import { medialSounds } from './version2';
+import { vowelsTonal } from './version2';
 import { impossibleSequences } from './collections';
 
+/** Subword tokenization. */
 export function tokenizeLatinSyllable(str: string) {
   const soundSeqs: Array<Array<Sound[]>> = new Array();
 
@@ -20,20 +21,23 @@ export function tokenizeLatinSyllable(str: string) {
         if (shouldBreak) break;
         if (i + 1 > beginOfSyllable) {
           // bypass those loops when i is less than or equal to beginOfSyllable
-          let sg = new SoundGeneration();
+          let sg = new SpellingGeneration();
           // the letter at position i is exclusive
           sg.letters = letters.slice(beginOfSyllable, i + 1);
           // console.log(sg.letters, beginOfSyllable, i, j);
           if (impossibleSequences.includes(sg.letters[i])) {
-            if (i > 0 && medialSounds.includes(sg.letters[i - 1])) {
+            if (i > 0 && vowelsTonal.includes(sg.letters[i - 1])) {
               shouldBreak = true;
               break;
             }
           }
           sg = syllableCompositions[j](sg);
 
-          if (sg.letters.length == sg.sounds.length && sg.matching == true) {
-            accumulatedSeqs.push(sg.sounds);
+          if (
+            sg.letters.length == sg.matchedLetters.length &&
+            sg.matching == true
+          ) {
+            accumulatedSeqs.push(sg.matchedLetters);
             // console.log(sg.sounds, beginOfSyllable, i, j);
           }
         }

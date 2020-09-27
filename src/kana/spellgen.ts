@@ -1,6 +1,6 @@
-import { Sound, SoundGeneration, sgPipe } from '../unit';
+import { Sound, SpellingGeneration, sgPipe } from '../unit';
 import {
-  KanaSoundTags,
+  KanaSpellingTags,
   kanaPositionalSound,
   initialConsonantsKana,
   vowelsKana,
@@ -10,84 +10,84 @@ import {
   hatsuonKana,
 } from './kana';
 
-function initialConsonant(sg: SoundGeneration) {
+function initialConsonant(sg: SpellingGeneration) {
   const sics = initialConsonantsKana;
 
-  if (sics.includes(sg.letters[sg.sounds.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+  if (sics.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
-      const s = ps(KanaSoundTags.initialConsonant);
-      if (s) sg.sounds.push(s);
+      const s = ps(KanaSpellingTags.initialConsonant);
+      if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
 
   return sg;
 }
 
-function semivowel(sg: SoundGeneration) {
+function semivowel(sg: SpellingGeneration) {
   const ssvs = semivowelsKana;
 
-  if (ssvs.includes(sg.letters[sg.sounds.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+  if (ssvs.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
-      const s = ps(KanaSoundTags.semivowel);
-      if (s) sg.sounds.push(s);
+      const s = ps(KanaSpellingTags.semivowel);
+      if (s) sg.matchedLetters.push(s);
     }
   }
 
   return sg;
 }
 
-function vowel(sg: SoundGeneration) {
+function vowel(sg: SpellingGeneration) {
   const svs = vowelsKana;
 
-  if (svs.includes(sg.letters[sg.sounds.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+  if (svs.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
-      const s = ps(KanaSoundTags.vowel);
-      if (s) sg.sounds.push(s);
+      const s = ps(KanaSpellingTags.vowel);
+      if (s) sg.matchedLetters.push(s);
     }
   }
 
   return sg;
 }
 
-function hatsuon(sg: SoundGeneration) {
+function hatsuon(sg: SpellingGeneration) {
   const sfcs = hatsuonKana;
 
-  if (sfcs.includes(sg.letters[sg.sounds.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+  if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
-      const s = ps(KanaSoundTags.finalConsonant);
-      if (s) sg.sounds.push(s);
+      const s = ps(KanaSpellingTags.finalConsonant);
+      if (s) sg.matchedLetters.push(s);
     }
   }
 
   return sg;
 }
 
-function finalConsonant(sg: SoundGeneration) {
+function finalConsonant(sg: SpellingGeneration) {
   const sfcs = finalConsonantsKana;
 
-  if (sfcs.includes(sg.letters[sg.sounds.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+  if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
-      const s = ps(KanaSoundTags.finalConsonant);
-      if (s) sg.sounds.push(s);
+      const s = ps(KanaSpellingTags.finalConsonant);
+      if (s) sg.matchedLetters.push(s);
     }
   }
 
   return sg;
 }
 
-function germinatedConsonant(sg: SoundGeneration) {
+function germinatedConsonant(sg: SpellingGeneration) {
   const sgcs = germinatedConsonantsKana;
 
-  if (sgcs.includes(sg.letters[sg.sounds.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.sounds.length]);
+  if (sgcs.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
-      const s = ps(KanaSoundTags.germinatedConsonant);
-      if (s) sg.sounds.push(s);
+      const s = ps(KanaSpellingTags.germinatedConsonant);
+      if (s) sg.matchedLetters.push(s);
     }
   }
 
@@ -121,7 +121,7 @@ export class KanaSoundGenerator {
 
     // sokuon
     let fcs = finalConsonantsKana;
-    for (let e of fcs.sounds) {
+    for (let e of fcs.letters) {
       let syl: string[] = new Array();
       Object.assign(syl, letters);
       syl.push(e.toString());
@@ -142,12 +142,15 @@ export class KanaSoundGenerator {
       // generates all needed sounds to be processed
 
       for (let j = 0; j < this.sylCompositions.length; j++) {
-        let sg = new SoundGeneration();
+        let sg = new SpellingGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = this.sylCompositions[j](sg);
-        if (sg.letters.length == sg.sounds.length && sg.matching == true) {
-          sequences.push(sg.sounds);
+        if (
+          sg.letters.length == sg.matchedLetters.length &&
+          sg.matching == true
+        ) {
+          sequences.push(sg.matchedLetters);
           break;
         }
       }

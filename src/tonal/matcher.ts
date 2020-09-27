@@ -1,10 +1,5 @@
+import { TonalLetterTags, stopFinalsBgjklpsTonal } from './version2';
 import {
-  TonalLetterTags,
-  stopFinalSoundsBBggkkllppss,
-  stopFinalSoundsBgjklps,
-} from './version2';
-import {
-  finalsBBggkkpp,
   finalsLs,
   finalsBgkp,
   finalsJls,
@@ -105,7 +100,7 @@ export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
 // bf, gf, jf, kf, lf, pf, sf
 export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
   if (
-    stopFinalSoundsBgjklps.includes(finalBgjklps) &&
+    stopFinalsBgjklpsTonal.includes(finalBgjklps) &&
     TonalLetterTags.f === firstTonalF
   )
     return true;

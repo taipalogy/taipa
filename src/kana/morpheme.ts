@@ -9,7 +9,7 @@ import {
   hatsuonKana,
   KanaLetterTags,
 } from './kana';
-import { KanaSoundGenerator } from './soundgen';
+import { KanaSoundGenerator } from './spellgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 export class KanaSyllable extends Syllable {}

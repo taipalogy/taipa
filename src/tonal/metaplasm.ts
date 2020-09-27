@@ -18,8 +18,8 @@ import {
   FreeTonalZ,
   FreeTonalX,
   lowerLettersTonal,
-  neutralFinalSounds,
-  TonalSoundTags,
+  neutralFinalsTonal,
+  TonalSpellingTags,
 } from './version2';
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
@@ -80,7 +80,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         );
         const fnl = s.letters[s.letters.length - 1].literal;
         const nslFnls = sounds.filter(
-          it => it.name === TonalSoundTags.nasalFinal
+          it => it.name === TonalSpellingTags.nasalFinal
         );
         s.popLetter(); // pop out the tonal
         if (
@@ -113,16 +113,17 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             return clones;
           }
         } else if (
-          sounds.filter(it => it.name === TonalSoundTags.medial).length > 0 &&
+          sounds.filter(it => it.name === TonalSpellingTags.medial).length >
+            0 &&
           nasalFinals.includes(s.lastSecondLetter.literal) &&
-          neutralFinalSounds.includes(s.lastLetter.literal)
+          neutralFinalsTonal.includes(s.lastLetter.literal)
         ) {
           // in case of internal sandhi of p or t
           // if there is no medials, e.g. hmhh, hngh, just bypass this block
           // mhh, mh, nhh, nh, nghh, ngh
           if (
             this.soundsFollowing[0] &&
-            this.soundsFollowing[0].name === TonalSoundTags.initial &&
+            this.soundsFollowing[0].name === TonalSpellingTags.initial &&
             s.lastSecondLetter.literal === this.soundsFollowing[0].toString()
           ) {
             // unchange to -tt or -t
@@ -287,7 +288,7 @@ export class TransfixUncombining extends TonalCombiningMetaplasm {
     if (allomorph) {
       const vowelA = sounds.filter(it => it.toString() === TonalLetterTags.a);
       const chkFnls = sounds.filter(
-        it => it.name === TonalSoundTags.checkedTonal
+        it => it.name === TonalSpellingTags.checkedTonal
       );
       const s: TonalSyllable = new TonalSyllable(
         sounds.map(it => new AlphabeticLetter(it.characters))

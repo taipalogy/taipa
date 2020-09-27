@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
+import { TonalSpellingTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
 import {
   inflectDesinence,
@@ -36,7 +36,9 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[1][4].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 });
 
@@ -61,7 +63,9 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[1][4].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 });
 
@@ -86,7 +90,9 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[1][3].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 });
 
@@ -111,11 +117,15 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[0][3].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[0][3].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[1][3].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 });
 
@@ -140,11 +150,15 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[0][3].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[0][3].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[1][3].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 });
 
@@ -169,7 +183,9 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTonal);
+    expect(doc.soundSequences[1][4].name).toEqual(
+      TonalSpellingTags.checkedTonal
+    );
   });
 });
 

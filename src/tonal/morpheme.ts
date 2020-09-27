@@ -8,16 +8,16 @@ import {
   TonalLetterTags,
   lowerLettersTonal,
   tonalPositionalSounds,
-  TonalSoundTags,
+  TonalSpellingTags,
   uncombiningRulesAy,
   CheckedAllomorph,
   Allomorph,
-  freeTonalSounds,
-  initialSounds,
-  stopFinalSounds,
+  freeTonalsTonal,
+  initialsTonal,
+  stopFinalsTonal,
 } from './version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
-import { TonalSoundGenerator } from './soundgen';
+import { TonalSoundGenerator } from './spellgen';
 import { isInSyllableTable } from './syllabletable';
 import {
   smMnngHF,
@@ -84,7 +84,7 @@ export function syllabifyTonal(
 
     if (
       isInSyllableTable(literal) &&
-      freeTonalSounds.includes(letters[i].literal)
+      freeTonalsTonal.includes(letters[i].literal)
     ) {
       // console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
       if (begin === beginOfSyllable) {
@@ -94,7 +94,7 @@ export function syllabifyTonal(
       break;
     } else if (
       isInSyllableTable(literalRoot4thFinal) &&
-      stopFinalSounds.includes(letters[i].literal)
+      stopFinalsTonal.includes(letters[i].literal)
     ) {
       // console.log(`i: ${i}, literal: ${literal}, literalRoot4thFinal: ${literalRoot4thFinal}, stopFinal: ${letters[i].literal}`);
       // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`);
@@ -103,7 +103,7 @@ export function syllabifyTonal(
         Object.assign(matchedLtrs, ltrs);
       }
       break;
-    } else if (freeTonalSounds.includes(letters[i].literal)) {
+    } else if (freeTonalsTonal.includes(letters[i].literal)) {
       // check tonals is the subset of free tonals
 
       // console.log(
@@ -193,7 +193,7 @@ export function syllabifyTonal(
         // for surface form gg whose underlying form could be tt or kk.
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
-      } else if (!freeTonalSounds.includes(letters[i].literal)) {
+      } else if (!freeTonalsTonal.includes(letters[i].literal)) {
         // free first tone without a free tonal
         const rules = freeAllomorphUncombiningRules.get(TonalLetterTags.zero);
         const tnls = !rules ? [] : rules;
@@ -362,9 +362,11 @@ export class TonalUncombiningMorpheme extends Morpheme {
     las = [];
     if (freeAllomorphs.has(s.lastLetter.literal)) {
       const am = freeAllomorphs.get(s.lastLetter.literal);
-      const stpFnls = sounds.filter(it => it.name === TonalSoundTags.stopFinal);
+      const stpFnls = sounds.filter(
+        it => it.name === TonalSpellingTags.stopFinal
+      );
       const chkttnls = sounds.filter(
-        it => it.name === TonalSoundTags.checkedTonal
+        it => it.name === TonalSpellingTags.checkedTonal
       );
 
       if (
@@ -437,22 +439,22 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     if (syllables.length >= 2) {
       const nslFnlLast2nd = syllables[syllables.length - 2].pattern.filter(
-        it => it.name === TonalSoundTags.nasalFinal
+        it => it.name === TonalSpellingTags.nasalFinal
       );
       const stpFnlH = syllables[syllables.length - 2].pattern.filter(
         it =>
-          it.name === TonalSoundTags.stopFinal &&
+          it.name === TonalSpellingTags.stopFinal &&
           it.toString() === TonalLetterTags.h
       );
       const tnl = syllables[syllables.length - 2].pattern.filter(
         it =>
-          (it.name === TonalSoundTags.nasalFinal ||
-            it.name === TonalSoundTags.checkedTonal) &&
+          (it.name === TonalSpellingTags.nasalFinal ||
+            it.name === TonalSpellingTags.checkedTonal) &&
           keysAy.includes(it.toString())
       );
       const nslInitLast = syllables[syllables.length - 1].pattern.filter(
         it =>
-          it.name === TonalSoundTags.initial &&
+          it.name === TonalSpellingTags.initial &&
           nasalInitials.includes(it.toString())
       );
 
@@ -482,8 +484,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         }
         const initLast = syllables[syllables.length - 1].pattern.filter(
           it =>
-            it.name === TonalSoundTags.initial &&
-            initialSounds.includes(it.toString())
+            it.name === TonalSpellingTags.initial &&
+            initialsTonal.includes(it.toString())
         );
         if (
           stpFnlH.length == 0 &&
@@ -518,12 +520,16 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isDoublet(syllables: MatchedPattern[]) {
     if (syllables.length == 2) {
       const stems = syllables
-        .map(it => it.pattern.filter(s => s.name !== TonalSoundTags.freeTonal))
+        .map(it =>
+          it.pattern.filter(s => s.name !== TonalSpellingTags.freeTonal)
+        )
         .map(seq => seq.map(s => s.toString()).join(''));
 
       // TODO: add checks for tone group
       const tnls = syllables
-        .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
+        .map(it =>
+          it.pattern.filter(s => s.name === TonalSpellingTags.freeTonal)
+        )
         .map(seq => seq.map(snd => snd.toString()).join(''));
 
       // compare 2 strings/lexical stems
@@ -538,19 +544,23 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         .map(it =>
           it.pattern.filter(
             snd =>
-              snd.name !== TonalSoundTags.freeTonal &&
-              snd.name !== TonalSoundTags.checkedTonal
+              snd.name !== TonalSpellingTags.freeTonal &&
+              snd.name !== TonalSpellingTags.checkedTonal
           )
         )
         .map(seq => seq.map(snd => snd.toString()).join(''));
 
       const fnls = syllables
-        .map(it => it.pattern.filter(s => s.name === TonalSoundTags.stopFinal))
+        .map(it =>
+          it.pattern.filter(s => s.name === TonalSpellingTags.stopFinal)
+        )
         .map(seq => seq.map(s => s.toString()).join(''));
 
       // TODO: add checks for tone group
       const tnls = syllables
-        .map(it => it.pattern.filter(s => s.name === TonalSoundTags.freeTonal))
+        .map(it =>
+          it.pattern.filter(s => s.name === TonalSpellingTags.freeTonal)
+        )
         .map(seq => seq.map(s => s.toString()).join(''));
 
       // compare 3 strings/lexical stems
@@ -620,7 +630,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         // in case of hmhw or hmhwhmhw
         // check if the previous letter is a consonant
 
-        if (initialSounds.includes(head)) return letters;
+        if (initialsTonal.includes(head)) return letters;
 
         let fnl;
         if (
@@ -813,7 +823,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       if (fnl) {
         pattern.letters.push(fnl);
         const snd = tonalPositionalSounds.get(fnl.literal);
-        if (snd) pattern.pattern.push(snd(TonalSoundTags.stopFinal));
+        if (snd) pattern.pattern.push(snd(TonalSpellingTags.stopFinal));
       }
     } else if (
       this.sandhiFinalTonals.length > 0 &&
@@ -828,7 +838,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
           const snd = tonalPositionalSounds.get(fnl.letters[0].literal);
           if (snd)
-            pattern.pattern.splice(fnl.index, 1, snd(TonalSoundTags.stopFinal));
+            pattern.pattern.splice(
+              fnl.index,
+              1,
+              snd(TonalSpellingTags.stopFinal)
+            );
         } else if (fnl.letters.length == 2) {
           // replace 1 letter at fnl.index with 2 letters
           pattern.letters.splice(
@@ -843,8 +857,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             pattern.pattern.splice(
               fnl.index - lenPrecedingLetters,
               1,
-              snd1(TonalSoundTags.nasalFinal),
-              snd2(TonalSoundTags.stopFinal)
+              snd1(TonalSpellingTags.nasalFinal),
+              snd2(TonalSpellingTags.stopFinal)
             );
           }
         }

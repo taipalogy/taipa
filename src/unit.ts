@@ -1,6 +1,5 @@
 import { TonalCombiningMetaplasm } from './metaplasm';
 import { InflectionalEnding } from './tonal/lexeme';
-import { lowerLettersTonal } from './tonal/version2';
 
 export class Character {
   character: string;
@@ -77,6 +76,7 @@ export class AlphabeticGrapheme extends Grapheme {
   }
 }
 
+/** Letter is a subword unit. */
 export class Letter {
   literal: string = '';
 }
@@ -319,12 +319,12 @@ export class Sound {
   }
 }
 
-export const setOfSounds = function (sounds: Sound[]) {
+export const letterSequence = function (letters: Sound[]) {
   return {
-    sounds,
+    letters: letters,
     includes(str: string) {
-      for (let i in this.sounds) {
-        if (str && this.sounds[i] && str === this.sounds[i].toString())
+      for (let i in this.letters) {
+        if (str && this.letters[i] && str === this.letters[i].toString())
           return true;
       }
       return false;
@@ -333,15 +333,15 @@ export const setOfSounds = function (sounds: Sound[]) {
 };
 
 export const sgPipe = (
-  ...fns: Array<(sg: SoundGeneration) => SoundGeneration>
-) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
+  ...fns: Array<(sg: SpellingGeneration) => SpellingGeneration>
+) => (x: SpellingGeneration) => fns.reduce((v, f) => f(v), x);
 
 /** Sound generation for syllable compositions. */
-export class SoundGeneration {
+export class SpellingGeneration {
   /** The letters to be matched. */
   letters: string[] = [];
-  /** Matched sounds accumulator. */
-  sounds: Sound[] = new Array<Sound>();
+  /** Matched letters accumulator. */
+  matchedLetters: Sound[] = new Array<Sound>();
   /** flag for syllable matching process. */
   matching: boolean = true;
   /** Will populate `predictions` when set to true. */
@@ -372,6 +372,7 @@ export class MatchedPattern {
 
 export abstract class Morpheme {}
 
+/** Syllable is a subword unit. */
 export class Syllable {
   literal: string = '';
 

@@ -1,7 +1,7 @@
 import {
   Letters,
   Sound,
-  setOfSounds,
+  letterSequence,
   Character,
   MatchedSequence,
 } from '../unit';
@@ -177,7 +177,7 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.or,
 ]);
 
-export enum TonalSoundTags {
+export enum TonalSpellingTags {
   initial = 'initial',
   medial = 'medial',
   nasalization = 'nasalization',
@@ -188,33 +188,33 @@ export enum TonalSoundTags {
 }
 
 export class Initial extends Sound {
-  name = TonalSoundTags.initial;
+  name = TonalSpellingTags.initial;
 }
 export class Medial extends Sound {
-  name = TonalSoundTags.medial;
+  name = TonalSpellingTags.medial;
 }
 export class Final extends Sound {
   name = '';
 }
 export class Nasalization extends Sound {
-  name = TonalSoundTags.nasalization;
+  name = TonalSpellingTags.nasalization;
 }
 export class Tonal extends Sound {
   name = '';
 }
 
 export class FreeTonal extends Tonal {
-  name = TonalSoundTags.freeTonal;
+  name = TonalSpellingTags.freeTonal;
 }
 export class CheckedTonal extends Tonal {
-  name = TonalSoundTags.checkedTonal;
+  name = TonalSpellingTags.checkedTonal;
 }
 
 export class StopFinal extends Final {
-  name = TonalSoundTags.stopFinal;
+  name = TonalSpellingTags.stopFinal;
 }
 export class NasalFinal extends Final {
-  name = TonalSoundTags.nasalFinal;
+  name = TonalSpellingTags.nasalFinal;
 }
 
 class MedialA extends Medial {
@@ -427,17 +427,17 @@ class NasalizationNN extends Nasalization {
   characters = this.makeCharacters(TonalLetterTags.nn);
 }
 
-export const nasalizationSounds = setOfSounds([new NasalizationNN()]);
+export const nasalizationTonal = letterSequence([new NasalizationNN()]);
 
-export const nasalFinalSounds = setOfSounds([
+export const nasalFinalsTonal = letterSequence([
   new FinalM(),
   new FinalN(),
   new FinalNG(),
 ]);
 
-export const neutralFinalSounds = setOfSounds([new FinalH(), new FinalHH()]);
+export const neutralFinalsTonal = letterSequence([new FinalH(), new FinalHH()]);
 
-export const medialSounds = setOfSounds([
+export const vowelsTonal = letterSequence([
   new MedialA(),
   new MedialE(),
   new MedialI(),
@@ -449,13 +449,13 @@ export const medialSounds = setOfSounds([
   new MedialER(),
 ]);
 
-export const materLectionisSounds = setOfSounds([
+export const materLectionisTonal = letterSequence([
   new MaterLectionisM(),
   new MaterLectionisN(),
   new MaterLectionisNG(),
 ]);
 
-export const initialSounds = setOfSounds([
+export const initialsTonal = letterSequence([
   new InitialP(),
   new InitialT(),
   new InitialK(),
@@ -478,7 +478,7 @@ export const initialSounds = setOfSounds([
   new InitialNG(),
 ]);
 
-export const freeTonalSounds = setOfSounds([
+export const freeTonalsTonal = letterSequence([
   new FreeTonalZ(),
   new FreeTonalW(),
   new FreeTonalXX(),
@@ -489,14 +489,14 @@ export const freeTonalSounds = setOfSounds([
   new FreeTonalY(),
 ]);
 
-export const checkedTonalSounds = setOfSounds([
+export const checkedTonalsTonal = letterSequence([
   new CheckedTonalF(),
   new CheckedTonalY(),
   new CheckedTonalW(),
   new CheckedTonalX(),
 ]);
 
-export const stopFinalSounds = setOfSounds([
+export const stopFinalsTonal = letterSequence([
   new FinalP(),
   new FinalT(),
   new FinalK(),
@@ -507,7 +507,7 @@ export const stopFinalSounds = setOfSounds([
   new FinalHH(),
 ]);
 
-export const stopFinalSoundsBgjklps = setOfSounds([
+export const stopFinalsBgjklpsTonal = letterSequence([
   new FinalB(),
   new FinalG(),
   new FinalJ(),
@@ -517,7 +517,7 @@ export const stopFinalSoundsBgjklps = setOfSounds([
   new FinalS(),
 ]);
 
-export const stopFinalSoundsBBggkkllppss = setOfSounds([
+export const stopFinalsBBggkkllppssTonal = letterSequence([
   new FinalBB(),
   new FinalGG(),
   new FinalKK(),
@@ -527,7 +527,7 @@ export const stopFinalSoundsBBggkkllppss = setOfSounds([
 ]);
 
 export function positionalSound(sounds: Sound[]) {
-  return (t: TonalSoundTags) => {
+  return (t: TonalSpellingTags) => {
     for (let i in sounds) {
       if (sounds[i].name === t) return sounds[i];
     }
@@ -592,7 +592,7 @@ const psZx = positionalSound([new FreeTonalZX()]);
 
 export const tonalPositionalSounds = new Map<
   string,
-  (t: TonalSoundTags) => Sound
+  (t: TonalSpellingTags) => Sound
 >()
   .set(TonalLetterTags.a, psA)
   .set(TonalLetterTags.b, psB)
