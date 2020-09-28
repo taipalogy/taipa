@@ -13,7 +13,7 @@ import {
   hatsuonsKana,
   KanaLetterTags,
 } from './kana';
-import { KanaPositionalLetterGenerator } from './spellgen';
+import { KanaPositionalLetterGenerator } from './lettergen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 export class KanaSyllable extends Syllable {}

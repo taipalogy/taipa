@@ -79,6 +79,6 @@ export {
 
 export { predict } from './tonal/prediction';
 
-export { syllableCompositions } from './tonal/spellgen';
+export { syllableCompositions } from './tonal/lettergen';
 
 export { tokenizeLatinSyllable } from './tonal/tokenizer';
