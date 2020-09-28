@@ -1,19 +1,19 @@
 import { syllableCompositions } from './spellgen';
-import { SpellingGeneration, Sound } from '../unit';
+import { PositionalLetterGeneration, PositionalLetter } from '../unit';
 import { graphAnalyzeTonal } from './analyzer';
 import { vowelsTonal } from './version2';
 import { impossibleSequences } from './collections';
 
 /** Subword tokenization. */
 export function tokenizeLatinSyllable(str: string) {
-  const soundSeqs: Array<Array<Sound[]>> = new Array();
+  const pLetterSeqs: Array<Array<PositionalLetter[]>> = new Array();
 
   const letters = graphAnalyzeTonal(str).map(x => x.letter && x.letter.literal);
 
   // console.log(letters);
   let beginOfSyllable = 0;
   while (beginOfSyllable < letters.length) {
-    const accumulatedSeqs: Array<Sound[]> = new Array(); // accumulator for the matched
+    const accumulatedSeqs: Array<PositionalLetter[]> = new Array(); // accumulator for the matched
     let shouldBreak: boolean = false;
     for (let i = 0; i < letters.length; i++) {
       // i is used for the end of the specified portion of letters. see letters.slice below
@@ -21,7 +21,7 @@ export function tokenizeLatinSyllable(str: string) {
         if (shouldBreak) break;
         if (i + 1 > beginOfSyllable) {
           // bypass those loops when i is less than or equal to beginOfSyllable
-          let sg = new SpellingGeneration();
+          let sg = new PositionalLetterGeneration();
           // the letter at position i is exclusive
           sg.letters = letters.slice(beginOfSyllable, i + 1);
           // console.log(sg.letters, beginOfSyllable, i, j);
@@ -38,7 +38,7 @@ export function tokenizeLatinSyllable(str: string) {
             sg.matching == true
           ) {
             accumulatedSeqs.push(sg.matchedLetters);
-            // console.log(sg.sounds, beginOfSyllable, i, j);
+            // console.log(sg.letters, beginOfSyllable, i, j);
           }
         }
       }
@@ -63,8 +63,8 @@ export function tokenizeLatinSyllable(str: string) {
       // break while loop
       break;
     } else if (accumulatedSeqs.length > 0) {
-      soundSeqs.push(accumulatedSeqs);
+      pLetterSeqs.push(accumulatedSeqs);
     }
   }
-  return soundSeqs.map(x => x.map(y => y));
+  return pLetterSeqs.map(x => x.map(y => y));
 }

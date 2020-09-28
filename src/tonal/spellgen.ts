@@ -1,6 +1,6 @@
-import { Sound, SpellingGeneration, sgPipe } from '../unit';
+import { PositionalLetter, PositionalLetterGeneration, sgPipe } from '../unit';
 import {
-  tonalPositionalSounds,
+  tonalPositionalLetters,
   TonalSpellingTags,
   lowerLettersTonal,
   checkedTonalsTonal,
@@ -10,18 +10,18 @@ import {
   vowelsTonal,
   neutralFinalsTonal,
   nasalFinalsTonal,
-  nasalizationTonal,
+  nasalizationsTonal,
   stopFinalsTonal,
   stopFinalsBgjklpsTonal,
   stopFinalsBBggkkllppssTonal,
 } from './version2';
 import { combiningRules } from './collections';
 
-function initialConsonant(sg: SpellingGeneration) {
+function initialConsonant(sg: PositionalLetterGeneration) {
   if (initialsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.initial);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.initial);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -29,13 +29,13 @@ function initialConsonant(sg: SpellingGeneration) {
   return sg;
 }
 
-function stopFinalConsonant(sg: SpellingGeneration) {
+function stopFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (stopFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.stopFinal);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.stopFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -47,13 +47,13 @@ function stopFinalConsonant(sg: SpellingGeneration) {
   return sg;
 }
 
-function neutralFinalConsonant(sg: SpellingGeneration) {
+function neutralFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (neutralFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.stopFinal);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.stopFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -65,14 +65,14 @@ function neutralFinalConsonant(sg: SpellingGeneration) {
   return sg;
 }
 
-function nasalFinalConsonant(sg: SpellingGeneration) {
+function nasalFinalConsonant(sg: PositionalLetterGeneration) {
   // check out the length of letters like we do in the loop in function vowel
   if (!sg.matching || sg.letters.length == 0) return sg;
 
   if (nasalFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.nasalFinal);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.nasalFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -84,7 +84,7 @@ function nasalFinalConsonant(sg: SpellingGeneration) {
   return sg;
 }
 
-function vowel(sg: SpellingGeneration) {
+function vowel(sg: PositionalLetterGeneration) {
   // we need the below line when the preceding initial consonant is not matched
   if (!sg.matching) return sg;
 
@@ -93,9 +93,9 @@ function vowel(sg: SpellingGeneration) {
   for (let i = sg.matchedLetters.length; i < sg.letters.length; i++) {
     if (vowelsTonal.includes(sg.letters[i])) {
       toBePredicted = true;
-      const ps = tonalPositionalSounds.get(sg.letters[i]);
-      if (ps) {
-        const s = ps(TonalSpellingTags.medial);
+      const pl = tonalPositionalLetters.get(sg.letters[i]);
+      if (pl) {
+        const s = pl(TonalSpellingTags.medial);
         matches++;
         if (s) sg.matchedLetters.push(s);
       }
@@ -116,11 +116,11 @@ function vowel(sg: SpellingGeneration) {
   return sg;
 }
 
-function materLectionis(sg: SpellingGeneration) {
+function materLectionis(sg: PositionalLetterGeneration) {
   if (materLectionisTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.medial);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.medial);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -128,11 +128,11 @@ function materLectionis(sg: SpellingGeneration) {
   return sg;
 }
 
-function nasalization(sg: SpellingGeneration) {
+function nasalization(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
-  if (nasalizationTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
+  if (nasalizationsTonal.includes(sg.letters[sg.matchedLetters.length])) {
+    const ps = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
     if (ps) {
       const s = ps(TonalSpellingTags.nasalization);
       if (s) sg.matchedLetters.push(s);
@@ -140,19 +140,19 @@ function nasalization(sg: SpellingGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(nasalizationTonal.letters);
+      sg.predictions.push(nasalizationsTonal.letters);
   }
 
   return sg;
 }
 
-function freeTonal(sg: SpellingGeneration) {
+function freeTonal(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (freeTonalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.freeTonal);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.freeTonal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -164,13 +164,13 @@ function freeTonal(sg: SpellingGeneration) {
   return sg;
 }
 
-function checkedTonal(sg: SpellingGeneration) {
+function checkedTonal(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (checkedTonalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.checkedTonal);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.checkedTonal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -182,16 +182,16 @@ function checkedTonal(sg: SpellingGeneration) {
   return sg;
 }
 
-function sandhiFinalConsonant(sg: SpellingGeneration) {
+function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (
     stopFinalsBgjklpsTonal.includes(sg.letters[sg.matchedLetters.length]) ||
     stopFinalsBBggkkllppssTonal.includes(sg.letters[sg.matchedLetters.length])
   ) {
-    const ps = tonalPositionalSounds.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.stopFinal);
+    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(TonalSpellingTags.stopFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -310,7 +310,7 @@ export const syllableCompositions = [
   scVC3, scVCT3, scCVC3, scCVCT3, scCVCCT,
 ];
 
-export class TonalSoundGenerator {
+export class TonalPositionalLetterGenerator {
   private isStopFinal(str: string) {
     if (stopFinalsTonal.includes(str)) return true;
 
@@ -338,9 +338,9 @@ export class TonalSoundGenerator {
     return strs;
   }
 
-  generate(letters: string[]): Sound[][] {
+  generate(letters: string[]): PositionalLetter[][] {
     let strs: Array<string[]> = new Array();
-    const sequences: Array<Sound[]> = new Array(); // to be returned
+    const sequences: Array<PositionalLetter[]> = new Array(); // to be returned
 
     if (this.isStopFinal(letters[letters.length - 1])) {
       strs = this.genChecked(letters);
@@ -349,10 +349,10 @@ export class TonalSoundGenerator {
     }
 
     for (let i in strs) {
-      // generates all needed sounds to be processed
+      // generates all needed positional letters to be processed
 
       for (let j = 0; j < syllableCompositions.length; j++) {
-        let sg = new SpellingGeneration();
+        let sg = new PositionalLetterGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = syllableCompositions[j](sg);

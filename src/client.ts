@@ -20,7 +20,7 @@ export class Client {
       ta.blockSequences = getKanaBlocks(morphemes);
 
       for (let m of morphemes) {
-        ta.soundSequences.push(m.sounds);
+        ta.letterSequences.push(m.letters);
       }
     }
 
@@ -42,7 +42,7 @@ export class Client {
       ta.blockSequences = getTaiKanaBlocks(morphemes);
 
       for (let m of morphemes) {
-        ta.soundSequences.push(m.sounds);
+        ta.letterSequences.push(m.letters);
         // TODO: first free tone to fourth. first checked tone to eighth
         ta.uncombiningSequences.push(m.getForms().map(it => it.literal));
       }

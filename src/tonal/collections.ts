@@ -50,7 +50,7 @@ export const tonalsWx = [
 ];
 
 // b, l, g, m, n
-export const epentheticSounds = [
+export const epentheticLetters = [
   TonalLetterTags.b.toString(),
   TonalLetterTags.l.toString(),
   TonalLetterTags.g.toString(),

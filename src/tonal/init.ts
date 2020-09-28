@@ -1,5 +1,5 @@
 import {
-  tonalPositionalSounds,
+  tonalPositionalLetters,
   lowerLettersTonal,
   TonalSpellingTags,
   TonalLetterTags,
@@ -15,11 +15,11 @@ import {
   hatsuon,
   special,
 } from '../kana/kana';
-import { Sound } from '../unit';
+import { PositionalLetter } from '../unit';
 import { fourthFinals } from './collections';
 
 export function checkNumberOfLetterTonal() {
-  if (tonalPositionalSounds.size !== lowerLettersTonal.size) {
+  if (tonalPositionalLetters.size !== lowerLettersTonal.size) {
     console.log('sizes unmatched');
   }
 }
@@ -60,19 +60,23 @@ function getToneSymbolForFourthEighth(final: string, tonalLen: number) {
   return '';
 }
 
-function getReplicatedKanaVowel(sounds: Sound[], j: number, replica: string) {
+function getReplicatedKanaVowel(
+  letters: PositionalLetter[],
+  j: number,
+  replica: string
+) {
   if (
     (j == 0 &&
-      sounds[0].name === TonalSpellingTags.medial &&
-      (sounds.length == 1 ||
-        (sounds.length == 2 &&
-          sounds[sounds.length - 1].name === TonalSpellingTags.freeTonal) ||
-        (sounds.length == 2 &&
-          sounds[sounds.length - 1].name ===
+      letters[0].name === TonalSpellingTags.medial &&
+      (letters.length == 1 ||
+        (letters.length == 2 &&
+          letters[letters.length - 1].name === TonalSpellingTags.freeTonal) ||
+        (letters.length == 2 &&
+          letters[letters.length - 1].name ===
             TonalSpellingTags.nasalization))) ||
-    (sounds.length == 3 &&
-      sounds[sounds.length - 2].name === TonalSpellingTags.nasalization &&
-      sounds[sounds.length - 1].name === TonalSpellingTags.freeTonal)
+    (letters.length == 3 &&
+      letters[letters.length - 2].name === TonalSpellingTags.nasalization &&
+      letters[letters.length - 1].name === TonalSpellingTags.freeTonal)
   ) {
     // reduplicate the vowel for syllables without an initial
     // in case of a, e,
@@ -80,26 +84,26 @@ function getReplicatedKanaVowel(sounds: Sound[], j: number, replica: string) {
     // in case of ennx
     return replica;
   } else if (
-    (sounds.length == 2 &&
-      sounds[0].name === TonalSpellingTags.medial &&
-      (sounds[1].toString() === TonalLetterTags.h ||
-        sounds[1].toString() === TonalLetterTags.hh)) ||
-    (sounds.length == 3 &&
-      sounds[0].name === TonalSpellingTags.medial &&
-      (sounds[1].toString() === TonalLetterTags.h ||
-        sounds[1].toString() === TonalLetterTags.hh) &&
-      sounds[2].name === TonalSpellingTags.checkedTonal) ||
-    (sounds.length == 3 &&
-      sounds[0].name === TonalSpellingTags.medial &&
-      sounds[1].name === TonalSpellingTags.nasalization &&
-      (sounds[2].toString() === TonalLetterTags.h ||
-        sounds[2].toString() === TonalLetterTags.hh))
+    (letters.length == 2 &&
+      letters[0].name === TonalSpellingTags.medial &&
+      (letters[1].toString() === TonalLetterTags.h ||
+        letters[1].toString() === TonalLetterTags.hh)) ||
+    (letters.length == 3 &&
+      letters[0].name === TonalSpellingTags.medial &&
+      (letters[1].toString() === TonalLetterTags.h ||
+        letters[1].toString() === TonalLetterTags.hh) &&
+      letters[2].name === TonalSpellingTags.checkedTonal) ||
+    (letters.length == 3 &&
+      letters[0].name === TonalSpellingTags.medial &&
+      letters[1].name === TonalSpellingTags.nasalization &&
+      (letters[2].toString() === TonalLetterTags.h ||
+        letters[2].toString() === TonalLetterTags.hh))
   ) {
     // reduplicate the vowel for syllables without an initial
     // in case of ah, ehh
     // in case of ahy
     // in case of ennh, innh
-    return getSmallKanaVowel(sounds[0].toString());
+    return getSmallKanaVowel(letters[0].toString());
   }
 
   return '';
@@ -120,25 +124,25 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
   let kanas4thToneWoArrow = '';
 
   for (let i = 0; i < morphemes.length; i++) {
-    const initl = morphemes[i].sounds.filter(
+    const initl = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.initial
     );
-    const mdls = morphemes[i].sounds.filter(
+    const mdls = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.medial
     );
-    const nslFnl = morphemes[i].sounds.filter(
+    const nslFnl = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.nasalFinal
     );
-    const stpFnl = morphemes[i].sounds.filter(
+    const stpFnl = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.stopFinal
     );
-    const frTnl = morphemes[i].sounds.filter(
+    const frTnl = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.freeTonal
     );
-    const chkTnl = morphemes[i].sounds.filter(
+    const chkTnl = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.checkedTonal
     );
-    const nslz = morphemes[i].sounds.filter(
+    const nslz = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.nasalization
     );
     const finalsForEToKanaIE = stpFnl
@@ -305,7 +309,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
             } else {
               kanas[i] += got[1];
               kanas[i] += getReplicatedKanaVowel(
-                morphemes[i].sounds,
+                morphemes[i].letters,
                 j,
                 got[1]
               );
@@ -330,7 +334,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                 } else {
                   // there replicated kana other than ir, or
                   kanas[i] += getReplicatedKanaVowel(
-                    morphemes[i].sounds,
+                    morphemes[i].letters,
                     i,
                     kn[1] + combiningOverline
                   );
@@ -354,7 +358,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                 if (mdls.length == 1) {
                   if (kn)
                     kanas[i] += getReplicatedKanaVowel(
-                      morphemes[i].sounds,
+                      morphemes[i].letters,
                       j,
                       kn[1]
                     );
@@ -477,21 +481,24 @@ const kanaInitials = function (map?: Map<string, string[] | undefined>) {
   };
 };
 
-const getKanaIRor = function (medials: Sound[], hasOneFinal: boolean) {
-  if (medials.length == 1) {
-    const kn = mappingMedial.get(medials[0].toString());
+const getKanaIRor = function (
+  vowels: PositionalLetter[],
+  hasOneFinal: boolean
+) {
+  if (vowels.length == 1) {
+    const kn = mappingMedial.get(vowels[0].toString());
     if (kn) {
       if (hasOneFinal) {
-        const sml = mappingMedialSmallForm.get(medials[0].toString());
+        const sml = mappingMedialSmallForm.get(vowels[0].toString());
         if (sml) {
           return sml[1] + combiningOverline;
         }
       }
       return kn[1] + combiningOverline;
     }
-  } else if (medials.length == 2) {
+  } else if (vowels.length == 2) {
     // return small form
-    const kn = mappingMedialSmallForm.get(medials[0].toString());
+    const kn = mappingMedialSmallForm.get(vowels[0].toString());
     if (kn) {
       return kn[1] + combiningOverline;
     }

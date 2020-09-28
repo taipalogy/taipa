@@ -1,5 +1,5 @@
 import {
-  kanaPositionalSound,
+  kanaPositionalLetters,
   lowerLettersKana,
   kogakimoji,
   hiraganaKatakana,
@@ -8,7 +8,7 @@ import {
   initialConsonantsKana,
   germinatedConsonantsKana,
   finalConsonantsKana,
-  hatsuonKana,
+  hatsuonsKana,
   special,
   KanaLetterTags,
   otherKanas,
@@ -16,7 +16,7 @@ import {
 import { KanaUncombiningMorpheme } from './morpheme';
 
 export function checkNumberOfLettersKana() {
-  if (kanaPositionalSound.size !== lowerLettersKana.size) {
+  if (kanaPositionalLetters.size !== lowerLettersKana.size) {
     console.log('sizes unmatched');
   }
 }
@@ -116,7 +116,7 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
         kanaSequences[2] += ks[1];
       }
       if (
-        hatsuonKana.includes(m.syllable.literal[m.syllable.literal.length - 1])
+        hatsuonsKana.includes(m.syllable.literal[m.syllable.literal.length - 1])
       ) {
         ks = hatsuon.get('n');
         if (ks) {
@@ -141,18 +141,18 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
         germinatedConsonantsKana.includes(first) == true
       ) {
         const ret = getKanasFollowingSmallChu(
-          m.sounds[1].toString() + m.sounds[2].toString()
+          m.letters[1].toString() + m.letters[2].toString()
         );
         kanaSequences[0] += ret[0];
         kanaSequences[1] += ret[1];
         kanaSequences[2] += ret[1];
       } else if (
-        m.sounds[0].toString() === KanaLetterTags.t &&
-        m.sounds[1].toString() === KanaLetterTags.ch &&
-        germinatedConsonantsKana.includes(m.sounds[0].toString()) == true
+        m.letters[0].toString() === KanaLetterTags.t &&
+        m.letters[1].toString() === KanaLetterTags.ch &&
+        germinatedConsonantsKana.includes(m.letters[0].toString()) == true
       ) {
         const ret = getKanasFollowingSmallChu(
-          m.sounds[1].toString() + m.sounds[2].toString()
+          m.letters[1].toString() + m.letters[2].toString()
         );
         kanaSequences[0] += ret[0];
         kanaSequences[1] += ret[1];

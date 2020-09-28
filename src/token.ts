@@ -2,7 +2,7 @@ import { Document } from './document';
 import { Tagset } from './dparser/symbols';
 import { TonalWord } from './tonal/lexeme';
 import { PhrasalVerbs } from './dparser/rules';
-import { Sound, Word } from './unit';
+import { PositionalLetter, Word } from './unit';
 import { lemmatize } from './tonal/lemmatizer';
 
 export class Token {
@@ -31,8 +31,8 @@ export class TokenAnalysis {
   lemmas: Array<Word> = new Array();
   /** Inflectional suffix. */
   inflectionalEnding: string = '';
-  /** Sound sequences. */
-  soundSequences: Array<Sound[]> = new Array();
+  /** positional letter sequences. */
+  letterSequences: Array<PositionalLetter[]> = new Array();
   /** Syllabic block or syllabogram sequences. */
   blockSequences: string[] = [];
   /** Uncombining form sequences. */

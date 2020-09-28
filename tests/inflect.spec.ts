@@ -31,12 +31,12 @@ describe('Inflectional ending testing', () => {
     expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
   });
 
-  test('check the sound of inflectional ending', () => {
-    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
+  test('check the letter of inflectional ending', () => {
+    expect(doc.letterSequences[1][4].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][4].name).toEqual(
+    expect(doc.letterSequences[1][4].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
@@ -58,12 +58,12 @@ describe('Inflectional ending testing', () => {
     expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
   });
 
-  test('check the sound of inflectional ending', () => {
-    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
+  test('check the letter of inflectional ending', () => {
+    expect(doc.letterSequences[1][4].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][4].name).toEqual(
+    expect(doc.letterSequences[1][4].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
@@ -85,12 +85,12 @@ describe('Inflectional ending testing', () => {
     expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
   });
 
-  test('check the sound of inflectional ending', () => {
-    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.f);
+  test('check the letter of inflectional ending', () => {
+    expect(doc.letterSequences[1][3].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][3].name).toEqual(
+    expect(doc.letterSequences[1][3].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
@@ -112,18 +112,18 @@ describe('Inflectional ending testing', () => {
     expect(doc.inflectionalEnding).toEqual(TonalLetterTags.w);
   });
 
-  test('check the sound of inflectional ending', () => {
-    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
+  test('check the letter of inflectional ending', () => {
+    expect(doc.letterSequences[1][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[0][3].name).toEqual(
+    expect(doc.letterSequences[0][3].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][3].name).toEqual(
+    expect(doc.letterSequences[1][3].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
@@ -145,18 +145,18 @@ describe('Inflectional ending testing', () => {
     expect(doc.inflectionalEnding).toEqual('w');
   });
 
-  test('check the sound of inflectional ending', () => {
-    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
+  test('check the letter of inflectional ending', () => {
+    expect(doc.letterSequences[1][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[0][3].name).toEqual(
+    expect(doc.letterSequences[0][3].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][3].name).toEqual(
+    expect(doc.letterSequences[1][3].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });
@@ -178,12 +178,12 @@ describe('Inflectional ending testing', () => {
     expect(doc.inflectionalEnding).toEqual('w');
   });
 
-  test('check the sound of inflectional ending', () => {
-    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.w);
+  test('check the letter of inflectional ending', () => {
+    expect(doc.letterSequences[1][4].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.soundSequences[1][4].name).toEqual(
+    expect(doc.letterSequences[1][4].name).toEqual(
       TonalSpellingTags.checkedTonal
     );
   });

@@ -277,7 +277,7 @@ export class GraphemeMaker {
           let l = letters.shift();
           if (l) {
             beginOfLetter += l.characters.length;
-            // pack letters into sounds
+            // pack letters into graphemes
             let gr = new AlphabeticGrapheme(l);
             graphemes.push(gr);
           }
@@ -290,7 +290,7 @@ export class GraphemeMaker {
   }
 }
 
-export class Sound {
+export class PositionalLetter {
   name: string = '';
   // an array of character objects. can be used to make a word object.
   characters: Array<Character> = new Array();
@@ -319,7 +319,7 @@ export class Sound {
   }
 }
 
-export const letterSequence = function (letters: Sound[]) {
+export const letterSequence = function (letters: PositionalLetter[]) {
   return {
     letters: letters,
     includes(str: string) {
@@ -332,28 +332,29 @@ export const letterSequence = function (letters: Sound[]) {
   };
 };
 
+// spelling generation
 export const sgPipe = (
-  ...fns: Array<(sg: SpellingGeneration) => SpellingGeneration>
-) => (x: SpellingGeneration) => fns.reduce((v, f) => f(v), x);
+  ...fns: Array<(sg: PositionalLetterGeneration) => PositionalLetterGeneration>
+) => (x: PositionalLetterGeneration) => fns.reduce((v, f) => f(v), x);
 
-/** Sound generation for syllable compositions. */
-export class SpellingGeneration {
+/** Positional letter generation for syllable compositions. */
+export class PositionalLetterGeneration {
   /** The letters to be matched. */
   letters: string[] = [];
   /** Matched letters accumulator. */
-  matchedLetters: Sound[] = new Array<Sound>();
+  matchedLetters: PositionalLetter[] = new Array<PositionalLetter>();
   /** flag for syllable matching process. */
   matching: boolean = true;
   /** Will populate `predictions` when set to true. */
   predictive: boolean = false;
-  /** Predicted sounds */
-  predictions: Array<Sound[]> = new Array();
+  /** Predicted positional letters */
+  predictions: Array<PositionalLetter[]> = new Array();
   predictSandhiFinal: boolean = false;
 }
 
 export class MatchedPattern {
   letters: Array<AlphabeticLetter> = new Array();
-  pattern: Array<Sound> = new Array();
+  pattern: Array<PositionalLetter> = new Array();
 
   get matchedLength() {
     return this.letters.length;

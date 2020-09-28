@@ -1,7 +1,7 @@
 import { Metaplasm } from './interface';
 import { TonalSyllable } from './tonal/morpheme';
 import { Allomorph } from './tonal/version2';
-import { Sound, Morpheme } from './unit';
+import { PositionalLetter, Morpheme } from './unit';
 import { TonalWord, InflectionalEnding } from './tonal/lexeme';
 import { TonalPhrase } from './tonal/phraseme';
 import {
@@ -15,7 +15,10 @@ import {
 } from './dparser/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
-  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
+  apply(
+    letters: Array<PositionalLetter>,
+    allomorph: Allomorph
+  ): Array<TonalSyllable> {
     return [];
   }
 }

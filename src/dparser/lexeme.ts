@@ -18,7 +18,7 @@ import {
   TonalLetterTags,
 } from '../tonal/version2';
 import { TonalSyllable } from '../tonal/morpheme';
-import { Sound } from '../unit';
+import { PositionalLetter } from '../unit';
 import {
   TonalInflectionMetaplasm,
   TonalInsertionMetaplasm,
@@ -33,7 +33,7 @@ export class TonalInflectionLexeme extends Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
   private allomorphicEnding: AllomorphicEnding;
-  // TODO: word patterns for tiapwsux chongwtaiwgiy, ay, etc.. check out member sounds in morpheme.
+  // TODO: word patterns for tiapwsux chongwtaiwgiy, ay, etc.. check out member positional letters in morpheme.
 
   constructor(
     morphemes: Array<TonalCombiningMorpheme>,
@@ -126,23 +126,23 @@ export class TonalInsertionLexeme implements Lexeme {
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
     if (preceding.morphemes.length > 0) {
-      const adjacentSnds =
-        preceding.morphemes[preceding.morphemes.length - 1].sounds;
-      let s = new Sound();
+      const adjacentLtrs =
+        preceding.morphemes[preceding.morphemes.length - 1].letters;
+      let pl = new PositionalLetter();
       if (
-        adjacentSnds[adjacentSnds.length - 1].name ===
+        adjacentLtrs[adjacentLtrs.length - 1].name ===
           TonalSpellingTags.freeTonal &&
-        adjacentSnds[adjacentSnds.length - 2].name ===
+        adjacentLtrs[adjacentLtrs.length - 2].name ===
           TonalSpellingTags.nasalFinal
       ) {
-        s = adjacentSnds[adjacentSnds.length - 2];
+        pl = adjacentLtrs[adjacentLtrs.length - 2];
       } else if (
-        adjacentSnds[adjacentSnds.length - 1].name ===
+        adjacentLtrs[adjacentLtrs.length - 1].name ===
         TonalSpellingTags.nasalFinal
       ) {
-        s = adjacentSnds[adjacentSnds.length - 1];
+        pl = adjacentLtrs[adjacentLtrs.length - 1];
       }
-      const syls = this.morphemes[0].insertNasal(s);
+      const syls = this.morphemes[0].insertNasal(pl);
 
       wrd.replaceSyllable(0, syls[0]);
 
@@ -177,18 +177,18 @@ export class TonalUninsertionLexeme implements Lexeme {
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
     if (preceding.morphemes.length > 0) {
-      const adjacentSnds =
-        preceding.morphemes[preceding.morphemes.length - 1].sounds;
-      let s = new Sound();
+      const adjacentLtrs =
+        preceding.morphemes[preceding.morphemes.length - 1].letters;
+      let pl = new PositionalLetter();
       if (
-        (adjacentSnds[adjacentSnds.length - 1].name ===
+        (adjacentLtrs[adjacentLtrs.length - 1].name ===
           TonalSpellingTags.freeTonal &&
-          adjacentSnds[adjacentSnds.length - 2].name ===
+          adjacentLtrs[adjacentLtrs.length - 2].name ===
             TonalSpellingTags.nasalFinal) ||
-        adjacentSnds[adjacentSnds.length - 1].name ===
+        adjacentLtrs[adjacentLtrs.length - 1].name ===
           TonalSpellingTags.nasalFinal
       ) {
-        s = adjacentSnds[adjacentSnds.length - 2];
+        pl = adjacentLtrs[adjacentLtrs.length - 2];
       }
       const syls = this.morphemes[0].uninsertNasal();
 
@@ -225,7 +225,7 @@ export class TonalInfectionLexeme implements Lexeme {
     );
     if (
       preceding.morphemes.length > 0 &&
-      preceding.morphemes[preceding.morphemes.length - 1].sounds.filter(
+      preceding.morphemes[preceding.morphemes.length - 1].letters.filter(
         i => i.name === TonalSpellingTags.nasalization
       ).length > 0
     ) {
@@ -262,14 +262,14 @@ export class TonalUninfectionLexeme implements Lexeme {
       this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
     );
     if (preceding.morphemes.length > 0) {
-      const adjacentSnds = this.morphemes[this.morphemes.length - 1].sounds;
+      const adjacentLtrs = this.morphemes[this.morphemes.length - 1].letters;
       const n = preceding.morphemes[
         preceding.morphemes.length - 1
-      ].sounds.filter(i => i.name === TonalSpellingTags.nasalization);
+      ].letters.filter(i => i.name === TonalSpellingTags.nasalization);
 
       if (
         n.length == 1 &&
-        adjacentSnds.filter(it => it.name === TonalSpellingTags.nasalization)
+        adjacentLtrs.filter(it => it.name === TonalSpellingTags.nasalization)
           .length == 1
       ) {
         // if there is a nasalization in thre preceding word and the current word
@@ -307,10 +307,10 @@ export class TonalMutationLexeme implements Lexeme {
     );
 
     if (following.morphemes.length > 0) {
-      const adjacentSnds =
-        following.morphemes[following.morphemes.length - 1].sounds;
-      if (adjacentSnds[0].name === TonalSpellingTags.initial) {
-        const s = adjacentSnds[0];
+      const adjacentLtrs =
+        following.morphemes[following.morphemes.length - 1].letters;
+      if (adjacentLtrs[0].name === TonalSpellingTags.initial) {
+        const s = adjacentLtrs[0];
         const syls = this.morphemes[
           this.morphemes.length - 1
         ].changeFinalPtkppttkk(s);
@@ -348,13 +348,13 @@ export class TonalUnmutationLexeme implements Lexeme {
   }
 
   unmutateWith(following: TonalUnmutationLexeme) {
-    const snds = this.morphemes[this.morphemes.length - 1].sounds;
-    const fnls = snds.filter(i => i.name === TonalSpellingTags.stopFinal);
+    const ltrs = this.morphemes[this.morphemes.length - 1].letters;
+    const fnls = ltrs.filter(i => i.name === TonalSpellingTags.stopFinal);
     const wrd = new TonalWord(
       this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
     );
 
-    if (following.morphemes[0].sounds[0].toString() === TonalLetterTags.g) {
+    if (following.morphemes[0].letters[0].toString() === TonalLetterTags.g) {
       if (
         fnls[0].toString() === TonalLetterTags.gg ||
         fnls[0].toString() === TonalLetterTags.g
@@ -362,7 +362,7 @@ export class TonalUnmutationLexeme implements Lexeme {
         wrd.replaceSyllable(
           0,
           this.morphemes[0].unmutateFinalConsonant(
-            following.morphemes[0].sounds[0]
+            following.morphemes[0].letters[0]
           )[0]
         );
         return [wrd];

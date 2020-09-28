@@ -7,7 +7,7 @@ import {
   AllomorphX,
   TonalLetterTags,
   lowerLettersTonal,
-  tonalPositionalSounds,
+  tonalPositionalLetters,
   TonalSpellingTags,
   uncombiningRulesAy,
   CheckedAllomorph,
@@ -16,8 +16,12 @@ import {
   initialsTonal,
   stopFinalsTonal,
 } from './version2';
-import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
-import { TonalSoundGenerator } from './spellgen';
+import {
+  AlphabeticLetter,
+  AlphabeticGrapheme,
+  PositionalLetter,
+} from '../unit';
+import { TonalPositionalLetterGenerator } from './spellgen';
 import { isInSyllableTable } from './syllabletable';
 import {
   smMnngHF,
@@ -33,7 +37,7 @@ import {
   smBgkpWx,
 } from './matcher';
 import {
-  epentheticSounds,
+  epentheticLetters,
   tonalsWx,
   sandhiFinalsPPpttt,
   fourthToEighthFinals,
@@ -225,9 +229,9 @@ export function syllabifyTonal(
   }
 
   // console.log('matched: ' + matched);
-  const tsg = new TonalSoundGenerator();
+  const tsg = new TonalPositionalLetterGenerator();
   //console.log('matched: ' + matched)
-  let list: Array<Sound[]> = new Array();
+  let list: Array<PositionalLetter[]> = new Array();
 
   if (matched.length > 0) {
     list = tsg.generate(matchedLtrs);
@@ -236,7 +240,7 @@ export function syllabifyTonal(
       const rea = new RemovingEpenthesisOfAy();
       const done = rea.applyToString(literal);
       //console.log(done.toString())
-      if (epentheticSounds.includes(ltrs[0]) && isInSyllableTable(done)) {
+      if (epentheticLetters.includes(ltrs[0]) && isInSyllableTable(done)) {
         list = tsg.generate(ltrs);
       }
     }
@@ -263,7 +267,7 @@ export function syllabifyTonal(
                 mp.letters[q] = letters[beginOfSyllable + q];
               }
 
-              // copy the pattern of sounds
+              // copy the pattern of positional letters
               mp.pattern = list[m];
               //console.log(syllabary.list[m])
               //console.log(mp.letters)
@@ -302,11 +306,11 @@ export class TonalUncombiningMorpheme extends Morpheme {
   allomorph: Allomorph;
   private metaplasm: TonalCombiningMetaplasm;
   private forms: TonalSyllable[];
-  sounds: Array<Sound>;
+  letters: Array<PositionalLetter>;
 
   constructor(
     syllable: TonalSyllable,
-    sounds: Array<Sound>,
+    letters: Array<PositionalLetter>,
     metaplasm: TonalCombiningMetaplasm
   ) {
     super();
@@ -314,22 +318,22 @@ export class TonalUncombiningMorpheme extends Morpheme {
     this.metaplasm = metaplasm;
 
     // assign allomorph for each syllable
-    this.sounds = sounds;
-    this.allomorph = this.assignAllomorph(this.syllable, this.sounds);
-    this.forms = this.metaplasm.apply(this.sounds, this.allomorph);
+    this.letters = letters;
+    this.allomorph = this.assignAllomorph(this.letters);
+    this.forms = this.metaplasm.apply(this.letters, this.allomorph);
   }
 
   getForms(): TonalSyllable[] {
     return this.forms;
   }
 
-  private assignAllomorph(syllable: TonalSyllable, sounds: Sound[]): Allomorph {
+  private assignAllomorph(letters: PositionalLetter[]): Allomorph {
     let allomorph: Allomorph = new ZeroAllomorph();
     // assign the matched allomorph for this syllable
     let las: Array<Allomorph> = []; // list of allomorphs
 
     const s: TonalSyllable = new TonalSyllable(
-      sounds.map(it => new AlphabeticLetter(it.characters))
+      letters.map(it => new AlphabeticLetter(it.characters))
     );
     const keys = Array.from(checkedAllomorphs.keys());
     for (let k = 0; k < keys.length; k++) {
@@ -362,10 +366,10 @@ export class TonalUncombiningMorpheme extends Morpheme {
     las = [];
     if (freeAllomorphs.has(s.lastLetter.literal)) {
       const am = freeAllomorphs.get(s.lastLetter.literal);
-      const stpFnls = sounds.filter(
+      const stpFnls = letters.filter(
         it => it.name === TonalSpellingTags.stopFinal
       );
-      const chkttnls = sounds.filter(
+      const chkttnls = letters.filter(
         it => it.name === TonalSpellingTags.checkedTonal
       );
 
@@ -506,8 +510,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isTransfixInflection(syllables: MatchedPattern[]) {
     // TODO: there are not many of them. make a tiny dictionary to cover the ocurrences
     const thirds = syllables
-      .map(it => it.pattern.filter(snd => snd.toString() === TonalLetterTags.w))
-      .map(seq => seq.map(snd => snd.toString()))
+      .map(it => it.pattern.filter(ltr => ltr.toString() === TonalLetterTags.w))
+      .map(seq => seq.map(ltr => ltr.toString()))
       .filter(arr => arr.length > 0);
     const endingAw: boolean =
       syllables[syllables.length - 1].lastSecondLetter.literal ===
@@ -530,7 +534,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         .map(it =>
           it.pattern.filter(s => s.name === TonalSpellingTags.freeTonal)
         )
-        .map(seq => seq.map(snd => snd.toString()).join(''));
+        .map(seq => seq.map(ltr => ltr.toString()).join(''));
 
       // compare 2 strings/lexical stems
       if (stems[0] === stems[1]) return true; // identical
@@ -543,12 +547,12 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       const stems = syllables
         .map(it =>
           it.pattern.filter(
-            snd =>
-              snd.name !== TonalSpellingTags.freeTonal &&
-              snd.name !== TonalSpellingTags.checkedTonal
+            ltr =>
+              ltr.name !== TonalSpellingTags.freeTonal &&
+              ltr.name !== TonalSpellingTags.checkedTonal
           )
         )
-        .map(seq => seq.map(snd => snd.toString()).join(''));
+        .map(seq => seq.map(ltr => ltr.toString()).join(''));
 
       const fnls = syllables
         .map(it =>
@@ -822,8 +826,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       const fnl = this.sandhiFinals.pop();
       if (fnl) {
         pattern.letters.push(fnl);
-        const snd = tonalPositionalSounds.get(fnl.literal);
-        if (snd) pattern.pattern.push(snd(TonalSpellingTags.stopFinal));
+        const ltr = tonalPositionalLetters.get(fnl.literal);
+        if (ltr) pattern.pattern.push(ltr(TonalSpellingTags.stopFinal));
       }
     } else if (
       this.sandhiFinalTonals.length > 0 &&
@@ -836,12 +840,12 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       if (fnl) {
         if (fnl.letters.length == 1) {
           pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
-          const snd = tonalPositionalSounds.get(fnl.letters[0].literal);
-          if (snd)
+          const ltr = tonalPositionalLetters.get(fnl.letters[0].literal);
+          if (ltr)
             pattern.pattern.splice(
               fnl.index,
               1,
-              snd(TonalSpellingTags.stopFinal)
+              ltr(TonalSpellingTags.stopFinal)
             );
         } else if (fnl.letters.length == 2) {
           // replace 1 letter at fnl.index with 2 letters
@@ -851,14 +855,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             fnl.letters[0],
             fnl.letters[1]
           );
-          const snd1 = tonalPositionalSounds.get(fnl.letters[0].literal);
-          const snd2 = tonalPositionalSounds.get(fnl.letters[1].literal);
-          if (snd1 && snd2) {
+          const ltr1 = tonalPositionalLetters.get(fnl.letters[0].literal);
+          const ltr2 = tonalPositionalLetters.get(fnl.letters[1].literal);
+          if (ltr1 && ltr2) {
             pattern.pattern.splice(
               fnl.index - lenPrecedingLetters,
               1,
-              snd1(TonalSpellingTags.nasalFinal),
-              snd2(TonalSpellingTags.stopFinal)
+              ltr1(TonalSpellingTags.nasalFinal),
+              ltr2(TonalSpellingTags.stopFinal)
             );
           }
         }
@@ -925,7 +929,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         morphemes.push(this.createMorpheme(ptn, new TransfixUncombining()));
       } else {
         if (i < matched.length - 1) {
-          // pass the sounds of the following syllable to unchange sounds accordingly
+          // pass the letters of the following syllable to unchange sounds accordingly
           morphemes.push(
             this.createMorpheme(
               ptn,

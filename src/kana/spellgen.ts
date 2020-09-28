@@ -1,22 +1,22 @@
-import { Sound, SpellingGeneration, sgPipe } from '../unit';
+import { PositionalLetter, PositionalLetterGeneration, sgPipe } from '../unit';
 import {
   KanaSpellingTags,
-  kanaPositionalSound,
+  kanaPositionalLetters,
   initialConsonantsKana,
   vowelsKana,
   germinatedConsonantsKana,
   semivowelsKana,
   finalConsonantsKana,
-  hatsuonKana,
+  hatsuonsKana,
 } from './kana';
 
-function initialConsonant(sg: SpellingGeneration) {
+function initialConsonant(sg: PositionalLetterGeneration) {
   const sics = initialConsonantsKana;
 
   if (sics.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(KanaSpellingTags.initialConsonant);
+    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(KanaSpellingTags.initialConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -24,13 +24,13 @@ function initialConsonant(sg: SpellingGeneration) {
   return sg;
 }
 
-function semivowel(sg: SpellingGeneration) {
+function semivowel(sg: PositionalLetterGeneration) {
   const ssvs = semivowelsKana;
 
   if (ssvs.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(KanaSpellingTags.semivowel);
+    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(KanaSpellingTags.semivowel);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -38,13 +38,13 @@ function semivowel(sg: SpellingGeneration) {
   return sg;
 }
 
-function vowel(sg: SpellingGeneration) {
+function vowel(sg: PositionalLetterGeneration) {
   const svs = vowelsKana;
 
   if (svs.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(KanaSpellingTags.vowel);
+    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(KanaSpellingTags.vowel);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -52,13 +52,13 @@ function vowel(sg: SpellingGeneration) {
   return sg;
 }
 
-function hatsuon(sg: SpellingGeneration) {
-  const sfcs = hatsuonKana;
+function hatsuon(sg: PositionalLetterGeneration) {
+  const sfcs = hatsuonsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(KanaSpellingTags.finalConsonant);
+    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -66,13 +66,13 @@ function hatsuon(sg: SpellingGeneration) {
   return sg;
 }
 
-function finalConsonant(sg: SpellingGeneration) {
+function finalConsonant(sg: PositionalLetterGeneration) {
   const sfcs = finalConsonantsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(KanaSpellingTags.finalConsonant);
+    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -80,13 +80,13 @@ function finalConsonant(sg: SpellingGeneration) {
   return sg;
 }
 
-function germinatedConsonant(sg: SpellingGeneration) {
+function germinatedConsonant(sg: PositionalLetterGeneration) {
   const sgcs = germinatedConsonantsKana;
 
   if (sgcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = kanaPositionalSound.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(KanaSpellingTags.germinatedConsonant);
+    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (pl) {
+      const s = pl(KanaSpellingTags.germinatedConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -101,7 +101,7 @@ const scCVC = sgPipe(initialConsonant, vowel, finalConsonant);
 const scCSV = sgPipe(initialConsonant, semivowel, vowel);
 const scCCV = sgPipe(germinatedConsonant, initialConsonant, vowel);
 
-export class KanaSoundGenerator {
+export class KanaPositionalLetterGenerator {
   readonly sylCompositions = [scV, scCV, scVC, scCVC, scCSV, scCCV];
 
   private genSokuonAndGerminated(letters: string[], lookahead: string) {
@@ -133,16 +133,16 @@ export class KanaSoundGenerator {
 
   generate(letters: string[], lookahead: string) {
     let strs: Array<string[]> = new Array();
-    let sequences: Array<Sound[]> = new Array(); // to be returned
+    let sequences: Array<PositionalLetter[]> = new Array(); // to be returned
 
     strs = this.genSokuonAndGerminated(letters, lookahead);
 
     // console.log(strs);
     for (let i in strs) {
-      // generates all needed sounds to be processed
+      // generates all needed positional letters to be processed
 
       for (let j = 0; j < this.sylCompositions.length; j++) {
-        let sg = new SpellingGeneration();
+        let sg = new PositionalLetterGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = this.sylCompositions[j](sg);

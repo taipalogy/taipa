@@ -1,4 +1,8 @@
-import { AlphabeticGrapheme, Sound, AlphabeticLetter } from '../unit';
+import {
+  AlphabeticGrapheme,
+  PositionalLetter,
+  AlphabeticLetter,
+} from '../unit';
 import { Syllable, MatchedPattern, Morpheme, MorphemeMaker } from '../unit';
 import {
   hiraganaKatakana,
@@ -6,10 +10,10 @@ import {
   initialConsonantsKana,
   vowelsKana,
   semivowelsKana,
-  hatsuonKana,
+  hatsuonsKana,
   KanaLetterTags,
 } from './kana';
-import { KanaSoundGenerator } from './spellgen';
+import { KanaPositionalLetterGenerator } from './spellgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 export class KanaSyllable extends Syllable {}
@@ -18,18 +22,18 @@ export class KanaSyllable extends Syllable {}
 export class KanaUncombiningMorpheme extends Morpheme {
   syllable: KanaSyllable;
   private metaplasm: KanaCombiningMetaplasm;
-  sounds: Array<Sound>;
+  letters: Array<PositionalLetter>;
 
   constructor(
     syllable: KanaSyllable,
-    sounds: Array<Sound>,
+    letters: Array<PositionalLetter>,
     kcm: KanaCombiningMetaplasm
   ) {
     super();
     this.syllable = syllable;
     this.metaplasm = kcm;
-    this.sounds = new Array();
-    this.sounds = sounds;
+    this.letters = new Array();
+    this.letters = letters;
   }
 }
 
@@ -77,7 +81,7 @@ function syllabifyKana(
       matched = literal;
       // no need to shift the germinated consonant? check out the above block
       Object.assign(matchedLtrs, ltrs);
-    } else if (hatsuonKana.includes(lookAhead) && i == 1) {
+    } else if (hatsuonsKana.includes(lookAhead) && i == 1) {
       if (
         letters.length > 2 &&
         initialConsonantsKana.includes(letters[2].literal)
@@ -90,10 +94,10 @@ function syllabifyKana(
     }
   }
 
-  let list: Array<Sound[]> = new Array();
+  let list: Array<PositionalLetter[]> = new Array();
   if (matched.length > 0) {
     // console.log(matchedLtrs, lookAhead);
-    const ksg = new KanaSoundGenerator();
+    const ksg = new KanaPositionalLetterGenerator();
     list = ksg.generate(matchedLtrs, lookAhead);
     // console.log(list);
   }
@@ -101,7 +105,7 @@ function syllabifyKana(
   let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
   let mp = new MatchedPattern();
-  let sounds = new Array<Sound>();
+  let pLetters = new Array<PositionalLetter>();
 
   for (let m in list) {
     let min = Math.min(letters.length - beginOfSyllable, list[m].length);
@@ -116,7 +120,7 @@ function syllabifyKana(
                 arr[q] = letters[beginOfSyllable + q];
               }
               arraysOfLetters.push(arr);
-              sounds = list[m];
+              pLetters = list[m];
             }
           } else {
             break;
@@ -131,7 +135,7 @@ function syllabifyKana(
     // copy the matched letters
     for (let q = 0; q < arraysOfLetters[0].length; q++) {
       mp.letters[q] = letters[beginOfSyllable + q];
-      mp.pattern[q] = sounds[q];
+      mp.pattern[q] = pLetters[q];
     }
     return mp;
   }
@@ -159,7 +163,7 @@ function syllabifyKana(
       arraysOfLetters[longerEntry].length
     ) {
       if (
-        hatsuonKana.includes(
+        hatsuonsKana.includes(
           arraysOfLetters[longerEntry][arraysOfLetters[longerEntry].length - 1]
             .literal
         )
@@ -167,14 +171,14 @@ function syllabifyKana(
         // return the longer one
         for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
           mp.letters[q] = letters[beginOfSyllable + q];
-          mp.pattern[q] = sounds[q];
+          mp.pattern[q] = pLetters[q];
         }
         return mp;
       }
       // return the shorter one
       for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
         mp.letters[q] = letters[beginOfSyllable + q];
-        mp.pattern[q] = sounds[q];
+        mp.pattern[q] = pLetters[q];
       }
       return mp;
     }
@@ -193,14 +197,14 @@ function syllabifyKana(
         // return the longer one
         for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
           mp.letters[q] = letters[beginOfSyllable + q];
-          mp.pattern[q] = sounds[q];
+          mp.pattern[q] = pLetters[q];
         }
       } else {
         // vowel ending
         // return the shorter one
         for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
           mp.letters[q] = letters[beginOfSyllable + q];
-          mp.pattern[q] = sounds[q];
+          mp.pattern[q] = pLetters[q];
         }
       }
       return mp;
@@ -222,14 +226,14 @@ function syllabifyKana(
         // return the shorter one
         for (let q = 0; q < arraysOfLetters[shorterEntry].length; q++) {
           mp.letters[q] = letters[beginOfSyllable + q];
-          mp.pattern[q] = sounds[q];
+          mp.pattern[q] = pLetters[q];
         }
         return mp;
       }
       // return the longer one
       for (let q = 0; q < arraysOfLetters[longerEntry].length; q++) {
         mp.letters[q] = letters[beginOfSyllable + q];
-        mp.pattern[q] = sounds[q];
+        mp.pattern[q] = pLetters[q];
       }
     }
   }
