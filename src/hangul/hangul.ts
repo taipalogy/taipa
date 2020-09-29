@@ -36,7 +36,6 @@ export enum HangulLetterTags {
 
   h = 'h',
   l = 'l',
-  r = 'r',
   s = 's',
 
   w = 'w',
@@ -90,7 +89,6 @@ export const lowerLettersHangul = new LettersOfHangul([
   HangulLetterTags.jj,
   HangulLetterTags.h,
   HangulLetterTags.l,
-  HangulLetterTags.r,
   HangulLetterTags.s,
   HangulLetterTags.w,
   HangulLetterTags.y,
