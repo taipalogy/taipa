@@ -116,7 +116,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             return clones;
           }
         } else if (
-          letters.filter(it => it.name === TonalSpellingTags.medial).length >
+          letters.filter(it => it.name === TonalSpellingTags.vowel).length >
             0 &&
           nasalFinals.includes(s.lastSecondLetter.literal) &&
           neutralFinalsTonal.includes(s.lastLetter.literal)
@@ -333,6 +333,39 @@ export class TransfixUncombining extends TonalCombiningMetaplasm {
         clone7.popLetter(); // letter y was also pushed to clone7, so we have to pop it out. bug?
         clone7.pushLetter(lowerLettersTonal.get(TonalLetterTags.z));
         return [s, clone2, clone5, clone7];
+      }
+    }
+    return [];
+  }
+}
+
+/** Change ~ietf or ietw to ~ek or ~ekk. */
+export class UncombiningFormsIetfIetwToEkEkk extends TonalCombiningMetaplasm {
+  apply(
+    letters: Array<PositionalLetter>,
+    allomorph: Allomorph
+  ): TonalSyllable[] {
+    if (allomorph) {
+      const ics = letters.filter(i => i.name === TonalSpellingTags.initial);
+      const ts = letters.filter(i => i.name === TonalSpellingTags.checkedTonal);
+      if (ics.length > 0 && ts.length > 0) {
+        if (ts[0].toString() === TonalLetterTags.f) {
+          // in case of ~ietf
+          const s: TonalSyllable = new TonalSyllable([
+            new AlphabeticLetter(ics[0].characters),
+            lowerLettersTonal.get(TonalLetterTags.e),
+            lowerLettersTonal.get(TonalLetterTags.k),
+          ]);
+          return [s];
+        } else if (ts[0].toString() === TonalLetterTags.w) {
+          // in case of ~ietw
+          const s: TonalSyllable = new TonalSyllable([
+            new AlphabeticLetter(ics[0].characters),
+            lowerLettersTonal.get(TonalLetterTags.e),
+            lowerLettersTonal.get(TonalLetterTags.kk),
+          ]);
+          return [s];
+        }
       }
     }
     return [];

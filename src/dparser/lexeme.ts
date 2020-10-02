@@ -215,7 +215,7 @@ export class TonalInfectionLexeme implements Lexeme {
   }
 
   getForms() {
-    // for internal samdhi
+    // for internal sandhi
     return this.forms;
   }
 
@@ -272,7 +272,7 @@ export class TonalUninfectionLexeme implements Lexeme {
         adjacentLtrs.filter(it => it.name === TonalSpellingTags.nasalization)
           .length == 1
       ) {
-        // if there is a nasalization in thre preceding word and the current word
+        // if there is a nasalization in the preceding word and the current word
         wrd.replaceSyllable(0, this.morphemes[0].uninfect()[0]);
         return [wrd];
       }

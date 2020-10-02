@@ -9,13 +9,11 @@ describe('Lemma testing', () => {
   const cli = new Client();
 
   const t1 = cli.processTonal('chitt');
-
   test('check the number of lemmata', () => {
     expect(t1.lemmas.length).toEqual(0);
   });
 
   const t2 = cli.processTonal('suzjipwhoatf');
-
   test('check the number of lemmata', () => {
     expect(t2.lemmas.length).toEqual(1);
   });
@@ -25,7 +23,6 @@ describe('Lemma testing', () => {
   });
 
   const t3 = cli.processTonal('goa');
-
   test('check the number of lemmata', () => {
     expect(t3.lemmas.length).toEqual(1);
   });
@@ -37,7 +34,6 @@ describe('Lemma testing', () => {
 
 describe('Uncombining form testing, reduplication', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('angxxangzangx');
-
   test('check the uncombining form, triplet', () => {
     expect(ms1[0].getForms()[0].literal).toEqual('angx');
   });
@@ -47,7 +43,6 @@ describe('Uncombining form testing, reduplication', () => {
   });
 
   const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('angzangx');
-
   test('check the uncombining form, doublet', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('angx');
   });
@@ -55,53 +50,59 @@ describe('Uncombining form testing, reduplication', () => {
 
 describe('Uncombining form testing, ay', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('calxay');
-
   test('check the uncombining form', () => {
     expect(ms1[0].getForms()[0].literal).toEqual('catt');
   });
 
   const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('cagxay');
-
   test('check the uncombining form', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('cakk');
   });
 
   const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('abxay');
-
   test('check the uncombining form', () => {
     expect(ms3[0].getForms()[0].literal).toEqual('app');
   });
 
   const ms4 = tonalLemmatizationAnalyzer.morphAnalyze('cilfay');
-
   test('check the uncombining form', () => {
     expect(ms4[0].getForms()[0].literal).toEqual('cit');
   });
 
   const ms5 = tonalLemmatizationAnalyzer.morphAnalyze('degfay');
-
   test('check the uncombining form', () => {
     expect(ms5[0].getForms()[0].literal).toEqual('dek');
   });
 
   const ms6 = tonalLemmatizationAnalyzer.morphAnalyze('qabfay');
-
   test('check the uncombining form', () => {
     expect(ms6[0].getForms()[0].literal).toEqual('qap');
   });
 
   const ms7 = tonalLemmatizationAnalyzer.morphAnalyze('daiwdongxay');
-
   test('check the uncombining form, 3-syllable word', () => {
     expect(ms7[0].getForms()[0].literal).toEqual('daiz');
   });
 
   const ms8 = tonalLemmatizationAnalyzer.morphAnalyze('ngzaftaixay');
-
   test('check the uncombining form, 4-syllable word', () => {
     expect(ms8[0].getForms()[0].literal).toEqual('ngx');
     expect(ms8[1].getForms()[0].literal).toEqual('ay');
   });
+});
+
+describe('Uncombining form testing, ietf or ietw to ek or ekk', () => {
+  /*
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('vietfqew');
+  test('check the uncombining form', () => {
+    expect(ms1[0].getForms()[0].literal).toEqual('vek');
+  });
+
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('vietwlienx');
+  test('check the uncombining form', () => {
+    expect(ms2[0].getForms()[0].literal).toEqual('vekk');
+  });
+  */
 });
 
 describe('Lemma testing', () => {
@@ -109,7 +110,6 @@ describe('Lemma testing', () => {
   // let doc = new TokenAnalysis();
 
   const t1 = cli.processTonal('sia');
-
   test('check the number of lemmata', () => {
     expect(t1.lemmas.length).toEqual(1);
   });
@@ -119,7 +119,6 @@ describe('Lemma testing', () => {
   });
 
   const t2 = cli.processTonal('siay');
-
   test('check the number of lemmata', () => {
     expect(t2.lemmas.length).toEqual(1);
   });
@@ -129,7 +128,6 @@ describe('Lemma testing', () => {
   });
 
   const t3 = cli.processTonal('siaw');
-
   test('check the number of lemmata', () => {
     expect(t3.lemmas.length).toEqual(2);
   });
@@ -140,7 +138,6 @@ describe('Lemma testing', () => {
   });
 
   const t4 = cli.processTonal('siaz');
-
   test('check the number of lemmata', () => {
     expect(t4.lemmas.length).toEqual(3);
   });
@@ -152,7 +149,6 @@ describe('Lemma testing', () => {
   });
 
   const t5 = cli.processTonal('siax');
-
   test('check the number of lemmata', () => {
     expect(t5.lemmas.length).toEqual(0);
   });
@@ -179,7 +175,6 @@ describe('Lemma testing, empty string as an argument', () => {
 
   // const lmtzr = new TonalLemmatizer();
   const lx1 = lemmatize(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
   });
@@ -217,7 +212,6 @@ describe('Lemma testing, undefined string as an argument', () => {
   });
 
   const lx2 = lemmatize(inputUnd);
-
   test('check the word literal', () => {
     expect(lx2.word.literal).toEqual('');
   });

@@ -95,7 +95,7 @@ function vowel(sg: PositionalLetterGeneration) {
       toBePredicted = true;
       const pl = tonalPositionalLetters.get(sg.letters[i]);
       if (pl) {
-        const s = pl(TonalSpellingTags.medial);
+        const s = pl(TonalSpellingTags.vowel);
         matches++;
         if (s) sg.matchedLetters.push(s);
       }
@@ -120,7 +120,7 @@ function materLectionis(sg: PositionalLetterGeneration) {
   if (materLectionisTonal.includes(sg.letters[sg.matchedLetters.length])) {
     const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
     if (pl) {
-      const s = pl(TonalSpellingTags.medial);
+      const s = pl(TonalSpellingTags.vowel);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;

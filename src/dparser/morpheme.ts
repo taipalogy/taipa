@@ -138,7 +138,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         const ltrs = this.letters;
         if (ltrs[ltrs.length - 1].name === TonalSpellingTags.freeTonal) {
           ltrs.splice(ltrs.length - 1, 0, n);
-        } else if (ltrs[ltrs.length - 1].name === TonalSpellingTags.medial) {
+        } else if (ltrs[ltrs.length - 1].name === TonalSpellingTags.vowel) {
           ltrs.push(n);
         }
         return [
@@ -246,7 +246,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
   private changeWithMedial(medial: PositionalLetter) {
     if (
-      medial.name === TonalSpellingTags.medial &&
+      medial.name === TonalSpellingTags.vowel &&
       vowelsTonal.includes(medial.toString())
     ) {
       return this.voicedFinal();

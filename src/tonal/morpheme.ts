@@ -48,6 +48,7 @@ import {
   PrecedingAyexUncombining,
   TonalUncombiningForms,
   TransfixUncombining,
+  UncombiningFormsIetfIetwToEkEkk,
 } from './metaplasm';
 import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
 
@@ -580,6 +581,35 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
+  /** Check if ~ek or ~ekk available for the ~iet syllable. */
+  private isEKekkAvailableRimeIet(syllables: MatchedPattern[]) {
+    if (syllables.length >= 2) {
+      const vs = syllables[syllables.length - 2].pattern.filter(
+        i => i.name === TonalSpellingTags.vowel
+      );
+      const fcs = syllables[syllables.length - 2].pattern.filter(
+        i => i.name === TonalSpellingTags.stopFinal
+      );
+      const ts = syllables[syllables.length - 2].pattern.filter(
+        i => i.name === TonalSpellingTags.checkedTonal
+      );
+      if (
+        vs.length == 2 &&
+        fcs.length == 1 &&
+        ts.length == 1 &&
+        vs[0].toString() === TonalLetterTags.i &&
+        vs[1].toString() === TonalLetterTags.e &&
+        fcs[0].toString() === TonalLetterTags.t &&
+        (ts[0].toString() === TonalLetterTags.f ||
+          ts[0].toString() === TonalLetterTags.w)
+      ) {
+        // TODO: check if the uncombining forms present in syllable table.
+        return true;
+      }
+    }
+    return false;
+  }
+
   private preprocessSandhiFinal(letters: Array<AlphabeticLetter>) {
     this.sandhiFinals.push(letters[letters.length - 1]);
     return letters.slice(0, letters.length - 1);
@@ -927,6 +957,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         );
       } else if (this.isTransfixInflection(matched)) {
         morphemes.push(this.createMorpheme(ptn, new TransfixUncombining()));
+      } else if (this.isEKekkAvailableRimeIet(matched)) {
+        // TODO: skip the last syllable
+        // morphemes.push(
+        //   this.createMorpheme(ptn, new UncombiningFormsIetfIetwToEkEkk())
+        // );
       } else {
         if (i < matched.length - 1) {
           // pass the letters of the following syllable to unchange sounds accordingly

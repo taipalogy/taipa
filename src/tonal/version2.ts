@@ -179,7 +179,7 @@ export const lowerLettersTonal = new LettersOfTonal([
 
 export enum TonalSpellingTags {
   initial = 'initial',
-  medial = 'medial',
+  vowel = 'vowel',
   nasalization = 'nasalization',
   stopFinal = 'stopFinal',
   nasalFinal = 'nasalFinal',
@@ -191,7 +191,7 @@ export class Initial extends PositionalLetter {
   name = TonalSpellingTags.initial;
 }
 export class Medial extends PositionalLetter {
-  name = TonalSpellingTags.medial;
+  name = TonalSpellingTags.vowel;
 }
 export class Final extends PositionalLetter {
   name = '';

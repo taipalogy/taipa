@@ -67,7 +67,7 @@ function getReplicatedKanaVowel(
 ) {
   if (
     (j == 0 &&
-      letters[0].name === TonalSpellingTags.medial &&
+      letters[0].name === TonalSpellingTags.vowel &&
       (letters.length == 1 ||
         (letters.length == 2 &&
           letters[letters.length - 1].name === TonalSpellingTags.freeTonal) ||
@@ -85,16 +85,16 @@ function getReplicatedKanaVowel(
     return replica;
   } else if (
     (letters.length == 2 &&
-      letters[0].name === TonalSpellingTags.medial &&
+      letters[0].name === TonalSpellingTags.vowel &&
       (letters[1].toString() === TonalLetterTags.h ||
         letters[1].toString() === TonalLetterTags.hh)) ||
     (letters.length == 3 &&
-      letters[0].name === TonalSpellingTags.medial &&
+      letters[0].name === TonalSpellingTags.vowel &&
       (letters[1].toString() === TonalLetterTags.h ||
         letters[1].toString() === TonalLetterTags.hh) &&
       letters[2].name === TonalSpellingTags.checkedTonal) ||
     (letters.length == 3 &&
-      letters[0].name === TonalSpellingTags.medial &&
+      letters[0].name === TonalSpellingTags.vowel &&
       letters[1].name === TonalSpellingTags.nasalization &&
       (letters[2].toString() === TonalLetterTags.h ||
         letters[2].toString() === TonalLetterTags.hh))
@@ -128,7 +128,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
       it => it.name === TonalSpellingTags.initial
     );
     const mdls = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.medial
+      it => it.name === TonalSpellingTags.vowel
     );
     const nslFnl = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.nasalFinal
