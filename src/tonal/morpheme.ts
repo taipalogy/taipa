@@ -328,6 +328,12 @@ export class TonalUncombiningMorpheme extends Morpheme {
     return this.forms;
   }
 
+  addForms(syllables: TonalSyllable[]) {
+    if (syllables && syllables.length == 1) {
+      this.forms.push(syllables[0]);
+    }
+  }
+
   private assignAllomorph(letters: PositionalLetter[]): Allomorph {
     let allomorph: Allomorph = new ZeroAllomorph();
     // assign the matched allomorph for this syllable
@@ -957,11 +963,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         );
       } else if (this.isTransfixInflection(matched)) {
         morphemes.push(this.createMorpheme(ptn, new TransfixUncombining()));
-      } else if (this.isEKekkAvailableRimeIet(matched)) {
-        // TODO: skip the last syllable
-        // morphemes.push(
-        //   this.createMorpheme(ptn, new UncombiningFormsIetfIetwToEkEkk())
-        // );
       } else {
         if (i < matched.length - 1) {
           // pass the letters of the following syllable to unchange sounds accordingly
@@ -976,6 +977,15 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           morphemes.push(
             this.createMorpheme(ptn, new TonalUncombiningForms([]))
           );
+        }
+        if (this.isEKekkAvailableRimeIet(matched) && i < matched.length - 1) {
+          const forms = this.createMorpheme(
+            ptn,
+            new UncombiningFormsIetfIetwToEkEkk()
+          ).getForms();
+          if (forms && forms.length == 1) {
+            morphemes[i].addForms(forms);
+          }
         }
       }
     }

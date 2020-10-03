@@ -92,17 +92,20 @@ describe('Uncombining form testing, ay', () => {
 });
 
 describe('Uncombining form testing, ietf or ietw to ek or ekk', () => {
-  /*
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('vietfqew');
-  test('check the uncombining form', () => {
-    expect(ms1[0].getForms()[0].literal).toEqual('vek');
+  test('check the uncombining form, changed rime', () => {
+    expect(ms1[0].getForms()[1].literal).toEqual('vek');
   });
 
   const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('vietwlienx');
-  test('check the uncombining form', () => {
-    expect(ms2[0].getForms()[0].literal).toEqual('vekk');
+  test('check the uncombining form, changed rime', () => {
+    expect(ms2[0].getForms()[1].literal).toEqual('vekk');
   });
-  */
+
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('vietwchong');
+  test('check the uncombining form, unchanged rime, changed tone', () => {
+    expect(ms3[0].getForms()[0].literal).toEqual('viett');
+  });
 });
 
 describe('Lemma testing', () => {
