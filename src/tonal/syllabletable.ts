@@ -12,24 +12,28 @@ const toBeVerified = [
     'cett', 'changxx', 'choa', 'chiauhh', 'ciauhh',
 
     'dom',
+
+    'giakk',
     
-    'hioh',
+    'hioh', 'hoangz',
 
-    'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt',
+    'iakk',
 
-    'kihh', 'kiauhh',
+    'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt', 'joany',
 
-    'len', 'lirey',  'lng',
+    'kihh', 'kiauhh', 'komz', 'kop',
+
+    'len', 'liakk', 'lirey',  'lng',
 
     'mah',
 
-    'na', 'ngihh',
+    'na', 'ngihh', 'noaiw',
 
     'oehh',
 
     'pitt',
 
-    'qanh', 'qih', 'qngh', 'qoaiz', 'qoatt',
+    'qanh', 'qih', 'qngh', 'qoaix', 'qoaiz', 'qoakk', 'qoangz', 'qoatt',
 
     'sauhh', 'sokk',
 
