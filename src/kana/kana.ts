@@ -328,7 +328,7 @@ export const finalConsonantsKana = letterSequence([
 
 export const hatsuonsKana = letterSequence([new FinalConsonantN()]);
 
-function positionalLetter(letters: PositionalLetter[]) {
+function letterPositions(letters: PositionalLetter[]) {
   return (t: KanaSpellingTags) => {
     for (let i in letters) {
       if (letters[i].name === t) return letters[i];
@@ -337,94 +337,94 @@ function positionalLetter(letters: PositionalLetter[]) {
   };
 }
 
-const plA = positionalLetter([new VowelA()]);
-const plB = positionalLetter([
+const lpA = letterPositions([new VowelA()]);
+const lpB = letterPositions([
   new InitialConsonantB(),
   new FinalConsonantB(),
   new GerminatedConsonantB(),
 ]);
-const plC = positionalLetter([
+const lpC = letterPositions([
   new InitialConsonantC(),
   new GerminatedConsonantC(),
 ]);
-const plCH = positionalLetter([new InitialConsonantCH()]);
-const plD = positionalLetter([
+const lpCH = letterPositions([new InitialConsonantCH()]);
+const lpD = letterPositions([
   new InitialConsonantD(),
   new FinalConsonantD(),
   new GerminatedConsonantD(),
 ]);
-const plE = positionalLetter([new VowelE()]);
-const plF = positionalLetter([new InitialConsonantF()]);
-const plG = positionalLetter([
+const lpE = letterPositions([new VowelE()]);
+const lpF = letterPositions([new InitialConsonantF()]);
+const lpG = letterPositions([
   new InitialConsonantG(),
   new FinalConsonantG(),
   new GerminatedConsonantG(),
 ]);
-const plH = positionalLetter([new InitialConsonantH()]);
-const plI = positionalLetter([new VowelI()]);
-const plJ = positionalLetter([new InitialConsonantJ()]);
-const plK = positionalLetter([
+const lpH = letterPositions([new InitialConsonantH()]);
+const lpI = letterPositions([new VowelI()]);
+const lpJ = letterPositions([new InitialConsonantJ()]);
+const lpK = letterPositions([
   new InitialConsonantK(),
   new FinalConsonantK(),
   new GerminatedConsonantK(),
 ]);
-const plL = positionalLetter([new InitialConsonantL()]);
-const plM = positionalLetter([new InitialConsonantM()]);
-const plN = positionalLetter([new InitialConsonantN(), new FinalConsonantN()]);
-const plNG = positionalLetter([new InitialConsonantNG()]);
-const plO = positionalLetter([new VowelO()]);
-const plP = positionalLetter([
+const lpL = letterPositions([new InitialConsonantL()]);
+const lpM = letterPositions([new InitialConsonantM()]);
+const lpN = letterPositions([new InitialConsonantN(), new FinalConsonantN()]);
+const lpNG = letterPositions([new InitialConsonantNG()]);
+const lpO = letterPositions([new VowelO()]);
+const lpP = letterPositions([
   new InitialConsonantP(),
   new FinalConsonantP(),
   new GerminatedConsonantP(),
 ]);
-const plR = positionalLetter([new InitialConsonantR()]);
-const plS = positionalLetter([
+const lpR = letterPositions([new InitialConsonantR()]);
+const lpS = letterPositions([
   new InitialConsonantS(),
   new FinalConsonantS(),
   new GerminatedConsonantS(),
 ]);
-const plT = positionalLetter([
+const lpT = letterPositions([
   new InitialConsonantT(),
   new FinalConsonantT(),
   new GerminatedConsonantT(),
 ]);
-const plU = positionalLetter([new VowelU()]);
-const plV = positionalLetter([new InitialConsonantV()]);
-const plW = positionalLetter([new InitialConsonantW(), new SemivowelW()]);
-const plY = positionalLetter([new InitialConsonantY(), new SemivowelY()]);
-const plZ = positionalLetter([new InitialConsonantZ()]);
+const lpU = letterPositions([new VowelU()]);
+const lpV = letterPositions([new InitialConsonantV()]);
+const lpW = letterPositions([new InitialConsonantW(), new SemivowelW()]);
+const lpY = letterPositions([new InitialConsonantY(), new SemivowelY()]);
+const lpZ = letterPositions([new InitialConsonantZ()]);
 
 export const kanaPositionalLetters = new Map<
   string,
   (t: KanaSpellingTags) => PositionalLetter
 >()
-  .set(KanaLetterTags.a, plA)
-  .set(KanaLetterTags.b, plB)
-  .set(KanaLetterTags.c, plC)
-  .set(KanaLetterTags.ch, plCH)
-  .set(KanaLetterTags.d, plD)
-  .set(KanaLetterTags.e, plE)
-  .set(KanaLetterTags.f, plF)
-  .set(KanaLetterTags.g, plG)
-  .set(KanaLetterTags.h, plH)
-  .set(KanaLetterTags.i, plI)
-  .set(KanaLetterTags.j, plJ)
-  .set(KanaLetterTags.k, plK)
-  .set(KanaLetterTags.l, plL)
-  .set(KanaLetterTags.m, plM)
-  .set(KanaLetterTags.n, plN)
-  .set(KanaLetterTags.ng, plNG)
-  .set(KanaLetterTags.o, plO)
-  .set(KanaLetterTags.p, plP)
-  .set(KanaLetterTags.r, plR)
-  .set(KanaLetterTags.s, plS)
-  .set(KanaLetterTags.t, plT)
-  .set(KanaLetterTags.u, plU)
-  .set(KanaLetterTags.v, plV)
-  .set(KanaLetterTags.w, plW)
-  .set(KanaLetterTags.y, plY)
-  .set(KanaLetterTags.z, plZ);
+  .set(KanaLetterTags.a, lpA)
+  .set(KanaLetterTags.b, lpB)
+  .set(KanaLetterTags.c, lpC)
+  .set(KanaLetterTags.ch, lpCH)
+  .set(KanaLetterTags.d, lpD)
+  .set(KanaLetterTags.e, lpE)
+  .set(KanaLetterTags.f, lpF)
+  .set(KanaLetterTags.g, lpG)
+  .set(KanaLetterTags.h, lpH)
+  .set(KanaLetterTags.i, lpI)
+  .set(KanaLetterTags.j, lpJ)
+  .set(KanaLetterTags.k, lpK)
+  .set(KanaLetterTags.l, lpL)
+  .set(KanaLetterTags.m, lpM)
+  .set(KanaLetterTags.n, lpN)
+  .set(KanaLetterTags.ng, lpNG)
+  .set(KanaLetterTags.o, lpO)
+  .set(KanaLetterTags.p, lpP)
+  .set(KanaLetterTags.r, lpR)
+  .set(KanaLetterTags.s, lpS)
+  .set(KanaLetterTags.t, lpT)
+  .set(KanaLetterTags.u, lpU)
+  .set(KanaLetterTags.v, lpV)
+  .set(KanaLetterTags.w, lpW)
+  .set(KanaLetterTags.y, lpY)
+  .set(KanaLetterTags.z, lpZ);
 
 export const kogakimoji = new Map<
   string,

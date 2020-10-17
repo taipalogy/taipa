@@ -862,8 +862,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       const fnl = this.sandhiFinals.pop();
       if (fnl) {
         pattern.letters.push(fnl);
-        const ltr = tonalPositionalLetters.get(fnl.literal);
-        if (ltr) pattern.pattern.push(ltr(TonalSpellingTags.stopFinal));
+        const positions = tonalPositionalLetters.get(fnl.literal);
+        if (positions) pattern.pattern.push(positions(TonalSpellingTags.stopFinal));
       }
     } else if (
       this.sandhiFinalTonals.length > 0 &&
@@ -876,12 +876,12 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       if (fnl) {
         if (fnl.letters.length == 1) {
           pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
-          const ltr = tonalPositionalLetters.get(fnl.letters[0].literal);
-          if (ltr)
+          const positions = tonalPositionalLetters.get(fnl.letters[0].literal);
+          if (positions)
             pattern.pattern.splice(
               fnl.index,
               1,
-              ltr(TonalSpellingTags.stopFinal)
+              positions(TonalSpellingTags.stopFinal)
             );
         } else if (fnl.letters.length == 2) {
           // replace 1 letter at fnl.index with 2 letters
@@ -891,13 +891,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             fnl.letters[0],
             fnl.letters[1]
           );
-          const ltr1 = tonalPositionalLetters.get(fnl.letters[0].literal);
+          const positions = tonalPositionalLetters.get(fnl.letters[0].literal);
           const ltr2 = tonalPositionalLetters.get(fnl.letters[1].literal);
-          if (ltr1 && ltr2) {
+          if (positions && ltr2) {
             pattern.pattern.splice(
               fnl.index - lenPrecedingLetters,
               1,
-              ltr1(TonalSpellingTags.nasalFinal),
+              positions(TonalSpellingTags.nasalFinal),
               ltr2(TonalSpellingTags.stopFinal)
             );
           }

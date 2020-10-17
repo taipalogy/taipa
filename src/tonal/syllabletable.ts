@@ -27,8 +27,10 @@ const toBeVerified = [
 
     'mah',
 
-    'na', 'ngihh', 'noaiw',
+    'na', 'niw', 'noaiw',
 
+    'ngihh',
+    
     'oehh',
 
     'pitt',

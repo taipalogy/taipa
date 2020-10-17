@@ -14,9 +14,9 @@ function initialConsonant(sg: PositionalLetterGeneration) {
   const sics = initialConsonantsKana;
 
   if (sics.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(KanaSpellingTags.initialConsonant);
+    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(KanaSpellingTags.initialConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -28,9 +28,9 @@ function semivowel(sg: PositionalLetterGeneration) {
   const ssvs = semivowelsKana;
 
   if (ssvs.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(KanaSpellingTags.semivowel);
+    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(KanaSpellingTags.semivowel);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -42,9 +42,9 @@ function vowel(sg: PositionalLetterGeneration) {
   const svs = vowelsKana;
 
   if (svs.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(KanaSpellingTags.vowel);
+    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(KanaSpellingTags.vowel);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -56,9 +56,9 @@ function hatsuon(sg: PositionalLetterGeneration) {
   const sfcs = hatsuonsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(KanaSpellingTags.finalConsonant);
+    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -70,9 +70,9 @@ function finalConsonant(sg: PositionalLetterGeneration) {
   const sfcs = finalConsonantsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(KanaSpellingTags.finalConsonant);
+    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -84,9 +84,9 @@ function germinatedConsonant(sg: PositionalLetterGeneration) {
   const sgcs = germinatedConsonantsKana;
 
   if (sgcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(KanaSpellingTags.germinatedConsonant);
+    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(KanaSpellingTags.germinatedConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }

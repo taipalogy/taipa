@@ -19,9 +19,9 @@ import { combiningRules } from './collections';
 
 function initialConsonant(sg: PositionalLetterGeneration) {
   if (initialsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.initial);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.initial);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -33,9 +33,9 @@ function stopFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (stopFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.stopFinal);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.stopFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -51,9 +51,9 @@ function neutralFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (neutralFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.stopFinal);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.stopFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -70,9 +70,9 @@ function nasalFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching || sg.letters.length == 0) return sg;
 
   if (nasalFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.nasalFinal);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.nasalFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -93,9 +93,9 @@ function vowel(sg: PositionalLetterGeneration) {
   for (let i = sg.matchedLetters.length; i < sg.letters.length; i++) {
     if (vowelsTonal.includes(sg.letters[i])) {
       toBePredicted = true;
-      const pl = tonalPositionalLetters.get(sg.letters[i]);
-      if (pl) {
-        const s = pl(TonalSpellingTags.vowel);
+      const positions = tonalPositionalLetters.get(sg.letters[i]);
+      if (positions) {
+        const s = positions(TonalSpellingTags.vowel);
         matches++;
         if (s) sg.matchedLetters.push(s);
       }
@@ -118,9 +118,9 @@ function vowel(sg: PositionalLetterGeneration) {
 
 function materLectionis(sg: PositionalLetterGeneration) {
   if (materLectionisTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.vowel);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.vowel);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -132,9 +132,9 @@ function nasalization(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (nasalizationsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const ps = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (ps) {
-      const s = ps(TonalSpellingTags.nasalization);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.nasalization);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -150,9 +150,9 @@ function freeTonal(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (freeTonalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.freeTonal);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.freeTonal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -168,9 +168,9 @@ function checkedTonal(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (checkedTonalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.checkedTonal);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.checkedTonal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -189,9 +189,9 @@ function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
     stopFinalsBgjklpsTonal.includes(sg.letters[sg.matchedLetters.length]) ||
     stopFinalsBBggkkllppssTonal.includes(sg.letters[sg.matchedLetters.length])
   ) {
-    const pl = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
-    if (pl) {
-      const s = pl(TonalSpellingTags.stopFinal);
+    const positions = tonalPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    if (positions) {
+      const s = positions(TonalSpellingTags.stopFinal);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
