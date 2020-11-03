@@ -95,7 +95,7 @@ export class KeyWords {
   }
 
   private populateWords() {
-    this.createWord('qaz', POSTags.auxiliary);
+    this.createWord('kaz', POSTags.auxiliary);
     this.createWord('che', POSTags.pronoun);
   }
 

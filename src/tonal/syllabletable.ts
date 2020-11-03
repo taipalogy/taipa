@@ -9,9 +9,9 @@ export function isInSyllableTable(syllable: string) {
 const toBeVerified = [
     'baih', 'buhh', 'burhh',
     
-    'cett', 'changxx', 'choa', 'chiauhh', 'ciauhh',
+    'cett', 'changxx', 'choa', 'chiauhh', 'chiuh', 'chiunnh', 'ciauhh',
 
-    'dom',
+    'tom',
 
     'giakk',
     
@@ -21,7 +21,7 @@ const toBeVerified = [
 
     'jex', 'jek', 'jeng', 'jih', 'jirnx', 'jirtt', 'joany',
 
-    'kihh', 'kiauhh', 'komz', 'kop',
+    'khihh', 'khiauhh', 'khomz', 'khop',
 
     'len', 'liakk', 'lirey',  'lng',
 
@@ -33,15 +33,15 @@ const toBeVerified = [
     
     'oehh',
 
-    'pitt',
+    'phitt',
 
-    'qanh', 'qih', 'qngh', 'qoaix', 'qoaiz', 'qoakk', 'qoangz', 'qoatt',
+    'kanh', 'kih', 'kngh', 'koaix', 'koaiz', 'koakk', 'koangz', 'koatt',
 
     'sauhh', 'sokk',
 
-    'toehh', 'tom', 'tomz',
+    'thoehh', 'thom', 'thomz',
 
-    'vann', 'vihh', 'virt',
+    'pann', 'pihh', 'pirt',
 ]
 
 // prettier-ignore
@@ -54,7 +54,7 @@ const addonSyllables = [
 
     'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'chor', 'choreh', 'chorehh', 'chorew', 'chorex', 'chorez', 'chorh', 'chorhh', 'chorw', 'chorz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
 
-    'dainny', 'dainnw', 'dainnx', 'dainnz', 'dainnhh', 'denny', 'dennx', 'dorex', 'dorey', 'dorez', 'dorh', 'dorhh', 'dorw', 'dory', 'dorz', 'diann', 'diannw', 'dinnh', 'dinnw', 'dir', 'dirinnw', 'dirinnz', 'dirw', 'dirx', 'dirz', 'doanny', 'duinny', 'duinnw', 'duinnx', 'duinnz',
+    'tainny', 'tainnw', 'tainnx', 'tainnz', 'tainnhh', 'tenny', 'tennx', 'torex', 'torey', 'torez', 'torh', 'torhh', 'torw', 'tory', 'torz', 'tiann', 'tiannw', 'tinnh', 'tinnw', 'tir', 'tirinnw', 'tirinnz', 'tirw', 'tirx', 'tirz', 'toanny', 'tuinny', 'tuinnw', 'tuinnx', 'tuinnz',
 
     'enny', 'ennh', 'ennz', 'ennhh', 'or', 'ore', 'orehh', 'orex', 'orey', 'orez', 'orh', 'orw', 'orx', 'orz',
 
@@ -66,7 +66,7 @@ const addonSyllables = [
 
     'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jiry', 'jirx', 'jorx',
 	
-	'kannx', 'kainnh', 'kainnw', 'kaunnhh', 'kennh', 'kennx', 'kor', 'kore', 'koreh', 'korew', 'korw', 'korh', 'korx', 'kiann', 'kiannw', 'kinn', 'kir', 'kirnx', 'kirny', 'kirw', 'kngz', 'koainn', 'koainnw', 'konny', 'kuinnw',
+	'khannx', 'khainnh', 'khainnw', 'khaunnhh', 'khennh', 'khennx', 'khor', 'khore', 'khoreh', 'khorew', 'khorw', 'khorh', 'khorx', 'khiann', 'khiannw', 'khinn', 'khir', 'khirnx', 'khirny', 'khirw', 'khngz', 'khoainn', 'khoainnw', 'khonny', 'khuinnw',
 
     'lorehh', 'lorex', 'lorh', 'lorx', 'liry', 'lirx', 'lirz',
 
@@ -78,17 +78,17 @@ const addonSyllables = [
 
     'oainn', 'oainnh', 'oainnz', 'oainnhh', 'oannx',
 
-    'painn', 'pennw', 'por', 'porhh', 'porw', 'porx', 'porz', 'pinny', 'pinnhh', 'png', 'pngy', 'pngw', 'pngz', 'pnghh', 'poannx', 'ponn', 'puinn', 'puinnw', 'puinnx',
+    'phainn', 'phennw', 'phor', 'phorhh', 'phorw', 'phorx', 'phorz', 'phinny', 'phinnhh', 'phng', 'phngy', 'phngw', 'phngz', 'phnghh', 'phoannx', 'phonn', 'phuinn', 'phuinnw', 'phuinnx',
 	
-	'qainny', 'qainnw', 'qainnz', 'qannhh', 'qore', 'qoreh', 'qorew', 'qorex', 'qorey', 'qorez', 'qorh', 'qorw', 'qory', 'qiaunnhh', 'qinny', 'qinnh', 'qinnhh', 'qir', 'qirinn', 'qirinny', 'qirn', 'qirnw', 'qirnz', 'qirw', 'qirx', 'qiry', 'qirz', 'qiunnx', 'qiunnz', 'qnghh', 'qoainnw', 'qoainnx', 'qoainnhh', 'qoannw', 'qoenny', 'qonnz', 'quinn', 'quinny', 'quinnw',
+	'kainny', 'kainnw', 'kainnz', 'kannhh', 'kore', 'koreh', 'korew', 'korex', 'korey', 'korez', 'korh', 'korw', 'kory', 'kiaunnhh', 'kinny', 'kinnh', 'kinnhh', 'kir', 'kirinn', 'kirinny', 'kirn', 'kirnw', 'kirnz', 'kirw', 'kirx', 'kiry', 'kirz', 'kiunnx', 'kiunnz', 'knghh', 'koainnw', 'koainnx', 'koainnhh', 'koannw', 'koenny', 'konnz', 'kuinn', 'kuinny', 'kuinnw',
 
     'sainn', 'sanny', 'sannw', 'sannx', 'sore', 'sorew', 'sorew', 'sorh', 'sorhh', 'sorx', 'sorw', 'sorz', 'sinnx', 'sinnhh', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm', 'smw', 'smh', 'snghh', 'soainn', 'soainnh', 'soainnx', 'soainnhh', 'soenn', 'soenny', 'soennw', 'suinn', 'suinny', 'suinnw',
 
-    'tainnw', 'tainnz', 'tannx', 'tannz', 'tenn', 'tor', 'tore', 'torehh', 'torew', 'torhh', 'torw', 'tinnw', 'tinnx', 'tirx', 'tiry', 'tiunny', 'toannx', 'tuinnw', 'tuinnx', 'tuinnz',
+    'thainnw', 'thainnz', 'thannx', 'thannz', 'thenn', 'thor', 'thore', 'thorehh', 'thorew', 'thorhh', 'thorw', 'thinnw', 'thinnx', 'thirx', 'thiry', 'thiunny', 'thoannx', 'thuinnw', 'thuinnx', 'thuinnz',
 
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
-    'vainny', 'vainnx', 'vainnz', 'vor', 'vory', 'vorw', 'vorx', 'vorz', 'vinnx', 'vngx', 'vuinn', 'vuinny', 'vuinnx', 'vuinnz',
+    'painny', 'painnx', 'painnz', 'por', 'pory', 'porw', 'porx', 'porz', 'pinnx', 'pngx', 'puinn', 'puinny', 'puinnx', 'puinnz',
 ]
 
 // prettier-ignore
@@ -100,7 +100,7 @@ const syllabicHeadwords = [
 
     'chap', 'chiak', 'chio', 'chir', 'chiri', 'choai', 'choang', 'choe', 'chom', 'chor', 'chore',
 
-    'diang', 'dim', 'dio', 'dir', 'diri', 'diur', 'doa', 'doe', 'dom', 'dor', 'dore', 'dut',
+    'tiang', 'tim', 'tio', 'tir', 'tiri', 'tiur', 'toa', 'toe', 'tom', 'tor', 'tore', 'tut',
     
     'er', 'erng',
 
@@ -112,7 +112,7 @@ const syllabicHeadwords = [
 
     'je', 'jek', 'jeng', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'joa', 'joe', 'jor', 'jun', 'jur',
 
-    'kir', 'kor',
+    'khir', 'khor',
 
     'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'loa', 'loat', 'loe', 'lop', 'lom', 'lor', 'lore',
 
@@ -124,17 +124,17 @@ const syllabicHeadwords = [
 
     'or', 'ore',
 
-    'qen', 'qet', 'qiak', 'qiang', 'qio', 'qip', 'qir', 'qiri', 'qirn', 'qit', 'qiur', 'qor',
+    'ken', 'ket', 'kiak', 'kiang', 'kio', 'kip', 'kir', 'kiri', 'kirn', 'kit', 'kiur', 'kor',
     
     'oa', 'oak',
 
-    'por',
+    'phor',
     
     'sir', 'siri', 'sop', 'sor', 'sore',
 
-    'ta', 'tia', 'tor',
+    'tha', 'thia', 'thor',
 
-    'via', 'viang', 'viri', 'voa', 'vor',
+    'pia', 'piang', 'piri', 'poa', 'por',
 ]
 
 // prettier-ignore
@@ -145,7 +145,7 @@ const extraSyllables = [
 
     'coaih', 'choatt',
     
-    'dngh',
+    'tngh',
 
     'en',
 
@@ -155,7 +155,7 @@ const extraSyllables = [
 
     'jip',
 
-	'kiaih', 'kuih',
+	'khiaih', 'khuih',
 
     'laih', 'langh', 'lip', 'lih', 'lit', 'litt', 'loaih', 'loaiz', 'loeh',
 
@@ -231,27 +231,27 @@ export const basicSyllables = [
     'chuix', 'chuiz', 'chun', 'chuny', 'chunw', 'chunx', 'chunz', 'chut',
     'chutt', 
 
-    'da', 'day', 'daw', 'dah', 'dahh', 'dai', 'daiy', 'daiw', 'daix', 'daiz',
-    'dainn', 'dainny', 'dak', 'dakk', 'dam', 'damy', 'damw', 'damx', 'damz',
-    'dan', 'dany', 'danw', 'danx', 'danz', 'dang', 'dangy', 'dangw', 'dangx',
-    'dangz', 'dann', 'danny', 'dannw', 'dannx', 'dannz', 'dap', 'dapp', 'dat',
-    'datt', 'dau', 'dauy', 'dauw', 'daux', 'dauz', 'dauh', 'dauhh', 'de', 'dey',
-    'dew', 'dex', 'dez', 'deh', 'denn', 'dennw', 'dennz', 'di', 'diy', 'diw',
-    'dix', 'diz', 'dia', 'diah', 'diahh', 'diak', 'diakk', 'diam', 'diamy',
-    'diamw', 'diamx', 'diamz', 'dien', 'dieny', 'dienx', 'dienz', 'dianny',
-    'diannx', 'diannz', 'diap', 'diapp', 'diet', 'diett', 'diau', 'diauw',
-    'diaux', 'diauz', 'dih', 'dihh', 'dek', 'dekk', 'dimw', 'dimx', 'dimz',
-    'din', 'diny', 'dinw', 'dinx', 'dinz', 'deng', 'dengy', 'dengw', 'dengx',
-    'dengz', 'dinn', 'dinnx', 'dinnz', 'dinnhh', 'diurw', 'diurx', 'diurz',
-    'diurh', 'diurhh', 'diok', 'diokk', 'diong', 'diongy', 'diongw', 'diongx',
-    'diongz', 'dit', 'ditt', 'diu', 'diuy', 'diuw', 'diux', 'diuz', 'diuh',
-    'diunn', 'diunny', 'diunnw', 'diunnx', 'diunnz', 'dng', 'dngy', 'dngw',
-    'dngx', 'dngz', 'dur', 'dury', 'durw', 'durx', 'durz', 'durh', 'durhh',
-    'dok', 'dokk', 'domx', 'dong', 'dongy', 'dongw', 'dongx', 'dongz', 'do',
-    'doy', 'dow', 'dox', 'doz', 'du', 'duy', 'duw', 'dux', 'duz', 'doaw',
-    'doaz', 'doan', 'doany', 'doanw', 'doanz', 'doann', 'doannw', 'doannx',
-    'doannz', 'doat', 'doatt', 'doew', 'doex', 'doez', 'duh', 'duhh', 'dui',
-    'duiw', 'duix', 'duiz', 'dun', 'duny', 'dunw', 'dunz', 'dutt', 
+    'ta', 'tay', 'taw', 'tah', 'tahh', 'tai', 'taiy', 'taiw', 'taix', 'taiz',
+    'tainn', 'tainny', 'tak', 'takk', 'tam', 'tamy', 'tamw', 'tamx', 'tamz',
+    'tan', 'tany', 'tanw', 'tanx', 'tanz', 'tang', 'tangy', 'tangw', 'tangx',
+    'tangz', 'tann', 'tanny', 'tannw', 'tannx', 'tannz', 'tap', 'tapp', 'tat',
+    'tatt', 'tau', 'tauy', 'tauw', 'taux', 'tauz', 'tauh', 'tauhh', 'te', 'tey',
+    'tew', 'tex', 'tez', 'teh', 'tenn', 'tennw', 'tennz', 'ti', 'tiy', 'tiw',
+    'tix', 'tiz', 'tia', 'tiah', 'tiahh', 'tiak', 'tiakk', 'tiam', 'tiamy',
+    'tiamw', 'tiamx', 'tiamz', 'tien', 'tieny', 'tienx', 'tienz', 'tianny',
+    'tiannx', 'tiannz', 'tiap', 'tiapp', 'tiet', 'tiett', 'tiau', 'tiauw',
+    'tiaux', 'tiauz', 'tih', 'tihh', 'tek', 'tekk', 'timw', 'timx', 'timz',
+    'tin', 'tiny', 'tinw', 'tinx', 'tinz', 'teng', 'tengy', 'tengw', 'tengx',
+    'tengz', 'tinn', 'tinnx', 'tinnz', 'tinnhh', 'tiurw', 'tiurx', 'tiurz',
+    'tiurh', 'tiurhh', 'tiok', 'tiokk', 'tiong', 'tiongy', 'tiongw', 'tiongx',
+    'tiongz', 'tit', 'titt', 'tiu', 'tiuy', 'tiuw', 'tiux', 'tiuz', 'tiuh',
+    'tiunn', 'tiunny', 'tiunnw', 'tiunnx', 'tiunnz', 'tng', 'tngy', 'tngw',
+    'tngx', 'tngz', 'tur', 'tury', 'turw', 'turx', 'turz', 'turh', 'turhh',
+    'tok', 'tokk', 'tomx', 'tong', 'tongy', 'tongw', 'tongx', 'tongz', 'to',
+    'toy', 'tow', 'tox', 'toz', 'tu', 'tuy', 'tuw', 'tux', 'tuz', 'toaw',
+    'toaz', 'toan', 'toany', 'toanw', 'toanz', 'toann', 'toannw', 'toannx',
+    'toannz', 'toat', 'toatt', 'toew', 'toex', 'toez', 'tuh', 'tuhh', 'tui',
+    'tuiw', 'tuix', 'tuiz', 'tun', 'tuny', 'tunw', 'tunz', 'tutt', 
 
     'e', 'ey', 'ew', 'ex', 'ez', 'eh', 'ehh', 'enn', 'ennx',
 
@@ -304,21 +304,21 @@ export const basicSyllables = [
     'jiurz', 'jiok', 'jiokk', 'jiongy', 'jiongx', 'jiongz', 'jipp', 'jitt',
     'jiux', 'juy', 'jux', 'juz', 'joahh', 'joex', 'joez', 'junz',
 
-    'ka', 'kay', 'kaw', 'kah', 'kahh', 'kai', 'kaiy', 'kaiw', 'kainn', 'kainny',
-    'kak', 'kakk', 'kam', 'kamy', 'kamw', 'kan', 'kanw', 'kang', 'kangy',
-    'kangw', 'kann', 'kap', 'kapp', 'kat', 'kau', 'kauy', 'kauw', 'ke', 'key',
-    'kew', 'kex', 'keh', 'kehh', 'kenn', 'kennhh', 'ki', 'kiy', 'kiw', 'kix',
-    'kiz', 'kia', 'kiax', 'kiaz', 'kiah', 'kiakk', 'kiam', 'kiamw', 'kiamx',
-    'kiamz', 'kien', 'kieny', 'kienw', 'kienx', 'kiang', 'kiangw', 'kiap',
-    'kiet', 'kiett', 'kiau', 'kiauy', 'kiauw', 'kiauh', 'kih', 'kek', 'kim',
-    'kimy', 'kimx', 'kin', 'kiny', 'kinx', 'keng', 'kengy', 'kengw', 'kengx',
-    'kengz', 'kinnx', 'kiury', 'kiurw', 'kiurh', 'kiok', 'kiong', 'kiongy',
-    'kiongx', 'kip', 'kipp', 'kit', 'kitt', 'kiu', 'kiuy', 'kiux', 'kiuz',
-    'kiunn', 'kiunnz', 'kng', 'kngw', 'kur', 'kury', 'kurw', 'kurx', 'kok',
-    'kokk', 'kong', 'kongy', 'kongw', 'kongz', 'ko', 'koy', 'kow', 'ku', 'kux',
-    'kuz', 'koa', 'koay', 'koaw', 'koah', 'koaiw', 'koan', 'koany', 'koanw',
-    'koanx', 'koann', 'koanny', 'koannw', 'koat', 'koe', 'koew', 'koex', 'koeh',
-    'kuh', 'kui', 'kuiy', 'kuiw', 'kun', 'kuny', 'kunw', 'kunx', 'kut', 'kutt',
+    'kha', 'khay', 'khaw', 'khah', 'khahh', 'khai', 'khaiy', 'khaiw', 'khainn', 'khainny',
+    'khak', 'khakk', 'kham', 'khamy', 'khamw', 'khan', 'khanw', 'khang', 'khangy',
+    'khangw', 'khann', 'khap', 'khapp', 'khat', 'khau', 'khauy', 'khauw', 'khe', 'khey',
+    'khew', 'khex', 'kheh', 'khehh', 'khenn', 'khennhh', 'khi', 'khiy', 'khiw', 'khix',
+    'khiz', 'khia', 'khiax', 'khiaz', 'khiah', 'khiakk', 'khiam', 'khiamw', 'khiamx',
+    'khiamz', 'khien', 'khieny', 'khienw', 'khienx', 'khiang', 'khiangw', 'khiap',
+    'khiet', 'khiett', 'khiau', 'khiauy', 'khiauw', 'khiauh', 'khih', 'khek', 'khim',
+    'khimy', 'khimx', 'khin', 'khiny', 'khinx', 'kheng', 'khengy', 'khengw', 'khengx',
+    'khengz', 'khinnx', 'khiury', 'khiurw', 'khiurh', 'khiok', 'khiong', 'khiongy',
+    'khiongx', 'khip', 'khipp', 'khit', 'khitt', 'khiu', 'khiuy', 'khiux', 'khiuz',
+    'khiunn', 'khiunnz', 'khng', 'khngw', 'khur', 'khury', 'khurw', 'khurx', 'khok',
+    'khokk', 'khong', 'khongy', 'khongw', 'khongz', 'kho', 'khoy', 'khow', 'khu', 'khux',
+    'khuz', 'khoa', 'khoay', 'khoaw', 'khoah', 'khoaiw', 'khoan', 'khoany', 'khoanw',
+    'khoanx', 'khoann', 'khoanny', 'khoannw', 'khoat', 'khoe', 'khoew', 'khoex', 'khoeh',
+    'khuh', 'khui', 'khuiy', 'khuiw', 'khun', 'khuny', 'khunw', 'khunx', 'khut', 'khutt',
 
 
     'la', 'lax', 'laz', 'lah', 'lahh', 'laix', 'laiz', 'lak', 'lakk', 'lam',
@@ -360,40 +360,40 @@ export const basicSyllables = [
     'oanz', 'oang', 'oann', 'oanny', 'oannw', 'oannz', 'oat', 'oatt', 'oe',
     'oey', 'oew', 'oex', 'oez', 'oeh',
 
-    'pa', 'paw', 'paz', 'pah', 'paiw', 'painny', 'painnz', 'pak', 'pakk', 'pan',
-    'pan', 'pang', 'pangy', 'pangw', 'pangx', 'pangz', 'pannw', 'pannz', 'pau',
-    'pauy', 'pauw', 'pauz', 'pauhh', 'pe', 'pey', 'pew', 'pez', 'penn', 'pennx',
-    'pennz', 'pi', 'piy', 'piw', 'pix', 'piz', 'piah', 'piahh', 'piak', 'piakk',
-    'pien', 'pienw', 'pienx', 'piang', 'piangz', 'piann', 'pianny', 'piannx',
-    'piet', 'piau', 'piauw', 'piaux', 'pih', 'pihh', 'pek', 'piny', 'pinx',
-    'pinz', 'peng', 'pengw', 'pengx', 'pengz', 'pinn', 'pinnw', 'pinnx',
-    'pinnz', 'piurw', 'piurx', 'pit', 'pngh', 'pur', 'pury', 'purw', 'purz',
-    'purh', 'pok', 'pokk', 'pong', 'pongy', 'pongw', 'pongx', 'pongz', 'po',
-    'poy', 'pow', 'pox', 'poz', 'puy', 'pux', 'puz', 'poaw', 'poah', 'poahh',
-    'poan', 'poanx', 'poanz', 'poann', 'poannw', 'poannz', 'poat', 'poe',
-    'poey', 'poew', 'poex', 'poez', 'poehh', 'puhh', 'puiy', 'puiw', 'pun',
-    'puny', 'punw', 'punx', 'put', 'putt',
+    'pha', 'phaw', 'phaz', 'phah', 'phaiw', 'phainny', 'phainnz', 'phak', 'phakk', 'phan',
+    'phan', 'phang', 'phangy', 'phangw', 'phangx', 'phangz', 'phannw', 'phannz', 'phau',
+    'phauy', 'phauw', 'phauz', 'phauhh', 'phe', 'phey', 'phew', 'phez', 'phenn', 'phennx',
+    'phennz', 'phi', 'phiy', 'phiw', 'phix', 'phiz', 'phiah', 'phiahh', 'phiak', 'phiakk',
+    'phien', 'phienw', 'phienx', 'phiang', 'phiangz', 'phiann', 'phianny', 'phiannx',
+    'phiet', 'phiau', 'phiauw', 'phiaux', 'phih', 'phihh', 'phek', 'phiny', 'phinx',
+    'phinz', 'pheng', 'phengw', 'phengx', 'phengz', 'phinn', 'phinnw', 'phinnx',
+    'phinnz', 'phiurw', 'phiurx', 'phit', 'phngh', 'phur', 'phury', 'phurw', 'phurz',
+    'phurh', 'phok', 'phokk', 'phong', 'phongy', 'phongw', 'phongx', 'phongz', 'pho',
+    'phoy', 'phow', 'phox', 'phoz', 'phuy', 'phux', 'phuz', 'phoaw', 'phoah', 'phoahh',
+    'phoan', 'phoanx', 'phoanz', 'phoann', 'phoannw', 'phoannz', 'phoat', 'phoe',
+    'phoey', 'phoew', 'phoex', 'phoez', 'phoehh', 'phuhh', 'phuiy', 'phuiw', 'phun',
+    'phuny', 'phunw', 'phunx', 'phut', 'phutt',
 
-    'qa', 'qay', 'qaw', 'qaz', 'qah', 'qai', 'qaiy', 'qaiw', 'qainn', 'qainnx',
-    'qak', 'qakk', 'qam', 'qamy', 'qamw', 'qamx', 'qan', 'qany', 'qanw', 'qang',
-    'qangy', 'qangw', 'qangx', 'qangz', 'qann', 'qanny', 'qannw', 'qannx',
-    'qap', 'qat', 'qau', 'qauy', 'qauw', 'qaux', 'qauz', 'qauh', 'qe', 'qey',
-    'qew', 'qez', 'qeh', 'qehh', 'qenn', 'qenny', 'qennw', 'qi', 'qiy', 'qiw',
-    'qix', 'qiz', 'qia', 'qiaw', 'qiaz', 'qiahh', 'qiam', 'qiamy', 'qiamw',
-    'qiamx', 'qien', 'qieny', 'qienw', 'qienz', 'qiann', 'qianny', 'qiannw',
-    'qiannx', 'qiannz', 'qiap', 'qiet', 'qiett', 'qiau', 'qiauy', 'qiaux',
-    'qiauz', 'qek', 'qekk', 'qim', 'qimy', 'qimw', 'qimz', 'qin', 'qiny',
-    'qinw', 'qinz', 'qeng', 'qengy', 'qengw', 'qengx', 'qengz', 'qinn', 'qinnw',
-    'qinnx', 'qiurw', 'qiurx', 'qiurz', 'qiurh', 'qiok', 'qiokk', 'qiong',
-    'qiongy', 'qiongx', 'qiongz', 'qip', 'qipp', 'qitt', 'qiu', 'qiuy', 'qiuw',
-    'qiux', 'qiuz', 'qiunn', 'qng', 'qngy', 'qngw', 'qur', 'qury', 'qurw',
-    'qurx', 'qurz', 'qurh', 'qok', 'qokk', 'qong', 'qongy', 'qongw', 'qongx',
-    'qonnx', 'qo', 'qoy', 'qow', 'qox', 'qoz', 'qu', 'quy', 'quw', 'quz', 'qoa',
-    'qoay', 'qoaw', 'qoaz', 'qoah', 'qoai', 'qoaiy', 'qoaiw', 'qoainn',
-    'qoainny', 'qoainnz', 'qoan', 'qoany', 'qoanw', 'qoanx', 'qoanz', 'qoann',
-    'qoanny', 'qoannx', 'qoannz', 'qoat', 'qoe', 'qoey', 'qoew', 'qoeh', 'qui',
-    'quiy', 'quiw', 'quix', 'quiz', 'qun', 'quny', 'qunw', 'qunx', 'qunz',
-    'qut', 'qutt',
+    'ka', 'kay', 'kaw', 'kaz', 'kah', 'kai', 'kaiy', 'kaiw', 'kainn', 'kainnx',
+    'kak', 'kakk', 'kam', 'kamy', 'kamw', 'kamx', 'kan', 'kany', 'kanw', 'kang',
+    'kangy', 'kangw', 'kangx', 'kangz', 'kann', 'kanny', 'kannw', 'kannx',
+    'kap', 'kat', 'kau', 'kauy', 'kauw', 'kaux', 'kauz', 'kauh', 'ke', 'key',
+    'kew', 'kez', 'keh', 'kehh', 'kenn', 'kenny', 'kennw', 'ki', 'kiy', 'kiw',
+    'kix', 'kiz', 'kia', 'kiaw', 'kiaz', 'kiahh', 'kiam', 'kiamy', 'kiamw',
+    'kiamx', 'kien', 'kieny', 'kienw', 'kienz', 'kiann', 'kianny', 'kiannw',
+    'kiannx', 'kiannz', 'kiap', 'kiet', 'kiett', 'kiau', 'kiauy', 'kiaux',
+    'kiauz', 'kek', 'kekk', 'kim', 'kimy', 'kimw', 'kimz', 'kin', 'kiny',
+    'kinw', 'kinz', 'keng', 'kengy', 'kengw', 'kengx', 'kengz', 'kinn', 'kinnw',
+    'kinnx', 'kiurw', 'kiurx', 'kiurz', 'kiurh', 'kiok', 'kiokk', 'kiong',
+    'kiongy', 'kiongx', 'kiongz', 'kip', 'kipp', 'kitt', 'kiu', 'kiuy', 'kiuw',
+    'kiux', 'kiuz', 'kiunn', 'kng', 'kngy', 'kngw', 'kur', 'kury', 'kurw',
+    'kurx', 'kurz', 'kurh', 'kok', 'kokk', 'kong', 'kongy', 'kongw', 'kongx',
+    'konnx', 'ko', 'koy', 'kow', 'kox', 'koz', 'ku', 'kuy', 'kuw', 'kuz', 'koa',
+    'koay', 'koaw', 'koaz', 'koah', 'koai', 'koaiy', 'koaiw', 'koainn',
+    'koainny', 'koainnz', 'koan', 'koany', 'koanw', 'koanx', 'koanz', 'koann',
+    'koanny', 'koannx', 'koannz', 'koat', 'koe', 'koey', 'koew', 'koeh', 'kui',
+    'kuiy', 'kuiw', 'kuix', 'kuiz', 'kun', 'kuny', 'kunw', 'kunx', 'kunz',
+    'kut', 'kutt',
 
     'sa', 'say', 'saw', 'sah', 'sahh', 'sai', 'saiy', 'saiw', 'saix', 'saiz',
     'sak', 'sam', 'samy', 'samw', 'samx', 'san', 'sany', 'sanw', 'sang',
@@ -417,40 +417,40 @@ export const basicSyllables = [
     'suh', 'sui', 'suiy', 'suiw', 'suix', 'suiz', 'sun', 'suny', 'sunw', 'sunx',
     'sunz', 'sut', 'sutt',
 
-    'taw', 'tah', 'tahh', 'tai', 'taiy', 'taiw', 'taix', 'taiz', 'tak', 'takk',
-    'tam', 'tamw', 'tamx', 'tamz', 'tan', 'tany', 'tanw', 'tanx', 'tang',
-    'tangy', 'tangw', 'tangx', 'tann', 'tanny', 'tap', 'tat', 'tau', 'tauy',
-    'tauw', 'taux', 'tauz', 'te', 'tey', 'tew', 'tex', 'tez', 'teh', 'tehh',
-    'tennw', 'tennx', 'ti', 'tiy', 'tiw', 'tix', 'tiz', 'tiah', 'tiam', 'tiamy',
-    'tiamz', 'tien', 'tieny', 'tiann', 'tiannw', 'tiannx', 'tiannz', 'tiap',
-    'tiapp', 'tiet', 'tiau', 'tiauy', 'tiauw', 'tiaux', 'tiauz', 'tih', 'tihh',
-    'tek', 'tekk', 'tim', 'tin', 'tinx', 'tinz', 'teng', 'tengy', 'tengw',
-    'tengx', 'tinn', 'tinnz', 'tiur', 'tiurw', 'tiurx', 'tiok', 'tiong',
-    'tiongy', 'tiongw', 'tiongx', 'tiu', 'tiuy', 'tng', 'tngw', 'tngx', 'tngz',
-    'tur', 'tury', 'turw', 'turx', 'turh', 'turhh', 'tok', 'tokk', 'tong',
-    'tongy', 'tongw', 'tongz', 'toy', 'tow', 'tox', 'tuy', 'toa', 'toaz',
-    'toah', 'toanx', 'toann', 'toanny', 'toannw', 'toat', 'tuh', 'tui', 'tuiy',
-    'tuiw', 'tuix', 'tun', 'tuny', 'tunx', 'tunz', 'tut', 'tutt',
+    'thaw', 'thah', 'thahh', 'thai', 'thaiy', 'thaiw', 'thaix', 'thaiz', 'thak', 'thakk',
+    'tham', 'thamw', 'thamx', 'thamz', 'than', 'thany', 'thanw', 'thanx', 'thang',
+    'thangy', 'thangw', 'thangx', 'thann', 'thanny', 'thap', 'that', 'thau', 'thauy',
+    'thauw', 'thaux', 'thauz', 'the', 'they', 'thew', 'thex', 'thez', 'theh', 'thehh',
+    'thennw', 'thennx', 'thi', 'thiy', 'thiw', 'thix', 'thiz', 'thiah', 'thiam', 'thiamy',
+    'thiamz', 'thien', 'thieny', 'thiann', 'thiannw', 'thiannx', 'thiannz', 'thiap',
+    'thiapp', 'thiet', 'thiau', 'thiauy', 'thiauw', 'thiaux', 'thiauz', 'thih', 'thihh',
+    'thek', 'thekk', 'thim', 'thin', 'thinx', 'thinz', 'theng', 'thengy', 'thengw',
+    'thengx', 'thinn', 'thinnz', 'thiur', 'thiurw', 'thiurx', 'thiok', 'thiong',
+    'thiongy', 'thiongw', 'thiongx', 'thiu', 'thiuy', 'thng', 'thngw', 'thngx', 'thngz',
+    'thur', 'thury', 'thurw', 'thurx', 'thurh', 'thurhh', 'thok', 'thokk', 'thong',
+    'thongy', 'thongw', 'thongz', 'thoy', 'thow', 'thox', 'thuy', 'thoa', 'thoaz',
+    'thoah', 'thoanx', 'thoann', 'thoanny', 'thoannw', 'thoat', 'thuh', 'thui', 'thuiy',
+    'thuiw', 'thuix', 'thun', 'thuny', 'thunx', 'thunz', 'thut', 'thutt',
 
     'u', 'uy', 'uw', 'ux', 'uz', 'uh', 'ui', 'uiy', 'uiw', 'uix', 'uiz', 'un',
     'uny', 'unw', 'unx', 'unz', 'ut',
 
     'ur', 'urw', 'urx', 'urh', 'urhh',
 
-    'va', 'vay', 'vaw', 'vax', 'vaz', 'vah', 'vai', 'vaiy', 'vaiw', 'vaix',
-    'vaiz', 'vak', 'vakk', 'van', 'vany', 'vanx', 'vanz', 'vang', 'vangy',
-    'vangw', 'vangx', 'vat', 'vatt', 'vau', 'vauy', 'vaux', 'vauz', 've', 'vey',
-    'vew', 'vex', 'vez', 'veh', 'vehh', 'venn', 'vennw', 'vennx', 'vennz', 'vi',
-    'viy', 'viw', 'vix', 'viz', 'viah', 'viak', 'viakk', 'vien', 'vieny',
-    'vienw', 'vienz', 'viangw', 'viangz', 'viann', 'vianny', 'viannw', 'viannx',
-    'viet', 'viett', 'viau', 'viauy', 'vih', 'vek', 'vekk', 'vin', 'viny',
-    'vinw', 'vinx', 'veng', 'vengy', 'vengw', 'vengx', 'vengz', 'vinn', 'vinny',
-    'vinnw', 'vinnz', 'viur', 'viury', 'viurz', 'vit', 'vitt', 'viu', 'vng',
-    'vngy', 'vngz', 'vur', 'vury', 'vurw', 'vurx', 'vurz', 'vurh', 'vurhh',
-    'vok', 'vokk', 'vongy', 'vongw', 'vongx', 'vongz', 'vo', 'voy', 'vow',
-    'vox', 'voz', 'vu', 'vuw', 'vux', 'vuz', 'voaw', 'voah', 'voahh',
-    'voan', 'voanw', 'voanx', 'voanz', 'voann', 'voanny', 'voannw', 'voannx',
-    'voannz', 'voat', 'voatt', 'voe', 'voey', 'voew', 'voex', 'voez', 'voeh',
-    'voehh', 'vuh', 'vui', 'vuix', 'vuiz', 'vun', 'vuny', 'vunw', 'vunx',
-    'vunz', 'vut', 'vutt',
+    'pa', 'pay', 'paw', 'pax', 'paz', 'pah', 'pai', 'paiy', 'paiw', 'paix',
+    'paiz', 'pak', 'pakk', 'pan', 'pany', 'panx', 'panz', 'pang', 'pangy',
+    'pangw', 'pangx', 'pat', 'patt', 'pau', 'pauy', 'paux', 'pauz', 'pe', 'pey',
+    'pew', 'pex', 'pez', 'peh', 'pehh', 'penn', 'pennw', 'pennx', 'pennz', 'pi',
+    'piy', 'piw', 'pix', 'piz', 'piah', 'piak', 'piakk', 'pien', 'pieny',
+    'pienw', 'pienz', 'piangw', 'piangz', 'piann', 'pianny', 'piannw', 'piannx',
+    'piet', 'piett', 'piau', 'piauy', 'pih', 'pek', 'pekk', 'pin', 'piny',
+    'pinw', 'pinx', 'peng', 'pengy', 'pengw', 'pengx', 'pengz', 'pinn', 'pinny',
+    'pinnw', 'pinnz', 'piur', 'piury', 'piurz', 'pit', 'pitt', 'piu', 'png',
+    'pngy', 'pngz', 'pur', 'pury', 'purw', 'purx', 'purz', 'purh', 'purhh',
+    'pok', 'pokk', 'pongy', 'pongw', 'pongx', 'pongz', 'po', 'poy', 'pow',
+    'pox', 'poz', 'pu', 'puw', 'pux', 'puz', 'poaw', 'poah', 'poahh',
+    'poan', 'poanw', 'poanx', 'poanz', 'poann', 'poanny', 'poannw', 'poannx',
+    'poannz', 'poat', 'poatt', 'poe', 'poey', 'poew', 'poex', 'poez', 'poeh',
+    'poehh', 'puh', 'pui', 'puix', 'puiz', 'pun', 'puny', 'punw', 'punx',
+    'punz', 'put', 'putt',
 ]

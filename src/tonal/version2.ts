@@ -54,12 +54,12 @@ export enum TonalLetterTags {
   ur = 'ur',
 
   c = 'c',
-  d = 'd',
   ch = 'ch',
   j = 'j',
-  q = 'q',
   s = 's',
-  v = 'v',
+  ph = 'ph',
+  th = 'th',
+  kh = 'kh',
 
   m = 'm',
   n = 'n',
@@ -140,12 +140,9 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.u,
   TonalLetterTags.ur,
   TonalLetterTags.c,
-  TonalLetterTags.d,
   TonalLetterTags.ch,
   TonalLetterTags.j,
-  TonalLetterTags.q,
   TonalLetterTags.s,
-  TonalLetterTags.v,
   TonalLetterTags.m,
   TonalLetterTags.n,
   TonalLetterTags.ng,
@@ -175,6 +172,9 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.er,
   TonalLetterTags.ir,
   TonalLetterTags.or,
+  TonalLetterTags.ph,
+  TonalLetterTags.th,
+  TonalLetterTags.kh,
 ]);
 
 export enum TonalSpellingTags {
@@ -267,14 +267,17 @@ class InitialJ extends Initial {
 class InitialL extends Initial {
   characters = this.makeCharacters(TonalLetterTags.l);
 }
-class InitialQ extends Initial {
-  characters = this.makeCharacters(TonalLetterTags.q);
-}
 class InitialS extends Initial {
   characters = this.makeCharacters(TonalLetterTags.s);
 }
-class InitialV extends Initial {
-  characters = this.makeCharacters(TonalLetterTags.v);
+class InitialPH extends Initial {
+  characters = this.makeCharacters(TonalLetterTags.ph);
+}
+class InitialTH extends Initial {
+  characters = this.makeCharacters(TonalLetterTags.th);
+}
+class InitialKH extends Initial {
+  characters = this.makeCharacters(TonalLetterTags.kh);
 }
 
 class InitialH extends Initial {
@@ -292,9 +295,6 @@ class InitialK extends Initial {
 }
 class InitialB extends Initial {
   characters = this.makeCharacters(TonalLetterTags.b);
-}
-class InitialD extends Initial {
-  characters = this.makeCharacters(TonalLetterTags.d);
 }
 class InitialG extends Initial {
   characters = this.makeCharacters(TonalLetterTags.g);
@@ -460,7 +460,6 @@ export const initialsTonal = letterSequence([
   new InitialT(),
   new InitialK(),
   new InitialB(),
-  new InitialD(),
   new InitialG(),
 
   new InitialH(),
@@ -469,9 +468,11 @@ export const initialsTonal = letterSequence([
   new InitialCH(),
   new InitialJ(),
   new InitialL(),
-  new InitialQ(),
   new InitialS(),
-  new InitialV(),
+
+  new InitialPH(),
+  new InitialTH(),
+  new InitialKH(),
 
   new InitialM(),
   new InitialN(),
@@ -540,7 +541,6 @@ const lpB = letterPositions([new InitialB(), new FinalB()]);
 const lpBB = letterPositions([new FinalBB()]);
 const lpC = letterPositions([new InitialC()]);
 const lpCH = letterPositions([new InitialCH()]);
-const lpD = letterPositions([new InitialD()]);
 const lpE = letterPositions([new MedialE()]);
 const lpER = letterPositions([new MedialER()]);
 const lpF = letterPositions([new FreeTonalF(), new CheckedTonalF()]);
@@ -552,6 +552,7 @@ const lpI = letterPositions([new MedialI()]);
 const lpIR = letterPositions([new MedialIR()]);
 const lpJ = letterPositions([new InitialJ(), new FinalJ()]);
 const lpK = letterPositions([new InitialK(), new FinalK()]);
+const lpKH = letterPositions([new InitialKH()]);
 const lpKK = letterPositions([new FinalKK()]);
 const lpL = letterPositions([new InitialL(), new FinalL()]);
 const lpLL = letterPositions([new FinalLL()]);
@@ -574,15 +575,15 @@ const lpNG = letterPositions([
 const lpO = letterPositions([new MedialO()]);
 const lpOR = letterPositions([new MedialOR()]);
 const lpP = letterPositions([new InitialP(), new FinalP()]);
+const lpPH = letterPositions([new InitialPH()]);
 const lpPP = letterPositions([new FinalPP()]);
-const lpQ = letterPositions([new InitialQ()]);
 const lpS = letterPositions([new InitialS(), new FinalS()]);
 const lpSS = letterPositions([new FinalSS()]);
 const lpT = letterPositions([new InitialT(), new FinalT()]);
+const lpTH = letterPositions([new InitialTH()]);
 const lpTT = letterPositions([new FinalTT()]);
 const lpU = letterPositions([new MedialU()]);
 const lpUR = letterPositions([new MedialUR()]);
-const lpV = letterPositions([new InitialV()]);
 const lpW = letterPositions([new FreeTonalW(), new CheckedTonalW()]);
 const lpX = letterPositions([new FreeTonalX(), new CheckedTonalX()]);
 const lpXX = letterPositions([new FreeTonalXX()]);
@@ -599,7 +600,6 @@ export const tonalPositionalLetters = new Map<
   .set(TonalLetterTags.bb, lpBB)
   .set(TonalLetterTags.c, lpC)
   .set(TonalLetterTags.ch, lpCH)
-  .set(TonalLetterTags.d, lpD)
   .set(TonalLetterTags.e, lpE)
   .set(TonalLetterTags.er, lpER)
   .set(TonalLetterTags.f, lpF)
@@ -611,6 +611,7 @@ export const tonalPositionalLetters = new Map<
   .set(TonalLetterTags.ir, lpIR)
   .set(TonalLetterTags.j, lpJ)
   .set(TonalLetterTags.k, lpK)
+  .set(TonalLetterTags.kh, lpKH)
   .set(TonalLetterTags.kk, lpKK)
   .set(TonalLetterTags.l, lpL)
   .set(TonalLetterTags.ll, lpLL)
@@ -621,15 +622,15 @@ export const tonalPositionalLetters = new Map<
   .set(TonalLetterTags.o, lpO)
   .set(TonalLetterTags.or, lpOR)
   .set(TonalLetterTags.p, lpP)
+  .set(TonalLetterTags.ph, lpPH)
   .set(TonalLetterTags.pp, lpPP)
-  .set(TonalLetterTags.q, lpQ)
   .set(TonalLetterTags.s, lpS)
   .set(TonalLetterTags.ss, lpSS)
   .set(TonalLetterTags.t, lpT)
+  .set(TonalLetterTags.th, lpTH)
   .set(TonalLetterTags.tt, lpTT)
   .set(TonalLetterTags.u, lpU)
   .set(TonalLetterTags.ur, lpUR)
-  .set(TonalLetterTags.v, lpV)
   .set(TonalLetterTags.w, lpW)
   .set(TonalLetterTags.x, lpX)
   .set(TonalLetterTags.xx, lpXX)

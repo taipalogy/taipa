@@ -69,19 +69,19 @@ describe('Uncombining form testing, ay', () => {
     expect(ms4[0].getForms()[0].literal).toEqual('cit');
   });
 
-  const ms5 = tonalLemmatizationAnalyzer.morphAnalyze('degfay');
+  const ms5 = tonalLemmatizationAnalyzer.morphAnalyze('tegfay');
   test('check the uncombining form', () => {
-    expect(ms5[0].getForms()[0].literal).toEqual('dek');
+    expect(ms5[0].getForms()[0].literal).toEqual('tek');
   });
 
-  const ms6 = tonalLemmatizationAnalyzer.morphAnalyze('qabfay');
+  const ms6 = tonalLemmatizationAnalyzer.morphAnalyze('kabfay');
   test('check the uncombining form', () => {
-    expect(ms6[0].getForms()[0].literal).toEqual('qap');
+    expect(ms6[0].getForms()[0].literal).toEqual('kap');
   });
 
-  const ms7 = tonalLemmatizationAnalyzer.morphAnalyze('daiwdongxay');
+  const ms7 = tonalLemmatizationAnalyzer.morphAnalyze('taiwtongxay');
   test('check the uncombining form, 3-syllable word', () => {
-    expect(ms7[0].getForms()[0].literal).toEqual('daiz');
+    expect(ms7[0].getForms()[0].literal).toEqual('taiz');
   });
 
   const ms8 = tonalLemmatizationAnalyzer.morphAnalyze('ngzaftaixay');
@@ -92,19 +92,19 @@ describe('Uncombining form testing, ay', () => {
 });
 
 describe('Uncombining form testing, ietf or ietw to ek or ekk', () => {
-  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('vietfqew');
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('pietfkew');
   test('check the uncombining form, changed rime', () => {
-    expect(ms1[0].getForms()[1].literal).toEqual('vek');
+    expect(ms1[0].getForms()[1].literal).toEqual('pek');
   });
 
-  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('vietwlienx');
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('pietwlienx');
   test('check the uncombining form, changed rime', () => {
-    expect(ms2[0].getForms()[1].literal).toEqual('vekk');
+    expect(ms2[0].getForms()[1].literal).toEqual('pekk');
   });
 
-  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('vietwchong');
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('pietwchong');
   test('check the uncombining form, unchanged rime, changed tone', () => {
-    expect(ms3[0].getForms()[0].literal).toEqual('viett');
+    expect(ms3[0].getForms()[0].literal).toEqual('piett');
   });
 });
 

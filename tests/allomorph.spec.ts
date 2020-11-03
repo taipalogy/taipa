@@ -75,7 +75,7 @@ describe('Allomorph testing', () => {
   });
 
   const ms9 = tonalInflectionAnalyzer.morphAnalyze(
-    'vutfjinx',
+    'putfjinx',
     new TonalCombiningForms()
   );
 
@@ -84,7 +84,7 @@ describe('Allomorph testing', () => {
   });
 
   const ms10 = tonalInflectionAnalyzer.morphAnalyze(
-    'vujfjinx',
+    'pujfjinx',
     new TonalCombiningForms()
   );
 
@@ -102,7 +102,7 @@ describe('Allomorph testing', () => {
   });
 
   const ms13 = tonalInflectionAnalyzer.morphAnalyze(
-    'qapfay',
+    'kapfay',
     new TonalCombiningForms()
   );
 
@@ -111,7 +111,7 @@ describe('Allomorph testing', () => {
   });
 
   const ms14 = tonalInflectionAnalyzer.morphAnalyze(
-    'qabfay',
+    'kabfay',
     new TonalCombiningForms()
   );
 
@@ -138,7 +138,7 @@ describe('Allomorph testing', () => {
   });
 
   const ms17 = tonalInflectionAnalyzer.morphAnalyze(
-    'dekfay',
+    'tekfay',
     new TonalCombiningForms()
   );
 
@@ -147,7 +147,7 @@ describe('Allomorph testing', () => {
   });
 
   const ms18 = tonalInflectionAnalyzer.morphAnalyze(
-    'degfay',
+    'tegfay',
     new TonalCombiningForms()
   );
 

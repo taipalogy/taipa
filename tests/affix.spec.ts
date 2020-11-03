@@ -51,7 +51,7 @@ describe('Suprafix testing, of length 2', () => {
 
 describe('Simulfix testing', () => {
   const gm = new GraphemeMaker(lowerLettersTonal);
-  const gs = gm.makeGraphemes('qirn');
+  const gs = gm.makeGraphemes('kirn');
 
   gs.splice(1, 1, gm.makeGraphemes('i')[0]);
 
@@ -65,16 +65,16 @@ describe('Simulfix testing', () => {
   ms[0].syllable.replaceLetter(1, lowerLettersTonal.get(TonalLetterTags.u));
 
   test('check the syllable', () => {
-    expect(ms[0].syllable.literal).toEqual('qun');
+    expect(ms[0].syllable.literal).toEqual('kun');
   });
 });
 
 describe('Duplifix testing', () => {
   const gm = new GraphemeMaker(lowerLettersTonal);
-  const gs = gm.makeGraphemes('ditwditt');
+  const gs = gm.makeGraphemes('titwtitt');
 
   test('check the letter', () => {
-    expect(gs[4].letter.literal).toEqual(TonalLetterTags.d);
+    expect(gs[4].letter.literal).toEqual(TonalLetterTags.t);
   });
 
   const mm = new TonalCombiningMorphemeMaker(new TonalCombiningForms());

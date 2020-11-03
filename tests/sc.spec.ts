@@ -45,10 +45,10 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('qoai');
+  const lx = lemmatize('koai');
 
   test('check the syllable composition. cv.', () => {
-    expect(lx.word.literal).toEqual('qoai');
+    expect(lx.word.literal).toEqual('koai');
   });
 });
 
@@ -81,10 +81,10 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('qoaiw');
+  const lx = lemmatize('koaiw');
 
   test('check the syllable composition. cvt.', () => {
-    expect(lx.word.literal).toEqual('qoaiw');
+    expect(lx.word.literal).toEqual('koaiw');
   });
 });
 
@@ -135,18 +135,18 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('qng');
+  const lx = lemmatize('kng');
 
   test('check the syllable composition. cc.', () => {
-    expect(lx.word.literal).toEqual('qng');
+    expect(lx.word.literal).toEqual('kng');
   });
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('qngy');
+  const lx = lemmatize('kngy');
 
   test('check the syllable composition. cct.', () => {
-    expect(lx.word.literal).toEqual('qngy');
+    expect(lx.word.literal).toEqual('kngy');
   });
 });
 

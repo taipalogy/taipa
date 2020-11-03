@@ -9,10 +9,10 @@ import {
 } from '../src/tonal/uninserter';
 
 describe('Epenthesis testing', () => {
-  const lx1 = insertToFollowingSyllable('qimxay');
+  const lx1 = insertToFollowingSyllable('kimxay');
 
   test('check the epenthesis of initial m', () => {
-    expect(lx1.getForms()[0].literal).toEqual('qimxmay');
+    expect(lx1.getForms()[0].literal).toEqual('kimxmay');
   });
 
   const lx2 = insertToFollowingSyllable('infay');
@@ -29,22 +29,22 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Epenthesis testing', () => {
-  const lx1 = inflectDesinence('qimxay');
+  const lx1 = inflectDesinence('kimxay');
 
   test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('qimxa');
+    expect(lx1.getForms()[0].literal).toEqual('kimxa');
   });
 
   const lx2 = insertToFollowingSyllable(lx1.getForms()[0].literal);
 
   test('check the epenthesis of initial m. surface form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('qimxma');
+    expect(lx2.getForms()[0].literal).toEqual('kimxma');
   });
 
-  const lx3 = insertToFollowingSyllable('qimza');
+  const lx3 = insertToFollowingSyllable('kimza');
 
   test('check the epenthesis of initial m', () => {
-    expect(lx3.getForms()[0].literal).toEqual('qimzma');
+    expect(lx3.getForms()[0].literal).toEqual('kimzma');
   });
 
   const lx4 = insertToFollowingSyllable('ginfa');
@@ -53,18 +53,18 @@ describe('Epenthesis testing', () => {
     expect(lx4.getForms()[0].literal).toEqual('ginfna');
   });
 
-  const lx5 = insertToFollowingSyllable('tangza');
+  const lx5 = insertToFollowingSyllable('thangza');
 
   test('check the epenthesis of initial ng', () => {
-    expect(lx5.getForms()[0].literal).toEqual('tangznga');
+    expect(lx5.getForms()[0].literal).toEqual('thangznga');
   });
 });
 
 describe('Uninsertion testing', () => {
-  const lx1 = uninsertFromFollowingSyllable('qimxmay');
+  const lx1 = uninsertFromFollowingSyllable('kimxmay');
 
   test('check the uninsertion of initial m', () => {
-    expect(lx1.getForms()[0].literal).toEqual('qimxay');
+    expect(lx1.getForms()[0].literal).toEqual('kimxay');
   });
 
   const lx2 = uninsertFromFollowingSyllable('infnay');

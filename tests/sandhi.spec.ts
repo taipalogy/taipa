@@ -25,7 +25,7 @@ describe('Epenthesis testing', () => {
 describe('Epenthesis testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('qapfbay');
+  const ta = cli.processTonal('kapfbay');
 
   test('check the consonant', () => {
     expect(ta.letterSequences[1][0].toString()).toEqual(TonalLetterTags.b);
@@ -35,7 +35,7 @@ describe('Epenthesis testing', () => {
 describe('Epenthesis testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('qamxmay');
+  const ta = cli.processTonal('kamxmay');
 
   test('check the consonant', () => {
     expect(ta.letterSequences[1][0].toString()).toEqual(TonalLetterTags.m);
@@ -125,10 +125,10 @@ describe('Reduplication testing', () => {
 describe('Reduplication testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('qufquwquz');
+  const ta = cli.processTonal('kufkuwkuz');
 
   test('check the uncombining form', () => {
-    expect(ta.uncombiningSequences[0]).toContain('quz');
+    expect(ta.uncombiningSequences[0]).toContain('kuz');
   });
 });
 
@@ -145,7 +145,7 @@ describe('Reduplication testing', () => {
 describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   const cli = new Client();
 
-  const ta1 = cli.processTonal('sannzamhwqauy');
+  const ta1 = cli.processTonal('sannzamhwkauy');
 
   test('check the uncombining form', () => {
     expect(ta1.uncombiningSequences[1]).toContain('app');
@@ -167,10 +167,10 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
     expect(ta2.letterSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
-  const ta3 = cli.processTonal('vunghfngay');
+  const ta3 = cli.processTonal('punghfngay');
 
   test('check the uncombining form', () => {
-    expect(ta3.uncombiningSequences[0]).toContain('vut');
+    expect(ta3.uncombiningSequences[0]).toContain('put');
   });
 
   test('check the consonant', () => {

@@ -88,15 +88,15 @@ export const finalsBBggkkpp = [
 ];
 
 export const initialsForFinalT = {
-  p: TonalLetterTags.p.toString(),
-  k: TonalLetterTags.k.toString(),
+  ph: TonalLetterTags.ph.toString(),
+  kh: TonalLetterTags.kh.toString(),
   b: TonalLetterTags.b.toString(),
   g: TonalLetterTags.g.toString(),
 
   j: TonalLetterTags.j.toString(),
-  q: TonalLetterTags.q.toString(),
+  k: TonalLetterTags.k.toString(),
   s: TonalLetterTags.s.toString(),
-  v: TonalLetterTags.v.toString(),
+  p: TonalLetterTags.p.toString(),
 
   m: TonalLetterTags.m.toString(),
   n: TonalLetterTags.n.toString(),
@@ -104,16 +104,16 @@ export const initialsForFinalT = {
 };
 
 export const initialsForTT = {
-  p: TonalLetterTags.p.toString(),
-  k: TonalLetterTags.k.toString(),
+  ph: TonalLetterTags.ph.toString(),
+  kh: TonalLetterTags.kh.toString(),
   g: TonalLetterTags.g.toString(),
 
   b: TonalLetterTags.b.toString(),
   j: TonalLetterTags.j.toString(),
 
-  q: TonalLetterTags.q.toString(),
+  k: TonalLetterTags.k.toString(),
   s: TonalLetterTags.s.toString(),
-  v: TonalLetterTags.v.toString(),
+  p: TonalLetterTags.p.toString(),
 
   m: TonalLetterTags.m.toString(),
   n: TonalLetterTags.n.toString(),
@@ -122,10 +122,10 @@ export const initialsForTT = {
 
 // tt, t
 export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
+  .set(TonalLetterTags.t + initialsForFinalT.ph, TonalLetterTags.p)
   .set(TonalLetterTags.t + initialsForFinalT.p, TonalLetterTags.p)
-  .set(TonalLetterTags.t + initialsForFinalT.v, TonalLetterTags.p)
+  .set(TonalLetterTags.t + initialsForFinalT.kh, TonalLetterTags.k)
   .set(TonalLetterTags.t + initialsForFinalT.k, TonalLetterTags.k)
-  .set(TonalLetterTags.t + initialsForFinalT.q, TonalLetterTags.k)
   .set(TonalLetterTags.t + initialsForFinalT.g, TonalLetterTags.g)
   .set(
     TonalLetterTags.t + TonalLetterTags.f + initialsForFinalT.j,
@@ -138,10 +138,10 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.t + initialsForFinalT.m, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialsForFinalT.n, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialsForFinalT.ng, TonalLetterTags.h)
+  .set(TonalLetterTags.tt + initialsForTT.ph, TonalLetterTags.pp)
   .set(TonalLetterTags.tt + initialsForTT.p, TonalLetterTags.pp)
-  .set(TonalLetterTags.tt + initialsForTT.v, TonalLetterTags.pp)
+  .set(TonalLetterTags.tt + initialsForTT.kh, TonalLetterTags.kk)
   .set(TonalLetterTags.tt + initialsForTT.k, TonalLetterTags.kk)
-  .set(TonalLetterTags.tt + initialsForTT.q, TonalLetterTags.kk)
   .set(TonalLetterTags.tt + initialsForTT.g, TonalLetterTags.gg)
   .set(TonalLetterTags.tt + initialsForTT.b, TonalLetterTags.ll)
   .set(TonalLetterTags.tt + initialsForTT.j, TonalLetterTags.ll)
@@ -262,8 +262,8 @@ export const eighthToFourthFinals = new Map<string, string>()
   .set(TonalLetterTags.ss, fourthFinals.s.toString())
   .set(TonalLetterTags.tt, fourthFinals.t.toString());
 
-export const impossibleSequences = [
-  TonalLetterTags.d.toString(),
-  TonalLetterTags.q.toString(),
-  TonalLetterTags.v.toString(),
+export const impossibleSequences: string[] = [
+  // TonalLetterTags.d.toString(),
+  // TonalLetterTags.q.toString(),
+  // TonalLetterTags.v.toString(),
 ];

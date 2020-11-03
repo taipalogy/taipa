@@ -14,7 +14,7 @@ import { createTonalInflectionLexeme } from '../src/dparser/creator';
 describe('Tonal testing', () => {
   const cli = new Client();
 
-  const t1 = cli.processTonal('damwvurhxoay');
+  const t1 = cli.processTonal('tamwpurhxoay');
 
   test('check the tone letter', () => {
     expect(t1.letterSequences[1][3].toString()).toEqual(TonalLetterTags.x);
@@ -26,7 +26,7 @@ describe('Tonal testing', () => {
     expect(t2.letterSequences[1][2].toString()).toEqual(TonalLetterTags.f);
   });
 
-  const t3 = cli.processTonal('qinznafjitt');
+  const t3 = cli.processTonal('kinznafjitt');
 
   test('check the tone letter', () => {
     expect(t3.letterSequences[1][2].toString()).toEqual(TonalLetterTags.f);
@@ -38,25 +38,25 @@ describe('Tonal testing', () => {
     expect(t4.letterSequences[0][3].toString()).toEqual(TonalLetterTags.f);
   });
 
-  const t5 = cli.processTonal('daizoanx');
+  const t5 = cli.processTonal('taizoanx');
 
   test('check the tone letter', () => {
     expect(t5.letterSequences[1][3].toString()).toEqual(TonalLetterTags.x);
   });
 
-  const t6 = cli.processTonal('daizoanzoez');
+  const t6 = cli.processTonal('taizoanzoez');
 
   test('check the tone letter', () => {
     expect(t6.letterSequences[2][2].toString()).toEqual(TonalLetterTags.z);
   });
 
-  const t7 = cli.processTonal('daiwjitwvunfdeyqok');
+  const t7 = cli.processTonal('taiwjitwpunfteykok');
 
   test('check the tone letter', () => {
     expect(t7.letterSequences[2][3].toString()).toEqual(TonalLetterTags.f);
   });
 
-  const t8 = cli.processTonal('qurzsa');
+  const t8 = cli.processTonal('kurzsa');
 
   test('check the tone letter', () => {
     expect(t8.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
@@ -74,13 +74,13 @@ describe('Tonal testing', () => {
     expect(t10.letterSequences[0][4].toString()).toEqual(TonalLetterTags.w);
   });
 
-  const t11 = cli.processTonal('qazvi');
+  const t11 = cli.processTonal('kazvi');
 
   test('check the tone letter', () => {
     expect(t11.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
   });
 
-  const t12 = cli.processTonal('mihwqiannz');
+  const t12 = cli.processTonal('mihwkiannz');
 
   test('check the tone letter', () => {
     expect(t12.letterSequences[0][3].toString()).toEqual(TonalLetterTags.w);
@@ -92,13 +92,13 @@ describe('Tonal testing', () => {
     expect(t13.letterSequences[0][3].toString()).toEqual(TonalLetterTags.w);
   });
 
-  const t14 = cli.processTonal('kazcng');
+  const t14 = cli.processTonal('khazcng');
 
   test('check the tone letter', () => {
     expect(t14.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
   });
 
-  const t15 = cli.processTonal('lamzdurfgiy');
+  const t15 = cli.processTonal('lamzturfgiy');
 
   test('check the tone letter', () => {
     expect(t15.letterSequences[0][3].toString()).toEqual(TonalLetterTags.z);
@@ -189,14 +189,14 @@ describe('Tonal testing', () => {
 });
 
 describe('Tonal testing', () => {
-  const morphemes1 = tonalLemmatizationAnalyzer.morphAnalyze('qamxmay');
+  const morphemes1 = tonalLemmatizationAnalyzer.morphAnalyze('kamxmay');
 
   test('check the tonal of the first syllable', () => {
     expect(morphemes1[0].allomorph.toString()).toEqual(TonalLetterTags.x);
   });
 
   const tia = tonalInflectionAnalyzer;
-  const morphemes2 = tia.morphAnalyze('qamxay', new TonalZeroCombining());
+  const morphemes2 = tia.morphAnalyze('kamxay', new TonalZeroCombining());
 
   test('check the tonal of the first syllable', () => {
     expect(morphemes2[0].allomorph.toString()).toEqual(TonalLetterTags.x);
@@ -245,7 +245,7 @@ describe('Tone group testing of syllables', () => {
     expect(ms1[2].allomorph.toString()).toEqual(TonalLetterTags.w);
   });
 
-  const ms2 = tia.morphAnalyze('cuhycuhyqiurw', new TonalCombiningForms());
+  const ms2 = tia.morphAnalyze('cuhycuhykiurw', new TonalCombiningForms());
 
   test('check the tonal symbol of the syllable', () => {
     expect(ms2[0].allomorph.toString()).toEqual(
@@ -277,8 +277,8 @@ describe('Tone group testing of phrasal verbs', () => {
   });
 
   const tia = tonalInflectionAnalyzer;
-  const lx3 = tia.lexAnalyze('tehh', new TonalDesinenceInflection());
-  const lx4 = tia.lexAnalyze('kih', new TonalDesinenceInflection());
+  const lx3 = tia.lexAnalyze('thehh', new TonalDesinenceInflection());
+  const lx4 = tia.lexAnalyze('khih', new TonalDesinenceInflection());
   const lx5 = tia.lexAnalyze('laih', new TonalDesinenceInflection());
 
   test('check the tone of the word, 844', () => {

@@ -11,26 +11,26 @@ import {
 import { inflectDesinence } from '../src/dparser/inflector';
 
 describe('Consonant mutation testing, agressive, duplifix', () => {
-  const lx = mutateInitialOfFollowingSyllable('ditwditt');
+  const lx = mutateInitialOfFollowingSyllable('titwtitt');
 
   test('check the underlying form', () => {
-    expect(lx.word.literal).toEqual('ditwditt');
+    expect(lx.word.literal).toEqual('titwtitt');
   });
 
   test('check the surface form', () => {
-    expect(lx.getForms()[0].literal).toEqual('ditwlitt');
+    expect(lx.getForms()[0].literal).toEqual('titwlitt');
   });
 });
 
 describe('Consonant unmutation testing, agressive, duplifix', () => {
-  const lx = unmutateInitialOfFollowingSyllable('ditwlitt');
+  const lx = unmutateInitialOfFollowingSyllable('titwlitt');
 
   test('check the surface form', () => {
-    expect(lx.word.literal).toEqual('ditwlitt');
+    expect(lx.word.literal).toEqual('titwlitt');
   });
 
   test('check the underlying form', () => {
-    expect(lx.getForms()[0].literal).toEqual('ditwditt');
+    expect(lx.getForms()[0].literal).toEqual('titwtitt');
   });
 });
 
@@ -83,10 +83,10 @@ describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -g
     expect(lx4.getForms()[0].literal).toEqual('ogflangx');
   });
 
-  const lx5 = mutateFinalOfPrecedingSyllable('vatwjitt');
+  const lx5 = mutateFinalOfPrecedingSyllable('patwjitt');
 
   test('check the surface form, -twj- to -lwj-', () => {
-    expect(lx5.getForms()[0].literal).toEqual('valwjitt');
+    expect(lx5.getForms()[0].literal).toEqual('palwjitt');
   });
 });
 
@@ -115,10 +115,10 @@ describe('Consonant unmutation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, 
     expect(lx4.getForms()[0].literal).toEqual('okflangx');
   });
 
-  const lx5 = unmutateFinalOfPrecedingSyllable('valwjitt');
+  const lx5 = unmutateFinalOfPrecedingSyllable('palwjitt');
 
   test('check the surface form, -lwj- to -twj-', () => {
-    expect(lx5.getForms()[0].literal).toEqual('vatwjitt');
+    expect(lx5.getForms()[0].literal).toEqual('patwjitt');
   });
 });
 
@@ -137,16 +137,16 @@ describe('Consonant mutation testing, sandhi tt, t', () => {
 });
 
 describe('Consonant mutation testing, internal sandhi, regressive', () => {
-  const lx1 = mutateFinalOfPrecedingSyllable('pokfbutwqoany');
+  const lx1 = mutateFinalOfPrecedingSyllable('phokfbutwkoany');
 
   test('check the surface form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('pogfbukwqoany');
+    expect(lx1.getForms()[0].literal).toEqual('phogfbukwkoany');
   });
 
   const lx2 = inflectDesinence(lx1.getForms()[0].literal);
 
   test('check the inflected form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('pogfbukwqoan');
+    expect(lx2.getForms()[0].literal).toEqual('phogfbukwkoan');
   });
 
   const lx3 = mutateFinalOfPrecedingSyllable('cutfgoaz');
@@ -155,10 +155,10 @@ describe('Consonant mutation testing, internal sandhi, regressive', () => {
     expect(lx3.getForms()[0].literal).toEqual('cugfgoaz');
   });
 
-  const lx4 = mutateFinalOfPrecedingSyllable('vutfjinx');
+  const lx4 = mutateFinalOfPrecedingSyllable('putfjinx');
 
   test('check the surface form', () => {
-    expect(lx4.getForms()[0].literal).toEqual('vujfjinx');
+    expect(lx4.getForms()[0].literal).toEqual('pujfjinx');
   });
 });
 
@@ -173,14 +173,14 @@ describe('Consonant mutation testing, internal sandhi, regressive', () => {
     expect(lx.getForms()[0].literal).toEqual('simzbunx');
   });
 
-  const lx2 = mutateFinalOfPrecedingSyllable('dekfnax');
+  const lx2 = mutateFinalOfPrecedingSyllable('tekfnax');
 
   test('check the underlying form, n-', () => {
-    expect(lx2.word.literal).toEqual('dekfnax');
+    expect(lx2.word.literal).toEqual('tekfnax');
   });
 
   test('check the surface form, n-', () => {
-    expect(lx2.getForms()[0].literal).toEqual('degfnax');
+    expect(lx2.getForms()[0].literal).toEqual('tegfnax');
   });
   /*
   const lx3 = mutateFinalOfPrecedingSyllable('qekfngiz');
@@ -193,14 +193,14 @@ describe('Consonant mutation testing, internal sandhi, regressive', () => {
     expect(lx3.getForms()[0].literal).toEqual('qegfngiz');
   });
 */
-  const lx4 = mutateFinalOfPrecedingSyllable('qekwmngx');
+  const lx4 = mutateFinalOfPrecedingSyllable('kekwmngx');
 
   test('check the underlying form, m-', () => {
-    expect(lx4.word.literal).toEqual('qekwmngx');
+    expect(lx4.word.literal).toEqual('kekwmngx');
   });
 
   test('check the surface form, m-', () => {
-    expect(lx4.getForms()[0].literal).toEqual('qegwmngx');
+    expect(lx4.getForms()[0].literal).toEqual('kegwmngx');
   });
 });
 

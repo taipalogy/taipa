@@ -40,13 +40,13 @@ describe('Ay testing', () => {
     expect(ta6.letterSequences[1][1].toString()).toEqual(TonalLetterTags.y);
   });
 
-  const ta7 = cli.processTonal('dekxgay');
+  const ta7 = cli.processTonal('tekxgay');
 
   test('check the free tonal y', () => {
     expect(ta7.letterSequences[1][2].toString()).toEqual(TonalLetterTags.y);
   });
 
-  const ta8 = cli.processTonal('dekxay');
+  const ta8 = cli.processTonal('tekxay');
 
   test('check the free tonal y', () => {
     expect(ta8.letterSequences[1][1].toString()).toEqual(TonalLetterTags.y);
@@ -68,10 +68,10 @@ describe('Ay testing', () => {
 describe('Ay testing, uncombining form of the first syllable', () => {
   const cli = new Client();
 
-  const ta1 = cli.processTonal('qexay');
+  const ta1 = cli.processTonal('kexay');
 
   test('check the uncombining form', () => {
-    expect(ta1.uncombiningSequences[0]).toContain('qe');
+    expect(ta1.uncombiningSequences[0]).toContain('ke');
   });
 
   const ta2 = cli.processTonal('boefay');
@@ -86,10 +86,10 @@ describe('Ay testing, uncombining form of the first syllable', () => {
     expect(ta3.uncombiningSequences[0]).toContain('pauw');
   });
 
-  const ta4 = cli.processTonal('qoxay');
+  const ta4 = cli.processTonal('koxay');
 
   test('check the uncombining form', () => {
-    expect(ta4.uncombiningSequences[0]).toContain('qox');
+    expect(ta4.uncombiningSequences[0]).toContain('kox');
   });
 
   const ta5 = cli.processTonal('hoexay');
@@ -116,16 +116,16 @@ describe('Ay testing, uncombining form of the first syllable', () => {
     expect(ta8.uncombiningSequences[0]).toContain('cit');
   });
 
-  const ta9 = cli.processTonal('voatxay');
+  const ta9 = cli.processTonal('poatxay');
 
   test('check the uncombining form', () => {
-    expect(ta9.uncombiningSequences[0]).toContain('voatt');
+    expect(ta9.uncombiningSequences[0]).toContain('poatt');
   });
 
-  const ta10 = cli.processTonal('qakfay');
+  const ta10 = cli.processTonal('kakfay');
 
   test('check the uncombining form', () => {
-    expect(ta10.uncombiningSequences[0]).toContain('qak');
+    expect(ta10.uncombiningSequences[0]).toContain('kak');
   });
 
   const ta11 = cli.processTonal('lokxay');
@@ -134,10 +134,10 @@ describe('Ay testing, uncombining form of the first syllable', () => {
     expect(ta11.uncombiningSequences[0]).toContain('lokk');
   });
 
-  const ta12 = cli.processTonal('qapfay');
+  const ta12 = cli.processTonal('kapfay');
 
   test('check the uncombining form', () => {
-    expect(ta12.uncombiningSequences[0]).toContain('qap');
+    expect(ta12.uncombiningSequences[0]).toContain('kap');
   });
 
   const ta13 = cli.processTonal('liapxay');
@@ -150,10 +150,10 @@ describe('Ay testing, uncombining form of the first syllable', () => {
 describe('NGay testing, uncombining form of the first syllable', () => {
   const cli = new Client();
 
-  const ta1 = cli.processTonal('vutfngay');
+  const ta1 = cli.processTonal('putfngay');
 
   test('check the uncombining form', () => {
-    expect(ta1.uncombiningSequences[0]).toContain('vut');
+    expect(ta1.uncombiningSequences[0]).toContain('put');
   });
 
   const ta2 = cli.processTonal('angzchoay');

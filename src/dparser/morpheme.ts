@@ -379,13 +379,13 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   unmutateInitialConsonant(initial: PositionalLetter) {
     if (
       initial.name === TonalSpellingTags.initial &&
-      initial.toString() === TonalLetterTags.d
+      initial.toString() === TonalLetterTags.t
     ) {
       // l -> d
       const s: TonalSyllable = new TonalSyllable(
         this.letters.map(it => new AlphabeticLetter(it.characters))
       );
-      s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.d));
+      s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.t));
       return [s];
     }
     return [];

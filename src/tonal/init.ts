@@ -515,30 +515,36 @@ const freeSyllablesWithCombiningOverline = [
   TonalLetterTags.ch.toString() + TonalLetterTags.or.toString(),
   TonalLetterTags.ch.toString() + TonalLetterTags.ur.toString(),
   TonalLetterTags.c.toString() + TonalLetterTags.o.toString(),
-  TonalLetterTags.d.toString() + TonalLetterTags.i.toString(),
+  // TonalLetterTags.d.toString() + TonalLetterTags.i.toString(),
   TonalLetterTags.t.toString() + TonalLetterTags.i.toString(),
-  TonalLetterTags.d.toString() + TonalLetterTags.u.toString(),
+  TonalLetterTags.th.toString() + TonalLetterTags.i.toString(),
+  // TonalLetterTags.d.toString() + TonalLetterTags.u.toString(),
   TonalLetterTags.t.toString() + TonalLetterTags.u.toString(),
-  TonalLetterTags.d.toString() + TonalLetterTags.ng.toString(),
+  TonalLetterTags.th.toString() + TonalLetterTags.u.toString(),
+  // TonalLetterTags.d.toString() + TonalLetterTags.ng.toString(),
   TonalLetterTags.t.toString() + TonalLetterTags.ng.toString(),
-  TonalLetterTags.d.toString() + TonalLetterTags.ir.toString(),
+  TonalLetterTags.th.toString() + TonalLetterTags.ng.toString(),
+  // TonalLetterTags.d.toString() + TonalLetterTags.ir.toString(),
   TonalLetterTags.t.toString() + TonalLetterTags.ir.toString(),
+  TonalLetterTags.th.toString() + TonalLetterTags.ir.toString(),
 ];
 
 const initialsWithCombiningDotBelow = {
   // whether the dot should be combined
   aspirated: [
     // with a dot
-    TonalLetterTags.k.toString(),
+    TonalLetterTags.kh.toString(),
     TonalLetterTags.c.toString(),
-    TonalLetterTags.p.toString(),
-    TonalLetterTags.t.toString(),
+    TonalLetterTags.ph.toString(),
+    TonalLetterTags.th.toString(),
   ],
   withoutADotOrOverline: [
-    TonalLetterTags.q.toString(),
+    // TonalLetterTags.q.toString(),
+    TonalLetterTags.k.toString(),
     TonalLetterTags.g.toString(),
     TonalLetterTags.b.toString(),
-    TonalLetterTags.v.toString(),
+    // TonalLetterTags.v.toString(),
+    TonalLetterTags.p.toString(),
     TonalLetterTags.j.toString(),
     TonalLetterTags.l.toString(),
     TonalLetterTags.h.toString(),
@@ -550,7 +556,8 @@ const initialsWithCombiningDotBelow = {
   withAnOverline: [
     TonalLetterTags.ch.toString(),
     TonalLetterTags.c.toString(),
-    TonalLetterTags.d.toString(),
+    // TonalLetterTags.d.toString(),
+    TonalLetterTags.t.toString(),
   ],
 };
 
@@ -639,11 +646,11 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.u, '㋒')
   .set(TonalLetterTags.e, '㋓')
   .set(TonalLetterTags.o, '㋔')
-  .set(TonalLetterTags.k + TonalLetterTags.a, '㋕')
-  .set(TonalLetterTags.k + TonalLetterTags.i, '㋖')
-  .set(TonalLetterTags.k + TonalLetterTags.u, '㋗')
-  .set(TonalLetterTags.k + TonalLetterTags.e, '㋘')
-  .set(TonalLetterTags.k + TonalLetterTags.o, '㋙')
+  .set(TonalLetterTags.kh + TonalLetterTags.a, '㋕')
+  .set(TonalLetterTags.kh + TonalLetterTags.i, '㋖')
+  .set(TonalLetterTags.kh + TonalLetterTags.u, '㋗')
+  .set(TonalLetterTags.kh + TonalLetterTags.e, '㋘')
+  .set(TonalLetterTags.kh + TonalLetterTags.o, '㋙')
   .set(TonalLetterTags.s + TonalLetterTags.a, '㋚')
   .set(TonalLetterTags.s + TonalLetterTags.i, '㋛')
   .set(TonalLetterTags.s + TonalLetterTags.u, '㋜')
@@ -661,39 +668,55 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.ch + TonalLetterTags.u, '㋡')
   .set(TonalLetterTags.ch + TonalLetterTags.e, '㋝')
   .set(TonalLetterTags.ch + TonalLetterTags.o, '㋞')
-  .set(TonalLetterTags.d + TonalLetterTags.a, '㋟')
-  .set(TonalLetterTags.d + TonalLetterTags.i, '㋠')
-  .set(TonalLetterTags.d + TonalLetterTags.u, '㋡')
-  .set(TonalLetterTags.d + TonalLetterTags.e, '㋢')
-  .set(TonalLetterTags.d + TonalLetterTags.o, '㋣')
+  // .set(TonalLetterTags.d + TonalLetterTags.a, '㋟')
+  // .set(TonalLetterTags.d + TonalLetterTags.i, '㋠')
+  // .set(TonalLetterTags.d + TonalLetterTags.u, '㋡')
+  // .set(TonalLetterTags.d + TonalLetterTags.e, '㋢')
+  // .set(TonalLetterTags.d + TonalLetterTags.o, '㋣')
+  .set(TonalLetterTags.t + TonalLetterTags.a, '㋟')
+  .set(TonalLetterTags.t + TonalLetterTags.i, '㋠')
+  .set(TonalLetterTags.t + TonalLetterTags.u, '㋡')
+  .set(TonalLetterTags.t + TonalLetterTags.e, '㋢')
+  .set(TonalLetterTags.t + TonalLetterTags.o, '㋣')
   .set(TonalLetterTags.j + TonalLetterTags.i, '㋛' + '\u{3099}') // ㋛゙
-  .set(TonalLetterTags.p + TonalLetterTags.a, '㋩' + '\u{309a}') // ㋩゚
-  .set(TonalLetterTags.p + TonalLetterTags.i, '㋪' + '\u{309a}') // ㋪゚
-  .set(TonalLetterTags.p + TonalLetterTags.u, '㋫' + '\u{309a}') // ㋫゚
-  .set(TonalLetterTags.p + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
-  .set(TonalLetterTags.p + TonalLetterTags.o, '㋭' + '\u{309a}') // ㋭゚
-  .set(TonalLetterTags.q + TonalLetterTags.a, '㋕')
-  .set(TonalLetterTags.q + TonalLetterTags.i, '㋖')
-  .set(TonalLetterTags.q + TonalLetterTags.ir, '㋗')
-  .set(TonalLetterTags.q + TonalLetterTags.u, '㋗')
-  .set(TonalLetterTags.q + TonalLetterTags.e, '㋘')
-  .set(TonalLetterTags.q + TonalLetterTags.o, '㋙')
+  .set(TonalLetterTags.ph + TonalLetterTags.a, '㋩' + '\u{309a}') // ㋩゚
+  .set(TonalLetterTags.ph + TonalLetterTags.i, '㋪' + '\u{309a}') // ㋪゚
+  .set(TonalLetterTags.ph + TonalLetterTags.u, '㋫' + '\u{309a}') // ㋫゚
+  .set(TonalLetterTags.ph + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
+  .set(TonalLetterTags.ph + TonalLetterTags.o, '㋭' + '\u{309a}') // ㋭゚
+  // .set(TonalLetterTags.q + TonalLetterTags.a, '㋕')
+  // .set(TonalLetterTags.q + TonalLetterTags.i, '㋖')
+  // .set(TonalLetterTags.q + TonalLetterTags.ir, '㋗')
+  // .set(TonalLetterTags.q + TonalLetterTags.u, '㋗')
+  // .set(TonalLetterTags.q + TonalLetterTags.e, '㋘')
+  // .set(TonalLetterTags.q + TonalLetterTags.o, '㋙')
+  .set(TonalLetterTags.k + TonalLetterTags.a, '㋕')
+  .set(TonalLetterTags.k + TonalLetterTags.i, '㋖')
+  .set(TonalLetterTags.k + TonalLetterTags.ir, '㋗')
+  .set(TonalLetterTags.k + TonalLetterTags.u, '㋗')
+  .set(TonalLetterTags.k + TonalLetterTags.e, '㋘')
+  .set(TonalLetterTags.k + TonalLetterTags.o, '㋙')
   .set(TonalLetterTags.h + TonalLetterTags.a, '㋩')
   .set(TonalLetterTags.h + TonalLetterTags.i, '㋪')
   .set(TonalLetterTags.h + TonalLetterTags.ir, '㋫')
   .set(TonalLetterTags.h + TonalLetterTags.u, '㋫')
   .set(TonalLetterTags.h + TonalLetterTags.e, '㋬')
   .set(TonalLetterTags.h + TonalLetterTags.o, '㋭')
-  .set(TonalLetterTags.t + TonalLetterTags.a, '㋟')
-  .set(TonalLetterTags.t + TonalLetterTags.i, '㋠')
-  .set(TonalLetterTags.t + TonalLetterTags.u, '㋡')
-  .set(TonalLetterTags.t + TonalLetterTags.e, '㋢')
-  .set(TonalLetterTags.t + TonalLetterTags.o, '㋣')
-  .set(TonalLetterTags.v + TonalLetterTags.a, '㋩' + '\u{309a}') // ㋩゚
-  .set(TonalLetterTags.v + TonalLetterTags.i, '㋪' + '\u{309a}') // ㋪゚
-  .set(TonalLetterTags.v + TonalLetterTags.u, '㋫' + '\u{309a}') // ㋫゚
-  .set(TonalLetterTags.v + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
-  .set(TonalLetterTags.v + TonalLetterTags.o, '㋭' + '\u{309a}'); // ㋭゚
+  .set(TonalLetterTags.th + TonalLetterTags.a, '㋟')
+  .set(TonalLetterTags.th + TonalLetterTags.i, '㋠')
+  .set(TonalLetterTags.th + TonalLetterTags.u, '㋡')
+  .set(TonalLetterTags.th + TonalLetterTags.e, '㋢')
+  .set(TonalLetterTags.th + TonalLetterTags.o, '㋣')
+  // .set(TonalLetterTags.v + TonalLetterTags.a, '㋩' + '\u{309a}') // ㋩゚
+  // .set(TonalLetterTags.v + TonalLetterTags.i, '㋪' + '\u{309a}') // ㋪゚
+  // .set(TonalLetterTags.v + TonalLetterTags.u, '㋫' + '\u{309a}') // ㋫゚
+  // .set(TonalLetterTags.v + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
+  // .set(TonalLetterTags.v + TonalLetterTags.o, '㋭' + '\u{309a}'); // ㋭゚
+  .set(TonalLetterTags.p + TonalLetterTags.a, '㋩' + '\u{309a}') // ㋩゚
+  .set(TonalLetterTags.p + TonalLetterTags.i, '㋪' + '\u{309a}') // ㋪゚
+  .set(TonalLetterTags.p + TonalLetterTags.u, '㋫' + '\u{309a}') // ㋫゚
+  .set(TonalLetterTags.p + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
+  .set(TonalLetterTags.p + TonalLetterTags.o, '㋭' + '\u{309a}'); // ㋭゚
 
 const finalsForEKegekkeggeng = [
   TonalLetterTags.k.toString(),
@@ -1154,17 +1177,20 @@ const mappingInitial = new Map<string, Map<string, string[] | undefined>>()
   .set(TonalLetterTags.b, mappingInitialB)
   .set(TonalLetterTags.c, mappingInitialC)
   .set(TonalLetterTags.ch, mappingInitialC)
-  .set(TonalLetterTags.d, mappingInitialT)
+  // .set(TonalLetterTags.d, mappingInitialT)
+  .set(TonalLetterTags.t, mappingInitialT)
   .set(TonalLetterTags.g, mappingInitialG)
   .set(TonalLetterTags.h, mappingInitialH)
   .set(TonalLetterTags.j, mappingInitialJ)
-  .set(TonalLetterTags.k, mappingInitialK)
+  .set(TonalLetterTags.kh, mappingInitialK)
   .set(TonalLetterTags.l, mappingInitialL)
   .set(TonalLetterTags.m, mappingInitialM)
   .set(TonalLetterTags.n, mappingInitialN)
   .set(TonalLetterTags.ng, mappingInitialNG)
-  .set(TonalLetterTags.p, mappingInitialP)
-  .set(TonalLetterTags.q, mappingInitialK)
+  .set(TonalLetterTags.ph, mappingInitialP)
+  // .set(TonalLetterTags.q, mappingInitialK)
+  .set(TonalLetterTags.k, mappingInitialK)
   .set(TonalLetterTags.s, mappingInitialS)
-  .set(TonalLetterTags.t, mappingInitialT)
-  .set(TonalLetterTags.v, mappingInitialP);
+  .set(TonalLetterTags.th, mappingInitialT)
+  // .set(TonalLetterTags.v, mappingInitialP);
+  .set(TonalLetterTags.p, mappingInitialP);
