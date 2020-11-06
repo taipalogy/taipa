@@ -1,10 +1,10 @@
 import { TonalLetterTags, stopFinalsBgjklpsTonal } from './version2';
 import {
-  finalsLs,
-  finalsBgkp,
-  finalsJls,
-  tonalsWx,
-  nasalFinals,
+  finalConsonantsLs,
+  finalConsonantsBgkp,
+  finalConsonantsJls,
+  toneLettersWx,
+  nasalFinalConsonants,
 } from './collections';
 
 // mhf, nhf, nghf
@@ -17,7 +17,7 @@ export const smMnngHF = function (
   firstTonalF: string
 ) {
   if (
-    nasalFinals.includes(nasalFinal) &&
+    nasalFinalConsonants.includes(nasalFinal) &&
     TonalLetterTags.h === neutralFinalH &&
     TonalLetterTags.f === firstTonalF
   )
@@ -52,9 +52,9 @@ export const smMnngHWx = function (
   tonalWX: string
 ) {
   if (
-    nasalFinals.includes(nasalFinal) &&
+    nasalFinalConsonants.includes(nasalFinal) &&
     TonalLetterTags.h === neutralFinalH &&
-    tonalsWx.includes(tonalWX)
+    toneLettersWx.includes(tonalWX)
   )
     return true;
 
@@ -66,7 +66,10 @@ export const regexJlsF = /(j|l|s)f/g;
 
 // jf, lf, sf
 export const smJlsF = function (finalJls: string, firstTonalF: string) {
-  if (finalsJls.includes(finalJls) && TonalLetterTags.f === firstTonalF)
+  if (
+    finalConsonantsJls.includes(finalJls) &&
+    TonalLetterTags.f === firstTonalF
+  )
     return true;
 
   return false;
@@ -74,7 +77,10 @@ export const smJlsF = function (finalJls: string, firstTonalF: string) {
 
 // bf, gf, kf, pf
 export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
-  if (finalsBgkp.includes(finalBgkp) && TonalLetterTags.f === firstTonalF)
+  if (
+    finalConsonantsBgkp.includes(finalBgkp) &&
+    TonalLetterTags.f === firstTonalF
+  )
     return true;
 
   return false;
@@ -85,14 +91,19 @@ export const regexLsWx = /(l|s)(w|x)/g;
 
 // lw, lx, sw
 export const smLsWx = function (finalLs: string, tonalWX: string) {
-  if (finalsLs.includes(finalLs) && tonalsWx.includes(tonalWX)) return true;
+  if (finalConsonantsLs.includes(finalLs) && toneLettersWx.includes(tonalWX))
+    return true;
 
   return false;
 };
 
 // bw, bx, gw, gx, kw, kx, pw, px
 export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
-  if (finalsBgkp.includes(finalBgkp) && tonalsWx.includes(tonalWX)) return true;
+  if (
+    finalConsonantsBgkp.includes(finalBgkp) &&
+    toneLettersWx.includes(tonalWX)
+  )
+    return true;
 
   return false;
 };

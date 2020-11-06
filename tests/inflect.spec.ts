@@ -191,17 +191,8 @@ describe('Inflectional ending testing', () => {
 
 describe('Inflection testing', () => {
   const tw = inflectDesinence('guzleng');
-
   test('check the inflected form', () => {
     expect(tw.getForms()[0].literal).toEqual('guzlengz');
-  });
-});
-
-describe('Inflection testing', () => {
-  const tw = inflectTransfix('tamwpurhxoay');
-
-  test('check the inflected form', () => {
-    expect(tw.getForms()[0].literal).toEqual('tamwpurhwoaw');
   });
 });
 
@@ -314,7 +305,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectDesinence('tok');
-
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('tokf');
   });
@@ -338,13 +328,11 @@ describe('Inflection testing', () => {
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('chitwpoewiaw');
   });
-});
 
-describe('Inflection testing', () => {
-  const lx1 = inflectTransfix('tamwpurhxoay');
+  const lx2 = inflectTransfix('tamwpurhxoay');
 
   test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('tamwpurhwoaw');
+    expect(lx2.getForms()[0].literal).toEqual('tamwpurhwoaw');
   });
 });
 

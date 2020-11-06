@@ -19,14 +19,14 @@ import {
   PositionalLetter,
 } from '../unit';
 import {
-  initialsBghjl,
+  initialConsonantsBghjl,
   ttInitialTInitialPairs,
-  voicelessVoicedFinals,
-  initialsForFinalT,
-  finalsBgjlsbbggllss,
-  voicedVoicelessFinals,
-  initialsForTT,
-  nasalInitials,
+  voicelessVoicedFinalConsonants,
+  initialConsonantsForFinalT,
+  finalConsonantsForBgjlsbbggllss,
+  voicedVoicelessFinalConsonants,
+  initialConsonantsForTT,
+  nasalInitialConsonants,
 } from '../tonal/collections';
 import { TonalCombiningMetaplasm } from '../metaplasm';
 
@@ -76,7 +76,7 @@ export class TonalCombiningMorpheme extends Morpheme {
     if (
       checkedTonalsTonal.includes(syllable.lastLetter.literal) &&
       (uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal) ||
-        finalsBgjlsbbggllss.has(syllable.lastSecondLetter.literal))
+        finalConsonantsForBgjlsbbggllss.has(syllable.lastSecondLetter.literal))
     ) {
       // in case of a final followed by a tonal
       const ams = combinedCheckedAllomorphs.get(
@@ -189,9 +189,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     if (
       (this.letters[this.letters.length - 2].toString() ===
         TonalLetterTags.tt &&
-        Object.values(initialsForTT).includes(initial.toString())) ||
+        Object.values(initialConsonantsForTT).includes(initial.toString())) ||
       (this.letters[this.letters.length - 2].toString() === TonalLetterTags.t &&
-        Object.values(initialsForFinalT).includes(initial.toString()))
+        Object.values(initialConsonantsForFinalT).includes(initial.toString()))
     ) {
       const s: TonalSyllable = new TonalSyllable(
         this.letters.map(it => new AlphabeticLetter(it.characters))
@@ -211,7 +211,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       }
       if (fnl) {
         s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
-        if (nasalInitials.includes(initial.toString())) {
+        if (nasalInitialConsonants.includes(initial.toString())) {
           s.insertLetter(
             s.letters.length - 2,
             new AlphabeticLetter(initial.characters)
@@ -236,7 +236,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   private changeWithInitialMnng(initial: PositionalLetter) {
     if (
       initial.name === TonalSpellingTags.initial &&
-      nasalInitials.includes(initial.toString())
+      nasalInitialConsonants.includes(initial.toString())
     ) {
       return this.voicedFinal();
     }
@@ -258,7 +258,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   private changeWithInitialBghjl(initial: PositionalLetter) {
     if (
       initial.name === TonalSpellingTags.initial &&
-      initialsBghjl.includes(initial.toString())
+      initialConsonantsBghjl.includes(initial.toString())
     ) {
       return this.voicedFinal();
     }
@@ -317,7 +317,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   }
 
   private voicedFinal() {
-    const fnl = voicelessVoicedFinals.get(
+    const fnl = voicelessVoicedFinalConsonants.get(
       this.letters[this.letters.length - 2].toString()
     );
 
@@ -358,11 +358,11 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   toVoicelessFinal() {
     // unvoiced
     if (
-      voicedVoicelessFinals.has(
+      voicedVoicelessFinalConsonants.has(
         this.letters[this.letters.length - 2].toString()
       )
     ) {
-      const fnl = voicedVoicelessFinals.get(
+      const fnl = voicedVoicelessFinalConsonants.get(
         this.letters[this.letters.length - 2].toString()
       );
       if (fnl) {

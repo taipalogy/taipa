@@ -24,10 +24,11 @@ import {
 import { PositionalLetter, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 import {
-  finalsBgjlsbbggllss,
-  voicedVoicelessFinals,
-  nasalFinals,
-  fourthToEighthFinals,
+  finalConsonantsForBgjlsbbggllss,
+  voicedVoicelessFinalConsonants,
+  nasalFinalConsonants,
+  fourthToEighthFinalConsonants,
+  finalConsonantsForTransfix,
 } from './collections';
 
 /** Returns the uncombining forms of a syllable. */
@@ -89,16 +90,18 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         if (
           nslFnls.length == 0 &&
           (fnl === TonalLetterTags.w || fnl === TonalLetterTags.x) &&
-          Array.from(fourthToEighthFinals.keys()).includes(s.lastLetter.literal)
+          Array.from(fourthToEighthFinalConsonants.keys()).includes(
+            s.lastLetter.literal
+          )
         ) {
           // in case of no internal sandhi
           const fnl = s.lastLetter.literal;
           s.popLetter(); // pop the 4th final
-          const got = fourthToEighthFinals.get(fnl);
+          const got = fourthToEighthFinalConsonants.get(fnl);
           if (got) s.pushLetter(lowerLettersTonal.get(got)); // push the 8th final
-        } else if (finalsBgjlsbbggllss.has(s.lastLetter.literal)) {
+        } else if (finalConsonantsForBgjlsbbggllss.has(s.lastLetter.literal)) {
           // in case of internal or external sandhi
-          const fnlsOfLemma = finalsBgjlsbbggllss.get(
+          const fnlsOfLemma = finalConsonantsForBgjlsbbggllss.get(
             s.lastLetter.literal + fnl
           );
           // console.log(s, allomorph, fnl, fnlsOfLemma);
@@ -118,7 +121,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         } else if (
           letters.filter(it => it.name === TonalSpellingTags.vowel).length >
             0 &&
-          nasalFinals.includes(s.lastSecondLetter.literal) &&
+          nasalFinalConsonants.includes(s.lastSecondLetter.literal) &&
           neutralFinalsTonal.includes(s.lastLetter.literal)
         ) {
           // in case of internal sandhi of p or t
@@ -168,9 +171,11 @@ export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
     syllable: TonalSyllable,
     letters: Array<PositionalLetter>
   ) {
-    if (voicedVoicelessFinals.has(letters[letters.length - 2].toString())) {
+    if (
+      voicedVoicelessFinalConsonants.has(letters[letters.length - 2].toString())
+    ) {
       // in case of sandhi finals
-      const fnl = voicedVoicelessFinals.get(
+      const fnl = voicedVoicelessFinalConsonants.get(
         syllable.lastLetter.literal + letters[letters.length - 1].toString()
       );
       if (fnl)
@@ -179,10 +184,14 @@ export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
           lowerLettersTonal.get(fnl)
         );
     } else if (
-      fourthToEighthFinals.has(letters[letters.length - 2].toString()) &&
+      fourthToEighthFinalConsonants.has(
+        letters[letters.length - 2].toString()
+      ) &&
       letters[letters.length - 1].toString() === TonalLetterTags.x
     ) {
-      const fnl = fourthToEighthFinals.get(syllable.lastLetter.literal);
+      const fnl = fourthToEighthFinalConsonants.get(
+        syllable.lastLetter.literal
+      );
       if (fnl)
         syllable.replaceLetter(
           syllable.letters.length - 1,
@@ -318,8 +327,14 @@ export class TransfixUncombining extends TonalCombiningMetaplasm {
         // checked tones
         s.popLetter(); // pop letter w
         const clone: TonalSyllable = Object.create(s);
-        clone.popLetter(); // pop final t
-        clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.tt));
+        // get hh or tt
+        const got = finalConsonantsForTransfix.get(
+          s.letters[s.letters.length - 1].literal
+        );
+        if (got) {
+          clone.popLetter(); // pop final t
+          clone.pushLetter(lowerLettersTonal.get(got)); // push hh or tt
+        }
         return [s, clone];
       } else {
         // in case of free tones other than aw, return the other four free tones

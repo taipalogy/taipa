@@ -38,10 +38,12 @@ import {
 } from './matcher';
 import {
   epentheticLetters,
-  tonalsWx,
+  toneLettersWx,
   sandhiFinalsPPpttt,
-  fourthToEighthFinals,
-  nasalInitials,
+  fourthToEighthFinalConsonants,
+  nasalInitialConsonants,
+  sandhiFinalConsonantsBgjlsbbggllss,
+  finalConsonantsForBgjlsbbggllss,
 } from './collections';
 import {
   LastSyllableForms,
@@ -63,28 +65,30 @@ export function syllabifyTonal(
   let begin: number = 0;
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  let literalRoot4thFinal = '';
+  let literalLexicalRootFourth = '';
+  let literalLexicalRootEighth = '';
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
     ltrs.push(letters[i].literal);
     // console.log(`begining of the loop: ${literal}. ${ltrs}`);
-    const had = fourthToEighthFinals.has(letters[i].literal);
+    const had = fourthToEighthFinalConsonants.has(letters[i].literal);
     if (
       i + 1 < letters.length &&
       had &&
       TonalLetterTags.w === letters[i + 1].literal
     ) {
-      const got = fourthToEighthFinals.get(letters[i].literal);
+      const got = fourthToEighthFinalConsonants.get(letters[i].literal);
       // restore the lexical roots for 4th finals, which is 8th finals
       if (got) {
         // since it is 4th finals, length of 4th final is one, just slice one character
-        literalRoot4thFinal =
-          literalRoot4thFinal.slice(0, literalRoot4thFinal.length) + got;
-        // console.log(`literalRoot4thFinal: ${literalRoot4thFinal}`);
+        literalLexicalRootEighth =
+          literalLexicalRootFourth.slice(0, literalLexicalRootFourth.length) +
+          got;
+        // console.log(`literalRoot4thFinal: ${literalRoot4thChecked}, 8th: ${literalRoot8thChecked}`);
       }
     } else {
-      literalRoot4thFinal = literalRoot4thFinal + letters[i].literal;
+      literalLexicalRootFourth = literalLexicalRootFourth + letters[i].literal;
     }
 
     if (
@@ -98,10 +102,11 @@ export function syllabifyTonal(
       }
       break;
     } else if (
-      isInSyllableTable(literalRoot4thFinal) &&
+      (isInSyllableTable(literalLexicalRootFourth) ||
+        isInSyllableTable(literalLexicalRootEighth)) &&
       stopFinalsTonal.includes(letters[i].literal)
     ) {
-      // console.log(`i: ${i}, literal: ${literal}, literalRoot4thFinal: ${literalRoot4thFinal}, stopFinal: ${letters[i].literal}`);
+      // console.log(`i: ${i}, literal: ${literal}, literalRoot4thFinal: ${literalRoot4thChecked}, stopFinal: ${letters[i].literal}`);
       // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`);
       if (begin === beginOfSyllable) {
         matched = literal; // assign literal instead of literalRoot4thFinal
@@ -173,7 +178,6 @@ export function syllabifyTonal(
             // this combining form is not present in the pool,
             // but its uncombining forms are. e.g. aw.
             matched = literal;
-            //begin = beginOfSyllable;
             Object.assign(matchedLtrs, ltrs);
             break;
           }
@@ -194,10 +198,28 @@ export function syllabifyTonal(
 
       // when there are no tonals
 
-      if (letters[i].literal === TonalLetterTags.gg) {
-        // for surface form gg whose underlying form could be tt or kk.
-        matched = literal;
-        Object.assign(matchedLtrs, ltrs);
+      if (
+        // letters[i].literal === TonalLetterTags.gg
+        sandhiFinalConsonantsBgjlsbbggllss.includes(letters[i].literal)
+      ) {
+        // for all of the syllables with sandhi finals that are not present in syllable tables
+        const literalWithoutFinal = letters
+          .map((val, ind, arr) => (ind < i ? arr[ind].literal : ''))
+          .join('');
+        const gotFinalConsonants = finalConsonantsForBgjlsbbggllss.get(
+          letters[i].literal
+        );
+        if (gotFinalConsonants) {
+          // check if at least one uncombinging form present
+          const isUncombingFormPresent = gotFinalConsonants
+            .map(it => isInSyllableTable(literalWithoutFinal + it))
+            .reduce((prev, curr, ind, arr) => prev || curr);
+          if (isUncombingFormPresent) {
+            // at least one uncombining form is present
+            matched = literal;
+            Object.assign(matchedLtrs, ltrs);
+          }
+        }
       } else if (!freeTonalsTonal.includes(letters[i].literal)) {
         // free first tone without a free tonal
         const rules = freeAllomorphUncombiningRules.get(TonalLetterTags.zero);
@@ -466,7 +488,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       const nslInitLast = syllables[syllables.length - 1].pattern.filter(
         it =>
           it.name === TonalSpellingTags.initial &&
-          nasalInitials.includes(it.toString())
+          nasalInitialConsonants.includes(it.toString())
       );
 
       // ending ay
@@ -683,7 +705,9 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             lowerLettersTonal.get(TonalLetterTags.t)
           );
         } else if (
-          tonalsWx.includes(matchedStrs[i].charAt(matchedStrs[i].length - 1))
+          toneLettersWx.includes(
+            matchedStrs[i].charAt(matchedStrs[i].length - 1)
+          )
         ) {
           if (
             matchedStrs[i].charAt(matchedStrs[i].length - 1) ===
@@ -863,7 +887,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       if (fnl) {
         pattern.letters.push(fnl);
         const positions = tonalPositionalLetters.get(fnl.literal);
-        if (positions) pattern.pattern.push(positions(TonalSpellingTags.stopFinal));
+        if (positions)
+          pattern.pattern.push(positions(TonalSpellingTags.stopFinal));
       }
     } else if (
       this.sandhiFinalTonals.length > 0 &&

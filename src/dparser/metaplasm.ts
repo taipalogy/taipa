@@ -12,10 +12,10 @@ import {
 import {
   eighthToFirst,
   combiningRules,
-  nasalInitials,
-  initialsBghjl,
-  voicedVoicelessFinals,
-  eighthToFourthFinals,
+  nasalInitialConsonants,
+  initialConsonantsBghjl,
+  voicedVoicelessFinalConsonants,
+  eighthToFourthFinalConsonants,
 } from '../tonal/collections';
 import {
   TonalCombiningMetaplasm,
@@ -100,7 +100,9 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
             if (allomorph.final.toString().length == 2) {
               // 8th finals are of length 2
               s.popLetter(); // pop the 8th final
-              const got = eighthToFourthFinals.get(allomorph.final.toString());
+              const got = eighthToFourthFinalConsonants.get(
+                allomorph.final.toString()
+              );
               if (got) {
                 s.pushLetter(lowerLettersTonal.get(got)); // push the 4th final
               }
@@ -476,7 +478,7 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
       );
       if (
         ltrs[ltrs.length - 2].name == TonalSpellingTags.nasalFinal &&
-        nasalInitials.includes(
+        nasalInitialConsonants.includes(
           morphemes[morphemes.length - 1].syllable.letters[0].literal
         ) &&
         morphemes[morphemes.length - 1].syllable.letters[1].literal ===
@@ -855,8 +857,12 @@ export class FinalConsonantUnmutationInternal extends TonalUnmutationMetaplasm {
     if (morphemes.length > 1) {
       for (let i = 1; i < morphemes.length; i++) {
         // combine b, g, h, j, l with m, n, ng
-        const initialsBghjlmnng = initialsBghjl.concat(nasalInitials);
-        const finalsBglbbggll = Array.from(voicedVoicelessFinals.keys());
+        const initialsBghjlmnng = initialConsonantsBghjl.concat(
+          nasalInitialConsonants
+        );
+        const finalsBglbbggll = Array.from(
+          voicedVoicelessFinalConsonants.keys()
+        );
         if (
           morphemes[i].letters[0].name === TonalSpellingTags.initial &&
           finalsBglbbggll.includes(morphemes[i - 1].lastSecondLetter) &&

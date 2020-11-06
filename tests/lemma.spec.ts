@@ -108,6 +108,18 @@ describe('Uncombining form testing, ietf or ietw to ek or ekk', () => {
   });
 });
 
+describe('Uncombining form testing, citw to cit, purhw to purhh', () => {
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('jiwpowcitwlaw');
+  test('check the uncombining form for transfix, 4th checked syllable', () => {
+    expect(ms1[2].getForms()[0].literal).toEqual('cit');
+  });
+
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('tamwpurhwaw');
+  test('check the uncombining form for transfix, 8th checked syllable', () => {
+    expect(ms2[1].getForms()[1].literal).toEqual('purhh');
+  });
+});
+
 describe('Lemma testing', () => {
   const cli = new Client();
   // let doc = new TokenAnalysis();
