@@ -20,6 +20,8 @@ import {
   lowerLettersTonal,
   neutralFinalsTonal,
   TonalSpellingTags,
+  freeToneLettersTonal,
+  Tonal,
 } from './version2';
 import { PositionalLetter, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
@@ -30,12 +32,15 @@ import {
   fourthToEighthFinalConsonants,
   finalConsonantsForTransfix,
 } from './collections';
+import { isInSyllableTable } from './syllabletable';
+import { smIENGFywxz } from './matcher';
 
 /** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   constructor(private lettersFollowing: PositionalLetter[]) {
     super();
   }
+
   apply(
     letters: Array<PositionalLetter>,
     allomorph: Allomorph
@@ -51,9 +56,44 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           const tnls = freeAllomorphUncombiningRules.get('zero');
           if (tnls) s.pushLetter(new AlphabeticLetter(tnls[0].characters));
           return [s];
+        } else if (
+          letters.length > 3 &&
+          smIENGFywxz(
+            letters[letters.length - 4].toString(),
+            letters[letters.length - 3].toString(),
+            letters[letters.length - 2].toString(),
+            letters[letters.length - 1].toString()
+          )
+        ) {
+          let ret: TonalSyllable[] = [];
+          const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
+          const tnls = !rules ? [] : rules;
+          for (let i in tnls) {
+            let s: TonalSyllable = new TonalSyllable(
+              letters.map(x => new AlphabeticLetter(x.characters))
+            );
+            s.replaceLetter(
+              letters.length - 2,
+              lowerLettersTonal.get(TonalLetterTags.n)
+            );
+            // ret = this.getFormsForFreeSyllable(s, tnls[i]);
+            if (!(tnls[i] instanceof ZeroAllomorph)) {
+              // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
+              // replace z with f or x
+              s.popLetter();
+              s.pushLetter(new AlphabeticLetter(tnls[i].characters));
+              ret.push(s);
+            } else {
+              // 7 to 1
+              // pop z
+              s.popLetter();
+              ret.push(s);
+            }
+          }
+          return ret;
         } else {
           // the 7th tone has two baseforms
-          const ret = [];
+          const ret: TonalSyllable[] = [];
           const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
           const tnls = !rules ? [] : rules;
           for (let i in tnls) {
@@ -86,7 +126,8 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         const nslFnls = letters.filter(
           it => it.name === TonalSpellingTags.nasalFinal
         );
-        s.popLetter(); // pop out the tonal
+        s.popLetter(); // pop out the tone letter
+
         if (
           nslFnls.length == 0 &&
           (fnl === TonalLetterTags.w || fnl === TonalLetterTags.x) &&
@@ -96,9 +137,33 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         ) {
           // in case of no internal sandhi
           const fnl = s.lastLetter.literal;
-          s.popLetter(); // pop the 4th final
+          s.popLetter(); // pop the 4th final consonant
           const got = fourthToEighthFinalConsonants.get(fnl);
-          if (got) s.pushLetter(lowerLettersTonal.get(got)); // push the 8th final
+          if (got) {
+            if (
+              isInSyllableTable(s.literal + lowerLettersTonal.get(got).literal)
+            ) {
+              // push the 8th final consonant if it is present in syllable table
+              s.pushLetter(lowerLettersTonal.get(got));
+            } else {
+              if (
+                s.letters.length === 2 &&
+                s.letters[0].literal === TonalLetterTags.t &&
+                s.letters[1].literal === TonalLetterTags.i &&
+                fnl === TonalLetterTags.k
+              ) {
+                // handle combining form 'tikw' of lexical root 'tekk'
+                // combining forms 'tietw' and 'tietf is handled in another function
+                s.popLetter(); // pop out vowel i
+                s.pushLetter(lowerLettersTonal.get(TonalLetterTags.e)); // push vowel e
+                s.pushLetter(lowerLettersTonal.get(TonalLetterTags.kk)); // push final consonant kk
+              } else {
+                // restore the popped-out final consonant.
+                // a syllable is just returned with its tone letter popped out
+                s.pushLetter(lowerLettersTonal.get(fnl));
+              }
+            }
+          }
         } else if (finalConsonantsForBgjlsbbggllss.has(s.lastLetter.literal)) {
           // in case of internal or external sandhi
           const fnlsOfLemma = finalConsonantsForBgjlsbbggllss.get(
@@ -158,6 +223,8 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             return [clone];
           }
         }
+        // a syllable is just returned with the tone letter popped out
+        // e.g. tnghw where w is popped and tngh is returned
         return [s];
       }
     }

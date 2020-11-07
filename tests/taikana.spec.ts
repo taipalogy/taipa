@@ -658,6 +658,11 @@ describe('Taiwanese kana testing, sandhi final', () => {
   test('taikanas', () => {
     expect(ta8.blockSequences[0]).toEqual('プ' + '\u{1b167}' + '⍭カ゚ア⎛');
   });
+
+  const ta9 = cli.processTonal('chinghwngoeh');
+  test('taikanas', () => {
+    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝');
+  });
 });
 
 describe('Taiwanese kana testing, unicode', () => {

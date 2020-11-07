@@ -216,7 +216,6 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('chikfqi');
-
   test('check the stop final', () => {
     expect(doc.letterSequences[0][2].toString()).toEqual(TonalLetterTags.k);
   });

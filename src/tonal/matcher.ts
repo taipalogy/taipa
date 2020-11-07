@@ -1,4 +1,8 @@
-import { TonalLetterTags, stopFinalsBgjklpsTonal } from './version2';
+import {
+  TonalLetterTags,
+  stopFinalsBgjklpsTonal,
+  freeToneLettersTonal,
+} from './version2';
 import {
   finalConsonantsLs,
   finalConsonantsBgkp,
@@ -30,6 +34,7 @@ export const smMnngHF = function (
 export const regexMnngHWx = /(m|ng?)h(w|x)/g;
 
 // mhw
+/*
 export const smMHW = function (
   nasalFinal: string,
   neutralFinalHh: string,
@@ -44,7 +49,7 @@ export const smMHW = function (
 
   return false;
 };
-
+*/
 // mhw, mhx, nhw, nhx, nghw, nghx
 export const smMnngHWx = function (
   nasalFinal: string,
@@ -115,6 +120,31 @@ export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
     TonalLetterTags.f === firstTonalF
   )
     return true;
+
+  return false;
+};
+
+// ieng + tone letter
+export const smIENGFywxz = function (
+  vowelI: string,
+  vowelE: string,
+  nasalFinalConsonantNG: string,
+  toneLetter: string
+) {
+  if (
+    vowelI === TonalLetterTags.i &&
+    vowelE === TonalLetterTags.e &&
+    nasalFinalConsonantNG === TonalLetterTags.ng &&
+    freeToneLettersTonal.includes(toneLetter)
+  )
+    return true;
+
+  return false;
+};
+
+// -ik
+export const smIK = function (vowelI: string, vowelK: string) {
+  if (vowelI === TonalLetterTags.i && vowelK === TonalLetterTags.k) return true;
 
   return false;
 };

@@ -204,10 +204,18 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
             ) {
               // if there is a final, letter i should be used to retrieve an initial kana
               // in the case of ~eng or -ek
-              kanas[i] += handleCombiningDotBelowOverline(
-                initl[0].toString(),
-                TonalLetterTags.i
-              );
+              if (mdls.length == 1) {
+                kanas[i] += handleCombiningDotBelowOverline(
+                  initl[0].toString(),
+                  TonalLetterTags.i
+                );
+              } else if (
+                mdls.length == 2 &&
+                mdls[0].toString() === TonalLetterTags.i
+              ) {
+                // in case of -ieng
+                kanas[i] += getSmallKanaVowel(KanaLetterTags.i);
+              }
               if (mdls[j].toString() === TonalLetterTags.e) {
                 // for letter e, an small kana e is appended to the preceding i-ending initial
                 kanas[i] += getSmallKanaVowel(mdls[j].toString());

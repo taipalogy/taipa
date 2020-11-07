@@ -12,9 +12,9 @@ import {
   uncombiningRulesAy,
   CheckedAllomorph,
   Allomorph,
-  freeTonalsTonal,
+  freeToneLettersTonal,
   initialsTonal,
-  stopFinalsTonal,
+  stopFinalConsonantsTonal,
 } from './version2';
 import {
   AlphabeticLetter,
@@ -31,10 +31,11 @@ import {
   regexMnngHF,
   regexLsWx,
   regexMnngHWx,
-  smMHW,
   smJlsF,
   smLsWx,
   smBgkpWx,
+  smIENGFywxz,
+  smIK,
 } from './matcher';
 import {
   epentheticLetters,
@@ -79,13 +80,19 @@ export function syllabifyTonal(
       TonalLetterTags.w === letters[i + 1].literal
     ) {
       const got = fourthToEighthFinalConsonants.get(letters[i].literal);
-      // restore the lexical roots for 4th finals, which is 8th finals
+      // restore the lexical roots for 4th final consonants, which is 8th finals
+      // in case of absent 8th roots, 4th roots should also be restored
+      // e.g. koehwlaih, jiwpowcitwlaw, khihwlih
+      // 4th and 8th roots for 3rd checked tones
       if (got) {
         // since it is 4th finals, length of 4th final is one, just slice one character
         literalLexicalRootEighth =
           literalLexicalRootFourth.slice(0, literalLexicalRootFourth.length) +
           got;
         // console.log(`literalRoot4thFinal: ${literalRoot4thChecked}, 8th: ${literalRoot8thChecked}`);
+        // the below fourth should go after the above eighth
+        literalLexicalRootFourth =
+          literalLexicalRootFourth + letters[i].literal;
       }
     } else {
       literalLexicalRootFourth = literalLexicalRootFourth + letters[i].literal;
@@ -93,7 +100,7 @@ export function syllabifyTonal(
 
     if (
       isInSyllableTable(literal) &&
-      freeTonalsTonal.includes(letters[i].literal)
+      freeToneLettersTonal.includes(letters[i].literal)
     ) {
       // console.log(`i: ${i}, literal: ${literal}, tone: ${letters[i].literal}, letters[i+1]: ${letters[i + 1].literal}`)
       if (begin === beginOfSyllable) {
@@ -104,21 +111,19 @@ export function syllabifyTonal(
     } else if (
       (isInSyllableTable(literalLexicalRootFourth) ||
         isInSyllableTable(literalLexicalRootEighth)) &&
-      stopFinalsTonal.includes(letters[i].literal)
+      stopFinalConsonantsTonal.includes(letters[i].literal)
     ) {
-      // console.log(`i: ${i}, literal: ${literal}, literalRoot4thFinal: ${literalRoot4thChecked}, stopFinal: ${letters[i].literal}`);
+      // console.log(`i: ${i}, literal: ${literal}, root4th: ${literalLexicalRootFourth}, root8th: ${literalLexicalRootEighth}, stopFinalConsonant: ${letters[i].literal}`);
       // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`);
       if (begin === beginOfSyllable) {
         matched = literal; // assign literal instead of literalRoot4thFinal
         Object.assign(matchedLtrs, ltrs);
       }
       break;
-    } else if (freeTonalsTonal.includes(letters[i].literal)) {
+    } else if (freeToneLettersTonal.includes(letters[i].literal)) {
       // check tonals is the subset of free tonals
 
-      // console.log(
-      //   `i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`
-      // );
+      // console.log(`i: ${i}, literal: ${literal}, letters[i].literal, ${letters[i].literal}`);
 
       // when there are tonals
 
@@ -141,13 +146,29 @@ export function syllabifyTonal(
         letters[i] &&
         letters[i - 1] &&
         letters[i - 2] &&
-        smMHW(
+        smMnngHWx(
           letters[i - 2].literal,
           letters[i - 1].literal,
           letters[i].literal
         )
       ) {
-        // for lexical roots end with ~mhw.
+        // for syllables end with ~mhw.
+        matched = literal;
+        Object.assign(matchedLtrs, ltrs);
+        break;
+      } else if (
+        literal.length > 3 &&
+        letters[i] &&
+        letters[i - 1] &&
+        letters[i - 2] &&
+        letters[i - 3] &&
+        smIENGFywxz(
+          letters[i - 3].literal,
+          letters[i - 2].literal,
+          letters[i - 1].literal,
+          letters[i].literal
+        )
+      ) {
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
         break;
@@ -163,10 +184,10 @@ export function syllabifyTonal(
       const tnls = tnlsFa.concat(
         tnlsAy.filter(item => tnlsFa.indexOf(item) < 0)
       );
-      // console.log(tnls)
+      // console.log(`literal: ${literal}}`);
       if (tnls.length > 0) {
         for (let t of tnls) {
-          //console.log(lit + t.toString())
+          // console.log(literal, t.toString());
           if (
             isInSyllableTable(
               letters
@@ -194,15 +215,12 @@ export function syllabifyTonal(
       begin = beginOfSyllable;
       // console.log(matched);
     } else {
-      // console.log('no matched for syllabifyTonal:' + ltrs)
+      // console.log('no matched for syllabifyTonal:' + ltrs);
 
       // when there are no tonals
 
-      if (
-        // letters[i].literal === TonalLetterTags.gg
-        sandhiFinalConsonantsBgjlsbbggllss.includes(letters[i].literal)
-      ) {
-        // for all of the syllables with sandhi finals that are not present in syllable tables
+      if (sandhiFinalConsonantsBgjlsbbggllss.includes(letters[i].literal)) {
+        // for the syllables with sandhi final consonants that are not present in syllable tables
         const literalWithoutFinal = letters
           .map((val, ind, arr) => (ind < i ? arr[ind].literal : ''))
           .join('');
@@ -220,7 +238,11 @@ export function syllabifyTonal(
             Object.assign(matchedLtrs, ltrs);
           }
         }
-      } else if (!freeTonalsTonal.includes(letters[i].literal)) {
+      } else if (smIK(ltrs[ltrs.length - 2], ltrs[ltrs.length - 1])) {
+        // match for -ik
+        matched = literal;
+        Object.assign(matchedLtrs, ltrs);
+      } else if (!freeToneLettersTonal.includes(letters[i].literal)) {
         // free first tone without a free tonal
         const rules = freeAllomorphUncombiningRules.get(TonalLetterTags.zero);
         const tnls = !rules ? [] : rules;
@@ -990,7 +1012,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         morphemes.push(this.createMorpheme(ptn, new TransfixUncombining()));
       } else {
         if (i < matched.length - 1) {
-          // pass the letters of the following syllable to unchange sounds accordingly
+          // pass the letters of the following syllable to unchange letters accordingly
           morphemes.push(
             this.createMorpheme(
               ptn,
@@ -998,7 +1020,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
             )
           );
         } else {
-          // no sandhi sounds to unchange, just pass an empty array
+          // no sandhi letters to unchange, just pass an empty array
           morphemes.push(
             this.createMorpheme(ptn, new TonalUncombiningForms([]))
           );

@@ -108,15 +108,38 @@ describe('Uncombining form testing, ietf or ietw to ek or ekk', () => {
   });
 });
 
-describe('Uncombining form testing, citw to cit, purhw to purhh', () => {
+describe('Uncombining form testing', () => {
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('tikwteng');
+  test('check the uncombining form,  tikw to tekk, changed rime', () => {
+    expect(ms1[0].getForms()[0].literal).toEqual('tekk');
+  });
+  /*
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('liengzngauz');
+  test('check the uncombining form,  liengz to lienx, sandhi final', () => {
+    expect(ms2[0].getForms()[0].literal).toEqual('lienx');
+  });
+  */
+});
+
+describe('Uncombining form testing', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze('jiwpowcitwlaw');
-  test('check the uncombining form for transfix, 4th checked syllable', () => {
+  test('check the uncombining form for transfix, 4th checked syllable, citw to cit', () => {
     expect(ms1[2].getForms()[0].literal).toEqual('cit');
   });
 
   const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('tamwpurhwaw');
-  test('check the uncombining form for transfix, 8th checked syllable', () => {
+  test('check the uncombining form for transfix, 8th checked syllable, purhw to purhh', () => {
     expect(ms2[1].getForms()[1].literal).toEqual('purhh');
+  });
+
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('tnghwkhih');
+  test('check the uncombining form, 4th checked syllable, tnghw to tngh', () => {
+    expect(ms3[0].getForms()[0].literal).toEqual('tngh');
+  });
+
+  const ms4 = tonalLemmatizationAnalyzer.morphAnalyze('koehwlaih');
+  test('check the uncombining form, 4th checked syllable, koehw to koeh', () => {
+    expect(ms4[0].getForms()[0].literal).toEqual('koeh');
   });
 });
 

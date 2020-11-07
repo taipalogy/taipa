@@ -20,7 +20,6 @@ describe('Inflectional ending testing', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('gengzchiapf');
-
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
@@ -47,7 +46,6 @@ describe('Inflectional ending testing', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('piauzpietf');
-
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
@@ -74,7 +72,6 @@ describe('Inflectional ending testing', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('tengzsekf');
-
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
@@ -101,7 +98,6 @@ describe('Inflectional ending testing', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('sekfhapw');
-
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
@@ -134,7 +130,6 @@ describe('Inflectional ending testing', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('kakfsitw');
-
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
@@ -167,7 +162,6 @@ describe('Inflectional ending testing', () => {
   let doc = new TokenAnalysis();
 
   doc = cli.processTonal('keysiokw');
-
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
@@ -198,7 +192,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing, absent lexical roots', () => {
   const tw1 = inflectDesinence('s');
-
   test('check the word', () => {
     expect(tw1.word.literal).toEqual('');
   });
@@ -208,7 +201,6 @@ describe('Inflection testing, absent lexical roots', () => {
   });
 
   const tw2 = inflectDesinence('on');
-
   test('check the word', () => {
     expect(tw2.word.literal).toEqual('');
   });
@@ -218,7 +210,6 @@ describe('Inflection testing, absent lexical roots', () => {
   });
 
   const tw3 = inflectDesinence('ax');
-
   test('check the word', () => {
     // it used to be an empty string
     // ax is now asserted after tone sandhi of ay is incorporated
@@ -233,7 +224,6 @@ describe('Inflection testing, absent lexical roots', () => {
 
   const str = 'chimhw';
   const tw4 = inflectDesinence(str);
-
   test('check the word', () => {
     expect(tw4.word.literal).toEqual(str);
   });
@@ -245,7 +235,6 @@ describe('Inflection testing, absent lexical roots', () => {
 
 describe('Inflection testing, with x in the middle of a stem', () => {
   const lx = inflectDesinence('curxurz');
-
   test('check the base form', () => {
     expect(lx.word.literal).toEqual('');
   });
@@ -257,7 +246,6 @@ describe('Inflection testing, with x in the middle of a stem', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectDesinence('siax');
-
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('siaz');
   });
@@ -269,7 +257,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectDesinence('giapp');
-
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('giapw');
   });
@@ -281,7 +268,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectDesinence('catx');
-
   test('check the length of inflected forms', () => {
     expect(lx1.getForms().length).toEqual(0);
   });
@@ -293,7 +279,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectDesinence('ekw');
-
   test('check the length of inflected forms', () => {
     expect(lx1.getForms().length).toEqual(0);
   });
@@ -312,7 +297,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectDesinence('kurh');
-
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('kurhy');
   });
@@ -324,13 +308,11 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = inflectTransfix('chitwpoexiay');
-
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('chitwpoewiaw');
   });
 
   const lx2 = inflectTransfix('tamwpurhxoay');
-
   test('check the inflected form', () => {
     expect(lx2.getForms()[0].literal).toEqual('tamwpurhwoaw');
   });
@@ -338,7 +320,6 @@ describe('Inflection testing', () => {
 
 describe('Inflection testing', () => {
   const lx1 = createTonalInflectionLexeme('kurh', new FourthToFirstCombining());
-
   test('check the inflected form', () => {
     expect(lx1.getForms()[0].literal).toEqual('kurhf');
   });
@@ -348,7 +329,6 @@ describe('Tonal testing, inflection', () => {
   const wrd1 = 'siauzbiett';
 
   const lx1 = inflectEighthToFirst(wrd1);
-
   test('check the base form', () => {
     expect(lx1.word.literal).toEqual(wrd1);
   });
@@ -360,7 +340,6 @@ describe('Tonal testing, inflection', () => {
   const wrd2 = 'urhh';
 
   const lx2 = inflectEighthToSecond(wrd2);
-
   test('check the base form', () => {
     expect(lx2.word.literal).toEqual(wrd2);
   });
@@ -374,7 +353,6 @@ describe('Inflection testing, empty inputs', () => {
   const inputEmpty: any = '';
 
   const lx1 = inflectEighthToFirst(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
   });
@@ -384,7 +362,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx2 = inflectEighthToSecond(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx2.word.literal).toEqual('');
   });
@@ -398,7 +375,6 @@ describe('Inflection testing, undefined inputs', () => {
   const inputUnd: any = undefined;
 
   const lx1 = inflectEighthToFirst(inputUnd);
-
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
   });
@@ -408,7 +384,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx2 = inflectEighthToSecond(inputUnd);
-
   test('check the word literal', () => {
     expect(lx2.word.literal).toEqual('');
   });
@@ -422,7 +397,6 @@ describe('Inflection testing, empty inputs', () => {
   const inputEmpty: any = '';
 
   const lx1 = inflectDesinence(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
   });
@@ -432,7 +406,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx2 = inflectTransfix(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx2.word.literal).toEqual('');
   });
@@ -442,7 +415,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx3 = inflectEncliticE(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx3.word.literal).toEqual('');
   });
@@ -452,7 +424,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx4 = inflectPhrasalVerbParticle(inputEmpty, TonalLetterTags.zero);
-
   test('check the word literal', () => {
     expect(lx4.word.literal).toEqual('');
   });
@@ -462,7 +433,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx5 = inflectEncliticLe(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx5.word.literal).toEqual('');
   });
@@ -472,7 +442,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx6 = inflectPossesiveEx(inputEmpty);
-
   test('check the word literal', () => {
     expect(lx6.word.literal).toEqual('');
   });
@@ -482,7 +451,6 @@ describe('Inflection testing, empty inputs', () => {
   });
 
   const lx7 = inflectTo(inputEmpty, inputEmpty);
-
   test('check the word literal', () => {
     expect(lx7.word.literal).toEqual('');
   });
@@ -496,7 +464,6 @@ describe('Inflection testing, undefined inputs', () => {
   const inputUnd: any = undefined;
 
   const lx1 = inflectDesinence(inputUnd);
-
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
   });
@@ -506,7 +473,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx2 = inflectTransfix(inputUnd);
-
   test('check the word literal', () => {
     expect(lx2.word.literal).toEqual('');
   });
@@ -516,7 +482,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx3 = inflectEncliticE(inputUnd);
-
   test('check the word literal', () => {
     expect(lx3.word.literal).toEqual('');
   });
@@ -526,7 +491,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx4 = inflectPhrasalVerbParticle(inputUnd, TonalLetterTags.zero);
-
   test('check the word literal', () => {
     expect(lx4.word.literal).toEqual('');
   });
@@ -536,7 +500,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx5 = inflectEncliticLe(inputUnd);
-
   test('check the word literal', () => {
     expect(lx5.word.literal).toEqual('');
   });
@@ -546,7 +509,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx6 = inflectPossesiveEx(inputUnd);
-
   test('check the word literal', () => {
     expect(lx6.word.literal).toEqual('');
   });
@@ -556,7 +518,6 @@ describe('Inflection testing, undefined inputs', () => {
   });
 
   const lx7 = inflectTo(inputUnd, inputUnd);
-
   test('check the word literal', () => {
     expect(lx7.word.literal).toEqual('');
   });
