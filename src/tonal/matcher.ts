@@ -1,6 +1,6 @@
 import {
   TonalLetterTags,
-  stopFinalsBgjklpsTonal,
+  stopFinalConsonantsBgjklpsTonal,
   freeToneLettersTonal,
 } from './version2';
 import {
@@ -116,7 +116,7 @@ export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
 // bf, gf, jf, kf, lf, pf, sf
 export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
   if (
-    stopFinalsBgjklpsTonal.includes(finalBgjklps) &&
+    stopFinalConsonantsBgjklpsTonal.includes(finalBgjklps) &&
     TonalLetterTags.f === firstTonalF
   )
     return true;

@@ -43,7 +43,7 @@ export {
   inflectSerial,
 } from './dparser/inflector';
 export { insertToFollowingSyllable } from './dparser/inserter';
-export { mutateFinalOfPrecedingSyllable } from './dparser/mutator';
+export { mutateFinalConsonantOfPrecedingSyllable } from './dparser/mutator';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';
@@ -67,7 +67,7 @@ export {
   PositionalLetterGeneration as SpellingGeneration,
 } from './unit';
 export {
-  initialsTonal,
+  initialConsonantsTonal,
   nasalizationsTonal,
   vowelsTonal,
 } from './tonal/version2';

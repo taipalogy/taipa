@@ -3,27 +3,27 @@ import {
   tonalPositionalLetters,
   TonalSpellingTags,
   lowerLettersTonal,
-  checkedTonalsTonal,
+  checkedToneLettersTonal,
   freeToneLettersTonal,
-  initialsTonal,
+  initialConsonantsTonal,
   materLectionisTonal,
   vowelsTonal,
-  neutralFinalsTonal,
-  nasalFinalsTonal,
+  neutralFinalConsonantsTonal,
+  nasalFinalConsonantsTonal,
   nasalizationsTonal,
   stopFinalConsonantsTonal,
-  stopFinalsBgjklpsTonal,
-  stopFinalsBBggkkllppssTonal,
+  stopFinalConsonantsBgjklpsTonal,
+  stopFinalConsonantsBBggkkllppssTonal,
 } from './version2';
 import { combiningRules } from './collections';
 
 function initialConsonant(sg: PositionalLetterGeneration) {
-  if (initialsTonal.includes(sg.letters[sg.matchedLetters.length])) {
+  if (initialConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])) {
     const positions = tonalPositionalLetters.get(
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.initial);
+      const s = positions(TonalSpellingTags.initialConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else sg.matching = false;
@@ -39,7 +39,7 @@ function stopFinalConsonant(sg: PositionalLetterGeneration) {
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.stopFinal);
+      const s = positions(TonalSpellingTags.stopFinalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -54,18 +54,20 @@ function stopFinalConsonant(sg: PositionalLetterGeneration) {
 function neutralFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
-  if (neutralFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
+  if (
+    neutralFinalConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])
+  ) {
     const positions = tonalPositionalLetters.get(
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.stopFinal);
+      const s = positions(TonalSpellingTags.stopFinalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(neutralFinalsTonal.letters);
+      sg.predictions.push(neutralFinalConsonantsTonal.letters);
   }
 
   return sg;
@@ -75,18 +77,20 @@ function nasalFinalConsonant(sg: PositionalLetterGeneration) {
   // check out the length of letters like we do in the loop in function vowel
   if (!sg.matching || sg.letters.length == 0) return sg;
 
-  if (nasalFinalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
+  if (
+    nasalFinalConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])
+  ) {
     const positions = tonalPositionalLetters.get(
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.nasalFinal);
+      const s = positions(TonalSpellingTags.nasalFinalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(nasalFinalsTonal.letters);
+      sg.predictions.push(nasalFinalConsonantsTonal.letters);
   }
 
   return sg;
@@ -158,7 +162,7 @@ function nasalization(sg: PositionalLetterGeneration) {
   return sg;
 }
 
-function freeTonal(sg: PositionalLetterGeneration) {
+function freeToneLetter(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (freeToneLettersTonal.includes(sg.letters[sg.matchedLetters.length])) {
@@ -166,7 +170,7 @@ function freeTonal(sg: PositionalLetterGeneration) {
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.freeTonal);
+      const s = positions(TonalSpellingTags.freeToneLetter);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -178,21 +182,21 @@ function freeTonal(sg: PositionalLetterGeneration) {
   return sg;
 }
 
-function checkedTonal(sg: PositionalLetterGeneration) {
+function checkedToneLetter(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
-  if (checkedTonalsTonal.includes(sg.letters[sg.matchedLetters.length])) {
+  if (checkedToneLettersTonal.includes(sg.letters[sg.matchedLetters.length])) {
     const positions = tonalPositionalLetters.get(
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.checkedTonal);
+      const s = positions(TonalSpellingTags.checkedToneLetter);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(checkedTonalsTonal.letters);
+      sg.predictions.push(checkedToneLettersTonal.letters);
   }
 
   return sg;
@@ -202,14 +206,18 @@ function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (
-    stopFinalsBgjklpsTonal.includes(sg.letters[sg.matchedLetters.length]) ||
-    stopFinalsBBggkkllppssTonal.includes(sg.letters[sg.matchedLetters.length])
+    stopFinalConsonantsBgjklpsTonal.includes(
+      sg.letters[sg.matchedLetters.length]
+    ) ||
+    stopFinalConsonantsBBggkkllppssTonal.includes(
+      sg.letters[sg.matchedLetters.length]
+    )
   ) {
     const positions = tonalPositionalLetters.get(
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.stopFinal);
+      const s = positions(TonalSpellingTags.stopFinalConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -217,10 +225,10 @@ function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
     if (
       sg.letters.length == sg.matchedLetters.length &&
       sg.predictive &&
-      sg.predictSandhiFinal
+      sg.predictSandhiFinalConsonant
     ) {
-      sg.predictions.push(stopFinalsBgjklpsTonal.letters);
-      sg.predictions.push(stopFinalsBBggkkllppssTonal.letters);
+      sg.predictions.push(stopFinalConsonantsBgjklpsTonal.letters);
+      sg.predictions.push(stopFinalConsonantsBBggkkllppssTonal.letters);
     }
   }
 
@@ -230,24 +238,29 @@ function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
 // common syllables
 const scV = sgPipe(vowel);
 const scM = sgPipe(materLectionis);
-const scVT = sgPipe(vowel, freeTonal);
-const scMT = sgPipe(materLectionis, freeTonal);
+const scVT = sgPipe(vowel, freeToneLetter);
+const scMT = sgPipe(materLectionis, freeToneLetter);
 const scMC = sgPipe(materLectionis, neutralFinalConsonant);
 const scCV = sgPipe(initialConsonant, vowel);
 const scVC1 = sgPipe(vowel, stopFinalConsonant);
 const scVC2 = sgPipe(vowel, nasalFinalConsonant);
-const scVCT1 = sgPipe(vowel, stopFinalConsonant, checkedTonal);
-const scVCT2 = sgPipe(vowel, nasalFinalConsonant, freeTonal);
-const scCVT = sgPipe(initialConsonant, vowel, freeTonal);
+const scVCT1 = sgPipe(vowel, stopFinalConsonant, checkedToneLetter);
+const scVCT2 = sgPipe(vowel, nasalFinalConsonant, freeToneLetter);
+const scCVT = sgPipe(initialConsonant, vowel, freeToneLetter);
 const scCVC1 = sgPipe(initialConsonant, vowel, stopFinalConsonant);
 const scCVC2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant);
 const scCVCT1 = sgPipe(
   initialConsonant,
   vowel,
   stopFinalConsonant,
-  checkedTonal
+  checkedToneLetter
 );
-const scCVCT2 = sgPipe(initialConsonant, vowel, nasalFinalConsonant, freeTonal);
+const scCVCT2 = sgPipe(
+  initialConsonant,
+  vowel,
+  nasalFinalConsonant,
+  freeToneLetter
+);
 const scCVCC = sgPipe(
   initialConsonant,
   vowel,
@@ -258,12 +271,12 @@ const scVCCT = sgPipe(
   vowel,
   nasalFinalConsonant,
   neutralFinalConsonant,
-  checkedTonal
+  checkedToneLetter
 );
 
 // consonant syllables
 const scCC = sgPipe(initialConsonant, nasalFinalConsonant);
-const scCCT = sgPipe(initialConsonant, nasalFinalConsonant, freeTonal);
+const scCCT = sgPipe(initialConsonant, nasalFinalConsonant, freeToneLetter);
 const scCCC = sgPipe(
   initialConsonant,
   nasalFinalConsonant,
@@ -273,15 +286,15 @@ const scCCCT = sgPipe(
   initialConsonant,
   nasalFinalConsonant,
   neutralFinalConsonant,
-  checkedTonal
+  checkedToneLetter
 );
 
 // nasalization syllables
 const scVN = sgPipe(vowel, nasalization);
-const scVNT = sgPipe(vowel, nasalization, freeTonal);
+const scVNT = sgPipe(vowel, nasalization, freeToneLetter);
 const scVNC = sgPipe(vowel, nasalization, neutralFinalConsonant);
 const scCVN = sgPipe(initialConsonant, vowel, nasalization);
-const scCVNT = sgPipe(initialConsonant, vowel, nasalization, freeTonal);
+const scCVNT = sgPipe(initialConsonant, vowel, nasalization, freeToneLetter);
 const scCVNC = sgPipe(
   initialConsonant,
   vowel,
@@ -293,25 +306,25 @@ const scCVNCT = sgPipe(
   vowel,
   nasalization,
   neutralFinalConsonant,
-  checkedTonal
+  checkedToneLetter
 );
 
 // sandhi syllables
 const scVC3 = sgPipe(vowel, sandhiFinalConsonant);
-const scVCT3 = sgPipe(vowel, sandhiFinalConsonant, checkedTonal);
+const scVCT3 = sgPipe(vowel, sandhiFinalConsonant, checkedToneLetter);
 const scCVC3 = sgPipe(initialConsonant, vowel, sandhiFinalConsonant);
 const scCVCT3 = sgPipe(
   initialConsonant,
   vowel,
   sandhiFinalConsonant,
-  checkedTonal
+  checkedToneLetter
 );
 const scCVCCT = sgPipe(
   initialConsonant,
   vowel,
   nasalFinalConsonant,
   neutralFinalConsonant,
-  checkedTonal
+  checkedToneLetter
 );
 
 // prettier-ignore

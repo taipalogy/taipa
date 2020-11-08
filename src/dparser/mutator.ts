@@ -24,7 +24,7 @@ export function mutateInitialOfFollowingSyllable(word: string) {
 }
 
 /** Mutates the final of the preceding syllable. */
-export function mutateFinalOfPrecedingSyllable(word: string) {
+export function mutateFinalConsonantOfPrecedingSyllable(word: string) {
   const mrphs = morphAnalyzeChanging(word);
   const lx = new TonalMutationLexeme(
     mrphs,

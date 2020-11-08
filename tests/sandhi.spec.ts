@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { mutateFinalOfPrecedingSyllable } from '../src/dparser/mutator';
+import { mutateFinalConsonantOfPrecedingSyllable } from '../src/dparser/mutator';
 
 describe('Epenthesis testing', () => {
   const cli = new Client();
@@ -32,17 +32,17 @@ describe('Epenthesis testing', () => {
 });
 
 describe('Voiced final testing', () => {
-  const lx1 = mutateFinalOfPrecedingSyllable('lakwex');
+  const lx1 = mutateFinalConsonantOfPrecedingSyllable('lakwex');
   test('chech the surface form', () => {
     expect(lx1.getForms()[0].literal).toEqual('lagwex');
   });
 
-  const lx2 = mutateFinalOfPrecedingSyllable('chapwex');
+  const lx2 = mutateFinalConsonantOfPrecedingSyllable('chapwex');
   test('chech the surface form', () => {
     expect(lx2.getForms()[0].literal).toEqual('chabwex');
   });
 
-  const lx3 = mutateFinalOfPrecedingSyllable('chitwex');
+  const lx3 = mutateFinalConsonantOfPrecedingSyllable('chitwex');
   test('chech the surface form', () => {
     expect(lx3.getForms()[0].literal).toEqual('chilwex');
   });

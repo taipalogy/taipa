@@ -18,7 +18,7 @@ import {
   FreeTonalZ,
   FreeTonalX,
   lowerLettersTonal,
-  neutralFinalsTonal,
+  neutralFinalConsonantsTonal,
   TonalSpellingTags,
   freeToneLettersTonal,
   Tonal,
@@ -53,8 +53,8 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           const s: TonalSyllable = new TonalSyllable(
             letters.map(x => new AlphabeticLetter(x.characters))
           );
-          const tnls = freeAllomorphUncombiningRules.get('zero');
-          if (tnls) s.pushLetter(new AlphabeticLetter(tnls[0].characters));
+          const tnltrs = freeAllomorphUncombiningRules.get('zero');
+          if (tnltrs) s.pushLetter(new AlphabeticLetter(tnltrs[0].characters));
           return [s];
         } else if (
           letters.length > 3 &&
@@ -65,23 +65,23 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             letters[letters.length - 1].toString()
           )
         ) {
+          // in case of -ieng plus a tone letter
           let ret: TonalSyllable[] = [];
           const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
-          const tnls = !rules ? [] : rules;
-          for (let i in tnls) {
+          const tnltrs = !rules ? [] : rules;
+          for (let i in tnltrs) {
             let s: TonalSyllable = new TonalSyllable(
               letters.map(x => new AlphabeticLetter(x.characters))
             );
             s.replaceLetter(
               letters.length - 2,
               lowerLettersTonal.get(TonalLetterTags.n)
-            );
-            // ret = this.getFormsForFreeSyllable(s, tnls[i]);
-            if (!(tnls[i] instanceof ZeroAllomorph)) {
+            ); // replace letter ng with n
+            if (!(tnltrs[i] instanceof ZeroAllomorph)) {
               // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
               // replace z with f or x
               s.popLetter();
-              s.pushLetter(new AlphabeticLetter(tnls[i].characters));
+              s.pushLetter(new AlphabeticLetter(tnltrs[i].characters));
               ret.push(s);
             } else {
               // 7 to 1
@@ -95,16 +95,16 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           // the 7th tone has two baseforms
           const ret: TonalSyllable[] = [];
           const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
-          const tnls = !rules ? [] : rules;
-          for (let i in tnls) {
+          const tnltrs = !rules ? [] : rules;
+          for (let i in tnltrs) {
             let s: TonalSyllable = new TonalSyllable(
               letters.map(x => new AlphabeticLetter(x.characters))
             );
-            if (!(tnls[i] instanceof ZeroAllomorph)) {
+            if (!(tnltrs[i] instanceof ZeroAllomorph)) {
               // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
               // replace z with f or x
               s.popLetter();
-              s.pushLetter(new AlphabeticLetter(tnls[i].characters));
+              s.pushLetter(new AlphabeticLetter(tnltrs[i].characters));
               ret.push(s);
             } else {
               // 7 to 1
@@ -124,7 +124,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
         );
         const fnl = s.letters[s.letters.length - 1].literal;
         const nslFnls = letters.filter(
-          it => it.name === TonalSpellingTags.nasalFinal
+          it => it.name === TonalSpellingTags.nasalFinalConsonant
         );
         s.popLetter(); // pop out the tone letter
 
@@ -187,14 +187,15 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           letters.filter(it => it.name === TonalSpellingTags.vowel).length >
             0 &&
           nasalFinalConsonants.includes(s.lastSecondLetter.literal) &&
-          neutralFinalsTonal.includes(s.lastLetter.literal)
+          neutralFinalConsonantsTonal.includes(s.lastLetter.literal)
         ) {
           // in case of internal sandhi of p or t
           // if there is no medials, e.g. hmhh, hngh, just bypass this block
           // mhh, mh, nhh, nh, nghh, ngh
           if (
             this.lettersFollowing[0] &&
-            this.lettersFollowing[0].name === TonalSpellingTags.initial &&
+            this.lettersFollowing[0].name ===
+              TonalSpellingTags.initialConsonant &&
             s.lastSecondLetter.literal === this.lettersFollowing[0].toString()
           ) {
             // unchange to -tt or -t
@@ -379,7 +380,7 @@ export class TransfixUncombining extends TonalCombiningMetaplasm {
     if (allomorph) {
       const vowelA = letters.filter(it => it.toString() === TonalLetterTags.a);
       const chkFnls = letters.filter(
-        it => it.name === TonalSpellingTags.checkedTonal
+        it => it.name === TonalSpellingTags.checkedToneLetter
       );
       const s: TonalSyllable = new TonalSyllable(
         letters.map(it => new AlphabeticLetter(it.characters))
@@ -428,8 +429,12 @@ export class UncombiningFormsIetfIetwToEkEkk extends TonalCombiningMetaplasm {
     allomorph: Allomorph
   ): TonalSyllable[] {
     if (allomorph) {
-      const ics = letters.filter(i => i.name === TonalSpellingTags.initial);
-      const ts = letters.filter(i => i.name === TonalSpellingTags.checkedTonal);
+      const ics = letters.filter(
+        i => i.name === TonalSpellingTags.initialConsonant
+      );
+      const ts = letters.filter(
+        i => i.name === TonalSpellingTags.checkedToneLetter
+      );
       if (ics.length > 0 && ts.length > 0) {
         if (ts[0].toString() === TonalLetterTags.f) {
           // in case of ~ietf

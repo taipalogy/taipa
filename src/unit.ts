@@ -349,7 +349,7 @@ export class PositionalLetterGeneration {
   predictive: boolean = false;
   /** Predicted positional letters */
   predictions: Array<PositionalLetter[]> = new Array();
-  predictSandhiFinal: boolean = false;
+  predictSandhiFinalConsonant: boolean = false;
 }
 
 export class MatchedPattern {

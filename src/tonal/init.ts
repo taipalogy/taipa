@@ -4,7 +4,7 @@ import {
   TonalSpellingTags,
   TonalLetterTags,
   materLectionisTonal,
-  neutralFinalsTonal,
+  neutralFinalConsonantsTonal,
 } from './version2';
 import { TonalUncombiningMorpheme } from './morpheme';
 import {
@@ -70,13 +70,14 @@ function getReplicatedKanaVowel(
       letters[0].name === TonalSpellingTags.vowel &&
       (letters.length == 1 ||
         (letters.length == 2 &&
-          letters[letters.length - 1].name === TonalSpellingTags.freeTonal) ||
+          letters[letters.length - 1].name ===
+            TonalSpellingTags.freeToneLetter) ||
         (letters.length == 2 &&
           letters[letters.length - 1].name ===
             TonalSpellingTags.nasalization))) ||
     (letters.length == 3 &&
       letters[letters.length - 2].name === TonalSpellingTags.nasalization &&
-      letters[letters.length - 1].name === TonalSpellingTags.freeTonal)
+      letters[letters.length - 1].name === TonalSpellingTags.freeToneLetter)
   ) {
     // reduplicate the vowel for syllables without an initial
     // in case of a, e,
@@ -92,7 +93,7 @@ function getReplicatedKanaVowel(
       letters[0].name === TonalSpellingTags.vowel &&
       (letters[1].toString() === TonalLetterTags.h ||
         letters[1].toString() === TonalLetterTags.hh) &&
-      letters[2].name === TonalSpellingTags.checkedTonal) ||
+      letters[2].name === TonalSpellingTags.checkedToneLetter) ||
     (letters.length == 3 &&
       letters[0].name === TonalSpellingTags.vowel &&
       letters[1].name === TonalSpellingTags.nasalization &&
@@ -125,22 +126,22 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
 
   for (let i = 0; i < morphemes.length; i++) {
     const initl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.initial
+      it => it.name === TonalSpellingTags.initialConsonant
     );
     const mdls = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.vowel
     );
     const nslFnl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.nasalFinal
+      it => it.name === TonalSpellingTags.nasalFinalConsonant
     );
     const stpFnl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.stopFinal
+      it => it.name === TonalSpellingTags.stopFinalConsonant
     );
     const frTnl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.freeTonal
+      it => it.name === TonalSpellingTags.freeToneLetter
     );
     const chkTnl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.checkedTonal
+      it => it.name === TonalSpellingTags.checkedToneLetter
     );
     const nslz = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.nasalization
@@ -148,13 +149,13 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
     const finalsForEToKanaIE = stpFnl
       .filter(
         it =>
-          it.name === TonalSpellingTags.stopFinal &&
+          it.name === TonalSpellingTags.stopFinalConsonant &&
           finalsForEKegekkeggeng.includes(it.toString())
       )
       .concat(
         nslFnl.filter(
           it =>
-            it.name === TonalSpellingTags.nasalFinal &&
+            it.name === TonalSpellingTags.nasalFinalConsonant &&
             finalsForEKegekkeggeng.includes(it.toString())
         )
       );
@@ -257,7 +258,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                   nslFnl.length == 0 &&
                   mdls.length == 1 &&
                   stpFnl.length == 1 &&
-                  neutralFinalsTonal.includes(stpFnl[0].toString())
+                  neutralFinalConsonantsTonal.includes(stpFnl[0].toString())
                 ) {
                   kanas[i] += getSmallKanaVowel(mdls[j].toString());
                 }
@@ -332,7 +333,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                 kanas[i] += kn[1] + combiningOverline;
                 if (
                   stpFnl.length == 1 &&
-                  neutralFinalsTonal.includes(stpFnl[0].toString())
+                  neutralFinalConsonantsTonal.includes(stpFnl[0].toString())
                 ) {
                   // in case of orh, use kanaIRor to get one extra small kana
                   kanas[i] += getKanaIRor(

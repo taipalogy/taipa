@@ -15,7 +15,7 @@ function getNoInsertion(word: string) {
 }
 
 /**
- * Inserts an initial m, n, or ng to syllable ay if the preceding syllable has a final m, n, or ng.
+ * Inserts an initial consonant m, n, or ng to syllable ay if the preceding syllable has a final consonant m, n, or ng.
  * @param word A word whose second syllable is ay, a, or af. The word has at least 2 syllables for the second one to be inserted an initial.
  */
 export function insertToFollowingSyllable(word: string) {
@@ -24,14 +24,14 @@ export function insertToFollowingSyllable(word: string) {
   const gs = gm.makeGraphemes(word);
   const mrphs = tschmm.makeMorphemes(gs);
 
-  // TODO: add initial g. b? l?
+  // TODO: add initial consonant g. b? l?
   const lx = new TonalInsertionLexeme(mrphs, new Epenthesis());
 
   return lx;
 }
 
 /**
- * Insert an initial to the enclitic.
+ * Insert an initial consonant to the enclitic.
  * @param preceding Thre preceding word.
  * @param following The following word. The enclitic.
  */

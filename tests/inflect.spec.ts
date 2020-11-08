@@ -36,7 +36,7 @@ describe('Inflectional ending testing', () => {
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[1][4].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 });
@@ -62,7 +62,7 @@ describe('Inflectional ending testing', () => {
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[1][4].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 });
@@ -88,7 +88,7 @@ describe('Inflectional ending testing', () => {
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[1][3].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 });
@@ -114,13 +114,13 @@ describe('Inflectional ending testing', () => {
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[0][3].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[1][3].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 });
@@ -146,13 +146,13 @@ describe('Inflectional ending testing', () => {
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[0][3].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[1][3].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 });
@@ -178,7 +178,7 @@ describe('Inflectional ending testing', () => {
 
   test('check the name of checked tonal', () => {
     expect(doc.letterSequences[1][4].name).toEqual(
-      TonalSpellingTags.checkedTonal
+      TonalSpellingTags.checkedToneLetter
     );
   });
 });

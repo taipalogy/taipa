@@ -178,17 +178,17 @@ export const lowerLettersTonal = new LettersOfTonal([
 ]);
 
 export enum TonalSpellingTags {
-  initial = 'initialConsonant',
+  initialConsonant = 'initialConsonant',
   vowel = 'vowel',
   nasalization = 'nasalization',
-  stopFinal = 'stopFinalConsonant',
-  nasalFinal = 'nasalFinalConsonant',
-  checkedTonal = 'checkedToneLetter',
-  freeTonal = 'freeToneLetter',
+  stopFinalConsonant = 'stopFinalConsonant',
+  nasalFinalConsonant = 'nasalFinalConsonant',
+  checkedToneLetter = 'checkedToneLetter',
+  freeToneLetter = 'freeToneLetter',
 }
 
 export class Initial extends PositionalLetter {
-  name = TonalSpellingTags.initial;
+  name = TonalSpellingTags.initialConsonant;
 }
 export class Medial extends PositionalLetter {
   name = TonalSpellingTags.vowel;
@@ -204,17 +204,17 @@ export class Tonal extends PositionalLetter {
 }
 
 export class FreeTonal extends Tonal {
-  name = TonalSpellingTags.freeTonal;
+  name = TonalSpellingTags.freeToneLetter;
 }
 export class CheckedTonal extends Tonal {
-  name = TonalSpellingTags.checkedTonal;
+  name = TonalSpellingTags.checkedToneLetter;
 }
 
 export class StopFinal extends Final {
-  name = TonalSpellingTags.stopFinal;
+  name = TonalSpellingTags.stopFinalConsonant;
 }
 export class NasalFinal extends Final {
-  name = TonalSpellingTags.nasalFinal;
+  name = TonalSpellingTags.nasalFinalConsonant;
 }
 
 class MedialA extends Medial {
@@ -429,13 +429,16 @@ class NasalizationNN extends Nasalization {
 
 export const nasalizationsTonal = letterSequence([new NasalizationNN()]);
 
-export const nasalFinalsTonal = letterSequence([
+export const nasalFinalConsonantsTonal = letterSequence([
   new FinalM(),
   new FinalN(),
   new FinalNG(),
 ]);
 
-export const neutralFinalsTonal = letterSequence([new FinalH(), new FinalHH()]);
+export const neutralFinalConsonantsTonal = letterSequence([
+  new FinalH(),
+  new FinalHH(),
+]);
 
 export const vowelsTonal = letterSequence([
   new MedialA(),
@@ -455,7 +458,7 @@ export const materLectionisTonal = letterSequence([
   new MaterLectionisNG(),
 ]);
 
-export const initialsTonal = letterSequence([
+export const initialConsonantsTonal = letterSequence([
   new InitialP(),
   new InitialT(),
   new InitialK(),
@@ -490,7 +493,7 @@ export const freeToneLettersTonal = letterSequence([
   new FreeTonalY(),
 ]);
 
-export const checkedTonalsTonal = letterSequence([
+export const checkedToneLettersTonal = letterSequence([
   new CheckedTonalF(),
   new CheckedTonalY(),
   new CheckedTonalW(),
@@ -508,7 +511,7 @@ export const stopFinalConsonantsTonal = letterSequence([
   new FinalHH(),
 ]);
 
-export const stopFinalsBgjklpsTonal = letterSequence([
+export const stopFinalConsonantsBgjklpsTonal = letterSequence([
   new FinalB(),
   new FinalG(),
   new FinalJ(),
@@ -518,7 +521,7 @@ export const stopFinalsBgjklpsTonal = letterSequence([
   new FinalS(),
 ]);
 
-export const stopFinalsBBggkkllppssTonal = letterSequence([
+export const stopFinalConsonantsBBggkkllppssTonal = letterSequence([
   new FinalBB(),
   new FinalGG(),
   new FinalKK(),

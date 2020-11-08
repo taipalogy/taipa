@@ -131,14 +131,14 @@ export class TonalInsertionLexeme implements Lexeme {
       let pl = new PositionalLetter();
       if (
         adjacentLtrs[adjacentLtrs.length - 1].name ===
-          TonalSpellingTags.freeTonal &&
+          TonalSpellingTags.freeToneLetter &&
         adjacentLtrs[adjacentLtrs.length - 2].name ===
-          TonalSpellingTags.nasalFinal
+          TonalSpellingTags.nasalFinalConsonant
       ) {
         pl = adjacentLtrs[adjacentLtrs.length - 2];
       } else if (
         adjacentLtrs[adjacentLtrs.length - 1].name ===
-        TonalSpellingTags.nasalFinal
+        TonalSpellingTags.nasalFinalConsonant
       ) {
         pl = adjacentLtrs[adjacentLtrs.length - 1];
       }
@@ -182,11 +182,11 @@ export class TonalUninsertionLexeme implements Lexeme {
       let pl = new PositionalLetter();
       if (
         (adjacentLtrs[adjacentLtrs.length - 1].name ===
-          TonalSpellingTags.freeTonal &&
+          TonalSpellingTags.freeToneLetter &&
           adjacentLtrs[adjacentLtrs.length - 2].name ===
-            TonalSpellingTags.nasalFinal) ||
+            TonalSpellingTags.nasalFinalConsonant) ||
         adjacentLtrs[adjacentLtrs.length - 1].name ===
-          TonalSpellingTags.nasalFinal
+          TonalSpellingTags.nasalFinalConsonant
       ) {
         pl = adjacentLtrs[adjacentLtrs.length - 2];
       }
@@ -309,7 +309,7 @@ export class TonalMutationLexeme implements Lexeme {
     if (following.morphemes.length > 0) {
       const adjacentLtrs =
         following.morphemes[following.morphemes.length - 1].letters;
-      if (adjacentLtrs[0].name === TonalSpellingTags.initial) {
+      if (adjacentLtrs[0].name === TonalSpellingTags.initialConsonant) {
         const s = adjacentLtrs[0];
         const syls = this.morphemes[
           this.morphemes.length - 1
@@ -349,7 +349,9 @@ export class TonalUnmutationLexeme implements Lexeme {
 
   unmutateWith(following: TonalUnmutationLexeme) {
     const ltrs = this.morphemes[this.morphemes.length - 1].letters;
-    const fnls = ltrs.filter(i => i.name === TonalSpellingTags.stopFinal);
+    const fnls = ltrs.filter(
+      i => i.name === TonalSpellingTags.stopFinalConsonant
+    );
     const wrd = new TonalWord(
       this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
     );
