@@ -131,7 +131,7 @@ export class TonalInsertionLexeme implements Lexeme {
       let pl = new PositionalLetter();
       if (
         adjacentLtrs[adjacentLtrs.length - 1].name ===
-          TonalSpellingTags.freeToneLetter &&
+          TonalSpellingTags.freeTone &&
         adjacentLtrs[adjacentLtrs.length - 2].name ===
           TonalSpellingTags.nasalFinalConsonant
       ) {
@@ -182,7 +182,7 @@ export class TonalUninsertionLexeme implements Lexeme {
       let pl = new PositionalLetter();
       if (
         (adjacentLtrs[adjacentLtrs.length - 1].name ===
-          TonalSpellingTags.freeToneLetter &&
+          TonalSpellingTags.freeTone &&
           adjacentLtrs[adjacentLtrs.length - 2].name ===
             TonalSpellingTags.nasalFinalConsonant) ||
         adjacentLtrs[adjacentLtrs.length - 1].name ===

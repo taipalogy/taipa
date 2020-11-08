@@ -14,7 +14,9 @@ function initialConsonant(sg: PositionalLetterGeneration) {
   const sics = initialConsonantsKana;
 
   if (sics.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    const positions = kanaPositionalLetters.get(
+      sg.letters[sg.matchedLetters.length]
+    );
     if (positions) {
       const s = positions(KanaSpellingTags.initialConsonant);
       if (s) sg.matchedLetters.push(s);
@@ -28,7 +30,9 @@ function semivowel(sg: PositionalLetterGeneration) {
   const ssvs = semivowelsKana;
 
   if (ssvs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    const positions = kanaPositionalLetters.get(
+      sg.letters[sg.matchedLetters.length]
+    );
     if (positions) {
       const s = positions(KanaSpellingTags.semivowel);
       if (s) sg.matchedLetters.push(s);
@@ -42,7 +46,9 @@ function vowel(sg: PositionalLetterGeneration) {
   const svs = vowelsKana;
 
   if (svs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    const positions = kanaPositionalLetters.get(
+      sg.letters[sg.matchedLetters.length]
+    );
     if (positions) {
       const s = positions(KanaSpellingTags.vowel);
       if (s) sg.matchedLetters.push(s);
@@ -56,7 +62,9 @@ function hatsuon(sg: PositionalLetterGeneration) {
   const sfcs = hatsuonsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    const positions = kanaPositionalLetters.get(
+      sg.letters[sg.matchedLetters.length]
+    );
     if (positions) {
       const s = positions(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedLetters.push(s);
@@ -70,7 +78,9 @@ function finalConsonant(sg: PositionalLetterGeneration) {
   const sfcs = finalConsonantsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    const positions = kanaPositionalLetters.get(
+      sg.letters[sg.matchedLetters.length]
+    );
     if (positions) {
       const s = positions(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedLetters.push(s);
@@ -84,7 +94,9 @@ function germinatedConsonant(sg: PositionalLetterGeneration) {
   const sgcs = germinatedConsonantsKana;
 
   if (sgcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(sg.letters[sg.matchedLetters.length]);
+    const positions = kanaPositionalLetters.get(
+      sg.letters[sg.matchedLetters.length]
+    );
     if (positions) {
       const s = positions(KanaSpellingTags.germinatedConsonant);
       if (s) sg.matchedLetters.push(s);

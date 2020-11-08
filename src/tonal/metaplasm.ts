@@ -380,7 +380,7 @@ export class TransfixUncombining extends TonalCombiningMetaplasm {
     if (allomorph) {
       const vowelA = letters.filter(it => it.toString() === TonalLetterTags.a);
       const chkFnls = letters.filter(
-        it => it.name === TonalSpellingTags.checkedToneLetter
+        it => it.name === TonalSpellingTags.checkedTone
       );
       const s: TonalSyllable = new TonalSyllable(
         letters.map(it => new AlphabeticLetter(it.characters))
@@ -432,9 +432,7 @@ export class UncombiningFormsIetfIetwToEkEkk extends TonalCombiningMetaplasm {
       const ics = letters.filter(
         i => i.name === TonalSpellingTags.initialConsonant
       );
-      const ts = letters.filter(
-        i => i.name === TonalSpellingTags.checkedToneLetter
-      );
+      const ts = letters.filter(i => i.name === TonalSpellingTags.checkedTone);
       if (ics.length > 0 && ts.length > 0) {
         if (ts[0].toString() === TonalLetterTags.f) {
           // in case of ~ietf

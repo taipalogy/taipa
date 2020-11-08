@@ -178,13 +178,13 @@ export const lowerLettersTonal = new LettersOfTonal([
 ]);
 
 export enum TonalSpellingTags {
-  initialConsonant = 'initialConsonant',
+  initialConsonant = 'initialConsonant', // initial consonant
   vowel = 'vowel',
   nasalization = 'nasalization',
-  stopFinalConsonant = 'stopFinalConsonant',
-  nasalFinalConsonant = 'nasalFinalConsonant',
-  checkedToneLetter = 'checkedToneLetter',
-  freeToneLetter = 'freeToneLetter',
+  stopFinalConsonant = 'stopFinalConsonant', // stop final consonant
+  nasalFinalConsonant = 'nasalFinalConsonant', // nasal final consonant
+  checkedTone = 'checkedTone', // checked tone letter
+  freeTone = 'freeTone', // free tone letter
 }
 
 export class Initial extends PositionalLetter {
@@ -204,10 +204,10 @@ export class Tonal extends PositionalLetter {
 }
 
 export class FreeTonal extends Tonal {
-  name = TonalSpellingTags.freeToneLetter;
+  name = TonalSpellingTags.freeTone;
 }
 export class CheckedTonal extends Tonal {
-  name = TonalSpellingTags.checkedToneLetter;
+  name = TonalSpellingTags.checkedTone;
 }
 
 export class StopFinal extends Final {

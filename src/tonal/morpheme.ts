@@ -421,7 +421,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
         it => it.name === TonalSpellingTags.stopFinalConsonant
       );
       const chkttnls = letters.filter(
-        it => it.name === TonalSpellingTags.checkedToneLetter
+        it => it.name === TonalSpellingTags.checkedTone
       );
 
       if (
@@ -504,7 +504,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       const tnl = syllables[syllables.length - 2].pattern.filter(
         it =>
           (it.name === TonalSpellingTags.nasalFinalConsonant ||
-            it.name === TonalSpellingTags.checkedToneLetter) &&
+            it.name === TonalSpellingTags.checkedTone) &&
           keysAy.includes(it.toString())
       );
       const nslInitLast = syllables[syllables.length - 1].pattern.filter(
@@ -576,14 +576,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     if (syllables.length == 2) {
       const stems = syllables
         .map(it =>
-          it.pattern.filter(s => s.name !== TonalSpellingTags.freeToneLetter)
+          it.pattern.filter(s => s.name !== TonalSpellingTags.freeTone)
         )
         .map(seq => seq.map(s => s.toString()).join(''));
 
       // TODO: add checks for tone group
       const tnls = syllables
         .map(it =>
-          it.pattern.filter(s => s.name === TonalSpellingTags.freeToneLetter)
+          it.pattern.filter(s => s.name === TonalSpellingTags.freeTone)
         )
         .map(seq => seq.map(ltr => ltr.toString()).join(''));
 
@@ -599,8 +599,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         .map(it =>
           it.pattern.filter(
             ltr =>
-              ltr.name !== TonalSpellingTags.freeToneLetter &&
-              ltr.name !== TonalSpellingTags.checkedToneLetter
+              ltr.name !== TonalSpellingTags.freeTone &&
+              ltr.name !== TonalSpellingTags.checkedTone
           )
         )
         .map(seq => seq.map(ltr => ltr.toString()).join(''));
@@ -616,7 +616,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       // TODO: add checks for tone group
       const tnls = syllables
         .map(it =>
-          it.pattern.filter(s => s.name === TonalSpellingTags.freeToneLetter)
+          it.pattern.filter(s => s.name === TonalSpellingTags.freeTone)
         )
         .map(seq => seq.map(s => s.toString()).join(''));
 
@@ -643,7 +643,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         i => i.name === TonalSpellingTags.stopFinalConsonant
       );
       const ts = syllables[syllables.length - 2].pattern.filter(
-        i => i.name === TonalSpellingTags.checkedToneLetter
+        i => i.name === TonalSpellingTags.checkedTone
       );
       if (
         vs.length == 2 &&

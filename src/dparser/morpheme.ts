@@ -136,7 +136,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     if (n) {
       if (n.name === TonalSpellingTags.nasalization) {
         const ltrs = this.letters;
-        if (ltrs[ltrs.length - 1].name === TonalSpellingTags.freeToneLetter) {
+        if (ltrs[ltrs.length - 1].name === TonalSpellingTags.freeTone) {
           ltrs.splice(ltrs.length - 1, 0, n);
         } else if (ltrs[ltrs.length - 1].name === TonalSpellingTags.vowel) {
           ltrs.push(n);

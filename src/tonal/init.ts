@@ -70,14 +70,13 @@ function getReplicatedKanaVowel(
       letters[0].name === TonalSpellingTags.vowel &&
       (letters.length == 1 ||
         (letters.length == 2 &&
-          letters[letters.length - 1].name ===
-            TonalSpellingTags.freeToneLetter) ||
+          letters[letters.length - 1].name === TonalSpellingTags.freeTone) ||
         (letters.length == 2 &&
           letters[letters.length - 1].name ===
             TonalSpellingTags.nasalization))) ||
     (letters.length == 3 &&
       letters[letters.length - 2].name === TonalSpellingTags.nasalization &&
-      letters[letters.length - 1].name === TonalSpellingTags.freeToneLetter)
+      letters[letters.length - 1].name === TonalSpellingTags.freeTone)
   ) {
     // reduplicate the vowel for syllables without an initial
     // in case of a, e,
@@ -93,7 +92,7 @@ function getReplicatedKanaVowel(
       letters[0].name === TonalSpellingTags.vowel &&
       (letters[1].toString() === TonalLetterTags.h ||
         letters[1].toString() === TonalLetterTags.hh) &&
-      letters[2].name === TonalSpellingTags.checkedToneLetter) ||
+      letters[2].name === TonalSpellingTags.checkedTone) ||
     (letters.length == 3 &&
       letters[0].name === TonalSpellingTags.vowel &&
       letters[1].name === TonalSpellingTags.nasalization &&
@@ -138,10 +137,10 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
       it => it.name === TonalSpellingTags.stopFinalConsonant
     );
     const frTnl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.freeToneLetter
+      it => it.name === TonalSpellingTags.freeTone
     );
     const chkTnl = morphemes[i].letters.filter(
-      it => it.name === TonalSpellingTags.checkedToneLetter
+      it => it.name === TonalSpellingTags.checkedTone
     );
     const nslz = morphemes[i].letters.filter(
       it => it.name === TonalSpellingTags.nasalization

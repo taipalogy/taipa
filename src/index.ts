@@ -62,10 +62,7 @@ export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord } from './tonal/lexeme';
 export { TonalPhrase } from './tonal/phraseme';
 
-export {
-  PositionalLetter,
-  PositionalLetterGeneration as SpellingGeneration,
-} from './unit';
+export { PositionalLetter, PositionalLetterGeneration } from './unit';
 export {
   initialConsonantsTonal,
   nasalizationsTonal,

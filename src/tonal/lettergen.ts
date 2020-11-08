@@ -170,7 +170,7 @@ function freeToneLetter(sg: PositionalLetterGeneration) {
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.freeToneLetter);
+      const s = positions(TonalSpellingTags.freeTone);
       if (s) sg.matchedLetters.push(s);
     }
   } else {
@@ -190,7 +190,7 @@ function checkedToneLetter(sg: PositionalLetterGeneration) {
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(TonalSpellingTags.checkedToneLetter);
+      const s = positions(TonalSpellingTags.checkedTone);
       if (s) sg.matchedLetters.push(s);
     }
   } else {

@@ -104,11 +104,11 @@ export const lowerLettersKana = new LettersOfKana([
 ]);
 
 export enum KanaSpellingTags {
-  germinatedConsonant = 'germinatedConsonant',
-  initialConsonant = 'initialConsonant',
+  germinatedConsonant = 'germinatedConsonant', // germinated consonant
+  initialConsonant = 'initialConsonant', // initial consonant
   semivowel = 'semivowel',
   vowel = 'vowel',
-  finalConsonant = 'finalConsonant',
+  finalConsonant = 'finalConsonant', // final consonant
 }
 
 class GerminatedConsonant extends PositionalLetter {
