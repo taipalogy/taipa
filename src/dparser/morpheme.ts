@@ -204,7 +204,6 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       );
       if (!fnl && initial.toString() === TonalLetterTags.j) {
         // this block is dedicated to -tfj- and -twj-, since there is only -jfj- but not -jwj-
-        // TODO: need to clarify if there is -jwj-
         fnl = ttInitialTInitialPairs.get(
           this.letters[this.letters.length - 2].toString() +
             this.letters[this.letters.length - 1] +

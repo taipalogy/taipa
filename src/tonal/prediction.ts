@@ -33,8 +33,8 @@ export function predict(letters: string[]) {
   []);
 
   // for valid predictions
-  const predictions = dedupes.filter(x =>
-    isInSyllableTable(letters.join('') + x[0])
+  const predictions = dedupes.filter(it =>
+    isInSyllableTable(letters.join('') + it[0])
   );
 
   return predictions;
