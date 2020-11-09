@@ -65,32 +65,32 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
             letters[letters.length - 1].toString()
           )
         ) {
-          // in case of -ieng plus a tone letter
-          let ret: TonalSyllable[] = [];
-          const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
-          const tnltrs = !rules ? [] : rules;
-          for (let i in tnltrs) {
-            let s: TonalSyllable = new TonalSyllable(
-              letters.map(x => new AlphabeticLetter(x.characters))
-            );
-            s.replaceLetter(
-              letters.length - 2,
-              lowerLettersTonal.get(TonalLetterTags.n)
-            ); // replace letter ng with n
-            if (!(tnltrs[i] instanceof ZeroAllomorph)) {
-              // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
-              // replace z with f or x
-              s.popLetter();
-              s.pushLetter(new AlphabeticLetter(tnltrs[i].characters));
-              ret.push(s);
-            } else {
-              // 7 to 1
-              // pop z
-              s.popLetter();
-              ret.push(s);
-            }
-          }
-          return ret;
+          // in case of -ieng plus a tone letter. e.g. liengzngauz
+          // let ret: TonalSyllable[] = [];
+          // const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
+          // const tnltrs = !rules ? [] : rules;
+          // for (let i in tnltrs) {
+          //   let s: TonalSyllable = new TonalSyllable(
+          //     letters.map(x => new AlphabeticLetter(x.characters))
+          //   );
+          //   s.replaceLetter(
+          //     letters.length - 2,
+          //     lowerLettersTonal.get(TonalLetterTags.n)
+          //   ); // replace letter ng with n
+          //   if (!(tnltrs[i] instanceof ZeroAllomorph)) {
+          //     // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
+          //     // replace z with f or x
+          //     s.popLetter();
+          //     s.pushLetter(new AlphabeticLetter(tnltrs[i].characters));
+          //     ret.push(s);
+          //   } else {
+          //     // 7 to 1
+          //     // pop z
+          //     s.popLetter();
+          //     ret.push(s);
+          //   }
+          // }
+          // return ret;
         } else {
           // the 7th tone has two baseforms
           const ret: TonalSyllable[] = [];
