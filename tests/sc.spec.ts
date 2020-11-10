@@ -13,10 +13,10 @@ describe('Syllable composition testing', () => {
     expect(lx2.word.literal).toEqual('ai');
   });
 
-  const lx3 = lemmatize('oai');
+  const lx3 = lemmatize('uai');
 
   test('check the syllable composition. v.', () => {
-    expect(lx3.word.literal).toEqual('oai');
+    expect(lx3.word.literal).toEqual('uai');
   });
 });
 
@@ -45,10 +45,10 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('koai');
+  const lx = lemmatize('kuai');
 
   test('check the syllable composition. cv.', () => {
-    expect(lx.word.literal).toEqual('koai');
+    expect(lx.word.literal).toEqual('kuai');
   });
 });
 
@@ -81,10 +81,10 @@ describe('Syllable composition testing', () => {
 });
 
 describe('Syllable composition testing', () => {
-  const lx = lemmatize('koaiw');
+  const lx = lemmatize('kuaiw');
 
   test('check the syllable composition. cvt.', () => {
-    expect(lx.word.literal).toEqual('koaiw');
+    expect(lx.word.literal).toEqual('kuaiw');
   });
 });
 
@@ -95,10 +95,10 @@ describe('Syllable composition testing', () => {
     expect(lx1.word.literal).toEqual('sip');
   });
 
-  const lx2 = lemmatize('seng');
+  const lx2 = lemmatize('sing');
 
   test('check the syllable composition. cvc.', () => {
-    expect(lx2.word.literal).toEqual('seng');
+    expect(lx2.word.literal).toEqual('sing');
   });
 });
 
@@ -109,10 +109,10 @@ describe('Syllable composition testing', () => {
     expect(lx1.word.literal).toEqual('sipf');
   });
 
-  const lx2 = lemmatize('sengx');
+  const lx2 = lemmatize('singx');
 
   test('check the syllable composition. cvct.', () => {
-    expect(lx2.word.literal).toEqual('sengx');
+    expect(lx2.word.literal).toEqual('singx');
   });
 });
 

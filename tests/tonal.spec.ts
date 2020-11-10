@@ -14,7 +14,7 @@ import { createTonalInflectionLexeme } from '../src/dparser/creator';
 describe('Tonal testing', () => {
   const cli = new Client();
 
-  const t1 = cli.processTonal('tamwpurhxoay');
+  const t1 = cli.processTonal('tamwpurhxuay');
 
   test('check the tone letter', () => {
     expect(t1.letterSequences[1][3].toString()).toEqual(TonalLetterTags.x);
@@ -32,19 +32,19 @@ describe('Tonal testing', () => {
     expect(t3.letterSequences[1][2].toString()).toEqual(TonalLetterTags.f);
   });
 
-  const t4 = cli.processTonal('chaufcheng');
+  const t4 = cli.processTonal('chaufching');
 
   test('check the tone letter', () => {
     expect(t4.letterSequences[0][3].toString()).toEqual(TonalLetterTags.f);
   });
 
-  const t5 = cli.processTonal('taizoanx');
+  const t5 = cli.processTonal('taizuanx');
 
   test('check the tone letter', () => {
     expect(t5.letterSequences[1][3].toString()).toEqual(TonalLetterTags.x);
   });
 
-  const t6 = cli.processTonal('taizoanzoez');
+  const t6 = cli.processTonal('taizuanzuez');
 
   test('check the tone letter', () => {
     expect(t6.letterSequences[2][2].toString()).toEqual(TonalLetterTags.z);
@@ -74,7 +74,7 @@ describe('Tonal testing', () => {
     expect(t10.letterSequences[0][4].toString()).toEqual(TonalLetterTags.w);
   });
 
-  const t11 = cli.processTonal('kazvi');
+  const t11 = cli.processTonal('kazpi');
 
   test('check the tone letter', () => {
     expect(t11.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
@@ -114,7 +114,7 @@ describe('Tonal testing, if present or not', () => {
     expect(t1.word.literal).toEqual('ax');
   });
 
-  const t2 = cli.processTonal('soaiw');
+  const t2 = cli.processTonal('suaiw');
 
   test('check if it is not present. 5 letters in length', () => {
     expect(t2.word.literal).toEqual('');
@@ -144,7 +144,7 @@ describe('Tonal testing', () => {
     expect(ms2[0].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.y);
   });
 
-  const wrd2 = 'chengzhokk';
+  const wrd2 = 'chingzhokk';
 
   const ms3 = tia.morphAnalyze(wrd2, new TonalZeroCombining());
 
@@ -216,7 +216,7 @@ describe('Tone group testing of words', () => {
     expect(lx4.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.z);
   });
 
-  const lx5 = createTonalInflectionLexeme('pah');
+  const lx5 = createTonalInflectionLexeme('phah');
   const lx6 = createTonalInflectionLexeme('ew');
 
   test('check the tone of the word, 43', () => {
@@ -266,7 +266,7 @@ describe('Tone group testing of syllables', () => {
 
 describe('Tone group testing of phrasal verbs', () => {
   const lx1 = createTonalInflectionLexeme('ciet');
-  const lx2 = createTonalInflectionLexeme('loeh');
+  const lx2 = createTonalInflectionLexeme('lueh');
 
   test('check the tonal of the word, 34', () => {
     expect(lx1.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.t);

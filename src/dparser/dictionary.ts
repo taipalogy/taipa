@@ -1,13 +1,13 @@
 // prettier-ignore
 export const dictOfVerbs = [
-    'khoannw',
+    'khuannw',
 
     'phah',
 ];
 
 // prettier-ignore
 export const dictOfPhrasalVerbs = [
-    ['khoannw', 'tiurh'],
+    ['khuannw', 'tiurh'],
     ['longw', 'tiurh'],
 ];
 
@@ -17,7 +17,7 @@ export const dictOfPhrasalVerbTwos = [
 ];
 
 /** Base forms of separate VV compounds. */
-export const dictOfSeperateVVCompounds = [['siamy', 'koew']];
+export const dictOfSeperateVVCompounds = [['siamy', 'kuew']];
 
 export enum particlesOfVpp {
   cut = 'cut',

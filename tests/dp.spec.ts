@@ -2,7 +2,7 @@ import { processor } from '../src/dparser/processor';
 import { DependencyLabels } from '../src/dparser/symbols';
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa khoannw tiurh');
+  const doc = processor('gua khuannw tiurh');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -11,25 +11,25 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khoannw');
+    expect(rs[0].head.text).toEqual('khuannw');
     expect(rs[0].dependent.text).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[1].head.text).toEqual('khoannw');
-    expect(rs[1].dependent.text).toEqual('goa');
+    expect(rs[1].head.text).toEqual('khuannw');
+    expect(rs[1].dependent.text).toEqual('gua');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
     expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('khoannw');
+    expect(rs[2].dependent.text).toEqual('khuannw');
   });
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa khoanny tiurhw che');
+  const doc = processor('gua khuanny tiurhw che');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -38,31 +38,31 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khoanny');
+    expect(rs[0].head.text).toEqual('khuanny');
     expect(rs[0].dependent.text).toEqual('tiurhw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.obj);
-    expect(rs[1].head.text).toEqual('khoanny');
+    expect(rs[1].head.text).toEqual('khuanny');
     expect(rs[1].dependent.text).toEqual('che');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('khoanny');
-    expect(rs[2].dependent.text).toEqual('goa');
+    expect(rs[2].head.text).toEqual('khuanny');
+    expect(rs[2].dependent.text).toEqual('gua');
   });
 
   test('check the third relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
     expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khoanny');
+    expect(rs[3].dependent.text).toEqual('khuanny');
   });
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa longy tiurhw che');
+  const doc = processor('gua longy tiurhw che');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -84,7 +84,7 @@ describe('Dependency parsing', () => {
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
     expect(rs[2].head.text).toEqual('longy');
-    expect(rs[2].dependent.text).toEqual('goa');
+    expect(rs[2].dependent.text).toEqual('gua');
   });
 
   test('check the third relation', () => {
@@ -95,7 +95,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('che goa khoannw tiurh');
+  const doc = processor('che gua khuannw tiurh');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -104,31 +104,31 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khoannw');
+    expect(rs[0].head.text).toEqual('khuannw');
     expect(rs[0].dependent.text).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[1].head.text).toEqual('khoannw');
-    expect(rs[1].dependent.text).toEqual('goa');
+    expect(rs[1].head.text).toEqual('khuannw');
+    expect(rs[1].dependent.text).toEqual('gua');
   });
 
   test('check the second relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.dislocated);
-    expect(rs[2].head.text).toEqual('khoannw');
+    expect(rs[2].head.text).toEqual('khuannw');
     expect(rs[2].dependent.text).toEqual('che');
   });
 
   test('check the third relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
     expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khoannw');
+    expect(rs[3].dependent.text).toEqual('khuannw');
   });
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('khoannw tiurh aw');
+  const doc = processor('khuannw tiurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -137,25 +137,25 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khoannw');
+    expect(rs[0].head.text).toEqual('khuannw');
     expect(rs[0].dependent.text).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[1].head.text).toEqual('khoannw');
+    expect(rs[1].head.text).toEqual('khuannw');
     expect(rs[1].dependent.text).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
     expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('khoannw');
+    expect(rs[2].dependent.text).toEqual('khuannw');
   });
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('khoannw aw');
+  const doc = processor('khuannw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -164,14 +164,14 @@ describe('Dependency parsing', () => {
 
   test('check the second relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('khoannw');
+    expect(rs[0].head.text).toEqual('khuannw');
     expect(rs[0].dependent.text).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.root);
     expect(rs[1].head.text).toEqual('ROOT');
-    expect(rs[1].dependent.text).toEqual('khoannw');
+    expect(rs[1].dependent.text).toEqual('khuannw');
   });
 });
 
@@ -197,7 +197,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa khoannw tiurh aw');
+  const doc = processor('gua khuannw tiurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -206,26 +206,26 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khoannw');
+    expect(rs[0].head.text).toEqual('khuannw');
     expect(rs[0].dependent.text).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[1].head.text).toEqual('khoannw');
+    expect(rs[1].head.text).toEqual('khuannw');
     expect(rs[1].dependent.text).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('khoannw');
-    expect(rs[2].dependent.text).toEqual('goa');
+    expect(rs[2].head.text).toEqual('khuannw');
+    expect(rs[2].dependent.text).toEqual('gua');
   });
 
   test('check the fourth relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
     expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khoannw');
+    expect(rs[3].dependent.text).toEqual('khuannw');
   });
 });
 
@@ -305,7 +305,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa kaz phah');
+  const doc = processor('gua kaz phah');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -321,7 +321,7 @@ describe('Dependency parsing', () => {
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.nsubj);
     expect(rs[1].head.text).toEqual('phah');
-    expect(rs[1].dependent.text).toEqual('goa');
+    expect(rs[1].dependent.text).toEqual('gua');
   });
 
   test('check the third relation', () => {
@@ -332,7 +332,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa kaz phah aw');
+  const doc = processor('gua kaz phah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -354,7 +354,7 @@ describe('Dependency parsing', () => {
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
     expect(rs[2].head.text).toEqual('phah');
-    expect(rs[2].dependent.text).toEqual('goa');
+    expect(rs[2].dependent.text).toEqual('gua');
   });
 
   test('check the fourth relation', () => {
@@ -365,7 +365,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('goa kaz khoannw aw');
+  const doc = processor('gua kaz khuannw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -374,25 +374,25 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('khoannw');
+    expect(rs[0].head.text).toEqual('khuannw');
     expect(rs[0].dependent.text).toEqual('aw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.aux);
-    expect(rs[1].head.text).toEqual('khoannw');
+    expect(rs[1].head.text).toEqual('khuannw');
     expect(rs[1].dependent.text).toEqual('kaz');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('khoannw');
-    expect(rs[2].dependent.text).toEqual('goa');
+    expect(rs[2].head.text).toEqual('khuannw');
+    expect(rs[2].dependent.text).toEqual('gua');
   });
 
   test('check the fourth relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
     expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khoannw');
+    expect(rs[3].dependent.text).toEqual('khuannw');
   });
 });

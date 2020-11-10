@@ -8,7 +8,7 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('isfseng');
+  doc = cli.processTonal('isfsing');
 
   test('check the stop final', () => {
     expect(doc.letterSequences[0][1].toString()).toEqual(TonalLetterTags.s);
@@ -52,7 +52,7 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
 
-  const ta1 = cli.processTonal('chibfhoat');
+  const ta1 = cli.processTonal('chibfhuat');
 
   test('check the stop final', () => {
     expect(ta1.letterSequences[0][2].toString()).toEqual(TonalLetterTags.b);
@@ -118,7 +118,7 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('cugfgoaz');
+  doc = cli.processTonal('cugfguaz');
 
   test('check the stop final', () => {
     expect(doc.letterSequences[0][2].toString()).toEqual(TonalLetterTags.g);
@@ -244,7 +244,7 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('cupfpoaw');
+  doc = cli.processTonal('cupfphuaw');
 
   test('check the stop final', () => {
     expect(doc.letterSequences[0][2].toString()).toEqual(TonalLetterTags.p);

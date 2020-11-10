@@ -19,14 +19,14 @@ import {
 } from '../src/dparser/creator';
 
 describe('Phrasal verb testing, transitive', () => {
-  const ph = inflectToProceeding('khoannw', 'tiurh');
+  const ph = inflectToProceeding('khuannw', 'tiurh');
 
   test('check the base form', () => {
-    expect(ph.phrase.literal).toEqual('khoannw tiurh');
+    expect(ph.phrase.literal).toEqual('khuannw tiurh');
   });
 
   test('check the proceeding form', () => {
-    expect(ph.getForms()[0].literal).toEqual('khoanny tiurhw');
+    expect(ph.getForms()[0].literal).toEqual('khuanny tiurhw');
   });
 });
 
@@ -110,10 +110,10 @@ describe('Verb phrase testing, conjunctive', () => {
 });
 
 describe('Noun phrase testing, possesive', () => {
-  const fr = inflectPossesive('azbengx', 'ex');
+  const fr = inflectPossesive('azbingx', 'ex');
 
   test('check the proceeding form', () => {
-    expect(fr.getForms()[0].literal).toEqual('azbengx ew');
+    expect(fr.getForms()[0].literal).toEqual('azbingx ew');
   });
 
   const frase = fr.getForms()[0].literal;
@@ -121,19 +121,19 @@ describe('Noun phrase testing, possesive', () => {
   const phm = insertToFollowingWord(words[0], words[1]);
 
   test('check the assimilated form', () => {
-    expect(phm.getForms()[0].literal).toEqual('azbengx ngew');
+    expect(phm.getForms()[0].literal).toEqual('azbingx ngew');
   });
 });
 
 describe('Serial words testing', () => {
-  const fr = inflectSerial('goay', 'siz', 'chitwlex');
+  const fr = inflectSerial('guay', 'siz', 'chitwlex');
 
   test('check the base form', () => {
-    expect(fr.phrase.literal).toEqual('goa siw chitwlex');
+    expect(fr.phrase.literal).toEqual('gua siw chitwlex');
   });
 
   test('check the proceeding form', () => {
-    expect(fr.getForms()[0].literal).toEqual('goa siw chitwlez');
+    expect(fr.getForms()[0].literal).toEqual('gua siw chitwlez');
   });
 });
 
@@ -150,16 +150,16 @@ describe('Compound testing', () => {
     expect(p2.phrase.literal).toEqual('cuhycuhy kiurw');
   });
 
-  const p3 = createCompoundPhraseme('siamy', 'koew');
+  const p3 = createCompoundPhraseme('siamy', 'kuew');
 
   test('separate vv compound', () => {
-    expect(p3.phrase.literal).toEqual('siam koew');
+    expect(p3.phrase.literal).toEqual('siam kuew');
   });
 
-  const p4 = createCompoundPhraseme('phoaw', 'khih');
+  const p4 = createCompoundPhraseme('phuaw', 'khih');
 
   test('separable phrasal verb, verb-subsidiary compound', () => {
-    expect(p4.phrase.literal).toEqual('phoay khih');
+    expect(p4.phrase.literal).toEqual('phuay khih');
   });
 
   const p5 = createCompoundPhraseme('chiahh', 'pay');
@@ -174,10 +174,10 @@ describe('Compound testing', () => {
     expect(p8.phrase.literal).toEqual('lamz me');
   });
 
-  const p9 = createCompoundPhraseme('tiz', 'taiztengy');
+  const p9 = createCompoundPhraseme('tiz', 'taiztingy');
 
   test('adverbial phrase, place', () => {
-    expect(p9.phrase.literal).toEqual('tiw taiztengy');
+    expect(p9.phrase.literal).toEqual('tiw taiztingy');
   });
 
   const p10 = createCompoundPhraseme('uiw', 'sannztiamy');
@@ -194,24 +194,24 @@ describe('Compound testing', () => {
 });
 
 describe('Phrasal verb testing, participle form', () => {
-  const p1 = inflectToParticiple('thoa', 'khih', TonalLetterTags.zero);
+  const p1 = inflectToParticiple('thua', 'khih', TonalLetterTags.zero);
 
   test('check the base form', () => {
-    expect(p1.phrase.literal).toEqual('thoa khih');
+    expect(p1.phrase.literal).toEqual('thua khih');
   });
 
   test('check the participle form', () => {
-    expect(p1.getForms()[0].literal).toEqual('thoa khi');
+    expect(p1.getForms()[0].literal).toEqual('thua khi');
   });
 
-  const p2 = inflectToParticiple('thoa', 'khih', TonalLetterTags.z);
+  const p2 = inflectToParticiple('thua', 'khih', TonalLetterTags.z);
 
   test('check the base form', () => {
-    expect(p2.phrase.literal).toEqual('thoa khih');
+    expect(p2.phrase.literal).toEqual('thua khih');
   });
 
   test('check the participle form', () => {
-    expect(p2.getForms()[0].literal).toEqual('thoaz khiz');
+    expect(p2.getForms()[0].literal).toEqual('thuaz khiz');
   });
 
   const p3 = inflectVppToParticiple('pun', 'cut', 'laih', TonalLetterTags.zero);
@@ -242,16 +242,16 @@ describe('Phrase testing', () => {
     expect(p1.literal).toEqual('pinypiangy kiurw');
   });
 
-  const p2 = createTonalPhrase('khoahy linzlong');
+  const p2 = createTonalPhrase('khuahy linzlong');
 
   test('gifchongwguy', () => {
-    expect(p2.literal).toEqual('khoahy linzlong');
+    expect(p2.literal).toEqual('khuahy linzlong');
   });
 
-  const p3 = createTonalPhrase('hengx liz');
+  const p3 = createTonalPhrase('hingx liz');
 
   test('enclitic', () => {
-    expect(p3.literal).toEqual('hengx liz');
+    expect(p3.literal).toEqual('hingx liz');
   });
 
   const lx4 = createTonalInflectionLexeme('kaz');

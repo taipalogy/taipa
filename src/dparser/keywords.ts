@@ -114,7 +114,7 @@ export class KeyWords {
   }
 
   private populateLexemes() {
-    this.createLexeme('goay', POSTags.pronoun);
+    this.createLexeme('guay', POSTags.pronoun);
     this.createLexeme('longy', POSTags.particle);
     this.createLexeme('bez', POSTags.particle);
   }

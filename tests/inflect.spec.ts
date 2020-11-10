@@ -19,11 +19,11 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('gengzchiapf');
+  doc = cli.processTonal('gingzchiapf');
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('gengzchiap');
+    expect(l.substr(0, l.length - en.length)).toEqual('gingzchiap');
   });
 
   test('check the inflectional ending', () => {
@@ -45,11 +45,11 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('piauzpietf');
+  doc = cli.processTonal('phiauzpietf');
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('piauzpiet');
+    expect(l.substr(0, l.length - en.length)).toEqual('phiauzpiet');
   });
 
   test('check the inflectional ending', () => {
@@ -71,11 +71,11 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('tengzsekf');
+  doc = cli.processTonal('thingzsekf');
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('tengzsek');
+    expect(l.substr(0, l.length - en.length)).toEqual('thingzsek');
   });
 
   test('check the inflectional ending', () => {
@@ -129,11 +129,11 @@ describe('Inflectional ending testing', () => {
   const cli = new Client();
   let doc = new TokenAnalysis();
 
-  doc = cli.processTonal('kakfsitw');
+  doc = cli.processTonal('khakfsitw');
   test('check the inflectional stem', () => {
     let l = doc.word.literal;
     let en = doc.inflectionalEnding;
-    expect(l.substr(0, l.length - en.length)).toEqual('kakfsit');
+    expect(l.substr(0, l.length - en.length)).toEqual('khakfsit');
   });
 
   test('check the inflectional ending', () => {
@@ -184,9 +184,9 @@ describe('Inflectional ending testing', () => {
 });
 
 describe('Inflection testing', () => {
-  const tw = inflectDesinence('guzleng');
+  const tw = inflectDesinence('guzling');
   test('check the inflected form', () => {
-    expect(tw.getForms()[0].literal).toEqual('guzlengz');
+    expect(tw.getForms()[0].literal).toEqual('guzlingz');
   });
 });
 
@@ -307,14 +307,14 @@ describe('Inflection testing', () => {
 });
 
 describe('Inflection testing', () => {
-  const lx1 = inflectTransfix('chitwpoexiay');
+  const lx1 = inflectTransfix('chitwpuexiay');
   test('check the inflected form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('chitwpoewiaw');
+    expect(lx1.getForms()[0].literal).toEqual('chitwpuewiaw');
   });
 
-  const lx2 = inflectTransfix('tamwpurhxoay');
+  const lx2 = inflectTransfix('tamwpurhxuay');
   test('check the inflected form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('tamwpurhwoaw');
+    expect(lx2.getForms()[0].literal).toEqual('tamwpurhwuaw');
   });
 });
 

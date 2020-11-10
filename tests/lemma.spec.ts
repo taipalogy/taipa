@@ -13,22 +13,22 @@ describe('Lemma testing', () => {
     expect(t1.lemmas.length).toEqual(0);
   });
 
-  const t2 = cli.processTonal('suzjipwhoatf');
+  const t2 = cli.processTonal('suzjipwhuatf');
   test('check the number of lemmata', () => {
     expect(t2.lemmas.length).toEqual(1);
   });
 
   test('check the lemma', () => {
-    expect(t2.lemmas[0].literal).toEqual('suzjipwhoat');
+    expect(t2.lemmas[0].literal).toEqual('suzjipwhuat');
   });
 
-  const t3 = cli.processTonal('goa');
+  const t3 = cli.processTonal('gua');
   test('check the number of lemmata', () => {
     expect(t3.lemmas.length).toEqual(1);
   });
 
   test('check the lemma', () => {
-    expect(t3.lemmas[0].literal).toEqual('goay');
+    expect(t3.lemmas[0].literal).toEqual('guay');
   });
 });
 
@@ -137,9 +137,9 @@ describe('Uncombining form testing', () => {
     expect(ms3[0].getForms()[0].literal).toEqual('tngh');
   });
 
-  const ms4 = tonalLemmatizationAnalyzer.morphAnalyze('koehwlaih');
-  test('check the uncombining form, 4th checked syllable, koehw to koeh', () => {
-    expect(ms4[0].getForms()[0].literal).toEqual('koeh');
+  const ms4 = tonalLemmatizationAnalyzer.morphAnalyze('kuehwlaih');
+  test('check the uncombining form, 4th checked syllable, kuehw to kueh', () => {
+    expect(ms4[0].getForms()[0].literal).toEqual('kueh');
   });
 });
 

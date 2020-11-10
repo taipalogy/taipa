@@ -25,7 +25,7 @@ describe('Epenthesis testing', () => {
     expect(ta4.letterSequences[1][0].toString()).toEqual(TonalLetterTags.m);
   });
 
-  const ta5 = cli.processTonal('soanfnay');
+  const ta5 = cli.processTonal('suanfnay');
   test('check the consonant', () => {
     expect(ta5.letterSequences[1][0].toString()).toEqual(TonalLetterTags.n);
   });

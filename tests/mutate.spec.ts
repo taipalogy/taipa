@@ -71,10 +71,10 @@ describe('Consonant mutation testing, b-, g-, h-, j-, l- for -b, -g, -l, -bb, -g
     expect(lx2.getForms()[0].literal).toEqual('chabwgoz');
   });
 
-  const lx3 = mutateFinalConsonantOfPrecedingSyllable('chipfhoat');
+  const lx3 = mutateFinalConsonantOfPrecedingSyllable('chipfhuat');
 
   test('check the surface form, -pfh- to -bfh-', () => {
-    expect(lx3.getForms()[0].literal).toEqual('chibfhoat');
+    expect(lx3.getForms()[0].literal).toEqual('chibfhuat');
   });
 
   const lx4 = mutateFinalConsonantOfPrecedingSyllable('okflangx');
@@ -103,10 +103,10 @@ describe('Consonant unmutation testing, b-, g-, h-, j-, l- for -p, -k, -t, -pp, 
     expect(lx2.getForms()[0].literal).toEqual('chapwgoz');
   });
 
-  const lx3 = unmutateFinalOfPrecedingSyllable('chibfhoat');
+  const lx3 = unmutateFinalOfPrecedingSyllable('chibfhuat');
 
   test('check the surface form', () => {
-    expect(lx3.getForms()[0].literal).toEqual('chipfhoat');
+    expect(lx3.getForms()[0].literal).toEqual('chipfhuat');
   });
 
   const lx4 = unmutateFinalOfPrecedingSyllable('ogflangx');
@@ -137,22 +137,22 @@ describe('Consonant mutation testing, sandhi tt, t', () => {
 });
 
 describe('Consonant mutation testing, internal sandhi, regressive', () => {
-  const lx1 = mutateFinalConsonantOfPrecedingSyllable('phokfbutwkoany');
+  const lx1 = mutateFinalConsonantOfPrecedingSyllable('phokfbutwkuany');
 
   test('check the surface form', () => {
-    expect(lx1.getForms()[0].literal).toEqual('phogfbukwkoany');
+    expect(lx1.getForms()[0].literal).toEqual('phogfbukwkuany');
   });
 
   const lx2 = inflectDesinence(lx1.getForms()[0].literal);
 
   test('check the inflected form', () => {
-    expect(lx2.getForms()[0].literal).toEqual('phogfbukwkoan');
+    expect(lx2.getForms()[0].literal).toEqual('phogfbukwkuan');
   });
 
-  const lx3 = mutateFinalConsonantOfPrecedingSyllable('cutfgoaz');
+  const lx3 = mutateFinalConsonantOfPrecedingSyllable('cutfguaz');
 
   test('check the surface form', () => {
-    expect(lx3.getForms()[0].literal).toEqual('cugfgoaz');
+    expect(lx3.getForms()[0].literal).toEqual('cugfguaz');
   });
 
   const lx4 = mutateFinalConsonantOfPrecedingSyllable('putfjinx');
