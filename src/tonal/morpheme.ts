@@ -540,18 +540,26 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           // in case of words like vutfngay
           return false;
         }
+
         const initLast = syllables[syllables.length - 1].pattern.filter(
           it =>
             it.name === TonalSpellingTags.initialConsonant &&
             initialConsonantsTonal.includes(it.toString())
         );
+        const mdlLast = syllables[syllables.length - 1].pattern.filter(
+          it => it.name === TonalSpellingTags.vowel
+        );
+
         if (
           stpFnlH.length == 0 &&
           nslFnlLast2nd.length == 1 &&
           initLast.length == 1 &&
           nslFnlLast2nd[0].toString() != initLast[0].toString()
         ) {
-          // in case of words like angzchoay, ngzchoay
+          // in case of words like angzchuay, ngzchuay
+          return false;
+        } else if (initLast.length == 1 && mdlLast.length > 1) {
+          // in case of suafluay, suafsuay
           return false;
         }
         return true;
@@ -1017,6 +1025,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         morphemes.push(this.createMorpheme(ptn, new TransfixUncombining()));
       } else {
         if (i < matched.length - 1) {
+          // when the target syllable is not the last one in a word.
           // pass the letters of the following syllable to unchange letters accordingly
           morphemes.push(
             this.createMorpheme(

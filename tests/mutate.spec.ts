@@ -183,14 +183,14 @@ describe('Consonant mutation testing, internal sandhi, regressive', () => {
     expect(lx2.getForms()[0].literal).toEqual('tegfnax');
   });
   /*
-  const lx3 = mutateFinalOfPrecedingSyllable('qekfngiz');
+  const lx3 = mutateFinalOfPrecedingSyllable('kekfngiz');
 
   test('check the underlying form, ng-', () => {
-    expect(lx3.word.literal).toEqual('qekfngiz');
+    expect(lx3.word.literal).toEqual('kekfngiz');
   });
 
   test('check the surface form, ng-', () => {
-    expect(lx3.getForms()[0].literal).toEqual('qegfngiz');
+    expect(lx3.getForms()[0].literal).toEqual('kegfngiz');
   });
 */
   const lx4 = mutateFinalConsonantOfPrecedingSyllable('kekwmngx');

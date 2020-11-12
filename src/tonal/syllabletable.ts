@@ -179,6 +179,8 @@ const extraSyllables = [
     'oh', 'op',
 
     'sangh', 'sennh', 'sienh', 'sinnh',
+
+    'tenz',
 ]
 
 // prettier-ignore
