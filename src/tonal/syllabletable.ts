@@ -9,11 +9,11 @@ export function isInSyllableTable(syllable: string) {
 const toBeVerified = [
     'baih', 'buhh', 'burhh',
     
-    'cett', 'changxx', 'chua', 'chiauhh', 'chiuh', 'chiunnh', 'ciauhh',
+    'cett', 'changxx', 'chua', 'chiauhh', 'chiuh', 'chiunnh', 'ciauhh', 'cuaihh',
 
     'tom',
 
-    'giakk',
+    'giakk', 'gueh', 'chueh',
     
     'hioh', 'huangz',
 
@@ -23,7 +23,7 @@ const toBeVerified = [
 
     'kirinnx', 'kuinnx',
 
-    'khihh', 'khiauhh', 'khomz', 'khop', 'khirh',
+    'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
 
     'len', 'liakk', 'lirey',  'lng',
 
@@ -48,6 +48,8 @@ const toBeVerified = [
     'pann', 'pihh', 'pirt',
 
     // syllabi headwords
+    'luai',
+
     'tirinn',
 ]
 
@@ -109,7 +111,7 @@ const syllabicHeadwords = [
 
     'tiang', 'tim', 'tio', 'tir', 'tiri', 'tiur', 'tua', 'tue', 'tom', 'tor', 'tore', 'tut',
     
-    'er', 'erng',
+    'er',
 
     'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gir', 'go', 'gue', 'gok', 'guat', 'gong', 'gor', 'gore', 'gur',
 
@@ -148,9 +150,11 @@ const syllabicHeadwords = [
 const extraSyllables = [
     'aih',
     
-    'burh',
+    'buaix', 'buaiw', 'bueh', 'burh',
 
-    'cuaih', 'chuatt',
+    'cuaih',
+    
+    'chuainn', 'chuatt',
     
     'tngh',
 
@@ -158,7 +162,7 @@ const extraSyllables = [
 
     'gehh', 'gih', 'giuh', 'gimw', 'gunx',
 
-    'homz',
+    'homz', 'huainn',
 
     'jip',
 

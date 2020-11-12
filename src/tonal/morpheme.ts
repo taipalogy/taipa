@@ -66,8 +66,8 @@ export function syllabifyTonal(
   let begin: number = 0;
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  let literalLexicalRootFourth = '';
-  let literalLexicalRootEighth = '';
+  let literalLexicalRoot4th8th = ''; // could be an 4th or 8th root
+  let literalLexicalRootEighth = ''; // specific an 8th root
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
@@ -77,25 +77,28 @@ export function syllabifyTonal(
     if (
       i + 1 < letters.length &&
       had &&
-      TonalLetterTags.w === letters[i + 1].literal
+      (TonalLetterTags.w === letters[i + 1].literal ||
+        TonalLetterTags.x === letters[i + 1].literal)
     ) {
       const got = fourthToEighthFinalConsonants.get(letters[i].literal);
       // restore the lexical roots for 4th final consonants, which is 8th finals
       // in case of absent 8th roots, 4th roots should also be restored
       // e.g. koehwlaih, jiwpowcitwlaw, khihwlih
+      // in case of absent 4th roots for an triplet
+      // e.g. juahxjuahwjuahh. there is no juah present in syllable table
       // 4th and 8th roots for 3rd checked tones
       if (got) {
         // since it is 4th finals, length of 4th final is one, just slice one character
         literalLexicalRootEighth =
-          literalLexicalRootFourth.slice(0, literalLexicalRootFourth.length) +
+          literalLexicalRoot4th8th.slice(0, literalLexicalRoot4th8th.length) +
           got;
         // console.log(`literalRoot4thFinal: ${literalRoot4thChecked}, 8th: ${literalRoot8thChecked}`);
         // the below fourth should go after the above eighth
-        literalLexicalRootFourth =
-          literalLexicalRootFourth + letters[i].literal;
+        literalLexicalRoot4th8th =
+          literalLexicalRoot4th8th + letters[i].literal;
       }
     } else {
-      literalLexicalRootFourth = literalLexicalRootFourth + letters[i].literal;
+      literalLexicalRoot4th8th = literalLexicalRoot4th8th + letters[i].literal;
     }
 
     if (
@@ -109,11 +112,11 @@ export function syllabifyTonal(
       }
       break;
     } else if (
-      (isInSyllableTable(literalLexicalRootFourth) ||
+      (isInSyllableTable(literalLexicalRoot4th8th) ||
         isInSyllableTable(literalLexicalRootEighth)) &&
       stopFinalConsonantsTonal.includes(letters[i].literal)
     ) {
-      // console.log(`i: ${i}, literal: ${literal}, root4th: ${literalLexicalRootFourth}, root8th: ${literalLexicalRootEighth}, stopFinalConsonant: ${letters[i].literal}`);
+      // console.log(`i: ${i}, literal: ${literal}, root4th8th: ${literalLexicalRoot4th8th}, root8th: ${literalLexicalRootEighth}, stopFinalConsonant: ${letters[i].literal}`);
       // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`);
       if (begin === beginOfSyllable) {
         matched = literal; // assign literal instead of literalRoot4thFinal
@@ -184,7 +187,7 @@ export function syllabifyTonal(
       const tnls = tnlsFa.concat(
         tnlsAy.filter(item => tnlsFa.indexOf(item) < 0)
       );
-      // console.log(`literal: ${literal}}`);
+      // console.log(`literal: ${literal}`);
       if (tnls.length > 0) {
         for (let t of tnls) {
           // console.log(literal, t.toString());

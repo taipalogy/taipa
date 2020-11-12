@@ -46,6 +46,20 @@ describe('Uncombining form testing, reduplication', () => {
   test('check the uncombining form, doublet', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('angx');
   });
+
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('juahxjuahwjuahh');
+  test('check the uncombining form, triplet', () => {
+    expect(ms3[0].getForms()[0].literal).toEqual('juahh');
+  });
+
+  test('check the uncombining form, triplet', () => {
+    expect(ms3[1].getForms()[0].literal).toEqual('juahh');
+  });
+
+  const ms4 = tonalLemmatizationAnalyzer.morphAnalyze('juahwjuahh');
+  test('check the uncombining form, doublet', () => {
+    expect(ms4[0].getForms()[0].literal).toEqual('juahh');
+  });
 });
 
 describe('Uncombining form testing, ay', () => {

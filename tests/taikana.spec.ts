@@ -4,49 +4,41 @@ describe('Taiwanese kana testing, nn, nasalization', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('enn');
-
   test('taikanas', () => {
     expect(ta1.blockSequences[0]).toEqual('㋓エ');
   });
 
   const ta2 = cli.processTonal('ianny');
-
   test('taikanas', () => {
     expect(ta2.blockSequences[0]).toEqual('㋑ア⎛');
   });
 
   const ta3 = cli.processTonal('annw');
-
   test('taikanas', () => {
     expect(ta3.blockSequences[0]).toEqual('㋐ア⎝');
   });
 
   const ta4 = cli.processTonal('iunnx');
-
   test('taikanas', () => {
     expect(ta4.blockSequences[0]).toEqual('㋑ウ⟨');
   });
 
   const ta5 = cli.processTonal('ainnz');
-
   test('taikanas', () => {
     expect(ta5.blockSequences[0]).toEqual('㋐イ⎸');
   });
 
   const ta6 = cli.processTonal('hiannh');
-
   test('taikanas', () => {
     expect(ta6.blockSequences[0]).toEqual('㋪ァ⤆');
   });
 
   const ta7 = cli.processTonal('siakfphannz');
-
   test('taikanas', () => {
     expect(ta7.blockSequences[0]).toEqual('シァㇰ⍭㋩゚' + '\u0323' + 'ア⎸');
   });
 
   const ta8 = cli.processTonal('cuann');
-
   test('taikanas', () => {
     expect(ta8.blockSequences[0]).toEqual('㋡' + '\u0323' + 'ア');
   });
@@ -121,55 +113,46 @@ describe('Taiwanese kana testing, vowels', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('a');
-
   test('taikanas', () => {
     expect(ta1.blockSequences[0]).toEqual('アア');
   });
 
   const ta2 = cli.processTonal('i');
-
   test('taikanas', () => {
     expect(ta2.blockSequences[0]).toEqual('イイ');
   });
 
   const ta3 = cli.processTonal('u');
-
   test('taikanas', () => {
     expect(ta3.blockSequences[0]).toEqual('ウウ');
   });
 
   const ta4 = cli.processTonal('ir');
-
   test('taikanas', () => {
     expect(ta4.blockSequences[0]).toEqual('ウ̅ウ̅');
   });
 
   const ta5 = cli.processTonal('e');
-
   test('taikanas', () => {
     expect(ta5.blockSequences[0]).toEqual('エエ');
   });
 
   const ta6 = cli.processTonal('o');
-
   test('taikanas', () => {
     expect(ta6.blockSequences[0]).toEqual('オオ');
   });
 
   const ta7 = cli.processTonal('or');
-
   test('taikanas', () => {
     expect(ta7.blockSequences[0]).toEqual('オ̅オ̅');
   });
 
   const ta8 = cli.processTonal('ur');
-
   test('taikanas', () => {
     expect(ta8.blockSequences[0]).toEqual('ヲヲ');
   });
 
   const ta9 = cli.processTonal('irn');
-
   test('taikanas', () => {
     expect(ta9.blockSequences[0]).toEqual('ウ̅ヌ');
   });
@@ -223,73 +206,56 @@ describe('Taiwanese kana testing, e and er', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('ek');
-
   test('taikanas', () => {
     expect(ta1.blockSequences[0]).toEqual('イェㇰ⤆');
   });
 
   const ta2 = cli.processTonal('ing');
-
   test('taikanas', () => {
     expect(ta2.blockSequences[0]).toEqual('イン');
   });
 
-  const ta3 = cli.processTonal('erng');
-
-  test('taikanas. the vowel could be e or er. to be verified.', () => {
-    expect(ta3.blockSequences[0]).toEqual('エン');
-  });
-
   const ta4 = cli.processTonal('kek');
-
   test('taikanas', () => {
     expect(ta4.blockSequences[0]).toEqual('キェㇰ⤆');
   });
 
   const ta5 = cli.processTonal('king');
-
   test('taikanas', () => {
     expect(ta5.blockSequences[0]).toEqual('キン');
   });
 
   const ta6 = cli.processTonal('ke');
-
   test('taikanas', () => {
     expect(ta6.blockSequences[0]).toEqual('ケエ');
   });
 
   const ta7 = cli.processTonal('ket');
-
   test('taikanas', () => {
     expect(ta7.blockSequences[0]).toEqual('ケッ⤆');
   });
 
   const ta8 = cli.processTonal('ken');
-
   test('taikanas', () => {
     expect(ta8.blockSequences[0]).toEqual('ケヌ');
   });
 
   const ta9 = cli.processTonal('liwek');
-
   test('taikanas', () => {
     expect(ta9.blockSequences[0]).toEqual('リイ⎝イェㇰ⤆');
   });
 
   const ta10 = cli.processTonal('chiurhwing');
-
   test('taikanas', () => {
     expect(ta10.blockSequences[0]).toEqual('チ' + '\u{1b166}' + '⎝イン');
   });
 
   const ta11 = cli.processTonal('ien');
-
   test('taikanas', () => {
     expect(ta11.blockSequences[0]).toEqual('イェヌ');
   });
 
   const ta12 = cli.processTonal('en');
-
   test('taikanas', () => {
     expect(ta12.blockSequences[0]).toEqual('エヌ');
   });
@@ -299,7 +265,6 @@ describe('Taiwanese kana testing, replication of kana vowels', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('ka');
-
   test('taikanas', () => {
     expect(ta1.blockSequences[0]).toEqual('カア');
   });
@@ -356,87 +321,73 @@ describe('Taiwanese kana testing, tone letter of check tones', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('kiok');
-
   test('taikanas', () => {
     expect(ta1.blockSequences[0]).toEqual('キォㇰ⤆');
     expect(ta1.blockSequences[1]).toEqual('キォㇰ');
   });
 
   const ta2 = cli.processTonal('kiokk');
-
   test('taikanas', () => {
     expect(ta2.blockSequences[0]).toEqual('キォㇰ⤇');
   });
 
   const ta3 = cli.processTonal('kiokf');
-
   test('taikanas', () => {
     expect(ta3.blockSequences[0]).toEqual('キォㇰ⍭');
   });
 
   const ta4 = cli.processTonal('kiokx');
-
   test('taikanas', () => {
     expect(ta4.blockSequences[0]).toEqual('キォㇰ⟨');
   });
 
   const ta5 = cli.processTonal('kiokw');
-
   test('taikanas', () => {
     expect(ta5.blockSequences[0]).toEqual('キォㇰ⎝');
   });
 
   const ta6 = cli.processTonal('kiurh');
-
   test('taikanas', () => {
     expect(ta6.blockSequences[0]).toEqual('キ' + '\u{1b166}' + '⤆');
     expect(ta6.blockSequences[1]).toEqual('キ' + '\u{1b166}');
   });
 
   const ta7 = cli.processTonal('kiurhy');
-
   test('taikanas', () => {
     expect(ta7.blockSequences[0]).toEqual('キ' + '\u{1b166}' + '⎛');
   });
 
   const ta8 = cli.processTonal('changxx');
-
   test('taikanas', () => {
     expect(ta8.blockSequences[0]).toEqual('サ̅ン⫽');
   });
 
   const ta9 = cli.processTonal('sangh');
-
   test('taikanas', () => {
     expect(ta9.blockSequences[0]).toEqual('サ' + '\u{1b167}' + '⤆');
   });
 
   const ta20 = cli.processTonal('chi');
-
   test('taikanas', () => {
     expect(ta20.blockSequences[0]).toEqual('チイ');
   });
 
   const ta21 = cli.processTonal('chiy');
-
   test('taikanas', () => {
     expect(ta21.blockSequences[0]).toEqual('チイ⎛');
   });
 
   const ta22 = cli.processTonal('chiw');
-
   test('taikanas', () => {
     expect(ta22.blockSequences[0]).toEqual('チイ⎝');
   });
 
   const ta23 = cli.processTonal('chix');
-
   test('taikanas', () => {
     expect(ta23.blockSequences[0]).toEqual('チイ⟨');
   });
 
   const ta24 = cli.processTonal('chiz');
-
   test('taikanas', () => {
     expect(ta24.blockSequences[0]).toEqual('チイ⎸');
   });
@@ -446,121 +397,101 @@ describe('Taiwanese kana testing, initials', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('cha');
-
   test('taikanas', () => {
     expect(ta1.blockSequences[0]).toEqual('サ̅ア');
   });
 
   const ta2 = cli.processTonal('ca');
-
   test('taikanas, サ̣̅ア', () => {
     expect(ta2.blockSequences[0]).toEqual('サ' + '\u0305' + '\u0323' + 'ア');
   });
 
   const ta3 = cli.processTonal('ta');
-
   test('taikanas', () => {
     expect(ta3.blockSequences[0]).toEqual('タア');
   });
 
   const ta4 = cli.processTonal('tha');
-
   test('taikanas, タ̣ア', () => {
     expect(ta4.blockSequences[0]).toEqual('タ' + '\u0323' + 'ア');
   });
 
   const ta5 = cli.processTonal('chi');
-
   test('taikanas', () => {
     expect(ta5.blockSequences[0]).toEqual('チイ');
   });
 
   const ta6 = cli.processTonal('ci');
-
   test('taikanas, チ̣イ', () => {
     expect(ta6.blockSequences[0]).toEqual('チ' + '\u0323' + 'イ');
   });
 
   const ta7 = cli.processTonal('ti');
-
   test('taikanas', () => {
     expect(ta7.blockSequences[0]).toEqual('チ̅イ');
   });
 
   const ta8 = cli.processTonal('thi');
-
   test('taikanas, チ̣̅イ', () => {
     expect(ta8.blockSequences[0]).toEqual('チ' + '\u0305' + '\u0323' + 'イ');
   });
 
   const ta9 = cli.processTonal('chu');
-
   test('taikanas', () => {
     expect(ta9.blockSequences[0]).toEqual('ツウ');
   });
 
   const ta10 = cli.processTonal('cu');
-
   test('taikanas, ツ̣ウ', () => {
     expect(ta10.blockSequences[0]).toEqual('ツ' + '\u0323' + 'ウ');
   });
 
   const ta11 = cli.processTonal('tu');
-
   test('taikanas', () => {
     expect(ta11.blockSequences[0]).toEqual('ツ̅ウ');
   });
 
   const ta12 = cli.processTonal('thu');
-
   test('taikanas, ツ̣̅ウ', () => {
     expect(ta12.blockSequences[0]).toEqual('ツ' + '\u0305' + '\u0323' + 'ウ');
   });
 
   const ta13 = cli.processTonal('che');
-
   test('taikanas', () => {
     expect(ta13.blockSequences[0]).toEqual('セ̅エ');
   });
 
   const ta14 = cli.processTonal('ce');
-
   test('taikanas, セ̣̅エ', () => {
     expect(ta14.blockSequences[0]).toEqual('セ' + '\u0305' + '\u0323' + 'エ');
   });
 
   const ta15 = cli.processTonal('te');
-
   test('taikanas', () => {
     expect(ta15.blockSequences[0]).toEqual('テエ');
   });
 
   const ta16 = cli.processTonal('the');
-
   test('taikanas, テ̣エ', () => {
     expect(ta16.blockSequences[0]).toEqual('テ' + '\u0323' + 'エ');
   });
 
   const ta17 = cli.processTonal('cho');
-
   test('taikanas', () => {
     expect(ta17.blockSequences[0]).toEqual('ソ̅オ');
   });
 
   const ta18 = cli.processTonal('co');
-
   test('taikanas, ソ̣̅オ', () => {
     expect(ta18.blockSequences[0]).toEqual('ソ' + '\u0305' + '\u0323' + 'オ');
   });
 
   const ta19 = cli.processTonal('to');
-
   test('taikanas', () => {
     expect(ta19.blockSequences[0]).toEqual('トオ');
   });
 
   const ta20 = cli.processTonal('tho');
-
   test('taikanas, ト̣オ', () => {
     expect(ta20.blockSequences[0]).toEqual('ト' + '\u0323' + 'オ');
   });
