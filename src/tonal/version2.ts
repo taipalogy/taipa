@@ -511,7 +511,7 @@ export const stopFinalConsonantsTonal = letterSequence([
   new FinalHH(),
 ]);
 
-export const stopFinalConsonantsBgjklpsTonal = letterSequence([
+export const finalConsonantsBgjklpsTonal = letterSequence([
   new FinalB(),
   new FinalG(),
   new FinalJ(),
@@ -521,7 +521,7 @@ export const stopFinalConsonantsBgjklpsTonal = letterSequence([
   new FinalS(),
 ]);
 
-export const stopFinalConsonantsBBggkkllppssTonal = letterSequence([
+export const finalConsonantsBBggkkllppssTonal = letterSequence([
   new FinalBB(),
   new FinalGG(),
   new FinalKK(),

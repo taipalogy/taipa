@@ -34,16 +34,17 @@ import {
   smJlsF,
   smLsWx,
   smBgkpWx,
-  smIENGFywxz,
+  smMngFywxz,
   smIK,
+  smVowelMng,
 } from './matcher';
 import {
   epentheticLetters,
   toneLettersWx,
-  sandhiFinalsPPpttt,
+  sandhiFinalPPpttt,
   fourthToEighthFinalConsonants,
   nasalInitialConsonants,
-  sandhiFinalConsonantsBgjlsbbggllss,
+  finalConsonantsBgjlsbbggllss,
   finalConsonantsForBgjlsbbggllss,
 } from './collections';
 import {
@@ -52,6 +53,7 @@ import {
   TonalUncombiningForms,
   TransfixUncombining,
   UncombiningFormsIetfIetwToEkEkk,
+  UncombiningFormsIengUamToneLetter,
 } from './metaplasm';
 import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
 
@@ -155,26 +157,20 @@ export function syllabifyTonal(
           letters[i].literal
         )
       ) {
-        // for syllables end with ~mhw.
+        // in case of -mhw.
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
         break;
       } else if (
-        literal.length > 3 &&
+        literal.length > 1 &&
         letters[i] &&
         letters[i - 1] &&
-        letters[i - 2] &&
-        letters[i - 3] &&
-        smIENGFywxz(
-          letters[i - 3].literal,
-          letters[i - 2].literal,
-          letters[i - 1].literal,
-          letters[i].literal
-        )
+        smMngFywxz(letters[i - 1].literal, letters[i].literal)
       ) {
-        matched = literal;
-        Object.assign(matchedLtrs, ltrs);
-        break;
+        // in case of -iengz, -uamz.
+        // matched = literal;
+        // Object.assign(matchedLtrs, ltrs);
+        // break;
       }
 
       // tone change of free allomorphs
@@ -220,9 +216,9 @@ export function syllabifyTonal(
     } else {
       // console.log('no matched for syllabifyTonal:' + ltrs);
 
-      // when there are no tonals
+      // when there are no tone letters
 
-      if (sandhiFinalConsonantsBgjlsbbggllss.includes(letters[i].literal)) {
+      if (finalConsonantsBgjlsbbggllss.includes(letters[i].literal)) {
         // for the syllables with sandhi final consonants that are not present in syllable tables
         const literalWithoutFinal = letters
           .map((val, ind, arr) => (ind < i ? arr[ind].literal : ''))
@@ -245,6 +241,10 @@ export function syllabifyTonal(
         // match for -ik
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
+      } else if (smVowelMng(ltrs[ltrs.length - 2], ltrs[ltrs.length - 1])) {
+        // match for -ieng, -uam
+        // matched = literal;
+        // Object.assign(matchedLtrs, ltrs);
       } else if (!freeToneLettersTonal.includes(letters[i].literal)) {
         // free first tone without a free tonal
         const rules = freeAllomorphUncombiningRules.get(TonalLetterTags.zero);
@@ -673,6 +673,29 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
+  private isIengUamToneLetter(syllables: MatchedPattern[]) {
+    // if (syllables.length >= 2) {
+    //   const vs = syllables[syllables.length - 2].pattern.filter(
+    //     i => i.name === TonalSpellingTags.vowel
+    //   );
+    //   const nfcs = syllables[syllables.length - 2].pattern.filter(
+    //     i => i.name === TonalSpellingTags.nasalFinalConsonant
+    //   );
+    //   const inits = syllables[syllables.length - 1].pattern.filter(
+    //     i => i.name === TonalSpellingTags.initialConsonant
+    //   );
+    //   if (
+    //     vs.length > 0 &&
+    //     nfcs.length == 1 &&
+    //     inits.length == 1 &&
+    //     nfcs[0].toString() === inits[0].toString()
+    //   ) {
+    //     return true;
+    //   }
+    // }
+    return false;
+  }
+
   private preprocessSandhiFinal(letters: Array<AlphabeticLetter>) {
     this.sandhiFinals.push(letters[letters.length - 1]);
     return letters.slice(0, letters.length - 1);
@@ -927,7 +950,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       }
     } else if (
       this.sandhiFinalTonals.length > 0 &&
-      sandhiFinalsPPpttt.includes(
+      sandhiFinalPPpttt.includes(
         pattern.letters[pattern.letters.length - 2].literal
       )
     ) {
@@ -1047,6 +1070,14 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           if (forms && forms.length == 1) {
             morphemes[i].addForms(forms);
           }
+        } else if (
+          this.isIengUamToneLetter(matched) &&
+          i < matched.length - 1
+        ) {
+          //   const forms = this.createMorpheme(
+          //     ptn,
+          //     new UncombiningFormsIengUamToneLetter()
+          //   ).getForms();
         }
       }
     }

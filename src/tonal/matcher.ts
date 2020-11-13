@@ -1,12 +1,14 @@
 import {
   TonalLetterTags,
-  stopFinalConsonantsBgjklpsTonal,
+  finalConsonantsBgjklpsTonal,
   freeToneLettersTonal,
+  vowelsTonal,
 } from './version2';
 import {
   finalConsonantsLs,
   finalConsonantsBgkp,
   finalConsonantsJls,
+  finalConsonantsMng,
   toneLettersWx,
   nasalFinalConsonants,
 } from './collections';
@@ -114,27 +116,20 @@ export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
 };
 
 // bf, gf, jf, kf, lf, pf, sf
-export const smBgjklpsF = function (finalBgjklps: string, firstTonalF: string) {
+export const smBgjklpsF = function (finalBgjklps: string, firstToneF: string) {
   if (
-    stopFinalConsonantsBgjklpsTonal.includes(finalBgjklps) &&
-    TonalLetterTags.f === firstTonalF
+    finalConsonantsBgjklpsTonal.includes(finalBgjklps) &&
+    TonalLetterTags.f === firstToneF
   )
     return true;
 
   return false;
 };
 
-// ieng + tone letter
-export const smIENGFywxz = function (
-  vowelI: string,
-  vowelE: string,
-  nasalFinalConsonantNG: string,
-  toneLetter: string
-) {
+// iengz, uamz
+export const smMngFywxz = function (finalMng: string, toneLetter: string) {
   if (
-    vowelI === TonalLetterTags.i &&
-    vowelE === TonalLetterTags.e &&
-    nasalFinalConsonantNG === TonalLetterTags.ng &&
+    finalConsonantsMng.includes(finalMng) &&
     freeToneLettersTonal.includes(toneLetter)
   )
     return true;
@@ -142,9 +137,17 @@ export const smIENGFywxz = function (
   return false;
 };
 
+export const smVowelMng = function (medial: string, finalMng: string) {
+  if (vowelsTonal.includes(medial) && finalConsonantsMng.includes(finalMng))
+    return true;
+
+  return false;
+};
+
 // -ik
-export const smIK = function (vowelI: string, vowelK: string) {
-  if (vowelI === TonalLetterTags.i && vowelK === TonalLetterTags.k) return true;
+export const smIK = function (medialI: string, medialK: string) {
+  if (medialI === TonalLetterTags.i && medialK === TonalLetterTags.k)
+    return true;
 
   return false;
 };

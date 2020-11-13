@@ -214,7 +214,7 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
                 mdls[0].toString() === TonalLetterTags.i
               ) {
                 // in case of -ieng
-                kanas[i] += getSmallKanaVowel(KanaLetterTags.i);
+                // kanas[i] += getSmallKanaVowel(KanaLetterTags.i);
               }
               if (mdls[j].toString() === TonalLetterTags.e) {
                 // for letter e, an small kana e is appended to the preceding i-ending initial

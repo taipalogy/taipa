@@ -132,6 +132,11 @@ describe('Uncombining form testing', () => {
   test('check the uncombining form,  liengz to lienx, sandhi final', () => {
     expect(ms2[0].getForms()[0].literal).toEqual('lienx');
   });
+
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('chuamzmngx');
+  test('check the uncombining form,  chuamz to chuan, sandhi final', () => {
+  expect(ms3[0].getForms()[2].literal).toEqual('chuan');
+  });
   */
 });
 

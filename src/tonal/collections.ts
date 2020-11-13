@@ -79,6 +79,12 @@ export const finalConsonantsLs = [
   TonalLetterTags.s.toString(),
 ];
 
+// sandhi final m, ng for final n
+export const finalConsonantsMng = [
+  TonalLetterTags.m.toString(),
+  TonalLetterTags.ng.toString(),
+];
+
 // bb, gg, kk, pp
 /*
 export const finalConsonantsBBggkkpp = [
@@ -153,7 +159,7 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
 
 // b, g, h, j, l
 export const initialConsonantsBghjl = [
-  // turn preceding finals to voiced ones
+  // mutate preceding finals to voiced ones
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.h.toString(),
@@ -192,7 +198,7 @@ export const voicedVoicelessFinalConsonants = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.gg, TonalLetterTags.kk);
 
 /** sandhi final consonants b, g, j, l, s, bb, gg, ll, ss */
-export const sandhiFinalConsonantsBgjlsbbggllss = [
+export const finalConsonantsBgjlsbbggllss = [
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.j.toString(),
@@ -261,7 +267,7 @@ export const fourthToEighthFinalConsonants = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.k, TonalLetterTags.kk)
   .set(TonalLetterTags.h, TonalLetterTags.hh);
 
-export const sandhiFinalsPPpttt = [
+export const sandhiFinalPPpttt = [
   TonalLetterTags.p.toString(),
   TonalLetterTags.pp.toString(),
   TonalLetterTags.t.toString(),

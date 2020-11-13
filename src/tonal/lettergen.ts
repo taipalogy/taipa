@@ -12,8 +12,8 @@ import {
   nasalFinalConsonantsTonal,
   nasalizationsTonal,
   stopFinalConsonantsTonal,
-  stopFinalConsonantsBgjklpsTonal,
-  stopFinalConsonantsBBggkkllppssTonal,
+  finalConsonantsBgjklpsTonal,
+  finalConsonantsBBggkkllppssTonal,
 } from './version2';
 import { combiningRules } from './collections';
 
@@ -206,10 +206,10 @@ function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
   if (!sg.matching) return sg;
 
   if (
-    stopFinalConsonantsBgjklpsTonal.includes(
+    finalConsonantsBgjklpsTonal.includes(
       sg.letters[sg.matchedLetters.length]
     ) ||
-    stopFinalConsonantsBBggkkllppssTonal.includes(
+    finalConsonantsBBggkkllppssTonal.includes(
       sg.letters[sg.matchedLetters.length]
     )
   ) {
@@ -227,8 +227,8 @@ function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
       sg.predictive &&
       sg.predictSandhiFinalConsonant
     ) {
-      sg.predictions.push(stopFinalConsonantsBgjklpsTonal.letters);
-      sg.predictions.push(stopFinalConsonantsBBggkkllppssTonal.letters);
+      sg.predictions.push(finalConsonantsBgjklpsTonal.letters);
+      sg.predictions.push(finalConsonantsBBggkkllppssTonal.letters);
     }
   }
 
