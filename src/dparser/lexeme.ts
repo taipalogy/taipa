@@ -33,7 +33,7 @@ export class TonalInflectionLexeme extends Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
   private allomorphicEnding: AllomorphicEnding;
-  // TODO: word patterns for thiapwsux chongwtaiwgiy, ay, etc... check out member positional letters in morpheme.
+  // TODO: word patterns for thiapwsux chongwthaiwgiy, ay, etc... check out member positional letters in morpheme.
 
   constructor(
     morphemes: Array<TonalCombiningMorpheme>,
