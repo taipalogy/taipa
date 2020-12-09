@@ -178,11 +178,11 @@ export const lowerLettersTonal = new LettersOfTonal([
 ]);
 
 export enum TonalSpellingTags {
-  initialConsonant = 'initialConsonant', // initial consonant
+  initialConsonant = 'initialConsonant',
   vowel = 'vowel',
   nasalization = 'nasalization',
-  stopFinalConsonant = 'stopFinalConsonant', // stop final consonant
-  nasalFinalConsonant = 'nasalFinalConsonant', // nasal final consonant
+  stopFinalConsonant = 'stopFinalConsonant',
+  nasalFinalConsonant = 'nasalFinalConsonant',
   checkedTone = 'checkedTone', // checked tone letter
   freeTone = 'freeTone', // free tone letter
 }

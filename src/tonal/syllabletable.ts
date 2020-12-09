@@ -21,7 +21,7 @@ const toBeVerified = [
 
     'jex', 'jek', 'jing', 'jih', 'jirnx', 'jirtt', 'juany',
 
-    'kirinnx', 'kuinnx',
+    'khanx', 'khangx', 'kirinnx', 'kuinnx',
 
     'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
 
@@ -47,7 +47,7 @@ const toBeVerified = [
 
     'pann', 'pihh', 'pirt',
 
-    // syllabi headwords
+    // syllabic headwords
     'luai',
 
     'tirinn',
