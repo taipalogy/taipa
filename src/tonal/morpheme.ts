@@ -186,7 +186,7 @@ export function syllabifyTonal(
       // console.log(`literal: ${literal}`);
       if (tnls.length > 0) {
         for (let t of tnls) {
-          // console.log(literal, t.toString());
+          // console.log(literal, t.toString(), tnls.length, tnls);
           if (
             isInSyllableTable(
               letters

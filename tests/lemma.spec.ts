@@ -98,7 +98,7 @@ describe('Uncombining form testing, ay', () => {
     expect(ms7[0].getForms()[0].literal).toEqual('taiz');
   });
 
-  const ms8 = tonalLemmatizationAnalyzer.morphAnalyze('ngzaftaixay');
+  const ms8 = tonalLemmatizationAnalyzer.morphAnalyze('ngzafthaixay');
   test('check the uncombining form, 4-syllable word', () => {
     expect(ms8[0].getForms()[0].literal).toEqual('ngx');
     expect(ms8[1].getForms()[0].literal).toEqual('ay');

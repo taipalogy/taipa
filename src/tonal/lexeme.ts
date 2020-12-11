@@ -142,7 +142,6 @@ export class TonalLemmatizationLexemeMaker extends LexemeMaker {
   }
 
   protected make(morphemes: Array<TonalUncombiningMorpheme>) {
-    // inflectional stem with x in the middle
     return new TonalLemmatizationLexeme(morphemes, new TonalLemmatization());
   }
 }
