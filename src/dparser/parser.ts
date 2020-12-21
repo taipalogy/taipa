@@ -3,7 +3,7 @@ import {
   Transition,
   Shift,
   RightArc,
-  LeftArc
+  LeftArc,
 } from './configuration';
 import { Guide } from './guide';
 import { Token } from '../token';
@@ -14,7 +14,6 @@ import { Relation } from './relation';
 
 export class DependencyParser {
   private c: Configuration = this.getInitialConfiguration();
-  private triggered: boolean = false;
 
   private s1: Token = new Token('');
   private s2: Token = new Token('');
@@ -50,7 +49,7 @@ export class DependencyParser {
     return false;
   }
 
-  private isStackEmpty() {
+  private isTwoNodesInStack() {
     if (this.c.stack.length === 2) return true;
     return false;
   }
@@ -96,12 +95,12 @@ export class DependencyParser {
     }
   }
 
-  private s2S1LeftArgsOfVerb = new Map<
+  private s2S1LeftArgsToPronoun = new Map<
     string,
     DependencyLabels[]
   >().set(Tagset.npr + Tagset.vb, [
     DependencyLabels.nsubj,
-    DependencyLabels.dislocated
+    DependencyLabels.dislocated,
   ]);
 
   private setS2S1Relation(t: Transition) {
@@ -111,7 +110,7 @@ export class DependencyParser {
         if (rel) {
           this.c.relations.push(this.rightRelation(rel));
         }
-      } else if (this.isStackEmpty()) {
+      } else if (this.isTwoNodesInStack()) {
         this.c.relations.push(this.rightRelation(DependencyLabels.root));
       }
     } else if (t instanceof LeftArc) {
@@ -120,16 +119,18 @@ export class DependencyParser {
         if (rel) {
           this.c.relations.push(this.leftRelation(rel));
         }
-      } else if (this.s2S1LeftArgsOfVerb.has(this.s2.tag + this.s1.tag)) {
-        const labels = this.s2S1LeftArgsOfVerb.get(this.s2.tag + this.s1.tag);
-        if (labels) {
-          if (this.triggered == false) {
+      } else if (this.s2S1LeftArgsToPronoun.has(this.s2.tag + this.s1.tag)) {
+        // TODO: may further break down Tagset.npr into demonstrative and personal
+        // DependencyLabels.dislocated may not be a valid label
+        const labels = this.s2S1LeftArgsToPronoun.get(
+          this.s2.tag + this.s1.tag
+        );
+        if (labels)
+          if (this.s2.text === 'gua') {
             this.c.relations.push(this.leftRelation(labels[0]));
-            this.triggered = true;
-          } else {
+          } else if (this.s2.text === 'che') {
             this.c.relations.push(this.leftRelation(labels[1]));
           }
-        }
       }
     }
   }

@@ -3,7 +3,7 @@ import {
   Transition,
   Shift,
   LeftArc,
-  RightArc
+  RightArc,
 } from './configuration';
 import { Tagset } from './symbols';
 import { Token } from '../token';
@@ -45,7 +45,7 @@ export class Guide {
     return false;
   }
 
-  private isStackEmpty(c: Configuration) {
+  private isTwoNodesInStack(c: Configuration) {
     if (c.stack.length === 2) return true;
     return false;
   }
@@ -71,7 +71,7 @@ export class Guide {
         if (tran) {
           this.transitions.push(tran);
         }
-      } else if (this.isStackEmpty(c)) {
+      } else if (this.isTwoNodesInStack(c)) {
         this.transitions.push(new RightArc());
       }
     }
