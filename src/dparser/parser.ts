@@ -14,6 +14,7 @@ import { Relation } from './relation';
 
 export class DependencyParser {
   private c: Configuration = this.getInitialConfiguration();
+  private previousPronoun: string = '';
 
   private s1: Token = new Token('');
   private s2: Token = new Token('');
@@ -120,15 +121,16 @@ export class DependencyParser {
           this.c.relations.push(this.leftRelation(rel));
         }
       } else if (this.s2S1LeftArgsToPronoun.has(this.s2.tag + this.s1.tag)) {
-        // TODO: may further break down Tagset.npr into demonstrative and personal
-        // DependencyLabels.dislocated may not be a valid label
+        // TODO: to be improved
         const labels = this.s2S1LeftArgsToPronoun.get(
           this.s2.tag + this.s1.tag
         );
         if (labels)
-          if (this.s2.text === 'gua') {
+          if (this.s2.text === 'gua' && this.previousPronoun === '') {
+            this.previousPronoun = this.s2.text;
             this.c.relations.push(this.leftRelation(labels[0]));
-          } else if (this.s2.text === 'che') {
+          } else if (this.s2.text === 'che' && this.previousPronoun === 'gua') {
+            this.previousPronoun = this.s2.text;
             this.c.relations.push(this.leftRelation(labels[1]));
           }
       }
