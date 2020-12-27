@@ -10,7 +10,6 @@ import { Token } from '../token';
 import { Document } from '../document';
 import { DependencyLabels, Tagset } from './symbols';
 import { Relation } from './relation';
-//import { FeatureLabel, Feature } from './feature';
 
 export class DependencyParser {
   private c: Configuration = this.getInitialConfiguration();
@@ -122,16 +121,22 @@ export class DependencyParser {
         }
       } else if (this.s2S1LeftArgsToPronoun.has(this.s2.tag + this.s1.tag)) {
         // TODO: to be improved
-        const labels = this.s2S1LeftArgsToPronoun.get(
+        const labelsPronoun = this.s2S1LeftArgsToPronoun.get(
           this.s2.tag + this.s1.tag
         );
-        if (labels)
+        const rels = this.c.relations.filter(it => it.dependent.text === 'gua');
+        if (labelsPronoun)
           if (this.s2.text === 'gua' && this.previousPronoun === '') {
             this.previousPronoun = this.s2.text;
-            this.c.relations.push(this.leftRelation(labels[0]));
-          } else if (this.s2.text === 'che' && this.previousPronoun === 'gua') {
+            this.c.relations.push(this.leftRelation(labelsPronoun[0]));
+          } else if (
+            this.s2.text === 'che' &&
+            this.previousPronoun === 'gua' &&
+            rels.length > 0 &&
+            rels[0].dependent.text === 'gua'
+          ) {
             this.previousPronoun = this.s2.text;
-            this.c.relations.push(this.leftRelation(labels[1]));
+            this.c.relations.push(this.leftRelation(labelsPronoun[1]));
           }
       }
     }
