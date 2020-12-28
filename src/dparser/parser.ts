@@ -8,12 +8,11 @@ import {
 import { Guide } from './guide';
 import { Token } from '../token';
 import { Document } from '../document';
-import { DependencyLabels, Tagset } from './symbols';
+import { DependencyLabels, Tagset, POSTags } from './symbols';
 import { Relation } from './relation';
 
 export class DependencyParser {
   private c: Configuration = this.getInitialConfiguration();
-  private previousPronoun: string = '';
 
   private s1: Token = new Token('');
   private s2: Token = new Token('');
@@ -126,23 +125,21 @@ export class DependencyParser {
         );
         const rels = this.c.relations.filter(it => it.dependent.text === 'gua');
         if (labelsPronoun)
-          if (this.s2.text === 'gua' && this.previousPronoun === '') {
-            this.previousPronoun = this.s2.text;
+          if (this.s2.text === 'gua') {
             this.c.relations.push(this.leftRelation(labelsPronoun[0]));
           } else if (
             this.s2.text === 'che' &&
-            this.previousPronoun === 'gua' &&
             rels.length > 0 &&
-            rels[0].dependent.text === 'gua'
+            rels[0].dependent.text === 'gua' &&
+            rels[0].dependent.pos === POSTags.pronoun
           ) {
-            this.previousPronoun = this.s2.text;
             this.c.relations.push(this.leftRelation(labelsPronoun[1]));
           }
       }
     }
   }
 
-  parse = (doc: Document): Document => {
+  parse(doc: Document): Document {
     for (let t of doc.tokens) {
       this.c.queue.push(t);
     }
@@ -173,5 +170,5 @@ export class DependencyParser {
 
     doc.relations = this.c.relations;
     return doc;
-  };
+  }
 }
