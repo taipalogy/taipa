@@ -13,7 +13,7 @@ const toBeVerified = [
 
     'tom',
 
-    'giakk', 'gueh', 'chueh',
+    'giakk', 'chueh',
     
     'hioh', 'huangz',
 
@@ -160,7 +160,7 @@ const extraSyllables = [
 
     'en',
 
-    'gehh', 'gih', 'giuh', 'gimw', 'gunx',
+    'geh', 'gehh', 'gih', 'giuh', 'gimw', 'gueh', 'gunx',
 
     'homz', 'huainn',
 
