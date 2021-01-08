@@ -217,7 +217,7 @@ describe('Phrase testing', () => {
   });
 
   const p7 = createTonalPhrase('lagg gueh');
-  test('noun phrase, regressive assimilation of lakk geh', () => {
+  test('noun phrase, regressive assimilation of lakk gueh', () => {
     expect(p7.literal).toEqual('lagg gueh');
   });
 });
