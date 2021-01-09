@@ -5,6 +5,17 @@ import { Document } from '../document';
 import { Token } from '../token';
 import { TokenLemmaLookup } from '../token';
 
+export const getTokens = function (text: string) {
+  const tokens: string[] = [];
+  if (text) {
+    const matchArr = text.match(/\w+/g);
+    if (matchArr) {
+      matchArr.filter(it => it != undefined).map(it => tokens.push(it));
+    }
+  }
+  return tokens;
+};
+
 export const tokenizeSpace = function (text: string) {
   const tokens: Token[] = [];
   if (text) {
