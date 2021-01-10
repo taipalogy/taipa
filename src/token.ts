@@ -1,9 +1,9 @@
 import { Document } from './document';
 import { Tagset } from './dparser/symbols';
-import { TonalWord } from './tonal/lexeme';
+import { TonalWord } from './unchange/lexeme';
 import { PhrasalVerbs } from './dparser/rules';
 import { PositionalLetter, Word } from './unit';
-import { lemmatize } from './tonal/lemmatizer';
+import { lemmatize } from './unchange/lemmatizer';
 
 export class Token {
   /** The simple part-of-speech tag. */

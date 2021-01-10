@@ -1,4 +1,4 @@
-import { TonalWord } from './lexeme';
+import { TonalWord } from '../unchange/lexeme';
 import { Phrase } from '../unit';
 
 /** A phrase made of words. */

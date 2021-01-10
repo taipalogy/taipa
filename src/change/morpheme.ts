@@ -1,5 +1,5 @@
 import { MatchedPattern, MorphemeMaker, Morpheme } from '../unit';
-import { TonalSyllable, syllabifyTonal } from '../tonal/morpheme';
+import { TonalSyllable, syllabifyTonal } from '../unchange/morpheme';
 import {
   Allomorph,
   ZeroAllomorph,

@@ -33,9 +33,9 @@ import {
   TonalPhrasalMutationMetaplasm,
   TonalPhrasalUnmutationMetaplasm,
 } from '../metaplasm';
-import { TonalSyllable } from '../tonal/morpheme';
+import { TonalSyllable } from '../unchange/morpheme';
 import { AlphabeticLetter, PositionalLetter } from '../unit';
-import { TonalWord } from '../tonal/lexeme';
+import { TonalWord } from '../unchange/lexeme';
 import {
   TonalCombiningMorpheme,
   TonalSoundChangingMorpheme,
@@ -51,7 +51,7 @@ import {
   TonalMutationLexeme,
   TonalUnmutationLexeme,
 } from './lexeme';
-import { TonalPhrase } from '../tonal/phraseme';
+import { TonalPhrase } from '../unchange/phraseme';
 
 /** Returns the combining forms of a syllable. */
 export class TonalCombiningForms extends TonalCombiningMetaplasm {

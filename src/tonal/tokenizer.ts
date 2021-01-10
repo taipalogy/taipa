@@ -1,6 +1,6 @@
-import { syllableCompositions } from './lettergen';
+import { syllableCompositions } from '../unchange/lettergen';
 import { PositionalLetterGeneration, PositionalLetter } from '../unit';
-import { graphAnalyzeTonal } from './analyzer';
+import { graphAnalyzeTonal } from '../unchange/analyzer';
 import { vowelsTonal } from './version2';
 import { impossibleSequences } from './collections';
 

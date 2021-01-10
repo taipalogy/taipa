@@ -11,9 +11,9 @@ import {
   inflectEncliticLe,
   inflectPossesiveEx,
   inflectTo,
-} from '../src/dparser/inflector';
-import { createTonalInflectionLexeme } from '../src/dparser/creator';
-import { FourthToFirstCombining } from '../src/dparser/metaplasm';
+} from '../src/change/inflector';
+import { createTonalInflectionLexeme } from '../src/change/creator';
+import { FourthToFirstCombining } from '../src/change/metaplasm';
 
 describe('Inflectional ending testing', () => {
   const cli = new Client();

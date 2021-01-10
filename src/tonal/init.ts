@@ -6,7 +6,7 @@ import {
   materLectionisTonal,
   neutralFinalConsonantsTonal,
 } from './version2';
-import { TonalUncombiningMorpheme } from './morpheme';
+import { TonalUncombiningMorpheme } from '../unchange/morpheme';
 import {
   hiraganaKatakana,
   KanaLetterTags,

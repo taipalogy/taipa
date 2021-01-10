@@ -1,10 +1,10 @@
-import { TonalMutationLexeme } from './lexeme';
-import { morphAnalyzeChanging } from './analyzer';
+import { TonalMutationLexeme } from '../change/lexeme';
+import { morphAnalyzeChanging } from '../change/analyzer';
 import {
   ConsonantMutation,
   FinalConsonantMutationExternal,
   FinalConsonantMutationInternal,
-} from './metaplasm';
+} from '../change/metaplasm';
 import { TonalZeroMutationMetaplasm } from '../metaplasm';
 import { TonalMutationPhrasemeMaker } from './phraseme';
 

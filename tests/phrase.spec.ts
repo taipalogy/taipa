@@ -8,15 +8,15 @@ import {
   inflectSerial,
   inflectToParticiple,
   inflectVppToParticiple,
-} from '../src/dparser/inflector';
-import { insertToFollowingWord } from '../src/dparser/inserter';
+} from '../src/change/inflector';
+import { insertToFollowingWord } from '../src/change/inserter';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { TonalSyllable } from '../src/tonal/morpheme';
+import { TonalSyllable } from '../src/unchange/morpheme';
 import {
   createTonalPhrase,
   createCompoundPhraseme,
   createTonalInflectionLexeme,
-} from '../src/dparser/creator';
+} from '../src/change/creator';
 
 describe('Phrasal verb testing, transitive', () => {
   const ph = inflectToProceeding('khuannw', 'tiurh');

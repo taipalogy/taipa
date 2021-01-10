@@ -1,5 +1,5 @@
 import { TonalCombiningMetaplasm } from './metaplasm';
-import { InflectionalEnding } from './tonal/lexeme';
+import { InflectionalEnding } from './unchange/lexeme';
 
 export class Character {
   character: string;

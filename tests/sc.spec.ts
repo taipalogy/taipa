@@ -1,4 +1,4 @@
-import { lemmatize } from '../src/tonal/lemmatizer';
+import { lemmatize } from '../src/unchange/lemmatizer';
 
 describe('Syllable composition testing', () => {
   const lx1 = lemmatize('a');

@@ -1,6 +1,6 @@
 import { POSTags } from './symbols';
-import { createTonalInflectionLexeme } from './creator';
-import { TonalCombiningForms } from './metaplasm';
+import { createTonalInflectionLexeme } from '../change/creator';
+import { TonalCombiningForms } from '../change/metaplasm';
 import { OrthoLexeme, OrthoWord, VisitorMatching } from './visitor';
 
 /** Construction element. */

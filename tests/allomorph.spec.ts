@@ -1,5 +1,5 @@
-import { tonalInflectionAnalyzer } from '../src/dparser/analyzer';
-import { TonalCombiningForms } from '../src/dparser/metaplasm';
+import { tonalInflectionAnalyzer } from '../src/change/analyzer';
+import { TonalCombiningForms } from '../src/change/metaplasm';
 
 describe('Allomorph testing', () => {
   const ms1 = tonalInflectionAnalyzer.morphAnalyze(

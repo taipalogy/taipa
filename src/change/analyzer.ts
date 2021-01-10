@@ -8,7 +8,7 @@ import { TonalInflectionLexemeMaker, TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionMetaplasm } from '../metaplasm';
 import { TonalCombiningMetaplasm } from '../metaplasm';
 import { TonalCombiningForms } from './metaplasm';
-import { graphAnalyzeTonal } from '../tonal/analyzer';
+import { graphAnalyzeTonal } from '../unchange/analyzer';
 
 /**
  * Analyzes a string into morphemes. Morphological analysis.

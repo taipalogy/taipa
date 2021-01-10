@@ -1,8 +1,8 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/token';
-import { tonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
-import { TonalUncombiningMorpheme } from '../src/tonal/morpheme';
+import { tonalLemmatizationAnalyzer } from '../src/unchange/analyzer';
+import { TonalUncombiningMorpheme } from '../src/unchange/morpheme';
 
 describe('Sandhi final testing, stop final, checked tonal', () => {
   const cli = new Client();

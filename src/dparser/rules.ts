@@ -7,7 +7,10 @@ import {
   PersonalPronounElement,
 } from './keywords';
 import { POSTags, Tagset } from './symbols';
-import { inflectToProceeding, inflectVppToProceeding } from './inflector';
+import {
+  inflectToProceeding,
+  inflectVppToProceeding,
+} from '../change/inflector';
 import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
   dictOfVerbs,
@@ -15,7 +18,7 @@ import {
   dictOfPhrasalVerbTwos,
   dictOfSeperateVVCompounds,
 } from './dictionary';
-import { createCompoundPhraseme } from './creator';
+import { createCompoundPhraseme } from '../change/creator';
 
 /** Construction of a phrase. */
 export class ConstructionOfPhrase {

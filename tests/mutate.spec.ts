@@ -2,13 +2,13 @@ import {
   mutateInitialOfFollowingSyllable,
   mutateFinalOfPrecedingWord,
   mutateFinalConsonantOfPrecedingSyllable,
-} from '../src/dparser/mutator';
+} from '../src/change/mutator';
 import {
   unmutateInitialOfFollowingSyllable,
   unmutateFinalOfPrecedingWord,
   unmutateFinalOfPrecedingSyllable,
-} from '../src/tonal/unmutator';
-import { inflectDesinence } from '../src/dparser/inflector';
+} from '../src/unchange/unmutator';
+import { inflectDesinence } from '../src/change/inflector';
 
 describe('Consonant mutation testing, agressive, duplifix', () => {
   const lx = mutateInitialOfFollowingSyllable('titwtitt');

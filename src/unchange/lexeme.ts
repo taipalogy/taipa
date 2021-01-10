@@ -1,7 +1,7 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import { Word, LexemeMaker, Lexeme } from '../unit';
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from './version2';
-import { TonalAffix } from './version2';
+import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../tonal/version2';
+import { TonalAffix } from '../tonal/version2';
 import { TonalLemmatization } from './metaplasm';
 
 class Ending {}

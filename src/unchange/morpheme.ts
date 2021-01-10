@@ -15,14 +15,14 @@ import {
   freeToneLettersTonal,
   initialConsonantsTonal,
   stopFinalConsonantsTonal,
-} from './version2';
+} from '../tonal/version2';
 import {
   AlphabeticLetter,
   AlphabeticGrapheme,
   PositionalLetter,
 } from '../unit';
 import { TonalPositionalLetterGenerator } from './lettergen';
-import { isInSyllableTable } from './syllabletable';
+import { isInSyllableTable } from '../tonal/syllabletable';
 import {
   smMnngHF,
   smMnngHWx,
@@ -46,7 +46,7 @@ import {
   nasalInitialConsonants,
   finalConsonantsBgjlsbbggllss,
   finalConsonantsForBgjlsbbggllss,
-} from './collections';
+} from '../tonal/collections';
 import {
   LastSyllableForms,
   PrecedingAyexUncombining,

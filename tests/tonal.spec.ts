@@ -1,15 +1,15 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { tonalLemmatizationAnalyzer } from '../src/tonal/analyzer';
-import { tonalInflectionAnalyzer } from '../src/dparser/analyzer';
+import { tonalLemmatizationAnalyzer } from '../src/unchange/analyzer';
+import { tonalInflectionAnalyzer } from '../src/change/analyzer';
 import { TonalZeroCombining } from '../src/metaplasm';
 import {
   EighthToSecondCombining,
   EighthToFirstCombining,
   TonalCombiningForms,
   TonalDesinenceInflection,
-} from '../src/dparser/metaplasm';
-import { createTonalInflectionLexeme } from '../src/dparser/creator';
+} from '../src/change/metaplasm';
+import { createTonalInflectionLexeme } from '../src/change/creator';
 
 describe('Tonal testing', () => {
   const cli = new Client();

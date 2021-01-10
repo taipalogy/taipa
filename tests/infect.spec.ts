@@ -1,11 +1,11 @@
 import {
   infectFollowingSyllable,
   infectFollowingWord,
-} from '../src/dparser/infector';
+} from '../src/change/infector';
 import {
   uninfectFollowingSyllable,
   uninfectFollowingWord,
-} from '../src/tonal/uninfector';
+} from '../src/unchange/uninfector';
 
 describe('Infection testing, nasalization', () => {
   const lx = infectFollowingSyllable('ennxiay');

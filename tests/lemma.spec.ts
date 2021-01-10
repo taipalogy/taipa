@@ -2,8 +2,8 @@ import { Client } from '../src/client';
 import {
   tonalLemmatizationAnalyzer,
   graphAnalyzeTonal,
-} from '../src/tonal/analyzer';
-import { lemmatize } from '../src/tonal/lemmatizer';
+} from '../src/unchange/analyzer';
+import { lemmatize } from '../src/unchange/lemmatizer';
 
 describe('Lemma testing', () => {
   const cli = new Client();

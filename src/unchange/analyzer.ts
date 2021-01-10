@@ -3,12 +3,12 @@ import {
   TonalLemmatizationLexeme,
 } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../unit';
-import { lowerLettersTonal } from './version2';
+import { lowerLettersTonal } from '../tonal/version2';
 import {
   TonalUncombiningMorphemeMaker,
   TonalUncombiningMorpheme,
 } from './morpheme';
-import { TonalSoundUnchangingMorphemeMaker } from '../dparser/morpheme';
+import { TonalSoundUnchangingMorphemeMaker } from '../change/morpheme';
 
 /**
  * Analyzes a string into morphemes. Morphological analysis.

@@ -5,8 +5,8 @@ export { Client } from './client';
 export {
   tonalLemmatizationAnalyzer,
   graphAnalyzeTonal,
-} from './tonal/analyzer';
-export { tonalInflectionAnalyzer } from './dparser/analyzer';
+} from './unchange/analyzer';
+export { tonalInflectionAnalyzer } from './change/analyzer';
 export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
 export { graphAnalyzeHangul } from './hangul/analyzer';
 export { GraphemeMaker } from './unit';
@@ -16,12 +16,12 @@ export {
   TonalSpellingTags,
 } from './tonal/version2';
 export { KanaLetterTags } from './kana/kana';
-export { lemmatize } from './tonal/lemmatizer';
+export { lemmatize } from './unchange/lemmatizer';
 export {
   createTonalPhrase,
   createTonalInflectionLexeme,
   createCompoundPhraseme,
-} from './dparser/creator';
+} from './change/creator';
 export {
   inflectDesinence,
   inflectTransfix,
@@ -41,26 +41,26 @@ export {
   inflectToParticiple,
   inflectVppToParticiple,
   inflectSerial,
-} from './dparser/inflector';
-export { insertToFollowingSyllable } from './dparser/inserter';
-export { mutateFinalConsonantOfPrecedingSyllable } from './dparser/mutator';
+} from './change/inflector';
+export { insertToFollowingSyllable } from './change/inserter';
+export { mutateFinalConsonantOfPrecedingSyllable } from './change/mutator';
 
 export { TokenAnalysis } from './token';
 export { AlphabeticGrapheme } from './unit';
-export { TonalCombiningMorpheme } from './dparser/morpheme';
-export { TonalUncombiningMorpheme } from './tonal/morpheme';
-export { TonalInflectionLexeme, TonalInsertionLexeme } from './dparser/lexeme';
-export { TonalLemmatizationLexeme } from './tonal/lexeme';
+export { TonalCombiningMorpheme } from './change/morpheme';
+export { TonalUncombiningMorpheme } from './unchange/morpheme';
+export { TonalInflectionLexeme, TonalInsertionLexeme } from './change/lexeme';
+export { TonalLemmatizationLexeme } from './unchange/lexeme';
 export {
   PhrasalVerbPhraseme,
   PhrasalVerbVppPhraseme,
   TonalMainParticlePhraseme,
   TonalCompoundPhraseme,
   SerialPhraseme,
-} from './dparser/phraseme';
+} from './change/phraseme';
 export { KanaUncombiningMorpheme } from './kana/morpheme';
-export { TonalWord } from './tonal/lexeme';
-export { TonalPhrase } from './tonal/phraseme';
+export { TonalWord } from './unchange/lexeme';
+export { TonalPhrase } from './unchange/phraseme';
 
 export { PositionalLetter, PositionalLetterGeneration } from './unit';
 export {
@@ -72,10 +72,10 @@ export {
 export {
   TonalDesinenceInflection,
   TonalCombiningForms,
-} from './dparser/metaplasm';
+} from './change/metaplasm';
 
 export { predict } from './tonal/prediction';
 
-export { syllableCompositions } from './tonal/lettergen';
+export { syllableCompositions } from './unchange/lettergen';
 
 export { tokenizeLatinSyllable } from './tonal/tokenizer';

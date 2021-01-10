@@ -9,7 +9,7 @@ import {
   AllomorphicEnding,
   FreeAllomorphicEnding,
   CheckedAllomorphicEnding,
-} from '../tonal/lexeme';
+} from '../unchange/lexeme';
 import {
   Allomorph,
   FreeAllomorph,
@@ -17,7 +17,7 @@ import {
   TonalSpellingTags,
   TonalLetterTags,
 } from '../tonal/version2';
-import { TonalSyllable } from '../tonal/morpheme';
+import { TonalSyllable } from '../unchange/morpheme';
 import { PositionalLetter } from '../unit';
 import {
   TonalInflectionMetaplasm,

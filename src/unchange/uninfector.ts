@@ -1,7 +1,7 @@
 import { morphAnalyzeUnchanging } from './analyzer';
-import { TonalUninfectionLexeme } from '../dparser/lexeme';
-import { TonalUninfectionPhrasemeMaker } from '../dparser/phraseme';
-import { UninfectionExternal, Uninfection } from '../dparser/metaplasm';
+import { TonalUninfectionLexeme } from '../change/lexeme';
+import { TonalUninfectionPhrasemeMaker } from '../change/phraseme';
+import { UninfectionExternal, Uninfection } from '../change/metaplasm';
 import { TonalZeroUninfectionMetaplasm } from '../metaplasm';
 
 export function getNoUninfection(word: string) {

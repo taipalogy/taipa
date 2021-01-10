@@ -1,12 +1,12 @@
 import {
   insertToFollowingSyllable,
   insertToFollowingWord,
-} from '../src/dparser/inserter';
-import { inflectDesinence } from '../src/dparser/inflector';
+} from '../src/change/inserter';
+import { inflectDesinence } from '../src/change/inflector';
 import {
   uninsertFromFollowingSyllable,
   uninsertFromFollowingWord,
-} from '../src/tonal/uninserter';
+} from '../src/unchange/uninserter';
 
 describe('Epenthesis testing', () => {
   const lx1 = insertToFollowingSyllable('kimxay');

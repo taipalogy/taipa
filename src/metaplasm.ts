@@ -1,9 +1,9 @@
 import { Metaplasm } from './interface';
-import { TonalSyllable } from './tonal/morpheme';
+import { TonalSyllable } from './unchange/morpheme';
 import { Allomorph } from './tonal/version2';
 import { PositionalLetter, Morpheme } from './unit';
-import { TonalWord, InflectionalEnding } from './tonal/lexeme';
-import { TonalPhrase } from './tonal/phraseme';
+import { TonalWord, InflectionalEnding } from './unchange/lexeme';
+import { TonalPhrase } from './unchange/phraseme';
 import {
   TonalInflectionLexeme,
   TonalInsertionLexeme,
@@ -12,7 +12,7 @@ import {
   TonalInfectionLexeme,
   TonalMutationLexeme,
   TonalUnmutationLexeme,
-} from './dparser/lexeme';
+} from './change/lexeme';
 
 export class TonalCombiningMetaplasm extends Metaplasm {
   apply(

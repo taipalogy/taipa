@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { mutateFinalConsonantOfPrecedingSyllable } from '../src/dparser/mutator';
+import { mutateFinalConsonantOfPrecedingSyllable } from '../src/change/mutator';
 
 describe('Epenthesis testing', () => {
   const cli = new Client();

@@ -22,7 +22,7 @@ import {
   TonalSpellingTags,
   freeToneLettersTonal,
   Tonal,
-} from './version2';
+} from '../tonal/version2';
 import { PositionalLetter, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 import {
@@ -31,8 +31,8 @@ import {
   nasalFinalConsonants,
   fourthToEighthFinalConsonants,
   finalConsonantsForTransfix,
-} from './collections';
-import { isInSyllableTable } from './syllabletable';
+} from '../tonal/collections';
+import { isInSyllableTable } from '../tonal/syllabletable';
 import { smMngFywxz } from './matcher';
 
 /** Returns the uncombining forms of a syllable. */

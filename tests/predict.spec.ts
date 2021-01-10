@@ -1,5 +1,5 @@
 import { predict } from '../src/tonal/prediction';
-import { graphAnalyzeTonal } from '../src/tonal/analyzer';
+import { graphAnalyzeTonal } from '../src/unchange/analyzer';
 import { GraphemeMaker } from '../src/unit';
 import { lowerLettersTonal } from '../src/tonal/version2';
 

@@ -3,7 +3,7 @@ import {
   finalConsonantsBgjklpsTonal,
   freeToneLettersTonal,
   vowelsTonal,
-} from './version2';
+} from '../tonal/version2';
 import {
   finalConsonantsLs,
   finalConsonantsBgkp,
@@ -11,7 +11,7 @@ import {
   finalConsonantsMng,
   toneLettersWx,
   nasalFinalConsonants,
-} from './collections';
+} from '../tonal/collections';
 
 // mhf, nhf, nghf
 export const regexMnngHF = /(m|ng?)hf/g;

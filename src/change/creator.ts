@@ -1,5 +1,5 @@
 import { tonalInflectionAnalyzer } from './analyzer';
-import { TonalPhrase } from '../tonal/phraseme';
+import { TonalPhrase } from '../unchange/phraseme';
 import { TonalZeroInflection } from '../metaplasm';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { TonalZeroCombining, TonalCombiningMetaplasm } from '../metaplasm';

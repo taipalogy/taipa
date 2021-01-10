@@ -1,12 +1,12 @@
 import { morphAnalyzeUnchanging } from './analyzer';
-import { TonalUnmutationLexeme } from '../dparser/lexeme';
+import { TonalUnmutationLexeme } from '../change/lexeme';
 import {
   ConsonantUnmutation,
   FinalConsonantUnmutationExternal,
   FinalConsonantUnmutationInternal,
-} from '../dparser/metaplasm';
+} from '../change/metaplasm';
 import { TonalZeroUnmutationMetaplasm } from '../metaplasm';
-import { TonalUnmutationPhrasemeMaker } from '../dparser/phraseme';
+import { TonalUnmutationPhrasemeMaker } from '../change/phraseme';
 
 function getNoUnmutation(word: string) {
   const mrphs = morphAnalyzeUnchanging(word);

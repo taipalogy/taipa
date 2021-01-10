@@ -15,7 +15,7 @@ import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { createTonalInflectionLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
-import { particlesOfVpp } from './dictionary';
+import { particlesOfVpp } from '../dparser/dictionary';
 
 /** Inflects the inflectional suffix of a word. Lexical inflector. */
 export function inflectDesinence(word: string) {
