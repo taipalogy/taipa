@@ -13,16 +13,32 @@ import {
 } from '../change/inflector';
 import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
-  dictOfVerb,
+  dictOfVerbs,
   dictOfPhrasalVerbs,
   dictOfPhrasalVerbTwos,
   dictOfSeperateVVCompounds,
-  dictOfSubsidiary,
+  dictOfSubsidiaries,
+  AdverbialParticlesInflected,
 } from './dictionary';
 import { createCompoundPhraseme } from '../change/creator';
+import { Pairs } from './tagger';
 
-export const padvLongy = function (nextToken: string, nextToken2: string) {
-  if (dictOfVerb.includes(nextToken) && dictOfSubsidiary.includes(nextToken2)) {
+export const isPadvLongy = function (nextToken: string, nextToken2: string) {
+  if (
+    dictOfVerbs.includes(nextToken) &&
+    dictOfSubsidiaries.includes(nextToken2)
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export const isVb = function (pairs: Pairs<string, string>, nextToken: string) {
+  if (
+    pairs.length == 1 &&
+    pairs[pairs.length - 1][0] === AdverbialParticlesInflected.longy &&
+    dictOfSubsidiaries.includes(nextToken)
+  ) {
     return true;
   }
   return false;
@@ -205,7 +221,7 @@ export class Rules {
 
   private lookupDictionary(str: string) {
     let phr;
-    if (dictOfVerb.includes(str)) {
+    if (dictOfVerbs.includes(str)) {
       let vs: VerbElement = new VerbElement(str);
       if (vs.pos === POSTags.verb) vs.tag = Tagset.vb;
       phr = [new ConstructionOfPhrase([])];

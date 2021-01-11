@@ -1,5 +1,5 @@
 // prettier-ignore
-export const dictOfVerb = [
+export const dictOfVerbs = [
     'khuannw',
 
     'phah',
@@ -26,8 +26,9 @@ export enum particlesOfVpp {
 }
 
 // prettier-ignore
-export const dictOfSubsidiary = ['a', 'aw', 'az'];
+export const dictOfSubsidiaries = ['a', 'aw', 'az'];
 
-export enum AdverbialParticles {
-  longy = 'longy',
+export enum AdverbialParticlesInflected {
+  // the value could be assigned by an inflector function
+  longy = 'long',
 }

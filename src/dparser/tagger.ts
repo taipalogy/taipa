@@ -4,7 +4,8 @@ import {
   VerbWithEnclitic,
   Rules,
   ConstructionOfPhrase,
-  padvLongy,
+  isPadvLongy,
+  isVb,
 } from './rules';
 import { POSTags, Tagset } from './symbols';
 import {
@@ -17,20 +18,39 @@ import { Token } from '../token';
 import { Document } from '../document';
 import { Feature } from './feature';
 import { inflectDesinence } from '../change/inflector';
-import { AdverbialParticles } from './dictionary';
+import {
+  AdverbialParticlesInflected,
+  dictOfVerbs,
+  dictOfSubsidiaries,
+} from './dictionary';
+
+type Pair<T, K> = [T, K];
+export type Pairs<T, K> = Pair<T, K>[];
 
 export function tag(features: Feature[]) {
-  let map = new Map();
+  const pairs: Pairs<string, string> = [];
   for (let i = 0; i < features.length; i++) {
     if (
-      features[i].token ===
-        inflectDesinence(AdverbialParticles.longy).getForms()[0].literal &&
-      padvLongy(features[i].nextToken, features[i].nextToken2)
+      features[i].token === AdverbialParticlesInflected.longy &&
+      isPadvLongy(features[i].nextToken, features[i].nextToken2)
     ) {
-      map.set(features[i].token, Tagset.padv);
+      pairs.push([features[i].token, Tagset.padv]);
+    }
+
+    if (dictOfVerbs.includes(features[i].token)) {
+      if (isVb(pairs, features[i].nextToken))
+        pairs.push([features[i].token, Tagset.vb]);
+    }
+
+    if (
+      dictOfSubsidiaries.includes(features[i].token) &&
+      dictOfVerbs.includes(features[i].prevToken)
+    ) {
+      // to check for the tone pattern
+      pairs.push([features[i].token, Tagset.psub]);
     }
   }
-  return map;
+  return pairs;
 }
 
 export class RuleBasedTagger {
