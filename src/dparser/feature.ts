@@ -1,4 +1,4 @@
-class Feature {
+export class Feature {
   token: string = '';
   isFirst: boolean = false;
   isLast: boolean = false;

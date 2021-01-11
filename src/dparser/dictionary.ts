@@ -1,5 +1,5 @@
 // prettier-ignore
-export const dictOfVerbs = [
+export const dictOfVerb = [
     'khuannw',
 
     'phah',
@@ -23,4 +23,11 @@ export enum particlesOfVpp {
   cut = 'cut',
   khih = 'khih',
   laih = 'laih',
+}
+
+// prettier-ignore
+export const dictOfSubsidiary = ['a', 'aw', 'az'];
+
+export enum AdverbialParticles {
+  longy = 'longy',
 }

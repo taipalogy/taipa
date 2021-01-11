@@ -13,12 +13,20 @@ import {
 } from '../change/inflector';
 import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
-  dictOfVerbs,
+  dictOfVerb,
   dictOfPhrasalVerbs,
   dictOfPhrasalVerbTwos,
   dictOfSeperateVVCompounds,
+  dictOfSubsidiary,
 } from './dictionary';
 import { createCompoundPhraseme } from '../change/creator';
+
+export const padvLongy = function (nextToken: string, nextToken2: string) {
+  if (dictOfVerb.includes(nextToken) && dictOfSubsidiary.includes(nextToken2)) {
+    return true;
+  }
+  return false;
+};
 
 /** Construction of a phrase. */
 export class ConstructionOfPhrase {
@@ -197,7 +205,7 @@ export class Rules {
 
   private lookupDictionary(str: string) {
     let phr;
-    if (dictOfVerbs.includes(str)) {
+    if (dictOfVerb.includes(str)) {
       let vs: VerbElement = new VerbElement(str);
       if (vs.pos === POSTags.verb) vs.tag = Tagset.vb;
       phr = [new ConstructionOfPhrase([])];

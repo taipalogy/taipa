@@ -4,6 +4,7 @@ import {
   VerbWithEnclitic,
   Rules,
   ConstructionOfPhrase,
+  padvLongy,
 } from './rules';
 import { POSTags, Tagset } from './symbols';
 import {
@@ -14,6 +15,23 @@ import {
 } from './keywords';
 import { Token } from '../token';
 import { Document } from '../document';
+import { Feature } from './feature';
+import { inflectDesinence } from '../change/inflector';
+import { AdverbialParticles } from './dictionary';
+
+export function tag(features: Feature[]) {
+  let map = new Map();
+  for (let i = 0; i < features.length; i++) {
+    if (
+      features[i].token ===
+        inflectDesinence(AdverbialParticles.longy).getForms()[0].literal &&
+      padvLongy(features[i].nextToken, features[i].nextToken2)
+    ) {
+      map.set(features[i].token, Tagset.padv);
+    }
+  }
+  return map;
+}
 
 export class RuleBasedTagger {
   private phrases: Array<ConstructionOfPhrase> = new Array();
