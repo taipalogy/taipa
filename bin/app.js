@@ -7,16 +7,16 @@ let doc = new document_1.Document();
 let stdin = process.openStdin();
 stdin.addListener('data', function (d) {
     doc = processor_1.processor(d.toString().trim());
-    const ts = doc.tokens;
+    const ts = doc.nodes;
     if (ts.length > 0) {
         for (let i = 0; i < ts.length; i++) {
             let lemma = '*';
             if (ts[i].lemma != '')
                 lemma = ts[i].lemma;
-            let headText = '*';
-            if (ts[i].head)
-                headText = ts[i].head.text;
-            console.info(ts[i].text +
+            let headToken = '*';
+            if (ts[i].head.length > 0)
+                headToken = ts[i].head;
+            console.info(ts[i].token +
                 ',' +
                 lemma +
                 ',' +
@@ -26,7 +26,7 @@ stdin.addListener('data', function (d) {
                 ',' +
                 ts[i].dep +
                 ',' +
-                headText);
+                headToken);
         }
     }
 });

@@ -1,14 +1,14 @@
 import { DependencyLabels } from './symbols';
-import { Token } from '../token';
+import { Node } from '../token';
 
 export class Relation {
-    dependency: DependencyLabels;
-    head: Token;
-    dependent: Token;
+  dependency: DependencyLabels;
+  head: Node;
+  dependent: Node;
 
-    constructor(dep: DependencyLabels, head: Token, dependent: Token) {
-        this.dependency = dep;
-        this.head = head;
-        this.dependent = dependent;
-    }
+  constructor(dep: DependencyLabels, head: Node, dependent: Node) {
+    this.dependency = dep;
+    this.head = head;
+    this.dependent = dependent;
+  }
 }

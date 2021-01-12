@@ -11,20 +11,20 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khuannw');
-    expect(rs[0].dependent.text).toEqual('tiurh');
+    expect(rs[0].head.token).toEqual('khuannw');
+    expect(rs[0].dependent.token).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[1].head.text).toEqual('khuannw');
-    expect(rs[1].dependent.text).toEqual('gua');
+    expect(rs[1].head.token).toEqual('khuannw');
+    expect(rs[1].dependent.token).toEqual('gua');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
-    expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('khuannw');
+    expect(rs[2].head.token).toEqual('ROOT');
+    expect(rs[2].dependent.token).toEqual('khuannw');
   });
 });
 
@@ -38,26 +38,26 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khuanny');
-    expect(rs[0].dependent.text).toEqual('tiurhw');
+    expect(rs[0].head.token).toEqual('khuanny');
+    expect(rs[0].dependent.token).toEqual('tiurhw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.obj);
-    expect(rs[1].head.text).toEqual('khuanny');
-    expect(rs[1].dependent.text).toEqual('che');
+    expect(rs[1].head.token).toEqual('khuanny');
+    expect(rs[1].dependent.token).toEqual('che');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('khuanny');
-    expect(rs[2].dependent.text).toEqual('gua');
+    expect(rs[2].head.token).toEqual('khuanny');
+    expect(rs[2].dependent.token).toEqual('gua');
   });
 
   test('check the third relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
-    expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khuanny');
+    expect(rs[3].head.token).toEqual('ROOT');
+    expect(rs[3].dependent.token).toEqual('khuanny');
   });
 });
 
@@ -71,26 +71,26 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('longy');
-    expect(rs[0].dependent.text).toEqual('tiurhw');
+    expect(rs[0].head.token).toEqual('longy');
+    expect(rs[0].dependent.token).toEqual('tiurhw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.obj);
-    expect(rs[1].head.text).toEqual('longy');
-    expect(rs[1].dependent.text).toEqual('che');
+    expect(rs[1].head.token).toEqual('longy');
+    expect(rs[1].dependent.token).toEqual('che');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('longy');
-    expect(rs[2].dependent.text).toEqual('gua');
+    expect(rs[2].head.token).toEqual('longy');
+    expect(rs[2].dependent.token).toEqual('gua');
   });
 
   test('check the third relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
-    expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('longy');
+    expect(rs[3].head.token).toEqual('ROOT');
+    expect(rs[3].dependent.token).toEqual('longy');
   });
 });
 
@@ -104,26 +104,26 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khuannw');
-    expect(rs[0].dependent.text).toEqual('tiurh');
+    expect(rs[0].head.token).toEqual('khuannw');
+    expect(rs[0].dependent.token).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[1].head.text).toEqual('khuannw');
-    expect(rs[1].dependent.text).toEqual('gua');
+    expect(rs[1].head.token).toEqual('khuannw');
+    expect(rs[1].dependent.token).toEqual('gua');
   });
 
   test('check the second relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.dislocated);
-    expect(rs[2].head.text).toEqual('khuannw');
-    expect(rs[2].dependent.text).toEqual('che');
+    expect(rs[2].head.token).toEqual('khuannw');
+    expect(rs[2].dependent.token).toEqual('che');
   });
 
   test('check the third relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
-    expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khuannw');
+    expect(rs[3].head.token).toEqual('ROOT');
+    expect(rs[3].dependent.token).toEqual('khuannw');
   });
 });
 
@@ -137,20 +137,20 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khuannw');
-    expect(rs[0].dependent.text).toEqual('tiurh');
+    expect(rs[0].head.token).toEqual('khuannw');
+    expect(rs[0].dependent.token).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[1].head.text).toEqual('khuannw');
-    expect(rs[1].dependent.text).toEqual('aw');
+    expect(rs[1].head.token).toEqual('khuannw');
+    expect(rs[1].dependent.token).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
-    expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('khuannw');
+    expect(rs[2].head.token).toEqual('ROOT');
+    expect(rs[2].dependent.token).toEqual('khuannw');
   });
 });
 
@@ -164,14 +164,14 @@ describe('Dependency parsing', () => {
 
   test('check the second relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('khuannw');
-    expect(rs[0].dependent.text).toEqual('aw');
+    expect(rs[0].head.token).toEqual('khuannw');
+    expect(rs[0].dependent.token).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.root);
-    expect(rs[1].head.text).toEqual('ROOT');
-    expect(rs[1].dependent.text).toEqual('khuannw');
+    expect(rs[1].head.token).toEqual('ROOT');
+    expect(rs[1].dependent.token).toEqual('khuannw');
   });
 });
 
@@ -185,14 +185,14 @@ describe('Dependency parsing', () => {
 
   test('check the second relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('longw');
-    expect(rs[0].dependent.text).toEqual('aw');
+    expect(rs[0].head.token).toEqual('longw');
+    expect(rs[0].dependent.token).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.root);
-    expect(rs[1].head.text).toEqual('ROOT');
-    expect(rs[1].dependent.text).toEqual('longw');
+    expect(rs[1].head.token).toEqual('ROOT');
+    expect(rs[1].dependent.token).toEqual('longw');
   });
 });
 
@@ -206,26 +206,26 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('khuannw');
-    expect(rs[0].dependent.text).toEqual('tiurh');
+    expect(rs[0].head.token).toEqual('khuannw');
+    expect(rs[0].dependent.token).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[1].head.text).toEqual('khuannw');
-    expect(rs[1].dependent.text).toEqual('aw');
+    expect(rs[1].head.token).toEqual('khuannw');
+    expect(rs[1].dependent.token).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('khuannw');
-    expect(rs[2].dependent.text).toEqual('gua');
+    expect(rs[2].head.token).toEqual('khuannw');
+    expect(rs[2].dependent.token).toEqual('gua');
   });
 
   test('check the fourth relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
-    expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khuannw');
+    expect(rs[3].head.token).toEqual('ROOT');
+    expect(rs[3].dependent.token).toEqual('khuannw');
   });
 });
 
@@ -239,14 +239,14 @@ describe('Dependency parsing', () => {
 
   test('check the second relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('phah');
-    expect(rs[0].dependent.text).toEqual('aw');
+    expect(rs[0].head.token).toEqual('phah');
+    expect(rs[0].dependent.token).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.root);
-    expect(rs[1].head.text).toEqual('ROOT');
-    expect(rs[1].dependent.text).toEqual('phah');
+    expect(rs[1].head.token).toEqual('ROOT');
+    expect(rs[1].dependent.token).toEqual('phah');
   });
 });
 
@@ -260,20 +260,20 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.compoundPrt);
-    expect(rs[0].head.text).toEqual('longw');
-    expect(rs[0].dependent.text).toEqual('tiurh');
+    expect(rs[0].head.token).toEqual('longw');
+    expect(rs[0].dependent.token).toEqual('tiurh');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[1].head.text).toEqual('longw');
-    expect(rs[1].dependent.text).toEqual('aw');
+    expect(rs[1].head.token).toEqual('longw');
+    expect(rs[1].dependent.token).toEqual('aw');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
-    expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('longw');
+    expect(rs[2].head.token).toEqual('ROOT');
+    expect(rs[2].dependent.token).toEqual('longw');
   });
 });
 
@@ -287,20 +287,20 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('phah');
-    expect(rs[0].dependent.text).toEqual('aw');
+    expect(rs[0].head.token).toEqual('phah');
+    expect(rs[0].dependent.token).toEqual('aw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.aux);
-    expect(rs[1].head.text).toEqual('phah');
-    expect(rs[1].dependent.text).toEqual('kaz');
+    expect(rs[1].head.token).toEqual('phah');
+    expect(rs[1].dependent.token).toEqual('kaz');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
-    expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('phah');
+    expect(rs[2].head.token).toEqual('ROOT');
+    expect(rs[2].dependent.token).toEqual('phah');
   });
 });
 
@@ -314,20 +314,20 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.aux);
-    expect(rs[0].head.text).toEqual('phah');
-    expect(rs[0].dependent.text).toEqual('kaz');
+    expect(rs[0].head.token).toEqual('phah');
+    expect(rs[0].dependent.token).toEqual('kaz');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[1].head.text).toEqual('phah');
-    expect(rs[1].dependent.text).toEqual('gua');
+    expect(rs[1].head.token).toEqual('phah');
+    expect(rs[1].dependent.token).toEqual('gua');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.root);
-    expect(rs[2].head.text).toEqual('ROOT');
-    expect(rs[2].dependent.text).toEqual('phah');
+    expect(rs[2].head.token).toEqual('ROOT');
+    expect(rs[2].dependent.token).toEqual('phah');
   });
 });
 
@@ -341,26 +341,26 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('phah');
-    expect(rs[0].dependent.text).toEqual('aw');
+    expect(rs[0].head.token).toEqual('phah');
+    expect(rs[0].dependent.token).toEqual('aw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.aux);
-    expect(rs[1].head.text).toEqual('phah');
-    expect(rs[1].dependent.text).toEqual('kaz');
+    expect(rs[1].head.token).toEqual('phah');
+    expect(rs[1].dependent.token).toEqual('kaz');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('phah');
-    expect(rs[2].dependent.text).toEqual('gua');
+    expect(rs[2].head.token).toEqual('phah');
+    expect(rs[2].dependent.token).toEqual('gua');
   });
 
   test('check the fourth relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
-    expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('phah');
+    expect(rs[3].head.token).toEqual('ROOT');
+    expect(rs[3].dependent.token).toEqual('phah');
   });
 });
 
@@ -374,25 +374,25 @@ describe('Dependency parsing', () => {
 
   test('check the first relation', () => {
     expect(rs[0].dependency).toEqual(DependencyLabels.prt);
-    expect(rs[0].head.text).toEqual('khuannw');
-    expect(rs[0].dependent.text).toEqual('aw');
+    expect(rs[0].head.token).toEqual('khuannw');
+    expect(rs[0].dependent.token).toEqual('aw');
   });
 
   test('check the second relation', () => {
     expect(rs[1].dependency).toEqual(DependencyLabels.aux);
-    expect(rs[1].head.text).toEqual('khuannw');
-    expect(rs[1].dependent.text).toEqual('kaz');
+    expect(rs[1].head.token).toEqual('khuannw');
+    expect(rs[1].dependent.token).toEqual('kaz');
   });
 
   test('check the third relation', () => {
     expect(rs[2].dependency).toEqual(DependencyLabels.nsubj);
-    expect(rs[2].head.text).toEqual('khuannw');
-    expect(rs[2].dependent.text).toEqual('gua');
+    expect(rs[2].head.token).toEqual('khuannw');
+    expect(rs[2].dependent.token).toEqual('gua');
   });
 
   test('check the fourth relation', () => {
     expect(rs[3].dependency).toEqual(DependencyLabels.root);
-    expect(rs[3].head.text).toEqual('ROOT');
-    expect(rs[3].dependent.text).toEqual('khuannw');
+    expect(rs[3].head.token).toEqual('ROOT');
+    expect(rs[3].dependent.token).toEqual('khuannw');
   });
 });

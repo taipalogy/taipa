@@ -14,7 +14,7 @@ import {
   ParticleElement,
   VerbElement,
 } from './keywords';
-import { Token } from '../token';
+import { Node } from '../token';
 import { Document } from '../document';
 import { Feature } from './feature';
 import { inflectDesinence } from '../change/inflector';
@@ -46,7 +46,7 @@ export function tag(features: Feature[]) {
       dictOfSubsidiaries.includes(features[i].token) &&
       dictOfVerbs.includes(features[i].prevToken)
     ) {
-      // to check for the tone pattern
+      // to check the tone pattern. to check if last word
       pairs.push([features[i].token, Tagset.psub]);
     }
   }
@@ -248,9 +248,9 @@ export class RuleBasedTagger {
     }
   }
 
-  private match(tokens: Token[]) {
+  private match(tokens: Node[]) {
     let toks: string[] = [];
-    for (let i in tokens) toks.push(tokens[i].text);
+    for (let i in tokens) toks.push(tokens[i].token);
 
     // console.log(tokens);
     const stack: string[] = [];
@@ -287,7 +287,7 @@ export class RuleBasedTagger {
   }
 
   tag(doc: Document) {
-    this.match(doc.tokens);
+    this.match(doc.nodes);
 
     let ces: Array<ConstructionElement> = new Array();
 
@@ -299,9 +299,9 @@ export class RuleBasedTagger {
     }
 
     for (let i = 0; i < ces.length; i++) {
-      if (doc.tokens[i].text === ces[i].orth) {
-        doc.tokens[i].pos = ces[i].pos;
-        doc.tokens[i].tag = ces[i].tag;
+      if (doc.nodes[i].token === ces[i].orth) {
+        doc.nodes[i].pos = ces[i].pos;
+        doc.nodes[i].tag = ces[i].tag;
       }
     }
 

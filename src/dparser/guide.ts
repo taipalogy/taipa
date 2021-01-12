@@ -6,13 +6,13 @@ import {
   RightArc,
 } from './configuration';
 import { Tagset } from './symbols';
-import { Token } from '../token';
+import { Node } from '../token';
 
 export class Guide {
   transitions: Array<Transition> = new Array();
-  private s1: Token = new Token('');
-  private s2: Token = new Token('');
-  private b1: Token = new Token('');
+  private s1: Node = new Node('');
+  private s2: Node = new Node('');
+  private b1: Node = new Node('');
 
   private s1B1Map = new Map<string, Transition>()
     .set(Tagset.vb + Tagset.ppv, new Shift())
@@ -51,11 +51,11 @@ export class Guide {
   }
 
   getNextTransition(c: Configuration) {
-    this.s1 = new Token('');
+    this.s1 = new Node('');
     if (c.stack.length > 0) this.s1 = c.stack[c.stack.length - 1];
-    this.s2 = new Token('');
+    this.s2 = new Node('');
     if (c.stack.length > 1) this.s2 = c.stack[c.stack.length - 2];
-    this.b1 = new Token('');
+    this.b1 = new Node('');
     if (c.queue.length > 0) this.b1 = c.queue[0];
 
     if (this.s1.tag != '' && this.b1.tag != '') {
