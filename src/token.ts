@@ -39,7 +39,7 @@ export class TokenAnalysis {
   uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
 }
 
-export class TokenLemmaLookup {
+export class TokenLemma {
   getTonalLemmas(doc: Document): Document {
     const sophv = new PhrasalVerbs();
     let j: number = 0;
@@ -48,7 +48,7 @@ export class TokenLemmaLookup {
 
     for (let i = 0; i < doc.nodes.length; i++) {
       if (len == i) {
-        // loop over the doc.speeches sequence
+        // loop over the doc.phrases sequence
         if (j < doc.phrases.length) {
           len += doc.phrases[j].elements.length;
           if (j + 1 < doc.phrases.length) j++;

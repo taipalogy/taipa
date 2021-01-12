@@ -8,7 +8,7 @@ import {
 import { Guide } from './guide';
 import { Node } from '../token';
 import { Document } from '../document';
-import { DependencyLabels, Tagset, POSTags } from './symbols';
+import { DependencyLabels, Tagset } from './symbols';
 import { Relation } from './relation';
 
 export class DependencyParser {
@@ -126,6 +126,7 @@ export class DependencyParser {
         const rels = this.c.relations.filter(
           it => it.dependent.token === 'gua'
         );
+
         if (labelsPronoun)
           if (this.s2.token === 'gua') {
             this.c.relations.push(this.leftRelation(labelsPronoun[0]));
@@ -133,7 +134,7 @@ export class DependencyParser {
             this.s2.token === 'che' &&
             rels.length > 0 &&
             rels[0].dependent.token === 'gua' &&
-            rels[0].dependent.pos === POSTags.pronoun
+            rels[0].dependent.tag === Tagset.npr
           ) {
             this.c.relations.push(this.leftRelation(labelsPronoun[1]));
           }

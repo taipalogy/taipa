@@ -2,6 +2,8 @@
 export const dictOfVerbs = [
     'khuannw',
 
+    'longw',
+
     'phah',
 ];
 
@@ -25,10 +27,26 @@ export enum particlesOfVpp {
   laih = 'laih',
 }
 
-// prettier-ignore
 export const dictOfSubsidiaries = ['a', 'aw', 'az'];
 
 export enum AdverbialParticlesInflected {
-  // the value could be assigned by an inflector function
+  // the values could be assigned by an inflector function
   longy = 'long',
 }
+
+export enum PersonalPronounInflected {
+  guay = 'gua',
+  liy = 'li',
+  i = 'iz',
+  guny = 'gun',
+  guany = 'guan',
+  lany = 'lan',
+  liny = 'lin',
+  in = 'inz',
+}
+
+export const dictOfPhrsalVerbParticles = ['tiurh'];
+
+export const dictOfDemonstrativePronoun = ['che'];
+
+export const dictOfAuxiliaries = ['kaz'];
