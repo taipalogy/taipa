@@ -1,5 +1,5 @@
 import { DependencyLabels } from './symbols';
-import { Node } from '../token';
+import { Node } from '../document';
 
 export class Relation {
   dependency: DependencyLabels;

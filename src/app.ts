@@ -2,7 +2,6 @@
 
 import { processor } from './dparser/processor';
 import { Document } from './document';
-import { Node } from './token';
 
 let doc = new Document();
 

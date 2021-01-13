@@ -6,7 +6,7 @@ import {
   RightArc,
 } from './configuration';
 import { Tagset } from './symbols';
-import { Node } from '../token';
+import { Node } from '../document';
 
 export class Guide {
   transitions: Array<Transition> = new Array();

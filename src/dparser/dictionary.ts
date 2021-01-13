@@ -32,6 +32,7 @@ export const dictOfSubsidiaries = ['a', 'aw', 'az'];
 export enum AdverbialParticlesInflected {
   // the values could be assigned by an inflector function
   longy = 'long',
+  bez = 'bew',
 }
 
 export enum PersonalPronounInflected {

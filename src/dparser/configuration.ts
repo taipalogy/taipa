@@ -1,5 +1,5 @@
 import { Relation } from './relation';
-import { Node } from '../token';
+import { Node } from '../document';
 
 export abstract class Transition {
   abstract do(c: Configuration): Configuration;

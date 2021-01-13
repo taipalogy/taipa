@@ -1,9 +1,8 @@
-import { ConstructionElement } from './keywords';
 import {
   inflectToProceeding,
   inflectVppToProceeding,
 } from '../change/inflector';
-import { OrthoPhraseme, VisitorMatching } from './visitor';
+import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
   dictOfVerbs,
   dictOfPhrasalVerbs,
@@ -12,9 +11,11 @@ import {
   AdverbialParticlesInflected,
   dictOfPhrsalVerbParticles,
   dictOfAuxiliaries,
+  dictOfSeperateVVCompounds,
 } from './dictionary';
 import { Pairs } from './tagger';
 import { PhrasalVerbPhraseme } from '../change/phraseme';
+import { createCompoundPhraseme } from '../change/creator';
 
 export const isPadvLongy = function (nextToken: string, nextToken2: string) {
   if (
@@ -94,6 +95,16 @@ export function isParticleOfPhrasalVerbInflected(
   return false;
 }
 
+/** Construction element. */
+export class ConstructionElement {
+  /** Orthographic text. */
+  orth: string = '';
+  /** The simple part-of-speech tag. */
+  pos: string = '';
+  /** The detailed part-of-speech tag. */
+  tag: string = '';
+}
+
 /** Construction of a phrase. */
 export class ConstructionOfPhrase {
   /** Part-of-speech of this phrase. */
@@ -153,6 +164,37 @@ export class PhrasalVerbs {
     const v = new VisitorMatching();
     const arr = this.phvbs.filter(it => it.accept(v, sequence));
     if (arr.length > 0) return arr[0].form;
+    return '';
+  }
+}
+
+export class SeparateCompoundVerbs {
+  compounds: Array<OrthoPhraseme> = new Array();
+
+  constructor() {
+    this.populatePhrasemes();
+  }
+
+  private populatePhrasemes() {
+    dictOfSeperateVVCompounds.map(it => {
+      const oe = new OrthoPhraseme();
+      oe.form = it[0] + ' ' + it[1];
+      oe.inflected.push(createCompoundPhraseme(it[0], it[1]).phrase.literal);
+      this.compounds.push(oe);
+    });
+  }
+
+  matchHead(head: string) {
+    const v = new VisitorMatching();
+    const arr = this.compounds
+      .map(it => {
+        const oe = new OrthoCompoundHead();
+        // assign the inflected form to oe
+        oe.form = it.inflected[0];
+        return oe;
+      })
+      .filter(it => it.accept(v, head));
+    if (arr.length > 0 && arr[0]) return arr[0].form.split(' ')[1];
     return '';
   }
 }

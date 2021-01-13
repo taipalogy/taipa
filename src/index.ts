@@ -45,7 +45,7 @@ export {
 export { insertToFollowingSyllable } from './change/inserter';
 export { mutateFinalConsonantOfPrecedingSyllable } from './change/mutator';
 
-export { TokenAnalysis } from './token';
+export { TokenAnalysis } from './client';
 export { AlphabeticGrapheme } from './unit';
 export { TonalCombiningMorpheme } from './change/morpheme';
 export { TonalUncombiningMorpheme } from './unchange/morpheme';

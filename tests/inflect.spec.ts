@@ -1,6 +1,6 @@
 import { Client } from '../src/client';
 import { TonalSpellingTags, TonalLetterTags } from '../src/tonal/version2';
-import { TokenAnalysis } from '../src/token';
+import { TokenAnalysis } from '../src/client';
 import {
   inflectDesinence,
   inflectTransfix,
