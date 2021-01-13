@@ -27,21 +27,26 @@ export const parseDenpendency = function (doc: Document) {
   return pa.parse(doc);
 };
 
-export const processor = function process(text: string) {
-  const tokens = getTokens(text);
-
-  let docTwo = new Document();
-  docTwo.nodes = tokens.map(it => new Node(it));
-
+function getFeatures(tokens: string[]) {
   const features = [];
   for (let i = 0; i < tokens.length; i++) {
     features.push(getFeature(tokens[i], i, tokens));
   }
-  const pairs = tag(features);
+  return features;
+}
 
-  if (pairs) {
-    for (let i = 0; i < pairs.length; i++) {
-      if (pairs[i]) docTwo.nodes[i].tag = pairs[i][1];
+export const processor = function process(text: string) {
+  const tokens = getTokens(text);
+  const features = getFeatures(tokens);
+  const pairsTokenTag = tag(features);
+
+  let docTwo = new Document();
+  docTwo.nodes = tokens.map(it => new Node(it));
+
+  if (pairsTokenTag) {
+    // convert token-tag pairs to nodes as stack or queue elements
+    for (let i = 0; i < pairsTokenTag.length; i++) {
+      if (pairsTokenTag[i]) docTwo.nodes[i].tag = pairsTokenTag[i][1];
     }
   }
 
