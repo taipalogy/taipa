@@ -1,5 +1,4 @@
 import { Client } from '../src/client';
-import { TokenAnalysis } from '../src/token';
 import { kanaLemmatizationAnalyzer } from '../src/kana/analyzer';
 import { KanaUncombiningMorpheme } from '../src/kana/morpheme';
 
