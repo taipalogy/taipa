@@ -3,7 +3,7 @@ import { tag } from '../dparser/tagger';
 
 import { Document } from '../document';
 import { Node } from '../document';
-import { getFeature } from './feature';
+import { getFeature, Feature } from './feature';
 import { PhrasalVerbs, SeparateCompoundVerbs } from './rules';
 import { lemmatize } from '../unchange/lemmatizer';
 import { Tagset } from './symbols';
@@ -33,6 +33,10 @@ function getFeatures(tokens: string[]) {
   return features;
 }
 
+function getMultiWordExpressions(features: Feature[]) {
+  return [];
+}
+
 function getLemma(token: string) {
   const lemmas = lemmatize(token).getLemmas();
   if (lemmas.length > 0) return lemmas[0].literal;
@@ -43,22 +47,8 @@ function getLemmata(doc: Document): Document {
   const phrvbs = new PhrasalVerbs();
   const scvbs = new SeparateCompoundVerbs();
   let expecting: string = '';
-  let j: number = 0;
-  let k: number = 0;
-  let len: number = 0;
 
   for (let i = 0; i < doc.nodes.length; i++) {
-    if (len == i) {
-      // loop over the doc.phrases sequence
-      if (j < doc.phrases.length) {
-        len += doc.phrases[j].elements.length;
-        if (j + 1 < doc.phrases.length) j++;
-        k = 0;
-      }
-    } else {
-      k++;
-    }
-
     if (doc.nodes[i].token === 'che' || doc.nodes[i].token === 'he') {
       doc.nodes[i].lemma = doc.nodes[i].token;
       continue; // defective
@@ -113,12 +103,6 @@ function getLemmata(doc: Document): Document {
         continue;
       }
     }
-    if (doc.phrases[j] && k + 1 == doc.phrases[j].elements.length) {
-      // at the end of a phrase
-      // need to further check if the phrase is a compound noun or verb phrase
-      doc.nodes[i].lemma = doc.nodes[i].token; // copy the base form
-      continue;
-    }
 
     let lemmas: TonalWord[] = [];
     lemmas = lemmatize(doc.nodes[i].token).getLemmas();
@@ -131,6 +115,7 @@ export const processor = function process(text: string) {
   const tokens = getTokens(text);
   const features = getFeatures(tokens);
   const pairsTokenTag = tag(features);
+  const expressions = getMultiWordExpressions(features);
 
   let doc = new Document();
   // convert token-tag pairs to nodes which are used as stack or queue elements
