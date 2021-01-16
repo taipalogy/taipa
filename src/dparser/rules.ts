@@ -6,14 +6,12 @@ import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
   dictOfVerbs,
   dictOfPhrasalVerbs,
-  dictOfPhrasalVerbTwos,
+  dictOfPhrasalVerbsVpp,
   dictOfSubsidiaries,
-  AdverbialParticlesInflected,
   dictOfPhrsalVerbParticles,
-  dictOfAuxiliaries,
   dictOfSeperateVVCompounds,
+  phrasalVerbParticlesInflected,
 } from './dictionary';
-import { Pairs } from './tagger';
 import { PhrasalVerbPhraseme } from '../change/phraseme';
 import { createCompoundPhraseme } from '../change/creator';
 
@@ -27,28 +25,36 @@ export const isPadvLongy = function (nextToken: string, nextToken2: string) {
   return false;
 };
 
-export const isVb = function (
-  pairs: Pairs<string, string>,
-  prvToken: string,
-  nextToken: string
+export function isPhrassalVerbParticleKhih(token: string) {
+  if (phrasalVerbParticlesInflected.khih === token) return true;
+  if (token === 'khih') return true;
+  return false;
+}
+
+export function isPhrasalVerbVp(token1: string, token2: string) {
+  if (
+    dictOfVerbs.includes(token1) &&
+    dictOfPhrsalVerbParticles.includes(token2)
+  )
+    return true;
+  return false;
+}
+
+export function isPhrasalVerbVpp(
+  token1: string,
+  token2: string,
+  token3: string
 ) {
   if (
-    pairs.length == 1 &&
-    pairs[pairs.length - 1][0] === AdverbialParticlesInflected.longy &&
-    dictOfSubsidiaries.includes(nextToken)
-  ) {
+    dictOfVerbs.includes(token1) &&
+    dictOfPhrsalVerbParticles.includes(token2) &&
+    dictOfPhrsalVerbParticles.includes(token3)
+  )
     return true;
-  } else if (dictOfPhrsalVerbParticles.includes(nextToken)) {
-    return true;
-  } else if (dictOfSubsidiaries.includes(nextToken)) {
-    return true;
-  } else if (dictOfAuxiliaries.includes(prvToken)) {
-    return true;
-  }
   return false;
-};
+}
 
-function matchInflectedPhrasalVerb(
+function isInflectedPhrasalVerb(
   token1: string,
   token2: string,
   phrasemes: PhrasalVerbPhraseme[]
@@ -65,15 +71,15 @@ function matchInflectedPhrasalVerb(
 
 /**
  * Check if the token is the main verb of a phrasal verb
- * @param token Main verb
- * @param nextToken Particle
+ * @param token1 Main verb
+ * @param token2 Particle
  */
 export function isMainVerbOfPhrasalVerbInflected(
-  token: string,
-  nextToken: string
+  token1: string,
+  token2: string
 ) {
   const phs = dictOfPhrasalVerbs.map(it => inflectToProceeding(it[0], it[1]));
-  if (matchInflectedPhrasalVerb(token, nextToken, phs)) {
+  if (isInflectedPhrasalVerb(token1, token2, phs)) {
     return true;
   }
   return false;
@@ -81,15 +87,15 @@ export function isMainVerbOfPhrasalVerbInflected(
 
 /**
  * Check if the token is the particle of a phrasal verb
- * @param token Particle
- * @param prvToken Main verb
+ * @param token1 Main verb
+ * @param token2 Particle
  */
 export function isParticleOfPhrasalVerbInflected(
-  token: string,
-  prvToken: string
+  token1: string,
+  token2: string
 ) {
   const phs = dictOfPhrasalVerbs.map(it => inflectToProceeding(it[0], it[1]));
-  if (matchInflectedPhrasalVerb(prvToken, token, phs)) {
+  if (isInflectedPhrasalVerb(token1, token2, phs)) {
     return true;
   }
   return false;
@@ -138,7 +144,7 @@ export class PhrasalVerbs {
         );
         this.phvbs.push(ol);
       });
-    dictOfPhrasalVerbTwos
+    dictOfPhrasalVerbsVpp
       .map(it => inflectVppToProceeding(it[0], it[1], it[2]))
       .map(it => {
         const ol = new OrthoPhraseme();

@@ -1,31 +1,21 @@
-// prettier-ignore
-export const dictOfVerbs = [
-    'khuannw',
-
-    'longw',
-
-    'phah',
-];
+export const dictOfVerbs = ['hua', 'khuannw', 'longw', 'phah', 'sa', 'thehh'];
 
 // prettier-ignore
 export const dictOfPhrasalVerbs = [
-    ['khuannw', 'tiurh'],
-    ['longw', 'tiurh'],
+  ['khuannw', 'tiurh'],
+  ['longw', 'tiurh'],
 ];
 
 // prettier-ignore
-export const dictOfPhrasalVerbTwos = [
-    ['thehh', 'cut', 'khih'],
+export const dictOfPhrasalVerbsVpp = [
+  ['thehh', 'cut', 'khih'],
 ];
 
 /** Base forms of separate VV compounds. */
-export const dictOfSeperateVVCompounds = [['siamy', 'kuew']];
-
-export enum particlesOfVpp {
-  cut = 'cut',
-  khih = 'khih',
-  laih = 'laih',
-}
+// prettier-ignore
+export const dictOfSeperateVVCompounds = [
+  ['siamy', 'kuew']
+];
 
 export const dictOfSubsidiaries = ['a', 'aw', 'az'];
 
@@ -46,7 +36,18 @@ export enum PersonalPronounInflected {
   in = 'inz',
 }
 
-export const dictOfPhrsalVerbParticles = ['tiurh'];
+export enum particlesOfVpp {
+  cut = 'cut',
+  khih = 'khih',
+  laih = 'laih',
+}
+
+export enum phrasalVerbParticlesInflected {
+  laih = 'laiz',
+  khih = 'khihf',
+}
+
+export const dictOfPhrsalVerbParticles = ['cut', 'khih', 'laih', 'tiurh'];
 
 export const dictOfDemonstrativePronoun = ['che'];
 

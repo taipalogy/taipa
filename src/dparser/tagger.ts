@@ -1,8 +1,10 @@
 import {
   isPadvLongy,
-  isVb,
   isMainVerbOfPhrasalVerbInflected,
   isParticleOfPhrasalVerbInflected,
+  isPhrassalVerbParticleKhih,
+  isPhrasalVerbVp,
+  isPhrasalVerbVpp,
 } from './rules';
 import { Tagset } from './symbols';
 import { Feature } from './feature';
@@ -15,8 +17,10 @@ import {
   dictOfDemonstrativePronoun,
   dictOfAuxiliaries,
   dictOfSeperateVVCompounds,
+  phrasalVerbParticlesInflected,
 } from './dictionary';
 import { inflectDesinence } from '../change/inflector';
+import { lemmatize } from '../unchange/lemmatizer';
 
 type Pair<T, K> = [T, K];
 export type Pairs<T, K> = Pair<T, K>[];
@@ -38,9 +42,98 @@ export function tag(features: Feature[]) {
       continue;
     }
 
-    if (dictOfVerbs.includes(features[i].token)) {
-      if (isVb(pairs, features[i].prevToken, features[i].nextToken))
-        pairs.push([features[i].token, Tagset.vb]);
+    if (
+      dictOfVerbs.includes(features[i].token) &&
+      pairs.length == 1 &&
+      pairs[pairs.length - 1][0] === AdverbialParticlesInflected.longy &&
+      dictOfSubsidiaries.includes(features[i].nextToken)
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      dictOfVerbs.includes(features[i].token) &&
+      dictOfAuxiliaries.includes(features[i].prevToken)
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      dictOfVerbs.includes(features[i].token) &&
+      dictOfSubsidiaries.includes(features[i].nextToken)
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      dictOfVerbs.includes(features[i].token) &&
+      dictOfPhrsalVerbParticles.includes(features[i].nextToken)
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      dictOfVerbs.includes(features[i].token) &&
+      phrasalVerbParticlesInflected.laih === features[i].prevToken &&
+      phrasalVerbParticlesInflected.khih === features[i].prevToken2
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      lemmatize(features[i].token).getLemmas().length == 3 &&
+      dictOfVerbs.includes(
+        lemmatize(features[i].token).getLemmas()[2].literal
+      ) &&
+      !dictOfPhrsalVerbParticles.includes(features[i].nextToken) && // object of the verb
+      isPhrassalVerbParticleKhih(features[i].nextToken2)
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      isPhrassalVerbParticleKhih(features[i].token) &&
+      features[i].prevToken &&
+      pairs[pairs.length - 1][1] === Tagset.nn &&
+      features[i].prevToken2 &&
+      pairs[pairs.length - 2][1] === Tagset.vb
+    ) {
+      // we may also check if the next token is a phrasal verb particle
+      pairs.push([features[i].token, Tagset.ppv]);
+      continue;
+    }
+
+    if (
+      dictOfPhrsalVerbParticles.includes(features[i].token) &&
+      features[i].prevToken &&
+      pairs[pairs.length - 1][1] === Tagset.ppv &&
+      features[i].prevToken2 &&
+      pairs[pairs.length - 2][1] === Tagset.nn
+    ) {
+      pairs.push([features[i].token, Tagset.ppv]);
+      continue;
+    }
+
+    if (
+      features[i].nextToken &&
+      isPhrasalVerbVp(features[i].token, features[i].nextToken)
+    ) {
+      // is main verb of phrasal verb
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      phrasalVerbParticlesInflected.laih === features[i].token &&
+      phrasalVerbParticlesInflected.khih === features[i].prevToken
+    ) {
+      pairs.push([features[i].token, Tagset.ppv]);
       continue;
     }
 
@@ -55,8 +148,8 @@ export function tag(features: Feature[]) {
 
     if (
       dictOfSubsidiaries.includes(features[i].token) &&
-      dictOfVerbs.includes(features[i].prevToken2) &&
-      dictOfPhrsalVerbParticles.includes(features[i].prevToken)
+      dictOfPhrsalVerbParticles.includes(features[i].prevToken) &&
+      dictOfVerbs.includes(features[i].prevToken2)
     ) {
       // to check the tone pattern. to check if last word
       pairs.push([features[i].token, Tagset.psub]);
@@ -69,9 +162,24 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      dictOfPhrsalVerbParticles.includes(features[i].token) &&
-      dictOfVerbs.includes(features[i].prevToken)
+      features[i].prevToken &&
+      isPhrasalVerbVp(features[i].prevToken, features[i].token)
     ) {
+      // is a particle of phrasal verb
+      pairs.push([features[i].token, Tagset.ppv]);
+      continue;
+    }
+
+    if (
+      features[i].prevToken &&
+      features[i].prevToken2 &&
+      isPhrasalVerbVpp(
+        features[i].prevToken2,
+        features[i].prevToken,
+        features[i].token
+      )
+    ) {
+      // is the 2nd particle of phrasal verb
       pairs.push([features[i].token, Tagset.ppv]);
       continue;
     }
@@ -84,7 +192,7 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      isParticleOfPhrasalVerbInflected(features[i].token, features[i].prevToken)
+      isParticleOfPhrasalVerbInflected(features[i].prevToken, features[i].token)
     ) {
       pairs.push([features[i].token, Tagset.ppv]);
       continue;
@@ -117,6 +225,8 @@ export function tag(features: Feature[]) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
+
+    pairs.push([features[i].token, Tagset.nn]);
   }
   return pairs;
 }
