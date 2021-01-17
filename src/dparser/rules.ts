@@ -1,41 +1,31 @@
 import {
   inflectToProceeding,
   inflectVppToProceeding,
+  inflectDesinence,
+  inflectPhrasalVerbParticle,
 } from '../change/inflector';
 import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
-  dictOfVerbs,
+  baseVerbs,
   dictOfPhrasalVerbs,
   dictOfPhrasalVerbsVpp,
-  dictOfSubsidiaries,
-  dictOfPhrsalVerbParticles,
+  subsidiaries,
+  basePhrsalVerbParticles,
   dictOfSeperateVVCompounds,
-  phrasalVerbParticlesInflected,
+  ParticlesVpp,
 } from './dictionary';
-import { PhrasalVerbPhraseme } from '../change/phraseme';
 import { createCompoundPhraseme } from '../change/creator';
+import { TonalLetterTags } from '../tonal/version2';
 
 export const isPadvLongy = function (nextToken: string, nextToken2: string) {
-  if (
-    dictOfVerbs.includes(nextToken) &&
-    dictOfSubsidiaries.includes(nextToken2)
-  ) {
+  if (baseVerbs.includes(nextToken) && subsidiaries.includes(nextToken2)) {
     return true;
   }
   return false;
 };
 
-export function isPhrassalVerbParticleKhih(token: string) {
-  if (phrasalVerbParticlesInflected.khih === token) return true;
-  if (token === 'khih') return true;
-  return false;
-}
-
 export function isPhrasalVerbVp(token1: string, token2: string) {
-  if (
-    dictOfVerbs.includes(token1) &&
-    dictOfPhrsalVerbParticles.includes(token2)
-  )
+  if (baseVerbs.includes(token1) && basePhrsalVerbParticles.includes(token2))
     return true;
   return false;
 }
@@ -46,60 +36,42 @@ export function isPhrasalVerbVpp(
   token3: string
 ) {
   if (
-    dictOfVerbs.includes(token1) &&
-    dictOfPhrsalVerbParticles.includes(token2) &&
-    dictOfPhrsalVerbParticles.includes(token3)
+    baseVerbs.includes(token1) &&
+    basePhrsalVerbParticles.includes(token2) &&
+    basePhrsalVerbParticles.includes(token3)
   )
     return true;
   return false;
 }
 
-function isInflectedPhrasalVerb(
-  token1: string,
-  token2: string,
-  phrasemes: PhrasalVerbPhraseme[]
-) {
-  if (
-    phrasemes.filter(it => it.getForms()[0].words[0].literal === token1)
-      .length > 0 &&
-    phrasemes.filter(it => it.getForms()[0].words[1].literal === token2)
-      .length > 0
-  )
-    return true;
-  return false;
-}
+export const inflectedVerbs = baseVerbs.map(
+  // get the first element of the returned array
+  it => inflectDesinence(it).getForms()[0].literal
+);
 
-/**
- * Check if the token is the main verb of a phrasal verb
- * @param token1 Main verb
- * @param token2 Particle
- */
-export function isMainVerbOfPhrasalVerbInflected(
-  token1: string,
-  token2: string
-) {
-  const phs = dictOfPhrasalVerbs.map(it => inflectToProceeding(it[0], it[1]));
-  if (isInflectedPhrasalVerb(token1, token2, phs)) {
-    return true;
-  }
-  return false;
-}
-
-/**
- * Check if the token is the particle of a phrasal verb
- * @param token1 Main verb
- * @param token2 Particle
- */
-export function isParticleOfPhrasalVerbInflected(
-  token1: string,
-  token2: string
-) {
-  const phs = dictOfPhrasalVerbs.map(it => inflectToProceeding(it[0], it[1]));
-  if (isInflectedPhrasalVerb(token1, token2, phs)) {
-    return true;
-  }
-  return false;
-}
+export const inflectedPhrasalVerbParticles = basePhrsalVerbParticles.map(it =>
+  it === ParticlesVpp.cut
+    ? inflectPhrasalVerbParticle(
+        ParticlesVpp.cut,
+        TonalLetterTags.f
+      ).getForms()[0].literal
+    : it === ParticlesVpp.khih
+    ? inflectPhrasalVerbParticle(
+        ParticlesVpp.khih,
+        TonalLetterTags.f
+      ).getForms()[0].literal
+    : it === ParticlesVpp.laih
+    ? inflectPhrasalVerbParticle(
+        ParticlesVpp.laih,
+        TonalLetterTags.z
+      ).getForms()[0].literal
+    : it === ParticlesVpp.tiurh
+    ? inflectPhrasalVerbParticle(
+        ParticlesVpp.tiurh,
+        TonalLetterTags.w
+      ).getForms()[0].literal
+    : ''
+);
 
 /** Construction element. */
 export class ConstructionElement {

@@ -1,23 +1,21 @@
 import {
   isPadvLongy,
-  isMainVerbOfPhrasalVerbInflected,
-  isParticleOfPhrasalVerbInflected,
-  isPhrassalVerbParticleKhih,
   isPhrasalVerbVp,
   isPhrasalVerbVpp,
+  inflectedPhrasalVerbParticles,
+  inflectedVerbs,
 } from './rules';
 import { Tagset } from './symbols';
 import { Feature } from './feature';
 import {
   AdverbialParticlesInflected,
-  dictOfVerbs,
-  dictOfSubsidiaries,
+  baseVerbs,
+  subsidiaries,
   PersonalPronounInflected,
-  dictOfPhrsalVerbParticles,
-  dictOfDemonstrativePronoun,
-  dictOfAuxiliaries,
+  basePhrsalVerbParticles,
+  demonstrativePronouns,
+  auxiliaries,
   dictOfSeperateVVCompounds,
-  phrasalVerbParticlesInflected,
 } from './dictionary';
 import { inflectDesinence } from '../change/inflector';
 import { lemmatize } from '../unchange/lemmatizer';
@@ -43,62 +41,63 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      dictOfVerbs.includes(features[i].token) &&
+      baseVerbs.includes(features[i].token) &&
       pairs.length == 1 &&
       pairs[pairs.length - 1][0] === AdverbialParticlesInflected.longy &&
-      dictOfSubsidiaries.includes(features[i].nextToken)
+      subsidiaries.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
-      dictOfVerbs.includes(features[i].token) &&
-      dictOfAuxiliaries.includes(features[i].prevToken)
+      baseVerbs.includes(features[i].token) &&
+      auxiliaries.includes(features[i].prevToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
-      dictOfVerbs.includes(features[i].token) &&
-      dictOfSubsidiaries.includes(features[i].nextToken)
+      baseVerbs.includes(features[i].token) &&
+      subsidiaries.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
-      dictOfVerbs.includes(features[i].token) &&
-      dictOfPhrsalVerbParticles.includes(features[i].nextToken)
+      baseVerbs.includes(features[i].token) &&
+      basePhrsalVerbParticles.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
-      dictOfVerbs.includes(features[i].token) &&
-      phrasalVerbParticlesInflected.laih === features[i].prevToken &&
-      phrasalVerbParticlesInflected.khih === features[i].prevToken2
+      baseVerbs.includes(features[i].token) &&
+      inflectedPhrasalVerbParticles.includes(features[i].prevToken) &&
+      inflectedPhrasalVerbParticles.includes(features[i].prevToken2)
     ) {
+      // a verb after a preceding phrasal verb
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
       lemmatize(features[i].token).getLemmas().length == 3 &&
-      dictOfVerbs.includes(
-        lemmatize(features[i].token).getLemmas()[2].literal
-      ) &&
-      !dictOfPhrsalVerbParticles.includes(features[i].nextToken) && // object of the verb
-      isPhrassalVerbParticleKhih(features[i].nextToken2)
+      baseVerbs.includes(lemmatize(features[i].token).getLemmas()[2].literal) &&
+      !basePhrsalVerbParticles.includes(features[i].nextToken) && // object of the verb
+      (basePhrsalVerbParticles.includes(features[i].nextToken2) ||
+        inflectedPhrasalVerbParticles.includes(features[i].nextToken2))
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
-      isPhrassalVerbParticleKhih(features[i].token) &&
+      (basePhrsalVerbParticles.includes(features[i].token) ||
+        inflectedPhrasalVerbParticles.includes(features[i].token)) &&
       features[i].prevToken &&
       pairs[pairs.length - 1][1] === Tagset.nn &&
       features[i].prevToken2 &&
@@ -110,7 +109,7 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      dictOfPhrsalVerbParticles.includes(features[i].token) &&
+      basePhrsalVerbParticles.includes(features[i].token) &&
       features[i].prevToken &&
       pairs[pairs.length - 1][1] === Tagset.ppv &&
       features[i].prevToken2 &&
@@ -130,16 +129,16 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      phrasalVerbParticlesInflected.laih === features[i].token &&
-      phrasalVerbParticlesInflected.khih === features[i].prevToken
+      inflectedPhrasalVerbParticles.includes(features[i].token) &&
+      inflectedPhrasalVerbParticles.includes(features[i].prevToken)
     ) {
       pairs.push([features[i].token, Tagset.ppv]);
       continue;
     }
 
     if (
-      dictOfSubsidiaries.includes(features[i].token) &&
-      dictOfVerbs.includes(features[i].prevToken)
+      subsidiaries.includes(features[i].token) &&
+      baseVerbs.includes(features[i].prevToken)
     ) {
       // to check the tone pattern. to check if last word
       pairs.push([features[i].token, Tagset.psub]);
@@ -147,9 +146,9 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      dictOfSubsidiaries.includes(features[i].token) &&
-      dictOfPhrsalVerbParticles.includes(features[i].prevToken) &&
-      dictOfVerbs.includes(features[i].prevToken2)
+      subsidiaries.includes(features[i].token) &&
+      basePhrsalVerbParticles.includes(features[i].prevToken) &&
+      baseVerbs.includes(features[i].prevToken2)
     ) {
       // to check the tone pattern. to check if last word
       pairs.push([features[i].token, Tagset.psub]);
@@ -185,25 +184,47 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      isMainVerbOfPhrasalVerbInflected(features[i].token, features[i].nextToken)
+      inflectedVerbs.includes(features[i].token) &&
+      features[i].nextToken &&
+      inflectedPhrasalVerbParticles.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
     if (
-      isParticleOfPhrasalVerbInflected(features[i].prevToken, features[i].token)
+      inflectedPhrasalVerbParticles.includes(features[i].token) &&
+      features[i].nextToken &&
+      inflectedPhrasalVerbParticles.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.ppv]);
       continue;
     }
 
-    if (dictOfDemonstrativePronoun.includes(features[i].token)) {
+    if (
+      inflectedVerbs.includes(features[i].token) &&
+      features[i].nextToken &&
+      inflectedPhrasalVerbParticles.includes(features[i].nextToken2)
+    ) {
+      pairs.push([features[i].token, Tagset.vb]);
+      continue;
+    }
+
+    if (
+      inflectedPhrasalVerbParticles.includes(features[i].token) &&
+      features[i].prevToken &&
+      inflectedVerbs.includes(features[i].prevToken)
+    ) {
+      pairs.push([features[i].token, Tagset.ppv]);
+      continue;
+    }
+
+    if (demonstrativePronouns.includes(features[i].token)) {
       pairs.push([features[i].token, Tagset.npr]);
       continue;
     }
 
-    if (dictOfAuxiliaries.includes(features[i].token)) {
+    if (auxiliaries.includes(features[i].token)) {
       pairs.push([features[i].token, Tagset.aux]);
       continue;
     }

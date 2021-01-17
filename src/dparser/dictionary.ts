@@ -1,4 +1,4 @@
-export const dictOfVerbs = ['hua', 'khuannw', 'longw', 'phah', 'sa', 'thehh'];
+export const baseVerbs = ['hua', 'khuannw', 'longw', 'phah', 'sa', 'thehh'];
 
 // prettier-ignore
 export const dictOfPhrasalVerbs = [
@@ -17,7 +17,7 @@ export const dictOfSeperateVVCompounds = [
   ['siamy', 'kuew']
 ];
 
-export const dictOfSubsidiaries = ['a', 'aw', 'az'];
+export const subsidiaries = ['a', 'aw', 'az'];
 
 export enum AdverbialParticlesInflected {
   // the values could be assigned by an inflector function
@@ -36,19 +36,20 @@ export enum PersonalPronounInflected {
   in = 'inz',
 }
 
-export enum particlesOfVpp {
+export enum ParticlesVpp {
   cut = 'cut',
   khih = 'khih',
   laih = 'laih',
+  tiurh = 'tiurh',
 }
 
-export enum phrasalVerbParticlesInflected {
-  laih = 'laiz',
-  khih = 'khihf',
-}
+export const basePhrsalVerbParticles = [
+  ParticlesVpp.cut.toString(),
+  ParticlesVpp.khih.toString(),
+  ParticlesVpp.laih.toString(),
+  ParticlesVpp.tiurh.toString(),
+];
 
-export const dictOfPhrsalVerbParticles = ['cut', 'khih', 'laih', 'tiurh'];
+export const demonstrativePronouns = ['che'];
 
-export const dictOfDemonstrativePronoun = ['che'];
-
-export const dictOfAuxiliaries = ['kaz'];
+export const auxiliaries = ['kaz'];
