@@ -160,7 +160,7 @@ const extraSyllables = [
 
     'en',
 
-    'geh', 'gehh', 'gih', 'giuh', 'gimw', 'gueh', 'gunx',
+    'geh', 'gehh', 'gih', 'giuh', 'gimw', 'gueh', 'gunx', 'guny',
 
     'homz', 'huainn',
 

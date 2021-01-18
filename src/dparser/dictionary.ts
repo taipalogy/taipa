@@ -19,24 +19,39 @@ export const dictOfSeperateVVCompounds = [
 
 export const subsidiaries = ['a', 'aw', 'az'];
 
-export enum AdverbialParticlesInflected {
-  // the values could be assigned by an inflector function
-  longy = 'long',
-  bez = 'bew',
+export enum ParticlesAdverbial {
+  longy = 'longy',
+  bez = 'bez',
 }
 
-export enum PersonalPronounInflected {
-  guay = 'gua',
-  liy = 'li',
-  i = 'iz',
-  guny = 'gun',
-  guany = 'guan',
-  lany = 'lan',
-  liny = 'lin',
-  in = 'inz',
+export const baseAdverbialParticles = [
+  ParticlesAdverbial.longy.toString(),
+  ParticlesAdverbial.bez.toString(),
+];
+
+export enum PronounsPersonal {
+  guay = 'guay',
+  liy = 'liy',
+  i = 'i',
+  guny = 'guny',
+  guany = 'guany',
+  lany = 'lany',
+  liny = 'liny',
+  in = 'in',
 }
 
-export enum ParticlesVpp {
+export const basePersonalPronouns = [
+  PronounsPersonal.guay.toString(),
+  PronounsPersonal.liy.toString(),
+  PronounsPersonal.i.toString(),
+  PronounsPersonal.guny.toString(),
+  PronounsPersonal.guany.toString(),
+  PronounsPersonal.lany.toString(),
+  PronounsPersonal.liny.toString(),
+  PronounsPersonal.in.toString(),
+];
+
+export enum ParticlesPhrasalVerb {
   cut = 'cut',
   khih = 'khih',
   laih = 'laih',
@@ -44,10 +59,10 @@ export enum ParticlesVpp {
 }
 
 export const basePhrsalVerbParticles = [
-  ParticlesVpp.cut.toString(),
-  ParticlesVpp.khih.toString(),
-  ParticlesVpp.laih.toString(),
-  ParticlesVpp.tiurh.toString(),
+  ParticlesPhrasalVerb.cut.toString(),
+  ParticlesPhrasalVerb.khih.toString(),
+  ParticlesPhrasalVerb.laih.toString(),
+  ParticlesPhrasalVerb.tiurh.toString(),
 ];
 
 export const demonstrativePronouns = ['che'];

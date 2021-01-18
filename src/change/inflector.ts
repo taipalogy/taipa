@@ -15,7 +15,7 @@ import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { createTonalInflectionLexeme } from './creator';
 import { TonalLetterTags } from '../tonal/version2';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
-import { ParticlesVpp } from '../dparser/dictionary';
+import { ParticlesPhrasalVerb } from '../dparser/dictionary';
 
 /** Inflects the inflectional suffix of a word. Lexical inflector. */
 export function inflectDesinence(word: string) {
@@ -134,7 +134,7 @@ export function inflectToProceeding(verb: string, particle: string) {
 
   const lxVerb = inflectDesinence(verb);
   let lxParticle: TonalInflectionLexeme = createTonalInflectionLexeme('');
-  if (particle === ParticlesVpp.khih) {
+  if (particle === ParticlesPhrasalVerb.khih) {
     lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
   } else {
     lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.w);
@@ -158,12 +158,15 @@ export function inflectVppToProceeding(
   const lxVerb = inflectDesinence(verb);
   let lxParticle: TonalInflectionLexeme = createTonalInflectionLexeme('');
   let lxParticleTwo: TonalInflectionLexeme = createTonalInflectionLexeme('');
-  if (particle === ParticlesVpp.cut && particleTwo === ParticlesVpp.khih) {
+  if (
+    particle === ParticlesPhrasalVerb.cut &&
+    particleTwo === ParticlesPhrasalVerb.khih
+  ) {
     lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
     lxParticleTwo = inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.f);
   } else if (
-    particle === ParticlesVpp.khih &&
-    particleTwo === ParticlesVpp.laih
+    particle === ParticlesPhrasalVerb.khih &&
+    particleTwo === ParticlesPhrasalVerb.laih
   ) {
     lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
     lxParticleTwo = inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.z);

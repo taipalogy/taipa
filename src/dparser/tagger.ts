@@ -4,14 +4,14 @@ import {
   isPhrasalVerbVpp,
   inflectedPhrasalVerbParticles,
   inflectedVerbs,
+  inflectedAdverbialParticles,
+  inflectedPersonalPronouns,
 } from './rules';
 import { Tagset } from './symbols';
 import { Feature } from './feature';
 import {
-  AdverbialParticlesInflected,
   baseVerbs,
   subsidiaries,
-  PersonalPronounInflected,
   basePhrsalVerbParticles,
   demonstrativePronouns,
   auxiliaries,
@@ -28,14 +28,14 @@ export function tag(features: Feature[]) {
   let expecting: string = '';
   for (let i = 0; i < features.length; i++) {
     if (
-      features[i].token === AdverbialParticlesInflected.longy &&
+      inflectedAdverbialParticles.includes(features[i].token) &&
       isPadvLongy(features[i].nextToken, features[i].nextToken2)
     ) {
       pairs.push([features[i].token, Tagset.padv]);
       continue;
     }
 
-    if (features[i].token === AdverbialParticlesInflected.bez) {
+    if (inflectedAdverbialParticles.includes(features[i].token)) {
       pairs.push([features[i].token, Tagset.padv]);
       continue;
     }
@@ -43,7 +43,7 @@ export function tag(features: Feature[]) {
     if (
       baseVerbs.includes(features[i].token) &&
       pairs.length == 1 &&
-      pairs[pairs.length - 1][0] === AdverbialParticlesInflected.longy &&
+      inflectedAdverbialParticles.includes(pairs[pairs.length - 1][0]) &&
       subsidiaries.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
@@ -155,7 +155,7 @@ export function tag(features: Feature[]) {
       continue;
     }
 
-    if (features[i].token === PersonalPronounInflected.guay) {
+    if (inflectedPersonalPronouns.includes(features[i].token)) {
       pairs.push([features[i].token, Tagset.npr]);
       continue;
     }

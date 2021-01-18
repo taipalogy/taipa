@@ -12,7 +12,9 @@ import {
   subsidiaries,
   basePhrsalVerbParticles,
   dictOfSeperateVVCompounds,
-  ParticlesVpp,
+  ParticlesPhrasalVerb,
+  basePersonalPronouns,
+  baseAdverbialParticles,
 } from './dictionary';
 import { createCompoundPhraseme } from '../change/creator';
 import { TonalLetterTags } from '../tonal/version2';
@@ -50,27 +52,35 @@ export const inflectedVerbs = baseVerbs.map(
 );
 
 export const inflectedPhrasalVerbParticles = basePhrsalVerbParticles.map(it =>
-  it === ParticlesVpp.cut
+  it === ParticlesPhrasalVerb.cut
     ? inflectPhrasalVerbParticle(
-        ParticlesVpp.cut,
+        ParticlesPhrasalVerb.cut,
         TonalLetterTags.f
       ).getForms()[0].literal
-    : it === ParticlesVpp.khih
+    : it === ParticlesPhrasalVerb.khih
     ? inflectPhrasalVerbParticle(
-        ParticlesVpp.khih,
+        ParticlesPhrasalVerb.khih,
         TonalLetterTags.f
       ).getForms()[0].literal
-    : it === ParticlesVpp.laih
+    : it === ParticlesPhrasalVerb.laih
     ? inflectPhrasalVerbParticle(
-        ParticlesVpp.laih,
+        ParticlesPhrasalVerb.laih,
         TonalLetterTags.z
       ).getForms()[0].literal
-    : it === ParticlesVpp.tiurh
+    : it === ParticlesPhrasalVerb.tiurh
     ? inflectPhrasalVerbParticle(
-        ParticlesVpp.tiurh,
+        ParticlesPhrasalVerb.tiurh,
         TonalLetterTags.w
       ).getForms()[0].literal
     : ''
+);
+
+export const inflectedPersonalPronouns = basePersonalPronouns.map(
+  it => inflectDesinence(it).getForms()[0].literal
+);
+
+export const inflectedAdverbialParticles = baseAdverbialParticles.map(
+  it => inflectDesinence(it).getForms()[0].literal
 );
 
 /** Construction element. */
