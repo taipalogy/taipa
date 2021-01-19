@@ -1,5 +1,5 @@
 import { DependencyParser } from '../dparser/parser';
-import { tag } from '../dparser/tagger';
+import { tag, Pairs } from '../dparser/tagger';
 
 import { Document } from '../document';
 import { Node } from '../document';
@@ -8,6 +8,7 @@ import { PhrasalVerbs, SeparateCompoundVerbs } from './rules';
 import { lemmatize } from '../unchange/lemmatizer';
 import { Tagset } from './symbols';
 import { TonalWord } from '../unchange/lexeme';
+import { baseVerbs, basePhrsalVerbParticles, subsidiaries } from './dictionary';
 
 export const getTokens = function (text: string) {
   const tokens: string[] = [];
@@ -33,8 +34,63 @@ function getFeatures(tokens: string[]) {
   return features;
 }
 
-function getMultiWordExpressions(features: Feature[]) {
-  return [];
+class MultiWordExpression {
+  index: number = 0;
+  tokens: string[] = [];
+}
+
+function createExpressionLengthTwo(
+  index: number,
+  token1: string,
+  token2: string
+) {
+  const obj = new MultiWordExpression();
+  obj.index = index;
+  obj.tokens.push(token1);
+  obj.tokens.push(token2);
+  return obj;
+}
+
+function getMultiWordExpressions(pairs: Pairs<string, string>) {
+  const expressions = [];
+  for (let i = 0; i < pairs.length - 1; i++) {
+    // phrasal verbs as verb + particle
+    if (
+      pairs[i][1] === Tagset.vb &&
+      pairs[i + 1][1] === Tagset.ppv &&
+      baseVerbs.includes(pairs[i][0]) &&
+      basePhrsalVerbParticles.includes(pairs[i + 1][0])
+    ) {
+      expressions.push(
+        createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0])
+      );
+    } else if (
+      pairs[i][1] === Tagset.vb &&
+      pairs[i + 1][1] === Tagset.psub &&
+      baseVerbs.includes(pairs[i][0]) &&
+      subsidiaries.includes(pairs[i + 1][0])
+    ) {
+      // verb + subsidiary
+    } else {
+      // verb of base form + adverb. mngz guaz
+      // verb of proceeding form + terminal form of personal pronoun. chiauykow liw
+    }
+  }
+
+  for (let j = 0; j < expressions.length - 1; j++) {
+    if (expressions[j].index < pairs.length - 2) {
+      if (
+        pairs[expressions[j].index + 2][1] === Tagset.ppv &&
+        basePhrsalVerbParticles.includes(pairs[expressions[j].index + 2][1])
+      ) {
+        // verb + particle + particle. e.g. thehh khih laih
+      } else if (pairs[expressions[j].index + 2][1] === Tagset.psub) {
+        // verb + particle + subsidiary. e.g. khuannw tiurh aw
+      }
+    }
+  }
+
+  return expressions;
 }
 
 function getLemma(token: string) {
@@ -111,11 +167,19 @@ function getLemmata(doc: Document): Document {
   return doc;
 }
 
+function getLemmas(
+  pairs: Pairs<string, string>,
+  expressions: MultiWordExpression[]
+) {
+  return [];
+}
+
 export const processor = function process(text: string) {
   const tokens = getTokens(text);
   const features = getFeatures(tokens);
   const pairsTokenTag = tag(features);
-  const expressions = getMultiWordExpressions(features);
+  const expressions = getMultiWordExpressions(pairsTokenTag);
+  const lemmas = getLemmas(pairsTokenTag, expressions);
 
   let doc = new Document();
   // convert token-tag pairs to nodes which are used as stack or queue elements
