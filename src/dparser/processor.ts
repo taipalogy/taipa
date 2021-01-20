@@ -8,7 +8,14 @@ import { PhrasalVerbs, SeparateCompoundVerbs } from './rules';
 import { lemmatize } from '../unchange/lemmatizer';
 import { Tagset } from './symbols';
 import { TonalWord } from '../unchange/lexeme';
-import { baseVerbs, basePhrsalVerbParticles, subsidiaries } from './dictionary';
+import {
+  baseVerbs,
+  basePhrsalVerbParticles,
+  subsidiariesA,
+  subsidiariesPersonalPronoun,
+  subsidiariesLe,
+  subsidiariesE,
+} from './dictionary';
 
 export const getTokens = function (text: string) {
   const tokens: string[] = [];
@@ -52,7 +59,7 @@ function createExpressionLengthTwo(
 }
 
 function getMultiWordExpressions(pairs: Pairs<string, string>) {
-  const expressions = [];
+  const expressions: MultiWordExpression[] = [];
   for (let i = 0; i < pairs.length - 1; i++) {
     // phrasal verbs as verb + particle
     if (
@@ -68,17 +75,24 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
       pairs[i][1] === Tagset.vb &&
       pairs[i + 1][1] === Tagset.psub &&
       baseVerbs.includes(pairs[i][0]) &&
-      subsidiaries.includes(pairs[i + 1][0])
+      (subsidiariesA.includes(pairs[i + 1][0]) ||
+        subsidiariesE.includes(pairs[i + 1][0]) ||
+        subsidiariesLe.includes(pairs[i + 1][0]) ||
+        subsidiariesPersonalPronoun.includes(pairs[i + 1][0]))
     ) {
       // verb + subsidiary
-    } else {
       // verb of base form + adverb. mngz guaz
       // verb of proceeding form + terminal form of personal pronoun. chiauykow liw
+      expressions.push(
+        createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0])
+      );
+      // check the tone pattern
     }
   }
 
   for (let j = 0; j < expressions.length - 1; j++) {
     if (expressions[j].index < pairs.length - 2) {
+      // look ahead for one extra token
       if (
         pairs[expressions[j].index + 2][1] === Tagset.ppv &&
         basePhrsalVerbParticles.includes(pairs[expressions[j].index + 2][1])
@@ -86,6 +100,43 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
         // verb + particle + particle. e.g. thehh khih laih
       } else if (pairs[expressions[j].index + 2][1] === Tagset.psub) {
         // verb + particle + subsidiary. e.g. khuannw tiurh aw
+      }
+    }
+  }
+
+  for (let i = 0; i < pairs.length - 2; i++) {
+    if (pairs[i][1] === Tagset.vb && pairs[i + 1][1] === Tagset.nn) {
+      const exprs: MultiWordExpression[] = [];
+      // separable transitive phrasal verb
+      // search in the remained tokens. check dictionary for a match
+      for (let k = i + 2; k < pairs.length; k++) {
+        // look ahead
+        if (pairs[k][1] === Tagset.ppv) {
+          exprs.push(createExpressionLengthTwo(i, pairs[i][0], pairs[k][0]));
+        }
+        if (k + 1 == pairs.length && exprs.length == 1) {
+          // phrasal verb of length 2
+          const popped = exprs.shift();
+          if (popped) expressions.push(popped);
+        } else if (k + 1 == pairs.length && exprs.length == 2) {
+          const secondParticle = exprs[1].tokens.pop();
+          // phrasal verb of length 3
+          // main verb and 1st particle already in the array
+          // we then push the 2nd particle
+          if (secondParticle) exprs[0].tokens.push(secondParticle);
+          const popped = exprs.shift();
+          if (popped) expressions.push(popped);
+        }
+      }
+    } else if (pairs[i][1] === Tagset.vb && pairs[i + 1][1] === Tagset.padv) {
+      // separate verb
+      for (let k = i + 2; k < pairs.length; k++) {
+        // look ahead
+        if (pairs[k][1] === Tagset.vb) {
+          expressions.push(
+            createExpressionLengthTwo(i, pairs[i][0], pairs[k][0])
+          );
+        }
       }
     }
   }
@@ -171,6 +222,7 @@ function getLemmas(
   pairs: Pairs<string, string>,
   expressions: MultiWordExpression[]
 ) {
+  // console.log(expressions);
   return [];
 }
 

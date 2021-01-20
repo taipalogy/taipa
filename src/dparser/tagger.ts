@@ -11,7 +11,7 @@ import { Tagset } from './symbols';
 import { Feature } from './feature';
 import {
   baseVerbs,
-  subsidiaries,
+  subsidiariesA,
   basePhrsalVerbParticles,
   demonstrativePronouns,
   auxiliaries,
@@ -44,7 +44,7 @@ export function tag(features: Feature[]) {
       baseVerbs.includes(features[i].token) &&
       pairs.length == 1 &&
       inflectedAdverbialParticles.includes(pairs[pairs.length - 1][0]) &&
-      subsidiaries.includes(features[i].nextToken)
+      subsidiariesA.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
@@ -60,7 +60,7 @@ export function tag(features: Feature[]) {
 
     if (
       baseVerbs.includes(features[i].token) &&
-      subsidiaries.includes(features[i].nextToken)
+      subsidiariesA.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
@@ -137,7 +137,7 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      subsidiaries.includes(features[i].token) &&
+      subsidiariesA.includes(features[i].token) &&
       baseVerbs.includes(features[i].prevToken)
     ) {
       // to check the tone pattern. to check if last word
@@ -146,7 +146,7 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      subsidiaries.includes(features[i].token) &&
+      subsidiariesA.includes(features[i].token) &&
       basePhrsalVerbParticles.includes(features[i].prevToken) &&
       baseVerbs.includes(features[i].prevToken2)
     ) {

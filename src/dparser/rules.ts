@@ -9,7 +9,7 @@ import {
   baseVerbs,
   dictOfPhrasalVerbs,
   dictOfPhrasalVerbsVpp,
-  subsidiaries,
+  subsidiariesA,
   basePhrsalVerbParticles,
   dictOfSeperateVVCompounds,
   ParticlesPhrasalVerb,
@@ -20,7 +20,7 @@ import { createCompoundPhraseme } from '../change/creator';
 import { TonalLetterTags } from '../tonal/version2';
 
 export const isPadvLongy = function (nextToken: string, nextToken2: string) {
-  if (baseVerbs.includes(nextToken) && subsidiaries.includes(nextToken2)) {
+  if (baseVerbs.includes(nextToken) && subsidiariesA.includes(nextToken2)) {
     return true;
   }
   return false;
