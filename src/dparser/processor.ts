@@ -61,6 +61,7 @@ function createExpressionLengthTwo(
 function getMultiWordExpressions(pairs: Pairs<string, string>) {
   const expressions: MultiWordExpression[] = [];
   for (let i = 0; i < pairs.length - 1; i++) {
+    const exprs: MultiWordExpression[] = []; // expecting only one element
     // phrasal verbs as verb + particle
     if (
       pairs[i][1] === Tagset.vb &&
@@ -71,35 +72,10 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
       expressions.push(
         createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0])
       );
-    } else if (
-      pairs[i][1] === Tagset.vb &&
-      pairs[i + 1][1] === Tagset.psub &&
-      baseVerbs.includes(pairs[i][0]) &&
-      (subsidiariesA.includes(pairs[i + 1][0]) ||
-        subsidiariesE.includes(pairs[i + 1][0]) ||
-        subsidiariesLe.includes(pairs[i + 1][0]) ||
-        subsidiariesPersonalPronoun.includes(pairs[i + 1][0]))
-    ) {
-      // verb + subsidiary
-      // verb of base form + adverb. mngz guaz
-      // verb of proceeding form + terminal form of personal pronoun. chiauykow liw
-      expressions.push(
-        createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0])
-      );
-      // check the tone pattern
-    }
-  }
-
-  for (let j = 0; j < expressions.length - 1; j++) {
-    if (expressions[j].index < pairs.length - 2) {
-      // look ahead for one extra token
-      if (
-        pairs[expressions[j].index + 2][1] === Tagset.ppv &&
-        basePhrsalVerbParticles.includes(pairs[expressions[j].index + 2][1])
-      ) {
-        // verb + particle + particle. e.g. thehh khih laih
-      } else if (pairs[expressions[j].index + 2][1] === Tagset.psub) {
-        // verb + particle + subsidiary. e.g. khuannw tiurh aw
+      // look ahead for the 2nd particle of a phrasal verb
+      if (i + 2 < pairs.length && pairs[i + 2][1] === Tagset.ppv) {
+        // push the 2nd particle into tokens array of the last element of the expressions
+        expressions[expressions.length - 1].tokens.push(pairs[i + 2][0]);
       }
     }
   }
@@ -222,7 +198,6 @@ function getLemmas(
   pairs: Pairs<string, string>,
   expressions: MultiWordExpression[]
 ) {
-  // console.log(expressions);
   return [];
 }
 
