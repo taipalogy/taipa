@@ -4,13 +4,18 @@ import { tag, Pairs } from '../dparser/tagger';
 import { Document } from '../document';
 import { Node } from '../document';
 import { getFeature, Feature } from './feature';
-import { PhrasalVerbs, SeparateCompoundVerbs } from './rules';
+import {
+  PhrasalVerbs,
+  SeparateCompoundVerbs,
+  inflectedVerbs,
+  inflectedPhrasalVerbParticles,
+} from './rules';
 import { lemmatize } from '../unchange/lemmatizer';
 import { Tagset } from './symbols';
 import { TonalWord } from '../unchange/lexeme';
 import {
   baseVerbs,
-  basePhrsalVerbParticles,
+  basePhrasalVerbParticles,
   subsidiariesA,
   subsidiariesPersonalPronoun,
   subsidiariesLe,
@@ -66,14 +71,17 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
     if (
       pairs[i][1] === Tagset.vb &&
       pairs[i + 1][1] === Tagset.ppv &&
-      baseVerbs.includes(pairs[i][0]) &&
-      basePhrsalVerbParticles.includes(pairs[i + 1][0])
+      ((baseVerbs.includes(pairs[i][0]) &&
+        basePhrasalVerbParticles.includes(pairs[i + 1][0])) ||
+        (inflectedVerbs.includes(pairs[i][0]) &&
+          inflectedPhrasalVerbParticles.includes(pairs[i + 1][0])))
     ) {
       expressions.push(
         createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0])
       );
       // look ahead for the 2nd particle of a phrasal verb
       if (i + 2 < pairs.length && pairs[i + 2][1] === Tagset.ppv) {
+        // can further check if the 2nd particle is inflected
         // push the 2nd particle into tokens array of the last element of the expressions
         expressions[expressions.length - 1].tokens.push(pairs[i + 2][0]);
       }
@@ -105,10 +113,15 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
         }
       }
     } else if (pairs[i][1] === Tagset.vb && pairs[i + 1][1] === Tagset.padv) {
-      // separate verb
       for (let k = i + 2; k < pairs.length; k++) {
         // look ahead
         if (pairs[k][1] === Tagset.vb) {
+          // separate verb
+          expressions.push(
+            createExpressionLengthTwo(i, pairs[i][0], pairs[k][0])
+          );
+        } else if (pairs[k][1] === Tagset.ppv) {
+          // separable phrasal verb
           expressions.push(
             createExpressionLengthTwo(i, pairs[i][0], pairs[k][0])
           );
@@ -198,6 +211,7 @@ function getLemmas(
   pairs: Pairs<string, string>,
   expressions: MultiWordExpression[]
 ) {
+  // console.log(pairs, expressions);
   return [];
 }
 
@@ -213,7 +227,8 @@ export const processor = function process(text: string) {
   doc.nodes = tokens.map(it => new Node(it));
   if (pairsTokenTag) {
     for (let i = 0; i < pairsTokenTag.length; i++) {
-      if (pairsTokenTag[i]) doc.nodes[i].tag = pairsTokenTag[i][1];
+      if (doc.nodes.length === pairsTokenTag.length && pairsTokenTag[i])
+        doc.nodes[i].tag = pairsTokenTag[i][1];
     }
   }
 

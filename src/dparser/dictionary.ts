@@ -61,7 +61,7 @@ export enum ParticlesPhrasalVerb {
   tiurh = 'tiurh',
 }
 
-export const basePhrsalVerbParticles = [
+export const basePhrasalVerbParticles = [
   ParticlesPhrasalVerb.cut.toString(),
   ParticlesPhrasalVerb.khih.toString(),
   ParticlesPhrasalVerb.laih.toString(),

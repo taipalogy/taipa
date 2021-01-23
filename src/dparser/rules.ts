@@ -10,7 +10,7 @@ import {
   dictOfPhrasalVerbs,
   dictOfPhrasalVerbsVpp,
   subsidiariesA,
-  basePhrsalVerbParticles,
+  basePhrasalVerbParticles,
   dictOfSeperateVVCompounds,
   ParticlesPhrasalVerb,
   basePersonalPronouns,
@@ -27,7 +27,7 @@ export const isPadvLongy = function (nextToken: string, nextToken2: string) {
 };
 
 export function isPhrasalVerbVp(token1: string, token2: string) {
-  if (baseVerbs.includes(token1) && basePhrsalVerbParticles.includes(token2))
+  if (baseVerbs.includes(token1) && basePhrasalVerbParticles.includes(token2))
     return true;
   return false;
 }
@@ -39,8 +39,8 @@ export function isPhrasalVerbVpp(
 ) {
   if (
     baseVerbs.includes(token1) &&
-    basePhrsalVerbParticles.includes(token2) &&
-    basePhrsalVerbParticles.includes(token3)
+    basePhrasalVerbParticles.includes(token2) &&
+    basePhrasalVerbParticles.includes(token3)
   )
     return true;
   return false;
@@ -51,7 +51,7 @@ export const inflectedVerbs = baseVerbs.map(
   it => inflectDesinence(it).getForms()[0].literal
 );
 
-export const inflectedPhrasalVerbParticles = basePhrsalVerbParticles.map(it =>
+export const inflectedPhrasalVerbParticles = basePhrasalVerbParticles.map(it =>
   it === ParticlesPhrasalVerb.cut
     ? inflectPhrasalVerbParticle(
         ParticlesPhrasalVerb.cut,

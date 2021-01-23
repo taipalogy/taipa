@@ -12,7 +12,7 @@ import { Feature } from './feature';
 import {
   baseVerbs,
   subsidiariesA,
-  basePhrsalVerbParticles,
+  basePhrasalVerbParticles,
   demonstrativePronouns,
   auxiliaries,
   dictOfSeperateVVCompounds,
@@ -37,6 +37,11 @@ export function tag(features: Feature[]) {
 
     if (inflectedAdverbialParticles.includes(features[i].token)) {
       pairs.push([features[i].token, Tagset.padv]);
+      continue;
+    }
+
+    if (inflectedPhrasalVerbParticles.includes(features[i].token)) {
+      pairs.push([features[i].token, Tagset.ppv]);
       continue;
     }
 
@@ -68,7 +73,7 @@ export function tag(features: Feature[]) {
 
     if (
       baseVerbs.includes(features[i].token) &&
-      basePhrsalVerbParticles.includes(features[i].nextToken)
+      basePhrasalVerbParticles.includes(features[i].nextToken)
     ) {
       pairs.push([features[i].token, Tagset.vb]);
       continue;
@@ -87,8 +92,8 @@ export function tag(features: Feature[]) {
     if (
       lemmatize(features[i].token).getLemmas().length == 3 &&
       baseVerbs.includes(lemmatize(features[i].token).getLemmas()[2].literal) &&
-      !basePhrsalVerbParticles.includes(features[i].nextToken) && // object of the verb
-      (basePhrsalVerbParticles.includes(features[i].nextToken2) ||
+      !basePhrasalVerbParticles.includes(features[i].nextToken) && // object of the verb
+      (basePhrasalVerbParticles.includes(features[i].nextToken2) ||
         inflectedPhrasalVerbParticles.includes(features[i].nextToken2))
     ) {
       pairs.push([features[i].token, Tagset.vb]);
@@ -96,7 +101,7 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      (basePhrsalVerbParticles.includes(features[i].token) ||
+      (basePhrasalVerbParticles.includes(features[i].token) ||
         inflectedPhrasalVerbParticles.includes(features[i].token)) &&
       features[i].prevToken &&
       pairs[pairs.length - 1][1] === Tagset.nn &&
@@ -109,7 +114,7 @@ export function tag(features: Feature[]) {
     }
 
     if (
-      basePhrsalVerbParticles.includes(features[i].token) &&
+      basePhrasalVerbParticles.includes(features[i].token) &&
       features[i].prevToken &&
       pairs[pairs.length - 1][1] === Tagset.ppv &&
       features[i].prevToken2 &&
@@ -147,7 +152,7 @@ export function tag(features: Feature[]) {
 
     if (
       subsidiariesA.includes(features[i].token) &&
-      basePhrsalVerbParticles.includes(features[i].prevToken) &&
+      basePhrasalVerbParticles.includes(features[i].prevToken) &&
       baseVerbs.includes(features[i].prevToken2)
     ) {
       // to check the tone pattern. to check if last word
