@@ -7,24 +7,17 @@ import {
 import { OrthoPhraseme, VisitorMatching, OrthoCompoundHead } from './visitor';
 import {
   baseVerbs,
-  dictOfPhrasalVerbs,
-  dictOfPhrasalVerbsVpp,
-  subsidiariesA,
+  phrasalVerbs,
+  phrasalVerbsVpp,
   basePhrasalVerbParticles,
-  dictOfSeperateVVCompounds,
+  seperateVVCompounds,
   ParticlesPhrasalVerb,
   basePersonalPronouns,
   baseAdverbialParticles,
+  ParticlesAdverbial,
 } from './dictionary';
 import { createCompoundPhraseme } from '../change/creator';
 import { TonalLetterTags } from '../tonal/version2';
-
-export const isPadvLongy = function (nextToken: string, nextToken2: string) {
-  if (baseVerbs.includes(nextToken) && subsidiariesA.includes(nextToken2)) {
-    return true;
-  }
-  return false;
-};
 
 export function isPhrasalVerbVp(token1: string, token2: string) {
   if (baseVerbs.includes(token1) && basePhrasalVerbParticles.includes(token2))
@@ -79,6 +72,11 @@ export const inflectedPersonalPronouns = basePersonalPronouns.map(
   it => inflectDesinence(it).getForms()[0].literal
 );
 
+export const inflectedAdverbialParticle = {
+  long: inflectDesinence(ParticlesAdverbial.longy.toString()).getForms()[0]
+    .literal,
+};
+
 export const inflectedAdverbialParticles = baseAdverbialParticles.map(
   it => inflectDesinence(it).getForms()[0].literal
 );
@@ -114,7 +112,7 @@ export class PhrasalVerbs {
   }
 
   private populatePhrasemes() {
-    dictOfPhrasalVerbs
+    phrasalVerbs
       .map(it => inflectToProceeding(it[0], it[1]))
       .map(it => {
         const ol = new OrthoPhraseme();
@@ -126,7 +124,7 @@ export class PhrasalVerbs {
         );
         this.phvbs.push(ol);
       });
-    dictOfPhrasalVerbsVpp
+    phrasalVerbsVpp
       .map(it => inflectVppToProceeding(it[0], it[1], it[2]))
       .map(it => {
         const ol = new OrthoPhraseme();
@@ -164,7 +162,7 @@ export class SeparateCompoundVerbs {
   }
 
   private populatePhrasemes() {
-    dictOfSeperateVVCompounds.map(it => {
+    seperateVVCompounds.map(it => {
       const oe = new OrthoPhraseme();
       oe.form = it[0] + ' ' + it[1];
       oe.inflected.push(createCompoundPhraseme(it[0], it[1]).phrase.literal);

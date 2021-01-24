@@ -3,7 +3,7 @@ import { tag, Pairs } from '../dparser/tagger';
 
 import { Document } from '../document';
 import { Node } from '../document';
-import { getFeature, Feature } from './feature';
+import { getFeature } from './feature';
 import {
   PhrasalVerbs,
   SeparateCompoundVerbs,
@@ -13,14 +13,7 @@ import {
 import { lemmatize } from '../unchange/lemmatizer';
 import { Tagset } from './symbols';
 import { TonalWord } from '../unchange/lexeme';
-import {
-  baseVerbs,
-  basePhrasalVerbParticles,
-  subsidiariesA,
-  subsidiariesPersonalPronoun,
-  subsidiariesLe,
-  subsidiariesE,
-} from './dictionary';
+import { baseVerbs, basePhrasalVerbParticles } from './dictionary';
 
 export const getTokens = function (text: string) {
   const tokens: string[] = [];

@@ -1,4 +1,7 @@
-export const baseVerbs = ['hua', 'khuannw', 'longw', 'phah', 'sa', 'thehh'];
+// prettier-ignore
+export const baseVerbs = [
+  'hua', 'khuannw', 'longw', 'phah', 'sa', 'thehh', 'tiurhh',
+];
 
 export const subsidiariesA = ['a', 'aw', 'az'];
 
@@ -6,20 +9,10 @@ export const subsidiariesLe = ['le', 'lew', 'lez'];
 
 export const subsidiariesE = ['e', 'ew', 'ez'];
 
+// prettier-ignore
 export const subsidiariesPersonalPronoun = [
-  'gua',
-  'guaw',
-  'guaz',
-  'liw',
-  'liz',
-  'i',
-  'iw',
-  'iz',
-  'guanw',
-  'guanz',
-  'inw',
-  'langw',
-  'langz',
+  'gua', 'guaw', 'guaz', 'liw', 'liz', 'i', 'iw', 'iz', 'guanw', 'guanz', 'inw',
+  'langw', 'langz',
 ];
 
 export enum ParticlesAdverbial {
@@ -28,8 +21,8 @@ export enum ParticlesAdverbial {
 }
 
 export const baseAdverbialParticles = [
-  ParticlesAdverbial.longy.toString(),
   ParticlesAdverbial.bez.toString(),
+  ParticlesAdverbial.longy.toString(),
 ];
 
 export enum PronounsPersonal {
@@ -72,19 +65,20 @@ export const demonstrativePronouns = ['che'];
 
 export const auxiliaries = ['kaz'];
 
+/** Separate VV compounds. */
 // prettier-ignore
-export const dictOfPhrasalVerbs = [
+export const seperateVVCompounds = [
+  ['siam', 'kuew'],
+  ['khuanny', 'tiurhh']
+];
+
+// prettier-ignore
+export const phrasalVerbs = [
   ['khuannw', 'tiurh'],
   ['longw', 'tiurh'],
 ];
 
 // prettier-ignore
-export const dictOfPhrasalVerbsVpp = [
+export const phrasalVerbsVpp = [
   ['thehh', 'cut', 'khih'],
-];
-
-/** Base forms of separate VV compounds. */
-// prettier-ignore
-export const dictOfSeperateVVCompounds = [
-  ['siamy', 'kuew']
 ];

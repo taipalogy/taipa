@@ -1,11 +1,11 @@
 import {
-  isPadvLongy,
   isPhrasalVerbVp,
   isPhrasalVerbVpp,
   inflectedPhrasalVerbParticles,
   inflectedVerbs,
   inflectedAdverbialParticles,
   inflectedPersonalPronouns,
+  inflectedAdverbialParticle,
 } from './rules';
 import { Tagset } from './symbols';
 import { Feature } from './feature';
@@ -15,7 +15,7 @@ import {
   basePhrasalVerbParticles,
   demonstrativePronouns,
   auxiliaries,
-  dictOfSeperateVVCompounds,
+  seperateVVCompounds,
 } from './dictionary';
 import { inflectDesinence } from '../change/inflector';
 import { lemmatize } from '../unchange/lemmatizer';
@@ -28,8 +28,9 @@ export function tag(features: Feature[]) {
   let expecting: string = '';
   for (let i = 0; i < features.length; i++) {
     if (
-      inflectedAdverbialParticles.includes(features[i].token) &&
-      isPadvLongy(features[i].nextToken, features[i].nextToken2)
+      inflectedAdverbialParticle.long === features[i].token &&
+      baseVerbs.includes(features[i].nextToken) &&
+      subsidiariesA.includes(features[i].nextToken2)
     ) {
       pairs.push([features[i].token, Tagset.padv]);
       continue;
@@ -234,18 +235,19 @@ export function tag(features: Feature[]) {
       continue;
     }
 
-    if (
-      dictOfSeperateVVCompounds
-        .map(it => inflectDesinence(it[0]).getForms()[0].literal)
-        .includes(features[i].token)
-    ) {
+    if (seperateVVCompounds.map(it => it[0]).includes(features[i].token)) {
       // the first word of a VV compound
-      expecting = 'kuew';
+      expecting = seperateVVCompounds.filter(
+        it => it[0] === features[i].token
+      )[0][1];
       pairs.push([features[i].token, Tagset.vb]);
       continue;
     }
 
-    if (expecting === 'kuew' && features[i].token === 'kuew') {
+    if (
+      seperateVVCompounds.map(it => it[1]).includes(expecting) &&
+      features[i].token === expecting
+    ) {
       // the second word of a VV compound
       expecting = '';
       pairs.push([features[i].token, Tagset.vb]);
