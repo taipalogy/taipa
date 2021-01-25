@@ -142,8 +142,8 @@ export class DependencyParser {
     }
   }
 
-  parse(doc: Document): Document {
-    for (let t of doc.nodes) {
+  parse(nodes: Node[]): Relation[] {
+    for (let t of nodes) {
       this.c.queue.push(t);
     }
 
@@ -171,7 +171,6 @@ export class DependencyParser {
       this.c = this.apply(t, this.c);
     }
 
-    doc.relations = this.c.relations;
-    return doc;
+    return this.c.relations;
   }
 }

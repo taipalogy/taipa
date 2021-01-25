@@ -1,4 +1,3 @@
-import { Metaplasm } from './interface';
 import { TonalSyllable } from './unchange/morpheme';
 import { Allomorph } from './tonal/version2';
 import { PositionalLetter, Morpheme } from './unit';
@@ -13,6 +12,8 @@ import {
   TonalMutationLexeme,
   TonalUnmutationLexeme,
 } from './change/lexeme';
+
+abstract class Metaplasm {}
 
 export class TonalCombiningMetaplasm extends Metaplasm {
   apply(

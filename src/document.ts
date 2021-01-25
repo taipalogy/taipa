@@ -1,5 +1,4 @@
 import { Relation } from './dparser/relation';
-import { ConstructionOfPhrase } from './dparser/rules';
 
 /** Parsing */
 export class Document {

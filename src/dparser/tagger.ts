@@ -17,7 +17,6 @@ import {
   auxiliaries,
   seperateVVCompounds,
 } from './dictionary';
-import { inflectDesinence } from '../change/inflector';
 import { lemmatize } from '../unchange/lemmatizer';
 
 type Pair<T, K> = [T, K];
