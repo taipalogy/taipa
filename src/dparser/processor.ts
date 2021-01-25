@@ -156,25 +156,35 @@ function getLemmas(
   return lemmas;
 }
 
-export const processor = function process(text: string) {
+function convertTokensToNodes(
+  tokens: string[],
+  pairs: Pairs<string, string>,
+  lemmas: string[]
+) {
+  // convert token-tag pairs to nodes which are used as stack or queue elements
+  const nodes = tokens.map(it => new Node(it));
+  if (pairs) {
+    for (let i = 0; i < pairs.length; i++) {
+      if (nodes.length === pairs.length && pairs[i]) {
+        nodes[i].tag = pairs[i][1];
+        nodes[i].lemma = lemmas[i];
+      }
+    }
+  }
+  return nodes;
+}
+
+export function nlp(text: string) {
   const tokens = getTokens(text);
   const features = getFeatures(tokens);
   const pairsTokenTag = tag(features);
   const expressions = getMultiWordExpressions(pairsTokenTag);
   const lemmas = getLemmas(pairsTokenTag, expressions);
+  const nodes = convertTokensToNodes(tokens, pairsTokenTag, lemmas);
+  const relations = parseDenpendency(nodes);
 
-  let doc = new Document();
-  // convert token-tag pairs to nodes which are used as stack or queue elements
-  doc.nodes = tokens.map(it => new Node(it));
-  if (pairsTokenTag) {
-    for (let i = 0; i < pairsTokenTag.length; i++) {
-      if (doc.nodes.length === pairsTokenTag.length && pairsTokenTag[i]) {
-        doc.nodes[i].tag = pairsTokenTag[i][1];
-        doc.nodes[i].lemma = lemmas[i];
-      }
-    }
-  }
-
-  doc.relations = parseDenpendency(doc.nodes);
+  const doc = new Document();
+  doc.nodes = nodes;
+  doc.relations = relations;
   return doc;
-};
+}

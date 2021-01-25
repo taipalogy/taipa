@@ -1,8 +1,8 @@
-import { processor } from '../src/dparser/processor';
+import { nlp } from '../src/dparser/processor';
 import { DependencyLabels } from '../src/dparser/symbols';
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua khuannw tiurh');
+  const doc = nlp('gua khuannw tiurh');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -29,7 +29,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua khuanny tiurhw che');
+  const doc = nlp('gua khuanny tiurhw che');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -62,7 +62,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua longy tiurhw che');
+  const doc = nlp('gua longy tiurhw che');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -95,7 +95,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('che gua khuannw tiurh');
+  const doc = nlp('che gua khuannw tiurh');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -128,7 +128,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('khuannw tiurh aw');
+  const doc = nlp('khuannw tiurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -155,7 +155,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('khuannw aw');
+  const doc = nlp('khuannw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -176,7 +176,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('longw aw');
+  const doc = nlp('longw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -197,7 +197,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua khuannw tiurh aw');
+  const doc = nlp('gua khuannw tiurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -230,7 +230,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('phah aw');
+  const doc = nlp('phah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -251,7 +251,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('longw tiurh aw');
+  const doc = nlp('longw tiurh aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -278,7 +278,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('kaz phah aw');
+  const doc = nlp('kaz phah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -305,7 +305,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua kaz phah');
+  const doc = nlp('gua kaz phah');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -332,7 +332,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua kaz phah aw');
+  const doc = nlp('gua kaz phah aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {
@@ -365,7 +365,7 @@ describe('Dependency parsing', () => {
 });
 
 describe('Dependency parsing', () => {
-  const doc = processor('gua kaz khuannw aw');
+  const doc = nlp('gua kaz khuannw aw');
   const rs = doc.relations;
 
   test('check the number of relations', () => {

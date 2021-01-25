@@ -7,7 +7,6 @@ import {
 } from './configuration';
 import { Guide } from './guide';
 import { Node } from '../document';
-import { Document } from '../document';
 import { DependencyLabels, Tagset } from './symbols';
 import { Relation } from './relation';
 
