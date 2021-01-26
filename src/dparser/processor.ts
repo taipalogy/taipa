@@ -137,22 +137,50 @@ function getLemmas(
   let ind: number = 0;
 
   for (let i = 0; i < pairs.length; i++) {
-    if (expressions.length > 0 && expressions[ind]) {
+    if (
+      expressions.length > 0 &&
+      expressions[ind] &&
+      i >= expressions[ind].index &&
+      i <
+        expressions[ind].index +
+          expressions[ind].distance +
+          expressions[ind].tokens.length
+    ) {
       // when the multi-word expression is hit
-
       if (expressions[ind].index == i) {
-        if (pairs[i][1] === Tagset.vb && expressions[ind].distance == 1) {
+        // the begin of a multi-word expression
+        if (pairs[i][1] === Tagset.vb) {
           lemmas.push(lemmatize(pairs[i][0]).getLemmas()[0].literal);
         }
-      } else if (i <= expressions[ind].index + expressions[ind].tokens.length) {
+      } else if (
+        i <
+        expressions[ind].index +
+          expressions[ind].distance +
+          expressions[ind].tokens.length
+      ) {
+        // in the middle of a multi-word expression
         if (pairs[i][1] === Tagset.padv)
           lemmas.push(lemmatize(pairs[i][0]).getLemmas()[0].literal);
-        else lemmas.push('');
+        else if (pairs[i][1] === Tagset.vb) lemmas.push(pairs[i][0]);
+        else if (pairs[i][1] === Tagset.nn) lemmas.push(pairs[i][0]);
+        else if (pairs[i][1] === Tagset.ppv) lemmas.push('');
+
+        if (
+          i + 1 ==
+          expressions[ind].index +
+            expressions[ind].distance +
+            expressions[ind].tokens.length
+        ) {
+          if (ind < expressions.length) {
+            ind++;
+          }
+        }
       }
+    } else {
+      lemmas.push('');
     }
-    lemmas.push('');
   }
-  // console.log(lemmas);
+  // console.log(lemmas, lemmas.length);
   return lemmas;
 }
 
