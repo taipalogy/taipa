@@ -12,10 +12,8 @@ export class Allomorph extends Morph {
   tonal: Tonal = new Tonal();
 
   toString() {
-    if (this.tonal.toString().length == 0) {
-      // return string 'zero' for first tone. member variable characters of graph is still null.
-      return TonalLetterTags.zero;
-    } else return this.tonal.toString();
+    // this function is promoted from class FreeAllomorph
+    return this.tonal.toString();
   }
 }
 

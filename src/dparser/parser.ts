@@ -7,7 +7,7 @@ import {
 } from './configuration';
 import { Guide } from './guide';
 import { Node } from '../document';
-import { DependencyLabels, Tagset } from './symbols';
+import { DepRelations, Tagset } from './symbols';
 import { Relation } from './relation';
 
 export class DependencyParser {
@@ -17,22 +17,22 @@ export class DependencyParser {
   private s2: Node = new Node('');
   private b1: Node = new Node('');
 
-  private s1B1RightRelations = new Map<string, DependencyLabels>()
-    .set(Tagset.ppv + Tagset.psub, DependencyLabels.compoundPrt)
-    .set(Tagset.ppv + Tagset.npr, DependencyLabels.compoundPrt);
+  private s1B1RightRelations = new Map<string, DepRelations>()
+    .set(Tagset.ppv + Tagset.psub, DepRelations.compoundPrt)
+    .set(Tagset.ppv + Tagset.npr, DepRelations.compoundPrt);
 
-  private s1B1LeftRelations = new Map<string, DependencyLabels>();
+  private s1B1LeftRelations = new Map<string, DepRelations>();
 
-  private s2S1RightRelations = new Map<string, DependencyLabels>()
-    .set(Tagset.vb + Tagset.ppv, DependencyLabels.compoundPrt)
-    .set(Tagset.vb + Tagset.psub, DependencyLabels.prt)
-    .set(Tagset.vb + Tagset.vb, DependencyLabels.compound)
-    .set(Tagset.vb + Tagset.npr, DependencyLabels.obj);
+  private s2S1RightRelations = new Map<string, DepRelations>()
+    .set(Tagset.vb + Tagset.ppv, DepRelations.compoundPrt)
+    .set(Tagset.vb + Tagset.psub, DepRelations.prt)
+    .set(Tagset.vb + Tagset.vb, DepRelations.compound)
+    .set(Tagset.vb + Tagset.npr, DepRelations.obj);
 
-  private s2S1LeftRelations = new Map<string, DependencyLabels>()
-    .set(Tagset.aux + Tagset.vb, DependencyLabels.aux)
-    .set(Tagset.padv + Tagset.vb, DependencyLabels.advmod)
-    .set(Tagset.appr + Tagset.npr, DependencyLabels.case);
+  private s2S1LeftRelations = new Map<string, DepRelations>()
+    .set(Tagset.aux + Tagset.vb, DepRelations.aux)
+    .set(Tagset.padv + Tagset.vb, DepRelations.advmod)
+    .set(Tagset.appr + Tagset.npr, DepRelations.case);
 
   private getInitialConfiguration() {
     return new Configuration();
@@ -52,13 +52,13 @@ export class DependencyParser {
     return false;
   }
 
-  private rightRelation(label: DependencyLabels): Relation {
+  private rightRelation(label: DepRelations): Relation {
     this.s1.dep = label;
     this.s1.head = this.s2.token;
     return new Relation(label, this.s2, this.s1);
   }
 
-  private leftRelation(label: DependencyLabels): Relation {
+  private leftRelation(label: DepRelations): Relation {
     this.s2.dep = label;
     this.s2.head = this.s1.token;
     return new Relation(label, this.s1, this.s2);
@@ -95,10 +95,10 @@ export class DependencyParser {
 
   private s2S1LeftArgsToPronoun = new Map<
     string,
-    DependencyLabels[]
+    DepRelations[]
   >().set(Tagset.npr + Tagset.vb, [
-    DependencyLabels.nsubj,
-    DependencyLabels.dislocated,
+    DepRelations.nsubj,
+    DepRelations.dislocated,
   ]);
 
   private setS2S1Relation(t: Transition) {
@@ -109,7 +109,7 @@ export class DependencyParser {
           this.c.relations.push(this.rightRelation(rel));
         }
       } else if (this.isTwoNodesInStack()) {
-        this.c.relations.push(this.rightRelation(DependencyLabels.root));
+        this.c.relations.push(this.rightRelation(DepRelations.root));
       }
     } else if (t instanceof LeftArc) {
       if (this.s2S1LeftRelations.has(this.s2.tag + this.s1.tag)) {

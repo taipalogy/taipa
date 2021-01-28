@@ -1,4 +1,5 @@
-export enum POSTags {
+/** Universal Part-of-Speeches. */
+export enum UPos {
   /*
       Universal POS tags
       https://universaldependencies.org/u/pos/
@@ -23,7 +24,8 @@ export enum POSTags {
   other = 'X',
 }
 
-export enum DependencyLabels {
+/** Dependency Relations. */
+export enum DepRelations {
   /*
       Universal Dependencies
       https://universaldependencies.org/u/dep/all.html
@@ -59,6 +61,7 @@ export enum DependencyLabels {
   xcomp = 'xcomp',
 }
 
+/** Detailed, language-specific part-of-speech tags. */
 export enum Tagset {
   aux = 'AUX', // auxiliary verb
   adj = 'ADJ', // adjective

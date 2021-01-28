@@ -8,6 +8,7 @@ import { inflectedVerbs, inflectedPhrasalVerbParticles } from './rules';
 import { Tagset } from './symbols';
 import { baseVerbs, basePhrasalVerbParticles } from './dictionary';
 import { lemmatize } from '../unchange/lemmatizer';
+import { tonalLemmatizationAnalyzer } from '../unchange/analyzer';
 
 export const getTokens = function (text: string) {
   const tokens: string[] = [];
@@ -33,9 +34,28 @@ function getFeatures(tokens: string[]) {
   return features;
 }
 
+/** Check if the word is in fourth tone or eighth tone. */
+function isFourthEighthTone(token: string) {
+  const tla = tonalLemmatizationAnalyzer;
+  const morphemes = tla.morphAnalyze(token);
+  const lexeme = tla.lexAnalyze(morphemes);
+  // no inflectional endings, not first tone which has no inflectional ending
+  // the fourth or eighth tone has a final
+  if (
+    lexeme.getInflectionalEnding().length == 0 &&
+    !(lexeme.getAllomorphicEnding().length == 0)
+  )
+    return true;
+  return false;
+}
+
+/** Multi-Word Expression. */
 class MultiWordExpression {
+  /** The position of an expression in a sentence. */
   index: number = 0;
+  /** The distance between the preceding word and the separate following words. */
   distance: number = 0;
+  /** The constituents of an expression. */
   tokens: string[] = [];
 }
 
@@ -150,7 +170,12 @@ function getLemmas(
       if (expressions[ind].index == i) {
         // the begin of a multi-word expression
         if (pairs[i][1] === Tagset.vb) {
-          lemmas.push(lemmatize(pairs[i][0]).getLemmas()[0].literal);
+          // to match tone patterns
+          lemmas.push(
+            isFourthEighthTone(pairs[i][0])
+              ? ''
+              : lemmatize(pairs[i][0]).getLemmas()[0].literal
+          );
         }
       } else if (
         i <
@@ -161,9 +186,14 @@ function getLemmas(
         // in the middle of a multi-word expression
         if (pairs[i][1] === Tagset.padv)
           lemmas.push(lemmatize(pairs[i][0]).getLemmas()[0].literal);
-        else if (pairs[i][1] === Tagset.vb) lemmas.push(pairs[i][0]);
+        else if (pairs[i][1] === Tagset.vb) lemmas.push('');
         else if (pairs[i][1] === Tagset.nn) lemmas.push(pairs[i][0]);
-        else if (pairs[i][1] === Tagset.ppv) lemmas.push('');
+        else if (pairs[i][1] === Tagset.ppv)
+          lemmas.push(
+            isFourthEighthTone(pairs[i][0])
+              ? ''
+              : lemmatize(pairs[i][0]).getLemmas()[0].literal
+          );
 
         if (
           i + 1 ==
@@ -172,6 +202,7 @@ function getLemmas(
             expressions[ind].tokens.length
         ) {
           if (ind < expressions.length) {
+            // move indicator to the next expression
             ind++;
           }
         }
@@ -184,13 +215,9 @@ function getLemmas(
   return lemmas;
 }
 
-function convertTokensToNodes(
-  tokens: string[],
-  pairs: Pairs<string, string>,
-  lemmas: string[]
-) {
+function convertTokensToNodes(pairs: Pairs<string, string>, lemmas: string[]) {
   // convert token-tag pairs to nodes which are used as stack or queue elements
-  const nodes = tokens.map(it => new Node(it));
+  const nodes = pairs.map(it => new Node(it[0]));
   if (pairs) {
     for (let i = 0; i < pairs.length; i++) {
       if (nodes.length === pairs.length && pairs[i]) {
@@ -208,7 +235,7 @@ export function nlp(text: string) {
   const pairsTokenTag = tag(features);
   const expressions = getMultiWordExpressions(pairsTokenTag);
   const lemmas = getLemmas(pairsTokenTag, expressions);
-  const nodes = convertTokensToNodes(tokens, pairsTokenTag, lemmas);
+  const nodes = convertTokensToNodes(pairsTokenTag, lemmas);
   const relations = parseDenpendency(nodes);
 
   const doc = new Document();

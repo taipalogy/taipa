@@ -1,6 +1,11 @@
 import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
 import { Word, LexemeMaker, Lexeme } from '../unit';
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../tonal/version2';
+import {
+  FreeAllomorph,
+  CheckedAllomorph,
+  Allomorph,
+  TonalLetterTags,
+} from '../tonal/version2';
 import { TonalAffix } from '../tonal/version2';
 import { TonalLemmatization } from './metaplasm';
 
@@ -79,6 +84,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
   word: TonalWord;
   private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
   private inflectionalEnding: InflectionalEnding;
+  private allomorphicEnding: AllomorphicEnding;
 
   constructor(
     morphemes: Array<TonalUncombiningMorpheme>,
@@ -94,11 +100,18 @@ export class TonalLemmatizationLexeme extends Lexeme {
         this.inflectionalEnding = this.assignInflectionalEnding(
           morphemes[morphemes.length - 1].allomorph
         );
+        this.allomorphicEnding = this.assignAllomorphicEnding(
+          morphemes[morphemes.length - 1].allomorph
+        );
       } else {
+        // null inflectional ending
         this.inflectionalEnding = new InflectionalEnding();
+        this.allomorphicEnding = new AllomorphicEnding();
       }
     } else {
+      // no morphemes. null inflectional ending
       this.inflectionalEnding = new InflectionalEnding();
+      this.allomorphicEnding = new AllomorphicEnding();
     }
 
     if (morphemes.length > 0)
@@ -115,20 +128,40 @@ export class TonalLemmatizationLexeme extends Lexeme {
     return '';
   }
 
+  getAllomorphicEnding() {
+    if (this.allomorphicEnding) return this.allomorphicEnding.toString();
+    return '';
+  }
+
   private assignInflectionalEnding(allomorph: Allomorph) {
-    let infe: InflectionalEnding = new InflectionalEnding();
+    let ending: InflectionalEnding = new InflectionalEnding();
     // change allomorph to affix
     if (allomorph instanceof FreeAllomorph) {
       let fie = new FreeInflectionalEnding();
       fie.affix.tonal = allomorph.tonal;
-      infe = fie;
+      ending = fie;
     } else if (allomorph instanceof CheckedAllomorph) {
       let cie = new CheckedInflectionalEnding();
       cie.affix.tonal = allomorph.tonal;
-      infe = cie;
+      ending = cie;
     }
     // this word is already in base form, and its last syllable is checked tone
-    return infe;
+    return ending;
+  }
+
+  private assignAllomorphicEnding(allomorph: Allomorph) {
+    let ending: AllomorphicEnding = new AllomorphicEnding();
+    if (allomorph instanceof FreeAllomorph) {
+      let fae = new FreeAllomorphicEnding();
+      fae.allomorph = allomorph;
+      ending = fae;
+    } else if (allomorph instanceof CheckedAllomorph) {
+      let chae = new CheckedAllomorphicEnding();
+      chae.allomorph = allomorph;
+      ending = chae;
+    }
+
+    return ending;
   }
 }
 
