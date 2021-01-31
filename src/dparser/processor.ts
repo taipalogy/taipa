@@ -9,6 +9,7 @@ import { Tagset } from './symbols';
 import { baseVerbs, basePhrasalVerbParticles } from './dictionary';
 import { lemmatize } from '../unchange/lemmatizer';
 import { tonalLemmatizationAnalyzer } from '../unchange/analyzer';
+import { TonalLetterTags } from '../tonal/version2';
 
 export const getTokens = function (text: string) {
   const tokens: string[] = [];
@@ -34,38 +35,114 @@ function getFeatures(tokens: string[]) {
   return features;
 }
 
-/** Check if the word is in fourth tone or eighth tone. */
-function isFourthEighthTone(token: string) {
+function createLexeme(token: string) {
   const tla = tonalLemmatizationAnalyzer;
   const morphemes = tla.morphAnalyze(token);
   const lexeme = tla.lexAnalyze(morphemes);
+  return lexeme;
+}
+
+/** Check if the word is in fourth tone or eighth tone. */
+function isFourthEighthTone(token: string) {
+  const lexeme = createLexeme(token);
   // no inflectional endings, not first tone which has no inflectional ending
   // the fourth or eighth tone has a final
   if (
     lexeme.getInflectionalEnding().length == 0 &&
-    !(lexeme.getAllomorphicEnding().length == 0)
+    (lexeme.getAllomorphicEnding().length == 1 ||
+      lexeme.getAllomorphicEnding().length == 2)
   )
     return true;
   return false;
 }
 
+/** Check if the word is in fourth tone. */
+function isFourthTone(token: string) {
+  const lexeme = createLexeme(token);
+  // no inflectional endings, not first tone which has no inflectional ending
+  // the fourth tone has a final of length 1
+  if (
+    lexeme.getInflectionalEnding().length == 0 &&
+    lexeme.getAllomorphicEnding().length == 1
+  )
+    return true;
+  return false;
+}
+
+function isFirstCheckedTone(token: string) {
+  const lexeme = createLexeme(token);
+  // a final plus a first tone letter
+  if (
+    lexeme.getInflectionalEnding().length == 1 &&
+    lexeme.getInflectionalEnding() === TonalLetterTags.f &&
+    lexeme.getAllomorphicEnding().length == 2
+  )
+    return true;
+  return false;
+}
+
+function isSeventhTone(token: string) {
+  const lexeme = createLexeme(token);
+  // a seventh tone letter
+  if (
+    lexeme.getInflectionalEnding().length == 1 &&
+    lexeme.getInflectionalEnding() === TonalLetterTags.z
+  )
+    return true;
+  return false;
+}
+
+function isThirdCheckedTone(token: string) {
+  const lexeme = createLexeme(token);
+  // a final plus a first tone letter
+  if (
+    lexeme.getInflectionalEnding().length == 1 &&
+    lexeme.getInflectionalEnding() === TonalLetterTags.w &&
+    lexeme.getAllomorphicEnding().length == 2
+  )
+    return true;
+  return false;
+}
+
+function shouldUninflect(expression: MultiWordExpression, index: number) {
+  if (index == expression.begin) {
+    // main verb
+    if (expression.distance > 0) return true;
+  } else if (
+    index > expression.begin &&
+    index == expression.begin + 1 + expression.distance
+  ) {
+    // 1st particle or 2nd verb
+    if (isFourthTone(expression.tokens[1])) return false;
+    if (isFirstCheckedTone(expression.tokens[1])) return true;
+    if (isThirdCheckedTone(expression.tokens[1])) return true;
+  } else if (index > expression.begin && index == expression.end) {
+    // 2nd particle, if any
+    if (isSeventhTone(expression.tokens[2])) return true;
+    if (isFirstCheckedTone(expression.tokens[2])) return true;
+  }
+  return false;
+}
+
 /** Multi-Word Expression. */
 class MultiWordExpression {
-  /** The position of an expression in a sentence. */
-  index: number = 0;
-  /** The distance between the preceding word and the separate following words. */
+  /** The begining of an expression in a sentence. */
+  begin: number = 0;
+  /** The end of an expression in a sentence. */
+  end: number = 0;
+  /** How far is the preceding word from the separated following words. */
   distance: number = 0;
   /** The constituents of an expression. */
   tokens: string[] = [];
 }
 
 function createExpressionLengthTwo(
-  index: number,
+  begin: number,
   token1: string,
   token2: string
 ) {
   const obj = new MultiWordExpression();
-  obj.index = index;
+  obj.begin = begin;
   obj.tokens.push(token1);
   obj.tokens.push(token2);
   return obj;
@@ -74,7 +151,6 @@ function createExpressionLengthTwo(
 function getMultiWordExpressions(pairs: Pairs<string, string>) {
   const expressions: MultiWordExpression[] = [];
   for (let i = 0; i < pairs.length - 1; i++) {
-    const exprs: MultiWordExpression[] = []; // expecting only one element
     // phrasal verbs as verb + particle
     if (
       pairs[i][1] === Tagset.vb &&
@@ -84,14 +160,15 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
         (inflectedVerbs.includes(pairs[i][0]) &&
           inflectedPhrasalVerbParticles.includes(pairs[i + 1][0])))
     ) {
-      expressions.push(
-        createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0])
-      );
+      const expr = createExpressionLengthTwo(i, pairs[i][0], pairs[i + 1][0]);
+      expr.end = i + 1;
+      expressions.push(expr);
       // look ahead for the 2nd particle of a phrasal verb
       if (i + 2 < pairs.length && pairs[i + 2][1] === Tagset.ppv) {
         // can further check if the 2nd particle is inflected
         // push the 2nd particle into tokens array of the last element of the expressions
         expressions[expressions.length - 1].tokens.push(pairs[i + 2][0]);
+        expressions[expressions.length - 1].end = i + 2;
       }
     }
   }
@@ -102,10 +179,14 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
       // separable transitive phrasal verb
       // search in the remained tokens. check dictionary for a match
       for (let k = i + 2; k < pairs.length; k++) {
-        // look ahead
         if (pairs[k][1] === Tagset.ppv) {
-          exprs.push(createExpressionLengthTwo(i, pairs[i][0], pairs[k][0]));
+          const expr = createExpressionLengthTwo(i, pairs[i][0], pairs[k][0]);
+          expr.end = k;
+          exprs.push(expr);
+          // in the case of length 2, there will be 1 expression in exprs.
+          // in the case of length 3, there will be 2 expressions in exprs.
         }
+        // look ahead until the end of the sentence
         if (k + 1 == pairs.length && exprs.length == 1) {
           // phrasal verb of length 2
           const popped = exprs.shift();
@@ -114,14 +195,19 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
             expressions.push(popped);
           }
         } else if (k + 1 == pairs.length && exprs.length == 2) {
+          // the 2nd particle is popped out from the tokens array of the 2nd expression
           const secondParticle = exprs[1].tokens.pop();
           // phrasal verb of length 3
           // main verb and 1st particle already in the array
           // we then push the 2nd particle
           if (secondParticle) exprs[0].tokens.push(secondParticle);
+          // get the end of the 2nd expression
+          const end2nd = exprs[1].end;
           const popped = exprs.shift();
           if (popped) {
             popped.distance = 1;
+            // assign the end
+            popped.end = end2nd;
             expressions.push(popped);
           }
         }
@@ -160,14 +246,14 @@ function getLemmas(
     if (
       expressions.length > 0 &&
       expressions[ind] &&
-      i >= expressions[ind].index &&
+      i >= expressions[ind].begin &&
       i <
-        expressions[ind].index +
+        expressions[ind].begin +
           expressions[ind].distance +
           expressions[ind].tokens.length
     ) {
       // when the multi-word expression is hit
-      if (expressions[ind].index == i) {
+      if (expressions[ind].begin == i) {
         // the begin of a multi-word expression
         if (pairs[i][1] === Tagset.vb) {
           // to match tone patterns
@@ -179,7 +265,7 @@ function getLemmas(
         }
       } else if (
         i <
-        expressions[ind].index +
+        expressions[ind].begin +
           expressions[ind].distance +
           expressions[ind].tokens.length
       ) {
@@ -190,14 +276,14 @@ function getLemmas(
         else if (pairs[i][1] === Tagset.nn) lemmas.push(pairs[i][0]);
         else if (pairs[i][1] === Tagset.ppv)
           lemmas.push(
-            isFourthEighthTone(pairs[i][0])
-              ? ''
-              : lemmatize(pairs[i][0]).getLemmas()[0].literal
+            shouldUninflect(expressions[ind], i)
+              ? lemmatize(pairs[i][0]).getLemmas()[0].literal
+              : ''
           );
 
         if (
           i + 1 ==
-          expressions[ind].index +
+          expressions[ind].begin +
             expressions[ind].distance +
             expressions[ind].tokens.length
         ) {

@@ -65,7 +65,7 @@ export const inflectedPersonalPronouns = basePersonalPronouns.map(
   it => inflectDesinence(it).getForms()[0].literal
 );
 
-export const inflectedAdverbialParticle = {
+export const proceedingAdverbialParticles = {
   long: inflectDesinence(ParticlesAdverbial.longy.toString()).getForms()[0]
     .literal,
 };

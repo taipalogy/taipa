@@ -5,7 +5,7 @@ import {
   inflectedVerbs,
   inflectedAdverbialParticles,
   inflectedPersonalPronouns,
-  inflectedAdverbialParticle,
+  proceedingAdverbialParticles,
 } from './rules';
 import { Tagset } from './symbols';
 import { Feature } from './feature';
@@ -27,7 +27,7 @@ export function tag(features: Feature[]) {
   let expecting: string = '';
   for (let i = 0; i < features.length; i++) {
     if (
-      inflectedAdverbialParticle.long === features[i].token &&
+      proceedingAdverbialParticles.long === features[i].token &&
       baseVerbs.includes(features[i].nextToken) &&
       subsidiariesA.includes(features[i].nextToken2)
     ) {
