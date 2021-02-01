@@ -33,14 +33,13 @@ import {
   TonalPhrasalMutationMetaplasm,
   TonalPhrasalUnmutationMetaplasm,
 } from '../metaplasm';
-import { TonalSyllable } from '../unchange/morpheme';
+import {
+  TonalSyllable,
+  TonalSoundUnchangingMorpheme,
+} from '../unchange/morpheme';
 import { AlphabeticLetter, PositionalLetter } from '../unit';
 import { TonalWord } from '../unchange/lexeme';
-import {
-  TonalCombiningMorpheme,
-  TonalSoundChangingMorpheme,
-  TonalSoundUnchangingMorpheme,
-} from './morpheme';
+import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import { TonalPhrasalInflectionMetaplasm } from '../metaplasm';
 import {
   TonalInflectionLexeme,

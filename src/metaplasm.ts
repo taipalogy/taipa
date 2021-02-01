@@ -40,6 +40,15 @@ export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 
 export class KanaCombiningMetaplasm extends Metaplasm {}
 
+export class TonalUncombiningMetaplasm extends Metaplasm {
+  apply(
+    letters: Array<PositionalLetter>,
+    allomorph: Allomorph
+  ): Array<TonalSyllable> {
+    return [];
+  }
+}
+
 export class TonalInflectionMetaplasm extends Metaplasm {
   apply(morphemes: Array<Morpheme>): TonalWord[] {
     return [];

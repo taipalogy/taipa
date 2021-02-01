@@ -1,4 +1,4 @@
-import { TonalCombiningMetaplasm } from '../metaplasm';
+import { TonalUncombiningMetaplasm } from '../metaplasm';
 import {
   TonalWord,
   InflectionalEnding,
@@ -36,7 +36,7 @@ import { isInSyllableTable } from '../tonal/syllabletable';
 import { smMngFywxz } from './matcher';
 
 /** Returns the uncombining forms of a syllable. */
-export class TonalUncombiningForms extends TonalCombiningMetaplasm {
+export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
   constructor(private lettersFollowing: PositionalLetter[]) {
     super();
   }
@@ -62,7 +62,7 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
           const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
           const tnltrs = !rules ? [] : rules;
           for (let i in tnltrs) {
-            let s: TonalSyllable = new TonalSyllable(
+            const s: TonalSyllable = new TonalSyllable(
               letters.map(x => new AlphabeticLetter(x.characters))
             );
             if (!(tnltrs[i] instanceof ZeroAllomorph)) {
@@ -198,8 +198,50 @@ export class TonalUncombiningForms extends TonalCombiningMetaplasm {
   }
 }
 
+/** Returns the uncombining forms of a phrasl verb particle syllable. */
+export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
+  apply(
+    letters: Array<PositionalLetter>,
+    allomorph: Allomorph
+  ): TonalSyllable[] {
+    if (allomorph) {
+      if (allomorph instanceof FreeAllomorph) {
+        // 7 to 4
+        const s: TonalSyllable = new TonalSyllable(
+          letters.map(it => new AlphabeticLetter(it.characters))
+        );
+        const tnl = letters.filter(
+          it => it.name === TonalSpellingTags.freeTone
+        );
+        if (tnl && tnl[0].toString() === TonalLetterTags.z) {
+          s.popLetter(); // pop the tonal
+          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.h)); // push neutral final
+        }
+        return [s];
+      } else if (allomorph instanceof CheckedAllomorph) {
+        // 1 to 4. 3 to 4.
+        const s: TonalSyllable = new TonalSyllable(
+          letters.map(it => new AlphabeticLetter(it.characters))
+        );
+        const tnl = letters.filter(
+          it => it.name === TonalSpellingTags.checkedTone
+        );
+        if (
+          tnl &&
+          (tnl[0].toString() === TonalLetterTags.f ||
+            tnl[0].toString() === TonalLetterTags.w)
+        ) {
+          s.popLetter(); // pop the tonal
+        }
+        return [s];
+      }
+    }
+    return [];
+  }
+}
+
 /** Returns the uncombining forms of the syllable preceding ay */
-export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
+export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
   private getUncombiningForms(
     syllable: TonalSyllable,
     letters: Array<PositionalLetter>
@@ -310,7 +352,7 @@ export class PrecedingAyexUncombining extends TonalCombiningMetaplasm {
 }
 
 /** Returns the last syllable of a double or triple construction as an uncombining form. */
-export class LastSyllableForms extends TonalCombiningMetaplasm {
+export class LastSyllableForms extends TonalUncombiningMetaplasm {
   constructor(private lettersLastSyllable: PositionalLetter[]) {
     super();
   }
@@ -337,7 +379,7 @@ export class LastSyllableForms extends TonalCombiningMetaplasm {
 }
 
 /** Returns the uncombining forms of a transfix inflected syllable. */
-export class TransfixUncombining extends TonalCombiningMetaplasm {
+export class TransfixUncombining extends TonalUncombiningMetaplasm {
   apply(
     letters: Array<PositionalLetter>,
     allomorph: Allomorph
@@ -388,7 +430,7 @@ export class TransfixUncombining extends TonalCombiningMetaplasm {
 }
 
 /** Change ~ietf or ietw to ~ek or ~ekk. */
-export class UncombiningFormsIetfIetwToEkEkk extends TonalCombiningMetaplasm {
+export class UncombiningFormsIetfIetwToEkEkk extends TonalUncombiningMetaplasm {
   apply(
     letters: Array<PositionalLetter>,
     allomorph: Allomorph
@@ -422,7 +464,7 @@ export class UncombiningFormsIetfIetwToEkEkk extends TonalCombiningMetaplasm {
   }
 }
 
-export class UncombiningFormsIengUamToneLetter extends TonalCombiningMetaplasm {
+export class UncombiningFormsIengUamToneLetter extends TonalUncombiningMetaplasm {
   apply(
     letters: Array<PositionalLetter>,
     allomorph: Allomorph

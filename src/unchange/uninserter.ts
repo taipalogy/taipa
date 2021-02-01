@@ -1,7 +1,7 @@
 import { GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';
 import { TonalUninsertionLexeme } from '../change/lexeme';
-import { TonalSoundUnchangingMorphemeMaker } from '../change/morpheme';
+import { TonalSoundUnchangingMorphemeMaker } from '../unchange/morpheme';
 import { Uninsertion, UninsertionFromEnclitic } from '../change/metaplasm';
 import { TonalUninsertionPhrasemeMaker } from '../change/phraseme';
 import { morphAnalyzeUnchanging } from './analyzer';

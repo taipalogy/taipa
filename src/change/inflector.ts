@@ -49,7 +49,7 @@ export function inflectEncliticE(word: string) {
 
 /**
  * Inflects 4th tone to 1st tone or 3rd tone accordingly. Inflects laih to laiz. Lexical inflector.
- * @param word particle
+ * @param word Particle
  * @param tone F, w, or z
  */
 export function inflectPhrasalVerbParticle(

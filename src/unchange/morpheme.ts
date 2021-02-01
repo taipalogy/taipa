@@ -46,6 +46,7 @@ import {
   nasalInitialConsonants,
   finalConsonantsBgjlsbbggllss,
   finalConsonantsForBgjlsbbggllss,
+  voicedVoicelessFinalConsonants,
 } from '../tonal/collections';
 import {
   LastSyllableForms,
@@ -55,7 +56,11 @@ import {
   UncombiningFormsIetfIetwToEkEkk,
   UncombiningFormsIengUamToneLetter,
 } from './metaplasm';
-import { TonalCombiningMetaplasm, RemovingEpenthesisOfAy } from '../metaplasm';
+import {
+  TonalCombiningMetaplasm,
+  RemovingEpenthesisOfAy,
+  TonalUncombiningMetaplasm,
+} from '../metaplasm';
 
 export function syllabifyTonal(
   letters: Array<AlphabeticLetter>,
@@ -465,9 +470,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     index: number;
     letters: AlphabeticLetter[];
   }>();
+  private metaplasm: TonalUncombiningMetaplasm;
 
-  constructor() {
+  constructor(metaplasm: TonalUncombiningMetaplasm) {
     super();
+    this.metaplasm = metaplasm;
   }
 
   protected createMorphemes() {
@@ -476,7 +483,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
   protected createMorpheme(
     matched: MatchedPattern,
-    metaplasm: TonalCombiningMetaplasm
+    metaplasm: TonalUncombiningMetaplasm
   ) {
     const tum: TonalUncombiningMorpheme = new TonalUncombiningMorpheme(
       new TonalSyllable(matched.letters),
@@ -1058,9 +1065,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           );
         } else {
           // no sandhi letters to unchange, just pass an empty array
-          morphemes.push(
-            this.createMorpheme(ptn, new TonalUncombiningForms([]))
-          );
+          // the metaplasm argument would be either TonalUncombiningForms or PhrasalVerbParticleUncombining
+          morphemes.push(this.createMorpheme(ptn, this.metaplasm));
         }
         if (this.isEKekkAvailableRimeIet(matched) && i < matched.length - 1) {
           const forms = this.createMorpheme(
@@ -1090,6 +1096,141 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     const ptns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptns);
     // TODO: to further check if the syllable is valid, given the following syllable
+
+    // return unms
+    return ms;
+  }
+}
+
+/** A syllable and its sound changing forms. */
+export class TonalSoundUnchangingMorpheme extends Morpheme {
+  syllable: TonalSyllable;
+  letters: Array<PositionalLetter>;
+
+  constructor(syllable: TonalSyllable, letters: PositionalLetter[]) {
+    super();
+    this.syllable = syllable;
+    this.letters = letters;
+  }
+
+  get lastSecondLetter() {
+    return this.letters[this.letters.length - 2].toString();
+  }
+
+  uninsertNasal() {
+    const ltrs = this.letters;
+    ltrs.shift();
+    return [
+      new TonalSyllable(ltrs.map(it => new AlphabeticLetter(it.characters))),
+    ];
+  }
+
+  toVoicelessFinal() {
+    // unvoiced
+    if (
+      voicedVoicelessFinalConsonants.has(
+        this.letters[this.letters.length - 2].toString()
+      )
+    ) {
+      const fnl = voicedVoicelessFinalConsonants.get(
+        this.letters[this.letters.length - 2].toString()
+      );
+      if (fnl) {
+        const s: TonalSyllable = new TonalSyllable(
+          this.letters.map(it => new AlphabeticLetter(it.characters))
+        );
+        s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
+        return [s];
+      }
+    }
+    return [];
+  }
+
+  unmutateInitialConsonant(initial: PositionalLetter) {
+    if (
+      initial.name === TonalSpellingTags.initialConsonant &&
+      initial.toString() === TonalLetterTags.t
+    ) {
+      // l -> d
+      const s: TonalSyllable = new TonalSyllable(
+        this.letters.map(it => new AlphabeticLetter(it.characters))
+      );
+      s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.t));
+      return [s];
+    }
+    return [];
+  }
+
+  unmutateFinalConsonant(initial: PositionalLetter) {
+    if (
+      initial.name === TonalSpellingTags.initialConsonant &&
+      initial.toString() === TonalLetterTags.g
+    ) {
+      // gg -> tt
+      const syl: TonalSyllable = new TonalSyllable(
+        this.letters.map(it => new AlphabeticLetter(it.characters))
+      );
+      const idx = this.letters.findIndex(
+        i => i.name === TonalSpellingTags.stopFinalConsonant
+      );
+      syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.tt));
+      return [syl];
+    }
+
+    return [];
+  }
+
+  uninfect() {
+    const n = this.letters.filter(
+      i => i.name === TonalSpellingTags.nasalization
+    );
+    if (n.length == 1) {
+      let ltrs = this.letters.filter(
+        i => i.name !== TonalSpellingTags.nasalization
+      );
+      const s: TonalSyllable = new TonalSyllable(
+        ltrs.map(it => new AlphabeticLetter(it.characters))
+      );
+      return [s];
+    }
+
+    return [];
+  }
+}
+
+export class TonalSoundUnchangingMorphemeMaker extends MorphemeMaker {
+  constructor() {
+    super();
+  }
+
+  protected createMorphemes() {
+    return new Array<TonalSoundUnchangingMorpheme>();
+  }
+
+  protected createMorpheme(match: MatchedPattern) {
+    const tcm = new TonalSoundUnchangingMorpheme(
+      new TonalSyllable(match.letters),
+      match.pattern
+    );
+    return tcm;
+  }
+
+  private postprocess(
+    matches: MatchedPattern[]
+  ): Array<TonalSoundUnchangingMorpheme> {
+    let morphemes = this.createMorphemes();
+    for (let i in matches) {
+      morphemes.push(this.createMorpheme(matches[i]));
+    }
+    return morphemes;
+  }
+
+  makeMorphemes(
+    graphemes: Array<AlphabeticGrapheme>
+  ): TonalSoundUnchangingMorpheme[] {
+    const ltrs = graphemes.map(it => it.letter);
+    const ptrns = this.make(ltrs, syllabifyTonal);
+    const ms = this.postprocess(ptrns);
 
     return ms;
   }

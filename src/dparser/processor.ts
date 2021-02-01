@@ -7,8 +7,10 @@ import { getFeature } from './feature';
 import { inflectedVerbs, inflectedPhrasalVerbParticles } from './rules';
 import { Tagset } from './symbols';
 import { baseVerbs, basePhrasalVerbParticles } from './dictionary';
-import { lemmatize } from '../unchange/lemmatizer';
-import { tonalLemmatizationAnalyzer } from '../unchange/analyzer';
+import {
+  lemmatize,
+  lemmatizePhrasalVerbParticle,
+} from '../unchange/lemmatizer';
 import { TonalLetterTags } from '../tonal/version2';
 
 export const getTokens = function (text: string) {
@@ -35,16 +37,10 @@ function getFeatures(tokens: string[]) {
   return features;
 }
 
-function createLexeme(token: string) {
-  const tla = tonalLemmatizationAnalyzer;
-  const morphemes = tla.morphAnalyze(token);
-  const lexeme = tla.lexAnalyze(morphemes);
-  return lexeme;
-}
-
 /** Check if the word is in fourth tone or eighth tone. */
 function isFourthEighthTone(token: string) {
-  const lexeme = createLexeme(token);
+  // TODO: is there a better way to check which tone it is
+  const lexeme = lemmatize(token);
   // no inflectional endings, not first tone which has no inflectional ending
   // the fourth or eighth tone has a final
   if (
@@ -58,7 +54,7 @@ function isFourthEighthTone(token: string) {
 
 /** Check if the word is in fourth tone. */
 function isFourthTone(token: string) {
-  const lexeme = createLexeme(token);
+  const lexeme = lemmatize(token);
   // no inflectional endings, not first tone which has no inflectional ending
   // the fourth tone has a final of length 1
   if (
@@ -70,7 +66,7 @@ function isFourthTone(token: string) {
 }
 
 function isFirstCheckedTone(token: string) {
-  const lexeme = createLexeme(token);
+  const lexeme = lemmatize(token);
   // a final plus a first tone letter
   if (
     lexeme.getInflectionalEnding().length == 1 &&
@@ -82,7 +78,7 @@ function isFirstCheckedTone(token: string) {
 }
 
 function isSeventhTone(token: string) {
-  const lexeme = createLexeme(token);
+  const lexeme = lemmatize(token);
   // a seventh tone letter
   if (
     lexeme.getInflectionalEnding().length == 1 &&
@@ -93,7 +89,7 @@ function isSeventhTone(token: string) {
 }
 
 function isThirdCheckedTone(token: string) {
-  const lexeme = createLexeme(token);
+  const lexeme = lemmatize(token);
   // a final plus a first tone letter
   if (
     lexeme.getInflectionalEnding().length == 1 &&
@@ -104,19 +100,24 @@ function isThirdCheckedTone(token: string) {
   return false;
 }
 
-function shouldUninflect(expression: MultiWordExpression, index: number) {
-  if (index == expression.begin) {
+/**
+ * Given a multi-word expression, which word should be uninflect to get lemmas.
+ * @param expression A multi-word expression
+ * @param position Position of a word in a sentence.
+ */
+function shouldUninflect(expression: MultiWordExpression, position: number) {
+  if (position == expression.begin) {
     // main verb
     if (expression.distance > 0) return true;
   } else if (
-    index > expression.begin &&
-    index == expression.begin + 1 + expression.distance
+    position > expression.begin &&
+    position == expression.begin + 1 + expression.distance
   ) {
     // 1st particle or 2nd verb
     if (isFourthTone(expression.tokens[1])) return false;
     if (isFirstCheckedTone(expression.tokens[1])) return true;
     if (isThirdCheckedTone(expression.tokens[1])) return true;
-  } else if (index > expression.begin && index == expression.end) {
+  } else if (position > expression.begin && position == expression.end) {
     // 2nd particle, if any
     if (isSeventhTone(expression.tokens[2])) return true;
     if (isFirstCheckedTone(expression.tokens[2])) return true;
@@ -274,12 +275,23 @@ function getLemmas(
           lemmas.push(lemmatize(pairs[i][0]).getLemmas()[0].literal);
         else if (pairs[i][1] === Tagset.vb) lemmas.push('');
         else if (pairs[i][1] === Tagset.nn) lemmas.push(pairs[i][0]);
-        else if (pairs[i][1] === Tagset.ppv)
-          lemmas.push(
-            shouldUninflect(expressions[ind], i)
-              ? lemmatize(pairs[i][0]).getLemmas()[0].literal
-              : ''
-          );
+        else if (pairs[i][1] === Tagset.ppv) {
+          if (shouldUninflect(expressions[ind], i)) {
+            if (
+              isThirdCheckedTone(pairs[i][0]) ||
+              isFirstCheckedTone(pairs[i][0]) ||
+              isSeventhTone(pairs[i][0])
+            ) {
+              // if tiurhw, laiz, khihf, etc. 1, 3, 7 to 4.
+              lemmas.push(
+                lemmatizePhrasalVerbParticle(pairs[i][0]).getLemmas()[0].literal
+              );
+            } else {
+              const lemma = lemmatize(pairs[i][0]).getLemmas()[0].literal;
+              lemmas.push(lemma);
+            }
+          } else lemmas.push('');
+        }
 
         if (
           i + 1 ==

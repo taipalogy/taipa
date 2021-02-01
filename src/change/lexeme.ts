@@ -1,9 +1,5 @@
 import { LexemeMaker, Lexeme } from '../unit';
-import {
-  TonalCombiningMorpheme,
-  TonalSoundChangingMorpheme,
-  TonalSoundUnchangingMorpheme,
-} from './morpheme';
+import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import {
   TonalWord,
   AllomorphicEnding,
@@ -17,7 +13,10 @@ import {
   TonalSpellingTags,
   TonalLetterTags,
 } from '../tonal/version2';
-import { TonalSyllable } from '../unchange/morpheme';
+import {
+  TonalSyllable,
+  TonalSoundUnchangingMorpheme,
+} from '../unchange/morpheme';
 import { PositionalLetter } from '../unit';
 import {
   TonalInflectionMetaplasm,
@@ -62,20 +61,21 @@ export class TonalInflectionLexeme extends Lexeme {
   }
 
   private assignAllomorphicEnding(allomorph: Allomorph) {
-    let tse: AllomorphicEnding = new AllomorphicEnding();
+    // TODO: is the same method in TonalLemmatizationLexeme redundant?
+    let ending: AllomorphicEnding = new AllomorphicEnding();
 
     if (allomorph instanceof FreeAllomorph) {
       // replace the tonal ending
-      let fte = new FreeAllomorphicEnding();
-      fte.allomorph = allomorph;
-      tse = fte;
+      let fae = new FreeAllomorphicEnding();
+      fae.allomorph = allomorph;
+      ending = fae;
     } else if (allomorph instanceof CheckedAllomorph) {
       // append the tonal of the tonal ending
-      let cte = new CheckedAllomorphicEnding();
-      cte.allomorph = allomorph;
-      tse = cte;
+      let chae = new CheckedAllomorphicEnding();
+      chae.allomorph = allomorph;
+      ending = chae;
     }
-    return tse;
+    return ending;
   }
 
   getInflectionalEnding() {
