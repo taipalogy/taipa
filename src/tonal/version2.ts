@@ -30,7 +30,9 @@ export class CheckedAllomorph extends Allomorph {
   }
 }
 
-export class TonalAffix extends Morph {
+class Affix {}
+
+export class TonalAffix extends Affix {
   tonal: Tonal = new Tonal();
   toString() {
     return this.tonal.toString();

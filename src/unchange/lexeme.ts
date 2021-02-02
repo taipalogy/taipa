@@ -84,7 +84,6 @@ export class TonalLemmatizationLexeme extends Lexeme {
   word: TonalWord;
   private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
   private inflectionalEnding: InflectionalEnding;
-  private allomorphicEnding: AllomorphicEnding;
 
   constructor(
     morphemes: Array<TonalUncombiningMorpheme>,
@@ -100,18 +99,13 @@ export class TonalLemmatizationLexeme extends Lexeme {
         this.inflectionalEnding = this.assignInflectionalEnding(
           morphemes[morphemes.length - 1].allomorph
         );
-        this.allomorphicEnding = this.assignAllomorphicEnding(
-          morphemes[morphemes.length - 1].allomorph
-        );
       } else {
         // null inflectional ending
         this.inflectionalEnding = new InflectionalEnding();
-        this.allomorphicEnding = new AllomorphicEnding();
       }
     } else {
       // no morphemes. null inflectional ending
       this.inflectionalEnding = new InflectionalEnding();
-      this.allomorphicEnding = new AllomorphicEnding();
     }
 
     if (morphemes.length > 0)
@@ -128,11 +122,6 @@ export class TonalLemmatizationLexeme extends Lexeme {
     return '';
   }
 
-  getAllomorphicEnding() {
-    if (this.allomorphicEnding) return this.allomorphicEnding.toString();
-    return '';
-  }
-
   private assignInflectionalEnding(allomorph: Allomorph) {
     let ending: InflectionalEnding = new InflectionalEnding();
     // change allomorph to affix
@@ -146,21 +135,6 @@ export class TonalLemmatizationLexeme extends Lexeme {
       ending = cie;
     }
     // this word is already in base form, and its last syllable is checked tone
-    return ending;
-  }
-
-  private assignAllomorphicEnding(allomorph: Allomorph) {
-    let ending: AllomorphicEnding = new AllomorphicEnding();
-    if (allomorph instanceof FreeAllomorph) {
-      let fae = new FreeAllomorphicEnding();
-      fae.allomorph = allomorph;
-      ending = fae;
-    } else if (allomorph instanceof CheckedAllomorph) {
-      let chae = new CheckedAllomorphicEnding();
-      chae.allomorph = allomorph;
-      ending = chae;
-    }
-
     return ending;
   }
 }

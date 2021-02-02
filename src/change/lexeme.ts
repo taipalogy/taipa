@@ -61,7 +61,6 @@ export class TonalInflectionLexeme extends Lexeme {
   }
 
   private assignAllomorphicEnding(allomorph: Allomorph) {
-    // TODO: is the same method in TonalLemmatizationLexeme redundant?
     let ending: AllomorphicEnding = new AllomorphicEnding();
 
     if (allomorph instanceof FreeAllomorph) {

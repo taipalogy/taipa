@@ -41,7 +41,7 @@ class Characters {
   private o: Map<string, Character> = new Map();
 
   constructor() {
-    for (let e of this.carr) {
+    for (const e of this.carr) {
       this.assign(e);
     }
   }
@@ -51,7 +51,7 @@ class Characters {
   }
 
   get(key: string): Character {
-    let value = this.o.get(key);
+    const value = this.o.get(key);
     if (value) {
       return value;
     }
@@ -110,7 +110,7 @@ export class MatchedSequence {
   }
   toString() {
     let str = '';
-    for (let i in this.characters) {
+    for (const i in this.characters) {
       str += this.characters[i].character;
     }
     return str;
@@ -129,7 +129,7 @@ export class Letters {
   }
 
   private assign(e: string) {
-    let carr: Character[] = [];
+    const carr: Character[] = [];
     for (let i = 0; i < e.length; i++) {
       let c = characters.get(e[i]);
       if (c) {
@@ -148,7 +148,7 @@ export class Letters {
   }
 
   get(key: string): AlphabeticLetter {
-    let value = this.o.get(key);
+    const value = this.o.get(key);
     if (value) {
       return value;
     }
@@ -205,8 +205,8 @@ export class GraphemeMaker {
       if (ms.matchedLength > 0) return ms;
     }
 
-    for (let j in candidates) {
-      let min = Math.min(
+    for (const j in candidates) {
+      const min = Math.min(
         characters.length - beginOfLetter,
         candidates[j].literal.length
       );
@@ -234,9 +234,9 @@ export class GraphemeMaker {
   }
 
   private make(characters: Array<Character>) {
-    let graphemes: Array<AlphabeticGrapheme> = new Array();
+    const graphemes: Array<AlphabeticGrapheme> = new Array();
     let beginOfLetter: number = 0;
-    let letters: Array<AlphabeticLetter> = new Array();
+    const letters: Array<AlphabeticLetter> = new Array();
     for (let i = 0; i < characters.length; i++) {
       // console.log('examining character: %s. length of characters: %d', characters[i].character, characters.length);
       //console.log("metadata letter array looping.");
@@ -245,14 +245,18 @@ export class GraphemeMaker {
         //console.log("matchedLen: %d", ms.matchedLength);
 
         // let candidates = this.list.filter(
-        let candidates = this.listOfLetters.filter(
+        const candidates = this.listOfLetters.filter(
           l => l.characters[0].character === characters[i].character
         );
 
-        let ms = this.getMatchedSequence(characters, beginOfLetter, candidates);
+        const ms = this.getMatchedSequence(
+          characters,
+          beginOfLetter,
+          candidates
+        );
 
         if (ms.matchedLength > 0) {
-          for (let key in candidates) {
+          for (const key in candidates) {
             // console.log(candidates[key].literal + ' - ' + ms.toString());
             if (
               candidates[key].literal ===
@@ -265,7 +269,7 @@ export class GraphemeMaker {
       }
 
       if (letters.length == 0) {
-        for (let j in characters) {
+        for (const j in characters) {
           //console.log(characters[j].character)
         }
         // 'length of letters is zero'
@@ -274,11 +278,11 @@ export class GraphemeMaker {
         //console.log("just one matched. i:%d. ls[0].characters.length:%d", i, ls[0].characters.length);
         if (i + 1 - beginOfLetter == letters[0].characters.length) {
           // when index i plus one equals the length of the matched syllable
-          let l = letters.shift();
+          const l = letters.shift();
           if (l) {
             beginOfLetter += l.characters.length;
             // pack letters into graphemes
-            let gr = new AlphabeticGrapheme(l);
+            const gr = new AlphabeticGrapheme(l);
             graphemes.push(gr);
           }
         }
@@ -290,7 +294,9 @@ export class GraphemeMaker {
   }
 }
 
+/** The spelling tag of a given letter. */
 export class PositionalLetter {
+  // one member of TonalSpellingTags
   name: string = '';
   // an array of character objects. can be used to make a word object.
   characters: Array<Character> = new Array();
@@ -311,7 +317,7 @@ export class PositionalLetter {
   }
 
   makeCharacters(str: string) {
-    let arr: Array<Character> = new Array();
+    const arr: Array<Character> = new Array();
     for (let i = 0; i < str.length; i++) {
       arr.push(new Character(str[i]));
     }
@@ -407,8 +413,54 @@ export class Syllable {
   }
 }
 
+export function makeMatchedPatterns(
+  letters: Array<AlphabeticLetter>,
+  syllabify: (
+    letters: Array<AlphabeticLetter>,
+    beginOfSyllable: number
+  ) => MatchedPattern
+): MatchedPattern[] {
+  const patterns = new Array<MatchedPattern>();
+  let beginOfSyllable: number = 0;
+  for (let i = 0; i < letters.length; i++) {
+    let msp: MatchedPattern = new MatchedPattern();
+    if (i - beginOfSyllable == 0) {
+      msp = syllabify(letters, beginOfSyllable);
+
+      if (msp.matchedLength == 0) {
+        //console.log('no matched syllables found. the syllable might need to be added')
+      }
+
+      // console.log('matchedLen: %d', msp.matchedLength);
+      // console.log(msp.pattern);
+      // console.log(msp.letters);
+
+      if (msp.letters.length > 0) {
+        for (const j in msp.letters) {
+          //console.log("msp.letters: %s", msp.letters[j].literal)
+        }
+        patterns.push(msp);
+      }
+
+      beginOfSyllable += msp.matchedLength;
+    }
+
+    if (patterns.length == 0) {
+      //console.log('nothing matched')
+    } else if (patterns.length >= 1) {
+      if (msp == undefined) break;
+
+      if (msp.matchedLength > 0) {
+        i += beginOfSyllable - i - 1;
+      }
+    }
+  }
+
+  return patterns;
+}
+
 export abstract class MorphemeMaker {
-  protected abstract createMorphemes(): Morpheme[];
+  protected abstract createArray(): Morpheme[];
 
   protected abstract createMorpheme(
     matched: MatchedPattern,
@@ -422,43 +474,7 @@ export abstract class MorphemeMaker {
       beginOfSyllable: number
     ) => MatchedPattern
   ): MatchedPattern[] {
-    let patterns = new Array<MatchedPattern>();
-    let beginOfSyllable: number = 0;
-    for (let i = 0; i < letters.length; i++) {
-      let msp: MatchedPattern = new MatchedPattern();
-      if (i - beginOfSyllable == 0) {
-        msp = syllabify(letters, beginOfSyllable);
-
-        if (msp.matchedLength == 0) {
-          //console.log('no matched syllables found. the syllable might need to be added')
-        }
-
-        // console.log('matchedLen: %d', msp.matchedLength);
-        // console.log(msp.pattern);
-        // console.log(msp.letters);
-
-        if (msp.letters.length > 0) {
-          for (let j in msp.letters) {
-            //console.log("msp.letters: %s", msp.letters[j].literal)
-          }
-          patterns.push(msp);
-        }
-
-        beginOfSyllable += msp.matchedLength;
-      }
-
-      if (patterns.length == 0) {
-        //console.log('nothing matched')
-      } else if (patterns.length >= 1) {
-        if (msp == undefined) break;
-
-        if (msp.matchedLength > 0) {
-          i += beginOfSyllable - i - 1;
-        }
-      }
-    }
-
-    return patterns;
+    return makeMatchedPatterns(letters, syllabify);
   }
 }
 
@@ -471,12 +487,6 @@ export class Word {
 export abstract class LexemeMaker {
   protected abstract make(ms: Array<Morpheme>): Lexeme;
 }
-
-export class ToneGroup {
-  inflectionalEndings: Array<InflectionalEnding> = new Array();
-}
-
-class ToneSandhiGroup extends ToneGroup {}
 
 export abstract class Phraseme {}
 

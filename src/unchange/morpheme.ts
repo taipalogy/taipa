@@ -477,7 +477,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     this.metaplasm = metaplasm;
   }
 
-  protected createMorphemes() {
+  protected createArray() {
     return new Array<TonalUncombiningMorpheme>();
   }
 
@@ -1000,7 +1000,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   protected postprocess(
     matched: MatchedPattern[]
   ): Array<TonalUncombiningMorpheme> {
-    const morphemes = this.createMorphemes();
+    const morphemes = this.createArray();
 
     for (let i = 0; i < matched.length; i++) {
       // accumulate the lenght of letters preceding the current syllable
@@ -1151,7 +1151,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
       initial.name === TonalSpellingTags.initialConsonant &&
       initial.toString() === TonalLetterTags.t
     ) {
-      // l -> d
+      // l- -> t-
       const s: TonalSyllable = new TonalSyllable(
         this.letters.map(it => new AlphabeticLetter(it.characters))
       );
@@ -1203,7 +1203,7 @@ export class TonalSoundUnchangingMorphemeMaker extends MorphemeMaker {
     super();
   }
 
-  protected createMorphemes() {
+  protected createArray() {
     return new Array<TonalSoundUnchangingMorpheme>();
   }
 
@@ -1218,7 +1218,7 @@ export class TonalSoundUnchangingMorphemeMaker extends MorphemeMaker {
   private postprocess(
     matches: MatchedPattern[]
   ): Array<TonalSoundUnchangingMorpheme> {
-    let morphemes = this.createMorphemes();
+    let morphemes = this.createArray();
     for (let i in matches) {
       morphemes.push(this.createMorpheme(matches[i]));
     }

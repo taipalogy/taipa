@@ -12,6 +12,7 @@ import {
   lemmatizePhrasalVerbParticle,
 } from '../unchange/lemmatizer';
 import { TonalLetterTags } from '../tonal/version2';
+import { extractTones } from '../tonal/tone';
 
 export const getTokens = function (text: string) {
   const tokens: string[] = [];
@@ -39,14 +40,14 @@ function getFeatures(tokens: string[]) {
 
 /** Check if the word is in fourth tone or eighth tone. */
 function isFourthEighthTone(token: string) {
-  // TODO: is there a better way to check which tone it is
-  const lexeme = lemmatize(token);
+  const tone = extractTones(token);
   // no inflectional endings, not first tone which has no inflectional ending
   // the fourth or eighth tone has a final
+
   if (
-    lexeme.getInflectionalEnding().length == 0 &&
-    (lexeme.getAllomorphicEnding().length == 1 ||
-      lexeme.getAllomorphicEnding().length == 2)
+    tone.getInflectionalEnding().length == 0 &&
+    (tone.getAllomorphicEnding().length == 1 ||
+      tone.getAllomorphicEnding().length == 2)
   )
     return true;
   return false;
@@ -54,47 +55,47 @@ function isFourthEighthTone(token: string) {
 
 /** Check if the word is in fourth tone. */
 function isFourthTone(token: string) {
-  const lexeme = lemmatize(token);
+  const tone = extractTones(token);
   // no inflectional endings, not first tone which has no inflectional ending
   // the fourth tone has a final of length 1
   if (
-    lexeme.getInflectionalEnding().length == 0 &&
-    lexeme.getAllomorphicEnding().length == 1
+    tone.getInflectionalEnding().length == 0 &&
+    tone.getAllomorphicEnding().length == 1
   )
     return true;
   return false;
 }
 
 function isFirstCheckedTone(token: string) {
-  const lexeme = lemmatize(token);
+  const tone = extractTones(token);
   // a final plus a first tone letter
   if (
-    lexeme.getInflectionalEnding().length == 1 &&
-    lexeme.getInflectionalEnding() === TonalLetterTags.f &&
-    lexeme.getAllomorphicEnding().length == 2
+    tone.getInflectionalEnding().length == 1 &&
+    tone.getInflectionalEnding() === TonalLetterTags.f &&
+    tone.getAllomorphicEnding().length == 2
   )
     return true;
   return false;
 }
 
 function isSeventhTone(token: string) {
-  const lexeme = lemmatize(token);
+  const tone = extractTones(token);
   // a seventh tone letter
   if (
-    lexeme.getInflectionalEnding().length == 1 &&
-    lexeme.getInflectionalEnding() === TonalLetterTags.z
+    tone.getInflectionalEnding().length == 1 &&
+    tone.getInflectionalEnding() === TonalLetterTags.z
   )
     return true;
   return false;
 }
 
 function isThirdCheckedTone(token: string) {
-  const lexeme = lemmatize(token);
+  const tone = extractTones(token);
   // a final plus a first tone letter
   if (
-    lexeme.getInflectionalEnding().length == 1 &&
-    lexeme.getInflectionalEnding() === TonalLetterTags.w &&
-    lexeme.getAllomorphicEnding().length == 2
+    tone.getInflectionalEnding().length == 1 &&
+    tone.getInflectionalEnding() === TonalLetterTags.w &&
+    tone.getAllomorphicEnding().length == 2
   )
     return true;
   return false;

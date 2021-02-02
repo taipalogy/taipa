@@ -342,7 +342,7 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
     this.metaplasm = metaplasm;
   }
 
-  protected createMorphemes() {
+  protected createArray() {
     return new Array<TonalCombiningMorpheme>();
   }
 
@@ -358,7 +358,7 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
   private postprocess(
     patterns: MatchedPattern[]
   ): Array<TonalCombiningMorpheme> {
-    let morphemes = this.createMorphemes();
+    let morphemes = this.createArray();
     for (let i in patterns) {
       morphemes.push(this.createMorpheme(patterns[i]));
     }
@@ -381,7 +381,7 @@ export class TonalSoundChangingMorphemeMaker extends MorphemeMaker {
     super();
   }
 
-  protected createMorphemes() {
+  protected createArray() {
     return new Array<TonalSoundChangingMorpheme>();
   }
 
@@ -396,7 +396,7 @@ export class TonalSoundChangingMorphemeMaker extends MorphemeMaker {
   private postprocess(
     matches: MatchedPattern[]
   ): Array<TonalSoundChangingMorpheme> {
-    let morphemes = this.createMorphemes();
+    const morphemes = this.createArray();
     for (let i in matches) {
       morphemes.push(this.createMorpheme(matches[i]));
     }

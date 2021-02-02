@@ -249,7 +249,7 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
     this.metaplasm = kcm;
   }
 
-  protected createMorphemes() {
+  protected createArray() {
     return new Array<KanaUncombiningMorpheme>();
   }
 
@@ -264,7 +264,7 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
   protected postprocess(
     patterns: MatchedPattern[]
   ): Array<KanaUncombiningMorpheme> {
-    let morphemes = this.createMorphemes();
+    let morphemes = this.createArray();
     for (let i in patterns) {
       morphemes.push(this.createMorpheme(patterns[i]));
     }
