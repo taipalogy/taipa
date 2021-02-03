@@ -83,7 +83,7 @@ export class TonalWord extends Word {
 export class TonalLemmatizationLexeme extends Lexeme {
   word: TonalWord;
   private lemmata: Array<TonalWord> = new Array(); // lexical forms. underlying forms
-  private inflectionalEnding: InflectionalEnding;
+  private endingInflectional: InflectionalEnding;
 
   constructor(
     morphemes: Array<TonalUncombiningMorpheme>,
@@ -96,20 +96,20 @@ export class TonalLemmatizationLexeme extends Lexeme {
 
     if (morphemes.length > 0) {
       if (morphemes[morphemes.length - 1].allomorph) {
-        this.inflectionalEnding = this.assignInflectionalEnding(
+        this.endingInflectional = this.assignInflectionalEnding(
           morphemes[morphemes.length - 1].allomorph
         );
       } else {
         // null inflectional ending
-        this.inflectionalEnding = new InflectionalEnding();
+        this.endingInflectional = new InflectionalEnding();
       }
     } else {
       // no morphemes. null inflectional ending
-      this.inflectionalEnding = new InflectionalEnding();
+      this.endingInflectional = new InflectionalEnding();
     }
 
     if (morphemes.length > 0)
-      this.lemmata = metaplasm.apply(morphemes, this.inflectionalEnding);
+      this.lemmata = metaplasm.apply(morphemes, this.endingInflectional);
   }
 
   getLemmas() {
@@ -118,7 +118,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
   }
 
   getInflectionalEnding() {
-    if (this.inflectionalEnding) return this.inflectionalEnding.toString();
+    if (this.endingInflectional) return this.endingInflectional.toString();
     return '';
   }
 

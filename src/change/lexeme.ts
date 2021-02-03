@@ -31,7 +31,7 @@ import {
 export class TonalInflectionLexeme extends Lexeme {
   word: TonalWord;
   private forms: Array<TonalWord> = new Array();
-  private allomorphicEnding: AllomorphicEnding;
+  private endingAllomorphic: AllomorphicEnding;
   // TODO: word patterns for thiapwsux chongwthaiwgiy, ay, etc... check out member positional letters in morpheme.
 
   constructor(
@@ -46,14 +46,14 @@ export class TonalInflectionLexeme extends Lexeme {
     if (morphemes.length > 0) {
       if (morphemes[morphemes.length - 1]) {
         // tonal ending needs to be assigned to sandhi lexeme
-        this.allomorphicEnding = this.assignAllomorphicEnding(
+        this.endingAllomorphic = this.assignAllomorphicEnding(
           morphemes[morphemes.length - 1].allomorph
         );
       } else {
-        this.allomorphicEnding = new AllomorphicEnding();
+        this.endingAllomorphic = new AllomorphicEnding();
       }
     } else {
-      this.allomorphicEnding = new AllomorphicEnding();
+      this.endingAllomorphic = new AllomorphicEnding();
     }
 
     if (morphemes.length > 0)
@@ -78,13 +78,13 @@ export class TonalInflectionLexeme extends Lexeme {
   }
 
   getInflectionalEnding() {
-    if (this.allomorphicEnding)
-      return this.allomorphicEnding.allomorph.tonal.toString();
+    if (this.endingAllomorphic)
+      return this.endingAllomorphic.allomorph.tonal.toString();
     return '';
   }
 
   getAllomorphicEnding() {
-    if (this.allomorphicEnding) return this.allomorphicEnding;
+    if (this.endingAllomorphic) return this.endingAllomorphic;
     return '';
   }
 
