@@ -927,7 +927,7 @@ export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>()
     new FreeTonalF(),
     new FreeTonalX(),
   ])
-  .set(TonalLetterTags.z, [new FreeTonalX(), new FreeTonalF(), new ZeroTonal()])
+  .set(TonalLetterTags.z, [new ZeroTonal(), new FreeTonalX(), new FreeTonalF()])
   .set(TonalLetterTags.zx, [])
   .set(TonalLetterTags.x, [])
   .set(TonalLetterTags.y, [new FreeTonalW()])

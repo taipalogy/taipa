@@ -91,7 +91,7 @@ export function tag(features: Feature[]) {
 
     if (
       lemmatize(features[i].token).getLemmas().length == 3 &&
-      baseVerbs.includes(lemmatize(features[i].token).getLemmas()[2].literal) &&
+      baseVerbs.includes(lemmatize(features[i].token).getLemmas()[0].literal) &&
       !basePhrasalVerbParticles.includes(features[i].nextToken) && // object of the verb
       (basePhrasalVerbParticles.includes(features[i].nextToken2) ||
         inflectedPhrasalVerbParticles.includes(features[i].nextToken2))

@@ -137,7 +137,7 @@ describe('Uncombining form testing, ay', () => {
     new TonalUncombiningForms([])
   );
   test('check the uncombining form, 4-syllable word', () => {
-    expect(ms8[0].getForms()[0].literal).toEqual('ngx');
+    expect(ms8[0].getForms()[1].literal).toEqual('ngx');
     expect(ms8[1].getForms()[0].literal).toEqual('ay');
   });
 });
@@ -260,9 +260,9 @@ describe('Lemma testing', () => {
   });
 
   test('check the lemma', () => {
-    expect(t4.lemmas[0].literal).toEqual('siax');
-    expect(t4.lemmas[1].literal).toEqual('siaf');
-    expect(t4.lemmas[2].literal).toEqual('sia');
+    expect(t4.lemmas[0].literal).toEqual('sia');
+    expect(t4.lemmas[1].literal).toEqual('siax');
+    expect(t4.lemmas[2].literal).toEqual('siaf');
   });
 
   const t5 = cli.processTonal('siax');
