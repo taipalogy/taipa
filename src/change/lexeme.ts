@@ -96,6 +96,7 @@ export class TonalInflectionLexeme extends Lexeme {
   }
 
   getForms() {
+    // TODO: change member variable name and method name.
     return this.forms;
   }
 }

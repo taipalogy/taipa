@@ -81,7 +81,7 @@ const addonSyllables = [
 
     'maix', 'mih', 'mihh', 'mng', 'muaix', 'muaiz', 'muex', 'muez', 'mui', 'muiz',
 
-    'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'nngh', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
+    'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'lngh', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
 
     'ngai', 'ngaiy', 'ngauy', 'ngauh', 'ngauhh', 'ngaw', 'ngaz', 'nge', 'ngh', 'nghh', 'ngiahh', 'ngiriy', 'ngiuy', 'ngiux', 'ngiz', 'ngueh', 'nguehh',
 
@@ -361,8 +361,8 @@ export const basicSyllables = [
 
     'nay', 'naw', 'nax', 'naz', 'nah', 'nai', 'naiy', 'naiz', 'nauy', 'nauz',
     'nauh', 'ne', 'nex', 'neh', 'ni', 'niy', 'nix', 'niz', 'niay', 'niax',
-    'niaz', 'niau', 'niauy', 'nih', 'niuy', 'niux', 'niuz', 'nng', 'nngy',
-    'nngw', 'nngx', 'nngz', 'noy', 'noz', 'nuay', 'nuaw', 'nuax', 'nuaz',
+    'niaz', 'niau', 'niauy', 'nih', 'niuy', 'niux', 'niuz', 'lng', 'lngy',
+    'lngw', 'lngx', 'lngz', 'noy', 'noz', 'nuay', 'nuaw', 'nuax', 'nuaz',
 
     'ng', 'ngy', 'ngw', 'ngx', 'ngz', 'ngay', 'ngaiz', 'ngaux', 'ngauz', 'ngey',
     'ngez', 'ngeh', 'ngehh', 'ngiax', 'ngiau', 'ngiauy', 'ngiauh', 'ngiauhh',

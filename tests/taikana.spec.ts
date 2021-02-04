@@ -103,9 +103,9 @@ describe('Taiwanese kana testing, consonants', () => {
   });
   */
 
-  const ta12 = cli.processTonal('nngz');
+  const ta12 = cli.processTonal('lngz');
   test('taikanas', () => {
-    expect(ta12.blockSequences[0]).toEqual('ヌン⎸');
+    expect(ta12.blockSequences[0]).toEqual('ルン⎸');
   });
 });
 
