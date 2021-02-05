@@ -25,7 +25,7 @@ const toBeVerified = [
 
     'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
 
-    'len', 'liakk', 'lirey',  'lng',
+    'len', 'liakk', 'lirey',
 
     'mah',
 
@@ -77,11 +77,11 @@ const addonSyllables = [
 	
 	'khannx', 'khainnh', 'khainnw', 'khaunnhh', 'khennh', 'khennx', 'khor', 'khore', 'khoreh', 'khorew', 'khorw', 'khorh', 'khorx', 'khiann', 'khiannw', 'khinn', 'khir', 'khirnx', 'khirny', 'khirw', 'khngz', 'khuainn', 'khuainnw', 'khonny', 'khuinnw',
 
-    'lorehh', 'lorex', 'lorh', 'lorx', 'liry', 'lirx', 'lirz',
+    'lorehh', 'lorex', 'lorh', 'lorx', 'liry', 'lirx', 'lirz', 'lngh', 
 
     'maix', 'mih', 'mihh', 'mng', 'muaix', 'muaiz', 'muex', 'muez', 'mui', 'muiz',
 
-    'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'lngh', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
+    'naih', 'naix', 'ney', 'new', 'nez', 'nehh', 'niauw', 'niauh', 'niaw', 'nirix', 'niriz', 'niu', 'nox', 'nui', 'nuiy', 'nuiw', 'nuix', 'nuiz',
 
     'ngai', 'ngaiy', 'ngauy', 'ngauh', 'ngauhh', 'ngaw', 'ngaz', 'nge', 'ngh', 'nghh', 'ngiahh', 'ngiriy', 'ngiuy', 'ngiux', 'ngiz', 'ngueh', 'nguehh',
 
@@ -346,12 +346,13 @@ export const basicSyllables = [
     'liauz', 'lihh', 'lek', 'lekk', 'lim', 'limy', 'limx', 'limz', 'lin',
     'liny', 'linw', 'linx', 'limz', 'ling', 'lingy', 'lingw', 'lingx', 'lingz',
     'liury', 'liurx', 'liurz', 'liurhh', 'liok', 'liokk', 'liongy', 'liongw',
-    'liongx', 'liongz', 'lipp', 'liu', 'liuy', 'liuw', 'liux', 'liuz', 'lur',
-    'lury', 'lurw', 'lurx', 'lurz', 'lurh', 'lurhh', 'lok', 'lokk', 'long',
-    'longy', 'longw', 'longx', 'longz', 'loy', 'lox', 'loz', 'lu', 'luy',
-    'luw', 'lux', 'luz', 'luax', 'luaz', 'luah', 'luahh', 'luany', 'luanx',
-    'luanz', 'luatt', 'luex', 'luez', 'lui', 'luiy', 'luiw', 'luix', 'luiz',
-    'lun', 'luny', 'lunx', 'lunz', 'lut', 'lutt',
+    'liongx', 'liongz', 'lipp', 'liu', 'liuy', 'liuw', 'liux', 'liuz', 'lng',
+    'lngy', 'lngw', 'lngx', 'lngz', 'lur', 'lury', 'lurw', 'lurx', 'lurz',
+    'lurh', 'lurhh', 'lok', 'lokk', 'long', 'longy', 'longw', 'longx', 'longz',
+    'loy', 'lox', 'loz', 'lu', 'luy', 'luw', 'lux', 'luz', 'luax', 'luaz',
+    'luah', 'luahh', 'luany', 'luanx', 'luanz', 'luatt', 'luex', 'luez', 'lui',
+    'luiy', 'luiw', 'luix', 'luiz', 'lun', 'luny', 'lunx', 'lunz', 'lut',
+    'lutt',
 
     'my', 'mx', 'mz', 'ma', 'may', 'maw', 'max', 'maz', 'mai', 'maiy', 'maiw',
     'maiz', 'mau', 'maux', 'mauz', 'mauh', 'me', 'mey', 'mex', 'mez', 'meh',
@@ -361,8 +362,8 @@ export const basicSyllables = [
 
     'nay', 'naw', 'nax', 'naz', 'nah', 'nai', 'naiy', 'naiz', 'nauy', 'nauz',
     'nauh', 'ne', 'nex', 'neh', 'ni', 'niy', 'nix', 'niz', 'niay', 'niax',
-    'niaz', 'niau', 'niauy', 'nih', 'niuy', 'niux', 'niuz', 'lng', 'lngy',
-    'lngw', 'lngx', 'lngz', 'noy', 'noz', 'nuay', 'nuaw', 'nuax', 'nuaz',
+    'niaz', 'niau', 'niauy', 'nih', 'niuy', 'niux', 'niuz', 'noy', 'noz',
+    'nuay', 'nuaw', 'nuax', 'nuaz',
 
     'ng', 'ngy', 'ngw', 'ngx', 'ngz', 'ngay', 'ngaiz', 'ngaux', 'ngauz', 'ngey',
     'ngez', 'ngeh', 'ngehh', 'ngiax', 'ngiau', 'ngiauy', 'ngiauh', 'ngiauhh',
