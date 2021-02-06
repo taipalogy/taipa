@@ -4,8 +4,8 @@ import { graphAnalyzeTonal } from '../unchange/analyzer';
 import { vowelsTonal } from './version2';
 import { impossibleSequences } from './collections';
 
-/** Subword tokenization. */
-export function tokenizeLatinSyllable(str: string) {
+/** Get Latin syllable compositions for syllable tokenization. Returned values can be further matched with tone patterns or looked up in dictionary. */
+export function getLatinSyllableCompositions(str: string) {
   const pLetterSeqs: Array<Array<PositionalLetter[]>> = new Array();
 
   const letters = graphAnalyzeTonal(str).map(x => x.letter && x.letter.literal);

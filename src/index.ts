@@ -78,12 +78,12 @@ export { predict } from './tonal/prediction';
 
 export { syllableCompositions } from './unchange/lettergen';
 
-export { tokenizeLatinSyllable } from './tonal/tokenizer';
+export { getLatinSyllableCompositions } from './tonal/tokenizer';
 
 export {
   LexicalTone,
   extractTones,
   getToneEndingNumber,
-  getToneEndingNumbersTwo as getToneGroupTwo,
-  getToneEndingNumbersThree as getToneGroupThree,
+  getToneEndingNumbersTwo,
+  getToneEndingNumbersThree,
 } from './tonal/tone';
