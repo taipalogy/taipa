@@ -203,6 +203,7 @@ describe('Phrase testing', () => {
   const p4 = createTonalPhrase(lx4.word.literal);
   const phm4 = createCompoundPhraseme('', lx4.word.literal);
   test('phrase, the preceding word is left empty, hence the space before kaz', () => {
+    expect(p4.literal).toEqual('kaz');
     expect(phm4.phrase.literal).toEqual(' kaz');
   });
 
@@ -217,8 +218,13 @@ describe('Phrase testing', () => {
   });
 
   const p7 = createTonalPhrase('lagg gueh');
-  test('noun phrase, regressive assimilation of lakk gueh', () => {
+  test('noun phrase, surface form of lakk gueh', () => {
     expect(p7.literal).toEqual('lagg gueh');
+  });
+
+  const p8 = createTonalPhrase('jibb bih');
+  test('verb phrase', () => {
+    expect(p8.literal).toEqual('jibb bih');
   });
 });
 
