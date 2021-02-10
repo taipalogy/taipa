@@ -41,6 +41,30 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
     super();
   }
 
+  private handleAssimilatedFinal(
+    syllable: TonalSyllable,
+    final: string
+  ): TonalSyllable[] {
+    const fnlsOfLemma = finalConsonantsForBgjlsbbggllss.get(
+      syllable.lastLetter.literal + final
+    );
+    // console.log(s, allomorph, fnl, fnlsOfLemma);
+    if (fnlsOfLemma) {
+      const clones = fnlsOfLemma.map(it => {
+        const clone: TonalSyllable = Object.create(syllable);
+        clone.replaceLetter(
+          syllable.letters.length - 1,
+          lowerLettersTonal.get(it.toString())
+        );
+        return clone;
+      });
+      const ret: TonalSyllable[] = [];
+      clones.map(it => ret.push(it));
+      return clones;
+    }
+    return [];
+  }
+
   apply(
     letters: Array<PositionalLetter>,
     allomorph: Allomorph
@@ -81,12 +105,18 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           return ret;
         }
       } else if (allomorph instanceof CheckedAllomorph) {
-        // pop the tone letter
-        // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
-        if (allomorph.tonal.toString() === '') return [];
         const s: TonalSyllable = new TonalSyllable(
           letters.map(it => new AlphabeticLetter(it.characters))
         );
+
+        if (allomorph.tonal.toString() === '') {
+          // when the final is assimilated, an empty array will be returned
+          return this.handleAssimilatedFinal(s, '');
+        }
+
+        // pop the tone letter
+        // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
+
         const fnl = s.letters[s.letters.length - 1].literal;
         const nslFnls = letters.filter(
           it => it.name === TonalSpellingTags.nasalFinalConsonant
@@ -131,23 +161,8 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           }
         } else if (finalConsonantsForBgjlsbbggllss.has(s.lastLetter.literal)) {
           // in case of internal or external sandhi
-          const fnlsOfLemma = finalConsonantsForBgjlsbbggllss.get(
-            s.lastLetter.literal + fnl
-          );
-          // console.log(s, allomorph, fnl, fnlsOfLemma);
-          if (fnlsOfLemma) {
-            const clones = fnlsOfLemma.map(it => {
-              const clone: TonalSyllable = Object.create(s);
-              clone.replaceLetter(
-                s.letters.length - 1,
-                lowerLettersTonal.get(it.toString())
-              );
-              return clone;
-            });
-            const ret: TonalSyllable[] = [];
-            clones.map(it => ret.push(it));
-            return clones;
-          }
+          const ret = this.handleAssimilatedFinal(s, fnl);
+          if (ret && ret.length > 0) return ret;
         } else if (
           letters.filter(it => it.name === TonalSpellingTags.vowel).length >
             0 &&
@@ -190,7 +205,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           }
         }
         // a syllable is just returned with the tone letter popped out
-        // e.g. tnghw where w is popped and tngh is returned
+        // e.g. tnghw's w is popped and tngh is returned
         return [s];
       }
     }

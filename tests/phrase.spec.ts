@@ -226,6 +226,11 @@ describe('Phrase testing', () => {
   test('verb phrase', () => {
     expect(p8.literal).toEqual('jibb bih');
   });
+
+  const p9 = createTonalPhrase('chutwchull leh');
+  test('verb phrase, regressive assimilation of chutwchutt leh', () => {
+    expect(p9.literal).toEqual('chutwchull leh');
+  });
 });
 
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {

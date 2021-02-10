@@ -5,6 +5,7 @@ import {
 } from '../src/unchange/analyzer';
 import { lemmatize } from '../src/unchange/lemmatizer';
 import { TonalUncombiningForms } from '../src/unchange/metaplasm';
+import { graphAnalyzeKana } from '../src/kana/analyzer';
 
 describe('Lemma testing', () => {
   const cli = new Client();
@@ -271,26 +272,23 @@ describe('Lemma testing', () => {
   });
 });
 
-describe('Lemma testing, empty string as an argument', () => {
+describe('Lemma testing, empty string as an argument, tonal', () => {
   const inputEmpty: any = '';
 
-  const gs2 = graphAnalyzeTonal(inputEmpty).map(
+  const gs1 = graphAnalyzeTonal(inputEmpty).map(
     x => x.letter && x.letter.literal
   );
-
   test('given empty string, check the letter literal', () => {
-    expect(gs2.length).toEqual(0);
+    expect(gs1.length).toEqual(0);
   });
 
   const soudnSeqs1 = tonalLemmatizationAnalyzer
     .morphAnalyze(inputEmpty, new TonalUncombiningForms([]))
     .map(x => x.letters);
-
   test('given empty string, check the letter literal', () => {
     expect(soudnSeqs1.length).toEqual(0);
   });
 
-  // const lmtzr = new TonalLemmatizer();
   const lx1 = lemmatize(inputEmpty);
   test('check the word literal', () => {
     expect(lx1.word.literal).toEqual('');
@@ -309,13 +307,12 @@ describe('Lemma testing, empty string as an argument', () => {
   });
 });
 
-describe('Lemma testing, undefined string as an argument', () => {
+describe('Lemma testing, undefined string as an argument, tonal', () => {
   const inputUnd: any = undefined;
 
   const gs1 = graphAnalyzeTonal(inputUnd).map(
     x => x.letter && x.letter.literal
   );
-
   test('given undefined string, check the letter literal', () => {
     expect(gs1.length).toEqual(0);
   });
@@ -323,7 +320,6 @@ describe('Lemma testing, undefined string as an argument', () => {
   const soudnSeqs2 = tonalLemmatizationAnalyzer
     .morphAnalyze(inputUnd, new TonalUncombiningForms([]))
     .map(x => x.letters);
-
   test('given undefined string, check the letter literal', () => {
     expect(soudnSeqs2.length).toEqual(0);
   });
@@ -343,5 +339,25 @@ describe('Lemma testing, undefined string as an argument', () => {
 
   test('check the lemmas', () => {
     expect(lx2.getLemmas.length).toEqual(0);
+  });
+});
+
+describe('Lemma testing, empty string as an argument, kana', () => {
+  const inputEmpty: any = '';
+
+  const gs1 = graphAnalyzeKana(inputEmpty).map(
+    x => x.letter && x.letter.literal
+  );
+  test('given empty string, check the letter literal', () => {
+    expect(gs1.length).toEqual(0);
+  });
+});
+
+describe('Lemma testing, undefined string as an argument, kana', () => {
+  const inputUnd: any = undefined;
+
+  const gs1 = graphAnalyzeKana(inputUnd).map(x => x.letter && x.letter.literal);
+  test('given undefined string, check the letter literal', () => {
+    expect(gs1.length).toEqual(0);
   });
 });

@@ -698,6 +698,18 @@ export class AllomorphH extends CheckedAllomorph {
   final = new FinalH();
 }
 
+class AllomorphB extends CheckedAllomorph {
+  final = new FinalB();
+}
+
+class AllomorphL extends CheckedAllomorph {
+  final = new FinalL();
+}
+
+class AllomorphG extends CheckedAllomorph {
+  final = new FinalG();
+}
+
 class AllomorphPP extends CheckedAllomorph {
   final = new FinalPP();
 }
@@ -712,6 +724,22 @@ class AllomorphKK extends CheckedAllomorph {
 
 class AllomorphHH extends CheckedAllomorph {
   final = new FinalHH();
+}
+
+class AllomorphBB extends CheckedAllomorph {
+  final = new FinalBB();
+}
+
+class AllomorphLL extends CheckedAllomorph {
+  final = new FinalLL();
+}
+
+class AllomorphGG extends CheckedAllomorph {
+  final = new FinalGG();
+}
+
+class AllomorphSS extends CheckedAllomorph {
+  final = new FinalSS();
 }
 
 class AllomorphPF extends CheckedAllomorph {
@@ -844,10 +872,17 @@ export const checkedAllomorphs = new Map<string, Allomorph>()
   .set(TonalLetterTags.t, new AllomorphT())
   .set(TonalLetterTags.k, new AllomorphK())
   .set(TonalLetterTags.h, new AllomorphH())
+  .set(TonalLetterTags.b, new AllomorphB())
+  .set(TonalLetterTags.g, new AllomorphG())
+  .set(TonalLetterTags.l, new AllomorphL())
   .set(TonalLetterTags.pp, new AllomorphPP())
   .set(TonalLetterTags.tt, new AllomorphTT())
   .set(TonalLetterTags.kk, new AllomorphKK())
   .set(TonalLetterTags.hh, new AllomorphHH())
+  .set(TonalLetterTags.bb, new AllomorphBB())
+  .set(TonalLetterTags.gg, new AllomorphGG())
+  .set(TonalLetterTags.ll, new AllomorphLL())
+  .set(TonalLetterTags.ss, new AllomorphSS())
   .set(TonalLetterTags.p + TonalLetterTags.f, new AllomorphPF())
   .set(TonalLetterTags.t + TonalLetterTags.f, new AllomorphTF())
   .set(TonalLetterTags.k + TonalLetterTags.f, new AllomorphKF())

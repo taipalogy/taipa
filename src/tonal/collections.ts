@@ -85,15 +85,6 @@ export const finalConsonantsMng = [
   TonalLetterTags.ng.toString(),
 ];
 
-// bb, gg, kk, pp
-/*
-export const finalConsonantsBBggkkpp = [
-  TonalLetterTags.bb.toString(),
-  TonalLetterTags.gg.toString(),
-  TonalLetterTags.kk.toString(),
-  TonalLetterTags.pp.toString(),
-];
-*/
 export const initialConsonantsForFinalT = {
   ph: TonalLetterTags.ph.toString(),
   kh: TonalLetterTags.kh.toString(),
@@ -220,11 +211,11 @@ export const finalConsonantsForBgjlsbbggllss = new Map<
   .set(TonalLetterTags.b, [TonalLetterTags.p, TonalLetterTags.t])
   .set(TonalLetterTags.g, [TonalLetterTags.k, TonalLetterTags.t])
   .set(TonalLetterTags.j, [TonalLetterTags.t])
-  .set(TonalLetterTags.l, [TonalLetterTags.l, TonalLetterTags.t])
+  .set(TonalLetterTags.l, [TonalLetterTags.t])
   .set(TonalLetterTags.s, [TonalLetterTags.t])
   .set(TonalLetterTags.bb, [TonalLetterTags.pp, TonalLetterTags.tt])
   .set(TonalLetterTags.gg, [TonalLetterTags.kk, TonalLetterTags.tt])
-  .set(TonalLetterTags.ll, [TonalLetterTags.ll, TonalLetterTags.tt])
+  .set(TonalLetterTags.ll, [TonalLetterTags.tt])
   .set(TonalLetterTags.ss, [TonalLetterTags.tt])
   // both keys and values are for the has method
   // the has method will not reach these pairs

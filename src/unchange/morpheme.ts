@@ -226,7 +226,9 @@ export function syllabifyTonal(
       if (finalConsonantsBgjlsbbggllss.includes(letters[i].literal)) {
         // for the syllables with sandhi final consonants that are not present in syllable tables
         const literalWithoutFinal = letters
-          .map((val, ind, arr) => (ind < i ? arr[ind].literal : ''))
+          .map((val, ind, arr) =>
+            ind < i && ind >= beginOfSyllable ? arr[ind].literal : ''
+          )
           .join('');
         const gotFinalConsonants = finalConsonantsForBgjlsbbggllss.get(
           letters[i].literal
@@ -236,6 +238,8 @@ export function syllabifyTonal(
           const isUncombingFormPresent = gotFinalConsonants
             .map(it => isInSyllableTable(literalWithoutFinal + it))
             .reduce((prev, curr, ind, arr) => prev || curr);
+          // console.log(literal,gotFinalConsonants,isUncombingFormPresent,literalWithoutFinal,`i: ${i}`);
+
           if (isUncombingFormPresent) {
             // at least one uncombining form is present
             matched = literal;
@@ -1097,7 +1101,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     const ms = this.postprocess(ptns);
     // TODO: to further check if the syllable is valid, given the following syllable
 
-    // return unms
     return ms;
   }
 }

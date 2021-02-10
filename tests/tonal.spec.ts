@@ -11,6 +11,12 @@ import {
 } from '../src/change/metaplasm';
 import { createTonalInflectionLexeme } from '../src/change/creator';
 import { TonalUncombiningForms } from '../src/unchange/metaplasm';
+import {
+  extractTones,
+  getToneEndingNumber,
+  getToneEndingNumbersTwo,
+  getToneEndingNumbersThree,
+} from '../src/tonal/tone';
 
 describe('Tonal testing', () => {
   const cli = new Client();
@@ -252,5 +258,63 @@ describe('Tone group testing of phrasal verbs', () => {
   });
   test('check the tone of the word, 844', () => {
     expect(lx5.getAllomorphicEnding().toString()).toEqual(TonalLetterTags.h);
+  });
+});
+
+describe('Tone testing, extractTone', () => {
+  const inputUnd: any = undefined;
+  const inputEmpty: any = '';
+
+  const lt1 = extractTones(inputEmpty);
+  test('check the length of toneLetters and stopFinals for empty input', () => {
+    expect(lt1.toneLetters.length).toEqual(0);
+    expect(lt1.stopFinals.length).toEqual(0);
+  });
+
+  const lt2 = extractTones(inputUnd);
+  test('check the length of toneLetters and stopFinals for undefined input', () => {
+    expect(lt2.toneLetters.length).toEqual(0);
+    expect(lt2.stopFinals.length).toEqual(0);
+  });
+});
+
+describe('Tone testing, getToneEndingNumber', () => {
+  const inputUnd: any = undefined;
+  const inputEmpty: any = '';
+
+  const num1 = getToneEndingNumber(inputEmpty);
+  test('check returned value for empty input', () => {
+    expect(num1).toEqual(-1);
+  });
+
+  const num2 = getToneEndingNumber(inputUnd);
+  test('check the returned value for undefined input', () => {
+    expect(num2).toEqual(-1);
+  });
+
+  const nums1 = getToneEndingNumbersTwo(inputEmpty, inputEmpty);
+  test('check returned value for empty input', () => {
+    expect(nums1[0]).toEqual(-1);
+    expect(nums1[1]).toEqual(-1);
+  });
+
+  const nums2 = getToneEndingNumbersTwo(inputUnd, inputUnd);
+  test('check the returned value for undefined input', () => {
+    expect(nums2[0]).toEqual(-1);
+    expect(nums2[1]).toEqual(-1);
+  });
+
+  const nums3 = getToneEndingNumbersThree(inputEmpty, inputEmpty, inputEmpty);
+  test('check returned value for empty input', () => {
+    expect(nums3[0]).toEqual(-1);
+    expect(nums3[1]).toEqual(-1);
+    expect(nums3[2]).toEqual(-1);
+  });
+
+  const nums4 = getToneEndingNumbersThree(inputUnd, inputUnd, inputUnd);
+  test('check the returned value for undefined input', () => {
+    expect(nums4[0]).toEqual(-1);
+    expect(nums4[1]).toEqual(-1);
+    expect(nums4[2]).toEqual(-1);
   });
 });
