@@ -94,6 +94,7 @@ export const lowerLettersHangul = new LettersOfHangul([
   HangulLetterTags.y,
   HangulLetterTags.m,
   HangulLetterTags.n,
+  // TODO: an initial r could be added if required
   HangulLetterTags.ng,
   HangulLetterTags.gs,
   HangulLetterTags.nj,

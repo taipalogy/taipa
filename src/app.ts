@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { nlp } from './dparser/processor';
+import { depParse } from './dparser/processor';
 import { Document } from './document';
 
 let doc = new Document();
@@ -8,7 +8,7 @@ let doc = new Document();
 let stdin = process.openStdin();
 
 stdin.addListener('data', function (d) {
-  doc = nlp(d.toString().trim());
+  doc = depParse(d.toString().trim());
 
   const ts = doc.nodes;
 

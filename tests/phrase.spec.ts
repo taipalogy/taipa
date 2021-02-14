@@ -231,6 +231,21 @@ describe('Phrase testing', () => {
   test('verb phrase, regressive assimilation of chutwchutt leh', () => {
     expect(p9.literal).toEqual('chutwchull leh');
   });
+
+  const p10 = createTonalPhrase('cig gueh');
+  test('noun phrase, surface form of cit gueh', () => {
+    expect(p10.literal).toEqual('cig gueh');
+  });
+
+  const p11 = createTonalPhrase('jib bih');
+  test('verb phrase', () => {
+    expect(p11.literal).toEqual('jib bih');
+  });
+
+  const p12 = createTonalPhrase('cul laih');
+  test('verb phrase, regressive assimilation of cut laih', () => {
+    expect(p12.literal).toEqual('cul laih');
+  });
 });
 
 describe('Phrasal verb testing, 2 empty words, 1 empty phrase', () => {

@@ -25,7 +25,7 @@ export const getTokens = function (text: string) {
   return tokens;
 };
 
-export const parseDenpendency = function (nodes: Node[]) {
+export const getDepRelations = function (nodes: Node[]) {
   const pa = new DependencyParser();
   return pa.parse(nodes);
 };
@@ -328,14 +328,14 @@ function convertTokensToNodes(pairs: Pairs<string, string>, lemmas: string[]) {
   return nodes;
 }
 
-export function nlp(text: string) {
+export function depParse(text: string) {
   const tokens = getTokens(text);
   const features = getFeatures(tokens);
   const pairsTokenTag = tag(features);
   const expressions = getMultiWordExpressions(pairsTokenTag);
   const lemmas = getLemmas(pairsTokenTag, expressions);
   const nodes = convertTokensToNodes(pairsTokenTag, lemmas);
-  const relations = parseDenpendency(nodes);
+  const relations = getDepRelations(nodes);
 
   const doc = new Document();
   doc.nodes = nodes;
