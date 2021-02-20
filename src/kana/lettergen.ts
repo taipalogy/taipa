@@ -4,7 +4,7 @@ import {
   kanaPositionalLetters,
   initialConsonantsKana,
   vowelsKana,
-  germinatedConsonantsKana,
+  geminatedConsonantsKana,
   semivowelsKana,
   finalConsonantsKana,
   hatsuonsKana,
@@ -90,15 +90,15 @@ function finalConsonant(sg: PositionalLetterGeneration) {
   return sg;
 }
 
-function germinatedConsonant(sg: PositionalLetterGeneration) {
-  const sgcs = germinatedConsonantsKana;
+function geminatedConsonant(sg: PositionalLetterGeneration) {
+  const sgcs = geminatedConsonantsKana;
 
   if (sgcs.includes(sg.letters[sg.matchedLetters.length])) {
     const positions = kanaPositionalLetters.get(
       sg.letters[sg.matchedLetters.length]
     );
     if (positions) {
-      const s = positions(KanaSpellingTags.germinatedConsonant);
+      const s = positions(KanaSpellingTags.geminatedConsonant);
       if (s) sg.matchedLetters.push(s);
     }
   }
@@ -108,21 +108,22 @@ function germinatedConsonant(sg: PositionalLetterGeneration) {
 
 const scV = sgPipe(vowel);
 const scCV = sgPipe(initialConsonant, vowel);
-const scVC = sgPipe(vowel, hatsuon);
-const scCVC = sgPipe(initialConsonant, vowel, finalConsonant);
+const scVC = sgPipe(vowel, finalConsonant); // includes hatsuon
+const scCVC = sgPipe(initialConsonant, vowel, finalConsonant); // includes geminated consonants
 const scCSV = sgPipe(initialConsonant, semivowel, vowel);
-const scCCV = sgPipe(germinatedConsonant, initialConsonant, vowel);
+const scCSVC = sgPipe(initialConsonant, semivowel, vowel, finalConsonant); // includes geminated consonants
+const scCCV = sgPipe(geminatedConsonant, initialConsonant, vowel);
 
 export class KanaPositionalLetterGenerator {
-  readonly sylCompositions = [scV, scCV, scVC, scCVC, scCSV, scCCV];
+  readonly sylCompositions = [scV, scCV, scVC, scCVC, scCSV, scCSVC, scCCV];
 
-  private genSokuonAndGerminated(letters: string[], lookahead: string) {
+  private genSokuonAndGeminated(letters: string[], lookahead: string) {
     let strs: Array<string[]> = new Array();
 
     strs.push(letters);
 
-    // consonant germination
-    if (germinatedConsonantsKana.includes(letters[0]) == true) {
+    // consonant gemination
+    if (geminatedConsonantsKana.includes(letters[0]) == true) {
       let syl: string[] = new Array();
       syl.push(letters[0].charAt(0));
       for (let e of letters) {
@@ -147,7 +148,7 @@ export class KanaPositionalLetterGenerator {
     let strs: Array<string[]> = new Array();
     let sequences: Array<PositionalLetter[]> = new Array(); // to be returned
 
-    strs = this.genSokuonAndGerminated(letters, lookahead);
+    strs = this.genSokuonAndGeminated(letters, lookahead);
 
     // console.log(strs);
     for (let i in strs) {

@@ -6,7 +6,7 @@ import {
   hatsuon,
   gailaigo,
   initialConsonantsKana,
-  germinatedConsonantsKana,
+  geminatedConsonantsKana,
   finalConsonantsKana,
   hatsuonsKana,
   special,
@@ -136,10 +136,7 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
       let first = m.syllable.literal[0];
       let second = m.syllable.literal[1];
 
-      if (
-        first === second &&
-        germinatedConsonantsKana.includes(first) == true
-      ) {
+      if (first === second && geminatedConsonantsKana.includes(first) == true) {
         const ret = getKanasFollowingSmallChu(
           m.letters[1].toString() + m.letters[2].toString()
         );
@@ -149,7 +146,7 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
       } else if (
         m.letters[0].toString() === KanaLetterTags.t &&
         m.letters[1].toString() === KanaLetterTags.ch &&
-        germinatedConsonantsKana.includes(m.letters[0].toString()) == true
+        geminatedConsonantsKana.includes(m.letters[0].toString()) == true
       ) {
         const ret = getKanasFollowingSmallChu(
           m.letters[1].toString() + m.letters[2].toString()

@@ -104,15 +104,15 @@ export const lowerLettersKana = new LettersOfKana([
 ]);
 
 export enum KanaSpellingTags {
-  germinatedConsonant = 'germinatedConsonant', // germinated consonant
+  geminatedConsonant = 'geminatedConsonant', // geminated consonant
   initialConsonant = 'initialConsonant', // initial consonant
   semivowel = 'semivowel',
   vowel = 'vowel',
   finalConsonant = 'finalConsonant', // final consonant
 }
 
-class GerminatedConsonant extends PositionalLetter {
-  name = KanaSpellingTags.germinatedConsonant;
+class GeminatedConsonant extends PositionalLetter {
+  name = KanaSpellingTags.geminatedConsonant;
 }
 class InitialConsonant extends PositionalLetter {
   name = KanaSpellingTags.initialConsonant;
@@ -242,28 +242,28 @@ class FinalConsonantT extends FinalConsonant {
   characters = this.makeCharacters(KanaLetterTags.t);
 }
 
-class GerminatedConsonantB extends GerminatedConsonant {
+class GeminatedConsonantB extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.b);
 }
-class GerminatedConsonantC extends GerminatedConsonant {
+class GeminatedConsonantC extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.c);
 }
-class GerminatedConsonantD extends GerminatedConsonant {
+class GeminatedConsonantD extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.d);
 }
-class GerminatedConsonantG extends GerminatedConsonant {
+class GeminatedConsonantG extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.g);
 }
-class GerminatedConsonantK extends GerminatedConsonant {
+class GeminatedConsonantK extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.k);
 }
-class GerminatedConsonantP extends GerminatedConsonant {
+class GeminatedConsonantP extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.p);
 }
-class GerminatedConsonantS extends GerminatedConsonant {
+class GeminatedConsonantS extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.s);
 }
-class GerminatedConsonantT extends GerminatedConsonant {
+class GeminatedConsonantT extends GeminatedConsonant {
   characters = this.makeCharacters(KanaLetterTags.t);
 }
 
@@ -299,15 +299,15 @@ export const vowelsKana = letterSequence([
   new VowelO(),
 ]);
 
-export const germinatedConsonantsKana = letterSequence([
-  new GerminatedConsonantB(),
-  new GerminatedConsonantC(),
-  new GerminatedConsonantD(),
-  new GerminatedConsonantG(),
-  new GerminatedConsonantK(),
-  new GerminatedConsonantP(),
-  new GerminatedConsonantS(),
-  new GerminatedConsonantT(),
+export const geminatedConsonantsKana = letterSequence([
+  new GeminatedConsonantB(),
+  // new GeminatedConsonantC(),
+  new GeminatedConsonantD(),
+  new GeminatedConsonantG(),
+  new GeminatedConsonantK(),
+  new GeminatedConsonantP(),
+  new GeminatedConsonantS(),
+  new GeminatedConsonantT(),
 ]);
 
 export const semivowelsKana = letterSequence([
@@ -341,24 +341,24 @@ const lpA = letterPositions([new VowelA()]);
 const lpB = letterPositions([
   new InitialConsonantB(),
   new FinalConsonantB(),
-  new GerminatedConsonantB(),
+  new GeminatedConsonantB(),
 ]);
 const lpC = letterPositions([
   new InitialConsonantC(),
-  new GerminatedConsonantC(),
+  new GeminatedConsonantC(),
 ]);
 const lpCH = letterPositions([new InitialConsonantCH()]);
 const lpD = letterPositions([
   new InitialConsonantD(),
   new FinalConsonantD(),
-  new GerminatedConsonantD(),
+  new GeminatedConsonantD(),
 ]);
 const lpE = letterPositions([new VowelE()]);
 const lpF = letterPositions([new InitialConsonantF()]);
 const lpG = letterPositions([
   new InitialConsonantG(),
   new FinalConsonantG(),
-  new GerminatedConsonantG(),
+  new GeminatedConsonantG(),
 ]);
 const lpH = letterPositions([new InitialConsonantH()]);
 const lpI = letterPositions([new VowelI()]);
@@ -366,7 +366,7 @@ const lpJ = letterPositions([new InitialConsonantJ()]);
 const lpK = letterPositions([
   new InitialConsonantK(),
   new FinalConsonantK(),
-  new GerminatedConsonantK(),
+  new GeminatedConsonantK(),
 ]);
 const lpL = letterPositions([new InitialConsonantL()]);
 const lpM = letterPositions([new InitialConsonantM()]);
@@ -376,18 +376,18 @@ const lpO = letterPositions([new VowelO()]);
 const lpP = letterPositions([
   new InitialConsonantP(),
   new FinalConsonantP(),
-  new GerminatedConsonantP(),
+  new GeminatedConsonantP(),
 ]);
 const lpR = letterPositions([new InitialConsonantR()]);
 const lpS = letterPositions([
   new InitialConsonantS(),
   new FinalConsonantS(),
-  new GerminatedConsonantS(),
+  new GeminatedConsonantS(),
 ]);
 const lpT = letterPositions([
   new InitialConsonantT(),
   new FinalConsonantT(),
-  new GerminatedConsonantT(),
+  new GeminatedConsonantT(),
 ]);
 const lpU = letterPositions([new VowelU()]);
 const lpV = letterPositions([new InitialConsonantV()]);

@@ -12,6 +12,8 @@ import {
   semivowelsKana,
   hatsuonsKana,
   KanaLetterTags,
+  finalConsonantsKana,
+  geminatedConsonantsKana,
 } from './kana';
 import { KanaPositionalLetterGenerator } from './lettergen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
@@ -46,7 +48,6 @@ function syllabifyKana(
   let lookAhead = '';
   let ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
-  const vwls = vowelsKana;
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
@@ -64,33 +65,62 @@ function syllabifyKana(
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
     } else if (
-      literal.length == 3 &&
-      literal[0] === literal[1] &&
-      vwls.includes(literal[2])
-    ) {
-      // for consonant germination of sokuon. e.g. ggu, kku, ppa, etc.
-      matched = literal;
-      ltrs.shift(); // shift the germinated consonants
-      Object.assign(matchedLtrs, ltrs);
-    } else if (
       ltrs.length == 3 &&
-      ltrs[0] === KanaLetterTags.t &&
-      ltrs[1] === KanaLetterTags.ch &&
-      vwls.includes(ltrs[2])
+      (ltrs[0] === ltrs[1] ||
+        (ltrs[0] === KanaLetterTags.t && ltrs[1] === KanaLetterTags.ch)) &&
+      vowelsKana.includes(ltrs[2])
     ) {
+      // initial sokuon. e.g. ggu, kku, ppa, etc.
+      // when a final t followed by an initial ch
       matched = literal;
-      // no need to shift the germinated consonant? check out the above block
       Object.assign(matchedLtrs, ltrs);
-    } else if (hatsuonsKana.includes(lookAhead) && i == 1) {
+      lookAhead = '';
+    } else if (
+      finalConsonantsKana.includes(lookAhead) &&
+      i + 1 == letters.length
+    ) {
+      // final sokuon, not medial sokuon
+      matched = literal;
+      Object.assign(matchedLtrs, ltrs);
+      lookAhead = '';
+    } else if (
+      geminatedConsonantsKana.includes(lookAhead) &&
+      i + 1 < letters.length // there is at least one letter after look-ahead
+    ) {
+      // medial sokuon, not final sokuon
       if (
-        letters.length > 2 &&
-        initialConsonantsKana.includes(letters[2].literal)
+        initialConsonantsKana.includes(letters[i + 1].literal) &&
+        (lookAhead === letters[i + 1].literal ||
+          (lookAhead === KanaLetterTags.t &&
+            letters[i + 1].literal === KanaLetterTags.ch))
       ) {
+        // check if the letter after look-ahead is an initial consonant
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
-        lookAhead = letters[i + 1].literal; // look-ahead
+      } else if (
+        vowelsKana.includes(letters[i + 1].literal) ||
+        semivowelsKana.includes(letters[i + 1].literal)
+      ) {
+        // check if the letter after look-ahead is a vowel
+        matched = literal.slice(0, literal.length - 1);
+        ltrs.pop();
+        Object.assign(matchedLtrs, ltrs);
       }
-      // console.log(lookAhead, i);
+      lookAhead = '';
+    } else if (hatsuonsKana.includes(lookAhead)) {
+      if (
+        vowelsKana.includes(letters[i + 1].literal) ||
+        semivowelsKana.includes(letters[i + 1].literal)
+      ) {
+        // check if the letter after look-ahead is a vowel
+        matched = literal.slice(0, literal.length - 1);
+        ltrs.pop();
+        Object.assign(matchedLtrs, ltrs);
+      } else {
+        matched = literal;
+        Object.assign(matchedLtrs, ltrs);
+      }
+      lookAhead = '';
     }
   }
 
