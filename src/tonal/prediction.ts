@@ -1,4 +1,4 @@
-import { syllableCompositions } from '../unchange/lettergen';
+import { syllableCompositions } from './lettergen';
 import { PositionalLetterGeneration, PositionalLetter } from '../unit';
 import { isInSyllableTable } from './syllabletable';
 

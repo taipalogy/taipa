@@ -21,7 +21,7 @@ import {
   AlphabeticGrapheme,
   PositionalLetter,
 } from '../unit';
-import { TonalPositionalLetterGenerator } from './lettergen';
+import { TonalPositionalLetterGenerator } from '../tonal/lettergen';
 import { isInSyllableTable } from '../tonal/syllabletable';
 import {
   smMnngHF,

@@ -14,8 +14,8 @@ import {
   stopFinalConsonantsTonal,
   finalConsonantsBgjklpsTonal,
   finalConsonantsBBggkkllppssTonal,
-} from '../tonal/version2';
-import { combiningRules } from '../tonal/collections';
+} from './version2';
+import { combiningRules } from './collections';
 
 function initialConsonant(sg: PositionalLetterGeneration) {
   if (initialConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])) {
