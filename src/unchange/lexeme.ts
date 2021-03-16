@@ -1,83 +1,14 @@
-import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
-import { Word, LexemeMaker, Lexeme } from '../unit';
-import {
-  FreeAllomorph,
-  CheckedAllomorph,
-  Allomorph,
-  TonalLetterTags,
-} from '../tonal/version2';
-import { TonalAffix } from '../tonal/version2';
+import { TonalUncombiningMorpheme } from './morpheme';
+import { Lexeme } from '../unit';
+import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../tonal/version2';
 import { TonalLemmatization } from './metaplasm';
-
-class Ending {}
-
-export class InflectionalEnding extends Ending {
-  affix: TonalAffix = new TonalAffix(); // the affix of this word
-  toString() {
-    return this.affix.toString();
-  }
-}
-
-export class FreeInflectionalEnding extends InflectionalEnding {}
-
-export class CheckedInflectionalEnding extends InflectionalEnding {}
-
-export class AllomorphicEnding extends Ending {
-  allomorph: Allomorph = new Allomorph();
-  toString() {
-    return this.allomorph.toString();
-  }
-}
-
-export class FreeAllomorphicEnding extends AllomorphicEnding {}
-
-export class CheckedAllomorphicEnding extends AllomorphicEnding {}
-
-/** A word made of syllables. */
-export class TonalWord extends Word {
-  syllables: Array<TonalSyllable>;
-  constructor(syllables: Array<TonalSyllable>) {
-    super();
-    this.syllables = new Array<TonalSyllable>();
-    if (syllables != undefined) {
-      this.syllables = syllables;
-      this.concat();
-    }
-  }
-
-  popSyllable() {
-    this.syllables = this.syllables.slice(0, this.syllables.length - 1);
-    this.concat();
-  }
-
-  pushSyllable(syllable: TonalSyllable) {
-    this.syllables.push(syllable);
-    this.concat();
-  }
-
-  shiftSyllable() {
-    const syl = this.syllables.shift();
-    this.concat();
-    return syl;
-  }
-
-  unshiftSyllable(syllable: TonalSyllable) {
-    const num = this.syllables.unshift(syllable);
-    this.concat();
-    return num;
-  }
-
-  replaceSyllable(i: number, syllable: TonalSyllable) {
-    if (i < this.syllables.length) {
-      this.syllables.splice(i, 1, syllable);
-    }
-    this.concat();
-  }
-
-  private concat() {
-    this.literal = this.syllables.map(x => (x ? x.literal : '')).join('');
-  }
-}
+import { LexemeMaker } from '../maker';
+import {
+  TonalWord,
+  InflectionalEnding,
+  FreeInflectionalEnding,
+  CheckedInflectionalEnding,
+} from './unit';
 
 /** A word and its lemmas/base forms. */
 export class TonalLemmatizationLexeme extends Lexeme {

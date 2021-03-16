@@ -1,11 +1,12 @@
 import { TonalUncombiningMetaplasm } from '../metaplasm';
 import {
+  TonalSyllable,
   TonalWord,
   InflectionalEnding,
   FreeInflectionalEnding,
   CheckedInflectionalEnding,
-} from './lexeme';
-import { TonalSyllable, TonalUncombiningMorpheme } from './morpheme';
+} from './unit';
+import { TonalUncombiningMorpheme } from './morpheme';
 import {
   Allomorph,
   FreeAllomorph,
@@ -20,8 +21,6 @@ import {
   lowerLettersTonal,
   neutralFinalConsonantsTonal,
   TonalSpellingTags,
-  freeToneLettersTonal,
-  Tonal,
 } from '../tonal/version2';
 import { PositionalLetter, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';

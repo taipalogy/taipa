@@ -102,6 +102,16 @@ describe('Uninsertion testing', () => {
   test('check the underlying form', () => {
     expect(lx1.getForms()[0].literal).toEqual('lim a');
   });
+
+  const lx2 = uninsertFromFollowingWord('angx', 'gez');
+
+  test('check the surface form', () => {
+    expect(lx2.phrase.literal).toEqual('angx gez');
+  });
+
+  test('check the underlying form', () => {
+    expect(lx2.getForms()[0].literal).toEqual('angx ez');
+  });
 });
 
 describe('Insertion testing, 1 empty word', () => {

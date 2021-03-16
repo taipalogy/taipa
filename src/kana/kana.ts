@@ -226,9 +226,6 @@ class FinalConsonantG extends FinalConsonant {
 class FinalConsonantK extends FinalConsonant {
   characters = this.makeCharacters(KanaLetterTags.k);
 }
-class FinalConsonantH extends FinalConsonant {
-  characters = this.makeCharacters(KanaLetterTags.h);
-}
 class FinalConsonantN extends FinalConsonant {
   characters = this.makeCharacters(KanaLetterTags.n);
 }

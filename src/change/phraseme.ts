@@ -17,8 +17,7 @@ import {
   ConjugateVppToParticiple,
   ConjugateVppToTransitive,
 } from './metaplasm';
-import { TonalWord } from '../unchange/lexeme';
-import { TonalPhrase } from '../unchange/phraseme';
+import { TonalWord, TonalPhrase } from '../unchange/unit';
 import {
   TonalPhrasalInflectionMetaplasm,
   TonalPhrasalInsertionMetaplasm,

@@ -1,9 +1,5 @@
 import { syllabifyTonal } from '../unchange/morpheme';
-import {
-  MatchedPattern,
-  AlphabeticGrapheme,
-  makeMatchedPatterns,
-} from '../unit';
+import { AlphabeticGrapheme, makeMatchedPatterns } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
 import { TonalSpellingTags, TonalLetterTags } from './version2';
 

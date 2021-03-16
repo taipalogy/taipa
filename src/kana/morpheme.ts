@@ -3,7 +3,8 @@ import {
   PositionalLetter,
   AlphabeticLetter,
 } from '../unit';
-import { Syllable, MatchedPattern, Morpheme, MorphemeMaker } from '../unit';
+import { Syllable, MatchedPattern, Morpheme } from '../unit';
+import { MorphemeMaker } from '../maker';
 import {
   hiraganaKatakana,
   gailaigo,
@@ -23,7 +24,6 @@ export class KanaSyllable extends Syllable {}
 /** A syllable. */
 export class KanaUncombiningMorpheme extends Morpheme {
   syllable: KanaSyllable;
-  private metaplasm: KanaCombiningMetaplasm;
   letters: Array<PositionalLetter>;
 
   constructor(
@@ -33,7 +33,6 @@ export class KanaUncombiningMorpheme extends Morpheme {
   ) {
     super();
     this.syllable = syllable;
-    this.metaplasm = kcm;
     this.letters = new Array();
     this.letters = letters;
   }

@@ -1,19 +1,15 @@
- {
-    "include": [
-        "src"
-    ], 
-    "exclude": [
-        "node_modules"
-    ],
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es6",
-        "declaration": true,
-        "outDir": "./lib",
-        "strict": true,
-        "sourceMap": true,
-        "declarationMap": false
-        //"noUnusedLocals": true,
-        //"noUnusedParameters": true
-    }
+{
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "sourceMap": true,
+    "declarationMap": false
+    // "noUnusedLocals": true
+    // "noUnusedParameters": true
+  }
 }

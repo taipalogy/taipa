@@ -1,7 +1,6 @@
 import { TonalLemmatizationLexeme } from './unchange/lexeme';
 import { checkNumberOfLetterTonal, getTaiKanaBlocks } from './tonal/init';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
-import { TonalUncombiningMorpheme } from './unchange/morpheme';
 
 import { getKanaBlocks, checkNumberOfLettersKana } from './kana/init';
 import { KanaUncombiningMorpheme } from './kana/morpheme';

@@ -59,8 +59,7 @@ export {
   SerialPhraseme,
 } from './change/phraseme';
 export { KanaUncombiningMorpheme } from './kana/morpheme';
-export { TonalWord } from './unchange/lexeme';
-export { TonalPhrase } from './unchange/phraseme';
+export { TonalWord, TonalPhrase } from './unchange/unit';
 
 export { PositionalLetter, PositionalLetterGeneration } from './unit';
 export {

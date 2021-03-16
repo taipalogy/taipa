@@ -1,11 +1,13 @@
-import { LexemeMaker, Lexeme } from '../unit';
+import { Lexeme } from '../unit';
+import { LexemeMaker } from '../maker';
 import { TonalCombiningMorpheme, TonalSoundChangingMorpheme } from './morpheme';
 import {
+  TonalSyllable,
   TonalWord,
   AllomorphicEnding,
   FreeAllomorphicEnding,
   CheckedAllomorphicEnding,
-} from '../unchange/lexeme';
+} from '../unchange/unit';
 import {
   Allomorph,
   FreeAllomorph,
@@ -13,10 +15,7 @@ import {
   TonalSpellingTags,
   TonalLetterTags,
 } from '../tonal/version2';
-import {
-  TonalSyllable,
-  TonalSoundUnchangingMorpheme,
-} from '../unchange/morpheme';
+import { TonalSoundUnchangingMorpheme } from '../unchange/morpheme';
 import { PositionalLetter } from '../unit';
 import {
   TonalInflectionMetaplasm,
@@ -176,25 +175,43 @@ export class TonalUninsertionLexeme implements Lexeme {
     const wrd = new TonalWord(
       this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
     );
+    let initial: string = '';
+    if (this.morphemes.length > 0) {
+      initial = this.morphemes[0].letters[0].toString();
+    }
     if (preceding.morphemes.length > 0) {
-      const adjacentLtrs =
+      const precedingLtrs =
         preceding.morphemes[preceding.morphemes.length - 1].letters;
       let pl = new PositionalLetter();
       if (
-        (adjacentLtrs[adjacentLtrs.length - 1].name ===
+        precedingLtrs[precedingLtrs.length - 1].name ===
           TonalSpellingTags.freeTone &&
-          adjacentLtrs[adjacentLtrs.length - 2].name ===
-            TonalSpellingTags.nasalFinalConsonant) ||
-        adjacentLtrs[adjacentLtrs.length - 1].name ===
+        precedingLtrs[precedingLtrs.length - 2].name ===
           TonalSpellingTags.nasalFinalConsonant
       ) {
-        pl = adjacentLtrs[adjacentLtrs.length - 2];
+        pl = precedingLtrs[precedingLtrs.length - 2];
+      } else if (
+        precedingLtrs[precedingLtrs.length - 1].name ===
+        TonalSpellingTags.nasalFinalConsonant
+      ) {
+        pl = precedingLtrs[precedingLtrs.length - 1];
       }
-      const syls = this.morphemes[0].uninsertNasal();
 
-      wrd.replaceSyllable(0, syls[0]);
+      if (
+        pl &&
+        pl.toString().length > 0 &&
+        (pl.toString() === initial ||
+          (pl.toString() === TonalLetterTags.ng &&
+            initial === TonalLetterTags.g))
+      ) {
+        // when the preceding letter is m, the initial of this enclitic is m
+        // when the preceding letter is n, the initial of this enclitic is n
+        // when the preceding letter is ng, the initial of this enclitic is g
+        const syls = this.morphemes[0].uninsertNasal();
 
-      return [wrd];
+        wrd.replaceSyllable(0, syls[0]);
+        return [wrd];
+      }
     }
     return [];
   }

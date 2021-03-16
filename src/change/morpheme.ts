@@ -1,5 +1,7 @@
-import { MatchedPattern, MorphemeMaker, Morpheme } from '../unit';
-import { TonalSyllable, syllabifyTonal } from '../unchange/morpheme';
+import { MatchedPattern, Morpheme } from '../unit';
+import { MorphemeMaker } from '../maker';
+import { syllabifyTonal } from '../unchange/morpheme';
+import { TonalSyllable } from '../unchange/unit';
 import {
   Allomorph,
   ZeroAllomorph,
@@ -24,7 +26,6 @@ import {
   voicelessVoicedFinalConsonants,
   initialConsonantsForFinalT,
   finalConsonantsForBgjlsbbggllss,
-  voicedVoicelessFinalConsonants,
   initialConsonantsForTT,
   nasalInitialConsonants,
 } from '../tonal/collections';

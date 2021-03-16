@@ -11,7 +11,7 @@ import {
 } from '../src/change/inflector';
 import { insertToFollowingWord } from '../src/change/inserter';
 import { TonalLetterTags } from '../src/tonal/version2';
-import { TonalSyllable } from '../src/unchange/morpheme';
+import { TonalSyllable } from '../src/unchange/unit';
 import {
   createTonalPhrase,
   createCompoundPhraseme,

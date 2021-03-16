@@ -1,6 +1,3 @@
-import { TonalCombiningMetaplasm } from './metaplasm';
-import { InflectionalEnding } from './unchange/lexeme';
-
 export class Character {
   character: string;
 
@@ -459,33 +456,10 @@ export function makeMatchedPatterns(
   return patterns;
 }
 
-export abstract class MorphemeMaker {
-  protected abstract createArray(): Morpheme[];
-
-  protected abstract createMorpheme(
-    matched: MatchedPattern,
-    metaplasm: TonalCombiningMetaplasm
-  ): Morpheme;
-
-  protected make(
-    letters: Array<AlphabeticLetter>,
-    syllabify: (
-      letters: Array<AlphabeticLetter>,
-      beginOfSyllable: number
-    ) => MatchedPattern
-  ): MatchedPattern[] {
-    return makeMatchedPatterns(letters, syllabify);
-  }
-}
-
 export abstract class Lexeme {}
 
 export class Word {
   literal: string = '';
-}
-
-export abstract class LexemeMaker {
-  protected abstract make(ms: Array<Morpheme>): Lexeme;
 }
 
 export abstract class Phraseme {}

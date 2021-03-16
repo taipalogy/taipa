@@ -1,6 +1,6 @@
 import {
-  TonalLemmatizationLexemeMaker,
   TonalLemmatizationLexeme,
+  TonalLemmatizationLexemeMaker,
 } from './lexeme';
 import { AlphabeticGrapheme, GraphemeMaker } from '../unit';
 import { lowerLettersTonal } from '../tonal/version2';

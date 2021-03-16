@@ -1,8 +1,8 @@
-import { TonalSyllable } from './unchange/morpheme';
+import { TonalSyllable } from './unchange/unit';
 import { Allomorph } from './tonal/version2';
 import { PositionalLetter, Morpheme } from './unit';
-import { TonalWord, InflectionalEnding } from './unchange/lexeme';
-import { TonalPhrase } from './unchange/phraseme';
+import { TonalWord, InflectionalEnding } from './unchange/unit';
+import { TonalPhrase } from './unchange/unit';
 import {
   TonalInflectionLexeme,
   TonalInsertionLexeme,

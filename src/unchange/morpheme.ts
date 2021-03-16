@@ -1,4 +1,5 @@
-import { Syllable, MorphemeMaker, MatchedPattern, Morpheme } from '../unit';
+import { MatchedPattern, Morpheme } from '../unit';
+import { MorphemeMaker } from '../maker';
 import {
   freeAllomorphUncombiningRules,
   checkedAllomorphs,
@@ -54,13 +55,14 @@ import {
   TonalUncombiningForms,
   TransfixUncombining,
   UncombiningFormsIetfIetwToEkEkk,
-  UncombiningFormsIengUamToneLetter,
+  // UncombiningFormsIengUamToneLetter,
 } from './metaplasm';
 import {
   TonalCombiningMetaplasm,
   RemovingEpenthesisOfAy,
   TonalUncombiningMetaplasm,
 } from '../metaplasm';
+import { TonalSyllable } from './unit';
 
 export function syllabifyTonal(
   letters: Array<AlphabeticLetter>,
@@ -338,23 +340,6 @@ export function syllabifyTonal(
   }
 
   return mp;
-}
-
-export class TonalSyllable extends Syllable {
-  popLetter() {
-    this.letters = this.letters.slice(0, this.letters.length - 1);
-    this.concat();
-  }
-
-  get lastLetter() {
-    if (this.letters.length >= 1) return this.letters[this.letters.length - 1];
-    return new AlphabeticLetter([]);
-  }
-
-  get lastSecondLetter() {
-    if (this.letters.length >= 2) return this.letters[this.letters.length - 2];
-    return new AlphabeticLetter([]);
-  }
 }
 
 /** A syllable and its uncombining forms. */

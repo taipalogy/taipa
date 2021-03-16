@@ -7,7 +7,7 @@ import {
   geminatedConsonantsKana,
   semivowelsKana,
   finalConsonantsKana,
-  hatsuonsKana,
+  // hatsuonsKana,
 } from './kana';
 
 function initialConsonant(sg: PositionalLetterGeneration) {
@@ -57,7 +57,7 @@ function vowel(sg: PositionalLetterGeneration) {
 
   return sg;
 }
-
+/*
 function hatsuon(sg: PositionalLetterGeneration) {
   const sfcs = hatsuonsKana;
 
@@ -73,7 +73,7 @@ function hatsuon(sg: PositionalLetterGeneration) {
 
   return sg;
 }
-
+*/
 function finalConsonant(sg: PositionalLetterGeneration) {
   const sfcs = finalConsonantsKana;
 
