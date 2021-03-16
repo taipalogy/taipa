@@ -118,8 +118,10 @@ export class TonalPhrasalInflectionMetaplasm extends Metaplasm {
   ): TonalPhrase[] {
     return [];
   }
+}
 
-  applyVpp(
+export class TonalPhrasalInflectionVppMetaplasm extends Metaplasm {
+  apply(
     lexemeOne: TonalInflectionLexeme,
     lexemeTwo: TonalInflectionLexeme,
     lexemeThree: TonalInflectionLexeme

@@ -32,6 +32,7 @@ import {
   TonalPhrasalInfectionMetaplasm,
   TonalPhrasalMutationMetaplasm,
   TonalPhrasalUnmutationMetaplasm,
+  TonalPhrasalInflectionVppMetaplasm,
 } from '../metaplasm';
 import { TonalSoundUnchangingMorpheme } from '../unchange/morpheme';
 import { TonalSyllable, TonalPhrase } from '../unchange/unit';
@@ -601,8 +602,8 @@ export class ConjugateToProceeding extends TonalPhrasalInflectionMetaplasm {
 }
 
 /** Returns the proceeding forms of a phrasal verb of length 3. */
-export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
-  applyVpp(
+export class ConjugateVppToProceeding extends TonalPhrasalInflectionVppMetaplasm {
+  apply(
     verb: TonalInflectionLexeme,
     particle: TonalInflectionLexeme,
     particleTwo: TonalInflectionLexeme
@@ -628,8 +629,8 @@ export class ConjugateVppToProceeding extends TonalPhrasalInflectionMetaplasm {
 }
 
 /** Returns the transitive forms of a phrasal verb of length 3. */
-export class ConjugateVppToTransitive extends TonalPhrasalInflectionMetaplasm {
-  applyVpp(
+export class ConjugateVppToTransitive extends TonalPhrasalInflectionVppMetaplasm {
+  apply(
     verb: TonalInflectionLexeme,
     particle: TonalInflectionLexeme,
     particleTwo: TonalInflectionLexeme
@@ -672,8 +673,8 @@ export class ConjugateToParticiple extends TonalPhrasalInflectionMetaplasm {
 }
 
 /** Returns the participle forms of a phrasal verb of length 3. */
-export class ConjugateVppToParticiple extends TonalPhrasalInflectionMetaplasm {
-  applyVpp(
+export class ConjugateVppToParticiple extends TonalPhrasalInflectionVppMetaplasm {
+  apply(
     verb: TonalInflectionLexeme,
     particle: TonalInflectionLexeme,
     particleTwo: TonalInflectionLexeme

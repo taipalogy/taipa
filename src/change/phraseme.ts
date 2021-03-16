@@ -26,6 +26,7 @@ import {
   TonalPhrasalInfectionMetaplasm,
   TonalPhrasalMutationMetaplasm,
   TonalPhrasalUnmutationMetaplasm,
+  TonalPhrasalInflectionVppMetaplasm,
 } from '../metaplasm';
 
 /** A phrase of length 2 and its inflected forms. */
@@ -61,12 +62,12 @@ export class PhrasalVerbVppPhraseme extends Phraseme {
     verb: TonalInflectionLexeme,
     particle: TonalInflectionLexeme,
     particleTwo: TonalInflectionLexeme,
-    metaplasm: TonalPhrasalInflectionMetaplasm
+    metaplasm: TonalPhrasalInflectionVppMetaplasm
   ) {
     super();
     this.phrase = new TonalPhrase([verb.word, particle.word, particleTwo.word]);
 
-    this.forms = metaplasm.applyVpp(verb, particle, particleTwo);
+    this.forms = metaplasm.apply(verb, particle, particleTwo);
   }
 
   /** Returns proceeding forms, participle forms, or transitive forms. */
