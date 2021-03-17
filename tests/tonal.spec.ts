@@ -23,77 +23,77 @@ describe('Tonal testing', () => {
 
   const t1 = cli.processTonal('tamwpurhxuay');
   test('check the tone letter', () => {
-    expect(t1.letterSequences[1][3].toString()).toEqual(TonalLetterTags.x);
+    expect(t1.soundSequences[1][3].toString()).toEqual(TonalLetterTags.x);
   });
 
   const t2 = cli.processTonal('binznafchaiw');
   test('check the tone letter', () => {
-    expect(t2.letterSequences[1][2].toString()).toEqual(TonalLetterTags.f);
+    expect(t2.soundSequences[1][2].toString()).toEqual(TonalLetterTags.f);
   });
 
   const t3 = cli.processTonal('kinznafjitt');
   test('check the tone letter', () => {
-    expect(t3.letterSequences[1][2].toString()).toEqual(TonalLetterTags.f);
+    expect(t3.soundSequences[1][2].toString()).toEqual(TonalLetterTags.f);
   });
 
   const t4 = cli.processTonal('chaufching');
   test('check the tone letter', () => {
-    expect(t4.letterSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(t4.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
   });
 
   const t5 = cli.processTonal('taizuanx');
   test('check the tone letter', () => {
-    expect(t5.letterSequences[1][3].toString()).toEqual(TonalLetterTags.x);
+    expect(t5.soundSequences[1][3].toString()).toEqual(TonalLetterTags.x);
   });
 
   const t6 = cli.processTonal('taizuanzuez');
   test('check the tone letter', () => {
-    expect(t6.letterSequences[2][2].toString()).toEqual(TonalLetterTags.z);
+    expect(t6.soundSequences[2][2].toString()).toEqual(TonalLetterTags.z);
   });
 
   const t7 = cli.processTonal('taiwjitwpunfteykok');
   test('check the tone letter', () => {
-    expect(t7.letterSequences[2][3].toString()).toEqual(TonalLetterTags.f);
+    expect(t7.soundSequences[2][3].toString()).toEqual(TonalLetterTags.f);
   });
 
   const t8 = cli.processTonal('kurzsa');
   test('check the tone letter', () => {
-    expect(t8.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
+    expect(t8.soundSequences[0][2].toString()).toEqual(TonalLetterTags.z);
   });
 
   const t9 = cli.processTonal('hongzqun');
   test('check the tone letter', () => {
-    expect(t9.letterSequences[0][3].toString()).toEqual(TonalLetterTags.z);
+    expect(t9.soundSequences[0][3].toString()).toEqual(TonalLetterTags.z);
   });
 
   const t10 = cli.processTonal('siapwjipp');
   test('check the tone letter', () => {
-    expect(t10.letterSequences[0][4].toString()).toEqual(TonalLetterTags.w);
+    expect(t10.soundSequences[0][4].toString()).toEqual(TonalLetterTags.w);
   });
 
   const t11 = cli.processTonal('kazpi');
   test('check the tone letter', () => {
-    expect(t11.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
+    expect(t11.soundSequences[0][2].toString()).toEqual(TonalLetterTags.z);
   });
 
   const t12 = cli.processTonal('mihwkiannz');
   test('check the tone letter', () => {
-    expect(t12.letterSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(t12.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   const t13 = cli.processTonal('bakwchiu');
   test('check the tone letter', () => {
-    expect(t13.letterSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(t13.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   const t14 = cli.processTonal('khazcng');
   test('check the tone letter', () => {
-    expect(t14.letterSequences[0][2].toString()).toEqual(TonalLetterTags.z);
+    expect(t14.soundSequences[0][2].toString()).toEqual(TonalLetterTags.z);
   });
 
   const t15 = cli.processTonal('lamzturfgiy');
   test('check the tone letter', () => {
-    expect(t15.letterSequences[0][3].toString()).toEqual(TonalLetterTags.z);
+    expect(t15.soundSequences[0][3].toString()).toEqual(TonalLetterTags.z);
   });
 });
 

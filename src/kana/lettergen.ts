@@ -1,7 +1,7 @@
-import { PositionalLetter, PositionalLetterGeneration, sgPipe } from '../unit';
+import { Sound, PositionalSoundGeneration, sgPipe } from '../unit';
 import {
-  KanaSpellingTags,
-  kanaPositionalLetters,
+  KanaSoundTags,
+  kanaPositionalSounds,
   initialConsonantsKana,
   vowelsKana,
   geminatedConsonantsKana,
@@ -10,96 +10,94 @@ import {
   // hatsuonsKana,
 } from './kana';
 
-function initialConsonant(sg: PositionalLetterGeneration) {
+function initialConsonant(sg: PositionalSoundGeneration) {
   const sics = initialConsonantsKana;
 
-  if (sics.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (sics.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = kanaPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(KanaSpellingTags.initialConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(KanaSoundTags.initialConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
 
   return sg;
 }
 
-function semivowel(sg: PositionalLetterGeneration) {
+function semivowel(sg: PositionalSoundGeneration) {
   const ssvs = semivowelsKana;
 
-  if (ssvs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (ssvs.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = kanaPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(KanaSpellingTags.semivowel);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(KanaSoundTags.semivowel);
+      if (s) sg.matchedSounds.push(s);
     }
   }
 
   return sg;
 }
 
-function vowel(sg: PositionalLetterGeneration) {
+function vowel(sg: PositionalSoundGeneration) {
   const svs = vowelsKana;
 
-  if (svs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (svs.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = kanaPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(KanaSpellingTags.vowel);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(KanaSoundTags.vowel);
+      if (s) sg.matchedSounds.push(s);
     }
   }
 
   return sg;
 }
 /*
-function hatsuon(sg: PositionalLetterGeneration) {
+function hatsuon(sg: PositionalSoundGeneration) {
   const sfcs = hatsuonsKana;
 
-  if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
-    );
-    if (positions) {
-      const s = positions(KanaSpellingTags.finalConsonant);
-      if (s) sg.matchedLetters.push(s);
+  if (sfcs.includes(sg.sounds[sg.matchedSounds.length])) {
+    const sounds = kanaPositionalSounds.get(sg.sounds[sg.matchedSounds.length]);
+    if (sounds) {
+      const s = sounds(KanaSoundTags.finalConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   }
 
   return sg;
 }
 */
-function finalConsonant(sg: PositionalLetterGeneration) {
+function finalConsonant(sg: PositionalSoundGeneration) {
   const sfcs = finalConsonantsKana;
 
-  if (sfcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (sfcs.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = kanaPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(KanaSpellingTags.finalConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(KanaSoundTags.finalConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   }
 
   return sg;
 }
 
-function geminatedConsonant(sg: PositionalLetterGeneration) {
+function geminatedConsonant(sg: PositionalSoundGeneration) {
   const sgcs = geminatedConsonantsKana;
 
-  if (sgcs.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = kanaPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (sgcs.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = kanaPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(KanaSpellingTags.geminatedConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(KanaSoundTags.geminatedConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   }
 
@@ -134,7 +132,7 @@ export class KanaPositionalLetterGenerator {
 
     // sokuon
     let fcs = finalConsonantsKana;
-    for (let e of fcs.letters) {
+    for (let e of fcs.sounds) {
       let syl: string[] = new Array();
       Object.assign(syl, letters);
       syl.push(e.toString());
@@ -146,24 +144,24 @@ export class KanaPositionalLetterGenerator {
 
   generate(letters: string[], lookahead: string) {
     let strs: Array<string[]> = new Array();
-    let sequences: Array<PositionalLetter[]> = new Array(); // to be returned
+    let sequences: Array<Sound[]> = new Array(); // to be returned
 
     strs = this.genSokuonAndGeminated(letters, lookahead);
 
     // console.log(strs);
     for (let i in strs) {
-      // generates all needed positional letters to be processed
+      // generates all needed positional sounds to be processed
 
       for (let j = 0; j < this.sylCompositions.length; j++) {
-        let sg = new PositionalLetterGeneration();
+        let sg = new PositionalSoundGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = this.sylCompositions[j](sg);
         if (
-          sg.letters.length == sg.matchedLetters.length &&
+          sg.letters.length == sg.matchedSounds.length &&
           sg.matching == true
         ) {
-          sequences.push(sg.matchedLetters);
+          sequences.push(sg.matchedSounds);
           break;
         }
       }

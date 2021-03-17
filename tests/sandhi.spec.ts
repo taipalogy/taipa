@@ -7,27 +7,27 @@ describe('Epenthesis testing', () => {
 
   const ta1 = cli.processTonal('sutflay');
   test('check the consonant', () => {
-    expect(ta1.letterSequences[1][0].toString()).toEqual(TonalLetterTags.l);
+    expect(ta1.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
   });
 
   const ta2 = cli.processTonal('jiokxgay');
   test('check the consonant', () => {
-    expect(ta2.letterSequences[1][0].toString()).toEqual(TonalLetterTags.g);
+    expect(ta2.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
   });
 
   const ta3 = cli.processTonal('kapfbay');
   test('check the consonant', () => {
-    expect(ta3.letterSequences[1][0].toString()).toEqual(TonalLetterTags.b);
+    expect(ta3.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
   });
 
   const ta4 = cli.processTonal('kamxmay');
   test('check the consonant', () => {
-    expect(ta4.letterSequences[1][0].toString()).toEqual(TonalLetterTags.m);
+    expect(ta4.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
   });
 
   const ta5 = cli.processTonal('suanfnay');
   test('check the consonant', () => {
-    expect(ta5.letterSequences[1][0].toString()).toEqual(TonalLetterTags.n);
+    expect(ta5.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
   });
 });
 
@@ -92,7 +92,7 @@ describe('Voiced final consonant testing', () => {
 
   const ta = cli.processTonal('teg');
   test('check if it handles sandhi final consonants', () => {
-    expect(ta.letterSequences[0].map(it => it.toString()).join('')).toEqual(
+    expect(ta.soundSequences[0].map(it => it.toString()).join('')).toEqual(
       'teg'
     );
   });
@@ -103,14 +103,14 @@ describe('-ik ending testing', () => {
 
   const ta1 = cli.processTonal('tik');
   test('check if it handles sandhi rime, tik of tikw, tikw of tekk', () => {
-    expect(ta1.letterSequences[0].map(it => it.toString()).join('')).toEqual(
+    expect(ta1.soundSequences[0].map(it => it.toString()).join('')).toEqual(
       'tik'
     );
   });
 
   const ta2 = cli.processTonal('chik');
   test('check if it handles sandhi final consonants, chik of chikf, chikf ot chit', () => {
-    expect(ta2.letterSequences[0].map(it => it.toString()).join('')).toEqual(
+    expect(ta2.soundSequences[0].map(it => it.toString()).join('')).toEqual(
       'chik'
     );
   });
@@ -125,8 +125,8 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta1.letterSequences[1][1].toString()).toEqual(TonalLetterTags.m);
-    expect(ta1.letterSequences[1][2].toString()).toEqual(TonalLetterTags.h);
+    expect(ta1.soundSequences[1][1].toString()).toEqual(TonalLetterTags.m);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta2 = cli.processTonal('hinhfnix');
@@ -136,8 +136,8 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta2.letterSequences[0][2].toString()).toEqual(TonalLetterTags.n);
-    expect(ta2.letterSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(ta2.soundSequences[0][2].toString()).toEqual(TonalLetterTags.n);
+    expect(ta2.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta3 = cli.processTonal('punghfngay');
@@ -147,8 +147,8 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta3.letterSequences[0][2].toString()).toEqual(TonalLetterTags.ng);
-    expect(ta3.letterSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(ta3.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ng);
+    expect(ta3.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta4 = cli.processTonal('chimhwmix');
@@ -158,7 +158,7 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta4.letterSequences[0][2].toString()).toEqual(TonalLetterTags.m);
-    expect(ta4.letterSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(ta4.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
+    expect(ta4.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 });

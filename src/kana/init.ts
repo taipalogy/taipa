@@ -1,5 +1,5 @@
 import {
-  kanaPositionalLetters,
+  kanaPositionalSounds,
   lowerLettersKana,
   kogakimoji,
   hiraganaKatakana,
@@ -16,7 +16,7 @@ import {
 import { KanaUncombiningMorpheme } from './morpheme';
 
 export function checkNumberOfLettersKana() {
-  if (kanaPositionalLetters.size !== lowerLettersKana.size) {
+  if (kanaPositionalSounds.size !== lowerLettersKana.size) {
     console.log('sizes unmatched');
   }
 }
@@ -138,18 +138,18 @@ export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
 
       if (first === second && geminatedConsonantsKana.includes(first) == true) {
         const ret = getKanasFollowingSmallChu(
-          m.letters[1].toString() + m.letters[2].toString()
+          m.sounds[1].toString() + m.sounds[2].toString()
         );
         kanaSequences[0] += ret[0];
         kanaSequences[1] += ret[1];
         kanaSequences[2] += ret[1];
       } else if (
-        m.letters[0].toString() === KanaLetterTags.t &&
-        m.letters[1].toString() === KanaLetterTags.ch &&
-        geminatedConsonantsKana.includes(m.letters[0].toString()) == true
+        m.sounds[0].toString() === KanaLetterTags.t &&
+        m.sounds[1].toString() === KanaLetterTags.ch &&
+        geminatedConsonantsKana.includes(m.sounds[0].toString()) == true
       ) {
         const ret = getKanasFollowingSmallChu(
-          m.letters[1].toString() + m.letters[2].toString()
+          m.sounds[1].toString() + m.sounds[2].toString()
         );
         kanaSequences[0] += ret[0];
         kanaSequences[1] += ret[1];

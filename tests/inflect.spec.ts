@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalSpellingTags, TonalLetterTags } from '../src/tonal/version2';
+import { TonalSoundTags, TonalLetterTags } from '../src/tonal/version2';
 import { TokenAnalysis } from '../src/client';
 import {
   inflectDesinence,
@@ -31,13 +31,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.letterSequences[1][4].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[1][4].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTone);
   });
 });
 
@@ -57,13 +55,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.letterSequences[1][4].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[1][4].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTone);
   });
 });
 
@@ -83,13 +79,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.letterSequences[1][3].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[1][3].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTone);
   });
 });
 
@@ -109,19 +103,15 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.letterSequences[1][3].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[0][3].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[0][3].name).toEqual(TonalSoundTags.checkedTone);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[1][3].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTone);
   });
 });
 
@@ -141,19 +131,15 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.letterSequences[1][3].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[0][3].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[0][3].name).toEqual(TonalSoundTags.checkedTone);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[1][3].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[1][3].name).toEqual(TonalSoundTags.checkedTone);
   });
 });
 
@@ -173,13 +159,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.letterSequences[1][4].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
-    expect(doc.letterSequences[1][4].name).toEqual(
-      TonalSpellingTags.checkedTone
-    );
+    expect(doc.soundSequences[1][4].name).toEqual(TonalSoundTags.checkedTone);
   });
 });
 

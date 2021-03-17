@@ -20,9 +20,9 @@ import {
   FreeTonalX,
   lowerLettersTonal,
   neutralFinalConsonantsTonal,
-  TonalSpellingTags,
+  TonalSoundTags,
 } from '../tonal/version2';
-import { PositionalLetter, AlphabeticLetter } from '../unit';
+import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 import {
   finalConsonantsForBgjlsbbggllss,
@@ -36,7 +36,7 @@ import { smMngFywxz } from './matcher';
 
 /** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
-  constructor(private lettersFollowing: PositionalLetter[]) {
+  constructor(private soundsFollowing: Sound[]) {
     super();
   }
 
@@ -64,17 +64,14 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
     return [];
   }
 
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph instanceof FreeAllomorph) {
         if (allomorph instanceof ZeroAllomorph) {
           // push y to make tone 2
           // 1 to 2
           const s: TonalSyllable = new TonalSyllable(
-            letters.map(x => new AlphabeticLetter(x.characters))
+            sounds.map(x => new AlphabeticLetter(x.characters))
           );
           const tnltrs = freeAllomorphUncombiningRules.get('zero');
           if (tnltrs) s.pushLetter(new AlphabeticLetter(tnltrs[0].characters));
@@ -86,7 +83,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           const tnltrs = !rules ? [] : rules;
           for (let i in tnltrs) {
             const s: TonalSyllable = new TonalSyllable(
-              letters.map(x => new AlphabeticLetter(x.characters))
+              sounds.map(x => new AlphabeticLetter(x.characters))
             );
             if (!(tnltrs[i] instanceof ZeroAllomorph)) {
               // 2 to 3. 3 to 7. 7 to 5. 3 to 5.
@@ -105,7 +102,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
         }
       } else if (allomorph instanceof CheckedAllomorph) {
         const s: TonalSyllable = new TonalSyllable(
-          letters.map(it => new AlphabeticLetter(it.characters))
+          sounds.map(it => new AlphabeticLetter(it.characters))
         );
 
         if (allomorph.tonal.toString() === '') {
@@ -117,8 +114,8 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
         // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
 
         const fnl = s.letters[s.letters.length - 1].literal;
-        const nslFnls = letters.filter(
-          it => it.name === TonalSpellingTags.nasalFinalConsonant
+        const nslFnls = sounds.filter(
+          it => it.name === TonalSoundTags.nasalFinalConsonant
         );
         s.popLetter(); // pop out the tone letter
 
@@ -163,8 +160,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           const ret = this.handleAssimilatedFinal(s, fnl);
           if (ret && ret.length > 0) return ret;
         } else if (
-          letters.filter(it => it.name === TonalSpellingTags.vowel).length >
-            0 &&
+          sounds.filter(it => it.name === TonalSoundTags.vowel).length > 0 &&
           nasalFinalConsonants.includes(s.lastSecondLetter.literal) &&
           neutralFinalConsonantsTonal.includes(s.lastLetter.literal)
         ) {
@@ -172,10 +168,9 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           // if there is no medials, e.g. hmhh, hngh, just bypass this block
           // mhh, mh, nhh, nh, nghh, ngh
           if (
-            this.lettersFollowing[0] &&
-            this.lettersFollowing[0].name ===
-              TonalSpellingTags.initialConsonant &&
-            s.lastSecondLetter.literal === this.lettersFollowing[0].toString()
+            this.soundsFollowing[0] &&
+            this.soundsFollowing[0].name === TonalSoundTags.initialConsonant &&
+            s.lastSecondLetter.literal === this.soundsFollowing[0].toString()
           ) {
             // unchange to -tt or -t
             s.popLetter(); // pop the neutral
@@ -188,7 +183,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.t));
             }
             return [clone];
-          } else if (this.lettersFollowing[0]) {
+          } else if (this.soundsFollowing[0]) {
             // there has to be a following syllable for this syllable to change form
             // unchange to -pp or -p
             s.popLetter(); // pop the neutral
@@ -214,19 +209,14 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
 
 /** Returns the uncombining forms of a phrasl verb particle syllable. */
 export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph instanceof FreeAllomorph) {
         // 7 to 4
         const s: TonalSyllable = new TonalSyllable(
-          letters.map(it => new AlphabeticLetter(it.characters))
+          sounds.map(it => new AlphabeticLetter(it.characters))
         );
-        const tnl = letters.filter(
-          it => it.name === TonalSpellingTags.freeTone
-        );
+        const tnl = sounds.filter(it => it.name === TonalSoundTags.freeTone);
         if (tnl && tnl[0].toString() === TonalLetterTags.z) {
           s.popLetter(); // pop the tonal
           s.pushLetter(lowerLettersTonal.get(TonalLetterTags.h)); // push neutral final
@@ -235,11 +225,9 @@ export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
       } else if (allomorph instanceof CheckedAllomorph) {
         // 1 to 4. 3 to 4.
         const s: TonalSyllable = new TonalSyllable(
-          letters.map(it => new AlphabeticLetter(it.characters))
+          sounds.map(it => new AlphabeticLetter(it.characters))
         );
-        const tnl = letters.filter(
-          it => it.name === TonalSpellingTags.checkedTone
-        );
+        const tnl = sounds.filter(it => it.name === TonalSoundTags.checkedTone);
         if (
           tnl &&
           (tnl[0].toString() === TonalLetterTags.f ||
@@ -256,10 +244,7 @@ export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
 
 /** Returns the uncombining forms of the syllable preceding ay */
 export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
-  private getUncombiningForms(
-    syllable: TonalSyllable,
-    letters: Array<PositionalLetter>
-  ) {
+  private getUncombiningForms(syllable: TonalSyllable, letters: Array<Sound>) {
     if (
       voicedVoicelessFinalConsonants.has(letters[letters.length - 2].toString())
     ) {
@@ -289,10 +274,7 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
     }
   }
 
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (allomorph.tonal.toString() === TonalLetterTags.f) {
         if (allomorph instanceof FreeAllomorph) {
@@ -301,7 +283,7 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
           const tnls = !rls ? [] : rls;
           for (let i in tnls) {
             let s: TonalSyllable = new TonalSyllable(
-              letters.map(it => new AlphabeticLetter(it.characters))
+              sounds.map(it => new AlphabeticLetter(it.characters))
             );
             // 1 to 2. 1 to 3
             // replace f with y or w
@@ -312,11 +294,11 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
           return ret;
         } else if (allomorph instanceof CheckedAllomorph) {
           const s: TonalSyllable = new TonalSyllable(
-            letters.map(it => new AlphabeticLetter(it.characters))
+            sounds.map(it => new AlphabeticLetter(it.characters))
           );
           // pop f
           s.popLetter();
-          this.getUncombiningForms(s, letters);
+          this.getUncombiningForms(s, sounds);
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.x) {
@@ -327,7 +309,7 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
           const tnls = !rls ? [] : rls;
           for (let i in tnls) {
             let s: TonalSyllable = new TonalSyllable(
-              letters.map(it => new AlphabeticLetter(it.characters))
+              sounds.map(it => new AlphabeticLetter(it.characters))
             );
             if (!(tnls[i] instanceof ZeroTonal)) {
               if (tnls[i] instanceof FreeTonalZ) {
@@ -351,10 +333,10 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
         } else if (allomorph instanceof CheckedAllomorph) {
           // 5 to 8.
           const s: TonalSyllable = new TonalSyllable(
-            letters.map(it => new AlphabeticLetter(it.characters))
+            sounds.map(it => new AlphabeticLetter(it.characters))
           );
           s.popLetter(); // pop x
-          this.getUncombiningForms(s, letters);
+          this.getUncombiningForms(s, sounds);
           return [s];
         }
       } else if (allomorph.tonal.toString() === TonalLetterTags.y) {
@@ -367,20 +349,17 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
 
 /** Returns the last syllable of a double or triple construction as an uncombining form. */
 export class LastSyllableForms extends TonalUncombiningMetaplasm {
-  constructor(private lettersLastSyllable: PositionalLetter[]) {
+  constructor(private lettersLastSyllable: Sound[]) {
     super();
   }
 
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       // skip the last syllable. it is the base form of the preceding 2 syllables.
       if (
         this.lettersLastSyllable[
           this.lettersLastSyllable.length - 1
-        ].toString() === letters[letters.length - 1].toString()
+        ].toString() === sounds[sounds.length - 1].toString()
       )
         return [];
       const s: TonalSyllable = new TonalSyllable(
@@ -394,17 +373,14 @@ export class LastSyllableForms extends TonalUncombiningMetaplasm {
 
 /** Returns the uncombining forms of a transfix inflected syllable. */
 export class TransfixUncombining extends TonalUncombiningMetaplasm {
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
-      const vowelA = letters.filter(it => it.toString() === TonalLetterTags.a);
-      const chkFnls = letters.filter(
-        it => it.name === TonalSpellingTags.checkedTone
+      const vowelA = sounds.filter(it => it.toString() === TonalLetterTags.a);
+      const chkFnls = sounds.filter(
+        it => it.name === TonalSoundTags.checkedTone
       );
       const s: TonalSyllable = new TonalSyllable(
-        letters.map(it => new AlphabeticLetter(it.characters))
+        sounds.map(it => new AlphabeticLetter(it.characters))
       );
 
       if (vowelA.length == 1) {
@@ -445,15 +421,12 @@ export class TransfixUncombining extends TonalUncombiningMetaplasm {
 
 /** Change ~ietf or ietw to ~ek or ~ekk. */
 export class UncombiningFormsIetfIetwToEkEkk extends TonalUncombiningMetaplasm {
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
-      const ics = letters.filter(
-        i => i.name === TonalSpellingTags.initialConsonant
+      const ics = sounds.filter(
+        i => i.name === TonalSoundTags.initialConsonant
       );
-      const ts = letters.filter(i => i.name === TonalSpellingTags.checkedTone);
+      const ts = sounds.filter(i => i.name === TonalSoundTags.checkedTone);
       if (ics.length > 0 && ts.length > 0) {
         if (ts[0].toString() === TonalLetterTags.f) {
           // in case of ~ietf
@@ -479,16 +452,13 @@ export class UncombiningFormsIetfIetwToEkEkk extends TonalUncombiningMetaplasm {
 }
 
 export class UncombiningFormsIengUamToneLetter extends TonalUncombiningMetaplasm {
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): TonalSyllable[] {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       if (
-        letters.length > 1 &&
+        sounds.length > 1 &&
         smMngFywxz(
-          letters[letters.length - 2].toString(),
-          letters[letters.length - 1].toString()
+          sounds[sounds.length - 2].toString(),
+          sounds[sounds.length - 1].toString()
         )
       ) {
         // in case of -ieng plus a tone letter. e.g. liengzngauz
@@ -497,10 +467,10 @@ export class UncombiningFormsIengUamToneLetter extends TonalUncombiningMetaplasm
         // const tnltrs = !rules ? [] : rules;
         // for (let i in tnltrs) {
         //   let s: TonalSyllable = new TonalSyllable(
-        //     letters.map(x => new AlphabeticLetter(x.characters))
+        //     sounds.map(x => new AlphabeticLetter(x.characters))
         //   );
         //   s.replaceLetter(
-        //     letters.length - 2,
+        //     sounds.length - 2,
         //     lowerLettersTonal.get(TonalLetterTags.n)
         //   ); // replace letter ng with n
         //   if (!(tnltrs[i] instanceof ZeroAllomorph)) {

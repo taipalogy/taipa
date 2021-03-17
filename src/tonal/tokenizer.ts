@@ -1,19 +1,19 @@
 import { syllableCompositions } from './lettergen';
-import { PositionalLetterGeneration, PositionalLetter } from '../unit';
+import { PositionalSoundGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
 import { vowelsTonal } from './version2';
 import { impossibleSequences } from './collections';
 
 /** Get Latin syllable compositions for syllable tokenization. Returned values can be further matched with tone patterns or looked up in dictionary. */
 export function getLatinSyllableCompositions(str: string) {
-  const pLetterSeqs: Array<Array<PositionalLetter[]>> = new Array();
+  const soundSeqs: Array<Array<Sound[]>> = new Array();
 
   const letters = graphAnalyzeTonal(str).map(x => x.letter && x.letter.literal);
 
   // console.log(letters);
   let beginOfSyllable = 0;
   while (beginOfSyllable < letters.length) {
-    const accumulatedSeqs: Array<PositionalLetter[]> = new Array(); // accumulator for the matched
+    const accumulatedSeqs: Array<Sound[]> = new Array(); // accumulator for the matched
     let shouldBreak: boolean = false;
     for (let i = 0; i < letters.length; i++) {
       // i is used for the end of the specified portion of letters. see letters.slice below
@@ -21,7 +21,7 @@ export function getLatinSyllableCompositions(str: string) {
         if (shouldBreak) break;
         if (i + 1 > beginOfSyllable) {
           // bypass those loops when i is less than or equal to beginOfSyllable
-          let sg = new PositionalLetterGeneration();
+          let sg = new PositionalSoundGeneration();
           // the letter at position i is exclusive
           sg.letters = letters.slice(beginOfSyllable, i + 1);
           // console.log(sg.letters, beginOfSyllable, i, j);
@@ -34,10 +34,10 @@ export function getLatinSyllableCompositions(str: string) {
           sg = syllableCompositions[j](sg);
 
           if (
-            sg.letters.length == sg.matchedLetters.length &&
+            sg.letters.length == sg.matchedSounds.length &&
             sg.matching == true
           ) {
-            accumulatedSeqs.push(sg.matchedLetters);
+            accumulatedSeqs.push(sg.matchedSounds);
             // console.log(sg.letters, beginOfSyllable, i, j);
           }
         }
@@ -63,8 +63,8 @@ export function getLatinSyllableCompositions(str: string) {
       // break while loop
       break;
     } else if (accumulatedSeqs.length > 0) {
-      pLetterSeqs.push(accumulatedSeqs);
+      soundSeqs.push(accumulatedSeqs);
     }
   }
-  return pLetterSeqs.map(x => x.map(y => y));
+  return soundSeqs.map(x => x.map(y => y));
 }

@@ -13,7 +13,7 @@ export { GraphemeMaker } from './unit';
 export {
   lowerLettersTonal,
   TonalLetterTags,
-  TonalSpellingTags,
+  TonalSoundTags,
 } from './tonal/version2';
 export { KanaLetterTags } from './kana/kana';
 export { lemmatize } from './unchange/lemmatizer';
@@ -61,7 +61,7 @@ export {
 export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord, TonalPhrase } from './unchange/unit';
 
-export { PositionalLetter, PositionalLetterGeneration } from './unit';
+export { Sound, PositionalSoundGeneration } from './unit';
 export {
   initialConsonantsTonal,
   nasalizationsTonal,

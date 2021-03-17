@@ -1,7 +1,7 @@
 import {
   Letters,
-  PositionalLetter,
-  letterSequence,
+  Sound,
+  soundSequence,
   Character,
   MatchedSequence,
 } from '../unit';
@@ -177,7 +177,7 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.kh,
 ]);
 
-export enum TonalSpellingTags {
+export enum TonalSoundTags {
   initialConsonant = 'initialConsonant',
   vowel = 'vowel',
   nasalization = 'nasalization',
@@ -187,34 +187,34 @@ export enum TonalSpellingTags {
   freeTone = 'freeTone', // free tone letter
 }
 
-export class Initial extends PositionalLetter {
-  name = TonalSpellingTags.initialConsonant;
+export class Initial extends Sound {
+  name = TonalSoundTags.initialConsonant;
 }
-export class Medial extends PositionalLetter {
-  name = TonalSpellingTags.vowel;
+export class Medial extends Sound {
+  name = TonalSoundTags.vowel;
 }
-export class Final extends PositionalLetter {
+export class Final extends Sound {
   name = '';
 }
-export class Nasalization extends PositionalLetter {
-  name = TonalSpellingTags.nasalization;
+export class Nasalization extends Sound {
+  name = TonalSoundTags.nasalization;
 }
-export class Tonal extends PositionalLetter {
+export class Tonal extends Sound {
   name = '';
 }
 
 export class FreeTonal extends Tonal {
-  name = TonalSpellingTags.freeTone;
+  name = TonalSoundTags.freeTone;
 }
 export class CheckedTonal extends Tonal {
-  name = TonalSpellingTags.checkedTone;
+  name = TonalSoundTags.checkedTone;
 }
 
 export class StopFinal extends Final {
-  name = TonalSpellingTags.stopFinalConsonant;
+  name = TonalSoundTags.stopFinalConsonant;
 }
 export class NasalFinal extends Final {
-  name = TonalSpellingTags.nasalFinalConsonant;
+  name = TonalSoundTags.nasalFinalConsonant;
 }
 
 class MedialA extends Medial {
@@ -427,20 +427,20 @@ class NasalizationNN extends Nasalization {
   characters = this.makeCharacters(TonalLetterTags.nn);
 }
 
-export const nasalizationsTonal = letterSequence([new NasalizationNN()]);
+export const nasalizationsTonal = soundSequence([new NasalizationNN()]);
 
-export const nasalFinalConsonantsTonal = letterSequence([
+export const nasalFinalConsonantsTonal = soundSequence([
   new FinalM(),
   new FinalN(),
   new FinalNG(),
 ]);
 
-export const neutralFinalConsonantsTonal = letterSequence([
+export const neutralFinalConsonantsTonal = soundSequence([
   new FinalH(),
   new FinalHH(),
 ]);
 
-export const vowelsTonal = letterSequence([
+export const vowelsTonal = soundSequence([
   new MedialA(),
   new MedialE(),
   new MedialI(),
@@ -452,13 +452,13 @@ export const vowelsTonal = letterSequence([
   new MedialER(),
 ]);
 
-export const materLectionisTonal = letterSequence([
+export const materLectionisTonal = soundSequence([
   new MaterLectionisM(),
   new MaterLectionisN(),
   new MaterLectionisNG(),
 ]);
 
-export const initialConsonantsTonal = letterSequence([
+export const initialConsonantsTonal = soundSequence([
   new InitialP(),
   new InitialT(),
   new InitialK(),
@@ -482,7 +482,7 @@ export const initialConsonantsTonal = letterSequence([
   new InitialNG(),
 ]);
 
-export const freeToneLettersTonal = letterSequence([
+export const freeToneLettersTonal = soundSequence([
   new FreeTonalZ(),
   new FreeTonalW(),
   new FreeTonalXX(),
@@ -493,14 +493,14 @@ export const freeToneLettersTonal = letterSequence([
   new FreeTonalY(),
 ]);
 
-export const checkedToneLettersTonal = letterSequence([
+export const checkedToneLettersTonal = soundSequence([
   new CheckedTonalF(),
   new CheckedTonalY(),
   new CheckedTonalW(),
   new CheckedTonalX(),
 ]);
 
-export const stopFinalConsonantsTonal = letterSequence([
+export const stopFinalConsonantsTonal = soundSequence([
   new FinalP(),
   new FinalT(),
   new FinalK(),
@@ -511,7 +511,7 @@ export const stopFinalConsonantsTonal = letterSequence([
   new FinalHH(),
 ]);
 
-export const finalConsonantsBgjklpsTonal = letterSequence([
+export const finalConsonantsBgjklpsTonal = soundSequence([
   new FinalB(),
   new FinalG(),
   new FinalJ(),
@@ -521,7 +521,7 @@ export const finalConsonantsBgjklpsTonal = letterSequence([
   new FinalS(),
 ]);
 
-export const finalConsonantsBBggkkllppssTonal = letterSequence([
+export const finalConsonantsBBggkkllppssTonal = soundSequence([
   new FinalBB(),
   new FinalGG(),
   new FinalKK(),
@@ -530,116 +530,116 @@ export const finalConsonantsBBggkkllppssTonal = letterSequence([
   new FinalSS(),
 ]);
 
-function letterPositions(letters: PositionalLetter[]) {
-  return (t: TonalSpellingTags) => {
-    for (let i in letters) {
-      if (letters[i].name === t) return letters[i];
+function positionalSounds(sounds: Sound[]) {
+  return (s: TonalSoundTags) => {
+    for (const i in sounds) {
+      if (sounds[i].name === s) return sounds[i];
     }
-    return new PositionalLetter();
+    return new Sound();
   };
 }
 
-const lpA = letterPositions([new MedialA()]);
-const lpB = letterPositions([new InitialB(), new FinalB()]);
-const lpBB = letterPositions([new FinalBB()]);
-const lpC = letterPositions([new InitialC()]);
-const lpCH = letterPositions([new InitialCH()]);
-const lpE = letterPositions([new MedialE()]);
-const lpER = letterPositions([new MedialER()]);
-const lpF = letterPositions([new FreeTonalF(), new CheckedTonalF()]);
-const lpG = letterPositions([new InitialG(), new FinalG()]);
-const lpGG = letterPositions([new FinalGG()]);
-const lpH = letterPositions([new InitialH(), new FinalH()]);
-const lpHH = letterPositions([new FinalHH()]);
-const lpI = letterPositions([new MedialI()]);
-const lpIR = letterPositions([new MedialIR()]);
-const lpJ = letterPositions([new InitialJ(), new FinalJ()]);
-const lpK = letterPositions([new InitialK(), new FinalK()]);
-const lpKH = letterPositions([new InitialKH()]);
-const lpKK = letterPositions([new FinalKK()]);
-const lpL = letterPositions([new InitialL(), new FinalL()]);
-const lpLL = letterPositions([new FinalLL()]);
-const lpM = letterPositions([
+const psA = positionalSounds([new MedialA()]);
+const psB = positionalSounds([new InitialB(), new FinalB()]);
+const psBB = positionalSounds([new FinalBB()]);
+const psC = positionalSounds([new InitialC()]);
+const psCH = positionalSounds([new InitialCH()]);
+const psE = positionalSounds([new MedialE()]);
+const psER = positionalSounds([new MedialER()]);
+const psF = positionalSounds([new FreeTonalF(), new CheckedTonalF()]);
+const psG = positionalSounds([new InitialG(), new FinalG()]);
+const psGG = positionalSounds([new FinalGG()]);
+const psH = positionalSounds([new InitialH(), new FinalH()]);
+const psHH = positionalSounds([new FinalHH()]);
+const psI = positionalSounds([new MedialI()]);
+const psIR = positionalSounds([new MedialIR()]);
+const psJ = positionalSounds([new InitialJ(), new FinalJ()]);
+const psK = positionalSounds([new InitialK(), new FinalK()]);
+const psKH = positionalSounds([new InitialKH()]);
+const psKK = positionalSounds([new FinalKK()]);
+const psL = positionalSounds([new InitialL(), new FinalL()]);
+const psLL = positionalSounds([new FinalLL()]);
+const psM = positionalSounds([
   new InitialM(),
   new MaterLectionisM(),
   new FinalM(),
 ]);
-const lpN = letterPositions([
+const psN = positionalSounds([
   new InitialN(),
   new MaterLectionisN(),
   new FinalN(),
 ]);
-const lpNN = letterPositions([new NasalizationNN()]);
-const lpNG = letterPositions([
+const psNN = positionalSounds([new NasalizationNN()]);
+const psNG = positionalSounds([
   new InitialNG(),
   new MaterLectionisNG(),
   new FinalNG(),
 ]);
-const lpO = letterPositions([new MedialO()]);
-const lpOR = letterPositions([new MedialOR()]);
-const lpP = letterPositions([new InitialP(), new FinalP()]);
-const lpPH = letterPositions([new InitialPH()]);
-const lpPP = letterPositions([new FinalPP()]);
-const lpS = letterPositions([new InitialS(), new FinalS()]);
-const lpSS = letterPositions([new FinalSS()]);
-const lpT = letterPositions([new InitialT(), new FinalT()]);
-const lpTH = letterPositions([new InitialTH()]);
-const lpTT = letterPositions([new FinalTT()]);
-const lpU = letterPositions([new MedialU()]);
-const lpUR = letterPositions([new MedialUR()]);
-const lpW = letterPositions([new FreeTonalW(), new CheckedTonalW()]);
-const lpX = letterPositions([new FreeTonalX(), new CheckedTonalX()]);
-const lpXX = letterPositions([new FreeTonalXX()]);
-const lpY = letterPositions([new FreeTonalY(), new CheckedTonalY()]);
-const lpZ = letterPositions([new FreeTonalZ()]);
-const lpZX = letterPositions([new FreeTonalZX()]);
+const psO = positionalSounds([new MedialO()]);
+const psOR = positionalSounds([new MedialOR()]);
+const psP = positionalSounds([new InitialP(), new FinalP()]);
+const psPH = positionalSounds([new InitialPH()]);
+const psPP = positionalSounds([new FinalPP()]);
+const psS = positionalSounds([new InitialS(), new FinalS()]);
+const psSS = positionalSounds([new FinalSS()]);
+const psT = positionalSounds([new InitialT(), new FinalT()]);
+const psTH = positionalSounds([new InitialTH()]);
+const psTT = positionalSounds([new FinalTT()]);
+const psU = positionalSounds([new MedialU()]);
+const psUR = positionalSounds([new MedialUR()]);
+const psW = positionalSounds([new FreeTonalW(), new CheckedTonalW()]);
+const psX = positionalSounds([new FreeTonalX(), new CheckedTonalX()]);
+const psXX = positionalSounds([new FreeTonalXX()]);
+const psY = positionalSounds([new FreeTonalY(), new CheckedTonalY()]);
+const psZ = positionalSounds([new FreeTonalZ()]);
+const psZX = positionalSounds([new FreeTonalZX()]);
 
-export const tonalPositionalLetters = new Map<
+export const tonalPositionalSounds = new Map<
   string,
-  (t: TonalSpellingTags) => PositionalLetter
+  (s: TonalSoundTags) => Sound
 >()
-  .set(TonalLetterTags.a, lpA)
-  .set(TonalLetterTags.b, lpB)
-  .set(TonalLetterTags.bb, lpBB)
-  .set(TonalLetterTags.c, lpC)
-  .set(TonalLetterTags.ch, lpCH)
-  .set(TonalLetterTags.e, lpE)
-  .set(TonalLetterTags.er, lpER)
-  .set(TonalLetterTags.f, lpF)
-  .set(TonalLetterTags.g, lpG)
-  .set(TonalLetterTags.gg, lpGG)
-  .set(TonalLetterTags.h, lpH)
-  .set(TonalLetterTags.hh, lpHH)
-  .set(TonalLetterTags.i, lpI)
-  .set(TonalLetterTags.ir, lpIR)
-  .set(TonalLetterTags.j, lpJ)
-  .set(TonalLetterTags.k, lpK)
-  .set(TonalLetterTags.kh, lpKH)
-  .set(TonalLetterTags.kk, lpKK)
-  .set(TonalLetterTags.l, lpL)
-  .set(TonalLetterTags.ll, lpLL)
-  .set(TonalLetterTags.m, lpM)
-  .set(TonalLetterTags.n, lpN)
-  .set(TonalLetterTags.nn, lpNN)
-  .set(TonalLetterTags.ng, lpNG)
-  .set(TonalLetterTags.o, lpO)
-  .set(TonalLetterTags.or, lpOR)
-  .set(TonalLetterTags.p, lpP)
-  .set(TonalLetterTags.ph, lpPH)
-  .set(TonalLetterTags.pp, lpPP)
-  .set(TonalLetterTags.s, lpS)
-  .set(TonalLetterTags.ss, lpSS)
-  .set(TonalLetterTags.t, lpT)
-  .set(TonalLetterTags.th, lpTH)
-  .set(TonalLetterTags.tt, lpTT)
-  .set(TonalLetterTags.u, lpU)
-  .set(TonalLetterTags.ur, lpUR)
-  .set(TonalLetterTags.w, lpW)
-  .set(TonalLetterTags.x, lpX)
-  .set(TonalLetterTags.xx, lpXX)
-  .set(TonalLetterTags.y, lpY)
-  .set(TonalLetterTags.z, lpZ)
-  .set(TonalLetterTags.zx, lpZX);
+  .set(TonalLetterTags.a, psA)
+  .set(TonalLetterTags.b, psB)
+  .set(TonalLetterTags.bb, psBB)
+  .set(TonalLetterTags.c, psC)
+  .set(TonalLetterTags.ch, psCH)
+  .set(TonalLetterTags.e, psE)
+  .set(TonalLetterTags.er, psER)
+  .set(TonalLetterTags.f, psF)
+  .set(TonalLetterTags.g, psG)
+  .set(TonalLetterTags.gg, psGG)
+  .set(TonalLetterTags.h, psH)
+  .set(TonalLetterTags.hh, psHH)
+  .set(TonalLetterTags.i, psI)
+  .set(TonalLetterTags.ir, psIR)
+  .set(TonalLetterTags.j, psJ)
+  .set(TonalLetterTags.k, psK)
+  .set(TonalLetterTags.kh, psKH)
+  .set(TonalLetterTags.kk, psKK)
+  .set(TonalLetterTags.l, psL)
+  .set(TonalLetterTags.ll, psLL)
+  .set(TonalLetterTags.m, psM)
+  .set(TonalLetterTags.n, psN)
+  .set(TonalLetterTags.nn, psNN)
+  .set(TonalLetterTags.ng, psNG)
+  .set(TonalLetterTags.o, psO)
+  .set(TonalLetterTags.or, psOR)
+  .set(TonalLetterTags.p, psP)
+  .set(TonalLetterTags.ph, psPH)
+  .set(TonalLetterTags.pp, psPP)
+  .set(TonalLetterTags.s, psS)
+  .set(TonalLetterTags.ss, psSS)
+  .set(TonalLetterTags.t, psT)
+  .set(TonalLetterTags.th, psTH)
+  .set(TonalLetterTags.tt, psTT)
+  .set(TonalLetterTags.u, psU)
+  .set(TonalLetterTags.ur, psUR)
+  .set(TonalLetterTags.w, psW)
+  .set(TonalLetterTags.x, psX)
+  .set(TonalLetterTags.xx, psXX)
+  .set(TonalLetterTags.y, psY)
+  .set(TonalLetterTags.z, psZ)
+  .set(TonalLetterTags.zx, psZX);
 
 export class ZeroAllomorph extends FreeAllomorph {
   tonal = new ZeroTonal();

@@ -1,7 +1,7 @@
-import { PositionalLetter, PositionalLetterGeneration, sgPipe } from '../unit';
+import { Sound, PositionalSoundGeneration, sgPipe } from '../unit';
 import {
-  tonalPositionalLetters,
-  TonalSpellingTags,
+  tonalPositionalSounds,
+  TonalSoundTags,
   lowerLettersTonal,
   checkedToneLettersTonal,
   freeToneLettersTonal,
@@ -17,99 +17,97 @@ import {
 } from './version2';
 import { combiningRules } from './collections';
 
-function initialConsonant(sg: PositionalLetterGeneration) {
-  if (initialConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+function initialConsonant(sg: PositionalSoundGeneration) {
+  if (initialConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.initialConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.initialConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
 
   return sg;
 }
 
-function stopFinalConsonant(sg: PositionalLetterGeneration) {
+function stopFinalConsonant(sg: PositionalSoundGeneration) {
   if (!sg.matching) return sg;
 
-  if (stopFinalConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (stopFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.stopFinalConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(stopFinalConsonantsTonal.letters);
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(stopFinalConsonantsTonal.sounds);
   }
 
   return sg;
 }
 
-function neutralFinalConsonant(sg: PositionalLetterGeneration) {
+function neutralFinalConsonant(sg: PositionalSoundGeneration) {
   if (!sg.matching) return sg;
 
   if (
-    neutralFinalConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])
+    neutralFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])
   ) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.stopFinalConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(neutralFinalConsonantsTonal.letters);
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(neutralFinalConsonantsTonal.sounds);
   }
 
   return sg;
 }
 
-function nasalFinalConsonant(sg: PositionalLetterGeneration) {
+function nasalFinalConsonant(sg: PositionalSoundGeneration) {
   // check out the length of letters like we do in the loop in function vowel
   if (!sg.matching || sg.letters.length == 0) return sg;
 
-  if (
-    nasalFinalConsonantsTonal.includes(sg.letters[sg.matchedLetters.length])
-  ) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (nasalFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.nasalFinalConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.nasalFinalConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(nasalFinalConsonantsTonal.letters);
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(nasalFinalConsonantsTonal.sounds);
   }
 
   return sg;
 }
 
-function vowel(sg: PositionalLetterGeneration) {
+function vowel(sg: PositionalSoundGeneration) {
   // we need the below line when the preceding initial consonant is not matched
   if (!sg.matching) return sg;
 
   let toBePredicted = true;
   let matches: number = 0;
-  for (let i = sg.matchedLetters.length; i < sg.letters.length; i++) {
+  for (let i = sg.matchedSounds.length; i < sg.letters.length; i++) {
     if (vowelsTonal.includes(sg.letters[i])) {
       toBePredicted = true;
-      const positions = tonalPositionalLetters.get(sg.letters[i]);
-      if (positions) {
-        const s = positions(TonalSpellingTags.vowel);
+      const sounds = tonalPositionalSounds.get(sg.letters[i]);
+      if (sounds) {
+        const s = sounds(TonalSoundTags.vowel);
         matches++;
-        if (s) sg.matchedLetters.push(s);
+        if (s) sg.matchedSounds.push(s);
       }
     } else {
       toBePredicted = false;
@@ -120,7 +118,7 @@ function vowel(sg: PositionalLetterGeneration) {
 
   if (toBePredicted) {
     if (sg.predictive && sg.letters.length > 0) {
-      sg.predictions.push(vowelsTonal.letters);
+      sg.predictions.push(vowelsTonal.sounds);
     }
     sg.matching = true;
   }
@@ -128,107 +126,105 @@ function vowel(sg: PositionalLetterGeneration) {
   return sg;
 }
 
-function materLectionis(sg: PositionalLetterGeneration) {
-  if (materLectionisTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+function materLectionis(sg: PositionalSoundGeneration) {
+  if (materLectionisTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.vowel);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.vowel);
+      if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
 
   return sg;
 }
 
-function nasalization(sg: PositionalLetterGeneration) {
+function nasalization(sg: PositionalSoundGeneration) {
   if (!sg.matching) return sg;
 
-  if (nasalizationsTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (nasalizationsTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.nasalization);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.nasalization);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(nasalizationsTonal.letters);
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(nasalizationsTonal.sounds);
   }
 
   return sg;
 }
 
-function freeToneLetter(sg: PositionalLetterGeneration) {
+function freeToneLetter(sg: PositionalSoundGeneration) {
   if (!sg.matching) return sg;
 
-  if (freeToneLettersTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (freeToneLettersTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.freeTone);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.freeTone);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(freeToneLettersTonal.letters);
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(freeToneLettersTonal.sounds);
   }
 
   return sg;
 }
 
-function checkedToneLetter(sg: PositionalLetterGeneration) {
+function checkedToneLetter(sg: PositionalSoundGeneration) {
   if (!sg.matching) return sg;
 
-  if (checkedToneLettersTonal.includes(sg.letters[sg.matchedLetters.length])) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+  if (checkedToneLettersTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.checkedTone);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.checkedTone);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedLetters.length && sg.predictive)
-      sg.predictions.push(checkedToneLettersTonal.letters);
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(checkedToneLettersTonal.sounds);
   }
 
   return sg;
 }
 
-function sandhiFinalConsonant(sg: PositionalLetterGeneration) {
+function sandhiFinalConsonant(sg: PositionalSoundGeneration) {
   if (!sg.matching) return sg;
 
   if (
-    finalConsonantsBgjklpsTonal.includes(
-      sg.letters[sg.matchedLetters.length]
-    ) ||
+    finalConsonantsBgjklpsTonal.includes(sg.letters[sg.matchedSounds.length]) ||
     finalConsonantsBBggkkllppssTonal.includes(
-      sg.letters[sg.matchedLetters.length]
+      sg.letters[sg.matchedSounds.length]
     )
   ) {
-    const positions = tonalPositionalLetters.get(
-      sg.letters[sg.matchedLetters.length]
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
     );
-    if (positions) {
-      const s = positions(TonalSpellingTags.stopFinalConsonant);
-      if (s) sg.matchedLetters.push(s);
+    if (sounds) {
+      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      if (s) sg.matchedSounds.push(s);
     }
   } else {
     sg.matching = false;
     if (
-      sg.letters.length == sg.matchedLetters.length &&
+      sg.letters.length == sg.matchedSounds.length &&
       sg.predictive &&
       sg.predictSandhiFinalConsonant
     ) {
-      sg.predictions.push(finalConsonantsBgjklpsTonal.letters);
-      sg.predictions.push(finalConsonantsBBggkkllppssTonal.letters);
+      sg.predictions.push(finalConsonantsBgjklpsTonal.sounds);
+      sg.predictions.push(finalConsonantsBBggkkllppssTonal.sounds);
     }
   }
 
@@ -370,9 +366,9 @@ export class TonalPositionalLetterGenerator {
     return strs;
   }
 
-  generate(letters: string[]): PositionalLetter[][] {
+  generate(letters: string[]): Sound[][] {
     let strs: Array<string[]> = new Array();
-    const sequences: Array<PositionalLetter[]> = new Array(); // to be returned
+    const sequences: Array<Sound[]> = new Array(); // to be returned
 
     if (this.isStopFinal(letters[letters.length - 1])) {
       strs = this.genChecked(letters);
@@ -381,18 +377,18 @@ export class TonalPositionalLetterGenerator {
     }
 
     for (let i in strs) {
-      // generates all needed positional letters to be processed
+      // generates all needed positional sounds to be processed
 
       for (let j = 0; j < syllableCompositions.length; j++) {
-        let sg = new PositionalLetterGeneration();
+        let sg = new PositionalSoundGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = syllableCompositions[j](sg);
         if (
-          sg.letters.length == sg.matchedLetters.length &&
+          sg.letters.length == sg.matchedSounds.length &&
           sg.matching == true
         ) {
-          sequences.push(sg.matchedLetters);
+          sequences.push(sg.matchedSounds);
           break;
         }
       }

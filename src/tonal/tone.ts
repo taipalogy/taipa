@@ -1,7 +1,7 @@
 import { syllabifyTonal } from '../unchange/morpheme';
 import { AlphabeticGrapheme, makeMatchedPatterns } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
-import { TonalSpellingTags, TonalLetterTags } from './version2';
+import { TonalSoundTags, TonalLetterTags } from './version2';
 
 /** Tone letters and stop finals of the syllables of a word. */
 export class LexicalTone {
@@ -53,7 +53,7 @@ export function extractTones(token: string) {
   const stps = ptn.map(it =>
     it
       .map(it =>
-        it.name === TonalSpellingTags.stopFinalConsonant ? it.toString() : ''
+        it.name === TonalSoundTags.stopFinalConsonant ? it.toString() : ''
       )
       .filter(it => it.length > 0)
   );
@@ -61,8 +61,8 @@ export function extractTones(token: string) {
   const tnls = ptn.map(it =>
     it
       .map(it =>
-        it.name === TonalSpellingTags.freeTone ||
-        it.name === TonalSpellingTags.checkedTone
+        it.name === TonalSoundTags.freeTone ||
+        it.name === TonalSoundTags.checkedTone
           ? it.toString()
           : ''
       )

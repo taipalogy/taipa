@@ -1,6 +1,6 @@
 import { TonalSyllable } from './unchange/unit';
 import { Allomorph } from './tonal/version2';
-import { PositionalLetter, Morpheme } from './unit';
+import { Sound, Morpheme } from './unit';
 import { TonalWord, InflectionalEnding } from './unchange/unit';
 import { TonalPhrase } from './unchange/unit';
 import {
@@ -16,10 +16,7 @@ import {
 abstract class Metaplasm {}
 
 export class TonalCombiningMetaplasm extends Metaplasm {
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): Array<TonalSyllable> {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     return [];
   }
 }
@@ -41,10 +38,7 @@ export class RemovingNasalizationOfAy extends TonalCombiningMetaplasm {}
 export class KanaCombiningMetaplasm extends Metaplasm {}
 
 export class TonalUncombiningMetaplasm extends Metaplasm {
-  apply(
-    letters: Array<PositionalLetter>,
-    allomorph: Allomorph
-  ): Array<TonalSyllable> {
+  apply(sounds: Array<Sound>, allomorph: Allomorph): Array<TonalSyllable> {
     return [];
   }
 }

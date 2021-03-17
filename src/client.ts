@@ -5,7 +5,7 @@ import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 import { getKanaBlocks, checkNumberOfLettersKana } from './kana/init';
 import { KanaUncombiningMorpheme } from './kana/morpheme';
 import { kanaLemmatizationAnalyzer } from './kana/analyzer';
-import { Word, PositionalLetter } from './unit';
+import { Word, Sound } from './unit';
 import { TonalUncombiningForms } from './unchange/metaplasm';
 
 export class TokenAnalysis {
@@ -15,8 +15,8 @@ export class TokenAnalysis {
   lemmas: Array<Word> = new Array();
   /** Inflectional suffix. */
   inflectionalEnding: string = '';
-  /** positional letter sequences. */
-  letterSequences: Array<PositionalLetter[]> = new Array();
+  /** positional sound sequences. */
+  soundSequences: Array<Sound[]> = new Array();
   /** Syllabic block or syllabogram sequences. */
   blockSequences: string[] = [];
   /** Uncombining form sequences. */
@@ -33,8 +33,8 @@ export class Client {
       const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
       ta.blockSequences = getKanaBlocks(morphemes);
 
-      for (let m of morphemes) {
-        ta.letterSequences.push(m.letters);
+      for (const m of morphemes) {
+        ta.soundSequences.push(m.sounds);
       }
     }
 
@@ -55,8 +55,8 @@ export class Client {
 
       ta.blockSequences = getTaiKanaBlocks(morphemes);
 
-      for (let m of morphemes) {
-        ta.letterSequences.push(m.letters);
+      for (const m of morphemes) {
+        ta.soundSequences.push(m.sounds);
         // TODO: first free tone to fourth. first checked tone to eighth
         ta.uncombiningSequences.push(m.getForms().map(it => it.literal));
       }
