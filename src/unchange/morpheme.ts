@@ -18,7 +18,7 @@ import {
   stopFinalConsonantsTonal,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
-import { TonalPositionalLetterGenerator } from '../tonal/lettergen';
+import { TonalPositionalSoundGenerator } from '../tonal/soundgen';
 import { isInSyllableTable } from '../tonal/syllabletable';
 import {
   smMnngHF,
@@ -284,7 +284,7 @@ export function syllabifyTonal(
   }
 
   // console.log('matched: ' + matched);
-  const tsg = new TonalPositionalLetterGenerator();
+  const tsg = new TonalPositionalSoundGenerator();
   //console.log('matched: ' + matched)
   let list: Array<Sound[]> = new Array();
 

@@ -1,4 +1,4 @@
-import { syllableCompositions } from './lettergen';
+import { syllableCompositions } from './soundgen';
 import { PositionalSoundGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
 import { vowelsTonal } from './version2';

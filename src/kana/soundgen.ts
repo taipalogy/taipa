@@ -112,7 +112,7 @@ const scCSV = sgPipe(initialConsonant, semivowel, vowel);
 const scCSVC = sgPipe(initialConsonant, semivowel, vowel, finalConsonant); // includes geminated consonants
 const scCCV = sgPipe(geminatedConsonant, initialConsonant, vowel);
 
-export class KanaPositionalLetterGenerator {
+export class KanaPositionalSoundGenerator {
   readonly sylCompositions = [scV, scCV, scVC, scCVC, scCSV, scCSVC, scCCV];
 
   private genSokuonAndGeminated(letters: string[], lookahead: string) {

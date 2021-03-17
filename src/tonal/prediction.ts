@@ -1,4 +1,4 @@
-import { syllableCompositions } from './lettergen';
+import { syllableCompositions } from './soundgen';
 import { PositionalSoundGeneration, Sound } from '../unit';
 import { isInSyllableTable } from './syllabletable';
 

@@ -206,7 +206,7 @@ export class TonalUninsertionLexeme implements Lexeme {
       ) {
         // when the preceding letter is m, the initial of this enclitic is m
         // when the preceding letter is n, the initial of this enclitic is n
-        // when the preceding letter is ng, the initial of this enclitic is g
+        // when the preceding letter is ng, the initial of this enclitic is ng/g
         const syls = this.morphemes[0].uninsertNasal();
 
         wrd.replaceSyllable(0, syls[0]);

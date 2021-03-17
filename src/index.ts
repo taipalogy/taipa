@@ -75,7 +75,7 @@ export {
 
 export { predict } from './tonal/prediction';
 
-export { syllableCompositions } from './tonal/lettergen';
+export { syllableCompositions } from './tonal/soundgen';
 
 export { getLatinSyllableCompositions } from './tonal/tokenizer';
 

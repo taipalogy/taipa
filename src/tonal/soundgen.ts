@@ -337,7 +337,7 @@ export const syllableCompositions = [
   scVC3, scVCT3, scCVC3, scCVCT3, scCVCCT,
 ];
 
-export class TonalPositionalLetterGenerator {
+export class TonalPositionalSoundGenerator {
   private isStopFinal(str: string) {
     if (stopFinalConsonantsTonal.includes(str)) return true;
 

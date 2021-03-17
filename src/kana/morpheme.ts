@@ -12,7 +12,7 @@ import {
   finalConsonantsKana,
   geminatedConsonantsKana,
 } from './kana';
-import { KanaPositionalLetterGenerator } from './lettergen';
+import { KanaPositionalSoundGenerator } from './soundgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 export class KanaSyllable extends Syllable {}
@@ -122,7 +122,7 @@ function syllabifyKana(
   let list: Array<Sound[]> = new Array();
   if (matched.length > 0) {
     // console.log(matchedLtrs, lookAhead);
-    const ksg = new KanaPositionalLetterGenerator();
+    const ksg = new KanaPositionalSoundGenerator();
     list = ksg.generate(matchedLtrs, lookAhead);
     // console.log(list);
   }
