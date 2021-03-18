@@ -6,7 +6,7 @@ const document_1 = require("../lib/document")
 let doc = new document_1.Document();
 let stdin = process.openStdin();
 stdin.addListener('data', function (d) {
-    doc = processor_1.nlp(d.toString().trim());
+    doc = processor_1.depParse(d.toString().trim());
     const ts = doc.nodes;
     if (ts.length > 0) {
         for (let i = 0; i < ts.length; i++) {
