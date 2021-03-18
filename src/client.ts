@@ -15,7 +15,7 @@ export class TokenAnalysis {
   lemmas: Array<Word> = new Array();
   /** Inflectional suffix. */
   inflectionalEnding: string = '';
-  /** positional sound sequences. */
+  /** sound sequences. */
   soundSequences: Array<Sound[]> = new Array();
   /** Syllabic block or syllabogram sequences. */
   blockSequences: string[] = [];

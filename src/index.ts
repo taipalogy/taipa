@@ -61,7 +61,7 @@ export {
 export { KanaUncombiningMorpheme } from './kana/morpheme';
 export { TonalWord, TonalPhrase } from './unchange/unit';
 
-export { Sound, PositionalSoundGeneration } from './unit';
+export { Sound, SoundGeneration } from './unit';
 export {
   initialConsonantsTonal,
   nasalizationsTonal,

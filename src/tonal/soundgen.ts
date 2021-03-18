@@ -1,4 +1,4 @@
-import { Sound, PositionalSoundGeneration, sgPipe } from '../unit';
+import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
   tonalPositionalSounds,
   TonalSoundTags,
@@ -17,7 +17,7 @@ import {
 } from './version2';
 import { combiningRules } from './collections';
 
-function initialConsonant(sg: PositionalSoundGeneration) {
+function initialConsonant(sg: SoundGeneration) {
   if (initialConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
     const sounds = tonalPositionalSounds.get(
       sg.letters[sg.matchedSounds.length]
@@ -31,7 +31,7 @@ function initialConsonant(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function stopFinalConsonant(sg: PositionalSoundGeneration) {
+function stopFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (stopFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
@@ -51,7 +51,7 @@ function stopFinalConsonant(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function neutralFinalConsonant(sg: PositionalSoundGeneration) {
+function neutralFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (
@@ -73,7 +73,7 @@ function neutralFinalConsonant(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function nasalFinalConsonant(sg: PositionalSoundGeneration) {
+function nasalFinalConsonant(sg: SoundGeneration) {
   // check out the length of letters like we do in the loop in function vowel
   if (!sg.matching || sg.letters.length == 0) return sg;
 
@@ -94,7 +94,7 @@ function nasalFinalConsonant(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function vowel(sg: PositionalSoundGeneration) {
+function vowel(sg: SoundGeneration) {
   // we need the below line when the preceding initial consonant is not matched
   if (!sg.matching) return sg;
 
@@ -126,7 +126,7 @@ function vowel(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function materLectionis(sg: PositionalSoundGeneration) {
+function materLectionis(sg: SoundGeneration) {
   if (materLectionisTonal.includes(sg.letters[sg.matchedSounds.length])) {
     const sounds = tonalPositionalSounds.get(
       sg.letters[sg.matchedSounds.length]
@@ -140,7 +140,7 @@ function materLectionis(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function nasalization(sg: PositionalSoundGeneration) {
+function nasalization(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (nasalizationsTonal.includes(sg.letters[sg.matchedSounds.length])) {
@@ -160,7 +160,7 @@ function nasalization(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function freeToneLetter(sg: PositionalSoundGeneration) {
+function freeToneLetter(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (freeToneLettersTonal.includes(sg.letters[sg.matchedSounds.length])) {
@@ -180,7 +180,7 @@ function freeToneLetter(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function checkedToneLetter(sg: PositionalSoundGeneration) {
+function checkedToneLetter(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (checkedToneLettersTonal.includes(sg.letters[sg.matchedSounds.length])) {
@@ -200,7 +200,7 @@ function checkedToneLetter(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function sandhiFinalConsonant(sg: PositionalSoundGeneration) {
+function sandhiFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
   if (
@@ -337,7 +337,7 @@ export const syllableCompositions = [
   scVC3, scVCT3, scCVC3, scCVCT3, scCVCCT,
 ];
 
-export class TonalPositionalSoundGenerator {
+export class TonalSoundGenerator {
   private isStopFinal(str: string) {
     if (stopFinalConsonantsTonal.includes(str)) return true;
 
@@ -377,10 +377,10 @@ export class TonalPositionalSoundGenerator {
     }
 
     for (let i in strs) {
-      // generates all needed positional sounds to be processed
+      // generates all needed sounds to be processed
 
       for (let j = 0; j < syllableCompositions.length; j++) {
-        let sg = new PositionalSoundGeneration();
+        let sg = new SoundGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = syllableCompositions[j](sg);

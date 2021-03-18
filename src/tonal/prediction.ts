@@ -1,5 +1,5 @@
 import { syllableCompositions } from './soundgen';
-import { PositionalSoundGeneration, Sound } from '../unit';
+import { SoundGeneration, Sound } from '../unit';
 import { isInSyllableTable } from './syllabletable';
 
 /** Predicts the following letters. Return them as an array of strings when available. If the lexical roots are not present, an empty array will be returned. */
@@ -7,13 +7,13 @@ export function predict(letters: string[]) {
   const soundSeqs: Array<Sound[]> = new Array();
 
   for (let j = 0; j < syllableCompositions.length; j++) {
-    let sg = new PositionalSoundGeneration();
+    let sg = new SoundGeneration();
     sg.predictive = true;
     sg.letters = letters;
     sg = syllableCompositions[j](sg);
 
     if (sg.letters.length != sg.matchedSounds.length || sg.matching != true) {
-      // the pattern is not matched, the first unmatched set of positional sounds
+      // the pattern is not matched, the first unmatched set of sounds
       // is then returned as a possible prediction
       sg.predictions.map(x => soundSeqs.push(x));
     }

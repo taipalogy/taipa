@@ -124,12 +124,12 @@ describe('Kana testing', () => {
   const morphemes1: KanaUncombiningMorpheme[] = ka.morphAnalyze(inputUnd);
 
   test('check the length of letter sequences', () => {
-    expect(morphemes1.map(x => x.letters).length).toEqual(0);
+    expect(morphemes1.map(x => x.sounds).length).toEqual(0);
   });
 
   const morphemes2: KanaUncombiningMorpheme[] = ka.morphAnalyze(inputEmpty);
 
   test('check the length of letter sequences', () => {
-    expect(morphemes2.map(x => x.letters).length).toEqual(0);
+    expect(morphemes2.map(x => x.sounds).length).toEqual(0);
   });
 });

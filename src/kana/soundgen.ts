@@ -1,4 +1,4 @@
-import { Sound, PositionalSoundGeneration, sgPipe } from '../unit';
+import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
   KanaSoundTags,
   kanaPositionalSounds,
@@ -10,7 +10,7 @@ import {
   // hatsuonsKana,
 } from './kana';
 
-function initialConsonant(sg: PositionalSoundGeneration) {
+function initialConsonant(sg: SoundGeneration) {
   const sics = initialConsonantsKana;
 
   if (sics.includes(sg.letters[sg.matchedSounds.length])) {
@@ -26,7 +26,7 @@ function initialConsonant(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function semivowel(sg: PositionalSoundGeneration) {
+function semivowel(sg: SoundGeneration) {
   const ssvs = semivowelsKana;
 
   if (ssvs.includes(sg.letters[sg.matchedSounds.length])) {
@@ -42,7 +42,7 @@ function semivowel(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function vowel(sg: PositionalSoundGeneration) {
+function vowel(sg: SoundGeneration) {
   const svs = vowelsKana;
 
   if (svs.includes(sg.letters[sg.matchedSounds.length])) {
@@ -58,7 +58,7 @@ function vowel(sg: PositionalSoundGeneration) {
   return sg;
 }
 /*
-function hatsuon(sg: PositionalSoundGeneration) {
+function hatsuon(sg: SoundGeneration) {
   const sfcs = hatsuonsKana;
 
   if (sfcs.includes(sg.sounds[sg.matchedSounds.length])) {
@@ -72,7 +72,7 @@ function hatsuon(sg: PositionalSoundGeneration) {
   return sg;
 }
 */
-function finalConsonant(sg: PositionalSoundGeneration) {
+function finalConsonant(sg: SoundGeneration) {
   const sfcs = finalConsonantsKana;
 
   if (sfcs.includes(sg.letters[sg.matchedSounds.length])) {
@@ -88,7 +88,7 @@ function finalConsonant(sg: PositionalSoundGeneration) {
   return sg;
 }
 
-function geminatedConsonant(sg: PositionalSoundGeneration) {
+function geminatedConsonant(sg: SoundGeneration) {
   const sgcs = geminatedConsonantsKana;
 
   if (sgcs.includes(sg.letters[sg.matchedSounds.length])) {
@@ -112,7 +112,7 @@ const scCSV = sgPipe(initialConsonant, semivowel, vowel);
 const scCSVC = sgPipe(initialConsonant, semivowel, vowel, finalConsonant); // includes geminated consonants
 const scCCV = sgPipe(geminatedConsonant, initialConsonant, vowel);
 
-export class KanaPositionalSoundGenerator {
+export class KanaSoundGenerator {
   readonly sylCompositions = [scV, scCV, scVC, scCVC, scCSV, scCSVC, scCCV];
 
   private genSokuonAndGeminated(letters: string[], lookahead: string) {
@@ -150,10 +150,10 @@ export class KanaPositionalSoundGenerator {
 
     // console.log(strs);
     for (let i in strs) {
-      // generates all needed positional sounds to be processed
+      // generates all needed sounds to be processed
 
       for (let j = 0; j < this.sylCompositions.length; j++) {
-        let sg = new PositionalSoundGeneration();
+        let sg = new SoundGeneration();
         sg.letters = strs[i];
         //console.log(`j: ${j}`)
         sg = this.sylCompositions[j](sg);

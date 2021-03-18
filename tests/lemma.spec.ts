@@ -284,7 +284,7 @@ describe('Lemma testing, empty string as an argument, tonal', () => {
 
   const soudnSeqs1 = tonalLemmatizationAnalyzer
     .morphAnalyze(inputEmpty, new TonalUncombiningForms([]))
-    .map(x => x.letters);
+    .map(x => x.sounds);
   test('given empty string, check the letter literal', () => {
     expect(soudnSeqs1.length).toEqual(0);
   });
@@ -319,7 +319,7 @@ describe('Lemma testing, undefined string as an argument, tonal', () => {
 
   const soudnSeqs2 = tonalLemmatizationAnalyzer
     .morphAnalyze(inputUnd, new TonalUncombiningForms([]))
-    .map(x => x.letters);
+    .map(x => x.sounds);
   test('given undefined string, check the letter literal', () => {
     expect(soudnSeqs2.length).toEqual(0);
   });

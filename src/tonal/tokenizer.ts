@@ -1,5 +1,5 @@
 import { syllableCompositions } from './soundgen';
-import { PositionalSoundGeneration, Sound } from '../unit';
+import { SoundGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
 import { vowelsTonal } from './version2';
 import { impossibleSequences } from './collections';
@@ -21,7 +21,7 @@ export function getLatinSyllableCompositions(str: string) {
         if (shouldBreak) break;
         if (i + 1 > beginOfSyllable) {
           // bypass those loops when i is less than or equal to beginOfSyllable
-          let sg = new PositionalSoundGeneration();
+          let sg = new SoundGeneration();
           // the letter at position i is exclusive
           sg.letters = letters.slice(beginOfSyllable, i + 1);
           // console.log(sg.letters, beginOfSyllable, i, j);

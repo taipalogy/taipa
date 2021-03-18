@@ -337,11 +337,11 @@ export const soundSequence = function (sounds: Sound[]) {
 
 // spelling generation
 export const sgPipe = (
-  ...fns: Array<(sg: PositionalSoundGeneration) => PositionalSoundGeneration>
-) => (x: PositionalSoundGeneration) => fns.reduce((v, f) => f(v), x);
+  ...fns: Array<(sg: SoundGeneration) => SoundGeneration>
+) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
 
-/** Positional sound generation for syllable compositions. */
-export class PositionalSoundGeneration {
+/** Sound generation for syllable compositions. */
+export class SoundGeneration {
   /** The letters to be matched. */
   letters: string[] = [];
   /** Matched sounds accumulator. */
@@ -350,7 +350,7 @@ export class PositionalSoundGeneration {
   matching: boolean = true;
   /** Will populate `predictions` when set to true. */
   predictive: boolean = false;
-  /** Predicted positional sounds */
+  /** Predicted sounds */
   predictions: Array<Sound[]> = new Array();
   predictSandhiFinalConsonant: boolean = false;
 }
