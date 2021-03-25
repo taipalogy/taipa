@@ -19,11 +19,11 @@ import {
 } from './dictionary';
 import { lemmatize } from '../unchange/lemmatizer';
 
-type Pair<T, K> = [T, K];
-export type Pairs<T, K> = Pair<T, K>[];
+export type tokenTagPair = [string, string];
 
 export function tag(features: Feature[]) {
-  const pairs: Pairs<string, string> = [];
+  // const pairs: Pairs<string, string> = [];
+  const pairs: Array<tokenTagPair> = [];
   let expecting: string = '';
   for (let i = 0; i < features.length; i++) {
     if (

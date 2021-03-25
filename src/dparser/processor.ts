@@ -1,5 +1,5 @@
 import { DependencyParser } from '../dparser/parser';
-import { tag, Pairs } from '../dparser/tagger';
+import { tag, tokenTagPair } from '../dparser/tagger';
 
 import { Document } from '../document';
 import { Node } from '../document';
@@ -150,7 +150,7 @@ function createExpressionLengthTwo(
   return obj;
 }
 
-function getMultiWordExpressions(pairs: Pairs<string, string>) {
+function getMultiWordExpressions(pairs: Array<tokenTagPair>) {
   const expressions: MultiWordExpression[] = [];
   for (let i = 0; i < pairs.length - 1; i++) {
     // phrasal verbs as verb + particle
@@ -236,7 +236,7 @@ function getMultiWordExpressions(pairs: Pairs<string, string>) {
 }
 
 function getLemmas(
-  pairs: Pairs<string, string>,
+  pairs: Array<tokenTagPair>,
   expressions: MultiWordExpression[]
 ) {
   // console.log(pairs, expressions);
@@ -314,7 +314,7 @@ function getLemmas(
   return lemmas;
 }
 
-function convertTokensToNodes(pairs: Pairs<string, string>, lemmas: string[]) {
+function convertTokensToNodes(pairs: Array<tokenTagPair>, lemmas: string[]) {
   // convert token-tag pairs to nodes which are used as stack or queue elements
   const nodes = pairs.map(it => new Node(it[0]));
   if (pairs) {
