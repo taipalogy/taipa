@@ -55,7 +55,8 @@ describe('Kana testing', () => {
   test('kana chouon', () => {
     expect(ta9.blockSequences[0]).toEqual('にゅうす');
     expect(ta9.blockSequences[1]).toEqual('ニュウス');
-    expect(ta9.blockSequences[2]).toEqual('ニュース');
+    expect(ta9.blockSequences[2]).toEqual('にゅーす');
+    expect(ta9.blockSequences[3]).toEqual('ニュース');
   });
 
   const ta10 = cli.processKana('yayuyo');
@@ -68,7 +69,8 @@ describe('Kana testing', () => {
   test('kanas', () => {
     expect(ta11.blockSequences[0]).toEqual('ろうまじ');
     expect(ta11.blockSequences[1]).toEqual('ロウマジ');
-    expect(ta11.blockSequences[2]).toEqual('ローマジ');
+    expect(ta11.blockSequences[2]).toEqual('ろーまじ');
+    expect(ta11.blockSequences[3]).toEqual('ローマジ');
   });
 
   const ta12 = cli.processKana('rongu');

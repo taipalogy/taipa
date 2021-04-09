@@ -539,7 +539,7 @@ export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.p + KanaLetterTags.a, ['ぱ', 'パ'])
   .set(KanaLetterTags.p + KanaLetterTags.i, ['ぴ', 'ピ'])
   .set(KanaLetterTags.p + KanaLetterTags.u, ['ぷ', 'プ'])
-  .set(KanaLetterTags.p + KanaLetterTags.e, ['ぺ', 'ペ'])
+  .set(KanaLetterTags.p + KanaLetterTags.e, ['ぺ', 'ペ']) // U+307A. U+30DA.
   .set(KanaLetterTags.p + KanaLetterTags.o, ['ぽ', 'ポ'])
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.a, ['きゃ', 'キャ'])
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.u, ['きゅ', 'キュ'])
