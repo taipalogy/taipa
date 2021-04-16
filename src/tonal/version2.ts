@@ -183,8 +183,8 @@ export enum TonalSoundTags {
   nasalization = 'nasalization',
   stopFinalConsonant = 'stopFinalConsonant',
   nasalFinalConsonant = 'nasalFinalConsonant',
-  checkedTone = 'checkedTone', // checked tone letter
-  freeTone = 'freeTone', // free tone letter
+  checkedTone = 'checkedTone', // checked tone
+  freeTone = 'freeTone', // free tone
 }
 
 export class Initial extends Sound {

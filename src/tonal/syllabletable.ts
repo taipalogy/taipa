@@ -31,7 +31,7 @@ const toBeVerified = [
 
     'na', 'niw', 'nuaiw',
 
-    'ngihh',
+    'ngihh', 'nguiy',
     
     'uehh',
 
