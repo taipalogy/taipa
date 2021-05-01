@@ -11,9 +11,9 @@ const toBeVerified = [
     
     'cett', 'changxx', 'chua', 'chiauhh', 'chiuh', 'chiunnh', 'ciauhh', 'cuaihh',
 
-    'tom',
+    'chueh',
 
-    'giakk', 'chueh',
+    'giakk', 'gutt',
     
     'hioh', 'huangz',
 
@@ -21,9 +21,9 @@ const toBeVerified = [
 
     'jex', 'jek', 'jing', 'jih', 'jirnx', 'jirtt', 'juany',
 
-    'khanx', 'khangx', 'kirinnx', 'kuinnx',
+    'kirinnx', 'kuinnx', 'kanh', 'kih', 'kngh', 'kuaix', 'kuaiz', 'kuakk', 'kuangz', 'kuatt',
 
-    'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
+    'khanx', 'khangx', 'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
 
     'len', 'liakk', 'lirey',
 
@@ -39,11 +39,10 @@ const toBeVerified = [
     
     'phitt',
 
-    'kanh', 'kih', 'kngh', 'kuaix', 'kuaiz', 'kuakk', 'kuangz', 'kuatt',
-
     'sauhh', 'sokk',
 
-    'thuehh', 'thom', 'thomz', 'tiangy', 'tionny',
+    'thuehh', 'thom', 'thomz', 'tiangy', 'tionny', 'tom',
+
 
     'pann', 'pihh', 'pirt',
 
@@ -103,7 +102,7 @@ const addonSyllables = [
 // prettier-ignore
 const syllabicHeadwords = [
     // TODO: some syllabic forms may not be found in Taiwanese but present in dictionary as headwords. need to further check
-    'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'bor',
+    'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'bor', 'bang',
 
     'cua', 'cuai', 'cuang', 'cuat', 'com', 'cor', 'core',
 
@@ -113,17 +112,19 @@ const syllabicHeadwords = [
     
     'er',
 
-    'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gir', 'go', 'gue', 'gok', 'guat', 'gong', 'gor', 'gore', 'gur',
+    'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gek', 'gia', 'giak', 'giam', 'giau', 'gim', 'giong', 'gip', 'gir', 'giri' /* 'ngiriy' burz phinnwim huzhurz. */, 'girn', 'go', 'gue', 'gok', 'guat', 'gong', 'gor', 'gore', 'gur', 'gut',
 
     'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'huai', 'huang', 'hop', 'hor', 'hore',
 
-    'iak', 'ionn', 'ir', 'iri', 'irn',
+    'iak', 'io' /* for ionn */, 'ir', 'iri', 'irn',
 
-    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jor', 'jun', 'jur',
+    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jor', 'jun', 'jur', 'jiam', 'jiang', 'jiongy', 'jim',
 
-    'khir', 'khor',
+    'kom', 'kop', 'kore' /* dupes in addon */, 'kork' /* for khork, after kore, before gua */,
 
-    'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'lua', 'luat', 'lue', 'lop', 'lom', 'lor', 'lore',
+    'khir', 'khor', 'kuak',
+
+    'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'lua', 'luat', 'lue', 'lop', 'lom', 'lor', 'lore', 'liong',
 
     'm', 'mia', 'min', 'muai', 'mue', 'mu',
 
@@ -139,7 +140,7 @@ const syllabicHeadwords = [
 
     'phor',
     
-    'sir', 'siri', 'sop', 'sor', 'sore',
+    'sir', 'siri', 'sop', 'sor', 'sore', 'sio' /* for sionn */,
 
     'tha', 'thia', 'thor',
 
@@ -160,7 +161,7 @@ const extraSyllables = [
 
     'en',
 
-    'geh', 'gehh', 'gih', 'giuh', 'gimw', 'gueh', 'gunx', 'guny',
+    'geh', 'gehh', 'gih', 'giuh', 'gimw', 'gipp', 'gueh', 'gunx', 'guny',
 
     'homz', 'huainn',
 
