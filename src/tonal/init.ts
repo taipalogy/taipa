@@ -52,7 +52,7 @@ function handleCombiningDotBelowOverline(initial: string, medial: string) {
 function getToneSymbolForFourthEighth(final: string, tonalLen: number) {
   if (tonalLen == 0) {
     // 4th tone and 8th tone
-    const kn = mappingSymbolForTones.get(final.toString());
+    const kn = mappingSymbolsToToneLetters.get(final.toString());
     if (kn) {
       return kn[0];
     }
@@ -431,11 +431,11 @@ function compose(morphemes: TonalUncombiningMorpheme[]) {
     }
 
     if (frTnl.length == 1) {
-      kanas[i] += mappingSymbolForTones.get(frTnl[0].toString());
+      kanas[i] += mappingSymbolsToToneLetters.get(frTnl[0].toString());
     }
 
     if (chkTnl.length == 1) {
-      kanas[i] += mappingSymbolForTones.get(chkTnl[0].toString());
+      kanas[i] += mappingSymbolsToToneLetters.get(chkTnl[0].toString());
     }
   }
 
@@ -590,7 +590,7 @@ const mappingMedialSmallForm = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n));
 
 // TODO: to be exported
-enum toneSymbolTags {
+enum ToneLetterTags {
   first = '⍭', // apl functional symbol stile tilde (U+236D)
   second = '⎛', // left parenthesis upper hook (U+239B)
   third = '⎝', // left parenthesis lower hook (U+239D)
@@ -602,31 +602,31 @@ enum toneSymbolTags {
   ninth = '⫽', // double solidus operator (U+2AFD)
 }
 
-const mappingSymbolForTones = new Map()
-  .set(TonalLetterTags.f, toneSymbolTags.first)
-  .set(TonalLetterTags.y, toneSymbolTags.second)
-  .set(TonalLetterTags.w, toneSymbolTags.third)
-  .set(TonalLetterTags.x, toneSymbolTags.fifth)
-  .set(TonalLetterTags.zx, toneSymbolTags.sixth)
-  .set(TonalLetterTags.z, toneSymbolTags.seventh)
-  .set(TonalLetterTags.xx, toneSymbolTags.ninth)
-  .set(TonalLetterTags.p, toneSymbolTags.fourth)
-  .set(TonalLetterTags.t, toneSymbolTags.fourth)
-  .set(TonalLetterTags.k, toneSymbolTags.fourth)
-  .set(TonalLetterTags.h, toneSymbolTags.fourth)
-  .set(TonalLetterTags.b, toneSymbolTags.fourth)
-  .set(TonalLetterTags.g, toneSymbolTags.fourth)
+const mappingSymbolsToToneLetters = new Map()
+  .set(TonalLetterTags.f, ToneLetterTags.first)
+  .set(TonalLetterTags.y, ToneLetterTags.second)
+  .set(TonalLetterTags.w, ToneLetterTags.third)
+  .set(TonalLetterTags.x, ToneLetterTags.fifth)
+  .set(TonalLetterTags.zx, ToneLetterTags.sixth)
+  .set(TonalLetterTags.z, ToneLetterTags.seventh)
+  .set(TonalLetterTags.xx, ToneLetterTags.ninth)
+  .set(TonalLetterTags.p, ToneLetterTags.fourth)
+  .set(TonalLetterTags.t, ToneLetterTags.fourth)
+  .set(TonalLetterTags.k, ToneLetterTags.fourth)
+  .set(TonalLetterTags.h, ToneLetterTags.fourth)
+  .set(TonalLetterTags.b, ToneLetterTags.fourth)
+  .set(TonalLetterTags.g, ToneLetterTags.fourth)
   // .set(TonalLetterTags.j, toneSymbolTags.fourth)
-  .set(TonalLetterTags.l, toneSymbolTags.fourth)
-  .set(TonalLetterTags.s, toneSymbolTags.fourth)
-  .set(TonalLetterTags.pp, toneSymbolTags.eighth)
-  .set(TonalLetterTags.tt, toneSymbolTags.eighth)
-  .set(TonalLetterTags.kk, toneSymbolTags.eighth)
-  .set(TonalLetterTags.hh, toneSymbolTags.eighth)
-  .set(TonalLetterTags.bb, toneSymbolTags.eighth)
-  .set(TonalLetterTags.gg, toneSymbolTags.eighth)
-  .set(TonalLetterTags.ll, toneSymbolTags.eighth)
-  .set(TonalLetterTags.ss, toneSymbolTags.eighth);
+  .set(TonalLetterTags.l, ToneLetterTags.fourth)
+  .set(TonalLetterTags.s, ToneLetterTags.fourth)
+  .set(TonalLetterTags.pp, ToneLetterTags.eighth)
+  .set(TonalLetterTags.tt, ToneLetterTags.eighth)
+  .set(TonalLetterTags.kk, ToneLetterTags.eighth)
+  .set(TonalLetterTags.hh, ToneLetterTags.eighth)
+  .set(TonalLetterTags.bb, ToneLetterTags.eighth)
+  .set(TonalLetterTags.gg, ToneLetterTags.eighth)
+  .set(TonalLetterTags.ll, ToneLetterTags.eighth)
+  .set(TonalLetterTags.ss, ToneLetterTags.eighth);
 
 const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
