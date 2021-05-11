@@ -1,5 +1,5 @@
 import { TonalLemmatizationLexeme } from './unchange/lexeme';
-import { checkNumberOfLetterTonal, getTaiKanaBlocks } from './tonal/init';
+import { checkNumberOfLetterTonal, getBlocks } from './tonal/init';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 
 import { getKanaBlocks, checkNumberOfLettersKana } from './kana/init';
@@ -17,7 +17,7 @@ export class TokenAnalysis {
   inflectionalEnding: string = '';
   /** sound sequences. */
   soundSequences: Array<Sound[]> = new Array();
-  /** Syllabic block or syllabogram sequences. */
+  /** Syllabic block or syllabogram sequences with tone letters. */
   blockSequences: string[] = [];
   /** Uncombining form sequences. */
   uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
@@ -53,7 +53,7 @@ export class Client {
       ta.lemmas = lexeme.getLemmas();
       ta.inflectionalEnding = lexeme.getInflectionalEnding();
 
-      ta.blockSequences = getTaiKanaBlocks(morphemes);
+      ta.blockSequences = getBlocks(morphemes);
 
       for (const m of morphemes) {
         ta.soundSequences.push(m.sounds);
