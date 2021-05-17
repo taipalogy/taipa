@@ -86,3 +86,5 @@ export {
   getToneEndingNumbersTwo,
   getToneEndingNumbersThree,
 } from './tonal/tone';
+
+export { ToneLetterTags, ToneNumberTags } from './tonal/tonesets';

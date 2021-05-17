@@ -15,6 +15,7 @@ import {
 import { Sound } from '../unit';
 import { fourthFinalConsonants } from './collections';
 import { TonalUncombiningMorpheme } from '../unchange/morpheme';
+import { ToneLetterTags } from './tonesets';
 
 const combiningOverline = '\u0305';
 const combiningDotBelow = '\u0323';
@@ -575,19 +576,6 @@ const mappingMedialSmallForm = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.n, otherKanas.get(KanaLetterTags.n + KanaLetterTags.u))
   .set(TonalLetterTags.ng, otherKanas.get(KanaLetterTags.n));
 
-// TODO: to be exported
-enum ToneLetterTags {
-  first = '⍭', // apl functional symbol stile tilde (U+236D)
-  second = '⎛', // left parenthesis upper hook (U+239B)
-  third = '⎝', // left parenthesis lower hook (U+239D)
-  fourth = '⤆', // leftwards double arrow from bar (U+2906)
-  fifth = '⟨', // mathematical left angle bracket (U+27E8)
-  sixth = '⟩', // mathematical left angle bracket (U+27E8)
-  seventh = '⎸', // left vertical box line (U+23B8)
-  eighth = '⤇', // rightwards double arrow from bar (U+2907)
-  ninth = '⫽', // double solidus operator (U+2AFD)
-}
-
 const mappingSymbolsToToneLetters = new Map()
   .set(TonalLetterTags.f, ToneLetterTags.first)
   .set(TonalLetterTags.y, ToneLetterTags.second)
@@ -602,7 +590,6 @@ const mappingSymbolsToToneLetters = new Map()
   .set(TonalLetterTags.h, ToneLetterTags.fourth)
   .set(TonalLetterTags.b, ToneLetterTags.fourth)
   .set(TonalLetterTags.g, ToneLetterTags.fourth)
-  // .set(TonalLetterTags.j, toneSymbolTags.fourth)
   .set(TonalLetterTags.l, ToneLetterTags.fourth)
   .set(TonalLetterTags.s, ToneLetterTags.fourth)
   .set(TonalLetterTags.pp, ToneLetterTags.eighth)
