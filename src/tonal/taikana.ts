@@ -116,7 +116,9 @@ export function composeTaiKana(morphemes: TonalUncombiningMorpheme[]) {
       it => it.name === TonalSoundTags.initialConsonant
     );
     const mdls = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.vowel
+      it =>
+        it.name === TonalSoundTags.vowel ||
+        it.name === TonalSoundTags.materLectionis
     );
     const nslFnl = morphemes[i].sounds.filter(
       it => it.name === TonalSoundTags.nasalFinalConsonant

@@ -31,48 +31,6 @@ function initialConsonant(sg: SoundGeneration) {
   return sg;
 }
 
-function stopFinalConsonant(sg: SoundGeneration) {
-  if (!sg.matching) return sg;
-
-  if (stopFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
-    const sounds = tonalPositionalSounds.get(
-      sg.letters[sg.matchedSounds.length]
-    );
-    if (sounds) {
-      const s = sounds(TonalSoundTags.stopFinalConsonant);
-      if (s) sg.matchedSounds.push(s);
-    }
-  } else {
-    sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(stopFinalConsonantsTonal.sounds);
-  }
-
-  return sg;
-}
-
-function neutralFinalConsonant(sg: SoundGeneration) {
-  if (!sg.matching) return sg;
-
-  if (
-    neutralFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])
-  ) {
-    const sounds = tonalPositionalSounds.get(
-      sg.letters[sg.matchedSounds.length]
-    );
-    if (sounds) {
-      const s = sounds(TonalSoundTags.stopFinalConsonant);
-      if (s) sg.matchedSounds.push(s);
-    }
-  } else {
-    sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(neutralFinalConsonantsTonal.sounds);
-  }
-
-  return sg;
-}
-
 function nasalFinalConsonant(sg: SoundGeneration) {
   // check out the length of letters like we do in the loop in function vowel
   if (!sg.matching || sg.letters.length == 0) return sg;
@@ -132,8 +90,10 @@ function materLectionis(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.vowel);
-      if (s) sg.matchedSounds.push(s);
+      const s = sounds(TonalSoundTags.materLectionis);
+      if (s) {
+        sg.matchedSounds.push(s);
+      }
     }
   } else sg.matching = false;
 
@@ -175,6 +135,48 @@ function freeToneLetter(sg: SoundGeneration) {
     sg.matching = false;
     if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
       sg.predictions.push(freeToneLettersTonal.sounds);
+  }
+
+  return sg;
+}
+
+function stopFinalConsonant(sg: SoundGeneration) {
+  if (!sg.matching) return sg;
+
+  if (stopFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
+    );
+    if (sounds) {
+      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      if (s) sg.matchedSounds.push(s);
+    }
+  } else {
+    sg.matching = false;
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(stopFinalConsonantsTonal.sounds);
+  }
+
+  return sg;
+}
+
+function neutralFinalConsonant(sg: SoundGeneration) {
+  if (!sg.matching) return sg;
+
+  if (
+    neutralFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])
+  ) {
+    const sounds = tonalPositionalSounds.get(
+      sg.letters[sg.matchedSounds.length]
+    );
+    if (sounds) {
+      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      if (s) sg.matchedSounds.push(s);
+    }
+  } else {
+    sg.matching = false;
+    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
+      sg.predictions.push(neutralFinalConsonantsTonal.sounds);
   }
 
   return sg;

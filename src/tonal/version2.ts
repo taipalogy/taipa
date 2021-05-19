@@ -180,6 +180,7 @@ export const lowerLettersTonal = new LettersOfTonal([
 export enum TonalSoundTags {
   initialConsonant = 'initialConsonant',
   vowel = 'vowel',
+  materLectionis = 'materLectionis',
   nasalization = 'nasalization',
   stopFinalConsonant = 'stopFinalConsonant',
   nasalFinalConsonant = 'nasalFinalConsonant',
@@ -217,6 +218,10 @@ export class NasalFinal extends Final {
   name = TonalSoundTags.nasalFinalConsonant;
 }
 
+export class MaterLectionis extends Medial {
+  name = TonalSoundTags.materLectionis;
+}
+
 class MedialA extends Medial {
   characters = this.makeCharacters(TonalLetterTags.a);
 }
@@ -245,13 +250,13 @@ class MedialOR extends Medial {
   characters = this.makeCharacters(TonalLetterTags.or);
 }
 
-class MaterLectionisM extends Medial {
+class MaterLectionisM extends MaterLectionis {
   characters = this.makeCharacters(TonalLetterTags.m);
 }
-class MaterLectionisN extends Medial {
+class MaterLectionisN extends MaterLectionis {
   characters = this.makeCharacters(TonalLetterTags.n);
 }
-class MaterLectionisNG extends Medial {
+class MaterLectionisNG extends MaterLectionis {
   characters = this.makeCharacters(TonalLetterTags.ng);
 }
 
