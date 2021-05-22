@@ -592,7 +592,7 @@ describe('Taiwanese kana testing, sandhi final', () => {
 
   const ta9 = cli.processTonal('chinghwngueh');
   test('taikanas', () => {
-    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝');
+    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝'); // ク゚ェ⤆
   });
 });
 

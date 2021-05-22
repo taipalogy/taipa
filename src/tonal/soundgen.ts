@@ -91,9 +91,7 @@ function materLectionis(sg: SoundGeneration) {
     );
     if (sounds) {
       const s = sounds(TonalSoundTags.materLectionis);
-      if (s) {
-        sg.matchedSounds.push(s);
-      }
+      if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
 

@@ -1016,6 +1016,7 @@ const mappingInitialN = new Map<string, string[] | undefined>()
 const mappingInitialNG = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.a, special.get(KanaLetterTags.ng + KanaLetterTags.a))
   .set(TonalLetterTags.i, special.get(KanaLetterTags.ng + KanaLetterTags.i))
+  .set(TonalLetterTags.u, special.get(KanaLetterTags.ng + KanaLetterTags.u))
   .set(TonalLetterTags.e, special.get(KanaLetterTags.ng + KanaLetterTags.e))
   .set(TonalLetterTags.o, special.get(KanaLetterTags.ng + KanaLetterTags.o))
   .set(TonalLetterTags.ir, special.get(KanaLetterTags.ng + KanaLetterTags.u));

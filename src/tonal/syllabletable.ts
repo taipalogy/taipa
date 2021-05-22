@@ -27,7 +27,7 @@ const toBeVerified = [
 
     'len', 'liakk', 'lirey',
 
-    'mah',
+    'mah', 'mol',
 
     'na', 'niw', 'nuaiw',
 
