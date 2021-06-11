@@ -172,4 +172,13 @@ describe('Allomorph testing', () => {
   test('check the allomorph', () => {
     expect(ms20[0].allomorph.toString()).toEqual('gw');
   });
+
+  const ms21 = tonalInflectionAnalyzer.morphAnalyze(
+    'pajwjitt',
+    new TonalCombiningForms()
+  );
+
+  test('check the allomorph', () => {
+    expect(ms21[0].allomorph.toString()).toEqual('jw');
+  });
 });

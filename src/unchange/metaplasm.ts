@@ -25,7 +25,7 @@ import {
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 import {
-  finalConsonantsForBgjlsbbggllss,
+  finalConsonantsForBgjlsbbggjjllss,
   voicedVoicelessFinalConsonants,
   nasalFinalConsonants,
   fourthToEighthFinalConsonants,
@@ -42,12 +42,11 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
 
   private handleAssimilatedFinal(
     syllable: TonalSyllable,
-    final: string
+    toneLetter: string
   ): TonalSyllable[] {
-    const fnlsOfLemma = finalConsonantsForBgjlsbbggllss.get(
-      syllable.lastLetter.literal + final
+    const fnlsOfLemma = finalConsonantsForBgjlsbbggjjllss.get(
+      syllable.lastLetter.literal + toneLetter
     );
-    // console.log(s, allomorph, fnl, fnlsOfLemma);
     if (fnlsOfLemma) {
       const clones = fnlsOfLemma.map(it => {
         const clone: TonalSyllable = Object.create(syllable);
@@ -113,7 +112,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
         // pop the tone letter
         // 1 to 4. 3 to 8. 2 to 4. 5 to 8.
 
-        const fnl = s.letters[s.letters.length - 1].literal;
+        const tnl = s.letters[s.letters.length - 1].literal;
         const nslFnls = sounds.filter(
           it => it.name === TonalSoundTags.nasalFinalConsonant
         );
@@ -121,7 +120,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
 
         if (
           nslFnls.length == 0 &&
-          (fnl === TonalLetterTags.w || fnl === TonalLetterTags.x) &&
+          (tnl === TonalLetterTags.w || tnl === TonalLetterTags.x) &&
           Array.from(fourthToEighthFinalConsonants.keys()).includes(
             s.lastLetter.literal
           )
@@ -155,9 +154,11 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
               }
             }
           }
-        } else if (finalConsonantsForBgjlsbbggllss.has(s.lastLetter.literal)) {
+        } else if (
+          finalConsonantsForBgjlsbbggjjllss.has(s.lastLetter.literal)
+        ) {
           // in case of internal or external sandhi
-          const ret = this.handleAssimilatedFinal(s, fnl);
+          const ret = this.handleAssimilatedFinal(s, tnl);
           if (ret && ret.length > 0) return ret;
         } else if (
           sounds.filter(it => it.name === TonalSoundTags.vowel).length > 0 &&
@@ -166,6 +167,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
         ) {
           // in case of internal sandhi of p or t
           // if there is no medials, e.g. hmhh, hngh, just bypass this block
+
           // mhh, mh, nhh, nh, nghh, ngh
           if (
             this.soundsFollowing[0] &&
@@ -176,8 +178,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
             s.popLetter(); // pop the neutral
             s.popLetter(); // pop the nasal
             const clone: TonalSyllable = Object.create(s);
-            // if (ntrl === TonalLetterTags.hh) {
-            if (fnl === TonalLetterTags.w) {
+            if (tnl === TonalLetterTags.w) {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.tt));
             } else {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.t));
@@ -190,7 +191,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
             s.popLetter(); // pop the nasal
             const clone: TonalSyllable = Object.create(s);
             // if (ntrl === TonalLetterTags.hh) {
-            if (fnl === TonalLetterTags.w) {
+            if (tnl === TonalLetterTags.w) {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.pp));
             } else {
               clone.pushLetter(lowerLettersTonal.get(TonalLetterTags.p));
@@ -243,7 +244,7 @@ export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
 }
 
 /** Returns the uncombining forms of the syllable preceding ay */
-export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
+export class PrecedingAyUncombining extends TonalUncombiningMetaplasm {
   private getUncombiningForms(syllable: TonalSyllable, letters: Array<Sound>) {
     if (
       voicedVoicelessFinalConsonants.has(letters[letters.length - 2].toString())
@@ -342,6 +343,52 @@ export class PrecedingAyexUncombining extends TonalUncombiningMetaplasm {
       } else if (allomorph.tonal.toString() === TonalLetterTags.y) {
         return [];
       }
+    }
+    return [];
+  }
+}
+
+/** Returns the uncombining forms of the syllable preceding ex */
+export class PrecedingExUncombining extends TonalUncombiningMetaplasm {
+  private handleAssimilatedFinal(syllable: TonalSyllable): TonalSyllable[] {
+    const finalConsonant = syllable.lastSecondLetter.literal;
+    const fnlsOfLemma = finalConsonantsForBgjlsbbggjjllss.get(
+      syllable.lastSecondLetter.literal + syllable.lastLetter.literal
+    );
+    if (fnlsOfLemma) {
+      if (
+        finalConsonant === TonalLetterTags.g ||
+        finalConsonant === TonalLetterTags.b
+      ) {
+        // when the final is b or g, and
+        // when the following syllable is ex
+        fnlsOfLemma.pop(); // pop tt or t
+      }
+      syllable.popLetter(); // pop tonal
+      const clones = fnlsOfLemma.map(it => {
+        const clone: TonalSyllable = Object.create(syllable);
+        // replace the final consonant which is the last letter after
+        // the tonal is popped
+        clone.replaceLetter(
+          syllable.letters.length - 1,
+          lowerLettersTonal.get(it.toString())
+        );
+        return clone;
+      });
+      const ret: TonalSyllable[] = [];
+      clones.map(it => ret.push(it));
+      return clones;
+    }
+    return [];
+  }
+
+  apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
+    if (allomorph) {
+      const syl: TonalSyllable = new TonalSyllable(
+        sounds.map(it => new AlphabeticLetter(it.characters))
+      );
+
+      return this.handleAssimilatedFinal(syl);
     }
     return [];
   }

@@ -19,7 +19,7 @@ const toBeVerified = [
 
     'iakk',
 
-    'jex', 'jek', 'jing', 'jih', 'jirnx', 'jirtt', 'juany',
+    'jex', 'jek', 'jing', 'jirnx', 'jirtt', 'juany',
 
     'kirinnx', 'kuinnx', 'kanh', 'kih', 'kngh', 'kuaix', 'kuaiz', 'kuakk', 'kuangz', 'kuatt',
 
@@ -165,7 +165,7 @@ const extraSyllables = [
 
     'homz', 'huainn',
 
-    'jip',
+    'jih', 'jip',
 
 	'khiaih', 'khuih',
 

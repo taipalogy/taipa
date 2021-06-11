@@ -213,12 +213,12 @@ describe('Phrase testing', () => {
   });
 
   const p6 = createTonalPhrase('jiss sih');
-  test('noun phrase, regressive assimilation of jitt sih', () => {
+  test('noun phrase, regressive assimilation of "jitt sih"', () => {
     expect(p6.literal).toEqual('jiss sih');
   });
 
   const p7 = createTonalPhrase('lagg gueh');
-  test('noun phrase, surface form of lakk gueh', () => {
+  test('noun phrase, surface form of "lakk gueh"', () => {
     expect(p7.literal).toEqual('lagg gueh');
   });
 
@@ -228,23 +228,33 @@ describe('Phrase testing', () => {
   });
 
   const p9 = createTonalPhrase('chutwchull leh');
-  test('verb phrase, regressive assimilation of chutwchutt leh', () => {
+  test('verb phrase, regressive assimilation of "chutwchutt leh"', () => {
     expect(p9.literal).toEqual('chutwchull leh');
   });
 
-  const p10 = createTonalPhrase('cig gueh');
-  test('noun phrase, surface form of cit gueh', () => {
-    expect(p10.literal).toEqual('cig gueh');
+  const p10 = createTonalPhrase('bajj jih');
+  test('noun phrase, regressive assimilation of "batt jih" (character batt)', () => {
+    expect(p10.literal).toEqual('bajj jih');
   });
 
-  const p11 = createTonalPhrase('jib bih');
+  const p11 = createTonalPhrase('cig gueh');
+  test('noun phrase, surface form of "cit gueh". regressive assimilation', () => {
+    expect(p11.literal).toEqual('cig gueh');
+  });
+
+  const p12 = createTonalPhrase('jib bih');
   test('verb phrase', () => {
-    expect(p11.literal).toEqual('jib bih');
+    expect(p12.literal).toEqual('jib bih');
   });
 
-  const p12 = createTonalPhrase('cul laih');
-  test('verb phrase, regressive assimilation of cut laih', () => {
-    expect(p12.literal).toEqual('cul laih');
+  const p13 = createTonalPhrase('cul laih');
+  test('verb phrase, regressive assimilation of "cut laih". (check out "cut lih")', () => {
+    expect(p13.literal).toEqual('cul laih');
+  });
+
+  const p14 = createTonalPhrase('baj jih');
+  test('noun phrase, regressive assimilation of "bat jih" (character bat)', () => {
+    expect(p14.literal).toEqual('baj jih');
   });
 });
 

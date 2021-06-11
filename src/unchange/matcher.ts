@@ -5,9 +5,8 @@ import {
   vowelsTonal,
 } from '../tonal/version2';
 import {
-  finalConsonantsLs,
-  finalConsonantsBgkp,
   finalConsonantsJls,
+  finalConsonantsBgkp,
   finalConsonantsMng,
   toneLettersWx,
   nasalFinalConsonants,
@@ -93,12 +92,12 @@ export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
   return false;
 };
 
-// lw, lx, sw. there is no sx
-export const regexLsWx = /(l|s)(w|x)/g;
+// jw, lw, lx, sw. there is no jx and sx.
+export const regexJlsWx = /(j|l|s)(w|x)/g;
 
-// lw, lx, sw
-export const smLsWx = function (finalLs: string, tonalWX: string) {
-  if (finalConsonantsLs.includes(finalLs) && toneLettersWx.includes(tonalWX))
+// jw, lw, lx, sw
+export const smJlsWx = function (finalLs: string, tonalWX: string) {
+  if (finalConsonantsJls.includes(finalLs) && toneLettersWx.includes(tonalWX))
     return true;
 
   return false;

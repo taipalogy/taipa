@@ -592,6 +592,7 @@ const mappingSymbolsToToneLetters = new Map()
   .set(TonalLetterTags.h, ToneLetterTags.fourth)
   .set(TonalLetterTags.b, ToneLetterTags.fourth)
   .set(TonalLetterTags.g, ToneLetterTags.fourth)
+  .set(TonalLetterTags.j, ToneLetterTags.fourth)
   .set(TonalLetterTags.l, ToneLetterTags.fourth)
   .set(TonalLetterTags.s, ToneLetterTags.fourth)
   .set(TonalLetterTags.pp, ToneLetterTags.eighth)
@@ -600,6 +601,7 @@ const mappingSymbolsToToneLetters = new Map()
   .set(TonalLetterTags.hh, ToneLetterTags.eighth)
   .set(TonalLetterTags.bb, ToneLetterTags.eighth)
   .set(TonalLetterTags.gg, ToneLetterTags.eighth)
+  .set(TonalLetterTags.jj, ToneLetterTags.eighth)
   .set(TonalLetterTags.ll, ToneLetterTags.eighth)
   .set(TonalLetterTags.ss, ToneLetterTags.eighth);
 
@@ -617,6 +619,7 @@ const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.kk, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u))
   .set(TonalLetterTags.bb, otherKanas.get(KanaLetterTags.b + KanaLetterTags.u))
   .set(TonalLetterTags.gg, otherKanas.get(KanaLetterTags.g + KanaLetterTags.u))
+  .set(TonalLetterTags.jj, otherKanas.get(KanaLetterTags.j + KanaLetterTags.u))
   .set(TonalLetterTags.ll, otherKanas.get(KanaLetterTags.r + KanaLetterTags.u))
   .set(TonalLetterTags.ss, otherKanas.get(KanaLetterTags.s + KanaLetterTags.u));
 

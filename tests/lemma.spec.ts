@@ -174,7 +174,7 @@ describe('Uncombining form testing', () => {
     'tikwteng',
     new TonalUncombiningForms([])
   );
-  test('check the uncombining form,  tikw to tekk, changed rime', () => {
+  test('check the uncombining form, tikw to tekk, changed rime', () => {
     expect(ms1[0].getForms()[0].literal).toEqual('tekk');
   });
   /*
@@ -269,6 +269,35 @@ describe('Lemma testing', () => {
   const t5 = cli.processTonal('siax');
   test('check the number of lemmata', () => {
     expect(t5.lemmas.length).toEqual(0);
+  });
+});
+
+describe('Uncombining form testing, ~bwex, ~gwex, ~lwex', () => {
+  const ms1 = tonalLemmatizationAnalyzer.morphAnalyze(
+    'chabwex',
+    new TonalUncombiningForms([])
+  );
+  test('check the uncombining form, voiced to unvoiced', () => {
+    expect(ms1[0].getForms().length).toEqual(1);
+    expect(ms1[0].getForms()[0].literal).toEqual('chapp');
+  });
+
+  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze(
+    'lagwex',
+    new TonalUncombiningForms([])
+  );
+  test('check the uncombining form, voiced to unvoiced', () => {
+    expect(ms2[0].getForms().length).toEqual(1);
+    expect(ms2[0].getForms()[0].literal).toEqual('lakk');
+  });
+
+  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze(
+    'chilwex',
+    new TonalUncombiningForms([])
+  );
+  test('check the uncombining form, voiced to unvoiced', () => {
+    expect(ms3[0].getForms().length).toEqual(1);
+    expect(ms3[0].getForms()[0].literal).toEqual('chitt');
   });
 });
 

@@ -73,11 +73,14 @@ export const finalConsonantsBgkp = [
   TonalLetterTags.p.toString(),
 ];
 
-// l, s for third and fifth checked tones
-export const finalConsonantsLs = [
+// j, l, s for third and fifth checked tones
+/*
+export const finalConsonantsJls = [
+  TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
   TonalLetterTags.s.toString(),
 ];
+*/
 
 // sandhi final m, ng for final n
 export const finalConsonantsMng = [
@@ -132,7 +135,7 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
   .set(
     TonalLetterTags.t + TonalLetterTags.w + initialConsonantsForFinalT.j,
     TonalLetterTags.l
-  )
+  ) // TODO: this entry to be removed
   .set(TonalLetterTags.t + initialConsonantsForFinalT.m, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialConsonantsForFinalT.n, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialConsonantsForFinalT.ng, TonalLetterTags.h)
@@ -141,8 +144,8 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.tt + initialConsonantsForTT.kh, TonalLetterTags.kk)
   .set(TonalLetterTags.tt + initialConsonantsForTT.k, TonalLetterTags.kk)
   .set(TonalLetterTags.tt + initialConsonantsForTT.g, TonalLetterTags.gg)
-  .set(TonalLetterTags.tt + initialConsonantsForTT.b, TonalLetterTags.ll)
-  .set(TonalLetterTags.tt + initialConsonantsForTT.j, TonalLetterTags.ll)
+  .set(TonalLetterTags.tt + initialConsonantsForTT.b, TonalLetterTags.bb)
+  .set(TonalLetterTags.tt + initialConsonantsForTT.j, TonalLetterTags.jj)
   .set(TonalLetterTags.tt + initialConsonantsForTT.s, TonalLetterTags.ss)
   .set(TonalLetterTags.tt + initialConsonantsForTT.m, TonalLetterTags.hh)
   .set(TonalLetterTags.tt + initialConsonantsForTT.n, TonalLetterTags.hh)
@@ -188,8 +191,8 @@ export const voicedVoicelessFinalConsonants = new Map<string, TonalLetterTags>()
   .set(TonalLetterTags.ll, TonalLetterTags.tt)
   .set(TonalLetterTags.gg, TonalLetterTags.kk);
 
-/** sandhi final consonants b, g, j, l, s, bb, gg, ll, ss */
-export const finalConsonantsBgjlsbbggllss = [
+/** sandhi final consonants b, g, j, l, s, bb, gg, jj, ll, ss */
+export const finalConsonantsBgjlsbbggjjllss = [
   TonalLetterTags.b.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.j.toString(),
@@ -197,12 +200,13 @@ export const finalConsonantsBgjlsbbggllss = [
   TonalLetterTags.s.toString(),
   TonalLetterTags.bb.toString(),
   TonalLetterTags.gg.toString(),
+  TonalLetterTags.jj.toString(),
   TonalLetterTags.ll.toString(),
   TonalLetterTags.ss.toString(),
 ];
 
-/** unchanged final consonants for b, g, j, l, s, bb, gg, ll, ss */
-export const finalConsonantsForBgjlsbbggllss = new Map<
+/** unchanged final consonants for b, g, j, l, s, bb, gg, jj, ll, ss */
+export const finalConsonantsForBgjlsbbggjjllss = new Map<
   string,
   TonalLetterTags[]
 >()
@@ -215,21 +219,23 @@ export const finalConsonantsForBgjlsbbggllss = new Map<
   .set(TonalLetterTags.s, [TonalLetterTags.t])
   .set(TonalLetterTags.bb, [TonalLetterTags.pp, TonalLetterTags.tt])
   .set(TonalLetterTags.gg, [TonalLetterTags.kk, TonalLetterTags.tt])
+  .set(TonalLetterTags.jj, [TonalLetterTags.tt])
   .set(TonalLetterTags.ll, [TonalLetterTags.tt])
   .set(TonalLetterTags.ss, [TonalLetterTags.tt])
   // both keys and values are for the has method
-  // the has method will not reach these pairs
-  .set(TonalLetterTags.s + TonalLetterTags.w, [TonalLetterTags.tt])
+  // the has method will not reach the below pairs
   .set(TonalLetterTags.b + TonalLetterTags.f, [
     TonalLetterTags.p,
     TonalLetterTags.t,
+  ])
+  .set(TonalLetterTags.b + TonalLetterTags.w, [
+    TonalLetterTags.pp,
+    TonalLetterTags.tt,
   ])
   .set(TonalLetterTags.g + TonalLetterTags.f, [
     TonalLetterTags.k,
     TonalLetterTags.t,
   ])
-  .set(TonalLetterTags.j + TonalLetterTags.f, [TonalLetterTags.t])
-  .set(TonalLetterTags.l + TonalLetterTags.f, [TonalLetterTags.t])
   .set(TonalLetterTags.g + TonalLetterTags.w, [
     TonalLetterTags.kk,
     TonalLetterTags.tt,
@@ -238,7 +244,12 @@ export const finalConsonantsForBgjlsbbggllss = new Map<
     TonalLetterTags.kk,
     TonalLetterTags.tt,
   ])
-  .set(TonalLetterTags.l + TonalLetterTags.w, [TonalLetterTags.tt]);
+  .set(TonalLetterTags.l + TonalLetterTags.f, [TonalLetterTags.t])
+  .set(TonalLetterTags.l + TonalLetterTags.w, [TonalLetterTags.tt])
+  .set(TonalLetterTags.j + TonalLetterTags.f, [TonalLetterTags.t])
+  .set(TonalLetterTags.j + TonalLetterTags.w, [TonalLetterTags.tt])
+  .set(TonalLetterTags.s + TonalLetterTags.f, [TonalLetterTags.t])
+  .set(TonalLetterTags.s + TonalLetterTags.w, [TonalLetterTags.tt]);
 
 export const fourthFinalConsonants = {
   p: TonalLetterTags.p.toString(),
@@ -270,6 +281,7 @@ export const eighthToFourthFinalConsonants = new Map<string, string>()
   .set(TonalLetterTags.bb, fourthFinalConsonants.b.toString())
   .set(TonalLetterTags.gg, fourthFinalConsonants.g.toString())
   .set(TonalLetterTags.hh, fourthFinalConsonants.h.toString())
+  .set(TonalLetterTags.jj, fourthFinalConsonants.j.toString())
   .set(TonalLetterTags.kk, fourthFinalConsonants.k.toString())
   .set(TonalLetterTags.ll, fourthFinalConsonants.l.toString())
   .set(TonalLetterTags.pp, fourthFinalConsonants.p.toString())

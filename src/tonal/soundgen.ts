@@ -11,7 +11,7 @@ import {
   neutralFinalConsonantsTonal,
   nasalFinalConsonantsTonal,
   nasalizationsTonal,
-  stopFinalConsonantsTonal,
+  finalConsonantsPtkhppttkkhhTonal,
   finalConsonantsBgjklpsTonal,
   finalConsonantsBBggkkllppssTonal,
 } from './version2';
@@ -141,7 +141,11 @@ function freeToneLetter(sg: SoundGeneration) {
 function stopFinalConsonant(sg: SoundGeneration) {
   if (!sg.matching) return sg;
 
-  if (stopFinalConsonantsTonal.includes(sg.letters[sg.matchedSounds.length])) {
+  if (
+    finalConsonantsPtkhppttkkhhTonal.includes(
+      sg.letters[sg.matchedSounds.length]
+    )
+  ) {
     const sounds = tonalPositionalSounds.get(
       sg.letters[sg.matchedSounds.length]
     );
@@ -152,7 +156,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
   } else {
     sg.matching = false;
     if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(stopFinalConsonantsTonal.sounds);
+      sg.predictions.push(finalConsonantsPtkhppttkkhhTonal.sounds);
   }
 
   return sg;
@@ -339,7 +343,7 @@ export const syllableCompositions = [
 
 export class TonalSoundGenerator {
   private isStopFinal(str: string) {
-    if (stopFinalConsonantsTonal.includes(str)) return true;
+    if (finalConsonantsPtkhppttkkhhTonal.includes(str)) return true;
 
     return false;
   }

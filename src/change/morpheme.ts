@@ -21,7 +21,7 @@ import {
   ttInitialTInitialPairs,
   voicelessVoicedFinalConsonants,
   initialConsonantsForFinalT,
-  finalConsonantsForBgjlsbbggllss,
+  finalConsonantsForBgjlsbbggjjllss,
   initialConsonantsForTT,
   nasalInitialConsonants,
 } from '../tonal/collections';
@@ -73,7 +73,9 @@ export class TonalCombiningMorpheme extends Morpheme {
     if (
       checkedToneLettersTonal.includes(syllable.lastLetter.literal) &&
       (uncombinedCheckedAllomorphs.has(syllable.lastSecondLetter.literal) ||
-        finalConsonantsForBgjlsbbggllss.has(syllable.lastSecondLetter.literal))
+        finalConsonantsForBgjlsbbggjjllss.has(
+          syllable.lastSecondLetter.literal
+        ))
     ) {
       // in case of a final followed by a tonal
       const ams = combinedCheckedAllomorphs.get(

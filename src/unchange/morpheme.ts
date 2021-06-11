@@ -15,7 +15,7 @@ import {
   Allomorph,
   freeToneLettersTonal,
   initialConsonantsTonal,
-  stopFinalConsonantsTonal,
+  finalConsonantsPtkhppttkkhhTonal,
 } from '../tonal/version2';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from '../tonal/soundgen';
@@ -26,10 +26,10 @@ import {
   smBgkpF,
   regexJlsF,
   regexMnngHF,
-  regexLsWx,
+  regexJlsWx,
   regexMnngHWx,
   smJlsF,
-  smLsWx,
+  smJlsWx,
   smBgkpWx,
   smMngFywxz,
   smIK,
@@ -41,13 +41,14 @@ import {
   sandhiFinalPPpttt,
   fourthToEighthFinalConsonants,
   nasalInitialConsonants,
-  finalConsonantsBgjlsbbggllss,
-  finalConsonantsForBgjlsbbggllss,
+  finalConsonantsBgjlsbbggjjllss,
+  finalConsonantsForBgjlsbbggjjllss,
   voicedVoicelessFinalConsonants,
 } from '../tonal/collections';
 import {
   LastSyllableForms,
-  PrecedingAyexUncombining,
+  PrecedingAyUncombining,
+  PrecedingExUncombining,
   TonalUncombiningForms,
   TransfixUncombining,
   UncombiningFormsIetfIetwToEkEkk,
@@ -119,7 +120,7 @@ export function syllabifyTonal(
     } else if (
       (isInSyllableTable(literalLexicalRoot4th8th) ||
         isInSyllableTable(literalLexicalRootEighth)) &&
-      stopFinalConsonantsTonal.includes(letters[i].literal)
+      finalConsonantsPtkhppttkkhhTonal.includes(letters[i].literal)
     ) {
       // console.log(`i: ${i}, literal: ${literal}, root4th8th: ${literalLexicalRoot4th8th}, root8th: ${literalLexicalRootEighth}, stopFinalConsonant: ${letters[i].literal}`);
       // console.log(`begin: ${begin}, beginOfSyllable: ${beginOfSyllable}`);
@@ -142,7 +143,7 @@ export function syllabifyTonal(
         (smBgkpF(letters[i - 1].literal, letters[i].literal) ||
           smBgkpWx(letters[i - 1].literal, letters[i].literal) ||
           smJlsF(letters[i - 1].literal, letters[i].literal) ||
-          smLsWx(letters[i - 1].literal, letters[i].literal))
+          smJlsWx(letters[i - 1].literal, letters[i].literal))
       ) {
         // b, g, bb, gg, l, j, s, ll, ss need to be handled in TonalCombiningMorpheme.assignAllomorph
         // this combining form is not present in the pool.
@@ -221,14 +222,14 @@ export function syllabifyTonal(
 
       // when there are no tone letters
 
-      if (finalConsonantsBgjlsbbggllss.includes(letters[i].literal)) {
+      if (finalConsonantsBgjlsbbggjjllss.includes(letters[i].literal)) {
         // for the syllables with sandhi final consonants that are not present in syllable tables
         const literalWithoutFinal = letters
           .map((val, ind, arr) =>
             ind < i && ind >= beginOfSyllable ? arr[ind].literal : ''
           )
           .join('');
-        const gotFinalConsonants = finalConsonantsForBgjlsbbggllss.get(
+        const gotFinalConsonants = finalConsonantsForBgjlsbbggjjllss.get(
           letters[i].literal
         );
         if (gotFinalConsonants) {
@@ -561,6 +562,18 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
+  private isCombiningEx(syllables: MatchedPattern[]) {
+    // ending ex
+    const endingEx =
+      syllables[syllables.length - 1].lastSecondLetter.literal ===
+        TonalLetterTags.e &&
+      syllables[syllables.length - 1].lastLetter.literal === TonalLetterTags.x;
+    if (endingEx) {
+      return true;
+    }
+    return false;
+  }
+
   private isTransfixInflection(syllables: MatchedPattern[]) {
     // TODO: there are not many of them. make a tiny dictionary to cover the ocurrences
     const thirds = syllables
@@ -699,7 +712,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       for (let i = 0; i < letters.length - 1; i++) {
         if (
           smJlsF(letters[i].literal, letters[i + 1].literal) ||
-          smLsWx(letters[i].literal, letters[i + 1].literal)
+          smJlsWx(letters[i].literal, letters[i + 1].literal)
         ) {
           indx = i;
           break;
@@ -864,11 +877,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         1
       );
       return ls;
-    } else if (literal.length > 1 && regexLsWx.test(literal)) {
+    } else if (literal.length > 1 && regexJlsWx.test(literal)) {
       const ls = this.preprocessSandhiFinalTonal(
         letters,
         literal,
-        regexLsWx,
+        regexJlsWx,
         1
       );
       return ls;
@@ -989,9 +1002,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
       if (this.isCombiningAy(matched) && matched.length == 2) {
         // ~fa, ~xa, fay, or ~xay. only 2 syllables
-        morphemes.push(
-          this.createMorpheme(ptn, new PrecedingAyexUncombining())
-        );
+        morphemes.push(this.createMorpheme(ptn, new PrecedingAyUncombining()));
       } else if (
         this.isCombiningAy(matched) &&
         (matched.length == 3 || matched.length == 4)
@@ -1000,7 +1011,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         if (i == matched.length - 2 || i == matched.length - 1)
           // the last 2 syllables
           morphemes.push(
-            this.createMorpheme(ptn, new PrecedingAyexUncombining())
+            this.createMorpheme(ptn, new PrecedingAyUncombining())
           );
         else if (i == matched.length - 3)
           // the first syllable of a 3-syllable word or the 2nd syllable of a 4-syllable word
@@ -1018,6 +1029,9 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
               new TonalUncombiningForms(matched[i + 1].pattern)
             )
           );
+      } else if (this.isCombiningEx(matched) && matched.length == 2) {
+        // ~ex
+        morphemes.push(this.createMorpheme(ptn, new PrecedingExUncombining()));
       } else if (this.isTriplet(matched)) {
         // triplet construction. pass the last syllable as an argument
         morphemes.push(
