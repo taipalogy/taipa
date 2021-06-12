@@ -155,11 +155,16 @@ export function syllabifyTonal(
         letters[i] &&
         letters[i - 1] &&
         letters[i - 2] &&
-        smMnngHWx(
+        (smMnngHWx(
           letters[i - 2].literal,
           letters[i - 1].literal,
           letters[i].literal
-        )
+        ) ||
+          smMnngHF(
+            letters[i - 2].literal,
+            letters[i - 1].literal,
+            letters[i].literal
+          ))
       ) {
         // in case of -mhw.
         matched = literal;
@@ -693,219 +698,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
-  private preprocessSandhiFinal(letters: Array<AlphabeticLetter>) {
-    this.sandhiFinals.push(letters[letters.length - 1]);
-    return letters.slice(0, letters.length - 1);
-  }
-
-  private preprocessSandhiFinalTonal(
-    letters: Array<AlphabeticLetter>,
-    literal: string,
-    regex: RegExp,
-    len: number
-  ) {
-    const matchedStrs = literal.match(regex);
-    // console.log(matchedStrs);
-
-    let indx = -1;
-    if (len == 1) {
-      for (let i = 0; i < letters.length - 1; i++) {
-        if (
-          smJlsF(letters[i].literal, letters[i + 1].literal) ||
-          smJlsWx(letters[i].literal, letters[i + 1].literal)
-        ) {
-          indx = i;
-          break;
-        }
-      }
-    } else if (len == 2) {
-      for (let i = 0; i < letters.length - 2; i++) {
-        if (
-          smMnngHF(
-            letters[i].literal,
-            letters[i + 1].literal,
-            letters[i + 2].literal
-          ) ||
-          smMnngHWx(
-            letters[i].literal,
-            letters[i + 1].literal,
-            letters[i + 2].literal
-          )
-        ) {
-          indx = i;
-          break;
-        }
-      }
-    }
-
-    if (matchedStrs) {
-      for (let i in matchedStrs) {
-        const idxl = literal.search(matchedStrs[i]);
-        const head = literal.substring(0, idxl);
-        const tail = literal.substring(idxl + matchedStrs[i].length);
-
-        // in case of hmhw or hmhwhmhw
-        // check if the previous letter is a consonant
-
-        if (initialConsonantsTonal.includes(head)) return letters;
-
-        let fnl;
-        if (
-          TonalLetterTags.f === matchedStrs[i].charAt(matchedStrs[i].length - 1)
-        ) {
-          literal = head.concat(TonalLetterTags.t + TonalLetterTags.f, tail);
-          fnl = letters.splice(
-            indx,
-            len,
-            lowerLettersTonal.get(TonalLetterTags.t)
-          );
-        } else if (
-          toneLettersWx.includes(
-            matchedStrs[i].charAt(matchedStrs[i].length - 1)
-          )
-        ) {
-          if (
-            matchedStrs[i].charAt(matchedStrs[i].length - 1) ===
-            TonalLetterTags.w
-          ) {
-            // 3rd tone
-            if (matchedStrs[0][0] === tail[0]) {
-              literal = head.concat(
-                TonalLetterTags.t + TonalLetterTags.w,
-                tail
-              );
-            } else {
-              literal = head.concat(
-                TonalLetterTags.p + TonalLetterTags.w,
-                tail
-              );
-            }
-          } else if (
-            matchedStrs[i].charAt(matchedStrs[i].length - 1) ===
-            TonalLetterTags.x
-          ) {
-            // 5th tone
-            if (matchedStrs[0][0] === tail[0]) {
-              literal = head.concat(
-                TonalLetterTags.t + TonalLetterTags.x,
-                tail
-              );
-            } else {
-              literal = head.concat(
-                TonalLetterTags.p + TonalLetterTags.x,
-                tail
-              );
-            }
-          }
-          // console.log(letters.map(x => x.literal).join(''), 'before splicing');
-          // console.log(matchedStrs[0][0], tail[0]);
-          if (
-            matchedStrs[0][0] === tail[0] ||
-            (matchedStrs[0][0] === TonalLetterTags.l &&
-              tail[0] === TonalLetterTags.j)
-          ) {
-            // if the initial of the following syllable equals to the final of the preceding one
-            // h -> tt
-            fnl = letters.splice(
-              indx,
-              len,
-              lowerLettersTonal.get(TonalLetterTags.t)
-            );
-          } else if (matchedStrs[0][0] === TonalLetterTags.h) {
-            // h -> pp
-            fnl = letters.splice(
-              indx,
-              len,
-              lowerLettersTonal.get(TonalLetterTags.p)
-            );
-          }
-          // console.log(letters.map(x => x.literal).join(''), 'after splicing');
-        }
-
-        // console.log(literal, head, tail);
-
-        if (fnl && len == 1)
-          this.sandhiFinalTonals.push({ index: indx, letters: [fnl[0]] });
-        else if (fnl && len == 2)
-          this.sandhiFinalTonals.push({
-            index: indx,
-            letters: [fnl[0], fnl[1]],
-          });
-      }
-    }
-
-    return letters;
-  }
-
-  private replaceSandhiFinal(letters: Array<AlphabeticLetter>) {
-    const slicedLetters = letters.slice(0, letters.length - 1);
-    const slicedLiteral = slicedLetters.map(it => it.literal).join('');
-    if (
-      letters.length > 0 &&
-      letters[letters.length - 1].literal === TonalLetterTags.gg &&
-      isInSyllableTable(slicedLiteral + TonalLetterTags.tt) &&
-      !isInSyllableTable(slicedLiteral + TonalLetterTags.kk)
-    ) {
-      // for surface form gg whose underlying form is tt but not kk
-      const ls = this.preprocessSandhiFinal(letters);
-      // append tt to sliced letters
-      ls.push(lowerLettersTonal.get(TonalLetterTags.tt));
-      return ls;
-    } else if (
-      letters.length > 0 &&
-      letters[letters.length - 1].literal === TonalLetterTags.b &&
-      isInSyllableTable(slicedLiteral + TonalLetterTags.p)
-    ) {
-      // for surface form b whose underlying form is p
-      const ls = this.preprocessSandhiFinal(letters);
-      // append tt to sliced letters
-      ls.push(lowerLettersTonal.get(TonalLetterTags.p));
-      return ls;
-    }
-
-    return letters;
-  }
-
-  private replaceSandhiFinalTonal(letters: Array<AlphabeticLetter>) {
-    let literal = letters.map(x => x.literal).join('');
-
-    if (literal.length > 1 && regexJlsF.test(literal)) {
-      const ls = this.preprocessSandhiFinalTonal(
-        letters,
-        literal,
-        regexJlsF,
-        1
-      );
-      return ls;
-    } else if (literal.length > 1 && regexJlsWx.test(literal)) {
-      const ls = this.preprocessSandhiFinalTonal(
-        letters,
-        literal,
-        regexJlsWx,
-        1
-      );
-      return ls;
-    } else if (literal.length > 2 && regexMnngHF.test(literal)) {
-      const ls = this.preprocessSandhiFinalTonal(
-        letters,
-        literal,
-        regexMnngHF,
-        2
-      );
-      return ls;
-    } else if (literal.length > 2 && regexMnngHWx.test(literal)) {
-      const ls = this.preprocessSandhiFinalTonal(
-        letters,
-        literal,
-        regexMnngHWx,
-        2
-      );
-      return ls;
-    }
-
-    return letters;
-  }
-
   protected preprocess(
     graphemes: Array<AlphabeticGrapheme>
   ): AlphabeticLetter[] {
@@ -913,78 +705,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     ltrs = graphemes.map(it => it.letter);
 
-    // handle sandhi finals without a tonal
-    ltrs = this.replaceSandhiFinal(ltrs);
-
-    // handle sandhi finals with a tonal
-    ltrs = this.replaceSandhiFinalTonal(ltrs);
-
     return ltrs;
-  }
-
-  private postprocessSandhiPPpttt(
-    pattern: MatchedPattern,
-    lenPrecedingLetters: number
-  ) {
-    if (
-      (pattern.letters[pattern.letters.length - 1].literal ===
-        TonalLetterTags.t ||
-        pattern.letters[pattern.letters.length - 1].literal ===
-          TonalLetterTags.tt ||
-        pattern.letters[pattern.letters.length - 1].literal ===
-          TonalLetterTags.p) &&
-      this.sandhiFinals.length > 0
-    ) {
-      // if there isn't a tonal
-      pattern.letters.pop();
-      pattern.pattern.pop();
-      const fnl = this.sandhiFinals.pop();
-      if (fnl) {
-        pattern.letters.push(fnl);
-        const sounds = tonalPositionalSounds.get(fnl.literal);
-        if (sounds)
-          pattern.pattern.push(sounds(TonalSoundTags.stopFinalConsonant));
-      }
-    } else if (
-      this.sandhiFinalTonals.length > 0 &&
-      sandhiFinalPPpttt.includes(
-        pattern.letters[pattern.letters.length - 2].literal
-      )
-    ) {
-      // if there is a tonal
-      const fnl = this.sandhiFinalTonals.pop();
-      if (fnl) {
-        if (fnl.letters.length == 1) {
-          pattern.letters.splice(fnl.index, 1, fnl.letters[0]);
-          const sounds = tonalPositionalSounds.get(fnl.letters[0].literal);
-          if (sounds)
-            pattern.pattern.splice(
-              fnl.index,
-              1,
-              sounds(TonalSoundTags.stopFinalConsonant)
-            );
-        } else if (fnl.letters.length == 2) {
-          // replace 1 letter at fnl.index with 2 letters
-          pattern.letters.splice(
-            fnl.index - lenPrecedingLetters,
-            1,
-            fnl.letters[0],
-            fnl.letters[1]
-          );
-          const sounds = tonalPositionalSounds.get(fnl.letters[0].literal);
-          const ltr2 = tonalPositionalSounds.get(fnl.letters[1].literal);
-          if (sounds && ltr2) {
-            pattern.pattern.splice(
-              fnl.index - lenPrecedingLetters,
-              1,
-              sounds(TonalSoundTags.nasalFinalConsonant),
-              ltr2(TonalSoundTags.stopFinalConsonant)
-            );
-          }
-        }
-      }
-    }
-    return pattern;
   }
 
   protected postprocess(
@@ -993,12 +714,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     const morphemes = this.createArray();
 
     for (let i = 0; i < matched.length; i++) {
-      // accumulate the lenght of letters preceding the current syllable
-      const lenPrecedingLetters: number = matched
-        .map((val, j) => (j < i ? val.letters.length : 0))
-        .reduce((prev, val) => prev + val);
-
-      const ptn = this.postprocessSandhiPPpttt(matched[i], lenPrecedingLetters);
+      const ptn = matched[i];
 
       if (this.isCombiningAy(matched) && matched.length == 2) {
         // ~fa, ~xa, fay, or ~xay. only 2 syllables

@@ -34,23 +34,6 @@ export const smMnngHF = function (
 // mhw, mhx, nhw, nhx, nghw, nghx
 export const regexMnngHWx = /(m|ng?)h(w|x)/g;
 
-// mhw
-/*
-export const smMHW = function (
-  nasalFinal: string,
-  neutralFinalHh: string,
-  thirdTonalW: string
-) {
-  if (
-    nasalFinal === TonalLetterTags.m &&
-    neutralFinalHh === TonalLetterTags.h &&
-    thirdTonalW === TonalLetterTags.w
-  )
-    return true;
-
-  return false;
-};
-*/
 // mhw, mhx, nhw, nhx, nghw, nghx
 export const smMnngHWx = function (
   nasalFinal: string,

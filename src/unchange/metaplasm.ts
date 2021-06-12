@@ -30,6 +30,7 @@ import {
   nasalFinalConsonants,
   fourthToEighthFinalConsonants,
   finalConsonantsForTransfix,
+  finalConsonantsForBgjlsFw,
 } from '../tonal/collections';
 import { isInSyllableTable } from '../tonal/syllabletable';
 import { smMngFywxz } from './matcher';
@@ -44,7 +45,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
     syllable: TonalSyllable,
     toneLetter: string
   ): TonalSyllable[] {
-    const fnlsOfLemma = finalConsonantsForBgjlsbbggjjllss.get(
+    const fnlsOfLemma = finalConsonantsForBgjlsFw.get(
       syllable.lastLetter.literal + toneLetter
     );
     if (fnlsOfLemma) {
@@ -352,7 +353,7 @@ export class PrecedingAyUncombining extends TonalUncombiningMetaplasm {
 export class PrecedingExUncombining extends TonalUncombiningMetaplasm {
   private handleAssimilatedFinal(syllable: TonalSyllable): TonalSyllable[] {
     const finalConsonant = syllable.lastSecondLetter.literal;
-    const fnlsOfLemma = finalConsonantsForBgjlsbbggjjllss.get(
+    const fnlsOfLemma = finalConsonantsForBgjlsFw.get(
       syllable.lastSecondLetter.literal + syllable.lastLetter.literal
     );
     if (fnlsOfLemma) {
@@ -508,7 +509,7 @@ export class UncombiningFormsIengUamToneLetter extends TonalUncombiningMetaplasm
           sounds[sounds.length - 1].toString()
         )
       ) {
-        // in case of -ieng plus a tone letter. e.g. liengzngauz
+        // in case of -ing plus a tone letter. e.g. lingzngauz
         // let ret: TonalSyllable[] = [];
         // const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
         // const tnltrs = !rules ? [] : rules;

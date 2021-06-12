@@ -58,7 +58,7 @@ export const epentheticLetters = [
   TonalLetterTags.n.toString(),
 ];
 
-// j, l, s for first checked tones
+// j, l, s for 1st, 3rd, 5th checked tones
 export const finalConsonantsJls = [
   TonalLetterTags.j.toString(),
   TonalLetterTags.l.toString(),
@@ -72,15 +72,6 @@ export const finalConsonantsBgkp = [
   TonalLetterTags.k.toString(),
   TonalLetterTags.p.toString(),
 ];
-
-// j, l, s for third and fifth checked tones
-/*
-export const finalConsonantsJls = [
-  TonalLetterTags.j.toString(),
-  TonalLetterTags.l.toString(),
-  TonalLetterTags.s.toString(),
-];
-*/
 
 // sandhi final m, ng for final n
 export const finalConsonantsMng = [
@@ -132,10 +123,6 @@ export const ttInitialTInitialPairs = new Map<string, TonalLetterTags>()
     TonalLetterTags.t + TonalLetterTags.f + initialConsonantsForFinalT.j,
     TonalLetterTags.j
   )
-  .set(
-    TonalLetterTags.t + TonalLetterTags.w + initialConsonantsForFinalT.j,
-    TonalLetterTags.l
-  ) // TODO: this entry to be removed
   .set(TonalLetterTags.t + initialConsonantsForFinalT.m, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialConsonantsForFinalT.n, TonalLetterTags.h)
   .set(TonalLetterTags.t + initialConsonantsForFinalT.ng, TonalLetterTags.h)
@@ -221,7 +208,9 @@ export const finalConsonantsForBgjlsbbggjjllss = new Map<
   .set(TonalLetterTags.gg, [TonalLetterTags.kk, TonalLetterTags.tt])
   .set(TonalLetterTags.jj, [TonalLetterTags.tt])
   .set(TonalLetterTags.ll, [TonalLetterTags.tt])
-  .set(TonalLetterTags.ss, [TonalLetterTags.tt])
+  .set(TonalLetterTags.ss, [TonalLetterTags.tt]);
+
+export const finalConsonantsForBgjlsFw = new Map<string, TonalLetterTags[]>()
   // both keys and values are for the has method
   // the has method will not reach the below pairs
   .set(TonalLetterTags.b + TonalLetterTags.f, [
@@ -237,10 +226,6 @@ export const finalConsonantsForBgjlsbbggjjllss = new Map<
     TonalLetterTags.t,
   ])
   .set(TonalLetterTags.g + TonalLetterTags.w, [
-    TonalLetterTags.kk,
-    TonalLetterTags.tt,
-  ])
-  .set(TonalLetterTags.g + TonalLetterTags.x, [
     TonalLetterTags.kk,
     TonalLetterTags.tt,
   ])
