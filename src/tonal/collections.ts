@@ -65,6 +65,12 @@ export const finalConsonantsJls = [
   TonalLetterTags.s.toString(),
 ];
 
+// j, l, s for 1st, 3rd checked tones
+export const finalConsonantsJs = [
+  TonalLetterTags.j.toString(),
+  TonalLetterTags.s.toString(),
+];
+
 // b, g, k, p
 export const finalConsonantsBgkp = [
   TonalLetterTags.b.toString(),

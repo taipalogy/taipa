@@ -10,10 +10,11 @@ import {
   finalConsonantsMng,
   toneLettersWx,
   nasalFinalConsonants,
+  finalConsonantsJs,
 } from '../tonal/collections';
 
 // mhf, nhf, nghf
-export const regexMnngHF = /(m|ng?)hf/g;
+// export const regexMnngHF = /(m|ng?)hf/g;
 
 // mhf, nhf, nghf
 export const smMnngHF = function (
@@ -32,7 +33,7 @@ export const smMnngHF = function (
 };
 
 // mhw, mhx, nhw, nhx, nghw, nghx
-export const regexMnngHWx = /(m|ng?)h(w|x)/g;
+// export const regexMnngHWx = /(m|ng?)h(w|x)/g;
 
 // mhw, mhx, nhw, nhx, nghw, nghx
 export const smMnngHWx = function (
@@ -51,7 +52,7 @@ export const smMnngHWx = function (
 };
 
 // jf, lf, sf
-export const regexJlsF = /(j|l|s)f/g;
+// export const regexJlsF = /(j|l|s)f/g;
 
 // jf, lf, sf
 export const smJlsF = function (finalJls: string, firstTonalF: string) {
@@ -76,11 +77,19 @@ export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
 };
 
 // jw, lw, lx, sw. there is no jx and sx.
-export const regexJlsWx = /(j|l|s)(w|x)/g;
+// export const regexJlsWx = /(j|l|s)(w|x)/g;
 
-// jw, lw, lx, sw
-export const smJlsWx = function (finalLs: string, tonalWX: string) {
-  if (finalConsonantsJls.includes(finalLs) && toneLettersWx.includes(tonalWX))
+// jw, sw
+export const smJsW = function (finalJs: string, tonalW: string) {
+  if (finalConsonantsJs.includes(finalJs) && TonalLetterTags.w === tonalW)
+    return true;
+
+  return false;
+};
+
+// lw, lx
+export const smLWx = function (finalL: string, tonalWX: string) {
+  if (TonalLetterTags.l === finalL && toneLettersWx.includes(tonalWX))
     return true;
 
   return false;

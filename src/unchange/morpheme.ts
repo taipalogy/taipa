@@ -8,7 +8,6 @@ import {
   AllomorphX,
   TonalLetterTags,
   lowerLettersTonal,
-  tonalPositionalSounds,
   TonalSoundTags,
   uncombiningRulesAy,
   CheckedAllomorph,
@@ -24,21 +23,16 @@ import {
   smMnngHF,
   smMnngHWx,
   smBgkpF,
-  regexJlsF,
-  regexMnngHF,
-  regexJlsWx,
-  regexMnngHWx,
   smJlsF,
-  smJlsWx,
+  smJsW,
   smBgkpWx,
   smMngFywxz,
   smIK,
   smVowelMng,
+  smLWx,
 } from './matcher';
 import {
   epentheticLetters,
-  toneLettersWx,
-  sandhiFinalPPpttt,
   fourthToEighthFinalConsonants,
   nasalInitialConsonants,
   finalConsonantsBgjlsbbggjjllss,
@@ -143,7 +137,8 @@ export function syllabifyTonal(
         (smBgkpF(letters[i - 1].literal, letters[i].literal) ||
           smBgkpWx(letters[i - 1].literal, letters[i].literal) ||
           smJlsF(letters[i - 1].literal, letters[i].literal) ||
-          smJlsWx(letters[i - 1].literal, letters[i].literal))
+          smJsW(letters[i - 1].literal, letters[i].literal) ||
+          smLWx(letters[i - 1].literal, letters[i].literal))
       ) {
         // b, g, bb, gg, l, j, s, ll, ss need to be handled in TonalCombiningMorpheme.assignAllomorph
         // this combining form is not present in the pool.

@@ -509,7 +509,7 @@ export class UncombiningFormsIengUamToneLetter extends TonalUncombiningMetaplasm
           sounds[sounds.length - 1].toString()
         )
       ) {
-        // in case of -ing plus a tone letter. e.g. lingzngauz
+        // in case of -ieng plus a tone letter. e.g. liengzngauz
         // let ret: TonalSyllable[] = [];
         // const rules = freeAllomorphUncombiningRules.get(allomorph.toString());
         // const tnltrs = !rules ? [] : rules;
