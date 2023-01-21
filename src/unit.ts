@@ -293,7 +293,7 @@ export class GraphemeMaker {
 
 /** The sound tag of a given letter. */
 export class Sound {
-  // one member of TonalSoundTags
+  // one member of TonalSpelling Tags
   name: string = '';
   // an array of character objects. can be used to make a word object.
   characters: Array<Character> = new Array();

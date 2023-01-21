@@ -13,7 +13,7 @@ export { GraphemeMaker } from './unit';
 export {
   lowerLettersTonal,
   TonalLetterTags,
-  TonalSoundTags,
+  TonalSpellingTags,
 } from './tonal/version2';
 export { KanaLetterTags } from './kana/kana';
 export { lemmatize } from './unchange/lemmatizer';

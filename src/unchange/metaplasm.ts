@@ -20,7 +20,7 @@ import {
   FreeTonalX,
   lowerLettersTonal,
   neutralFinalConsonantsTonal,
-  TonalSoundTags,
+  TonalSpellingTags,
 } from '../tonal/version2';
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
@@ -115,7 +115,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
 
         const tnl = s.letters[s.letters.length - 1].literal;
         const nslFnls = sounds.filter(
-          it => it.name === TonalSoundTags.nasalFinalConsonant
+          it => it.name === TonalSpellingTags.nasalFinalConsonant
         );
         s.popLetter(); // pop out the tone letter
 
@@ -162,7 +162,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           const ret = this.handleAssimilatedFinal(s, tnl);
           if (ret && ret.length > 0) return ret;
         } else if (
-          sounds.filter(it => it.name === TonalSoundTags.vowel).length > 0 &&
+          sounds.filter(it => it.name === TonalSpellingTags.vowel).length > 0 &&
           nasalFinalConsonants.includes(s.lastSecondLetter.literal) &&
           neutralFinalConsonantsTonal.includes(s.lastLetter.literal)
         ) {
@@ -172,7 +172,7 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
           // mhh, mh, nhh, nh, nghh, ngh
           if (
             this.soundsFollowing[0] &&
-            this.soundsFollowing[0].name === TonalSoundTags.initialConsonant &&
+            this.soundsFollowing[0].name === TonalSpellingTags.initialConsonant &&
             s.lastSecondLetter.literal === this.soundsFollowing[0].toString()
           ) {
             // unchange to -tt or -t
@@ -218,7 +218,7 @@ export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
         const s: TonalSyllable = new TonalSyllable(
           sounds.map(it => new AlphabeticLetter(it.characters))
         );
-        const tnl = sounds.filter(it => it.name === TonalSoundTags.freeTone);
+        const tnl = sounds.filter(it => it.name === TonalSpellingTags.freeTone);
         if (tnl && tnl[0].toString() === TonalLetterTags.z) {
           s.popLetter(); // pop the tonal
           s.pushLetter(lowerLettersTonal.get(TonalLetterTags.h)); // push neutral final
@@ -229,7 +229,7 @@ export class PhrasalVerbParticleUncombining extends TonalUncombiningMetaplasm {
         const s: TonalSyllable = new TonalSyllable(
           sounds.map(it => new AlphabeticLetter(it.characters))
         );
-        const tnl = sounds.filter(it => it.name === TonalSoundTags.checkedTone);
+        const tnl = sounds.filter(it => it.name === TonalSpellingTags.checkedTone);
         if (
           tnl &&
           (tnl[0].toString() === TonalLetterTags.f ||
@@ -425,7 +425,7 @@ export class TransfixUncombining extends TonalUncombiningMetaplasm {
     if (allomorph) {
       const vowelA = sounds.filter(it => it.toString() === TonalLetterTags.a);
       const chkFnls = sounds.filter(
-        it => it.name === TonalSoundTags.checkedTone
+        it => it.name === TonalSpellingTags.checkedTone
       );
       const s: TonalSyllable = new TonalSyllable(
         sounds.map(it => new AlphabeticLetter(it.characters))
@@ -472,9 +472,9 @@ export class UncombiningFormsIetfIetwToEkEkk extends TonalUncombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       const ics = sounds.filter(
-        i => i.name === TonalSoundTags.initialConsonant
+        i => i.name === TonalSpellingTags.initialConsonant
       );
-      const ts = sounds.filter(i => i.name === TonalSoundTags.checkedTone);
+      const ts = sounds.filter(i => i.name === TonalSpellingTags.checkedTone);
       if (ics.length > 0 && ts.length > 0) {
         if (ts[0].toString() === TonalLetterTags.f) {
           // in case of ~ietf

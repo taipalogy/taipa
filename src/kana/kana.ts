@@ -103,7 +103,7 @@ export const lowerLettersKana = new LettersOfKana([
   KanaLetterTags.ng,
 ]);
 
-export enum KanaSoundTags {
+export enum KanaSpellingTags {
   geminatedConsonant = 'geminatedConsonant', // geminated consonant
   initialConsonant = 'initialConsonant', // initial consonant
   semivowel = 'semivowel',
@@ -112,19 +112,19 @@ export enum KanaSoundTags {
 }
 
 class GeminatedConsonant extends Sound {
-  name = KanaSoundTags.geminatedConsonant;
+  name = KanaSpellingTags.geminatedConsonant;
 }
 class InitialConsonant extends Sound {
-  name = KanaSoundTags.initialConsonant;
+  name = KanaSpellingTags.initialConsonant;
 }
 class Semivowel extends Sound {
-  name = KanaSoundTags.semivowel;
+  name = KanaSpellingTags.semivowel;
 }
 class Vowel extends Sound {
-  name = KanaSoundTags.vowel;
+  name = KanaSpellingTags.vowel;
 }
 class FinalConsonant extends Sound {
-  name = KanaSoundTags.finalConsonant;
+  name = KanaSpellingTags.finalConsonant;
 }
 
 class InitialConsonantB extends InitialConsonant {
@@ -326,7 +326,7 @@ export const finalConsonantsKana = soundSequence([
 export const hatsuonsKana = soundSequence([new FinalConsonantN()]);
 
 function positionalSounds(sounds: Sound[]) {
-  return (s: KanaSoundTags) => {
+  return (s: KanaSpellingTags) => {
     for (const i in sounds) {
       if (sounds[i].name === s) return sounds[i];
     }
@@ -394,7 +394,7 @@ const psZ = positionalSounds([new InitialConsonantZ()]);
 
 export const kanaPositionalSounds = new Map<
   string,
-  (s: KanaSoundTags) => Sound
+  (s: KanaSpellingTags) => Sound
 >()
   .set(KanaLetterTags.a, psA)
   .set(KanaLetterTags.b, psB)

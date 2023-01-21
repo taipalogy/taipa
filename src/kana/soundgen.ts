@@ -1,6 +1,6 @@
 import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
-  KanaSoundTags,
+  KanaSpellingTags,
   kanaPositionalSounds,
   initialConsonantsKana,
   vowelsKana,
@@ -18,7 +18,7 @@ function initialConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(KanaSoundTags.initialConsonant);
+      const s = sounds(KanaSpellingTags.initialConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
@@ -34,7 +34,7 @@ function semivowel(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(KanaSoundTags.semivowel);
+      const s = sounds(KanaSpellingTags.semivowel);
       if (s) sg.matchedSounds.push(s);
     }
   }
@@ -50,7 +50,7 @@ function vowel(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(KanaSoundTags.vowel);
+      const s = sounds(KanaSpellingTags.vowel);
       if (s) sg.matchedSounds.push(s);
     }
   }
@@ -64,7 +64,7 @@ function hatsuon(sg: SoundGeneration) {
   if (sfcs.includes(sg.sounds[sg.matchedSounds.length])) {
     const sounds = kanaPositionalSounds.get(sg.sounds[sg.matchedSounds.length]);
     if (sounds) {
-      const s = sounds(KanaSoundTags.finalConsonant);
+      const s = sounds(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   }
@@ -80,7 +80,7 @@ function finalConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(KanaSoundTags.finalConsonant);
+      const s = sounds(KanaSpellingTags.finalConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   }
@@ -96,7 +96,7 @@ function geminatedConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(KanaSoundTags.geminatedConsonant);
+      const s = sounds(KanaSpellingTags.geminatedConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   }

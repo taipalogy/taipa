@@ -179,7 +179,7 @@ export const lowerLettersTonal = new LettersOfTonal([
   TonalLetterTags.kh,
 ]);
 
-export enum TonalSoundTags {
+export enum TonalSpellingTags {
   initialConsonant = 'initialConsonant',
   vowel = 'vowel',
   materLectionis = 'materLectionis',
@@ -191,37 +191,37 @@ export enum TonalSoundTags {
 }
 
 export class Initial extends Sound {
-  name = TonalSoundTags.initialConsonant;
+  name = TonalSpellingTags.initialConsonant;
 }
 export class Medial extends Sound {
-  name = TonalSoundTags.vowel;
+  name = TonalSpellingTags.vowel;
 }
 export class Final extends Sound {
   name = '';
 }
 export class Nasalization extends Sound {
-  name = TonalSoundTags.nasalization;
+  name = TonalSpellingTags.nasalization;
 }
 export class Tonal extends Sound {
   name = '';
 }
 
 export class FreeTonal extends Tonal {
-  name = TonalSoundTags.freeTone;
+  name = TonalSpellingTags.freeTone;
 }
 export class CheckedTonal extends Tonal {
-  name = TonalSoundTags.checkedTone;
+  name = TonalSpellingTags.checkedTone;
 }
 
 export class StopFinal extends Final {
-  name = TonalSoundTags.stopFinalConsonant;
+  name = TonalSpellingTags.stopFinalConsonant;
 }
 export class NasalFinal extends Final {
-  name = TonalSoundTags.nasalFinalConsonant;
+  name = TonalSpellingTags.nasalFinalConsonant;
 }
 
 export class MaterLectionis extends Medial {
-  name = TonalSoundTags.materLectionis;
+  name = TonalSpellingTags.materLectionis;
 }
 
 class MedialA extends Medial {
@@ -543,7 +543,7 @@ export const finalConsonantsBBggkkllppssTonal = soundSequence([
 ]);
 
 function positionalSounds(sounds: Sound[]) {
-  return (s: TonalSoundTags) => {
+  return (s: TonalSpellingTags) => {
     for (const i in sounds) {
       if (sounds[i].name === s) return sounds[i];
     }
@@ -609,7 +609,7 @@ const psZX = positionalSounds([new FreeTonalZX()]);
 
 export const tonalPositionalSounds = new Map<
   string,
-  (s: TonalSoundTags) => Sound
+  (s: TonalSpellingTags) => Sound
 >()
   .set(TonalLetterTags.a, psA)
   .set(TonalLetterTags.b, psB)

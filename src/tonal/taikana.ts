@@ -1,5 +1,5 @@
 import {
-  TonalSoundTags,
+  TonalSpellingTags,
   TonalLetterTags,
   materLectionisTonal,
   neutralFinalConsonantsTonal,
@@ -56,15 +56,15 @@ function getToneSymbolForFourthEighth(final: string, tonalLen: number) {
 function getReplicatedKanaVowel(sounds: Sound[], j: number, replica: string) {
   if (
     (j == 0 &&
-      sounds[0].name === TonalSoundTags.vowel &&
+      sounds[0].name === TonalSpellingTags.vowel &&
       (sounds.length == 1 ||
         (sounds.length == 2 &&
-          sounds[sounds.length - 1].name === TonalSoundTags.freeTone) ||
+          sounds[sounds.length - 1].name === TonalSpellingTags.freeTone) ||
         (sounds.length == 2 &&
-          sounds[sounds.length - 1].name === TonalSoundTags.nasalization))) ||
+          sounds[sounds.length - 1].name === TonalSpellingTags.nasalization))) ||
     (sounds.length == 3 &&
-      sounds[sounds.length - 2].name === TonalSoundTags.nasalization &&
-      sounds[sounds.length - 1].name === TonalSoundTags.freeTone)
+      sounds[sounds.length - 2].name === TonalSpellingTags.nasalization &&
+      sounds[sounds.length - 1].name === TonalSpellingTags.freeTone)
   ) {
     // reduplicate the vowel for syllables without an initial
     // in case of a, e,
@@ -73,17 +73,17 @@ function getReplicatedKanaVowel(sounds: Sound[], j: number, replica: string) {
     return replica;
   } else if (
     (sounds.length == 2 &&
-      sounds[0].name === TonalSoundTags.vowel &&
+      sounds[0].name === TonalSpellingTags.vowel &&
       (sounds[1].toString() === TonalLetterTags.h ||
         sounds[1].toString() === TonalLetterTags.hh)) ||
     (sounds.length == 3 &&
-      sounds[0].name === TonalSoundTags.vowel &&
+      sounds[0].name === TonalSpellingTags.vowel &&
       (sounds[1].toString() === TonalLetterTags.h ||
         sounds[1].toString() === TonalLetterTags.hh) &&
-      sounds[2].name === TonalSoundTags.checkedTone) ||
+      sounds[2].name === TonalSpellingTags.checkedTone) ||
     (sounds.length == 3 &&
-      sounds[0].name === TonalSoundTags.vowel &&
-      sounds[1].name === TonalSoundTags.nasalization &&
+      sounds[0].name === TonalSpellingTags.vowel &&
+      sounds[1].name === TonalSpellingTags.nasalization &&
       (sounds[2].toString() === TonalLetterTags.h ||
         sounds[2].toString() === TonalLetterTags.hh))
   ) {
@@ -113,38 +113,38 @@ export function composeTaiKana(morphemes: TonalUncombiningMorpheme[]) {
 
   for (let i = 0; i < morphemes.length; i++) {
     const initl = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.initialConsonant
+      it => it.name === TonalSpellingTags.initialConsonant
     );
     const mdls = morphemes[i].sounds.filter(
       it =>
-        it.name === TonalSoundTags.vowel ||
-        it.name === TonalSoundTags.materLectionis
+        it.name === TonalSpellingTags.vowel ||
+        it.name === TonalSpellingTags.materLectionis
     );
     const nslFnl = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.nasalFinalConsonant
+      it => it.name === TonalSpellingTags.nasalFinalConsonant
     );
     const stpFnl = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.stopFinalConsonant
+      it => it.name === TonalSpellingTags.stopFinalConsonant
     );
     const frTnl = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.freeTone
+      it => it.name === TonalSpellingTags.freeTone
     );
     const chkTnl = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.checkedTone
+      it => it.name === TonalSpellingTags.checkedTone
     );
     const nslz = morphemes[i].sounds.filter(
-      it => it.name === TonalSoundTags.nasalization
+      it => it.name === TonalSpellingTags.nasalization
     );
     const finalsForEToKanaIE = stpFnl
       .filter(
         it =>
-          it.name === TonalSoundTags.stopFinalConsonant &&
+          it.name === TonalSpellingTags.stopFinalConsonant &&
           finalsForEKegekkeggeng.includes(it.toString())
       )
       .concat(
         nslFnl.filter(
           it =>
-            it.name === TonalSoundTags.nasalFinalConsonant &&
+            it.name === TonalSpellingTags.nasalFinalConsonant &&
             finalsForEKegekkeggeng.includes(it.toString())
         )
       );

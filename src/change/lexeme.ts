@@ -12,7 +12,7 @@ import {
   Allomorph,
   FreeAllomorph,
   CheckedAllomorph,
-  TonalSoundTags,
+  TonalSpellingTags,
   TonalLetterTags,
 } from '../tonal/version2';
 import { TonalSoundUnchangingMorpheme } from '../unchange/morpheme';
@@ -130,14 +130,14 @@ export class TonalInsertionLexeme implements Lexeme {
       let s = new Sound();
       if (
         adjacentLtrs[adjacentLtrs.length - 1].name ===
-          TonalSoundTags.freeTone &&
+          TonalSpellingTags.freeTone &&
         adjacentLtrs[adjacentLtrs.length - 2].name ===
-          TonalSoundTags.nasalFinalConsonant
+          TonalSpellingTags.nasalFinalConsonant
       ) {
         s = adjacentLtrs[adjacentLtrs.length - 2];
       } else if (
         adjacentLtrs[adjacentLtrs.length - 1].name ===
-        TonalSoundTags.nasalFinalConsonant
+        TonalSpellingTags.nasalFinalConsonant
       ) {
         s = adjacentLtrs[adjacentLtrs.length - 1];
       }
@@ -185,14 +185,14 @@ export class TonalUninsertionLexeme implements Lexeme {
       let s = new Sound();
       if (
         precedingLtrs[precedingLtrs.length - 1].name ===
-          TonalSoundTags.freeTone &&
+          TonalSpellingTags.freeTone &&
         precedingLtrs[precedingLtrs.length - 2].name ===
-          TonalSoundTags.nasalFinalConsonant
+          TonalSpellingTags.nasalFinalConsonant
       ) {
         s = precedingLtrs[precedingLtrs.length - 2];
       } else if (
         precedingLtrs[precedingLtrs.length - 1].name ===
-        TonalSoundTags.nasalFinalConsonant
+        TonalSpellingTags.nasalFinalConsonant
       ) {
         s = precedingLtrs[precedingLtrs.length - 1];
       }
@@ -243,7 +243,7 @@ export class TonalInfectionLexeme implements Lexeme {
     if (
       preceding.morphemes.length > 0 &&
       preceding.morphemes[preceding.morphemes.length - 1].sounds.filter(
-        i => i.name === TonalSoundTags.nasalization
+        i => i.name === TonalSpellingTags.nasalization
       ).length > 0
     ) {
       // if there is a nasalization in the preceding word
@@ -282,11 +282,11 @@ export class TonalUninfectionLexeme implements Lexeme {
       const adjacentLtrs = this.morphemes[this.morphemes.length - 1].sounds;
       const n = preceding.morphemes[
         preceding.morphemes.length - 1
-      ].sounds.filter(i => i.name === TonalSoundTags.nasalization);
+      ].sounds.filter(i => i.name === TonalSpellingTags.nasalization);
 
       if (
         n.length == 1 &&
-        adjacentLtrs.filter(it => it.name === TonalSoundTags.nasalization)
+        adjacentLtrs.filter(it => it.name === TonalSpellingTags.nasalization)
           .length == 1
       ) {
         // if there is a nasalization in the preceding word and the current word
@@ -326,7 +326,7 @@ export class TonalMutationLexeme implements Lexeme {
     if (following.morphemes.length > 0) {
       const adjacentLtrs =
         following.morphemes[following.morphemes.length - 1].sounds;
-      if (adjacentLtrs[0].name === TonalSoundTags.initialConsonant) {
+      if (adjacentLtrs[0].name === TonalSpellingTags.initialConsonant) {
         const s = adjacentLtrs[0];
         const syls = this.morphemes[
           this.morphemes.length - 1
@@ -366,7 +366,7 @@ export class TonalUnmutationLexeme implements Lexeme {
 
   unmutateWith(following: TonalUnmutationLexeme) {
     const ltrs = this.morphemes[this.morphemes.length - 1].sounds;
-    const fnls = ltrs.filter(i => i.name === TonalSoundTags.stopFinalConsonant);
+    const fnls = ltrs.filter(i => i.name === TonalSpellingTags.stopFinalConsonant);
     const wrd = new TonalWord(
       this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
     );

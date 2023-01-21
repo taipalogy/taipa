@@ -11,7 +11,7 @@ describe('Basic testing', () => {
     expect(lowerLettersTonal.size).toEqual(43);
   });
 
-  test('check the number of lexical roots', () => {
+  test('check the number of syllables', () => {
     expect(basicSyllables.length).toEqual(2209);
   });
 });

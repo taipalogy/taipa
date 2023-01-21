@@ -5,7 +5,7 @@ import {
   AllomorphY,
   CheckedAllomorph,
   TonalLetterTags,
-  TonalSoundTags,
+  TonalSpellingTags,
   lowerLettersTonal,
   AllomorphH,
 } from '../tonal/version2';
@@ -417,7 +417,7 @@ export class Epenthesis extends TonalInsertionMetaplasm {
         morphemes.map(x => new TonalSyllable(x.syllable.letters))
       );
       if (
-        ltrs[ltrs.length - 2].name == TonalSoundTags.nasalFinalConsonant &&
+        ltrs[ltrs.length - 2].name == TonalSpellingTags.nasalFinalConsonant &&
         morphemes[morphemes.length - 1].syllable.letters[0].literal ===
           TonalLetterTags.a
       ) {
@@ -444,7 +444,7 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
         morphemes.map(it => new TonalSyllable(it.syllable.letters))
       );
       if (
-        ltrs[ltrs.length - 2].name == TonalSoundTags.nasalFinalConsonant &&
+        ltrs[ltrs.length - 2].name == TonalSpellingTags.nasalFinalConsonant &&
         nasalInitialConsonants.includes(
           morphemes[morphemes.length - 1].syllable.letters[0].literal
         ) &&
@@ -470,7 +470,7 @@ export class Infection extends TonalInfectionMetaplasm {
       );
 
       if (
-        ltrs.filter(it => it.name === TonalSoundTags.nasalization).length == 1
+        ltrs.filter(it => it.name === TonalSpellingTags.nasalization).length == 1
       ) {
         // nasalization of vowels
         wrd.replaceSyllable(
@@ -494,7 +494,7 @@ export class Uninfection extends TonalUninfectionMetaplasm {
       );
 
       if (
-        ltrs.filter(it => it.name === TonalSoundTags.nasalization).length == 1
+        ltrs.filter(it => it.name === TonalSpellingTags.nasalization).length == 1
       ) {
         // nasalization of vowels
         wrd.replaceSyllable(
@@ -781,7 +781,7 @@ export class FinalConsonantMutationInternal extends TonalMutationMetaplasm {
     if (morphemes.length > 1) {
       for (let i = 1; i < morphemes.length; i++) {
         if (
-          morphemes[i].sounds[0].name === TonalSoundTags.initialConsonant &&
+          morphemes[i].sounds[0].name === TonalSpellingTags.initialConsonant &&
           (morphemes[i - 1].lastSecondLetter === TonalLetterTags.t ||
             morphemes[i - 1].lastSecondLetter === TonalLetterTags.tt)
         ) {
@@ -829,7 +829,7 @@ export class FinalConsonantUnmutationInternal extends TonalUnmutationMetaplasm {
           voicedVoicelessFinalConsonants.keys()
         );
         if (
-          morphemes[i].sounds[0].name === TonalSoundTags.initialConsonant &&
+          morphemes[i].sounds[0].name === TonalSpellingTags.initialConsonant &&
           finalsBglbbggll.includes(morphemes[i - 1].lastSecondLetter) &&
           initialsBghjlmnng.includes(morphemes[i].sounds[0].toString())
         ) {

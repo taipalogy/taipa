@@ -1,7 +1,7 @@
 import { Sound, SoundGeneration, sgPipe } from '../unit';
 import {
   tonalPositionalSounds,
-  TonalSoundTags,
+  TonalSpellingTags,
   lowerLettersTonal,
   checkedToneLettersTonal,
   freeToneLettersTonal,
@@ -23,7 +23,7 @@ function initialConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.initialConsonant);
+      const s = sounds(TonalSpellingTags.initialConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
@@ -40,7 +40,7 @@ function nasalFinalConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.nasalFinalConsonant);
+      const s = sounds(TonalSpellingTags.nasalFinalConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
@@ -63,7 +63,7 @@ function vowel(sg: SoundGeneration) {
       toBePredicted = true;
       const sounds = tonalPositionalSounds.get(sg.letters[i]);
       if (sounds) {
-        const s = sounds(TonalSoundTags.vowel);
+        const s = sounds(TonalSpellingTags.vowel);
         matches++;
         if (s) sg.matchedSounds.push(s);
       }
@@ -90,7 +90,7 @@ function materLectionis(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.materLectionis);
+      const s = sounds(TonalSpellingTags.materLectionis);
       if (s) sg.matchedSounds.push(s);
     }
   } else sg.matching = false;
@@ -106,7 +106,7 @@ function nasalization(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.nasalization);
+      const s = sounds(TonalSpellingTags.nasalization);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
@@ -126,7 +126,7 @@ function freeToneLetter(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.freeTone);
+      const s = sounds(TonalSpellingTags.freeTone);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
@@ -150,7 +150,7 @@ function stopFinalConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      const s = sounds(TonalSpellingTags.stopFinalConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
@@ -172,7 +172,7 @@ function neutralFinalConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      const s = sounds(TonalSpellingTags.stopFinalConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
@@ -192,7 +192,7 @@ function checkedToneLetter(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.checkedTone);
+      const s = sounds(TonalSpellingTags.checkedTone);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
@@ -217,7 +217,7 @@ function sandhiFinalConsonant(sg: SoundGeneration) {
       sg.letters[sg.matchedSounds.length]
     );
     if (sounds) {
-      const s = sounds(TonalSoundTags.stopFinalConsonant);
+      const s = sounds(TonalSpellingTags.stopFinalConsonant);
       if (s) sg.matchedSounds.push(s);
     }
   } else {
