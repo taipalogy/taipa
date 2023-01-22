@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as readline from 'readline';
 
 /**
- * scripts> tsc npxbin.ts
+ * scripts> ../node_modules/typescript/bin/tsc npxbin.ts
  * scripts> node npxbin.js
  * scripts> mv app.js ../bin
  */
