@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalLetterTags } from '../src/tonal/version2';
+import { TonalLetterTags } from '../src/tonal/tonalalphabet';
 import { mutateFinalConsonantOfPrecedingSyllable } from '../src/change/mutator';
 
 describe('Epenthesis testing', () => {

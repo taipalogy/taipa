@@ -14,8 +14,8 @@ export {
   lowerLettersTonal,
   TonalLetterTags,
   TonalSpellingTags,
-} from './tonal/version2';
-export { KanaLetterTags } from './kana/kana';
+} from './tonal/tonalalphabet';
+export { KanaLetterTags } from './kana/kanaalphabet';
 export { lemmatize } from './unchange/lemmatizer';
 export {
   createTonalPhrase,
@@ -66,7 +66,7 @@ export {
   initialConsonantsTonal,
   nasalizationsTonal,
   vowelsTonal,
-} from './tonal/version2';
+} from './tonal/tonalalphabet';
 
 export {
   TonalDesinenceInflection,

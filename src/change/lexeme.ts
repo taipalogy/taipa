@@ -14,7 +14,7 @@ import {
   CheckedAllomorph,
   TonalSpellingTags,
   TonalLetterTags,
-} from '../tonal/version2';
+} from '../tonal/tonalalphabet';
 import { TonalSoundUnchangingMorpheme } from '../unchange/morpheme';
 import { Sound } from '../unit';
 import {

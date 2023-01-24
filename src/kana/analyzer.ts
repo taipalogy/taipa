@@ -1,6 +1,6 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../unit';
 import { KanaUncombiningMorphemeMaker } from './morpheme';
-import { lowerLettersKana } from './kana';
+import { lowerLettersKana } from './kanaalphabet';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
 /**

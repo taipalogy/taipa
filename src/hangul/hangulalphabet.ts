@@ -7,7 +7,7 @@ export enum HangulLetterTags {
   o = 'o',
   u = 'u',
 
-  oe = 'oe', /* ar */
+  oe = 'oe',
 
   er = 'er',
   ir = 'ir',
@@ -60,7 +60,7 @@ export const lowerLettersHangul = new LettersOfHangul([
   HangulLetterTags.i,
   HangulLetterTags.o,
   HangulLetterTags.u,
-  HangulLetterTags.oe, /* ar */
+  HangulLetterTags.oe,
   HangulLetterTags.er,
   HangulLetterTags.ir,
   HangulLetterTags.ur,

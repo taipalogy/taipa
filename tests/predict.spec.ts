@@ -1,7 +1,7 @@
 import { predict } from '../src/tonal/prediction';
 import { graphAnalyzeTonal } from '../src/unchange/analyzer';
 import { GraphemeMaker } from '../src/unit';
-import { lowerLettersTonal } from '../src/tonal/version2';
+import { lowerLettersTonal } from '../src/tonal/tonalalphabet';
 
 describe('Prediction testing', () => {
   const inputUnd: any = undefined;

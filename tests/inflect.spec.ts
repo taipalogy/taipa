@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalSpellingTags, TonalLetterTags } from '../src/tonal/version2';
+import { TonalSpellingTags, TonalLetterTags } from '../src/tonal/tonalalphabet';
 import { TokenAnalysis } from '../src/client';
 import {
   inflectDesinence,

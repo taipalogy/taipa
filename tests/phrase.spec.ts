@@ -10,7 +10,7 @@ import {
   inflectVppToParticiple,
 } from '../src/change/inflector';
 import { insertToFollowingWord } from '../src/change/inserter';
-import { TonalLetterTags } from '../src/tonal/version2';
+import { TonalLetterTags } from '../src/tonal/tonalalphabet';
 import { TonalSyllable } from '../src/unchange/unit';
 import {
   createTonalPhrase,

@@ -1,7 +1,7 @@
 import { syllableCompositions } from './soundgen';
 import { SoundGeneration, Sound } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
-import { vowelsTonal } from './version2';
+import { vowelsTonal } from './tonalalphabet';
 import { impossibleSequences } from './collections';
 
 /** Get Latin syllable compositions for syllable tokenization. Returned values can be further matched with tone patterns or looked up in dictionary. */

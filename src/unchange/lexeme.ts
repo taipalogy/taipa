@@ -1,6 +1,6 @@
 import { TonalUncombiningMorpheme } from './morpheme';
 import { Lexeme } from '../unit';
-import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../tonal/version2';
+import { FreeAllomorph, CheckedAllomorph, Allomorph } from '../tonal/tonalalphabet';
 import { TonalLemmatization } from './metaplasm';
 import { LexemeMaker } from '../maker';
 import {

@@ -11,7 +11,7 @@ import {
   lemmatize,
   lemmatizePhrasalVerbParticle,
 } from '../unchange/lemmatizer';
-import { TonalLetterTags } from '../tonal/version2';
+import { TonalLetterTags } from '../tonal/tonalalphabet';
 import { extractTones } from '../tonal/tone';
 
 export const getTokens = function (text: string) {

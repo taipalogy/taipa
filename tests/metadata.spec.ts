@@ -1,5 +1,5 @@
 import { characters } from '../src/unit';
-import { lowerLettersTonal } from '../src/tonal/version2';
+import { lowerLettersTonal } from '../src/tonal/tonalalphabet';
 import { basicSyllables } from '../src/tonal/syllabletable';
 
 describe('Basic testing', () => {

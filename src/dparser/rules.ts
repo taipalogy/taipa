@@ -10,7 +10,7 @@ import {
   baseAdverbialParticles,
   ParticlesAdverbial,
 } from './dictionary';
-import { TonalLetterTags } from '../tonal/version2';
+import { TonalLetterTags } from '../tonal/tonalalphabet';
 
 export function isPhrasalVerbVp(token1: string, token2: string) {
   if (baseVerbs.includes(token1) && basePhrasalVerbParticles.includes(token2))

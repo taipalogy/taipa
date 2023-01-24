@@ -1,5 +1,5 @@
 import { GraphemeMaker } from '../unit';
-import { lowerLettersHangul } from './hangul';
+import { lowerLettersHangul } from './hangulalphabet';
 
 /**
  * Analyzes a string into graphemes. Graphemic analysis.

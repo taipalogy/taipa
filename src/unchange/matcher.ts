@@ -3,7 +3,7 @@ import {
   finalConsonantsBgjklpsTonal,
   freeToneLettersTonal,
   vowelsTonal,
-} from '../tonal/version2';
+} from '../tonal/tonalalphabet';
 import {
   finalConsonantsJls,
   finalConsonantsBgkp,

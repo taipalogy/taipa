@@ -1,6 +1,6 @@
 import { Word, Syllable, AlphabeticLetter } from '../unit';
-import { Allomorph } from '../tonal/version2';
-import { TonalAffix } from '../tonal/version2';
+import { Allomorph } from '../tonal/tonalalphabet';
+import { TonalAffix } from '../tonal/tonalalphabet';
 import { Phrase } from '../unit';
 
 export class TonalSyllable extends Syllable {
