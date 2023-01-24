@@ -1,4 +1,4 @@
-import { tonalPositionalSounds, lowerLettersTonal } from './tonalalphabet';
+import { tonalPositionalSounds, lowerLettersTonal } from './tonalres';
 import { TonalUncombiningMorpheme } from '../unchange/morpheme';
 import { composeTaiKana } from './taikana';
 

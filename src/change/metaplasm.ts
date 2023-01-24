@@ -8,7 +8,7 @@ import {
   TonalSpellingTags,
   lowerLettersTonal,
   AllomorphH,
-} from '../tonal/tonalalphabet';
+} from '../tonal/tonalres';
 import {
   eighthToFirst,
   combiningRules,

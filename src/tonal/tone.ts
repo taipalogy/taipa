@@ -1,7 +1,7 @@
 import { syllabifyTonal } from '../unchange/morpheme';
 import { AlphabeticGrapheme, makeMatchedPatterns } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
-import { TonalSpellingTags, TonalLetterTags } from './tonalalphabet';
+import { TonalSpellingTags, TonalLetterTags } from './tonalres';
 
 /** Tone letters and stop finals of the syllables of a word. */
 export class LexicalTone {

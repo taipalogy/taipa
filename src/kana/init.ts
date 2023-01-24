@@ -12,7 +12,7 @@ import {
   special,
   KanaLetterTags,
   otherKanas,
-} from './kanaalphabet';
+} from './kanares';
 import { KanaUncombiningMorpheme } from './morpheme';
 
 export function checkNumberOfLettersKana() {

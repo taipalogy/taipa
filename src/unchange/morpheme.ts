@@ -15,7 +15,7 @@ import {
   freeToneLettersTonal,
   initialConsonantsTonal,
   finalConsonantsPtkhppttkkhhTonal,
-} from '../tonal/tonalalphabet';
+} from '../tonal/tonalres';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from '../tonal/soundgen';
 import { isInSyllableTable } from '../tonal/syllabletable';

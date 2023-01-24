@@ -3,7 +3,7 @@ import {
   TonalLetterTags,
   materLectionisTonal,
   neutralFinalConsonantsTonal,
-} from './tonalalphabet';
+} from './tonalres';
 import {
   hiraganaKatakana,
   KanaLetterTags,
@@ -11,7 +11,7 @@ import {
   kogakimoji,
   hatsuon,
   special,
-} from '../kana/kanaalphabet';
+} from '../kana/kanares';
 import { Sound } from '../unit';
 import { fourthFinalConsonants } from './collections';
 import { TonalUncombiningMorpheme } from '../unchange/morpheme';

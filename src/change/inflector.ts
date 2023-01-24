@@ -13,7 +13,7 @@ import {
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { createTonalInflectionLexeme } from './creator';
-import { TonalLetterTags } from '../tonal/tonalalphabet';
+import { TonalLetterTags } from '../tonal/tonalres';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
 import { ParticlesPhrasalVerb } from '../dparser/dictionary';
 

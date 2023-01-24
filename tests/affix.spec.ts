@@ -1,5 +1,5 @@
 import { GraphemeMaker } from '../src/unit';
-import { lowerLettersTonal, TonalLetterTags } from '../src/tonal/tonalalphabet';
+import { lowerLettersTonal, TonalLetterTags } from '../src/tonal/tonalres';
 import { TonalCombiningMorphemeMaker } from '../src/change/morpheme';
 import { TonalCombiningForms } from '../src/change/metaplasm';
 

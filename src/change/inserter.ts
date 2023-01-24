@@ -1,5 +1,5 @@
 import { GraphemeMaker } from '../unit';
-import { lowerLettersTonal } from '../tonal/tonalalphabet';
+import { lowerLettersTonal } from '../tonal/tonalres';
 import { TonalSoundChangingMorphemeMaker } from './morpheme';
 import { TonalInsertionLexeme } from './lexeme';
 import { Epenthesis, InsertionToEnclitic } from './metaplasm';

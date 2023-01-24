@@ -1,4 +1,4 @@
-import { TonalLetterTags } from './tonalalphabet';
+import { TonalLetterTags } from './tonalres';
 
 // m, n, ng
 const nasalConsonants = [

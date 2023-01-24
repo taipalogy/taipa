@@ -1,36 +1,25 @@
 #!/usr/bin/env node
 
-import { depParse } from './dparser/processor';
-import { Document } from './document';
+import { Client, TokenAnalysis } from './client'
+import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
+import { TonalUncombiningForms } from './unchange/metaplasm';
+import { TonalWord } from './unchange/unit';
+import { getSoundSequences } from './util';
 
-let doc = new Document();
+const cli = new Client();
 
-let stdin = process.openStdin();
+const stdin = process.openStdin();
+const tla = tonalLemmatizationAnalyzer;
 
 stdin.addListener('data', function (d) {
-  doc = depParse(d.toString().trim());
 
-  const ts = doc.nodes;
+  const ta: TokenAnalysis = cli.processTonal(d.toString().trim());
+  const wrd = ta.word as TonalWord; // type casting
+  // console.log(wrd.literal);
 
-  if (ts.length > 0) {
-    for (let i = 0; i < ts.length; i++) {
-      let lemma = '*';
-      if (ts[i].lemma != '') lemma = ts[i].lemma;
-      let headToken = '*';
-      if (ts[i].head.length > 0) headToken = ts[i].head;
-      console.info(
-        ts[i].token +
-          ',' +
-          lemma +
-          ',' +
-          ts[i].pos +
-          ',' +
-          ts[i].tag +
-          ',' +
-          ts[i].dep +
-          ',' +
-          headToken
-      );
-    }
-  }
+  const soundSeqs = getSoundSequences(
+    tla.morphAnalyze(wrd.literal, new TonalUncombiningForms([])).map(x => x.sounds)
+  );  
+
+  soundSeqs.forEach((v) => {console.info(v[0]+ ' - ' + v[1])});
 });

@@ -14,7 +14,7 @@ import {
   finalConsonantsPtkhppttkkhhTonal,
   finalConsonantsBgjklpsTonal,
   finalConsonantsBBggkkllppssTonal,
-} from './tonalalphabet';
+} from './tonalres';
 import { combiningRules } from './collections';
 
 function initialConsonant(sg: SoundGeneration) {

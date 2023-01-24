@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalLetterTags } from '../src/tonal/tonalalphabet';
+import { TonalLetterTags } from '../src/tonal/tonalres';
 
 describe('Ay testing', () => {
   const cli = new Client();

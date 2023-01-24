@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalLetterTags } from '../src/tonal/tonalalphabet';
+import { TonalLetterTags } from '../src/tonal/tonalres';
 import { TokenAnalysis } from '../src/client';
 import { tonalLemmatizationAnalyzer } from '../src/unchange/analyzer';
 import { TonalUncombiningMorpheme } from '../src/unchange/morpheme';

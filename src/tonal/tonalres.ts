@@ -187,7 +187,7 @@ export enum TonalSpellingTags {
   stopFinalConsonant = 'stopFinalConsonant',
   nasalFinalConsonant = 'nasalFinalConsonant',
   checkedTone = 'checkedTone', // checked tone
-  freeTone = 'freeTone', // free tone
+  freeTone = 'freeTone', // free tone. unchecked tone
 }
 
 export class Initial extends Sound {

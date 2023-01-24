@@ -21,7 +21,7 @@ import {
   lowerLettersTonal,
   neutralFinalConsonantsTonal,
   TonalSpellingTags,
-} from '../tonal/tonalalphabet';
+} from '../tonal/tonalres';
 import { Sound, AlphabeticLetter } from '../unit';
 import { TonalLemmatizationMetaplasm } from '../metaplasm';
 import {

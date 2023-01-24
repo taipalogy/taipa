@@ -11,7 +11,7 @@ import {
   KanaLetterTags,
   finalConsonantsKana,
   geminatedConsonantsKana,
-} from './kanaalphabet';
+} from './kanares';
 import { KanaSoundGenerator } from './soundgen';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 

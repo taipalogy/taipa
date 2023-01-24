@@ -8,7 +8,7 @@ import {
   semivowelsKana,
   finalConsonantsKana,
   // hatsuonsKana,
-} from './kanaalphabet';
+} from './kanares';
 
 function initialConsonant(sg: SoundGeneration) {
   const sics = initialConsonantsKana;

@@ -14,7 +14,7 @@ import {
   vowelsTonal,
   lowerLettersTonal,
   nasalizationsTonal,
-} from '../tonal/tonalalphabet';
+} from '../tonal/tonalres';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import {
   initialConsonantsBghjl,

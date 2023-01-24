@@ -1,5 +1,5 @@
 import { TonalSyllable } from './unchange/unit';
-import { Allomorph } from './tonal/tonalalphabet';
+import { Allomorph } from './tonal/tonalres';
 import { Sound, Morpheme } from './unit';
 import { TonalWord, InflectionalEnding } from './unchange/unit';
 import { TonalPhrase } from './unchange/unit';
