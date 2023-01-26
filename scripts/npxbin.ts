@@ -27,10 +27,8 @@ readInterface.on('line', (l: string) => {
     const str2 = './lib';
     const str3 = l.slice(idx2 + 1, l.length - 1);
     let oneLine = '';
-    if(idx2 >= 0)
-      oneLine = str1 + str2 + str3; // insert ./lib
-    else
-      oneLine = str1 + str3; // don't insert ./lib
+    if (idx2 >= 0) oneLine = str1 + str2 + str3; // insert ./lib
+    else oneLine = str1 + str3; // don't insert ./lib
     buffer.push(oneLine);
   } else if (idx1 == -1) {
     buffer.push(l);
@@ -45,6 +43,6 @@ readInterface.on('close', () => {
   }
 });
 
-fs.chmod(path, 0o755, err => {
+fs.chmod(path, 0o755, (err) => {
   if (err) throw err;
 });
