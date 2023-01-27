@@ -8,6 +8,12 @@ import { getSoundSequences } from './util';
 
 import * as fs from 'fs';
 
+/**
+ * > node lib/app.js
+ * or
+ * > node bin/app.js
+ */
+
 const stdin = process.openStdin();
 
 // process.argv.forEach(function (val, index, array) {
