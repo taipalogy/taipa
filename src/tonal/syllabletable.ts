@@ -15,7 +15,7 @@ const toBeVerified = [
 
     'giakk', 'gutt',
     
-    'hioh', 'huangz',
+    'huangz',
 
     'iakk',
 
