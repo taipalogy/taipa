@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { Client, TokenAnalysis } from '../src/client';
-import { tonalLemmatizationAnalyzer } from '../src/unchange/analyzer';
-import { TonalUncombiningForms } from '../src/unchange/metaplasm';
-import { TonalWord } from '../src/unchange/unit';
-import { getSoundSequences } from '../src/util';
+import { Client, TokenAnalysis } from './client';
+import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
+import { TonalUncombiningForms } from './unchange/metaplasm';
+import { TonalWord } from './unchange/unit';
+import { getSoundSequences } from './util';
 
 import * as fs from 'fs';
 
