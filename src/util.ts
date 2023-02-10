@@ -1,12 +1,13 @@
 import { Sound } from './unit';
 
-export function getSpellSequences(soundSeqs: Sound[][]) {
-  const letters = [];
+export function getLetterSoundPairs(soundSeqs: Sound[][]) {
+  // return letter-sound-name pairs
+  const pairs = [];
   for (let j in soundSeqs) {
     for (let k in soundSeqs[j]) {
-      const ltr = soundSeqs[j][k];
-      letters.push([ltr.toString(), ltr.name]);
+      const snd = soundSeqs[j][k];
+      pairs.push([snd.toString(), snd.name]);
     }
   }
-  return letters;
+  return pairs;
 }
