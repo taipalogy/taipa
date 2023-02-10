@@ -4,7 +4,7 @@ import { Client, TokenAnalysis } from './client';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 import { TonalUncombiningForms } from './unchange/metaplasm';
 import { TonalWord } from './unchange/unit';
-import { getSoundSequences } from './util';
+import { getSpellSequences } from './util';
 
 import * as fs from 'fs';
 import { TonalSpellingTags } from './tonal/tonalres';
@@ -33,7 +33,7 @@ function analyze(input: string) {
   const ta: TokenAnalysis = cli.processTonal(input.toString().trim());
   const wrd = ta.word as TonalWord; // type casting
 
-  const soundSeqs = getSoundSequences(
+  const soundSeqs = getSpellSequences(
     tla
       .morphAnalyze(wrd.literal, new TonalUncombiningForms([]))
       .map((x) => x.sounds)
@@ -102,7 +102,7 @@ stdin.addListener('data', function (d) {
               val[1] === TonalSpellingTags.nasalization
             ) {
               // console.log('in Nasalization', 'key:' + key, 'val:' + val[0]);
-              const arrEntry: string[] = dict[key + val[0]] || {};
+              const arrEntry: string[] = dict[precedings[0] + val[0]] || {};
               bpmf.pop();
               bpmf.push(arrEntry[0]);
               precedings.length = 0;

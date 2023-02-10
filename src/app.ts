@@ -4,7 +4,7 @@ import { Client, TokenAnalysis } from './client';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 import { TonalUncombiningForms } from './unchange/metaplasm';
 import { TonalWord } from './unchange/unit';
-import { getSoundSequences } from './util';
+import { getSpellSequences } from './util';
 
 import * as fs from 'fs';
 
@@ -34,7 +34,7 @@ stdin.addListener('data', function (d) {
     const wrd = ta.word as TonalWord; // type casting
     // console.log(wrd.literal);
 
-    const soundSeqs = getSoundSequences(
+    const soundSeqs = getSpellSequences(
       tla
         .morphAnalyze(wrd.literal, new TonalUncombiningForms([]))
         .map((x) => x.sounds)
