@@ -7,6 +7,7 @@ import { TonalWord } from './unchange/unit';
 import { getSoundSequences } from './util';
 
 import * as fs from 'fs';
+import { TonalSpellingTags } from './tonal/tonalres';
 
 /**
  * > node lib/app.js
@@ -56,10 +57,11 @@ stdin.addListener('data', function (d) {
       fileContents = fs.readFileSync(process.argv[2], 'utf-8');
       const dict = JSON.parse(fileContents) || {};
       const keys = Object.keys(dict);
-      const soundSeqs = analyze(input);
+      const spellSeqs = analyze(input);
 
       const bpmf: string[] = [];
-      if (soundSeqs.length == 0) {
+      const precedings: string[] = [];
+      if (spellSeqs.length == 0) {
         for (const key of keys) {
           if (key === input) {
             const arr: [] = dict[key];
@@ -69,13 +71,41 @@ stdin.addListener('data', function (d) {
           }
         }
       } else {
-        soundSeqs.forEach((v) => {
+        spellSeqs.forEach((val, ind, arrVals) => {
           for (const key of keys) {
-            if (key === v[0]) {
-              const arr: [] = dict[key];
-              const chrs = arr.join(',');
+            // console.log('precedings:', precedings, 'key:', key, 'val:', val[0]);
+            // console.log('key of keys:' + key);
+            if (key === val[0] && precedings.length == 0) {
+              const arrEntry: string[] = dict[key] || {};
+              // const chrs = arrEntry.join(',');
               // console.info(chrs);
-              bpmf.push(chrs);
+              // if (val[1] === TonalSpellingTags.initialConsonant) {
+              if (
+                val[1] === TonalSpellingTags.stopFinalConsonant &&
+                val[0].length == 1
+              ) {
+                // the 4th tone
+                bpmf.push(arrEntry[1]);
+              } else {
+                bpmf.push(arrEntry[0]);
+              }
+              if (
+                ind < arrVals.length - 1 &&
+                arrVals[ind + 1][1] === TonalSpellingTags.nasalization
+              ) {
+                // in case of the following letter is nasalization
+                // push the vowel
+                precedings.push(val[0]);
+              }
+            } else if (
+              precedings.length > 0 &&
+              val[1] === TonalSpellingTags.nasalization
+            ) {
+              // console.log('in Nasalization', 'key:' + key, 'val:' + val[0]);
+              const arrEntry: string[] = dict[key + val[0]] || {};
+              bpmf.pop();
+              bpmf.push(arrEntry[0]);
+              precedings.length = 0;
             }
           }
         });
