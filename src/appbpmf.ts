@@ -10,9 +10,9 @@ import * as fs from 'fs';
 import { TonalSpellingTags } from './tonal/tonalres';
 
 /**
- * > node lib/app.js
- * or
- * > node bin/app.js
+ * bopomofo
+ *
+ * > node lib/appbpmf.js
  */
 
 const stdin = process.openStdin();
