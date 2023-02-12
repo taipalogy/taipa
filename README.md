@@ -120,3 +120,9 @@ and get
 `ㄍㄚ`
 
 Go to github repo `https://github.com/taipalogy/dictionaries` to find out more dictionary examples.
+
+## Repos
+
+Go to `https://github.com/taipalogy/apps` to see examples of application.
+
+Go to `https://github.com/taipalogy/dictionaries` to see examples of dictionary.

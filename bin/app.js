@@ -27,7 +27,7 @@ stdin.addListener('data', function (d) {
         const ta = cli.processTonal(d.toString().trim());
         const wrd = ta.word; // type casting
         // console.log(wrd.literal);
-        const soundSeqs = (0, util_1.getSoundSequences)(tla
+        const soundSeqs = (0, util_1.getLetterSoundPairs)(tla
             .morphAnalyze(wrd.literal, new metaplasm_1.TonalUncombiningForms([]))
             .map((x) => x.sounds));
         soundSeqs.forEach((v) => {
