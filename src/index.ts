@@ -30,7 +30,6 @@ export {
   inflectEncliticLe,
   inflectPossesiveEx,
   inflectTo,
-  inflectEighthToFirst,
   inflectEighthToSecond,
   inflectToProceeding,
   inflectVppToProceeding,

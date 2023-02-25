@@ -8,7 +8,7 @@ import {
   PossesiveExCombining,
   FirstSeventhCombining,
   EighthToSecondCombining,
-  EighthToFirstCombining,
+  // EighthToFirstCombining,
 } from './metaplasm';
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
@@ -104,13 +104,13 @@ export function inflectTo(word: string, tone: TonalLetterTags) {
  * Inflects 8th tone to 1st tone. Addon inflector.
  * @param word 8th checked tone
  */
-export function inflectEighthToFirst(word: string) {
-  const tia = tonalInflectionAnalyzer;
+// export function inflectEighthToFirst(word: string) {
+//   const tia = tonalInflectionAnalyzer;
 
-  const ms = tia.morphAnalyze(word, new EighthToFirstCombining());
-  const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
-  return lx;
-}
+//   const ms = tia.morphAnalyze(word, new EighthToFirstCombining());
+//   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
+//   return lx;
+// }
 
 /**
  * Inflects 8th tone to 2nd tone. Addon inflector.
@@ -275,6 +275,6 @@ export function inflectVppToParticiple(
 export function inflectSerial(...words: string[]) {
   const phm = new TonalInflectionPhrasemeMaker();
 
-  const lexemes = words.map(it => inflectDesinence(it));
+  const lexemes = words.map((it) => inflectDesinence(it));
   return phm.makeSerialPhraseme(lexemes);
 }

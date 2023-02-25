@@ -5,7 +5,7 @@ import { tonalInflectionAnalyzer } from '../src/change/analyzer';
 import { TonalZeroCombining } from '../src/metaplasm';
 import {
   EighthToSecondCombining,
-  EighthToFirstCombining,
+  // EighthToFirstCombining,
   TonalCombiningForms,
   TonalDesinenceInflection,
 } from '../src/change/metaplasm';
@@ -136,15 +136,15 @@ describe('Tonal testing', () => {
     expect(ms3[1].allomorph.toString()).toEqual(TonalLetterTags.kk);
   });
 
-  const ms4 = tia.morphAnalyze(wrd2, new EighthToFirstCombining());
-  test('check the final of the syllable', () => {
-    expect(ms4[1].getForms()[0].lastSecondLetter.literal).toEqual(
-      TonalLetterTags.k
-    );
-  });
-  test('check the tone letter of the syllable', () => {
-    expect(ms4[1].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.f);
-  });
+  // const ms4 = tia.morphAnalyze(wrd2, new EighthToFirstCombining());
+  // test('check the final of the syllable', () => {
+  //   expect(ms4[1].getForms()[0].lastSecondLetter.literal).toEqual(
+  //     TonalLetterTags.k
+  //   );
+  // });
+  // test('check the tone letter of the syllable', () => {
+  //   expect(ms4[1].getForms()[0].lastLetter.literal).toEqual(TonalLetterTags.f);
+  // });
 
   const wrd3 = 'changxx';
   const ms5 = tia.morphAnalyze(wrd3, new TonalCombiningForms());
