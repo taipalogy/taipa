@@ -10,7 +10,6 @@ import {
   AllomorphH,
 } from '../tonal/tonalres';
 import {
-  eighthToFirst,
   combiningRules,
   nasalInitialConsonants,
   initialConsonantsBghjl,
@@ -161,31 +160,6 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
     return [];
   }
 }
-
-/** Changes 8th tone to 1st tone. */
-// export class EighthToFirstCombining extends TonalCombiningMetaplasm {
-//   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
-//     if (allomorph && allomorph instanceof CheckedAllomorph) {
-//       let s: TonalSyllable = new TonalSyllable(
-//         sounds.map(x => new AlphabeticLetter(x.characters))
-//       );
-//       const tnl = eighthToFirst.get(allomorph.toString());
-//       if (tnl) {
-//         s.popLetter();
-//         s.pushLetter(
-//           new AlphabeticLetter(lowerLettersTonal.get(tnl).characters)
-//         );
-//         s.pushLetter(
-//           new AlphabeticLetter(
-//             lowerLettersTonal.get(TonalLetterTags.f).characters
-//           )
-//         );
-//       }
-//       return [s];
-//     }
-//     return [];
-//   }
-// }
 
 /** Changes 8th tone to 2nd tone. */
 export class EighthToSecondCombining extends TonalCombiningMetaplasm {

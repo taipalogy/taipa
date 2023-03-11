@@ -8,7 +8,6 @@ import {
   PossesiveExCombining,
   FirstSeventhCombining,
   EighthToSecondCombining,
-  // EighthToFirstCombining,
 } from './metaplasm';
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
@@ -99,18 +98,6 @@ export function inflectTo(word: string, tone: TonalLetterTags) {
   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
   return lx;
 }
-
-/**
- * Inflects 8th tone to 1st tone. Addon inflector.
- * @param word 8th checked tone
- */
-// export function inflectEighthToFirst(word: string) {
-//   const tia = tonalInflectionAnalyzer;
-
-//   const ms = tia.morphAnalyze(word, new EighthToFirstCombining());
-//   const lx = tia.lexAnalyze(ms, new TonalDesinenceInflection());
-//   return lx;
-// }
 
 /**
  * Inflects 8th tone to 2nd tone. Addon inflector.

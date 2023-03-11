@@ -154,13 +154,6 @@ export const initialConsonantsBghjl = [
   TonalLetterTags.l.toString(),
 ];
 
-// 8 to 1
-export const eighthToFirst = new Map<string, TonalLetterTags>()
-  .set(TonalLetterTags.pp, TonalLetterTags.p)
-  .set(TonalLetterTags.tt, TonalLetterTags.t)
-  .set(TonalLetterTags.kk, TonalLetterTags.k)
-  .set(TonalLetterTags.hh, TonalLetterTags.h);
-
 /** Turn preceding finals to voiced ones. Unvoiced to voiced */
 export const voicelessVoicedFinalConsonants = new Map<string, string>()
   .set(TonalLetterTags.p, TonalLetterTags.b)

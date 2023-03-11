@@ -46,7 +46,6 @@ import {
   TonalUncombiningForms,
   TransfixUncombining,
   UncombiningFormsIetfIetwToEkEkk,
-  // UncombiningFormsIengUamToneLetter,
 } from './metaplasm';
 import {
   TonalCombiningMetaplasm,
@@ -179,13 +178,13 @@ export function syllabifyTonal(
 
       // tone change of free allomorphs
       const rulesFa = freeAllomorphUncombiningRules.get(letters[i].literal);
-      const tnlsFa = !rulesFa ? [] : rulesFa.map(x => x.toString());
+      const tnlsFa = !rulesFa ? [] : rulesFa.map((x) => x.toString());
       // tone sandhi of ay
       const rulesAy = uncombiningRulesAy.get(letters[i].literal);
-      const tnlsAy = !rulesAy ? [] : rulesAy.map(x => x.toString());
+      const tnlsAy = !rulesAy ? [] : rulesAy.map((x) => x.toString());
       // merge the above twoo arrays
       const tnls = tnlsFa.concat(
-        tnlsAy.filter(item => tnlsFa.indexOf(item) < 0)
+        tnlsAy.filter((item) => tnlsFa.indexOf(item) < 0)
       );
       // console.log(`literal: ${literal}`);
       if (tnls.length > 0) {
@@ -195,7 +194,7 @@ export function syllabifyTonal(
             isInSyllableTable(
               letters
                 .slice(beginOfSyllable, i)
-                .map(x => x.literal)
+                .map((x) => x.literal)
                 .join('') + t
             )
           ) {
@@ -235,7 +234,7 @@ export function syllabifyTonal(
         if (gotFinalConsonants) {
           // check if at least one uncombinging form present
           const isUncombingFormPresent = gotFinalConsonants
-            .map(it => isInSyllableTable(literalWithoutFinal + it))
+            .map((it) => isInSyllableTable(literalWithoutFinal + it))
             .reduce((prev, curr, ind, arr) => prev || curr);
           // console.log(literal,gotFinalConsonants,isUncombingFormPresent,literalWithoutFinal,`i: ${i}`);
 
@@ -378,7 +377,7 @@ export class TonalUncombiningMorpheme extends Morpheme {
     let las: Array<Allomorph> = []; // list of allomorphs
 
     const s: TonalSyllable = new TonalSyllable(
-      letters.map(it => new AlphabeticLetter(it.characters))
+      letters.map((it) => new AlphabeticLetter(it.characters))
     );
     const keys = Array.from(checkedAllomorphs.keys());
     for (let k = 0; k < keys.length; k++) {
@@ -412,10 +411,10 @@ export class TonalUncombiningMorpheme extends Morpheme {
     if (freeAllomorphs.has(s.lastLetter.literal)) {
       const am = freeAllomorphs.get(s.lastLetter.literal);
       const stpFnls = letters.filter(
-        it => it.name === TonalSpellingTags.stopFinalConsonant
+        (it) => it.name === TonalSpellingTags.stopFinalConsonant
       );
       const chkttnls = letters.filter(
-        it => it.name === TonalSpellingTags.checkedTone
+        (it) => it.name === TonalSpellingTags.checkedTone
       );
 
       if (
@@ -490,21 +489,21 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
 
     if (syllables.length >= 2) {
       const nslFnlLast2nd = syllables[syllables.length - 2].pattern.filter(
-        it => it.name === TonalSpellingTags.nasalFinalConsonant
+        (it) => it.name === TonalSpellingTags.nasalFinalConsonant
       );
       const stpFnlH = syllables[syllables.length - 2].pattern.filter(
-        it =>
+        (it) =>
           it.name === TonalSpellingTags.stopFinalConsonant &&
           it.toString() === TonalLetterTags.h
       );
       const tnl = syllables[syllables.length - 2].pattern.filter(
-        it =>
+        (it) =>
           (it.name === TonalSpellingTags.nasalFinalConsonant ||
             it.name === TonalSpellingTags.checkedTone) &&
           keysAy.includes(it.toString())
       );
       const nslInitLast = syllables[syllables.length - 1].pattern.filter(
-        it =>
+        (it) =>
           it.name === TonalSpellingTags.initialConsonant &&
           nasalInitialConsonants.includes(it.toString())
       );
@@ -535,12 +534,12 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         }
 
         const initLast = syllables[syllables.length - 1].pattern.filter(
-          it =>
+          (it) =>
             it.name === TonalSpellingTags.initialConsonant &&
             initialConsonantsTonal.includes(it.toString())
         );
         const mdlLast = syllables[syllables.length - 1].pattern.filter(
-          it => it.name === TonalSpellingTags.vowel
+          (it) => it.name === TonalSpellingTags.vowel
         );
 
         if (
@@ -577,9 +576,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isTransfixInflection(syllables: MatchedPattern[]) {
     // TODO: there are not many of them. make a tiny dictionary to cover the ocurrences
     const thirds = syllables
-      .map(it => it.pattern.filter(ltr => ltr.toString() === TonalLetterTags.w))
-      .map(seq => seq.map(ltr => ltr.toString()))
-      .filter(arr => arr.length > 0);
+      .map((it) =>
+        it.pattern.filter((ltr) => ltr.toString() === TonalLetterTags.w)
+      )
+      .map((seq) => seq.map((ltr) => ltr.toString()))
+      .filter((arr) => arr.length > 0);
     const endingAw: boolean =
       syllables[syllables.length - 1].lastSecondLetter.literal ===
       TonalLetterTags.a;
@@ -591,13 +592,17 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isDoublet(syllables: MatchedPattern[]) {
     if (syllables.length == 2) {
       const stems = syllables
-        .map(it => it.pattern.filter(s => s.name !== TonalSpellingTags.freeTone))
-        .map(seq => seq.map(s => s.toString()).join(''));
+        .map((it) =>
+          it.pattern.filter((s) => s.name !== TonalSpellingTags.freeTone)
+        )
+        .map((seq) => seq.map((s) => s.toString()).join(''));
 
       // TODO: add checks for tone group
       const tnls = syllables
-        .map(it => it.pattern.filter(s => s.name === TonalSpellingTags.freeTone))
-        .map(seq => seq.map(ltr => ltr.toString()).join(''));
+        .map((it) =>
+          it.pattern.filter((s) => s.name === TonalSpellingTags.freeTone)
+        )
+        .map((seq) => seq.map((ltr) => ltr.toString()).join(''));
 
       // compare 2 strings/lexical stems
       if (stems[0] === stems[1]) return true; // identical
@@ -608,25 +613,29 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isTriplet(syllables: MatchedPattern[]) {
     if (syllables.length == 3) {
       const stems = syllables
-        .map(it =>
+        .map((it) =>
           it.pattern.filter(
-            ltr =>
+            (ltr) =>
               ltr.name !== TonalSpellingTags.freeTone &&
               ltr.name !== TonalSpellingTags.checkedTone
           )
         )
-        .map(seq => seq.map(ltr => ltr.toString()).join(''));
+        .map((seq) => seq.map((ltr) => ltr.toString()).join(''));
 
       const fnls = syllables
-        .map(it =>
-          it.pattern.filter(s => s.name === TonalSpellingTags.stopFinalConsonant)
+        .map((it) =>
+          it.pattern.filter(
+            (s) => s.name === TonalSpellingTags.stopFinalConsonant
+          )
         )
-        .map(seq => seq.map(s => s.toString()).join(''));
+        .map((seq) => seq.map((s) => s.toString()).join(''));
 
       // TODO: add checks for tone group
       const tnls = syllables
-        .map(it => it.pattern.filter(s => s.name === TonalSpellingTags.freeTone))
-        .map(seq => seq.map(s => s.toString()).join(''));
+        .map((it) =>
+          it.pattern.filter((s) => s.name === TonalSpellingTags.freeTone)
+        )
+        .map((seq) => seq.map((s) => s.toString()).join(''));
 
       // compare 3 strings/lexical stems
       if (fnls && fnls.length > 0) {
@@ -645,13 +654,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isEKekkAvailableRimeIet(syllables: MatchedPattern[]) {
     if (syllables.length >= 2) {
       const vs = syllables[syllables.length - 2].pattern.filter(
-        i => i.name === TonalSpellingTags.vowel
+        (i) => i.name === TonalSpellingTags.vowel
       );
       const fcs = syllables[syllables.length - 2].pattern.filter(
-        i => i.name === TonalSpellingTags.stopFinalConsonant
+        (i) => i.name === TonalSpellingTags.stopFinalConsonant
       );
       const ts = syllables[syllables.length - 2].pattern.filter(
-        i => i.name === TonalSpellingTags.checkedTone
+        (i) => i.name === TonalSpellingTags.checkedTone
       );
       if (
         vs.length == 2 &&
@@ -670,35 +679,12 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
-  private isIengUamToneLetter(syllables: MatchedPattern[]) {
-    // if (syllables.length >= 2) {
-    //   const vs = syllables[syllables.length - 2].pattern.filter(
-    //     i => i.name === TonalSpellingTags.vowel
-    //   );
-    //   const nfcs = syllables[syllables.length - 2].pattern.filter(
-    //     i => i.name === TonalSpellingTags.nasalFinalConsonant
-    //   );
-    //   const inits = syllables[syllables.length - 1].pattern.filter(
-    //     i => i.name === TonalSpellingTags.initialConsonant
-    //   );
-    //   if (
-    //     vs.length > 0 &&
-    //     nfcs.length == 1 &&
-    //     inits.length == 1 &&
-    //     nfcs[0].toString() === inits[0].toString()
-    //   ) {
-    //     return true;
-    //   }
-    // }
-    return false;
-  }
-
   protected preprocess(
     graphemes: Array<AlphabeticGrapheme>
   ): AlphabeticLetter[] {
     let ltrs = new Array<AlphabeticLetter>();
 
-    ltrs = graphemes.map(it => it.letter);
+    ltrs = graphemes.map((it) => it.letter);
 
     return ltrs;
   }
@@ -778,14 +764,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
           if (forms && forms.length == 1) {
             morphemes[i].addForms(forms);
           }
-        } else if (
-          this.isIengUamToneLetter(matched) &&
-          i < matched.length - 1
-        ) {
-          //   const forms = this.createMorpheme(
-          //     ptn,
-          //     new UncombiningFormsIengUamToneLetter()
-          //   ).getForms();
         }
       }
     }
@@ -822,7 +800,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     const ltrs = this.sounds;
     ltrs.shift();
     return [
-      new TonalSyllable(ltrs.map(it => new AlphabeticLetter(it.characters))),
+      new TonalSyllable(ltrs.map((it) => new AlphabeticLetter(it.characters))),
     ];
   }
 
@@ -838,7 +816,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
       );
       if (fnl) {
         const s: TonalSyllable = new TonalSyllable(
-          this.sounds.map(it => new AlphabeticLetter(it.characters))
+          this.sounds.map((it) => new AlphabeticLetter(it.characters))
         );
         s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
         return [s];
@@ -854,7 +832,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     ) {
       // l- -> t-
       const s: TonalSyllable = new TonalSyllable(
-        this.sounds.map(it => new AlphabeticLetter(it.characters))
+        this.sounds.map((it) => new AlphabeticLetter(it.characters))
       );
       s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.t));
       return [s];
@@ -869,10 +847,10 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
     ) {
       // gg -> tt
       const syl: TonalSyllable = new TonalSyllable(
-        this.sounds.map(it => new AlphabeticLetter(it.characters))
+        this.sounds.map((it) => new AlphabeticLetter(it.characters))
       );
       const idx = this.sounds.findIndex(
-        i => i.name === TonalSpellingTags.stopFinalConsonant
+        (i) => i.name === TonalSpellingTags.stopFinalConsonant
       );
       syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.tt));
       return [syl];
@@ -882,13 +860,15 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   }
 
   uninfect() {
-    const n = this.sounds.filter(i => i.name === TonalSpellingTags.nasalization);
+    const n = this.sounds.filter(
+      (i) => i.name === TonalSpellingTags.nasalization
+    );
     if (n.length == 1) {
       let ltrs = this.sounds.filter(
-        i => i.name !== TonalSpellingTags.nasalization
+        (i) => i.name !== TonalSpellingTags.nasalization
       );
       const s: TonalSyllable = new TonalSyllable(
-        ltrs.map(it => new AlphabeticLetter(it.characters))
+        ltrs.map((it) => new AlphabeticLetter(it.characters))
       );
       return [s];
     }
@@ -927,7 +907,7 @@ export class TonalSoundUnchangingMorphemeMaker extends MorphemeMaker {
   makeMorphemes(
     graphemes: Array<AlphabeticGrapheme>
   ): TonalSoundUnchangingMorpheme[] {
-    const ltrs = graphemes.map(it => it.letter);
+    const ltrs = graphemes.map((it) => it.letter);
     const ptrns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptrns);
 
