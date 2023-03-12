@@ -215,7 +215,7 @@ export const basicSyllables = [
     'ciunn', 'ciunny', 'ciunnw', 'ciunnx', 'ciunnz', 'cng', 'cngy', 'cngw',
     'cngx', 'cngh', 'cnghh', 'cur', 'cury', 'curw', 'curh', 'cok', 'cokk',
     'cong', 'congy', 'congw', 'congx', 'co', 'coy', 'cow', 'cu', 'cuy', 'cuw',
-    'cuz', 'cuaw', 'cuaz', 'cuah', 'cuahh', 'cuan', 'cuan', 'cuanw', 'cuanx',
+    'cuz', 'cuaw', 'cuaz', 'cuah', 'cuahh', 'cuan', 'cuany', 'cuanw', 'cuanx',
     'cuangw', 'cuann', 'cuannw', 'cue', 'cuey', 'cuex',   'cuez', 'cuh', 'cuhh',
     'cui', 'cuiy', 'cuiw', 'cun', 'cuny', 'cunw', 'cunx', 'cunz', 'cut',
 
@@ -238,7 +238,7 @@ export const basicSyllables = [
     'chiuz', 'chiunn', 'chiunny', 'chiunnw', 'chiunnz', 'chng', 'chngy',
     'chngw', 'chngx', 'chngz', 'chur', 'chury', 'churw', 'churx', 'churz',
     'churh', 'chok', 'chokk', 'chong', 'chongy', 'chongw', 'chongx', 'chongz',
-    'cho', 'choy', 'choz', 'chu', 'chuy', 'chuw', 'chux', 'chuxz', 'chuay',
+    'cho', 'choy', 'choz', 'chu', 'chuy', 'chuw', 'chux', 'chuz', 'chuay',
     'chuax', 'chuaz', 'chuah', 'chuahh', 'chuainnz', 'chuan', 'chuany',
     'chuanw', 'chuanx', 'chuanz', 'chuann', 'chuanny', 'chuannw', 'chuannx',
     'chuannz', 'chuat', 'chuew', 'chuez', 'chuh', 'chui', 'chuiy', 'chuiw',
@@ -391,7 +391,7 @@ export const basicSyllables = [
     'punz', 'put', 'putt',
 
     'pha', 'phaw', 'phaz', 'phah', 'phaiw', 'phainny', 'phainnz', 'phak',
-    'phakk', 'phan', 'phan', 'phang', 'phangy', 'phangw', 'phangx', 'phangz',
+    'phakk', 'phan', 'phanz', 'phang', 'phangy', 'phangw', 'phangx', 'phangz',
     'phannw', 'phannz', 'phau', 'phauy', 'phauw', 'phauz', 'phauhh', 'phe',
     'phey', 'phew', 'phez', 'phenn', 'phennx', 'phennz', 'phi', 'phiy', 'phiw',
     'phix', 'phiz', 'phiah', 'phiahh', 'phiak', 'phiakk', 'phien', 'phienw',
