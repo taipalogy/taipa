@@ -17,7 +17,11 @@ export class TokenAnalysis {
   inflectionalEnding: string = '';
   /** sound sequences. */
   soundSequences: Array<Sound[]> = new Array();
-  /** Syllabic block or syllabogram sequences with tone letters. */
+  /**
+   * Syllabic block or syllabogram sequences with tone letters.
+   * We may have 2 sequences for kana, 1st one for hiragana, 2nd one for katakana.
+   * We may have multiple block sequences put into this array of strings
+   */
   blockSequences: string[] = [];
   /** Uncombining form sequences. */
   uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
@@ -58,7 +62,7 @@ export class Client {
       for (const m of morphemes) {
         ta.soundSequences.push(m.sounds);
         // TODO: first free tone to fourth. first checked tone to eighth
-        ta.uncombiningSequences.push(m.getForms().map(it => it.literal));
+        ta.uncombiningSequences.push(m.getForms().map((it) => it.literal));
       }
     }
 

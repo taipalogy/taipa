@@ -21,6 +21,8 @@ const toBeVerified = [
 
     'jex', 'jek', 'jing', 'jirnx', 'jirtt', 'juany',
 
+    'ker', 'kerh',
+
     'kirinnx', 'kuinnx', 'kanh', 'kih', 'kngh', 'kuaix', 'kuaiz', 'kuakk', 'kuangz', 'kuatt',
 
     'khanx', 'khangx', 'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',

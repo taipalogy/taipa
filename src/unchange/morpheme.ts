@@ -481,12 +481,6 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
   private isCombiningAy(syllables: MatchedPattern[]) {
     const keysAy = Array.from(uncombiningRulesAy.keys());
 
-    // bug?
-    // console.log(regexMnngHF.test('vunghf')); // true
-    // console.log(regexMnngHF.test('vunghfngay')); // false
-    // console.log(regexMnngHF.test('cunhf')) // true
-    // console.log(regexMnngHF.test('cunhfmiax')) // false
-
     if (syllables.length >= 2) {
       const nslFnlLast2nd = syllables[syllables.length - 2].pattern.filter(
         (it) => it.name === TonalSpellingTags.nasalFinalConsonant
