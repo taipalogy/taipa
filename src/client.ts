@@ -19,8 +19,7 @@ export class TokenAnalysis {
   soundSequences: Array<Sound[]> = new Array();
   /**
    * Syllabic block or syllabogram sequences with tone letters.
-   * We may have 2 sequences for kana, 1st one for hiragana, 2nd one for katakana.
-   * We may have multiple block sequences put into this array of strings
+   * Multiple sequences could be pushed into this array of strings.
    */
   blockSequences: string[] = [];
   /** Uncombining form sequences. */
