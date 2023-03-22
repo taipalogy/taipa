@@ -2,9 +2,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("../lib/client")
-const analyzer_1 = require("../lib/unchange/analyzer")
-const metaplasm_1 = require("../lib/unchange/metaplasm")
-const util_1 = require("../lib/util")
 const fs = require("fs")
 /**
  * > node lib/app.js
@@ -22,17 +19,26 @@ if (process.argv.length == 3) {
 }
 stdin.addListener('data', function (d) {
     if (process.argv.length == 2) {
+        // const cli = new Client();
+        // const tla = tonalLemmatizationAnalyzer;
+        // const ta: TokenAnalysis = cli.processTonal(d.toString().trim());
+        // const wrd = ta.word as TonalWord; // type casting
+        // // console.log(wrd.literal);
+        // const soundSeqs = getLetterSoundPairs(
+        //   tla
+        //     .morphAnalyze(wrd.literal, new TonalUncombiningForms([]))
+        //     .map((x) => x.sounds)
+        // );
+        // soundSeqs.forEach((v) => {
+        //   console.info(v[0] + ' - ' + v[1]);
+        // });
         const cli = new client_1.Client();
-        const tla = analyzer_1.tonalLemmatizationAnalyzer;
         const ta = cli.processTonal(d.toString().trim());
-        const wrd = ta.word; // type casting
-        // console.log(wrd.literal);
-        const soundSeqs = (0, util_1.getLetterSoundPairs)(tla
-            .morphAnalyze(wrd.literal, new metaplasm_1.TonalUncombiningForms([]))
-            .map((x) => x.sounds));
-        soundSeqs.forEach((v) => {
-            console.info(v[0] + ' - ' + v[1]);
-        });
+        ta.soundSequences
+            .flatMap((v) => {
+            return v;
+        })
+            .map((v) => console.log(v.toString() + ' - ' + v.name));
     }
     else if (process.argv.length == 3) {
         if (!fs.existsSync(process.argv[2])) {

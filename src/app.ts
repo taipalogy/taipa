@@ -1,11 +1,6 @@
 #!/usr/bin/env node
 
 import { Client, TokenAnalysis } from './client';
-import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
-import { TonalUncombiningForms } from './unchange/metaplasm';
-import { TonalWord } from './unchange/unit';
-import { getLetterSoundPairs } from './util';
-
 import * as fs from 'fs';
 
 /**
@@ -29,20 +24,13 @@ if (process.argv.length == 3) {
 stdin.addListener('data', function (d) {
   if (process.argv.length == 2) {
     const cli = new Client();
-    const tla = tonalLemmatizationAnalyzer;
     const ta: TokenAnalysis = cli.processTonal(d.toString().trim());
-    const wrd = ta.word as TonalWord; // type casting
-    // console.log(wrd.literal);
 
-    const soundSeqs = getLetterSoundPairs(
-      tla
-        .morphAnalyze(wrd.literal, new TonalUncombiningForms([]))
-        .map((x) => x.sounds)
-    );
-
-    soundSeqs.forEach((v) => {
-      console.info(v[0] + ' - ' + v[1]);
-    });
+    ta.soundSequences
+      .flatMap((v) => {
+        return v;
+      })
+      .map((v) => console.log(v.toString() + ' - ' + v.name));
   } else if (process.argv.length == 3) {
     if (!fs.existsSync(process.argv[2])) {
       console.log('File not found');
