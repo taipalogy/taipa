@@ -102,6 +102,42 @@ describe('Kana testing', () => {
     expect(ta16.blockSequences[0]).toEqual('どっち');
     expect(ta16.blockSequences[1]).toEqual('ドッチ');
   });
+
+  const ta17 = cli.processKana('sat');
+  test('kanas', () => {
+    expect(ta17.blockSequences[0]).toEqual('さっ');
+    expect(ta17.blockSequences[1]).toEqual('サッ');
+  });
+
+  const ta18 = cli.processKana('bat');
+  test('kanas', () => {
+    expect(ta18.blockSequences[0]).toEqual('ばっ');
+    expect(ta18.blockSequences[1]).toEqual('バッ');
+  });
+
+  const ta19 = cli.processKana('fit');
+  test('kanas', () => {
+    // ta19.blockSequences[0] not available
+    expect(ta19.blockSequences[1]).toEqual('フィッ');
+  });
+
+  const ta20 = cli.processKana('rat');
+  test('kanas', () => {
+    expect(ta20.blockSequences[0]).toEqual('らっ');
+    expect(ta20.blockSequences[1]).toEqual('ラッ');
+  });
+
+  const ta21 = cli.processKana('sit');
+  test('kanas', () => {
+    expect(ta21.blockSequences[0]).toEqual('しっ');
+    expect(ta21.blockSequences[1]).toEqual('シッ');
+  });
+
+  const ta22 = cli.processKana('tit');
+  test('kanas', () => {
+    // ta22.blockSequences[0] not available
+    expect(ta22.blockSequences[1]).toEqual('ティッ');
+  });
 });
 
 describe('Kana testing, syllabification', () => {
@@ -132,12 +168,12 @@ describe('Kana testing', () => {
   const morphemes1: KanaUncombiningMorpheme[] = ka.morphAnalyze(inputUnd);
 
   test('check the length of letter sequences', () => {
-    expect(morphemes1.map(x => x.sounds).length).toEqual(0);
+    expect(morphemes1.map((x) => x.sounds).length).toEqual(0);
   });
 
   const morphemes2: KanaUncombiningMorpheme[] = ka.morphAnalyze(inputEmpty);
 
   test('check the length of letter sequences', () => {
-    expect(morphemes2.map(x => x.sounds).length).toEqual(0);
+    expect(morphemes2.map((x) => x.sounds).length).toEqual(0);
   });
 });
