@@ -19,19 +19,6 @@ if (process.argv.length == 3) {
 }
 stdin.addListener('data', function (d) {
     if (process.argv.length == 2) {
-        // const cli = new Client();
-        // const tla = tonalLemmatizationAnalyzer;
-        // const ta: TokenAnalysis = cli.processTonal(d.toString().trim());
-        // const wrd = ta.word as TonalWord; // type casting
-        // // console.log(wrd.literal);
-        // const soundSeqs = getLetterSoundPairs(
-        //   tla
-        //     .morphAnalyze(wrd.literal, new TonalUncombiningForms([]))
-        //     .map((x) => x.sounds)
-        // );
-        // soundSeqs.forEach((v) => {
-        //   console.info(v[0] + ' - ' + v[1]);
-        // });
         const cli = new client_1.Client();
         const ta = cli.processTonal(d.toString().trim());
         ta.soundSequences

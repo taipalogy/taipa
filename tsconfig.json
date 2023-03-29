@@ -9,7 +9,5 @@
     "strict": true,
     "sourceMap": true,
     "declarationMap": false
-    // "noUnusedLocals": true
-    // "noUnusedParameters": true
   }
 }
