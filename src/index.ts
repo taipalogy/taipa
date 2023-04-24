@@ -86,4 +86,4 @@ export {
   getToneEndingNumbersThree,
 } from './tonal/tone';
 
-export { PseudoUnicodeEncodings, ToneNumberTags } from './tonal/tonesets';
+export { PseudoUnicodeEncoding, ToneNumberTags } from './tonal/tonesets';

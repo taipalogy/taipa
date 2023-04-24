@@ -15,7 +15,7 @@ import {
 import { Sound } from '../unit';
 import { fourthFinalConsonants } from './collections';
 import { TonalUncombiningMorpheme } from '../unchange/morpheme';
-import { PseudoUnicodeEncodings } from './tonesets';
+import { PseudoUnicodeEncoding } from './tonesets';
 
 const combiningOverline = '\u0305';
 const combiningDotBelow = '\u0323';
@@ -577,31 +577,31 @@ const mappingMedialSmallForm = new Map<string, string[] | undefined>()
   .set(ToneLetterTags.ng, otherKanas.get(KanaLetterTags.n));
 
 const mappingLettersToPseudoEncoding = new Map()
-  .set(ToneLetterTags.f, PseudoUnicodeEncodings.first)
-  .set(ToneLetterTags.y, PseudoUnicodeEncodings.second)
-  .set(ToneLetterTags.w, PseudoUnicodeEncodings.third)
-  .set(ToneLetterTags.x, PseudoUnicodeEncodings.fifth)
-  .set(ToneLetterTags.zx, PseudoUnicodeEncodings.sixth)
-  .set(ToneLetterTags.z, PseudoUnicodeEncodings.seventh)
-  .set(ToneLetterTags.xx, PseudoUnicodeEncodings.ninth)
-  .set(ToneLetterTags.p, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.t, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.k, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.h, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.b, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.g, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.j, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.l, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.s, PseudoUnicodeEncodings.fourth)
-  .set(ToneLetterTags.pp, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.tt, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.kk, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.hh, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.bb, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.gg, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.jj, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.ll, PseudoUnicodeEncodings.eighth)
-  .set(ToneLetterTags.ss, PseudoUnicodeEncodings.eighth);
+  .set(ToneLetterTags.f, PseudoUnicodeEncoding.first)
+  .set(ToneLetterTags.y, PseudoUnicodeEncoding.second)
+  .set(ToneLetterTags.w, PseudoUnicodeEncoding.third)
+  .set(ToneLetterTags.x, PseudoUnicodeEncoding.fifth)
+  .set(ToneLetterTags.zx, PseudoUnicodeEncoding.sixth)
+  .set(ToneLetterTags.z, PseudoUnicodeEncoding.seventh)
+  .set(ToneLetterTags.xx, PseudoUnicodeEncoding.ninth)
+  .set(ToneLetterTags.p, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.t, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.k, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.h, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.b, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.g, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.j, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.l, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.s, PseudoUnicodeEncoding.fourth)
+  .set(ToneLetterTags.pp, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.tt, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.kk, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.hh, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.bb, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.gg, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.jj, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.ll, PseudoUnicodeEncoding.eighth)
+  .set(ToneLetterTags.ss, PseudoUnicodeEncoding.eighth);
 
 const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(ToneLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
