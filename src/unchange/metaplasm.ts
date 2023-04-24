@@ -459,15 +459,17 @@ export class TransfixUncombining extends TonalUncombiningMetaplasm {
         return [s, clone];
       } else {
         // in case of free tones other than aw, return the other four free tones
-        s.popLetter(); // pop letter w. 1st tone
         const clone2: TonalSyllable = Object.create(s); // 2nd tone
         const clone5: TonalSyllable = Object.create(s); // 5th tone
         const clone7: TonalSyllable = Object.create(s); // 7th tone
+        clone2.popLetter(); // pop w
         clone2.pushLetter(lowerLettersTonal.get(ToneLetterTags.y));
-        clone5.popLetter(); // letter y was also pushed to clone5, so we have to pop it out. bug?
+        clone5.popLetter(); // pop w
         clone5.pushLetter(lowerLettersTonal.get(ToneLetterTags.x));
-        clone7.popLetter(); // letter y was also pushed to clone7, so we have to pop it out. bug?
+        clone7.popLetter(); // pop w
         clone7.pushLetter(lowerLettersTonal.get(ToneLetterTags.z));
+
+        // console.log(s.literal, clone2.literal, clone5.literal, clone7.literal);
         return [s, clone2, clone5, clone7];
       }
     }

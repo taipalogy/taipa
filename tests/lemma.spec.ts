@@ -177,17 +177,6 @@ describe('Uncombining form testing', () => {
   test('check the uncombining form, tikw to tekk, changed rime', () => {
     expect(ms1[0].getForms()[0].literal).toEqual('tekk');
   });
-  /*
-  const ms2 = tonalLemmatizationAnalyzer.morphAnalyze('liengzngauz');
-  test('check the uncombining form,  liengz to lienx, sandhi final', () => {
-    expect(ms2[0].getForms()[0].literal).toEqual('lienx');
-  });
-
-  const ms3 = tonalLemmatizationAnalyzer.morphAnalyze('chuamzmngx');
-  test('check the uncombining form,  chuamz to chuan, sandhi final', () => {
-  expect(ms3[0].getForms()[2].literal).toEqual('chuan');
-  });
-  */
 });
 
 describe('Uncombining form testing', () => {
@@ -208,19 +197,29 @@ describe('Uncombining form testing', () => {
   });
 
   const ms3 = tonalLemmatizationAnalyzer.morphAnalyze(
+    'tangwsiwaw',
+    new TonalUncombiningForms([])
+  );
+  test('check the uncombining form for transfix, 5th syllable, siw to siy, six, siz', () => {
+    expect(ms3[1].getForms()[1].literal).toEqual('siy');
+    expect(ms3[1].getForms()[2].literal).toEqual('six');
+    expect(ms3[1].getForms()[3].literal).toEqual('siz');
+  });
+
+  const ms6 = tonalLemmatizationAnalyzer.morphAnalyze(
     'tnghwkhih',
     new TonalUncombiningForms([])
   );
   test('check the uncombining form, 4th checked syllable, tnghw to tngh', () => {
-    expect(ms3[0].getForms()[0].literal).toEqual('tngh');
+    expect(ms6[0].getForms()[0].literal).toEqual('tngh');
   });
 
-  const ms4 = tonalLemmatizationAnalyzer.morphAnalyze(
+  const ms7 = tonalLemmatizationAnalyzer.morphAnalyze(
     'kuehwlaih',
     new TonalUncombiningForms([])
   );
   test('check the uncombining form, 4th checked syllable, kuehw to kueh', () => {
-    expect(ms4[0].getForms()[0].literal).toEqual('kueh');
+    expect(ms7[0].getForms()[0].literal).toEqual('kueh');
   });
 });
 
@@ -305,7 +304,7 @@ describe('Lemma testing, empty string as an argument, tonal', () => {
   const inputEmpty: any = '';
 
   const gs1 = graphAnalyzeTonal(inputEmpty).map(
-    x => x.letter && x.letter.literal
+    (x) => x.letter && x.letter.literal
   );
   test('given empty string, check the letter literal', () => {
     expect(gs1.length).toEqual(0);
@@ -313,7 +312,7 @@ describe('Lemma testing, empty string as an argument, tonal', () => {
 
   const soudnSeqs1 = tonalLemmatizationAnalyzer
     .morphAnalyze(inputEmpty, new TonalUncombiningForms([]))
-    .map(x => x.sounds);
+    .map((x) => x.sounds);
   test('given empty string, check the letter literal', () => {
     expect(soudnSeqs1.length).toEqual(0);
   });
@@ -328,7 +327,7 @@ describe('Lemma testing, empty string as an argument, tonal', () => {
   });
 
   test('check the lemmas', () => {
-    expect(lx1.getLemmas().map(x => x.literal).length).toEqual(0);
+    expect(lx1.getLemmas().map((x) => x.literal).length).toEqual(0);
   });
 
   test('check the lemmas', () => {
@@ -340,7 +339,7 @@ describe('Lemma testing, undefined string as an argument, tonal', () => {
   const inputUnd: any = undefined;
 
   const gs1 = graphAnalyzeTonal(inputUnd).map(
-    x => x.letter && x.letter.literal
+    (x) => x.letter && x.letter.literal
   );
   test('given undefined string, check the letter literal', () => {
     expect(gs1.length).toEqual(0);
@@ -348,7 +347,7 @@ describe('Lemma testing, undefined string as an argument, tonal', () => {
 
   const soudnSeqs2 = tonalLemmatizationAnalyzer
     .morphAnalyze(inputUnd, new TonalUncombiningForms([]))
-    .map(x => x.sounds);
+    .map((x) => x.sounds);
   test('given undefined string, check the letter literal', () => {
     expect(soudnSeqs2.length).toEqual(0);
   });
@@ -363,7 +362,7 @@ describe('Lemma testing, undefined string as an argument, tonal', () => {
   });
 
   test('check the lemmas', () => {
-    expect(lx2.getLemmas().map(x => x.literal).length).toEqual(0);
+    expect(lx2.getLemmas().map((x) => x.literal).length).toEqual(0);
   });
 
   test('check the lemmas', () => {
@@ -375,7 +374,7 @@ describe('Lemma testing, empty string as an argument, kana', () => {
   const inputEmpty: any = '';
 
   const gs1 = graphAnalyzeKana(inputEmpty).map(
-    x => x.letter && x.letter.literal
+    (x) => x.letter && x.letter.literal
   );
   test('given empty string, check the letter literal', () => {
     expect(gs1.length).toEqual(0);
@@ -385,7 +384,9 @@ describe('Lemma testing, empty string as an argument, kana', () => {
 describe('Lemma testing, undefined string as an argument, kana', () => {
   const inputUnd: any = undefined;
 
-  const gs1 = graphAnalyzeKana(inputUnd).map(x => x.letter && x.letter.literal);
+  const gs1 = graphAnalyzeKana(inputUnd).map(
+    (x) => x.letter && x.letter.literal
+  );
   test('given undefined string, check the letter literal', () => {
     expect(gs1.length).toEqual(0);
   });
