@@ -7,7 +7,7 @@ import {
   ZeroAllomorph,
   combinedFreeAllomorphs,
   uncombinedCheckedAllomorphs,
-  TonalLetterTags,
+  ToneLetterTags,
   TonalSpellingTags,
   checkedToneLettersTonal,
   combinedCheckedAllomorphs,
@@ -56,8 +56,8 @@ export class TonalCombiningMorpheme extends Morpheme {
 
   isAy() {
     if (
-      this.sounds[this.sounds.length - 1].toString() === TonalLetterTags.y &&
-      this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.a
+      this.sounds[this.sounds.length - 1].toString() === ToneLetterTags.y &&
+      this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.a
     )
       return true;
     return false;
@@ -84,7 +84,7 @@ export class TonalCombiningMorpheme extends Morpheme {
 
       if (ams && ams.length > 0) {
         const ret = ams.filter(
-          it => it.tonal.toString() === syllable.lastLetter.literal
+          (it) => it.tonal.toString() === syllable.lastLetter.literal
         );
         return ret[0];
       }
@@ -123,7 +123,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         const ltrs = this.sounds;
         ltrs.splice(0, 0, sound);
         return [
-          new TonalSyllable(ltrs.map(x => new AlphabeticLetter(x.characters))),
+          new TonalSyllable(
+            ltrs.map((x) => new AlphabeticLetter(x.characters))
+          ),
         ];
       }
     }
@@ -141,7 +143,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
           snds.push(n);
         }
         return [
-          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
+          new TonalSyllable(
+            snds.map((x) => new AlphabeticLetter(x.characters))
+          ),
         ];
       }
     }
@@ -155,14 +159,16 @@ export class TonalSoundChangingMorpheme extends Morpheme {
         const snds = this.sounds;
         if (snds[0].toString() === sound.toString()) {
           const s: TonalSyllable = new TonalSyllable(
-            this.sounds.map(it => new AlphabeticLetter(it.characters))
+            this.sounds.map((it) => new AlphabeticLetter(it.characters))
           );
 
-          s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.l));
+          s.replaceLetter(0, lowerLettersTonal.get(ToneLetterTags.l));
           return [s];
         }
         return [
-          new TonalSyllable(snds.map(x => new AlphabeticLetter(x.characters))),
+          new TonalSyllable(
+            snds.map((x) => new AlphabeticLetter(x.characters))
+          ),
         ];
       }
     }
@@ -173,12 +179,12 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     if (sound) {
       const snds = this.sounds;
       const syl: TonalSyllable = new TonalSyllable(
-        this.sounds.map(i => new AlphabeticLetter(i.characters))
+        this.sounds.map((i) => new AlphabeticLetter(i.characters))
       );
       const idx = snds.findIndex(
-        i => i.name === TonalSpellingTags.stopFinalConsonant
+        (i) => i.name === TonalSpellingTags.stopFinalConsonant
       );
-      syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.gg));
+      syl.replaceLetter(idx, lowerLettersTonal.get(ToneLetterTags.gg));
 
       return [syl];
     }
@@ -188,19 +194,19 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   private changeFinalTTt(initial: Sound) {
     // absolute assimilation, except for t or tt followed by j. regressive
     if (
-      (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
+      (this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.tt &&
         Object.values(initialConsonantsForTT).includes(initial.toString())) ||
-      (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.t &&
+      (this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.t &&
         Object.values(initialConsonantsForFinalT).includes(initial.toString()))
     ) {
       const s: TonalSyllable = new TonalSyllable(
-        this.sounds.map(it => new AlphabeticLetter(it.characters))
+        this.sounds.map((it) => new AlphabeticLetter(it.characters))
       );
 
       let fnl = ttInitialTInitialPairs.get(
         this.sounds[this.sounds.length - 2].toString() + initial.toString()
       );
-      if (!fnl && initial.toString() === TonalLetterTags.j) {
+      if (!fnl && initial.toString() === ToneLetterTags.j) {
         // this block is dedicated to -tfj- and -twj-, since there is only -jfj- but not -jwj-
         fnl = ttInitialTInitialPairs.get(
           this.sounds[this.sounds.length - 2].toString() +
@@ -299,16 +305,16 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     }
 
     if (
-      initial.toString() === TonalLetterTags.b &&
-      this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.n
+      initial.toString() === ToneLetterTags.b &&
+      this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.n
     ) {
       // replace final n with final m
       const s: TonalSyllable = new TonalSyllable(
-        this.sounds.map(it => new AlphabeticLetter(it.characters))
+        this.sounds.map((it) => new AlphabeticLetter(it.characters))
       );
       s.replaceLetter(
         s.letters.length - 2,
-        lowerLettersTonal.get(TonalLetterTags.m)
+        lowerLettersTonal.get(ToneLetterTags.m)
       );
       return [s];
     }
@@ -323,7 +329,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
 
     if (fnl) {
       const s: TonalSyllable = new TonalSyllable(
-        this.sounds.map(it => new AlphabeticLetter(it.characters))
+        this.sounds.map((it) => new AlphabeticLetter(it.characters))
       );
       s.replaceLetter(s.letters.length - 2, lowerLettersTonal.get(fnl));
       return [s];
@@ -366,7 +372,7 @@ export class TonalCombiningMorphemeMaker extends MorphemeMaker {
   makeMorphemes(
     graphemes: Array<AlphabeticGrapheme>
   ): TonalCombiningMorpheme[] {
-    const ltrs = graphemes.map(it => it.letter);
+    const ltrs = graphemes.map((it) => it.letter);
     const ptrns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptrns);
 
@@ -404,7 +410,7 @@ export class TonalSoundChangingMorphemeMaker extends MorphemeMaker {
   makeMorphemes(
     graphemes: Array<AlphabeticGrapheme>
   ): TonalSoundChangingMorpheme[] {
-    const ltrs = graphemes.map(it => it.letter);
+    const ltrs = graphemes.map((it) => it.letter);
     const ptrns = this.make(ltrs, syllabifyTonal);
     const ms = this.postprocess(ptrns);
 

@@ -13,7 +13,7 @@ import {
   FreeAllomorph,
   CheckedAllomorph,
   TonalSpellingTags,
-  TonalLetterTags,
+  ToneLetterTags,
 } from '../tonal/tonalres';
 import { TonalSoundUnchangingMorpheme } from '../unchange/morpheme';
 import { Sound } from '../unit';
@@ -40,7 +40,7 @@ export class TonalInflectionLexeme extends Lexeme {
     super();
 
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) {
       if (morphemes[morphemes.length - 1]) {
@@ -110,7 +110,7 @@ export class TonalInsertionLexeme implements Lexeme {
     metaplasm: TonalInsertionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
@@ -122,7 +122,7 @@ export class TonalInsertionLexeme implements Lexeme {
 
   insertWith(preceding: TonalInsertionLexeme) {
     const wrd = new TonalWord(
-      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
+      this.morphemes.map((x) => new TonalSyllable(x.syllable.letters))
     );
     if (preceding.morphemes.length > 0) {
       const adjacentLtrs =
@@ -161,7 +161,7 @@ export class TonalUninsertionLexeme implements Lexeme {
     metaplasm: TonalInsertionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
@@ -173,7 +173,7 @@ export class TonalUninsertionLexeme implements Lexeme {
 
   uninsertWith(preceding: TonalUninsertionLexeme) {
     const wrd = new TonalWord(
-      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
+      this.morphemes.map((x) => new TonalSyllable(x.syllable.letters))
     );
     let initial: string = '';
     if (this.morphemes.length > 0) {
@@ -201,8 +201,7 @@ export class TonalUninsertionLexeme implements Lexeme {
         s &&
         s.toString().length > 0 &&
         (s.toString() === initial ||
-          (s.toString() === TonalLetterTags.ng &&
-            initial === TonalLetterTags.g))
+          (s.toString() === ToneLetterTags.ng && initial === ToneLetterTags.g))
       ) {
         // when the preceding letter is m, the initial of this enclitic is m
         // when the preceding letter is n, the initial of this enclitic is n
@@ -226,7 +225,7 @@ export class TonalInfectionLexeme implements Lexeme {
     metaplasm: TonalInfectionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
@@ -238,12 +237,12 @@ export class TonalInfectionLexeme implements Lexeme {
 
   infectWith(preceding: TonalInfectionLexeme) {
     const wrd = new TonalWord(
-      this.morphemes.map(x => new TonalSyllable(x.syllable.letters))
+      this.morphemes.map((x) => new TonalSyllable(x.syllable.letters))
     );
     if (
       preceding.morphemes.length > 0 &&
       preceding.morphemes[preceding.morphemes.length - 1].sounds.filter(
-        i => i.name === TonalSpellingTags.nasalization
+        (i) => i.name === TonalSpellingTags.nasalization
       ).length > 0
     ) {
       // if there is a nasalization in the preceding word
@@ -264,7 +263,7 @@ export class TonalUninfectionLexeme implements Lexeme {
     metaplasm: TonalUninfectionMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
@@ -276,17 +275,17 @@ export class TonalUninfectionLexeme implements Lexeme {
 
   uninfectWith(preceding: TonalUninfectionLexeme) {
     const wrd = new TonalWord(
-      this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
+      this.morphemes.map((i) => new TonalSyllable(i.syllable.letters))
     );
     if (preceding.morphemes.length > 0) {
       const adjacentLtrs = this.morphemes[this.morphemes.length - 1].sounds;
       const n = preceding.morphemes[
         preceding.morphemes.length - 1
-      ].sounds.filter(i => i.name === TonalSpellingTags.nasalization);
+      ].sounds.filter((i) => i.name === TonalSpellingTags.nasalization);
 
       if (
         n.length == 1 &&
-        adjacentLtrs.filter(it => it.name === TonalSpellingTags.nasalization)
+        adjacentLtrs.filter((it) => it.name === TonalSpellingTags.nasalization)
           .length == 1
       ) {
         // if there is a nasalization in the preceding word and the current word
@@ -308,7 +307,7 @@ export class TonalMutationLexeme implements Lexeme {
     metaplasm: TonalMutationMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
@@ -320,7 +319,7 @@ export class TonalMutationLexeme implements Lexeme {
 
   mutateWith(following: TonalMutationLexeme) {
     const wrd = new TonalWord(
-      this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
+      this.morphemes.map((i) => new TonalSyllable(i.syllable.letters))
     );
 
     if (following.morphemes.length > 0) {
@@ -328,9 +327,8 @@ export class TonalMutationLexeme implements Lexeme {
         following.morphemes[following.morphemes.length - 1].sounds;
       if (adjacentLtrs[0].name === TonalSpellingTags.initialConsonant) {
         const s = adjacentLtrs[0];
-        const syls = this.morphemes[
-          this.morphemes.length - 1
-        ].changeFinalPtkppttkk(s);
+        const syls =
+          this.morphemes[this.morphemes.length - 1].changeFinalPtkppttkk(s);
 
         if (syls && syls.length > 0) {
           wrd.popSyllable();
@@ -354,7 +352,7 @@ export class TonalUnmutationLexeme implements Lexeme {
     metaplasm: TonalUnmutationMetaplasm
   ) {
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) this.forms = metaplasm.apply(morphemes);
   }
@@ -366,15 +364,17 @@ export class TonalUnmutationLexeme implements Lexeme {
 
   unmutateWith(following: TonalUnmutationLexeme) {
     const ltrs = this.morphemes[this.morphemes.length - 1].sounds;
-    const fnls = ltrs.filter(i => i.name === TonalSpellingTags.stopFinalConsonant);
+    const fnls = ltrs.filter(
+      (i) => i.name === TonalSpellingTags.stopFinalConsonant
+    );
     const wrd = new TonalWord(
-      this.morphemes.map(i => new TonalSyllable(i.syllable.letters))
+      this.morphemes.map((i) => new TonalSyllable(i.syllable.letters))
     );
 
-    if (following.morphemes[0].sounds[0].toString() === TonalLetterTags.g) {
+    if (following.morphemes[0].sounds[0].toString() === ToneLetterTags.g) {
       if (
-        fnls[0].toString() === TonalLetterTags.gg ||
-        fnls[0].toString() === TonalLetterTags.g
+        fnls[0].toString() === ToneLetterTags.gg ||
+        fnls[0].toString() === ToneLetterTags.g
       ) {
         wrd.replaceSyllable(
           0,
@@ -411,10 +411,10 @@ export class TonalInflectionLexemeMaker extends LexemeMaker {
 
   private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
     for (let i = 0; i < ms.length; i++) {
-      if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
+      if (ms[i] && ms[i].syllable.lastLetter.literal === ToneLetterTags.x) {
         if (i < ms.length - 1 && !ms[ms.length - 1].isAy()) {
           if (
-            ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a
+            ms[ms.length - 1].syllable.lastLetter.literal === ToneLetterTags.a
           ) {
             break;
           } else {

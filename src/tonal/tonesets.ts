@@ -1,4 +1,4 @@
-export enum ToneLetterTags {
+export enum PseudoUnicodeEncodings {
   first = '⍭', // apl functional symbol stile tilde (U+236D)
   second = '⎛', // left parenthesis upper hook (U+239B)
   third = '⎝', // left parenthesis lower hook (U+239D)

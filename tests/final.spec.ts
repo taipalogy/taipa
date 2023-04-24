@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalLetterTags } from '../src/tonal/tonalres';
+import { ToneLetterTags } from '../src/tonal/tonalres';
 import { TokenAnalysis } from '../src/client';
 import { tonalLemmatizationAnalyzer } from '../src/unchange/analyzer';
 import { TonalUncombiningMorpheme } from '../src/unchange/morpheme';
@@ -11,10 +11,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('isfsing');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][1].toString()).toEqual(TonalLetterTags.s);
+    expect(doc.soundSequences[0][1].toString()).toEqual(ToneLetterTags.s);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -24,10 +24,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('jiswsix');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.s);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.s);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -37,10 +37,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('bajfjiz');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.j);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.j);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -49,29 +49,30 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   const ta1 = cli.processTonal('chibfhuat');
   test('check the stop final', () => {
-    expect(ta1.soundSequences[0][2].toString()).toEqual(TonalLetterTags.b);
+    expect(ta1.soundSequences[0][2].toString()).toEqual(ToneLetterTags.b);
   });
   test('check the tonal', () => {
-    expect(ta1.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(ta1.soundSequences[0][3].toString()).toEqual(ToneLetterTags.f);
   });
 
   const ta2 = cli.processTonal('jib');
   test('check the stop final', () => {
-    expect(ta2.soundSequences[0][2].toString()).toEqual(TonalLetterTags.b);
+    expect(ta2.soundSequences[0][2].toString()).toEqual(ToneLetterTags.b);
   });
 });
 
 describe('Sandhi final testing, stop final, checked tonal', () => {
-  const mfs: TonalUncombiningMorpheme[] = tonalLemmatizationAnalyzer.morphAnalyze(
-    'habwliy',
-    new TonalUncombiningForms([])
-  );
-  const letterSeqs = mfs.map(x => x.sounds);
+  const mfs: TonalUncombiningMorpheme[] =
+    tonalLemmatizationAnalyzer.morphAnalyze(
+      'habwliy',
+      new TonalUncombiningForms([])
+    );
+  const letterSeqs = mfs.map((x) => x.sounds);
   test('check the stop final', () => {
-    expect(letterSeqs[0][2].toString()).toEqual(TonalLetterTags.b);
+    expect(letterSeqs[0][2].toString()).toEqual(ToneLetterTags.b);
   });
   test('check the tonal', () => {
-    expect(letterSeqs[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(letterSeqs[0][3].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -81,10 +82,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('silfley');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.l);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.l);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -94,10 +95,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   ta = cli.processTonal('palwjitt');
   test('check the stop final', () => {
-    expect(ta.soundSequences[0][2].toString()).toEqual(TonalLetterTags.l);
+    expect(ta.soundSequences[0][2].toString()).toEqual(ToneLetterTags.l);
   });
   test('check the tonal', () => {
-    expect(ta.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(ta.soundSequences[0][3].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -107,11 +108,11 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('cugfguaz');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.g);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.g);
   });
 
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -121,10 +122,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('bagwbaix');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.g);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.g);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -134,10 +135,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('abxbay');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][1].toString()).toEqual(TonalLetterTags.b);
+    expect(doc.soundSequences[0][1].toString()).toEqual(ToneLetterTags.b);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.x);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.x);
   });
 });
 
@@ -147,10 +148,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('cagxgay');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.g);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.g);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.x);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.x);
   });
 });
 
@@ -160,7 +161,7 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('chigg');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.gg);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.gg);
   });
 });
 
@@ -170,7 +171,7 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('lagg');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.gg);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.gg);
   });
 });
 
@@ -180,10 +181,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('calxlay');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.l);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.l);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.x);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.x);
   });
 });
 
@@ -193,10 +194,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('chikfqi');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.k);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.k);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -206,10 +207,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('pukwkong');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.k);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.k);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -219,10 +220,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('cupfphuaw');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.p);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.p);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -232,10 +233,10 @@ describe('Sandhi final testing, stop final, checked tonal', () => {
 
   doc = cli.processTonal('bipwpang');
   test('check the stop final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.p);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.p);
   });
   test('check the tonal', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -245,13 +246,13 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
 
   doc = cli.processTonal('chimhwmix');
   test('check the nasal final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.m);
   });
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
   });
   test('check the checked tonal', () => {
-    expect(doc.soundSequences[0][4].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[0][4].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -261,13 +262,13 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
 
   doc = cli.processTonal('binhwngx');
   test('check the nasal final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.n);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.n);
   });
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
   });
   test('check the checked tonal', () => {
-    expect(doc.soundSequences[0][4].toString()).toEqual(TonalLetterTags.w);
+    expect(doc.soundSequences[0][4].toString()).toEqual(ToneLetterTags.w);
   });
 });
 
@@ -277,14 +278,14 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
 
   doc = cli.processTonal('pimhfmngx');
   test('check the nasal final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.m);
   });
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
   });
 
   test('check the checked tonal', () => {
-    expect(doc.soundSequences[0][4].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][4].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -294,13 +295,13 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
 
   doc = cli.processTonal('hinhfnix');
   test('check the nasal final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.n);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.n);
   });
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
   });
   test('check the checked tonal', () => {
-    expect(doc.soundSequences[0][4].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][4].toString()).toEqual(ToneLetterTags.f);
   });
 });
 
@@ -310,12 +311,12 @@ describe('Sandhi final testing, nasal final, neutral final, checked tonal', () =
 
   doc = cli.processTonal('punghfngay');
   test('check the nasal final', () => {
-    expect(doc.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ng);
+    expect(doc.soundSequences[0][2].toString()).toEqual(ToneLetterTags.ng);
   });
   test('check the neutral final', () => {
-    expect(doc.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
+    expect(doc.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
   });
   test('check the checked tonal', () => {
-    expect(doc.soundSequences[0][4].toString()).toEqual(TonalLetterTags.f);
+    expect(doc.soundSequences[0][4].toString()).toEqual(ToneLetterTags.f);
   });
 });

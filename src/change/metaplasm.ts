@@ -4,7 +4,7 @@ import {
   ZeroAllomorph,
   AllomorphY,
   CheckedAllomorph,
-  TonalLetterTags,
+  ToneLetterTags,
   TonalSpellingTags,
   lowerLettersTonal,
   AllomorphH,
@@ -58,7 +58,7 @@ export class TonalCombiningForms extends TonalCombiningMetaplasm {
       );
       if (allomorph instanceof FreeAllomorph) {
         if (allomorph instanceof ZeroAllomorph) {
-          const tos = combiningRules.get(TonalLetterTags.zero);
+          const tos = combiningRules.get(ToneLetterTags.zero);
           if (tos) {
             s.pushLetter(
               new AlphabeticLetter(lowerLettersTonal.get(tos[0]).characters)
@@ -124,17 +124,17 @@ export class ThirdCombiningForm extends TonalCombiningMetaplasm {
 
       if (allomorph instanceof FreeAllomorph) {
         if (allomorph instanceof ZeroAllomorph) {
-          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
+          s.pushLetter(lowerLettersTonal.get(ToneLetterTags.w));
         } else {
           s.popLetter();
-          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
+          s.pushLetter(lowerLettersTonal.get(ToneLetterTags.w));
         }
       } else if (allomorph instanceof CheckedAllomorph) {
         if (allomorph.tonal.toString()) {
           s.popLetter();
-          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
+          s.pushLetter(lowerLettersTonal.get(ToneLetterTags.w));
         } else {
-          s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
+          s.pushLetter(lowerLettersTonal.get(ToneLetterTags.w));
         }
       }
       return [s];
@@ -151,9 +151,7 @@ export class FourthToFirstCombining extends TonalCombiningMetaplasm {
         sounds.map((x) => new AlphabeticLetter(x.characters))
       );
       s.pushLetter(
-        new AlphabeticLetter(
-          lowerLettersTonal.get(TonalLetterTags.f).characters
-        )
+        new AlphabeticLetter(lowerLettersTonal.get(ToneLetterTags.f).characters)
       );
       return [s];
     }
@@ -171,14 +169,10 @@ export class EighthToSecondCombining extends TonalCombiningMetaplasm {
 
       s.popLetter();
       s.pushLetter(
-        new AlphabeticLetter(
-          lowerLettersTonal.get(TonalLetterTags.h).characters
-        )
+        new AlphabeticLetter(lowerLettersTonal.get(ToneLetterTags.h).characters)
       );
       s.pushLetter(
-        new AlphabeticLetter(
-          lowerLettersTonal.get(TonalLetterTags.y).characters
-        )
+        new AlphabeticLetter(lowerLettersTonal.get(ToneLetterTags.y).characters)
       );
       return [s];
     }
@@ -196,7 +190,7 @@ export class AdnominalECombining extends TonalCombiningMetaplasm {
       );
       if (allomorph instanceof FreeAllomorph) {
         if (allomorph instanceof ZeroAllomorph) {
-          const tos = combiningRules.get(TonalLetterTags.zero);
+          const tos = combiningRules.get(ToneLetterTags.zero);
           if (tos) {
             // it should loop only once
             s.pushLetter(
@@ -213,26 +207,26 @@ export class AdnominalECombining extends TonalCombiningMetaplasm {
 
 /** Returns the combining form of a phrasal verb particle. */
 export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
-  constructor(private tone: TonalLetterTags) {
+  constructor(private tone: ToneLetterTags) {
     super();
   }
 
   private toThird(syllable: TonalSyllable, final: string) {
     let s: TonalSyllable = new TonalSyllable(syllable.letters);
-    s.pushLetter(lowerLettersTonal.get(TonalLetterTags.w));
+    s.pushLetter(lowerLettersTonal.get(ToneLetterTags.w));
     return s;
   }
 
   private toFirst(syllable: TonalSyllable) {
     let s: TonalSyllable = new TonalSyllable(syllable.letters);
-    s.pushLetter(lowerLettersTonal.get(TonalLetterTags.f));
+    s.pushLetter(lowerLettersTonal.get(ToneLetterTags.f));
     return s;
   }
 
   private toSeventh(syllable: TonalSyllable) {
     let s: TonalSyllable = new TonalSyllable(syllable.letters);
     s.popLetter();
-    s.pushLetter(lowerLettersTonal.get(TonalLetterTags.z));
+    s.pushLetter(lowerLettersTonal.get(ToneLetterTags.z));
     return s;
   }
 
@@ -244,11 +238,11 @@ export class PhrasalVerbParticleCombining extends TonalCombiningMetaplasm {
       if (allomorph instanceof CheckedAllomorph) {
         const ret: TonalSyllable[] = [];
         let syl: TonalSyllable = new TonalSyllable([]);
-        if (this.tone === TonalLetterTags.f) {
+        if (this.tone === ToneLetterTags.f) {
           syl = this.toFirst(s);
-        } else if (this.tone === TonalLetterTags.w) {
+        } else if (this.tone === ToneLetterTags.w) {
           syl = this.toThird(s, sounds[sounds.length - 1].toString());
-        } else if (this.tone === TonalLetterTags.z) {
+        } else if (this.tone === ToneLetterTags.z) {
           syl = this.toSeventh(s);
         }
         ret.push(syl);
@@ -270,8 +264,8 @@ export class ConjunctiveLeCombining extends TonalCombiningMetaplasm {
       );
       if (allomorph instanceof FreeAllomorph) {
         if (
-          allomorph.tonal.toString() === TonalLetterTags.z ||
-          allomorph.tonal.toString() === TonalLetterTags.w
+          allomorph.tonal.toString() === ToneLetterTags.z ||
+          allomorph.tonal.toString() === ToneLetterTags.w
         ) {
           s.popLetter();
           return [s];
@@ -291,9 +285,7 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
       );
       s.popLetter();
       s.pushLetter(
-        new AlphabeticLetter(
-          lowerLettersTonal.get(TonalLetterTags.w).characters
-        )
+        new AlphabeticLetter(lowerLettersTonal.get(ToneLetterTags.w).characters)
       );
       return [s];
     }
@@ -303,7 +295,7 @@ export class PossesiveExCombining extends TonalCombiningMetaplasm {
 
 /** Changes 4th tone to either 1st or 7th tone. */
 export class FirstSeventhCombining extends TonalCombiningMetaplasm {
-  constructor(private tone: TonalLetterTags) {
+  constructor(private tone: ToneLetterTags) {
     super();
   }
 
@@ -313,22 +305,22 @@ export class FirstSeventhCombining extends TonalCombiningMetaplasm {
       let s: TonalSyllable = new TonalSyllable(
         sounds.map((x) => new AlphabeticLetter(x.characters))
       );
-      if (s.lastLetter.literal === TonalLetterTags.h) {
+      if (s.lastLetter.literal === ToneLetterTags.h) {
         s.popLetter();
       }
-      if (this.tone === TonalLetterTags.z) {
+      if (this.tone === ToneLetterTags.z) {
         s.pushLetter(
           new AlphabeticLetter(
-            lowerLettersTonal.get(TonalLetterTags.z).characters
+            lowerLettersTonal.get(ToneLetterTags.z).characters
           )
         );
       } else if (
-        this.tone === TonalLetterTags.zero &&
-        sounds[sounds.length - 1].toString() === TonalLetterTags.t
+        this.tone === ToneLetterTags.zero &&
+        sounds[sounds.length - 1].toString() === ToneLetterTags.t
       ) {
         s.pushLetter(
           new AlphabeticLetter(
-            lowerLettersTonal.get(TonalLetterTags.f).characters
+            lowerLettersTonal.get(ToneLetterTags.f).characters
           )
         );
       }
@@ -393,7 +385,7 @@ export class Epenthesis extends TonalInsertionMetaplasm {
       if (
         ltrs[ltrs.length - 2].name == TonalSpellingTags.nasalFinalConsonant &&
         morphemes[morphemes.length - 1].syllable.letters[0].literal ===
-          TonalLetterTags.a
+          ToneLetterTags.a
       ) {
         // m, n, ng followed by -ay. pass the preceding nasal to get forms
         wrd.popSyllable();
@@ -423,7 +415,7 @@ export class Uninsertion extends TonalUninsertionMetaplasm {
           morphemes[morphemes.length - 1].syllable.letters[0].literal
         ) &&
         morphemes[morphemes.length - 1].syllable.letters[1].literal ===
-          TonalLetterTags.a
+          ToneLetterTags.a
       ) {
         wrd.popSyllable();
         wrd.pushSyllable(morphemes[morphemes.length - 1].uninsertNasal()[0]);
@@ -758,8 +750,8 @@ export class FinalConsonantMutationInternal extends TonalMutationMetaplasm {
       for (let i = 1; i < morphemes.length; i++) {
         if (
           morphemes[i].sounds[0].name === TonalSpellingTags.initialConsonant &&
-          (morphemes[i - 1].lastSecondLetter === TonalLetterTags.t ||
-            morphemes[i - 1].lastSecondLetter === TonalLetterTags.tt)
+          (morphemes[i - 1].lastSecondLetter === ToneLetterTags.t ||
+            morphemes[i - 1].lastSecondLetter === ToneLetterTags.tt)
         ) {
           const syls = morphemes[i - 1].changeFinalPtkppttkk(
             morphemes[i].sounds[0]
@@ -768,8 +760,8 @@ export class FinalConsonantMutationInternal extends TonalMutationMetaplasm {
             wrd.replaceSyllable(i - 1, syls[0]);
           }
         } else if (
-          morphemes[i].sounds[0].toString() === TonalLetterTags.b &&
-          morphemes[i - 1].lastSecondLetter === TonalLetterTags.n
+          morphemes[i].sounds[0].toString() === ToneLetterTags.b &&
+          morphemes[i - 1].lastSecondLetter === ToneLetterTags.n
         ) {
           const syls = morphemes[i - 1].changeFinalN(morphemes[i].sounds[0]);
           if (syls && syls.length > 0) {

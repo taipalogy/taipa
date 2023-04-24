@@ -10,7 +10,7 @@ import {
   baseAdverbialParticles,
   ParticlesAdverbial,
 } from './dictionary';
-import { TonalLetterTags } from '../tonal/tonalres';
+import { ToneLetterTags } from '../tonal/tonalres';
 
 export function isPhrasalVerbVp(token1: string, token2: string) {
   if (baseVerbs.includes(token1) && basePhrasalVerbParticles.includes(token2))
@@ -34,35 +34,36 @@ export function isPhrasalVerbVpp(
 
 export const inflectedVerbs = baseVerbs.map(
   // get the first element of the returned array
-  it => inflectDesinence(it).getForms()[0].literal
+  (it) => inflectDesinence(it).getForms()[0].literal
 );
 
-export const inflectedPhrasalVerbParticles = basePhrasalVerbParticles.map(it =>
-  it === ParticlesPhrasalVerb.cut
-    ? inflectPhrasalVerbParticle(
-        ParticlesPhrasalVerb.cut,
-        TonalLetterTags.f
-      ).getForms()[0].literal
-    : it === ParticlesPhrasalVerb.khih
-    ? inflectPhrasalVerbParticle(
-        ParticlesPhrasalVerb.khih,
-        TonalLetterTags.f
-      ).getForms()[0].literal
-    : it === ParticlesPhrasalVerb.laih
-    ? inflectPhrasalVerbParticle(
-        ParticlesPhrasalVerb.laih,
-        TonalLetterTags.z
-      ).getForms()[0].literal
-    : it === ParticlesPhrasalVerb.tiurh
-    ? inflectPhrasalVerbParticle(
-        ParticlesPhrasalVerb.tiurh,
-        TonalLetterTags.w
-      ).getForms()[0].literal
-    : ''
+export const inflectedPhrasalVerbParticles = basePhrasalVerbParticles.map(
+  (it) =>
+    it === ParticlesPhrasalVerb.cut
+      ? inflectPhrasalVerbParticle(
+          ParticlesPhrasalVerb.cut,
+          ToneLetterTags.f
+        ).getForms()[0].literal
+      : it === ParticlesPhrasalVerb.khih
+      ? inflectPhrasalVerbParticle(
+          ParticlesPhrasalVerb.khih,
+          ToneLetterTags.f
+        ).getForms()[0].literal
+      : it === ParticlesPhrasalVerb.laih
+      ? inflectPhrasalVerbParticle(
+          ParticlesPhrasalVerb.laih,
+          ToneLetterTags.z
+        ).getForms()[0].literal
+      : it === ParticlesPhrasalVerb.tiurh
+      ? inflectPhrasalVerbParticle(
+          ParticlesPhrasalVerb.tiurh,
+          ToneLetterTags.w
+        ).getForms()[0].literal
+      : ''
 );
 
 export const inflectedPersonalPronouns = basePersonalPronouns.map(
-  it => inflectDesinence(it).getForms()[0].literal
+  (it) => inflectDesinence(it).getForms()[0].literal
 );
 
 export const proceedingAdverbialParticles = {
@@ -71,5 +72,5 @@ export const proceedingAdverbialParticles = {
 };
 
 export const inflectedAdverbialParticles = baseAdverbialParticles.map(
-  it => inflectDesinence(it).getForms()[0].literal
+  (it) => inflectDesinence(it).getForms()[0].literal
 );

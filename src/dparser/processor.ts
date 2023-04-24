@@ -11,7 +11,7 @@ import {
   lemmatize,
   lemmatizePhrasalVerbParticle,
 } from '../unchange/lemmatizer';
-import { TonalLetterTags } from '../tonal/tonalres';
+import { ToneLetterTags } from '../tonal/tonalres';
 import { extractTones } from '../tonal/tone';
 
 export const getTokens = function (text: string) {
@@ -19,7 +19,7 @@ export const getTokens = function (text: string) {
   if (text) {
     const matchArr = text.match(/\w+/g);
     if (matchArr) {
-      matchArr.filter(it => it != undefined).map(it => tokens.push(it));
+      matchArr.filter((it) => it != undefined).map((it) => tokens.push(it));
     }
   }
   return tokens;
@@ -71,7 +71,7 @@ function isFirstCheckedTone(token: string) {
   // a final plus a first tone letter
   if (
     tone.getInflectionalEnding().length == 1 &&
-    tone.getInflectionalEnding() === TonalLetterTags.f &&
+    tone.getInflectionalEnding() === ToneLetterTags.f &&
     tone.getAllomorphicEnding().length == 2
   )
     return true;
@@ -83,7 +83,7 @@ function isSeventhTone(token: string) {
   // a seventh tone letter
   if (
     tone.getInflectionalEnding().length == 1 &&
-    tone.getInflectionalEnding() === TonalLetterTags.z
+    tone.getInflectionalEnding() === ToneLetterTags.z
   )
     return true;
   return false;
@@ -94,7 +94,7 @@ function isThirdCheckedTone(token: string) {
   // a final plus a first tone letter
   if (
     tone.getInflectionalEnding().length == 1 &&
-    tone.getInflectionalEnding() === TonalLetterTags.w &&
+    tone.getInflectionalEnding() === ToneLetterTags.w &&
     tone.getAllomorphicEnding().length == 2
   )
     return true;
@@ -316,7 +316,7 @@ function getLemmas(
 
 function convertTokensToNodes(pairs: Array<tokenTagPair>, lemmas: string[]) {
   // convert token-tag pairs to nodes which are used as stack or queue elements
-  const nodes = pairs.map(it => new Node(it[0]));
+  const nodes = pairs.map((it) => new Node(it[0]));
   if (pairs) {
     for (let i = 0; i < pairs.length; i++) {
       if (nodes.length === pairs.length && pairs[i]) {

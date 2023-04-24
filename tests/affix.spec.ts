@@ -1,16 +1,16 @@
 import { GraphemeMaker } from '../src/unit';
-import { lowerLettersTonal, TonalLetterTags } from '../src/tonal/tonalres';
+import { lowerLettersTonal, ToneLetterTags } from '../src/tonal/tonalres';
 import { TonalCombiningMorphemeMaker } from '../src/change/morpheme';
 import { TonalCombiningForms } from '../src/change/metaplasm';
 
-type TonePatternTwo = [TonalLetterTags, TonalLetterTags];
+type TonePatternTwo = [ToneLetterTags, ToneLetterTags];
 export type SuprafixTwo = { patterns: TonePatternTwo[] };
 
 describe('Suprafix testing, of length 2', () => {
   const st: SuprafixTwo = {
     patterns: [
-      [TonalLetterTags.w, TonalLetterTags.x], // 35
-      [TonalLetterTags.z, TonalLetterTags.z], // 77
+      [ToneLetterTags.w, ToneLetterTags.x], // 35
+      [ToneLetterTags.z, ToneLetterTags.z], // 77
     ],
   };
 
@@ -56,13 +56,13 @@ describe('Simulfix testing', () => {
   gs.splice(1, 1, gm.makeGraphemes('i')[0]);
 
   test('check the letter', () => {
-    expect(gs[1].letter.literal).toEqual(TonalLetterTags.i);
+    expect(gs[1].letter.literal).toEqual(ToneLetterTags.i);
   });
 
   const mm = new TonalCombiningMorphemeMaker(new TonalCombiningForms());
   const ms = mm.makeMorphemes(gs);
 
-  ms[0].syllable.replaceLetter(1, lowerLettersTonal.get(TonalLetterTags.u));
+  ms[0].syllable.replaceLetter(1, lowerLettersTonal.get(ToneLetterTags.u));
 
   test('check the syllable', () => {
     expect(ms[0].syllable.literal).toEqual('kun');
@@ -74,13 +74,13 @@ describe('Duplifix testing', () => {
   const gs = gm.makeGraphemes('titwtitt');
 
   test('check the letter', () => {
-    expect(gs[4].letter.literal).toEqual(TonalLetterTags.t);
+    expect(gs[4].letter.literal).toEqual(ToneLetterTags.t);
   });
 
   const mm = new TonalCombiningMorphemeMaker(new TonalCombiningForms());
   const ms = mm.makeMorphemes(gs);
 
-  ms[1].syllable.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.l));
+  ms[1].syllable.replaceLetter(0, lowerLettersTonal.get(ToneLetterTags.l));
 
   test('check the syllable', () => {
     expect(ms[1].syllable.literal).toEqual('litt');

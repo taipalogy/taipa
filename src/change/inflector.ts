@@ -12,7 +12,7 @@ import {
 import { TonalInflectionLexeme } from './lexeme';
 import { TonalInflectionPhrasemeMaker } from './phraseme';
 import { createTonalInflectionLexeme } from './creator';
-import { TonalLetterTags } from '../tonal/tonalres';
+import { ToneLetterTags } from '../tonal/tonalres';
 import { TonalDesinenceInflection, TransfixInflection } from './metaplasm';
 import { ParticlesPhrasalVerb } from '../dparser/dictionary';
 
@@ -51,10 +51,7 @@ export function inflectEncliticE(word: string) {
  * @param word Particle
  * @param tone F, w, or z
  */
-export function inflectPhrasalVerbParticle(
-  word: string,
-  tone: TonalLetterTags
-) {
+export function inflectPhrasalVerbParticle(word: string, tone: ToneLetterTags) {
   const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new PhrasalVerbParticleCombining(tone));
@@ -91,7 +88,7 @@ export function inflectPossesiveEx(word: string) {
  * @param word 4th checked tone
  * @param tone F or z
  */
-export function inflectTo(word: string, tone: TonalLetterTags) {
+export function inflectTo(word: string, tone: ToneLetterTags) {
   const tia = tonalInflectionAnalyzer;
 
   const ms = tia.morphAnalyze(word, new FirstSeventhCombining(tone));
@@ -122,9 +119,9 @@ export function inflectToProceeding(verb: string, particle: string) {
   const lxVerb = inflectDesinence(verb);
   let lxParticle: TonalInflectionLexeme = createTonalInflectionLexeme('');
   if (particle === ParticlesPhrasalVerb.khih) {
-    lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
+    lxParticle = inflectPhrasalVerbParticle(particle, ToneLetterTags.f);
   } else {
-    lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.w);
+    lxParticle = inflectPhrasalVerbParticle(particle, ToneLetterTags.w);
   }
   return phm.makePhrasalVerbPhraseme(lxVerb, lxParticle);
 }
@@ -149,14 +146,14 @@ export function inflectVppToProceeding(
     particle === ParticlesPhrasalVerb.cut &&
     particleTwo === ParticlesPhrasalVerb.khih
   ) {
-    lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
-    lxParticleTwo = inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.f);
+    lxParticle = inflectPhrasalVerbParticle(particle, ToneLetterTags.f);
+    lxParticleTwo = inflectPhrasalVerbParticle(particleTwo, ToneLetterTags.f);
   } else if (
     particle === ParticlesPhrasalVerb.khih &&
     particleTwo === ParticlesPhrasalVerb.laih
   ) {
-    lxParticle = inflectPhrasalVerbParticle(particle, TonalLetterTags.f);
-    lxParticleTwo = inflectPhrasalVerbParticle(particleTwo, TonalLetterTags.z);
+    lxParticle = inflectPhrasalVerbParticle(particle, ToneLetterTags.f);
+    lxParticleTwo = inflectPhrasalVerbParticle(particleTwo, ToneLetterTags.z);
   }
   return phm.makePhrasalVerbVppPhraseme(lxVerb, lxParticle, lxParticleTwo);
 }
@@ -228,7 +225,7 @@ export function inflectPossesive(noun: string, ex: string) {
 export function inflectToParticiple(
   verb: string,
   particle: string,
-  tone: TonalLetterTags
+  tone: ToneLetterTags
 ) {
   const phm = new TonalInflectionPhrasemeMaker();
 
@@ -248,7 +245,7 @@ export function inflectVppToParticiple(
   verb: string,
   particle: string,
   particleTwo: string,
-  tone: TonalLetterTags
+  tone: ToneLetterTags
 ) {
   const phm = new TonalInflectionPhrasemeMaker();
 
