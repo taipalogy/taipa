@@ -200,7 +200,8 @@ describe('Uncombining form testing', () => {
     'tangwsiwaw',
     new TonalUncombiningForms([])
   );
-  test('check the uncombining form for transfix, 5th syllable, siw to siy, six, siz', () => {
+  test('check the uncombining form for transfix, free syllable, siw to siy, six, siz', () => {
+    expect(ms3[1].getForms()[0].literal).toEqual('si');
     expect(ms3[1].getForms()[1].literal).toEqual('siy');
     expect(ms3[1].getForms()[2].literal).toEqual('six');
     expect(ms3[1].getForms()[3].literal).toEqual('siz');

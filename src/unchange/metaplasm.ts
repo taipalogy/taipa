@@ -431,46 +431,48 @@ export class LastSyllableForms extends TonalUncombiningMetaplasm {
 export class TransfixUncombining extends TonalUncombiningMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
-      const vowelA = sounds.filter((it) => it.toString() === ToneLetterTags.a);
-      const chkFnls = sounds.filter(
+      const vwlA = sounds.filter((it) => it.toString() === ToneLetterTags.a);
+      const chkdFnls = sounds.filter(
         (it) => it.name === TonalSpellingTags.checkedTone
       );
       const s: TonalSyllable = new TonalSyllable(
         sounds.map((it) => new AlphabeticLetter(it.characters))
       );
 
-      if (vowelA.length == 1) {
+      if (vwlA.length == 1) {
         // aw -> ay
         s.popLetter(); // pop letter w
         s.pushLetter(lowerLettersTonal.get(ToneLetterTags.y));
         return [s];
-      } else if (chkFnls.length == 1) {
+      } else if (chkdFnls.length == 1) {
         // checked tones
         s.popLetter(); // pop letter w
-        const clone: TonalSyllable = Object.create(s);
+        const sylChkd: TonalSyllable = Object.create(s);
         // get hh or tt
         const got = finalConsonantsForTransfix.get(
           s.letters[s.letters.length - 1].literal
         );
         if (got) {
-          clone.popLetter(); // pop final t
-          clone.pushLetter(lowerLettersTonal.get(got)); // push hh or tt
+          sylChkd.popLetter(); // pop final t
+          sylChkd.pushLetter(lowerLettersTonal.get(got)); // push hh or tt
         }
-        return [s, clone];
+        return [s, sylChkd];
       } else {
         // in case of free tones other than aw, return the other four free tones
-        const clone2: TonalSyllable = Object.create(s); // 2nd tone
-        const clone5: TonalSyllable = Object.create(s); // 5th tone
-        const clone7: TonalSyllable = Object.create(s); // 7th tone
-        clone2.popLetter(); // pop w
-        clone2.pushLetter(lowerLettersTonal.get(ToneLetterTags.y));
-        clone5.popLetter(); // pop w
-        clone5.pushLetter(lowerLettersTonal.get(ToneLetterTags.x));
-        clone7.popLetter(); // pop w
-        clone7.pushLetter(lowerLettersTonal.get(ToneLetterTags.z));
+        const syl1: TonalSyllable = Object.create(s); // 1st tone
+        const syl2: TonalSyllable = Object.create(s); // 2nd tone
+        const syl5: TonalSyllable = Object.create(s); // 5th tone
+        const syl7: TonalSyllable = Object.create(s); // 7th tone
+        syl1.popLetter(); // pop w
+        syl2.popLetter(); // pop w
+        syl2.pushLetter(lowerLettersTonal.get(ToneLetterTags.y));
+        syl5.popLetter(); // pop w
+        syl5.pushLetter(lowerLettersTonal.get(ToneLetterTags.x));
+        syl7.popLetter(); // pop w
+        syl7.pushLetter(lowerLettersTonal.get(ToneLetterTags.z));
 
-        // console.log(s.literal, clone2.literal, clone5.literal, clone7.literal);
-        return [s, clone2, clone5, clone7];
+        // console.log(syl1.literal, syl2.literal, syl5.literal, syl7.literal);
+        return [syl1, syl2, syl5, syl7];
       }
     }
     return [];
