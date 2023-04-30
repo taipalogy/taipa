@@ -1,6 +1,6 @@
 import { syllableCompositions } from './soundgen';
 import { SoundGeneration, Sound } from '../unit';
-import { isInSyllableTable } from './syllabletable';
+import { isInSyllableTable } from './syllablelists';
 
 /** Predicts the following letters. Return them as an array of strings when available. If the lexical roots are not present, an empty array will be returned. */
 export function predict(letters: string[]) {
@@ -15,17 +15,17 @@ export function predict(letters: string[]) {
     if (sg.letters.length != sg.matchedSounds.length || sg.matching != true) {
       // the pattern is not matched, the first unmatched set of sounds
       // is then returned as a possible prediction
-      sg.predictions.map(x => soundSeqs.push(x));
+      sg.predictions.map((x) => soundSeqs.push(x));
     }
   }
 
   const dupes: Array<[string, string]> = new Array();
-  soundSeqs.map(i => i.map(j => dupes.push([j.toString(), j.name])));
+  soundSeqs.map((i) => i.map((j) => dupes.push([j.toString(), j.name])));
   const dedupes = dupes.reduce(function (
     accumulator: Array<[string, string]>,
     curr: [string, string]
   ) {
-    if (accumulator.filter(x => x[0] === curr[0]).length == 0) {
+    if (accumulator.filter((x) => x[0] === curr[0]).length == 0) {
       accumulator.push(curr);
     }
     return accumulator;
@@ -33,7 +33,7 @@ export function predict(letters: string[]) {
   []);
 
   // for valid predictions
-  const predictions = dedupes.filter(it =>
+  const predictions = dedupes.filter((it) =>
     isInSyllableTable(letters.join('') + it[0])
   );
 

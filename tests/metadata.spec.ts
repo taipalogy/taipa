@@ -1,6 +1,6 @@
 import { characters } from '../src/unit';
 import { lowerLettersTonal } from '../src/tonal/tonalres';
-import { basicSyllables } from '../src/tonal/syllabletable';
+import { basicSyllables } from '../src/tonal/syllablelists';
 
 describe('Basic testing', () => {
   test('check the number of characters', () => {

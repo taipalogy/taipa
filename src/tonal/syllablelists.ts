@@ -1,6 +1,6 @@
 export function isInSyllableTable(syllable: string) {
   if (basicSyllables.includes(syllable)) return true;
-  if (extraSyllables.includes(syllable)) return true;
+  if (missingSyllables.includes(syllable)) return true;
   if (syllabicHeadwords.includes(syllable)) return true;
   return false;
 }
@@ -150,7 +150,7 @@ const syllabicHeadwords = [
 ]
 
 // prettier-ignore
-const extraSyllables = [
+const missingSyllables = [    
     'aih',
     
     'buaix', 'buaiw', 'bueh', 'burh',

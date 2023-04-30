@@ -18,7 +18,7 @@ import {
 } from '../tonal/tonalres';
 import { AlphabeticLetter, AlphabeticGrapheme, Sound } from '../unit';
 import { TonalSoundGenerator } from '../tonal/soundgen';
-import { isInSyllableTable } from '../tonal/syllabletable';
+import { isInSyllableTable } from '../tonal/syllablelists';
 import {
   smMnngHF,
   smMnngHWx,

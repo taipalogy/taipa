@@ -274,7 +274,7 @@ describe('Taiwanese kana testing, small form', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('gore');
-  test('taikanas, reduplication of vowels', () => {
+  test('taikanas, small form of vowels', () => {
     expect(ta1.blockSequences[0]).toEqual('ゴォ̅エ');
   });
 
@@ -306,13 +306,18 @@ describe('Taiwanese kana testing, small form', () => {
   });
   /*
   const ta7 = cli.processTonal('orh');
-  test('taikanas, reduplication of vowels', () => {
+  test('taikanas, small form of vowels', () => {
     expect(ta7.blockSequences[0]).toEqual('オ̅ォ̅⤆');
   });
-  
+
   const ta8 = cli.processTonal('borh');
-  test('taikanas, reduplication of vowels', () => {
+  test('taikanas, small form of vowels', () => {
     expect(ta8.blockSequences[0]).toEqual('ボォ̅⤆');
+  });
+
+  const ta9 = cli.processTonal('khirh');
+  test('taikanas, small form of vowels', () => {
+    expect(ta9.blockSequences[0]).toEqual('ク̣ゥ̅⤆');
   });
   */
 });
@@ -592,7 +597,8 @@ describe('Taiwanese kana testing, sandhi final', () => {
 
   const ta9 = cli.processTonal('chinghwngueh');
   test('taikanas', () => {
-    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝'); // ク゚ェ⤆
+    // ngueh: ク゚ェ⤆
+    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝');
   });
 });
 
