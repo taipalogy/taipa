@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { TonalSpellingTags, ToneLetterTags } from '../src/tonal/tonalres';
+import { TonalSpellingTags, TonalLetterTags } from '../src/tonal/tonalres';
 import { TokenAnalysis } from '../src/client';
 import {
   inflectDesinence,
@@ -26,11 +26,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the inflectional ending', () => {
-    expect(doc.inflectionalEnding).toEqual(ToneLetterTags.f);
+    expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.soundSequences[1][4].toString()).toEqual(ToneLetterTags.f);
+    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
@@ -52,11 +52,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the inflectional ending', () => {
-    expect(doc.inflectionalEnding).toEqual(ToneLetterTags.f);
+    expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.soundSequences[1][4].toString()).toEqual(ToneLetterTags.f);
+    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
@@ -78,11 +78,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the inflectional ending', () => {
-    expect(doc.inflectionalEnding).toEqual(ToneLetterTags.f);
+    expect(doc.inflectionalEnding).toEqual(TonalLetterTags.f);
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.soundSequences[1][3].toString()).toEqual(ToneLetterTags.f);
+    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.f);
   });
 
   test('check the name of checked tonal', () => {
@@ -104,11 +104,11 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the inflectional ending', () => {
-    expect(doc.inflectionalEnding).toEqual(ToneLetterTags.w);
+    expect(doc.inflectionalEnding).toEqual(TonalLetterTags.w);
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.soundSequences[1][3].toString()).toEqual(ToneLetterTags.w);
+    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
@@ -140,7 +140,7 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.soundSequences[1][3].toString()).toEqual(ToneLetterTags.w);
+    expect(doc.soundSequences[1][3].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
@@ -172,7 +172,7 @@ describe('Inflectional ending testing', () => {
   });
 
   test('check the letter of inflectional ending', () => {
-    expect(doc.soundSequences[1][4].toString()).toEqual(ToneLetterTags.w);
+    expect(doc.soundSequences[1][4].toString()).toEqual(TonalLetterTags.w);
   });
 
   test('check the name of checked tonal', () => {
@@ -395,7 +395,7 @@ describe('Inflection testing, empty inputs', () => {
     expect(lx3.getForms().length).toEqual(0);
   });
 
-  const lx4 = inflectPhrasalVerbParticle(inputEmpty, ToneLetterTags.zero);
+  const lx4 = inflectPhrasalVerbParticle(inputEmpty, TonalLetterTags.zero);
   test('check the word literal', () => {
     expect(lx4.word.literal).toEqual('');
   });
@@ -462,7 +462,7 @@ describe('Inflection testing, undefined inputs', () => {
     expect(lx3.getForms().length).toEqual(0);
   });
 
-  const lx4 = inflectPhrasalVerbParticle(inputUnd, ToneLetterTags.zero);
+  const lx4 = inflectPhrasalVerbParticle(inputUnd, TonalLetterTags.zero);
   test('check the word literal', () => {
     expect(lx4.word.literal).toEqual('');
   });

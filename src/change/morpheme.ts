@@ -7,7 +7,7 @@ import {
   ZeroAllomorph,
   combinedFreeAllomorphs,
   uncombinedCheckedAllomorphs,
-  ToneLetterTags,
+  TonalLetterTags,
   TonalSpellingTags,
   checkedToneLettersTonal,
   combinedCheckedAllomorphs,
@@ -56,8 +56,8 @@ export class TonalCombiningMorpheme extends Morpheme {
 
   isAy() {
     if (
-      this.sounds[this.sounds.length - 1].toString() === ToneLetterTags.y &&
-      this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.a
+      this.sounds[this.sounds.length - 1].toString() === TonalLetterTags.y &&
+      this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.a
     )
       return true;
     return false;
@@ -162,7 +162,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
             this.sounds.map((it) => new AlphabeticLetter(it.characters))
           );
 
-          s.replaceLetter(0, lowerLettersTonal.get(ToneLetterTags.l));
+          s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.l));
           return [s];
         }
         return [
@@ -184,7 +184,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       const idx = snds.findIndex(
         (i) => i.name === TonalSpellingTags.stopFinalConsonant
       );
-      syl.replaceLetter(idx, lowerLettersTonal.get(ToneLetterTags.gg));
+      syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.gg));
 
       return [syl];
     }
@@ -194,9 +194,9 @@ export class TonalSoundChangingMorpheme extends Morpheme {
   private changeFinalTTt(initial: Sound) {
     // absolute assimilation, except for t or tt followed by j. regressive
     if (
-      (this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.tt &&
+      (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.tt &&
         Object.values(initialConsonantsForTT).includes(initial.toString())) ||
-      (this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.t &&
+      (this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.t &&
         Object.values(initialConsonantsForFinalT).includes(initial.toString()))
     ) {
       const s: TonalSyllable = new TonalSyllable(
@@ -206,7 +206,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       let fnl = ttInitialTInitialPairs.get(
         this.sounds[this.sounds.length - 2].toString() + initial.toString()
       );
-      if (!fnl && initial.toString() === ToneLetterTags.j) {
+      if (!fnl && initial.toString() === TonalLetterTags.j) {
         // this block is dedicated to -tfj- and -twj-, since there is only -jfj- but not -jwj-
         fnl = ttInitialTInitialPairs.get(
           this.sounds[this.sounds.length - 2].toString() +
@@ -305,8 +305,8 @@ export class TonalSoundChangingMorpheme extends Morpheme {
     }
 
     if (
-      initial.toString() === ToneLetterTags.b &&
-      this.sounds[this.sounds.length - 2].toString() === ToneLetterTags.n
+      initial.toString() === TonalLetterTags.b &&
+      this.sounds[this.sounds.length - 2].toString() === TonalLetterTags.n
     ) {
       // replace final n with final m
       const s: TonalSyllable = new TonalSyllable(
@@ -314,7 +314,7 @@ export class TonalSoundChangingMorpheme extends Morpheme {
       );
       s.replaceLetter(
         s.letters.length - 2,
-        lowerLettersTonal.get(ToneLetterTags.m)
+        lowerLettersTonal.get(TonalLetterTags.m)
       );
       return [s];
     }

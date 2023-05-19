@@ -6,7 +6,7 @@ import {
   freeAllomorphs,
   ZeroAllomorph,
   AllomorphX,
-  ToneLetterTags,
+  TonalLetterTags,
   lowerLettersTonal,
   TonalSpellingTags,
   uncombiningRulesAy,
@@ -76,8 +76,8 @@ export function syllabifyTonal(
     if (
       i + 1 < letters.length &&
       had &&
-      (ToneLetterTags.w === letters[i + 1].literal ||
-        ToneLetterTags.x === letters[i + 1].literal)
+      (TonalLetterTags.w === letters[i + 1].literal ||
+        TonalLetterTags.x === letters[i + 1].literal)
     ) {
       const got = fourthToEighthFinalConsonants.get(letters[i].literal);
       // restore the lexical roots for 4th final consonants, which is 8th finals
@@ -254,7 +254,7 @@ export function syllabifyTonal(
         // Object.assign(matchedLtrs, ltrs);
       } else if (!freeToneLettersTonal.includes(letters[i].literal)) {
         // free first tone without a free tonal
-        const rules = freeAllomorphUncombiningRules.get(ToneLetterTags.zero);
+        const rules = freeAllomorphUncombiningRules.get(TonalLetterTags.zero);
         const tnls = !rules ? [] : rules;
         for (let t of tnls) {
           // append second tonal letter
@@ -488,7 +488,7 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       const stpFnlH = syllables[syllables.length - 2].pattern.filter(
         (it) =>
           it.name === TonalSpellingTags.stopFinalConsonant &&
-          it.toString() === ToneLetterTags.h
+          it.toString() === TonalLetterTags.h
       );
       const tnl = syllables[syllables.length - 2].pattern.filter(
         (it) =>
@@ -505,11 +505,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
       // ending ay
       const endingAy =
         syllables[syllables.length - 1].lastSecondLetter.literal ===
-          ToneLetterTags.a &&
-        syllables[syllables.length - 1].lastLetter.literal === ToneLetterTags.y;
+          TonalLetterTags.a &&
+        syllables[syllables.length - 1].lastLetter.literal ===
+          TonalLetterTags.y;
       // ending a is the proceeding form of ay
       const endingA =
-        syllables[syllables.length - 1].lastLetter.literal === ToneLetterTags.a;
+        syllables[syllables.length - 1].lastLetter.literal ===
+        TonalLetterTags.a;
 
       if (
         !(
@@ -557,8 +559,8 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     // ending ex
     const endingEx =
       syllables[syllables.length - 1].lastSecondLetter.literal ===
-        ToneLetterTags.e &&
-      syllables[syllables.length - 1].lastLetter.literal === ToneLetterTags.x;
+        TonalLetterTags.e &&
+      syllables[syllables.length - 1].lastLetter.literal === TonalLetterTags.x;
     if (endingEx) {
       return true;
     }
@@ -569,13 +571,13 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
     // TODO: there are not many of them. make a tiny dictionary to cover the ocurrences
     const thirds = syllables
       .map((it) =>
-        it.pattern.filter((ltr) => ltr.toString() === ToneLetterTags.w)
+        it.pattern.filter((ltr) => ltr.toString() === TonalLetterTags.w)
       )
       .map((seq) => seq.map((ltr) => ltr.toString()))
       .filter((arr) => arr.length > 0);
     const endingAw: boolean =
       syllables[syllables.length - 1].lastSecondLetter.literal ===
-      ToneLetterTags.a;
+      TonalLetterTags.a;
     if (syllables.length > 1 && thirds.length == syllables.length && endingAw)
       return true;
     return false;
@@ -658,11 +660,11 @@ export class TonalUncombiningMorphemeMaker extends MorphemeMaker {
         vs.length == 2 &&
         fcs.length == 1 &&
         ts.length == 1 &&
-        vs[0].toString() === ToneLetterTags.i &&
-        vs[1].toString() === ToneLetterTags.e &&
-        fcs[0].toString() === ToneLetterTags.t &&
-        (ts[0].toString() === ToneLetterTags.f ||
-          ts[0].toString() === ToneLetterTags.w)
+        vs[0].toString() === TonalLetterTags.i &&
+        vs[1].toString() === TonalLetterTags.e &&
+        fcs[0].toString() === TonalLetterTags.t &&
+        (ts[0].toString() === TonalLetterTags.f ||
+          ts[0].toString() === TonalLetterTags.w)
       ) {
         // TODO: check if the uncombining forms present in syllable table.
         return true;
@@ -820,13 +822,13 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   unmutateInitialConsonant(initial: Sound) {
     if (
       initial.name === TonalSpellingTags.initialConsonant &&
-      initial.toString() === ToneLetterTags.t
+      initial.toString() === TonalLetterTags.t
     ) {
       // l- -> t-
       const s: TonalSyllable = new TonalSyllable(
         this.sounds.map((it) => new AlphabeticLetter(it.characters))
       );
-      s.replaceLetter(0, lowerLettersTonal.get(ToneLetterTags.t));
+      s.replaceLetter(0, lowerLettersTonal.get(TonalLetterTags.t));
       return [s];
     }
     return [];
@@ -835,7 +837,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
   unmutateFinalConsonant(initial: Sound) {
     if (
       initial.name === TonalSpellingTags.initialConsonant &&
-      initial.toString() === ToneLetterTags.g
+      initial.toString() === TonalLetterTags.g
     ) {
       // gg -> tt
       const syl: TonalSyllable = new TonalSyllable(
@@ -844,7 +846,7 @@ export class TonalSoundUnchangingMorpheme extends Morpheme {
       const idx = this.sounds.findIndex(
         (i) => i.name === TonalSpellingTags.stopFinalConsonant
       );
-      syl.replaceLetter(idx, lowerLettersTonal.get(ToneLetterTags.tt));
+      syl.replaceLetter(idx, lowerLettersTonal.get(TonalLetterTags.tt));
       return [syl];
     }
 

@@ -1,5 +1,5 @@
 import { Client } from '../src/client';
-import { ToneLetterTags } from '../src/tonal/tonalres';
+import { TonalLetterTags } from '../src/tonal/tonalres';
 import { mutateFinalConsonantOfPrecedingSyllable } from '../src/change/mutator';
 
 describe('Epenthesis testing', () => {
@@ -7,27 +7,27 @@ describe('Epenthesis testing', () => {
 
   const ta1 = cli.processTonal('sutflay');
   test('check the consonant', () => {
-    expect(ta1.soundSequences[1][0].toString()).toEqual(ToneLetterTags.l);
+    expect(ta1.soundSequences[1][0].toString()).toEqual(TonalLetterTags.l);
   });
 
   const ta2 = cli.processTonal('jiokxgay');
   test('check the consonant', () => {
-    expect(ta2.soundSequences[1][0].toString()).toEqual(ToneLetterTags.g);
+    expect(ta2.soundSequences[1][0].toString()).toEqual(TonalLetterTags.g);
   });
 
   const ta3 = cli.processTonal('kapfbay');
   test('check the consonant', () => {
-    expect(ta3.soundSequences[1][0].toString()).toEqual(ToneLetterTags.b);
+    expect(ta3.soundSequences[1][0].toString()).toEqual(TonalLetterTags.b);
   });
 
   const ta4 = cli.processTonal('kamxmay');
   test('check the consonant', () => {
-    expect(ta4.soundSequences[1][0].toString()).toEqual(ToneLetterTags.m);
+    expect(ta4.soundSequences[1][0].toString()).toEqual(TonalLetterTags.m);
   });
 
   const ta5 = cli.processTonal('suanfnay');
   test('check the consonant', () => {
-    expect(ta5.soundSequences[1][0].toString()).toEqual(ToneLetterTags.n);
+    expect(ta5.soundSequences[1][0].toString()).toEqual(TonalLetterTags.n);
   });
 });
 
@@ -125,8 +125,8 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta1.soundSequences[1][1].toString()).toEqual(ToneLetterTags.m);
-    expect(ta1.soundSequences[1][2].toString()).toEqual(ToneLetterTags.h);
+    expect(ta1.soundSequences[1][1].toString()).toEqual(TonalLetterTags.m);
+    expect(ta1.soundSequences[1][2].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta2 = cli.processTonal('hinhfnix');
@@ -136,8 +136,8 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta2.soundSequences[0][2].toString()).toEqual(ToneLetterTags.n);
-    expect(ta2.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
+    expect(ta2.soundSequences[0][2].toString()).toEqual(TonalLetterTags.n);
+    expect(ta2.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta3 = cli.processTonal('punghfngay');
@@ -147,8 +147,8 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta3.soundSequences[0][2].toString()).toEqual(ToneLetterTags.ng);
-    expect(ta3.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
+    expect(ta3.soundSequences[0][2].toString()).toEqual(TonalLetterTags.ng);
+    expect(ta3.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 
   const ta4 = cli.processTonal('chimhwmix');
@@ -158,7 +158,7 @@ describe('Consonant mutation testing, sandhi pp, tt, t', () => {
   });
 
   test('check the consonant', () => {
-    expect(ta4.soundSequences[0][2].toString()).toEqual(ToneLetterTags.m);
-    expect(ta4.soundSequences[0][3].toString()).toEqual(ToneLetterTags.h);
+    expect(ta4.soundSequences[0][2].toString()).toEqual(TonalLetterTags.m);
+    expect(ta4.soundSequences[0][3].toString()).toEqual(TonalLetterTags.h);
   });
 });

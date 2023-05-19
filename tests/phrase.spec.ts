@@ -10,7 +10,7 @@ import {
   inflectVppToParticiple,
 } from '../src/change/inflector';
 import { insertToFollowingWord } from '../src/change/inserter';
-import { ToneLetterTags } from '../src/tonal/tonalres';
+import { TonalLetterTags } from '../src/tonal/tonalres';
 import { TonalSyllable } from '../src/unchange/unit';
 import {
   createTonalPhrase,
@@ -158,25 +158,25 @@ describe('Compound testing', () => {
 });
 
 describe('Phrasal verb testing, participle form', () => {
-  const p1 = inflectToParticiple('thua', 'khih', ToneLetterTags.zero);
+  const p1 = inflectToParticiple('thua', 'khih', TonalLetterTags.zero);
   test('check the base form', () => {
     expect(p1.phrase.literal).toEqual('thua khih');
     expect(p1.getForms()[0].literal).toEqual('thua khi');
   });
 
-  const p2 = inflectToParticiple('thua', 'khih', ToneLetterTags.z);
+  const p2 = inflectToParticiple('thua', 'khih', TonalLetterTags.z);
   test('check the base form', () => {
     expect(p2.phrase.literal).toEqual('thua khih');
     expect(p2.getForms()[0].literal).toEqual('thuaz khiz');
   });
 
-  const p3 = inflectVppToParticiple('pun', 'cut', 'laih', ToneLetterTags.zero);
+  const p3 = inflectVppToParticiple('pun', 'cut', 'laih', TonalLetterTags.zero);
   test('check the base form', () => {
     expect(p3.phrase.literal).toEqual('pun cut laih');
     expect(p3.getForms()[0].literal).toEqual('pun cutf lai');
   });
 
-  const p4 = inflectVppToParticiple('tin', 'lurh', 'laih', ToneLetterTags.z);
+  const p4 = inflectVppToParticiple('tin', 'lurh', 'laih', TonalLetterTags.z);
   test('check the base form', () => {
     expect(p4.phrase.literal).toEqual('tin lurh laih');
     expect(p4.getForms()[0].literal).toEqual('tinz lurz laiz');

@@ -45,7 +45,7 @@ class CheckedAffix extends TonalAffix {
   // there is no final for affix
 }
 
-export enum ToneLetterTags {
+export enum TonalLetterTags {
   a = 'a',
   e = 'e',
   i = 'i',
@@ -134,49 +134,49 @@ export class TonalLetters extends Letters {
 }
 
 export const lowerLettersTonal = new TonalLetters([
-  ToneLetterTags.a,
-  ToneLetterTags.e,
-  ToneLetterTags.i,
-  ToneLetterTags.o,
-  ToneLetterTags.u,
-  ToneLetterTags.ur,
-  ToneLetterTags.c,
-  ToneLetterTags.ch,
-  ToneLetterTags.j,
-  ToneLetterTags.jj,
-  ToneLetterTags.s,
-  ToneLetterTags.m,
-  ToneLetterTags.n,
-  ToneLetterTags.ng,
-  ToneLetterTags.nn,
-  ToneLetterTags.w,
-  ToneLetterTags.xx,
-  ToneLetterTags.z,
-  ToneLetterTags.zx,
-  ToneLetterTags.x,
-  ToneLetterTags.y,
-  ToneLetterTags.b,
-  ToneLetterTags.g,
-  ToneLetterTags.l,
-  ToneLetterTags.k,
-  ToneLetterTags.p,
-  ToneLetterTags.t,
-  ToneLetterTags.kk,
-  ToneLetterTags.pp,
-  ToneLetterTags.tt,
-  ToneLetterTags.hh,
-  ToneLetterTags.bb,
-  ToneLetterTags.gg,
-  ToneLetterTags.ll,
-  ToneLetterTags.ss,
-  ToneLetterTags.f,
-  ToneLetterTags.h,
-  ToneLetterTags.er,
-  ToneLetterTags.ir,
-  ToneLetterTags.or,
-  ToneLetterTags.ph,
-  ToneLetterTags.th,
-  ToneLetterTags.kh,
+  TonalLetterTags.a,
+  TonalLetterTags.e,
+  TonalLetterTags.i,
+  TonalLetterTags.o,
+  TonalLetterTags.u,
+  TonalLetterTags.ur,
+  TonalLetterTags.c,
+  TonalLetterTags.ch,
+  TonalLetterTags.j,
+  TonalLetterTags.jj,
+  TonalLetterTags.s,
+  TonalLetterTags.m,
+  TonalLetterTags.n,
+  TonalLetterTags.ng,
+  TonalLetterTags.nn,
+  TonalLetterTags.w,
+  TonalLetterTags.xx,
+  TonalLetterTags.z,
+  TonalLetterTags.zx,
+  TonalLetterTags.x,
+  TonalLetterTags.y,
+  TonalLetterTags.b,
+  TonalLetterTags.g,
+  TonalLetterTags.l,
+  TonalLetterTags.k,
+  TonalLetterTags.p,
+  TonalLetterTags.t,
+  TonalLetterTags.kk,
+  TonalLetterTags.pp,
+  TonalLetterTags.tt,
+  TonalLetterTags.hh,
+  TonalLetterTags.bb,
+  TonalLetterTags.gg,
+  TonalLetterTags.ll,
+  TonalLetterTags.ss,
+  TonalLetterTags.f,
+  TonalLetterTags.h,
+  TonalLetterTags.er,
+  TonalLetterTags.ir,
+  TonalLetterTags.or,
+  TonalLetterTags.ph,
+  TonalLetterTags.th,
+  TonalLetterTags.kh,
 ]);
 
 export enum TonalSpellingTags {
@@ -225,96 +225,96 @@ export class MaterLectionis extends Medial {
 }
 
 class MedialA extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.a);
+  characters = this.makeCharacters(TonalLetterTags.a);
 }
 class MedialE extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.e);
+  characters = this.makeCharacters(TonalLetterTags.e);
 }
 class MedialI extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.i);
+  characters = this.makeCharacters(TonalLetterTags.i);
 }
 class MedialO extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.o);
+  characters = this.makeCharacters(TonalLetterTags.o);
 }
 class MedialU extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.u);
+  characters = this.makeCharacters(TonalLetterTags.u);
 }
 class MedialUR extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.ur);
+  characters = this.makeCharacters(TonalLetterTags.ur);
 }
 class MedialER extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.er);
+  characters = this.makeCharacters(TonalLetterTags.er);
 }
 class MedialIR extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.ir);
+  characters = this.makeCharacters(TonalLetterTags.ir);
 }
 class MedialOR extends Medial {
-  characters = this.makeCharacters(ToneLetterTags.or);
+  characters = this.makeCharacters(TonalLetterTags.or);
 }
 
 class MaterLectionisM extends MaterLectionis {
-  characters = this.makeCharacters(ToneLetterTags.m);
+  characters = this.makeCharacters(TonalLetterTags.m);
 }
 class MaterLectionisN extends MaterLectionis {
-  characters = this.makeCharacters(ToneLetterTags.n);
+  characters = this.makeCharacters(TonalLetterTags.n);
 }
 class MaterLectionisNG extends MaterLectionis {
-  characters = this.makeCharacters(ToneLetterTags.ng);
+  characters = this.makeCharacters(TonalLetterTags.ng);
 }
 
 class InitialC extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.c);
+  characters = this.makeCharacters(TonalLetterTags.c);
 }
 class InitialCH extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.ch);
+  characters = this.makeCharacters(TonalLetterTags.ch);
 }
 class InitialJ extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.j);
+  characters = this.makeCharacters(TonalLetterTags.j);
 }
 class InitialL extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.l);
+  characters = this.makeCharacters(TonalLetterTags.l);
 }
 class InitialS extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.s);
+  characters = this.makeCharacters(TonalLetterTags.s);
 }
 class InitialPH extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.ph);
+  characters = this.makeCharacters(TonalLetterTags.ph);
 }
 class InitialTH extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.th);
+  characters = this.makeCharacters(TonalLetterTags.th);
 }
 class InitialKH extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.kh);
+  characters = this.makeCharacters(TonalLetterTags.kh);
 }
 
 class InitialH extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.h);
+  characters = this.makeCharacters(TonalLetterTags.h);
 }
 
 class InitialP extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.p);
+  characters = this.makeCharacters(TonalLetterTags.p);
 }
 class InitialT extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.t);
+  characters = this.makeCharacters(TonalLetterTags.t);
 }
 class InitialK extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.k);
+  characters = this.makeCharacters(TonalLetterTags.k);
 }
 class InitialB extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.b);
+  characters = this.makeCharacters(TonalLetterTags.b);
 }
 class InitialG extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.g);
+  characters = this.makeCharacters(TonalLetterTags.g);
 }
 
 class InitialM extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.m);
+  characters = this.makeCharacters(TonalLetterTags.m);
 }
 class InitialN extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.n);
+  characters = this.makeCharacters(TonalLetterTags.n);
 }
 class InitialNG extends Initial {
-  characters = this.makeCharacters(ToneLetterTags.ng);
+  characters = this.makeCharacters(TonalLetterTags.ng);
 }
 
 export class ZeroTonal extends Tonal {
@@ -322,120 +322,120 @@ export class ZeroTonal extends Tonal {
 }
 
 export class FreeTonalZ extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.z);
+  characters = this.makeCharacters(TonalLetterTags.z);
 }
 export class FreeTonalW extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.w);
+  characters = this.makeCharacters(TonalLetterTags.w);
 }
 export class FreeTonalF extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.f);
+  characters = this.makeCharacters(TonalLetterTags.f);
 }
 export class FreeTonalXX extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.xx);
+  characters = this.makeCharacters(TonalLetterTags.xx);
 }
 export class FreeTonalZX extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.zx);
+  characters = this.makeCharacters(TonalLetterTags.zx);
 }
 
 export class FreeTonalX extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.x);
+  characters = this.makeCharacters(TonalLetterTags.x);
 }
 export class FreeTonalY extends FreeTonal {
-  characters = this.makeCharacters(ToneLetterTags.y);
+  characters = this.makeCharacters(TonalLetterTags.y);
 }
 
 export class CheckedTonalW extends CheckedTonal {
-  characters = this.makeCharacters(ToneLetterTags.w);
+  characters = this.makeCharacters(TonalLetterTags.w);
 }
 export class CheckedTonalF extends CheckedTonal {
-  characters = this.makeCharacters(ToneLetterTags.f);
+  characters = this.makeCharacters(TonalLetterTags.f);
 }
 
 export class CheckedTonalX extends CheckedTonal {
-  characters = this.makeCharacters(ToneLetterTags.x);
+  characters = this.makeCharacters(TonalLetterTags.x);
 }
 export class CheckedTonalY extends CheckedTonal {
-  characters = this.makeCharacters(ToneLetterTags.y);
+  characters = this.makeCharacters(TonalLetterTags.y);
 }
 
 export class FinalP extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.p);
+  characters = this.makeCharacters(TonalLetterTags.p);
 }
 export class FinalT extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.t);
+  characters = this.makeCharacters(TonalLetterTags.t);
 }
 export class FinalK extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.k);
+  characters = this.makeCharacters(TonalLetterTags.k);
 }
 export class FinalH extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.h);
+  characters = this.makeCharacters(TonalLetterTags.h);
 }
 
 export class FinalPP extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.pp);
+  characters = this.makeCharacters(TonalLetterTags.pp);
 }
 export class FinalTT extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.tt);
+  characters = this.makeCharacters(TonalLetterTags.tt);
 }
 export class FinalKK extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.kk);
+  characters = this.makeCharacters(TonalLetterTags.kk);
 }
 export class FinalHH extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.hh);
+  characters = this.makeCharacters(TonalLetterTags.hh);
 }
 
 class FinalB extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.b);
+  characters = this.makeCharacters(TonalLetterTags.b);
 }
 
 class FinalL extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.l);
+  characters = this.makeCharacters(TonalLetterTags.l);
 }
 
 class FinalG extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.g);
+  characters = this.makeCharacters(TonalLetterTags.g);
 }
 
 class FinalJ extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.j);
+  characters = this.makeCharacters(TonalLetterTags.j);
 }
 
 class FinalS extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.s);
+  characters = this.makeCharacters(TonalLetterTags.s);
 }
 
 class FinalBB extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.bb);
+  characters = this.makeCharacters(TonalLetterTags.bb);
 }
 
 class FinalLL extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.ll);
+  characters = this.makeCharacters(TonalLetterTags.ll);
 }
 
 class FinalGG extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.gg);
+  characters = this.makeCharacters(TonalLetterTags.gg);
 }
 
 class FinalJJ extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.jj);
+  characters = this.makeCharacters(TonalLetterTags.jj);
 }
 
 class FinalSS extends StopFinal {
-  characters = this.makeCharacters(ToneLetterTags.ss);
+  characters = this.makeCharacters(TonalLetterTags.ss);
 }
 
 class FinalM extends NasalFinal {
-  characters = this.makeCharacters(ToneLetterTags.m);
+  characters = this.makeCharacters(TonalLetterTags.m);
 }
 class FinalN extends NasalFinal {
-  characters = this.makeCharacters(ToneLetterTags.n);
+  characters = this.makeCharacters(TonalLetterTags.n);
 }
 class FinalNG extends NasalFinal {
-  characters = this.makeCharacters(ToneLetterTags.ng);
+  characters = this.makeCharacters(TonalLetterTags.ng);
 }
 
 class NasalizationNN extends Nasalization {
-  characters = this.makeCharacters(ToneLetterTags.nn);
+  characters = this.makeCharacters(TonalLetterTags.nn);
 }
 
 export const nasalizationsTonal = soundSequence([new NasalizationNN()]);
@@ -611,49 +611,49 @@ export const tonalPositionalSounds = new Map<
   string,
   (s: TonalSpellingTags) => Sound
 >()
-  .set(ToneLetterTags.a, psA)
-  .set(ToneLetterTags.b, psB)
-  .set(ToneLetterTags.bb, psBB)
-  .set(ToneLetterTags.c, psC)
-  .set(ToneLetterTags.ch, psCH)
-  .set(ToneLetterTags.e, psE)
-  .set(ToneLetterTags.er, psER)
-  .set(ToneLetterTags.f, psF)
-  .set(ToneLetterTags.g, psG)
-  .set(ToneLetterTags.gg, psGG)
-  .set(ToneLetterTags.h, psH)
-  .set(ToneLetterTags.hh, psHH)
-  .set(ToneLetterTags.i, psI)
-  .set(ToneLetterTags.ir, psIR)
-  .set(ToneLetterTags.j, psJ)
-  .set(ToneLetterTags.jj, psJJ)
-  .set(ToneLetterTags.k, psK)
-  .set(ToneLetterTags.kh, psKH)
-  .set(ToneLetterTags.kk, psKK)
-  .set(ToneLetterTags.l, psL)
-  .set(ToneLetterTags.ll, psLL)
-  .set(ToneLetterTags.m, psM)
-  .set(ToneLetterTags.n, psN)
-  .set(ToneLetterTags.nn, psNN)
-  .set(ToneLetterTags.ng, psNG)
-  .set(ToneLetterTags.o, psO)
-  .set(ToneLetterTags.or, psOR)
-  .set(ToneLetterTags.p, psP)
-  .set(ToneLetterTags.ph, psPH)
-  .set(ToneLetterTags.pp, psPP)
-  .set(ToneLetterTags.s, psS)
-  .set(ToneLetterTags.ss, psSS)
-  .set(ToneLetterTags.t, psT)
-  .set(ToneLetterTags.th, psTH)
-  .set(ToneLetterTags.tt, psTT)
-  .set(ToneLetterTags.u, psU)
-  .set(ToneLetterTags.ur, psUR)
-  .set(ToneLetterTags.w, psW)
-  .set(ToneLetterTags.x, psX)
-  .set(ToneLetterTags.xx, psXX)
-  .set(ToneLetterTags.y, psY)
-  .set(ToneLetterTags.z, psZ)
-  .set(ToneLetterTags.zx, psZX);
+  .set(TonalLetterTags.a, psA)
+  .set(TonalLetterTags.b, psB)
+  .set(TonalLetterTags.bb, psBB)
+  .set(TonalLetterTags.c, psC)
+  .set(TonalLetterTags.ch, psCH)
+  .set(TonalLetterTags.e, psE)
+  .set(TonalLetterTags.er, psER)
+  .set(TonalLetterTags.f, psF)
+  .set(TonalLetterTags.g, psG)
+  .set(TonalLetterTags.gg, psGG)
+  .set(TonalLetterTags.h, psH)
+  .set(TonalLetterTags.hh, psHH)
+  .set(TonalLetterTags.i, psI)
+  .set(TonalLetterTags.ir, psIR)
+  .set(TonalLetterTags.j, psJ)
+  .set(TonalLetterTags.jj, psJJ)
+  .set(TonalLetterTags.k, psK)
+  .set(TonalLetterTags.kh, psKH)
+  .set(TonalLetterTags.kk, psKK)
+  .set(TonalLetterTags.l, psL)
+  .set(TonalLetterTags.ll, psLL)
+  .set(TonalLetterTags.m, psM)
+  .set(TonalLetterTags.n, psN)
+  .set(TonalLetterTags.nn, psNN)
+  .set(TonalLetterTags.ng, psNG)
+  .set(TonalLetterTags.o, psO)
+  .set(TonalLetterTags.or, psOR)
+  .set(TonalLetterTags.p, psP)
+  .set(TonalLetterTags.ph, psPH)
+  .set(TonalLetterTags.pp, psPP)
+  .set(TonalLetterTags.s, psS)
+  .set(TonalLetterTags.ss, psSS)
+  .set(TonalLetterTags.t, psT)
+  .set(TonalLetterTags.th, psTH)
+  .set(TonalLetterTags.tt, psTT)
+  .set(TonalLetterTags.u, psU)
+  .set(TonalLetterTags.ur, psUR)
+  .set(TonalLetterTags.w, psW)
+  .set(TonalLetterTags.x, psX)
+  .set(TonalLetterTags.xx, psXX)
+  .set(TonalLetterTags.y, psY)
+  .set(TonalLetterTags.z, psZ)
+  .set(TonalLetterTags.zx, psZX);
 
 export class ZeroAllomorph extends FreeAllomorph {
   tonal = new ZeroTonal();
@@ -688,13 +688,13 @@ class AllomorphZX extends FreeAllomorph {
 }
 
 export const freeAllomorphs = new Map<string, Allomorph>()
-  .set(ToneLetterTags.f, new AllomorphF())
-  .set(ToneLetterTags.w, new AllomorphW())
-  .set(ToneLetterTags.xx, new AllomorphXX())
-  .set(ToneLetterTags.z, new AllomorphZ())
-  .set(ToneLetterTags.zx, new AllomorphZX())
-  .set(ToneLetterTags.y, new AllomorphY())
-  .set(ToneLetterTags.x, new AllomorphX());
+  .set(TonalLetterTags.f, new AllomorphF())
+  .set(TonalLetterTags.w, new AllomorphW())
+  .set(TonalLetterTags.xx, new AllomorphXX())
+  .set(TonalLetterTags.z, new AllomorphZ())
+  .set(TonalLetterTags.zx, new AllomorphZX())
+  .set(TonalLetterTags.y, new AllomorphY())
+  .set(TonalLetterTags.x, new AllomorphX());
 
 class AllomorphP extends CheckedAllomorph {
   final = new FinalP();
@@ -895,110 +895,114 @@ class AllomorphLX extends CheckedAllomorph {
 }
 
 export const checkedAllomorphs = new Map<string, Allomorph>()
-  .set(ToneLetterTags.p, new AllomorphP())
-  .set(ToneLetterTags.t, new AllomorphT())
-  .set(ToneLetterTags.k, new AllomorphK())
-  .set(ToneLetterTags.h, new AllomorphH())
-  .set(ToneLetterTags.b, new AllomorphB())
-  .set(ToneLetterTags.g, new AllomorphG())
-  .set(ToneLetterTags.j, new AllomorphJ())
-  .set(ToneLetterTags.l, new AllomorphL())
-  .set(ToneLetterTags.pp, new AllomorphPP())
-  .set(ToneLetterTags.tt, new AllomorphTT())
-  .set(ToneLetterTags.kk, new AllomorphKK())
-  .set(ToneLetterTags.hh, new AllomorphHH())
-  .set(ToneLetterTags.bb, new AllomorphBB())
-  .set(ToneLetterTags.gg, new AllomorphGG())
-  .set(ToneLetterTags.jj, new AllomorphJJ())
-  .set(ToneLetterTags.ll, new AllomorphLL())
-  .set(ToneLetterTags.ss, new AllomorphSS())
-  .set(ToneLetterTags.p + ToneLetterTags.f, new AllomorphPF())
-  .set(ToneLetterTags.t + ToneLetterTags.f, new AllomorphTF())
-  .set(ToneLetterTags.k + ToneLetterTags.f, new AllomorphKF())
-  .set(ToneLetterTags.h + ToneLetterTags.f, new AllomorphHF())
-  .set(ToneLetterTags.b + ToneLetterTags.f, new AllomorphBF())
-  .set(ToneLetterTags.g + ToneLetterTags.f, new AllomorphGF())
-  .set(ToneLetterTags.j + ToneLetterTags.f, new AllomorphJF())
-  .set(ToneLetterTags.l + ToneLetterTags.f, new AllomorphLF())
-  .set(ToneLetterTags.s + ToneLetterTags.f, new AllomorphSF())
-  .set(ToneLetterTags.h + ToneLetterTags.y, new AllomorphHY())
-  .set(ToneLetterTags.p + ToneLetterTags.w, new AllomorphPW())
-  .set(ToneLetterTags.t + ToneLetterTags.w, new AllomorphTW())
-  .set(ToneLetterTags.k + ToneLetterTags.w, new AllomorphKW())
-  .set(ToneLetterTags.h + ToneLetterTags.w, new AllomorphHW())
-  .set(ToneLetterTags.b + ToneLetterTags.w, new AllomorphBW())
-  .set(ToneLetterTags.g + ToneLetterTags.w, new AllomorphGW())
-  .set(ToneLetterTags.j + ToneLetterTags.w, new AllomorphJW())
-  .set(ToneLetterTags.l + ToneLetterTags.w, new AllomorphLW())
-  .set(ToneLetterTags.s + ToneLetterTags.w, new AllomorphSW())
-  .set(ToneLetterTags.p + ToneLetterTags.x, new AllomorphPX())
-  .set(ToneLetterTags.t + ToneLetterTags.x, new AllomorphTX())
-  .set(ToneLetterTags.k + ToneLetterTags.x, new AllomorphKX())
-  .set(ToneLetterTags.h + ToneLetterTags.x, new AllomorphHX())
-  .set(ToneLetterTags.b + ToneLetterTags.x, new AllomorphBX())
-  .set(ToneLetterTags.g + ToneLetterTags.x, new AllomorphGX())
-  .set(ToneLetterTags.l + ToneLetterTags.x, new AllomorphLX());
+  .set(TonalLetterTags.p, new AllomorphP())
+  .set(TonalLetterTags.t, new AllomorphT())
+  .set(TonalLetterTags.k, new AllomorphK())
+  .set(TonalLetterTags.h, new AllomorphH())
+  .set(TonalLetterTags.b, new AllomorphB())
+  .set(TonalLetterTags.g, new AllomorphG())
+  .set(TonalLetterTags.j, new AllomorphJ())
+  .set(TonalLetterTags.l, new AllomorphL())
+  .set(TonalLetterTags.pp, new AllomorphPP())
+  .set(TonalLetterTags.tt, new AllomorphTT())
+  .set(TonalLetterTags.kk, new AllomorphKK())
+  .set(TonalLetterTags.hh, new AllomorphHH())
+  .set(TonalLetterTags.bb, new AllomorphBB())
+  .set(TonalLetterTags.gg, new AllomorphGG())
+  .set(TonalLetterTags.jj, new AllomorphJJ())
+  .set(TonalLetterTags.ll, new AllomorphLL())
+  .set(TonalLetterTags.ss, new AllomorphSS())
+  .set(TonalLetterTags.p + TonalLetterTags.f, new AllomorphPF())
+  .set(TonalLetterTags.t + TonalLetterTags.f, new AllomorphTF())
+  .set(TonalLetterTags.k + TonalLetterTags.f, new AllomorphKF())
+  .set(TonalLetterTags.h + TonalLetterTags.f, new AllomorphHF())
+  .set(TonalLetterTags.b + TonalLetterTags.f, new AllomorphBF())
+  .set(TonalLetterTags.g + TonalLetterTags.f, new AllomorphGF())
+  .set(TonalLetterTags.j + TonalLetterTags.f, new AllomorphJF())
+  .set(TonalLetterTags.l + TonalLetterTags.f, new AllomorphLF())
+  .set(TonalLetterTags.s + TonalLetterTags.f, new AllomorphSF())
+  .set(TonalLetterTags.h + TonalLetterTags.y, new AllomorphHY())
+  .set(TonalLetterTags.p + TonalLetterTags.w, new AllomorphPW())
+  .set(TonalLetterTags.t + TonalLetterTags.w, new AllomorphTW())
+  .set(TonalLetterTags.k + TonalLetterTags.w, new AllomorphKW())
+  .set(TonalLetterTags.h + TonalLetterTags.w, new AllomorphHW())
+  .set(TonalLetterTags.b + TonalLetterTags.w, new AllomorphBW())
+  .set(TonalLetterTags.g + TonalLetterTags.w, new AllomorphGW())
+  .set(TonalLetterTags.j + TonalLetterTags.w, new AllomorphJW())
+  .set(TonalLetterTags.l + TonalLetterTags.w, new AllomorphLW())
+  .set(TonalLetterTags.s + TonalLetterTags.w, new AllomorphSW())
+  .set(TonalLetterTags.p + TonalLetterTags.x, new AllomorphPX())
+  .set(TonalLetterTags.t + TonalLetterTags.x, new AllomorphTX())
+  .set(TonalLetterTags.k + TonalLetterTags.x, new AllomorphKX())
+  .set(TonalLetterTags.h + TonalLetterTags.x, new AllomorphHX())
+  .set(TonalLetterTags.b + TonalLetterTags.x, new AllomorphBX())
+  .set(TonalLetterTags.g + TonalLetterTags.x, new AllomorphGX())
+  .set(TonalLetterTags.l + TonalLetterTags.x, new AllomorphLX());
 
 export const combinedFreeAllomorphs = new Map<string, Allomorph>()
-  .set(ToneLetterTags.w, new AllomorphW())
-  .set(ToneLetterTags.z, new AllomorphZ())
-  .set(ToneLetterTags.x, new AllomorphX())
-  .set(ToneLetterTags.y, new AllomorphY())
-  .set(ToneLetterTags.f, new AllomorphF())
-  .set(ToneLetterTags.xx, new AllomorphXX());
+  .set(TonalLetterTags.w, new AllomorphW())
+  .set(TonalLetterTags.z, new AllomorphZ())
+  .set(TonalLetterTags.x, new AllomorphX())
+  .set(TonalLetterTags.y, new AllomorphY())
+  .set(TonalLetterTags.f, new AllomorphF())
+  .set(TonalLetterTags.xx, new AllomorphXX());
 
 export const uncombinedCheckedAllomorphs = new Map<string, Allomorph>()
-  .set(ToneLetterTags.p, new AllomorphP())
-  .set(ToneLetterTags.t, new AllomorphT())
-  .set(ToneLetterTags.k, new AllomorphK())
-  .set(ToneLetterTags.h, new AllomorphH())
-  .set(ToneLetterTags.pp, new AllomorphPP())
-  .set(ToneLetterTags.tt, new AllomorphTT())
-  .set(ToneLetterTags.kk, new AllomorphKK())
-  .set(ToneLetterTags.hh, new AllomorphHH());
+  .set(TonalLetterTags.p, new AllomorphP())
+  .set(TonalLetterTags.t, new AllomorphT())
+  .set(TonalLetterTags.k, new AllomorphK())
+  .set(TonalLetterTags.h, new AllomorphH())
+  .set(TonalLetterTags.pp, new AllomorphPP())
+  .set(TonalLetterTags.tt, new AllomorphTT())
+  .set(TonalLetterTags.kk, new AllomorphKK())
+  .set(TonalLetterTags.hh, new AllomorphHH());
 
 export const combinedCheckedAllomorphs = new Map<string, Allomorph[]>()
-  .set(ToneLetterTags.p + ToneLetterTags.f, [new AllomorphPF()])
-  .set(ToneLetterTags.p + ToneLetterTags.w, [new AllomorphPW()])
-  .set(ToneLetterTags.p + ToneLetterTags.x, [new AllomorphPX()])
-  .set(ToneLetterTags.t + ToneLetterTags.f, [new AllomorphTF()])
-  .set(ToneLetterTags.t + ToneLetterTags.w, [new AllomorphTW()])
-  .set(ToneLetterTags.t + ToneLetterTags.x, [new AllomorphTX()])
-  .set(ToneLetterTags.k + ToneLetterTags.f, [new AllomorphKF()])
-  .set(ToneLetterTags.k + ToneLetterTags.w, [new AllomorphKW()])
-  .set(ToneLetterTags.k + ToneLetterTags.x, [new AllomorphKX()])
-  .set(ToneLetterTags.h + ToneLetterTags.f, [new AllomorphHF()])
-  .set(ToneLetterTags.h + ToneLetterTags.y, [new AllomorphHY()])
-  .set(ToneLetterTags.h + ToneLetterTags.w, [new AllomorphHW()])
-  .set(ToneLetterTags.h + ToneLetterTags.x, [new AllomorphHX()])
-  .set(ToneLetterTags.b + ToneLetterTags.f, [new AllomorphBF()])
-  .set(ToneLetterTags.b + ToneLetterTags.w, [new AllomorphBW()])
-  .set(ToneLetterTags.b + ToneLetterTags.x, [new AllomorphBX()])
-  .set(ToneLetterTags.g + ToneLetterTags.f, [new AllomorphGF()])
-  .set(ToneLetterTags.g + ToneLetterTags.w, [new AllomorphGW()])
-  .set(ToneLetterTags.g + ToneLetterTags.x, [new AllomorphGX()])
-  .set(ToneLetterTags.j + ToneLetterTags.f, [new AllomorphJF()])
-  .set(ToneLetterTags.j + ToneLetterTags.w, [new AllomorphJW()])
-  .set(ToneLetterTags.l + ToneLetterTags.f, [new AllomorphLF()])
-  .set(ToneLetterTags.l + ToneLetterTags.w, [new AllomorphLW()])
-  .set(ToneLetterTags.l + ToneLetterTags.x, [new AllomorphLX()])
-  .set(ToneLetterTags.s + ToneLetterTags.f, [new AllomorphSF()])
-  .set(ToneLetterTags.s + ToneLetterTags.w, [new AllomorphSW()]);
+  .set(TonalLetterTags.p + TonalLetterTags.f, [new AllomorphPF()])
+  .set(TonalLetterTags.p + TonalLetterTags.w, [new AllomorphPW()])
+  .set(TonalLetterTags.p + TonalLetterTags.x, [new AllomorphPX()])
+  .set(TonalLetterTags.t + TonalLetterTags.f, [new AllomorphTF()])
+  .set(TonalLetterTags.t + TonalLetterTags.w, [new AllomorphTW()])
+  .set(TonalLetterTags.t + TonalLetterTags.x, [new AllomorphTX()])
+  .set(TonalLetterTags.k + TonalLetterTags.f, [new AllomorphKF()])
+  .set(TonalLetterTags.k + TonalLetterTags.w, [new AllomorphKW()])
+  .set(TonalLetterTags.k + TonalLetterTags.x, [new AllomorphKX()])
+  .set(TonalLetterTags.h + TonalLetterTags.f, [new AllomorphHF()])
+  .set(TonalLetterTags.h + TonalLetterTags.y, [new AllomorphHY()])
+  .set(TonalLetterTags.h + TonalLetterTags.w, [new AllomorphHW()])
+  .set(TonalLetterTags.h + TonalLetterTags.x, [new AllomorphHX()])
+  .set(TonalLetterTags.b + TonalLetterTags.f, [new AllomorphBF()])
+  .set(TonalLetterTags.b + TonalLetterTags.w, [new AllomorphBW()])
+  .set(TonalLetterTags.b + TonalLetterTags.x, [new AllomorphBX()])
+  .set(TonalLetterTags.g + TonalLetterTags.f, [new AllomorphGF()])
+  .set(TonalLetterTags.g + TonalLetterTags.w, [new AllomorphGW()])
+  .set(TonalLetterTags.g + TonalLetterTags.x, [new AllomorphGX()])
+  .set(TonalLetterTags.j + TonalLetterTags.f, [new AllomorphJF()])
+  .set(TonalLetterTags.j + TonalLetterTags.w, [new AllomorphJW()])
+  .set(TonalLetterTags.l + TonalLetterTags.f, [new AllomorphLF()])
+  .set(TonalLetterTags.l + TonalLetterTags.w, [new AllomorphLW()])
+  .set(TonalLetterTags.l + TonalLetterTags.x, [new AllomorphLX()])
+  .set(TonalLetterTags.s + TonalLetterTags.f, [new AllomorphSF()])
+  .set(TonalLetterTags.s + TonalLetterTags.w, [new AllomorphSW()]);
 
 export const freeAllomorphUncombiningRules = new Map<string, Tonal[]>()
-  .set(ToneLetterTags.f, [new FreeTonalY()])
-  .set(ToneLetterTags.w, [new FreeTonalZ(), new FreeTonalX()])
-  .set(ToneLetterTags.xx, [
+  .set(TonalLetterTags.f, [new FreeTonalY()])
+  .set(TonalLetterTags.w, [new FreeTonalZ(), new FreeTonalX()])
+  .set(TonalLetterTags.xx, [
     new FreeTonalZ(),
     new FreeTonalF(),
     new FreeTonalX(),
   ])
-  .set(ToneLetterTags.z, [new ZeroTonal(), new FreeTonalX(), new FreeTonalF()])
-  .set(ToneLetterTags.zx, [])
-  .set(ToneLetterTags.x, [])
-  .set(ToneLetterTags.y, [new FreeTonalW()])
-  .set(ToneLetterTags.zero, [new FreeTonalY()]);
+  .set(TonalLetterTags.z, [new ZeroTonal(), new FreeTonalX(), new FreeTonalF()])
+  .set(TonalLetterTags.zx, [])
+  .set(TonalLetterTags.x, [])
+  .set(TonalLetterTags.y, [new FreeTonalW()])
+  .set(TonalLetterTags.zero, [new FreeTonalY()]);
 
 export const uncombiningRulesAy = new Map<string, Tonal[]>()
-  .set(ToneLetterTags.f, [new FreeTonalY(), new FreeTonalW()])
-  .set(ToneLetterTags.x, [new ZeroTonal(), new FreeTonalX(), new FreeTonalZ()]);
+  .set(TonalLetterTags.f, [new FreeTonalY(), new FreeTonalW()])
+  .set(TonalLetterTags.x, [
+    new ZeroTonal(),
+    new FreeTonalX(),
+    new FreeTonalZ(),
+  ]);

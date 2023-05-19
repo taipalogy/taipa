@@ -11,7 +11,7 @@ import {
   lemmatize,
   lemmatizePhrasalVerbParticle,
 } from '../unchange/lemmatizer';
-import { ToneLetterTags } from '../tonal/tonalres';
+import { TonalLetterTags } from '../tonal/tonalres';
 import { extractTones } from '../tonal/tone';
 
 export const getTokens = function (text: string) {
@@ -71,7 +71,7 @@ function isFirstCheckedTone(token: string) {
   // a final plus a first tone letter
   if (
     tone.getInflectionalEnding().length == 1 &&
-    tone.getInflectionalEnding() === ToneLetterTags.f &&
+    tone.getInflectionalEnding() === TonalLetterTags.f &&
     tone.getAllomorphicEnding().length == 2
   )
     return true;
@@ -83,7 +83,7 @@ function isSeventhTone(token: string) {
   // a seventh tone letter
   if (
     tone.getInflectionalEnding().length == 1 &&
-    tone.getInflectionalEnding() === ToneLetterTags.z
+    tone.getInflectionalEnding() === TonalLetterTags.z
   )
     return true;
   return false;
@@ -94,7 +94,7 @@ function isThirdCheckedTone(token: string) {
   // a final plus a first tone letter
   if (
     tone.getInflectionalEnding().length == 1 &&
-    tone.getInflectionalEnding() === ToneLetterTags.w &&
+    tone.getInflectionalEnding() === TonalLetterTags.w &&
     tone.getAllomorphicEnding().length == 2
   )
     return true;

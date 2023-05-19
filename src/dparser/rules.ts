@@ -10,7 +10,7 @@ import {
   baseAdverbialParticles,
   ParticlesAdverbial,
 } from './dictionary';
-import { ToneLetterTags } from '../tonal/tonalres';
+import { TonalLetterTags } from '../tonal/tonalres';
 
 export function isPhrasalVerbVp(token1: string, token2: string) {
   if (baseVerbs.includes(token1) && basePhrasalVerbParticles.includes(token2))
@@ -42,22 +42,22 @@ export const inflectedPhrasalVerbParticles = basePhrasalVerbParticles.map(
     it === ParticlesPhrasalVerb.cut
       ? inflectPhrasalVerbParticle(
           ParticlesPhrasalVerb.cut,
-          ToneLetterTags.f
+          TonalLetterTags.f
         ).getForms()[0].literal
       : it === ParticlesPhrasalVerb.khih
       ? inflectPhrasalVerbParticle(
           ParticlesPhrasalVerb.khih,
-          ToneLetterTags.f
+          TonalLetterTags.f
         ).getForms()[0].literal
       : it === ParticlesPhrasalVerb.laih
       ? inflectPhrasalVerbParticle(
           ParticlesPhrasalVerb.laih,
-          ToneLetterTags.z
+          TonalLetterTags.z
         ).getForms()[0].literal
       : it === ParticlesPhrasalVerb.tiurh
       ? inflectPhrasalVerbParticle(
           ParticlesPhrasalVerb.tiurh,
-          ToneLetterTags.w
+          TonalLetterTags.w
         ).getForms()[0].literal
       : ''
 );

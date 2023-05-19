@@ -12,7 +12,7 @@ export { graphAnalyzeHangul } from './hangul/analyzer';
 export { GraphemeMaker } from './unit';
 export {
   lowerLettersTonal,
-  ToneLetterTags,
+  TonalLetterTags as ToneLetterTags,
   TonalSpellingTags,
 } from './tonal/tonalres';
 export { KanaLetterTags } from './kana/kanares';

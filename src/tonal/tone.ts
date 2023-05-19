@@ -1,7 +1,7 @@
 import { syllabifyTonal } from '../unchange/morpheme';
 import { AlphabeticGrapheme, makeMatchedPatterns } from '../unit';
 import { graphAnalyzeTonal } from '../unchange/analyzer';
-import { TonalSpellingTags, ToneLetterTags } from './tonalres';
+import { TonalSpellingTags, TonalLetterTags } from './tonalres';
 
 /** Tone letters and stop finals of the syllables of a word. */
 export class LexicalTone {
@@ -30,12 +30,12 @@ export class LexicalTone {
         if (this.stopFinals[i].length == 1) numbers.push(4);
         else if (this.stopFinals[i].length == 2) numbers.push(8);
       } else if (this.toneLetters[i] !== '') {
-        if (this.toneLetters[i] === ToneLetterTags.f) numbers.push(1);
-        if (this.toneLetters[i] === ToneLetterTags.y) numbers.push(2);
-        if (this.toneLetters[i] === ToneLetterTags.w) numbers.push(3);
-        if (this.toneLetters[i] === ToneLetterTags.x) numbers.push(5);
-        if (this.toneLetters[i] === ToneLetterTags.z) numbers.push(7);
-        if (this.toneLetters[i] === ToneLetterTags.xx) numbers.push(9);
+        if (this.toneLetters[i] === TonalLetterTags.f) numbers.push(1);
+        if (this.toneLetters[i] === TonalLetterTags.y) numbers.push(2);
+        if (this.toneLetters[i] === TonalLetterTags.w) numbers.push(3);
+        if (this.toneLetters[i] === TonalLetterTags.x) numbers.push(5);
+        if (this.toneLetters[i] === TonalLetterTags.z) numbers.push(7);
+        if (this.toneLetters[i] === TonalLetterTags.xx) numbers.push(9);
       }
     }
     return numbers;
@@ -95,12 +95,12 @@ export function getToneEndingNumber(token: string): number {
   }
   if (tone.getInflectionalEnding() !== '') {
     // -f, -y, -w, -x, -z, -xx. -pf, -tf, -kf, -hf.
-    if (tone.getInflectionalEnding() === ToneLetterTags.f) return 1;
-    if (tone.getInflectionalEnding() === ToneLetterTags.y) return 2;
-    if (tone.getInflectionalEnding() === ToneLetterTags.w) return 3;
-    if (tone.getInflectionalEnding() === ToneLetterTags.x) return 5;
-    if (tone.getInflectionalEnding() === ToneLetterTags.z) return 7;
-    if (tone.getInflectionalEnding() === ToneLetterTags.xx) return 9;
+    if (tone.getInflectionalEnding() === TonalLetterTags.f) return 1;
+    if (tone.getInflectionalEnding() === TonalLetterTags.y) return 2;
+    if (tone.getInflectionalEnding() === TonalLetterTags.w) return 3;
+    if (tone.getInflectionalEnding() === TonalLetterTags.x) return 5;
+    if (tone.getInflectionalEnding() === TonalLetterTags.z) return 7;
+    if (tone.getInflectionalEnding() === TonalLetterTags.xx) return 9;
   }
   return -1;
 }

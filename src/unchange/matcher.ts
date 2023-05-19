@@ -1,5 +1,5 @@
 import {
-  ToneLetterTags,
+  TonalLetterTags,
   finalConsonantsBgjklpsTonal,
   freeToneLettersTonal,
   vowelsTonal,
@@ -24,8 +24,8 @@ export const smMnngHF = function (
 ) {
   if (
     nasalFinalConsonants.includes(nasalFinal) &&
-    ToneLetterTags.h === neutralFinalH &&
-    ToneLetterTags.f === firstTonalF
+    TonalLetterTags.h === neutralFinalH &&
+    TonalLetterTags.f === firstTonalF
   )
     return true;
 
@@ -43,7 +43,7 @@ export const smMnngHWx = function (
 ) {
   if (
     nasalFinalConsonants.includes(nasalFinal) &&
-    ToneLetterTags.h === neutralFinalH &&
+    TonalLetterTags.h === neutralFinalH &&
     toneLettersWx.includes(tonalWX)
   )
     return true;
@@ -56,7 +56,10 @@ export const smMnngHWx = function (
 
 // jf, lf, sf
 export const smJlsF = function (finalJls: string, firstTonalF: string) {
-  if (finalConsonantsJls.includes(finalJls) && ToneLetterTags.f === firstTonalF)
+  if (
+    finalConsonantsJls.includes(finalJls) &&
+    TonalLetterTags.f === firstTonalF
+  )
     return true;
 
   return false;
@@ -66,7 +69,7 @@ export const smJlsF = function (finalJls: string, firstTonalF: string) {
 export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
   if (
     finalConsonantsBgkp.includes(finalBgkp) &&
-    ToneLetterTags.f === firstTonalF
+    TonalLetterTags.f === firstTonalF
   )
     return true;
 
@@ -78,7 +81,7 @@ export const smBgkpF = function (finalBgkp: string, firstTonalF: string) {
 
 // jw, sw
 export const smJsW = function (finalJs: string, tonalW: string) {
-  if (finalConsonantsJs.includes(finalJs) && ToneLetterTags.w === tonalW)
+  if (finalConsonantsJs.includes(finalJs) && TonalLetterTags.w === tonalW)
     return true;
 
   return false;
@@ -86,7 +89,7 @@ export const smJsW = function (finalJs: string, tonalW: string) {
 
 // lw, lx
 export const smLWx = function (finalL: string, tonalWX: string) {
-  if (ToneLetterTags.l === finalL && toneLettersWx.includes(tonalWX))
+  if (TonalLetterTags.l === finalL && toneLettersWx.includes(tonalWX))
     return true;
 
   return false;
@@ -107,7 +110,7 @@ export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
 export const smBgjklpsF = function (finalBgjklps: string, firstToneF: string) {
   if (
     finalConsonantsBgjklpsTonal.includes(finalBgjklps) &&
-    ToneLetterTags.f === firstToneF
+    TonalLetterTags.f === firstToneF
   )
     return true;
 
@@ -134,7 +137,8 @@ export const smVowelMng = function (medial: string, finalMng: string) {
 
 // -ik
 export const smIK = function (medialI: string, medialK: string) {
-  if (medialI === ToneLetterTags.i && medialK === ToneLetterTags.k) return true;
+  if (medialI === TonalLetterTags.i && medialK === TonalLetterTags.k)
+    return true;
 
   return false;
 };

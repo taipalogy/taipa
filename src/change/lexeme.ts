@@ -13,7 +13,7 @@ import {
   FreeAllomorph,
   CheckedAllomorph,
   TonalSpellingTags,
-  ToneLetterTags,
+  TonalLetterTags,
 } from '../tonal/tonalres';
 import { TonalSoundUnchangingMorpheme } from '../unchange/morpheme';
 import { Sound } from '../unit';
@@ -201,7 +201,8 @@ export class TonalUninsertionLexeme implements Lexeme {
         s &&
         s.toString().length > 0 &&
         (s.toString() === initial ||
-          (s.toString() === ToneLetterTags.ng && initial === ToneLetterTags.g))
+          (s.toString() === TonalLetterTags.ng &&
+            initial === TonalLetterTags.g))
       ) {
         // when the preceding letter is m, the initial of this enclitic is m
         // when the preceding letter is n, the initial of this enclitic is n
@@ -371,10 +372,10 @@ export class TonalUnmutationLexeme implements Lexeme {
       this.morphemes.map((i) => new TonalSyllable(i.syllable.letters))
     );
 
-    if (following.morphemes[0].sounds[0].toString() === ToneLetterTags.g) {
+    if (following.morphemes[0].sounds[0].toString() === TonalLetterTags.g) {
       if (
-        fnls[0].toString() === ToneLetterTags.gg ||
-        fnls[0].toString() === ToneLetterTags.g
+        fnls[0].toString() === TonalLetterTags.gg ||
+        fnls[0].toString() === TonalLetterTags.g
       ) {
         wrd.replaceSyllable(
           0,
@@ -411,10 +412,10 @@ export class TonalInflectionLexemeMaker extends LexemeMaker {
 
   private checkFifth(ms: Array<TonalCombiningMorpheme>): boolean {
     for (let i = 0; i < ms.length; i++) {
-      if (ms[i] && ms[i].syllable.lastLetter.literal === ToneLetterTags.x) {
+      if (ms[i] && ms[i].syllable.lastLetter.literal === TonalLetterTags.x) {
         if (i < ms.length - 1 && !ms[ms.length - 1].isAy()) {
           if (
-            ms[ms.length - 1].syllable.lastLetter.literal === ToneLetterTags.a
+            ms[ms.length - 1].syllable.lastLetter.literal === TonalLetterTags.a
           ) {
             break;
           } else {
