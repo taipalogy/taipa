@@ -71,7 +71,7 @@ export {
   TonalDesinenceInflection,
   TonalCombiningForms,
 } from './change/metaplasm';
-
+export { TonalUncombiningForms } from './unchange/metaplasm';
 export { predict } from './tonal/prediction';
 
 export { syllableCompositions } from './tonal/soundgen';
@@ -87,3 +87,10 @@ export {
 } from './tonal/tone';
 
 export { PseudoUnicodeEncoding, ToneNumberTags } from './tonal/tonesets';
+
+// uitilities
+
+export {
+  getLetterSoundPairsSequential,
+  getLetterSoundPairsSyllabic,
+} from './util';
