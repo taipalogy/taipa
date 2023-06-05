@@ -1,7 +1,3 @@
-// client
-export { Client } from './client';
-
-// API
 export {
   tonalLemmatizationAnalyzer,
   graphAnalyzeTonal,
@@ -9,7 +5,6 @@ export {
 export { tonalInflectionAnalyzer } from './change/analyzer';
 export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
 export { graphAnalyzeHangul } from './hangul/analyzer';
-export { GraphemeMaker } from './unit';
 export {
   lowerLettersTonal,
   TonalLetterTags as ToneLetterTags,
@@ -44,8 +39,6 @@ export {
 export { insertToFollowingSyllable } from './change/inserter';
 export { mutateFinalConsonantOfPrecedingSyllable } from './change/mutator';
 
-export { TokenAnalysis } from './client';
-export { AlphabeticGrapheme } from './unit';
 export { TonalCombiningMorpheme } from './change/morpheme';
 export { TonalUncombiningMorpheme } from './unchange/morpheme';
 export { TonalInflectionLexeme, TonalInsertionLexeme } from './change/lexeme';
@@ -58,9 +51,7 @@ export {
   SerialPhraseme,
 } from './change/phraseme';
 export { KanaUncombiningMorpheme } from './kana/morpheme';
-export { TonalWord, TonalPhrase } from './unchange/unit';
 
-export { Sound, SoundGeneration } from './unit';
 export {
   initialConsonantsTonal,
   nasalizationsTonal,
@@ -88,11 +79,21 @@ export {
 
 export { PseudoUnicodeEncoding, ToneNumberTags } from './tonal/tonesets';
 
-// uitilities
+// unit
+export { AlphabeticGrapheme } from './unit';
+export { GraphemeMaker } from './unit';
+export { Sound, SoundGeneration } from './unit';
 
+export { TonalWord, TonalPhrase } from './unchange/unit';
+
+// client
+export { Client, TokenAnalysis } from './client';
+
+// uitilities
 export {
   getLetterSoundPairsSequential,
   getLetterSoundPairsSyllabic,
   analyzeIntoSequence,
   analyzeIntoSyllables,
+  getUncombiningForms,
 } from './util';
