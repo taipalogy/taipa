@@ -93,4 +93,6 @@ export { PseudoUnicodeEncoding, ToneNumberTags } from './tonal/tonesets';
 export {
   getLetterSoundPairsSequential,
   getLetterSoundPairsSyllabic,
+  analyzeIntoSequence,
+  analyzeIntoSyllables,
 } from './util';
