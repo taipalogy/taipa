@@ -7,7 +7,7 @@ export { kanaLemmatizationAnalyzer, graphAnalyzeKana } from './kana/analyzer';
 export { graphAnalyzeHangul } from './hangul/analyzer';
 export {
   lowerLettersTonal,
-  TonalLetterTags as ToneLetterTags,
+  TonalLetterTags,
   TonalSpellingTags,
 } from './tonal/tonalres';
 export { KanaLetterTags } from './kana/kanares';
