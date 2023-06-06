@@ -96,4 +96,6 @@ export {
   analyzeIntoSequence,
   analyzeIntoSyllables,
   getUncombiningForms,
+  getLemmas,
+  pairsToString,
 } from './util';
