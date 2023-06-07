@@ -98,6 +98,7 @@ export enum TonalLetterTags {
 
   zero = 'zero',
 
+  ar = 'ar',
   er = 'er',
   ir = 'ir',
   or = 'or',
@@ -135,6 +136,7 @@ export class TonalLetters extends Letters {
 
 export const lowerLettersTonal = new TonalLetters([
   TonalLetterTags.a,
+  TonalLetterTags.ar,
   TonalLetterTags.e,
   TonalLetterTags.i,
   TonalLetterTags.o,
@@ -241,6 +243,9 @@ class MedialU extends Medial {
 }
 class MedialUR extends Medial {
   characters = this.makeCharacters(TonalLetterTags.ur);
+}
+class MedialAR extends Medial {
+  characters = this.makeCharacters(TonalLetterTags.ar);
 }
 class MedialER extends Medial {
   characters = this.makeCharacters(TonalLetterTags.er);
@@ -458,6 +463,7 @@ export const vowelsTonal = soundSequence([
   new MedialO(),
   new MedialU(),
   new MedialUR(),
+  new MedialAR(),
   new MedialIR(),
   new MedialOR(),
   new MedialER(),
@@ -552,6 +558,7 @@ function positionalSounds(sounds: Sound[]) {
 }
 
 const psA = positionalSounds([new MedialA()]);
+const psAR = positionalSounds([new MedialAR()]);
 const psB = positionalSounds([new InitialB(), new FinalB()]);
 const psBB = positionalSounds([new FinalBB()]);
 const psC = positionalSounds([new InitialC()]);
@@ -612,6 +619,7 @@ export const tonalPositionalSounds = new Map<
   (s: TonalSpellingTags) => Sound
 >()
   .set(TonalLetterTags.a, psA)
+  .set(TonalLetterTags.ar, psAR)
   .set(TonalLetterTags.b, psB)
   .set(TonalLetterTags.bb, psBB)
   .set(TonalLetterTags.c, psC)

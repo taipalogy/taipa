@@ -142,7 +142,7 @@ describe('Taiwanese kana testing, vowels', () => {
     expect(ta6.blockSequences[0]).toEqual('オオ');
   });
 
-  const ta7 = cli.processTonal('or');
+  const ta7 = cli.processTonal('er');
   test('taikanas', () => {
     expect(ta7.blockSequences[0]).toEqual('オ̅オ̅');
   });
@@ -273,7 +273,7 @@ describe('Taiwanese kana testing, replication of kana vowels', () => {
 describe('Taiwanese kana testing, small form', () => {
   const cli = new Client();
 
-  const ta1 = cli.processTonal('gore');
+  const ta1 = cli.processTonal('gere');
   test('taikanas, small form of vowels', () => {
     expect(ta1.blockSequences[0]).toEqual('ゴォ̅エ');
   });
@@ -305,12 +305,12 @@ describe('Taiwanese kana testing, small form', () => {
     expect(ta6.blockSequences[0]).toEqual('ク' + '\u{0323}' + 'ァヌ⎛');
   });
   /*
-  const ta7 = cli.processTonal('orh');
+  const ta7 = cli.processTonal('erh');
   test('taikanas, small form of vowels', () => {
     expect(ta7.blockSequences[0]).toEqual('オ̅ォ̅⤆');
   });
 
-  const ta8 = cli.processTonal('borh');
+  const ta8 = cli.processTonal('berh');
   test('taikanas, small form of vowels', () => {
     expect(ta8.blockSequences[0]).toEqual('ボォ̅⤆');
   });

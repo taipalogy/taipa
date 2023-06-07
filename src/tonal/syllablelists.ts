@@ -29,56 +29,54 @@ const toBeVerified = [
 
     'len', 'liakk', 'lirey',
 
+    // syllabic headwords
+    'luai',
+
     'mah', 'mol',
 
     'na', 'niw', 'nuaiw',
 
     'ngihh', 'nguiy',
     
-    'uehh',
+    'oh', 
 
-    'penw',
-    
-    'phitt',
+    'pann', 'pihh', 'pirt', 'penw', 'phitt',
 
     'sauhh', 'sokk',
 
     'thuehh', 'thom', 'thomz', 'tiangy', 'tionny', 'tom',
 
-
-    'pann', 'pihh', 'pirt',
-
-    // syllabic headwords
-    'luai',
-
     'tirinn',
+
+    'uehh',
+
 ]
 
 // prettier-ignore
 const addonSyllables = [
     'ainn', 'ainny', 'ainnx', 'anny', 'aunn', 'aunny', 'aunnz',
 
-    'borh', 'borhh', 'borx', 'bory', 'borz',
+    'berh', 'berhh', 'berx', 'bery', 'berz',
 
-    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cor', 'corh', 'corw', 'corx', 'cory', 'corz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'cuanny', 'cuannw', 'cuannz', 'cuinn', 'cuinny', 'cuinnw',
+    'cainn', 'cainny', 'cainnw', 'cainnx', 'cannh', 'cennh', 'cennx', 'cennz', 'cennhh', 'cer', 'cerh', 'cerw', 'cerx', 'cery', 'cerz', 'cinnw', 'cinnh', 'cinnz', 'cir', 'cirinn', 'cirinny', 'cirw', 'ciry', 'cirx', 'cuanny', 'cuannw', 'cuannz', 'cuinn', 'cuinny', 'cuinnw',
 
-    'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'chor', 'choreh', 'chorehh', 'chorew', 'chorex', 'chorez', 'chorh', 'chorhh', 'chorw', 'chorz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
+    'chainn', 'chainnw', 'chainnx', 'channw', 'channx', 'chennx', 'cher', 'chereh', 'cherehh', 'cherew', 'cherex', 'cherez', 'cherh', 'cherhh', 'cherw', 'cherz', 'chir', 'chirinny', 'chirinnx', 'chirm', 'chirw', 'chiry', 'chirx', 'chirz', 'chiunnx', 'chm', 'chuinn', 'chuinny', 'chuinnw', 'chuinnx', 'chuinnz',
 
-    'tainny', 'tainnw', 'tainnx', 'tainnz', 'tainnhh', 'tenny', 'tennx', 'torex', 'torey', 'torez', 'torh', 'torhh', 'torw', 'tory', 'torz', 'tiann', 'tiannw', 'tinnh', 'tinnw', 'tir', 'tirinnw', 'tirinnz', 'tirw', 'tirx', 'tirz', 'tuanny', 'tuinny', 'tuinnw', 'tuinnx', 'tuinnz',
+    'tainny', 'tainnw', 'tainnx', 'tainnz', 'tainnhh', 'tenny', 'tennx', 'terex', 'terey', 'terez', 'terh', 'terhh', 'terw', 'tery', 'terz', 'tiann', 'tiannw', 'tinnh', 'tinnw', 'tir', 'tirinnw', 'tirinnz', 'tirw', 'tirx', 'tirz', 'tuanny', 'tuinny', 'tuinnw', 'tuinnx', 'tuinnz',
 
-    'enny', 'ennh', 'ennz', 'ennhh', 'or', 'ore', 'orehh', 'orex', 'orey', 'orez', 'orh', 'orw', 'orx', 'orz',
+    'enny', 'ennh', 'ennz', 'ennhh', 'er', 'ere', 'erehh', 'erex', 'erey', 'erez', 'erh', 'erw', 'erx', 'erz',
 
-    'goreh', 'gorehh', 'gorhh', 'gorex', 'gorez', 'gorx', 'giauh', 'girnx', 'girnz', 'girt', 'girx', 'giry', 'girz',
+    'gereh', 'gerehh', 'gerhh', 'gerex', 'gerez', 'gerx', 'giauh', 'girnx', 'girnz', 'girt', 'girx', 'giry', 'girz',
 	
-    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'hor', 'horez', 'horw', 'horx', 'hory', 'horz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'huainnh', 'huannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
+    'hainny', 'hainnh', 'hainnz', 'hann', 'hannhh', 'henny', 'hennz', 'hennhh', 'her', 'herez', 'herw', 'herx', 'hery', 'herz', 'haunn', 'haunny', 'haunnw', 'haunnh', 'haunnx', 'haunnhh', 'hinnh', 'hinnx', 'hir', 'hirinnx', 'hirinnz', 'hirny', 'hirnz', 'hirw', 'hirx', 'hiry', 'hirtt', 'hirk', 'hiunny', 'hiunnw', 'hiunnz', 'hmhh', 'hmz', 'hngw', 'huainnh', 'huannw', 'honnz', 'hop', 'huinn', 'huinnh', 'huinnx', 'huinnz',
 
     'ionn', 'innh', 'innhh', 'ir', 'irinnx', 'irn', 'irny', 'irpp', 'irw', 'irx', 'iry', 'irz',
 
-    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jiry', 'jirx', 'jorx',
+    'jiaunny', 'jiaunnw', 'jiaunnx', 'jinny', 'jiry', 'jirx', 'jerx',
 	
-	'khannx', 'khainnh', 'khainnw', 'khaunnhh', 'khennh', 'khennx', 'khor', 'khore', 'khoreh', 'khorew', 'khorw', 'khorh', 'khorx', 'khiann', 'khiannw', 'khinn', 'khir', 'khirnx', 'khirny', 'khirw', 'khngz', 'khuainn', 'khuainnw', 'khonny', 'khuinnw',
+	'khannx', 'khainnh', 'khainnw', 'khaunnhh', 'khennh', 'khennx', 'kher', 'khere', 'khereh', 'kherew', 'kherw', 'kherh', 'kherx', 'khiann', 'khiannw', 'khinn', 'khir', 'khirnx', 'khirny', 'khirw', 'khngz', 'khuainn', 'khuainnw', 'khonny', 'khuinnw',
 
-    'lorehh', 'lorex', 'lorh', 'lorx', 'liry', 'lirx', 'lirz', 'lngh', 
+    'lerehh', 'lerex', 'lerh', 'lerx', 'liry', 'lirx', 'lirz', 'lngh', 
 
     'maix', 'mih', 'mihh', 'mng', 'muaix', 'muaiz', 'muex', 'muez', 'mui', 'muiz',
 
@@ -88,45 +86,45 @@ const addonSyllables = [
 
     'uainn', 'uainnh', 'uainnz', 'uainnhh', 'uannx',
 
-    'phainn', 'phennw', 'phor', 'phorhh', 'phorw', 'phorx', 'phorz', 'phinny', 'phinnhh', 'phng', 'phngy', 'phngw', 'phngz', 'phnghh', 'phuannx', 'phonn', 'phuinn', 'phuinnw', 'phuinnx',
+    'phainn', 'phennw', 'pher', 'pherhh', 'pherw', 'pherx', 'pherz', 'phinny', 'phinnhh', 'phng', 'phngy', 'phngw', 'phngz', 'phnghh', 'phuannx', 'phonn', 'phuinn', 'phuinnw', 'phuinnx',
 	
-	'kainny', 'kainnw', 'kainnz', 'kannhh', 'kore', 'koreh', 'korew', 'korex', 'korey', 'korez', 'korh', 'korw', 'kory', 'kiaunnhh', 'kinny', 'kinnh', 'kinnhh', 'kir', 'kirinn', 'kirinny', 'kirn', 'kirnw', 'kirnz', 'kirw', 'kirx', 'kiry', 'kirz', 'kiunnx', 'kiunnz', 'knghh', 'kuainnw', 'kuainnx', 'kuainnhh', 'kuannw', 'kuenny', 'konnz', 'kuinn', 'kuinny', 'kuinnw',
+	'kainny', 'kainnw', 'kainnz', 'kannhh', 'kere', 'kereh', 'kerew', 'kerex', 'kerey', 'kerez', 'kerh', 'kerw', 'kery', 'kiaunnhh', 'kinny', 'kinnh', 'kinnhh', 'kir', 'kirinn', 'kirinny', 'kirn', 'kirnw', 'kirnz', 'kirw', 'kirx', 'kiry', 'kirz', 'kiunnx', 'kiunnz', 'knghh', 'kuainnw', 'kuainnx', 'kuainnhh', 'kuannw', 'kuenny', 'konnz', 'kuinn', 'kuinny', 'kuinnw',
 
-    'sainn', 'sanny', 'sannw', 'sannx', 'sore', 'sorew', 'sorew', 'sorh', 'sorhh', 'sorx', 'sorw', 'sorz', 'sinnx', 'sinnhh', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm', 'smw', 'smh', 'snghh', 'suainn', 'suainnh', 'suainnx', 'suainnhh', 'suenn', 'suenny', 'suennw', 'suinn', 'suinny', 'suinnw',
+    'sainn', 'sanny', 'sannw', 'sannx', 'sere', 'serew', 'serew', 'serh', 'serhh', 'serx', 'serw', 'serz', 'sinnx', 'sinnhh', 'sir', 'sirinn', 'sirm', 'sirp', 'sirw', 'sirx', 'siry', 'sirz', 'sm', 'smw', 'smh', 'snghh', 'suainn', 'suainnh', 'suainnx', 'suainnhh', 'suenn', 'suenny', 'suennw', 'suinn', 'suinny', 'suinnw',
 
-    'thainnw', 'thainnz', 'thannx', 'thannz', 'thenn', 'thor', 'thore', 'thorehh', 'thorew', 'thorhh', 'thorw', 'thinnw', 'thinnx', 'thirx', 'thiry', 'thiunny', 'thuannx', 'thuinnw', 'thuinnx', 'thuinnz',
+    'thainnw', 'thainnz', 'thannx', 'thannz', 'thenn', 'ther', 'there', 'therehh', 'therew', 'therhh', 'therw', 'thinnw', 'thinnx', 'thirx', 'thiry', 'thiunny', 'thuannx', 'thuinnw', 'thuinnx', 'thuinnz',
 
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
-    'painny', 'painnx', 'painnz', 'por', 'pory', 'porw', 'porx', 'porz', 'pinnx', 'pngx', 'puinn', 'puinny', 'puinnx', 'puinnz',
+    'painny', 'painnx', 'painnz', 'per', 'pery', 'perw', 'perx', 'perz', 'pinnx', 'pngx', 'puinn', 'puinny', 'puinnx', 'puinnz',
 ]
 
 // prettier-ignore
 const syllabicHeadwords = [
     // TODO: some syllabic forms may not be found in Taiwanese but present in dictionary as headwords. need to further check
-    'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'bor', 'bang',
+    'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'ber', 'bang',
 
-    'cua', 'cuai', 'cuang', 'cuat', 'com', 'cor', 'core',
+    'cua', 'cuai', 'cuang', 'cuat', 'com', 'cer', 'cere',
 
-    'chap', 'chiak', 'chio', 'chir', 'chiri', 'chuai', 'chuang', 'chue', 'chom', 'chor', 'chore',
+    'chap', 'chiak', 'chio', 'chir', 'chiri', 'chuai', 'chuang', 'chue', 'chom', 'cher', 'chere',
 
-    'tiang', 'tim', 'tio', 'tir', 'tiri', 'tiur', 'tua', 'tue', 'tom', 'tor', 'tore', 'tut',
+    'tiang', 'tim', 'tio', 'tir', 'tiri', 'tiur', 'tua', 'tue', 'tom', 'ter', 'tere', 'tut',
     
     'er',
 
-    'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gek', 'gia', 'giak', 'giam', 'giau', 'gim', 'giong', 'gip', 'gir', 'giri' /* 'ngiriy' burz phinnwim huzhurz. */, 'girn', 'go', 'gue', 'gok', 'guat', 'gong', 'gor', 'gore', 'gur', 'gut',
+    'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gek', 'gia', 'giak', 'giam', 'giau', 'gim', 'giong', 'gip', 'gir', 'giri' /* 'ngiriy' burz phinnwim huzhurz. */, 'girn', 'go', 'gue', 'gok', 'guat', 'gong', 'ger', 'gere', 'gur', 'gut',
 
-    'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'huai', 'huang', 'hop', 'hor', 'hore',
+    'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'huai', 'huang', 'hop', 'her', 'here',
 
     'iak', 'io' /* for ionn */, 'ir', 'iri', 'irn',
 
-    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jor', 'jun', 'jur', 'jiam', 'jiang', 'jiongy', 'jim',
+    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jer', 'jun', 'jur', 'jiam', 'jiang', 'jiongy', 'jim',
 
-    'kom', 'kop', 'kore' /* dupes in addon */, 'kork' /* for khork, after kore, before gua */,
+    'kom', 'kop', 'kere' /* dupes in addon */, 'kerk' /* for kherk, after kere, befere gua */,
 
-    'khir', 'khor', 'kuak',
+    'khir', 'kher', 'kuak',
 
-    'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'lua', 'luat', 'lue', 'lop', 'lom', 'lor', 'lore', 'liong',
+    'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'lua', 'luat', 'lue', 'lop', 'lom', 'ler', 'lere', 'liong',
 
     'm', 'mia', 'min', 'muai', 'mue', 'mu',
 
@@ -134,19 +132,19 @@ const syllabicHeadwords = [
 
     'nga',
 
-    'or', 'ore',
+    'er', 'ere',
 
-    'ken', 'ket', 'kiak', 'kiang', 'kio', 'kip', 'kir', 'kiri', 'kirn', 'kit', 'kiur', 'kor',
+    'ken', 'ket', 'kiak', 'kiang', 'kio', 'kip', 'kir', 'kiri', 'kirn', 'kit', 'kiur', 'ker',
     
     'ua', 'uak',
 
-    'phor',
+    'pher',
     
-    'sir', 'siri', 'sop', 'sor', 'sore', 'sio' /* for sionn */,
+    'sir', 'siri', 'sop', 'ser', 'sere', 'sio' /* for sionn */,
 
-    'tha', 'thia', 'thor',
+    'tha', 'thia', 'ther',
 
-    'pia', 'piang', 'piri', 'pua', 'por',
+    'pia', 'piang', 'piri', 'pua', 'per',
 ]
 
 // prettier-ignore
@@ -179,7 +177,7 @@ const missingSyllables = [
 
     'ngh',
 
-    'oh', 'op',
+    'op',
 
     'sangh', 'sennh', 'sienh', 'sinnh',
 
