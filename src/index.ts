@@ -63,7 +63,6 @@ export {
   TonalCombiningForms,
 } from './change/metaplasm';
 export { TonalUncombiningForms } from './unchange/metaplasm';
-export { predict } from './tonal/prediction';
 
 export { syllableCompositions } from './tonal/soundgen';
 

@@ -96,7 +96,7 @@ export class AlphabeticLetter extends Letter {
   }
 
   protected concat() {
-    this.literal = this.characters.map(x => (x ? x.character : '')).join('');
+    this.literal = this.characters.map((x) => (x ? x.character : '')).join('');
   }
 }
 
@@ -243,7 +243,7 @@ export class GraphemeMaker {
 
         // let candidates = this.list.filter(
         const candidates = this.listOfLetters.filter(
-          l => l.characters[0].character === characters[i].character
+          (l) => l.characters[0].character === characters[i].character
         );
 
         const ms = this.getMatchedSequence(
@@ -336,9 +336,10 @@ export const soundSequence = function (sounds: Sound[]) {
 };
 
 // spelling generation
-export const sgPipe = (
-  ...fns: Array<(sg: SoundGeneration) => SoundGeneration>
-) => (x: SoundGeneration) => fns.reduce((v, f) => f(v), x);
+export const sgPipe =
+  (...fns: Array<(sg: SoundGeneration) => SoundGeneration>) =>
+  (x: SoundGeneration) =>
+    fns.reduce((v, f) => f(v), x);
 
 /** Sound generation for syllable compositions. */
 export class SoundGeneration {
@@ -348,11 +349,6 @@ export class SoundGeneration {
   matchedSounds: Sound[] = new Array<Sound>();
   /** flag for syllable matching process. */
   matching: boolean = true;
-  /** Will populate `predictions` when set to true. */
-  predictive: boolean = false;
-  /** Predicted sounds */
-  predictions: Array<Sound[]> = new Array();
-  predictSandhiFinalConsonant: boolean = false;
 }
 
 export class MatchedPattern {
@@ -406,7 +402,7 @@ export class Syllable {
   }
 
   protected concat() {
-    this.literal = this.letters.map(x => (x ? x.literal : '')).join('');
+    this.literal = this.letters.map((x) => (x ? x.literal : '')).join('');
   }
 }
 

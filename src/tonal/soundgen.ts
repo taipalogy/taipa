@@ -45,8 +45,6 @@ function nasalFinalConsonant(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(nasalFinalConsonantsTonal.sounds);
   }
 
   return sg;
@@ -72,13 +70,6 @@ function vowel(sg: SoundGeneration) {
       if (matches == 0) sg.matching = false;
       break;
     }
-  }
-
-  if (toBePredicted) {
-    if (sg.predictive && sg.letters.length > 0) {
-      sg.predictions.push(vowelsTonal.sounds);
-    }
-    sg.matching = true;
   }
 
   return sg;
@@ -111,8 +102,6 @@ function nasalization(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(nasalizationsTonal.sounds);
   }
 
   return sg;
@@ -131,8 +120,6 @@ function freeToneLetter(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(freeToneLettersTonal.sounds);
   }
 
   return sg;
@@ -155,8 +142,6 @@ function stopFinalConsonant(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(finalConsonantsPtkhppttkkhhTonal.sounds);
   }
 
   return sg;
@@ -177,8 +162,6 @@ function neutralFinalConsonant(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(neutralFinalConsonantsTonal.sounds);
   }
 
   return sg;
@@ -197,8 +180,6 @@ function checkedToneLetter(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (sg.letters.length == sg.matchedSounds.length && sg.predictive)
-      sg.predictions.push(checkedToneLettersTonal.sounds);
   }
 
   return sg;
@@ -222,14 +203,6 @@ function sandhiFinalConsonant(sg: SoundGeneration) {
     }
   } else {
     sg.matching = false;
-    if (
-      sg.letters.length == sg.matchedSounds.length &&
-      sg.predictive &&
-      sg.predictSandhiFinalConsonant
-    ) {
-      sg.predictions.push(finalConsonantsBgjklpsTonal.sounds);
-      sg.predictions.push(finalConsonantsBBggkkllppssTonal.sounds);
-    }
   }
 
   return sg;
