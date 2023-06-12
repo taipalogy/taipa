@@ -97,4 +97,6 @@ export {
   getUncombiningForms,
   getLemmas,
   pairsToString,
+  getStem,
+  getDesinence,
 } from './util';
