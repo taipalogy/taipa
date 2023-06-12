@@ -5,7 +5,7 @@ import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 import { TonalUncombiningForms } from './unchange/metaplasm';
 import { lemmatize } from './unchange/lemmatizer';
 
-/** Turn sounds into a sequence of letter-soundName pairs */
+/** Turn sounds into a sequence of letter-sound pairs */
 export function getLetterSoundPairsSequential(
   soundSeqs: Sound[][]
 ): [string, string][] {
@@ -16,7 +16,7 @@ export function getLetterSoundPairsSequential(
     .map((v) => [v.toString(), v.name]);
 }
 
-/** Turn sounds into syllabic letter-soundName pairs */
+/** Turn sounds into syllabic letter-sound pairs. */
 export function getLetterSoundPairsSyllabic(
   soundSeqs: Sound[][]
 ): [string, string][][] {
@@ -25,7 +25,7 @@ export function getLetterSoundPairsSyllabic(
   });
 }
 
-/** Analyze an input into syllabic letter-sound-pair */
+/** Analyze an input into syllabic letter-sound pairs. */
 export function analyzeIntoSyllables(input: string) {
   if (!input) return [];
   const cli = new Client();
@@ -42,7 +42,7 @@ export function analyzeIntoSyllables(input: string) {
   return pairs;
 }
 
-/** Analyze an input into a sequence of letter-sound-pairs */
+/** Analyze an input into a sequence of letter-sound-pairs. */
 export function analyzeIntoSequence(input: string) {
   if (!input) return [];
   const cli = new Client();
@@ -59,7 +59,7 @@ export function analyzeIntoSequence(input: string) {
   return pairs;
 }
 
-/** Get the uncombining forms of a syllable */
+/** Get the uncombining forms of a syllable. */
 export function getUncombiningForms(syl: string) {
   if (!syl) return [];
   const cli = new Client();
@@ -72,16 +72,35 @@ export function getUncombiningForms(syl: string) {
     .flatMap((mrfm) => mrfm.getForms().map((frm) => frm.literal));
 }
 
+/** Get lemmas of the word. */
 export function getLemmas(input: string) {
   if (!input) return [];
   const lxLemma = lemmatize(input);
   return lxLemma.getLemmas().map((x) => x.literal);
 }
 
+/** Join the letters in each tuple. */
 export function pairsToString(pairs: [string, string][]) {
   const chars: string[] = pairs.map((pair: [string, string]) => {
     return pair[0];
   });
   const syl = chars.join('');
   return syl;
+}
+
+/** Get the stem of a word. */
+export function getStem(input: string) {
+  const lxLemma = lemmatize(input);
+  const literal = lxLemma.word.literal;
+  const ending = lxLemma.getInflectionalEnding();
+  if (literal.length - ending.length != 0) {
+    return literal.substring(0, literal.length - ending.length);
+  }
+  return '';
+}
+
+/** Get the inflectional suffix of a word. */
+export function getDesinence(input: string) {
+  const lxLemma = lemmatize(input);
+  return lxLemma.getInflectionalEnding();
 }
