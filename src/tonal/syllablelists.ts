@@ -37,8 +37,6 @@ const toBeVerified = [
     'na', 'niw', 'nuaiw',
 
     'ngihh', 'nguiy',
-    
-    'oh', 
 
     'pann', 'pihh', 'pirt', 'penw', 'phitt',
 
@@ -97,6 +95,11 @@ const addonSyllables = [
     'uihh', 'uinn', 'uinny', 'uinnx', 'uinnz',
 
     'painny', 'painnx', 'painnz', 'per', 'pery', 'perw', 'perx', 'perz', 'pinnx', 'pngx', 'puinn', 'puinny', 'puinnx', 'puinnz',
+]
+
+// prettier-ignore
+const syllabicLoanwords = [    
+    'oh',
 ]
 
 // prettier-ignore
