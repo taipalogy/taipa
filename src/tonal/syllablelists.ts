@@ -121,7 +121,7 @@ const syllabicHeadwords = [
 
     'iak', 'io' /* for ionn */, 'ir', 'iri', 'irn',
 
-    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jer', 'jun', 'jur', 'jiam', 'jiang', 'jiongy', 'jim',
+    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jer', 'jun', 'jur' /* poj, taikana */, 'jiam', 'jiang', 'jiongy', 'jim',
 
     'kom', 'kop', 'kere' /* dupes in addon */, 'kerk' /* for kherk, after kere, befere gua */,
 
@@ -184,7 +184,7 @@ const missingSyllables = [
 
     'sangh', 'sennh', 'sienh', 'sinnh',
 
-    'tenz',
+    'tenz', 'thomx'
 ]
 
 // prettier-ignore
