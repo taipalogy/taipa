@@ -121,9 +121,9 @@ const syllabicHeadwords = [
 
     'iak', 'io' /* for ionn */, 'ir', 'iri', 'irn',
 
-    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jo', 'jua', 'jue', 'jer', 'jun', 'jur' /* poj, taikana */, 'jiam', 'jiang', 'jiongy', 'jim',
+    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jua', 'jue', 'jer', 'jun', 'jiam', 'jiang', 'jiongy', 'jim',
 
-    'kom', 'kop', 'kere' /* dupes in addon */, 'kerk' /* for kherk, after kere, befere gua */,
+    'kom', 'kop', 'kere' /* dupes in addon */, 'kerk' /* for kherk, after kere, befere gua. see khek. */,
 
     'khir', 'kher', 'kuak',
 

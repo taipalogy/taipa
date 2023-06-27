@@ -869,10 +869,6 @@ const mappingInitialJ = new Map<string, string[] | undefined>()
     hiraganaKatakana.get(KanaLetterTags.j + KanaLetterTags.i)
   )
   .set(
-    TonalLetterTags.o,
-    hiraganaKatakana.get(KanaLetterTags.z + KanaLetterTags.o)
-  )
-  .set(
     TonalLetterTags.er,
     hiraganaKatakana.get(KanaLetterTags.z + KanaLetterTags.o)
   )
@@ -883,12 +879,7 @@ const mappingInitialJ = new Map<string, string[] | undefined>()
   .set(
     TonalLetterTags.ir,
     hiraganaKatakana.get(KanaLetterTags.z + KanaLetterTags.u)
-  )
-  .set(
-    TonalLetterTags.ur,
-    hiraganaKatakana.get(KanaLetterTags.z + KanaLetterTags.u)
   );
-
 const mappingInitialK = new Map<string, string[] | undefined>()
   .set(
     TonalLetterTags.a,
