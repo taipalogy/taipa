@@ -166,7 +166,7 @@ const missingSyllables = [
 
     'geh', 'gehh', 'gih', 'giuh', 'gimw', 'gipp', 'gueh', 'gunx', 'guny',
 
-    'homz', 'huainn',
+    'homz', 'huainn', 'huih',
 
     'jih', 'jip',
 
