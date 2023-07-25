@@ -79,47 +79,9 @@ The app can also be executed by running the following command line, after you ha
 
 `node bin/app.js`
 
-### appkana
+### develop branch
 
-After the command line `npm run build` is executed, you can run the following command line to launch the kana application:
-
-`node lib/appkana.js`
-
-You can then input Roman alphabet,
-
-`katakana`
-
-and hit the enter key, the app will then print the kanas. For example:
-
-`かたかな`
-
-and
-
-`カタカナ`
-
-will be printed on the screen.
-
-### appbpmf
-
-When you have your own spelling dictionary available, you can implement an app to spell your word.
-
-Assuming you have an spelling dictionary stored at
-
-`../dictionaries/bopomofo.json`.
-
-You can run the following command line to lauch the app:
-
-`> node lib/appbpmf.js ../dictionaries/bopomofo.json`
-
-Enter Roman letters on your keyboard and get the bopomofo in return. Enter
-
-`ka`
-
-and get
-
-`ㄍㄚ`
-
-Go to github repo `https://github.com/taipalogy/dictionaries` to find out more dictionary examples.
+The latest changes are available on develop branch.
 
 ## Repos
 

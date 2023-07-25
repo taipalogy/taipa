@@ -98,8 +98,14 @@ const addonSyllables = [
 ]
 
 // prettier-ignore
-const syllabicLoanwords = [    
+const syllabicLoanwords = [
+    'jiny',
+
+    'meny',
+    
     'oh',
+
+    'phop',
 ]
 
 // prettier-ignore
