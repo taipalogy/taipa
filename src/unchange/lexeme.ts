@@ -23,7 +23,7 @@ export class TonalLemmatizationLexeme extends Lexeme {
     super();
 
     if (morphemes.length == 0) this.word = new TonalWord([]);
-    else this.word = new TonalWord(morphemes.map(x => x.syllable));
+    else this.word = new TonalWord(morphemes.map((x) => x.syllable));
 
     if (morphemes.length > 0) {
       if (morphemes[morphemes.length - 1].allomorph) {

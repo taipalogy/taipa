@@ -97,6 +97,8 @@ export const smLWx = function (finalL: string, tonalWX: string) {
 
 // bw, bx, gw, gx, kw, kx, pw, px
 export const smBgkpWx = function (finalBgkp: string, tonalWX: string) {
+  // used by syllabifyTonal for morpheme
+  // check out the collections.ts for lexemes
   if (
     finalConsonantsBgkp.includes(finalBgkp) &&
     toneLettersWx.includes(tonalWX)

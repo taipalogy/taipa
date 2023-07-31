@@ -31,6 +31,7 @@ import {
   fourthToEighthFinalConsonants,
   finalConsonantsForTransfix,
   finalConsonantsForBgjlsFw,
+  finalConsonantsForBglX,
 } from '../tonal/collections';
 import { isInSyllableTable } from '../tonal/syllablelists';
 import { smMngFywxz } from './matcher';
@@ -45,9 +46,10 @@ export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
     syllable: TonalSyllable,
     toneLetter: string
   ): TonalSyllable[] {
-    const fnlsOfLemma = finalConsonantsForBgjlsFw.get(
-      syllable.lastLetter.literal + toneLetter
-    );
+    const fnlsOfLemma =
+      finalConsonantsForBgjlsFw.get(syllable.lastLetter.literal + toneLetter) ||
+      finalConsonantsForBglX.get(syllable.lastLetter.literal + toneLetter);
+
     if (fnlsOfLemma) {
       const clones = fnlsOfLemma.map((it) => {
         const clone: TonalSyllable = Object.create(syllable);

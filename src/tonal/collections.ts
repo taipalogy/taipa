@@ -209,9 +209,15 @@ export const finalConsonantsForBgjlsbbggjjllss = new Map<
   .set(TonalLetterTags.ll, [TonalLetterTags.tt])
   .set(TonalLetterTags.ss, [TonalLetterTags.tt]);
 
+// followed by ay. from 5th to 8th
+export const finalConsonantsForBglX = new Map<string, TonalLetterTags[]>()
+  .set(TonalLetterTags.b + TonalLetterTags.x, [TonalLetterTags.pp])
+  .set(TonalLetterTags.g + TonalLetterTags.x, [TonalLetterTags.kk])
+  .set(TonalLetterTags.l + TonalLetterTags.x, [TonalLetterTags.tt]);
+
+// followed by a syllable. from 1st to 4th. from 3rd to 8th
 export const finalConsonantsForBgjlsFw = new Map<string, TonalLetterTags[]>()
   // both keys and values are for the has method
-  // the has method will not reach the below pairs
   .set(TonalLetterTags.b + TonalLetterTags.f, [
     TonalLetterTags.p,
     TonalLetterTags.t,

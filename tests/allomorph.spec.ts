@@ -173,6 +173,7 @@ describe('Allomorph testing', () => {
     expect(ms20[0].allomorph.toString()).toEqual('gw');
   });
 
+  // patwjitt. chitwjitt
   const ms21 = tonalInflectionAnalyzer.morphAnalyze(
     'pajwjitt',
     new TonalCombiningForms()
