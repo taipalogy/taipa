@@ -143,6 +143,23 @@ describe('Uncombining form testing, ay', () => {
   });
 });
 
+describe('Lemma testing, voiced final consonant followed by ay', () => {
+  const lm1 = lemmatize('calx');
+  test('check the uncombining form', () => {
+    expect(lm1.getLemmas().map((x) => x.literal)[0]).toEqual('catt');
+  });
+
+  const lm2 = lemmatize('cagx');
+  test('check the uncombining form', () => {
+    expect(lm2.getLemmas().map((x) => x.literal)[0]).toEqual('cakk');
+  });
+
+  const lm3 = lemmatize('abx');
+  test('check the uncombining form', () => {
+    expect(lm3.getLemmas().map((x) => x.literal)[0]).toEqual('app');
+  });
+});
+
 describe('Uncombining form testing, ietf or ietw to ek or ekk', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze(
     'pietfkew',
