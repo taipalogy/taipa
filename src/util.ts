@@ -4,6 +4,7 @@ import { TonalWord } from './unchange/unit';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 import { TonalUncombiningForms } from './unchange/metaplasm';
 import { lemmatize } from './unchange/lemmatizer';
+import { basicSyllables, isInSyllableTable } from './tonal/syllablelists';
 
 /** Turn sounds into a sequence of letter-sound pairs */
 export function getLetterSoundPairsSequential(
@@ -103,4 +104,37 @@ export function getStem(input: string) {
 export function getDesinence(input: string) {
   const lxLemma = lemmatize(input);
   return lxLemma.getInflectionalEnding();
+}
+
+/** Get the syllables whose substring is matched. */
+export function getSyllablesSub(input: string) {
+  const syls: string[] = [];
+  basicSyllables.forEach((it) => {
+    if (it.includes(input)) {
+      syls.push(it);
+    }
+  });
+  return syls;
+}
+
+/** Get the syllables that matched from the beginning. */
+export function getSyllablesInitial(input: string) {
+  const syls: string[] = [];
+  basicSyllables.forEach((it) => {
+    if (it.startsWith(input, 0)) {
+      syls.push(it);
+    }
+  });
+  return syls;
+}
+
+/** Get the syllables that matched to the end. */
+export function getSyllablesEnd(input: string) {
+  const syls: string[] = [];
+  basicSyllables.forEach((it) => {
+    if (it.endsWith(input, it.length)) {
+      syls.push(it);
+    }
+  });
+  return syls;
 }

@@ -188,6 +188,8 @@ const missingSyllables = [
 
     'op',
 
+    'pheh',
+
     'sangh', 'sennh', 'sienh', 'sinnh',
 
     'tenz', 'thomx'
