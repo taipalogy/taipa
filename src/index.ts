@@ -99,7 +99,7 @@ export {
   pairsToString,
   getStem,
   getDesinence,
-  getSyllablesSub,
-  getSyllablesInitial,
+  getSyllablesInclude,
+  getSyllablesStart,
   getSyllablesEnd,
 } from './util';

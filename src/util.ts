@@ -107,7 +107,7 @@ export function getDesinence(input: string) {
 }
 
 /** Get the syllables whose substring is matched. */
-export function getSyllablesSub(input: string) {
+export function getSyllablesInclude(input: string) {
   const syls: string[] = [];
   basicSyllables.forEach((it) => {
     if (it.includes(input)) {
@@ -118,7 +118,7 @@ export function getSyllablesSub(input: string) {
 }
 
 /** Get the syllables that matched from the beginning. */
-export function getSyllablesInitial(input: string) {
+export function getSyllablesStart(input: string) {
   const syls: string[] = [];
   basicSyllables.forEach((it) => {
     if (it.startsWith(input, 0)) {
