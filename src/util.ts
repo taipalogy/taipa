@@ -4,7 +4,13 @@ import { TonalWord } from './unchange/unit';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 import { TonalUncombiningForms } from './unchange/metaplasm';
 import { lemmatize } from './unchange/lemmatizer';
-import { basicSyllables, isInSyllableTable } from './tonal/syllablelists';
+import {
+  basicSyllables,
+  isInSyllableTable,
+  missingSyllables,
+  syllabicHeadwords,
+  syllabicLoanwords,
+} from './tonal/syllablelists';
 
 /** Turn sounds into a sequence of letter-sound pairs */
 export function getLetterSoundPairsSequential(
@@ -114,6 +120,21 @@ export function getSyllablesInclude(input: string) {
       syls.push(it);
     }
   });
+  missingSyllables.forEach((it) => {
+    if (it.includes(input)) {
+      syls.push(it);
+    }
+  });
+  syllabicHeadwords.forEach((it) => {
+    if (it.includes(input)) {
+      syls.push(it);
+    }
+  });
+  syllabicLoanwords.forEach((it) => {
+    if (it.includes(input)) {
+      syls.push(it);
+    }
+  });
   return syls;
 }
 
@@ -125,6 +146,21 @@ export function getSyllablesStart(input: string) {
       syls.push(it);
     }
   });
+  missingSyllables.forEach((it) => {
+    if (it.startsWith(input, 0)) {
+      syls.push(it);
+    }
+  });
+  syllabicHeadwords.forEach((it) => {
+    if (it.startsWith(input, 0)) {
+      syls.push(it);
+    }
+  });
+  syllabicLoanwords.forEach((it) => {
+    if (it.startsWith(input, 0)) {
+      syls.push(it);
+    }
+  });
   return syls;
 }
 
@@ -132,6 +168,21 @@ export function getSyllablesStart(input: string) {
 export function getSyllablesEnd(input: string) {
   const syls: string[] = [];
   basicSyllables.forEach((it) => {
+    if (it.endsWith(input, it.length)) {
+      syls.push(it);
+    }
+  });
+  missingSyllables.forEach((it) => {
+    if (it.endsWith(input, it.length)) {
+      syls.push(it);
+    }
+  });
+  syllabicHeadwords.forEach((it) => {
+    if (it.endsWith(input, it.length)) {
+      syls.push(it);
+    }
+  });
+  syllabicLoanwords.forEach((it) => {
     if (it.endsWith(input, it.length)) {
       syls.push(it);
     }

@@ -2,6 +2,7 @@ export function isInSyllableTable(syllable: string) {
   if (basicSyllables.includes(syllable)) return true;
   if (missingSyllables.includes(syllable)) return true;
   if (syllabicHeadwords.includes(syllable)) return true;
+  if (syllabicLoanwords.includes(syllable)) return true;
   return false;
 }
 
@@ -25,7 +26,7 @@ const toBeVerified = [
 
     'kirinnx', 'kuinnx', 'kanh', 'kih', 'kngh', 'kuaix', 'kuaiz', 'kuakk', 'kuangz', 'kuatt',
 
-    'khanx', 'khangx', 'khihh', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
+    'khanx', 'khangx', 'khihh', 'khiaih', 'khiauhh', 'khomz', 'khop', 'khirh', 'khuannx',
 
     'len', 'liakk', 'lirey',
 
@@ -98,7 +99,7 @@ const addonSyllables = [
 ]
 
 // prettier-ignore
-const syllabicLoanwords = [
+export const syllabicLoanwords = [
     'jiny',
 
     'meny',
@@ -109,7 +110,7 @@ const syllabicLoanwords = [
 ]
 
 // prettier-ignore
-const syllabicHeadwords = [
+export const syllabicHeadwords = [
     // TODO: some syllabic forms may not be found in Taiwanese but present in dictionary as headwords. need to further check
     'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'ber', 'bang',
 
@@ -157,7 +158,7 @@ const syllabicHeadwords = [
 ]
 
 // prettier-ignore
-const missingSyllables = [    
+export const missingSyllables = [    
     'aih',
     
     'buaix', 'buaiw', 'bueh', 'burh',
@@ -176,7 +177,7 @@ const missingSyllables = [
 
     'jih', 'jip',
 
-	'khiaih', 'khuih',
+	'khuih',
 
     'laih', 'langh', 'lip', 'lih', 'lit', 'litt', 'luaih', 'luaiz', 'lueh',
 
