@@ -6,9 +6,7 @@ import { TonalUncombiningForms } from './unchange/metaplasm';
 import { lemmatize } from './unchange/lemmatizer';
 import {
   basicSyllables,
-  isInSyllableTable,
   missingSyllables,
-  syllabicHeadwords,
   syllabicLoanwords,
 } from './tonal/syllablelists';
 
@@ -125,11 +123,6 @@ export function getSyllablesInclude(input: string) {
       syls.push(it);
     }
   });
-  syllabicHeadwords.forEach((it) => {
-    if (it.includes(input)) {
-      syls.push(it);
-    }
-  });
   syllabicLoanwords.forEach((it) => {
     if (it.includes(input)) {
       syls.push(it);
@@ -151,11 +144,6 @@ export function getSyllablesStart(input: string) {
       syls.push(it);
     }
   });
-  syllabicHeadwords.forEach((it) => {
-    if (it.startsWith(input, 0)) {
-      syls.push(it);
-    }
-  });
   syllabicLoanwords.forEach((it) => {
     if (it.startsWith(input, 0)) {
       syls.push(it);
@@ -173,11 +161,6 @@ export function getSyllablesEnd(input: string) {
     }
   });
   missingSyllables.forEach((it) => {
-    if (it.endsWith(input, it.length)) {
-      syls.push(it);
-    }
-  });
-  syllabicHeadwords.forEach((it) => {
     if (it.endsWith(input, it.length)) {
       syls.push(it);
     }

@@ -34,7 +34,6 @@ import {
   finalConsonantsForBglX,
 } from '../tonal/collections';
 import { isInSyllableTable } from '../tonal/syllablelists';
-import { smMngFywxz } from './matcher';
 
 /** Returns the uncombining forms of a syllable. */
 export class TonalUncombiningForms extends TonalUncombiningMetaplasm {
