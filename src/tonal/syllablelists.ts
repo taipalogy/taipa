@@ -3,6 +3,7 @@ export function isInSyllableTable(syllable: string) {
   if (missingSyllables.includes(syllable)) return true;
   if (syllabicHeadwords.includes(syllable)) return true;
   if (syllabicLoanwords.includes(syllable)) return true;
+  //   if (addonSyllables.includes(syllable)) return true;
   return false;
 }
 
@@ -22,7 +23,7 @@ const toBeVerified = [
 
     'jex', 'jek', 'jing', 'jirnx', 'jirtt', 'juany',
 
-    'ker', 'kerh',
+    'ker', 'kerh', 'ket',
 
     'kirinnx', 'kuinnx', 'kanh', 'kih', 'kngh', 'kuaix', 'kuaiz', 'kuakk', 'kuangz', 'kuatt',
 
@@ -110,7 +111,7 @@ export const syllabicLoanwords = [
 ]
 
 // prettier-ignore
-export const syllabicHeadwords = [
+const redundantSyllabicHeadwords = [
     // TODO: some syllabic forms may not be found in Taiwanese but present in dictionary as headwords. need to further check
     'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'ber', 'bang',
 
@@ -119,18 +120,16 @@ export const syllabicHeadwords = [
     'chap', 'chiak', 'chio', 'chir', 'chiri', 'chuai', 'chuang', 'chue', 'chom', 'cher', 'chere',
 
     'tiang', 'tim', 'tio', 'tir', 'tiri', 'tiur', 'tua', 'tue', 'tom', 'ter', 'tere', 'tut',
-    
-    'er',
 
     'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gek', 'gia', 'giak', 'giam', 'giau', 'gim', 'giong', 'gip', 'gir', 'giri' /* 'ngiriy' burz phinnwim huzhurz. */, 'girn', 'go', 'gue', 'gok', 'guat', 'gong', 'ger', 'gere', 'gur', 'gut',
 
     'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'huai', 'huang', 'hop', 'her', 'here',
 
-    'iak', 'io' /* for ionn */, 'ir', 'iri', 'irn',
+    'iak', 'io' /* for ionn */, 'iri', 'irn',
 
     'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jua', 'jue', 'jer', 'jun', 'jiam', 'jiang', 'jiongy', 'jim',
 
-    'kom', 'kop', 'kere' /* dupes in addon */, 'kerk' /* for kherk, after kere, befere gua. see khek. */,
+    'kom', 'kop',  'kerk' /* for kherk, after kere, befere gua. see khek. */,
 
     'khir', 'kher', 'kuak',
 
@@ -142,9 +141,9 @@ export const syllabicHeadwords = [
 
     'nga',
 
-    'er', 'ere',
+    'ere',
 
-    'ken', 'ket', 'kiak', 'kiang', 'kio', 'kip', 'kir', 'kiri', 'kirn', 'kit', 'kiur', 'ker',
+    'ken', 'kiak', 'kiang', 'kio', 'kip', 'kir', 'kiri', 'kirn', 'kit', 'kiur', 'ker',
     
     'ua', 'uak',
 
@@ -155,6 +154,13 @@ export const syllabicHeadwords = [
     'tha', 'thia', 'ther',
 
     'pia', 'piang', 'piri', 'pua', 'per',
+];
+
+// prettier-ignore
+export const syllabicHeadwords = [
+    'er',
+
+    'ir', 
 ]
 
 // prettier-ignore
@@ -177,7 +183,7 @@ export const missingSyllables = [
 
     'jih', 'jip',
 
-	'khuih',
+	'kenz', 'khuih',
 
     'laih', 'langh', 'lip', 'lih', 'lit', 'litt', 'luaih', 'luaiz', 'lueh',
 
@@ -193,7 +199,7 @@ export const missingSyllables = [
 
     'sangh', 'sennh', 'sienh', 'sinnh',
 
-    'tenz', 'thomx'
+    'tenz', 'thomx', 'tueh'
 ]
 
 // prettier-ignore
