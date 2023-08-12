@@ -3,7 +3,7 @@ export function isInSyllableTable(syllable: string) {
   if (missingSyllables.includes(syllable)) return true;
   if (syllabicHeadwords.includes(syllable)) return true;
   if (syllabicLoanwords.includes(syllable)) return true;
-  //   if (addonSyllables.includes(syllable)) return true;
+  if (addonSyllables.includes(syllable)) return true;
   return false;
 }
 
@@ -110,58 +110,7 @@ export const syllabicLoanwords = [
     'phop',
 ]
 
-// prettier-ignore
-const redundantSyllabicHeadwords = [
-    // TODO: some syllabic forms may not be found in Taiwanese but present in dictionary as headwords. need to further check
-    'bam', 'bek', 'biet', 'bit', 'biu', 'bua', 'buat', 'ber', 'bang',
-
-    'cua', 'cuai', 'cuang', 'cuat', 'com', 'cer', 'cere',
-
-    'chap', 'chiak', 'chio', 'chir', 'chiri', 'chuai', 'chuang', 'chue', 'chom', 'cher', 'chere',
-
-    'tiang', 'tim', 'tio', 'tir', 'tiri', 'tiur', 'tua', 'tue', 'tom', 'ter', 'tere', 'tut',
-
-    'ga', 'gai', 'gak', 'gang', 'gap', 'ge', 'gek', 'gia', 'giak', 'giam', 'giau', 'gim', 'giong', 'gip', 'gir', 'giri' /* 'ngiriy' burz phinnwim huzhurz. */, 'girn', 'go', 'gue', 'gok', 'guat', 'gong', 'ger', 'gere', 'gur', 'gut',
-
-    'hiap', 'hio', 'hir', 'hiri', 'hirn', 'hiur', 'huai', 'huang', 'hop', 'her', 'here',
-
-    'iak', 'io' /* for ionn */, 'iri', 'irn',
-
-    'je', 'jek', 'jing', 'jiak', 'jiap', 'jien', 'jiet', 'jin', 'jir', 'jit', 'jiu', 'jiur', 'jua', 'jue', 'jer', 'jun', 'jiam', 'jiang', 'jiongy', 'jim',
-
-    'kom', 'kop',  'kerk' /* for kherk, after kere, befere gua. see khek. */,
-
-    'khir', 'kher', 'kuak',
-
-    'lai', 'lat', 'lia', 'liak', 'liet', 'lir', 'lo', 'lua', 'luat', 'lue', 'lop', 'lom', 'ler', 'lere', 'liong',
-
-    'm', 'mia', 'min', 'muai', 'mue', 'mu',
-
-    'nio', 'no', 'nui',
-
-    'nga',
-
-    'ere',
-
-    'ken', 'kiak', 'kiang', 'kio', 'kip', 'kir', 'kiri', 'kirn', 'kit', 'kiur', 'ker',
-    
-    'ua', 'uak',
-
-    'pher',
-    
-    'sir', 'siri', 'sop', 'ser', 'sere', 'sio' /* for sionn */,
-
-    'tha', 'thia', 'ther',
-
-    'pia', 'piang', 'piri', 'pua', 'per',
-];
-
-// prettier-ignore
-export const syllabicHeadwords = [
-    'er',
-
-    'ir', 
-]
+export const syllabicHeadwords = ['er', 'ir'];
 
 // prettier-ignore
 export const missingSyllables = [    

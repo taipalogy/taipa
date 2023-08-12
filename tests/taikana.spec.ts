@@ -288,12 +288,12 @@ describe('Taiwanese kana testing, small form', () => {
   test('taikanas', () => {
     expect(ta3.blockSequences[0]).toEqual('ウァイ');
   });
-  /*
+
   const ta4 = cli.processTonal('sirinn');
   test('taikanas', () => {
     expect(ta4.blockSequences[0]).toEqual('㋜ゥ̅イ');
   });
-*/
+
   const ta5 = cli.processTonal('khiurh');
   test('taikanas', () => {
     expect(ta5.blockSequences[0]).toEqual(
@@ -598,8 +598,7 @@ describe('Taiwanese kana testing, sandhi final', () => {
 
   const ta9 = cli.processTonal('chinghwngueh');
   test('taikanas', () => {
-    // ngueh: ク゚ェ⤆
-    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝');
+    expect(ta9.blockSequences[0]).toEqual('チ' + '\u{1b167}' + '⎝ク゚ェ⤆');
   });
 });
 
