@@ -7,8 +7,7 @@ export enum HangulLetterTags {
   o = 'o',
   u = 'u',
 
-  oe = 'oe',
-
+  ar = 'ar',
   er = 'er',
   ir = 'ir',
   ur = 'ur',
@@ -32,24 +31,15 @@ export enum HangulLetterTags {
   l = 'l',
   s = 's',
 
-  w = 'w',
-  y = 'y',
-
   m = 'm',
   n = 'n',
-
   ng = 'ng',
 
-  gs = 'gs',
-  nj = 'nj',
-  lg = 'lg',
-  lm = 'lm',
-  lb = 'lb',
-  ls = 'ls',
-  lt = 'lt',
-  lp = 'lp',
-  lh = 'lh',
-  bs = 'bs',
+  kk = 'kk',
+  tt = 'tt',
+  pp = 'pp',
+  ss = 'ss',
+  jj = 'jj',
 }
 
 export class LettersOfHangul extends Letters {}
@@ -60,7 +50,7 @@ export const lowerLettersHangul = new LettersOfHangul([
   HangulLetterTags.i,
   HangulLetterTags.o,
   HangulLetterTags.u,
-  HangulLetterTags.oe,
+  HangulLetterTags.ar,
   HangulLetterTags.er,
   HangulLetterTags.ir,
   HangulLetterTags.ur,
@@ -79,26 +69,18 @@ export const lowerLettersHangul = new LettersOfHangul([
   HangulLetterTags.h,
   HangulLetterTags.l,
   HangulLetterTags.s,
-  HangulLetterTags.w,
-  HangulLetterTags.y,
   HangulLetterTags.m,
   HangulLetterTags.n,
   HangulLetterTags.ng,
-  HangulLetterTags.gs,
-  HangulLetterTags.nj,
-  HangulLetterTags.lg,
-  HangulLetterTags.lm,
-  HangulLetterTags.lb,
-  HangulLetterTags.ls,
-  HangulLetterTags.lt,
-  HangulLetterTags.lp,
-  HangulLetterTags.lh,
-  HangulLetterTags.bs,
+  HangulLetterTags.kk,
+  HangulLetterTags.tt,
+  HangulLetterTags.pp,
+  HangulLetterTags.ss,
+  HangulLetterTags.jj,
 ]);
 
 export enum HangulSpellingTags {
   initialConsonant = 'initialConsonant',
-  semivowel = 'semivowel',
   vowel = 'vowel',
   finalConsonant = 'finalConsonant',
 }
