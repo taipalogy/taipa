@@ -65,100 +65,100 @@ describe('Ay testing', () => {
   });
 });
 
-describe('Ay testing, uncombining form of the first syllable', () => {
+describe('Ay testing, standalone form of the first syllable', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('kexay');
 
-  test('check the uncombining form', () => {
-    expect(ta1.uncombiningSequences[0]).toContain('ke');
+  test('check the standalone form', () => {
+    expect(ta1.standaloneSequences[0]).toContain('ke');
   });
 
   const ta2 = cli.processTonal('buefay');
 
-  test('check the uncombining form', () => {
-    expect(ta2.uncombiningSequences[0]).toContain('buey');
+  test('check the standalone form', () => {
+    expect(ta2.standaloneSequences[0]).toContain('buey');
   });
 
   const ta3 = cli.processTonal('paufay');
 
-  test('check the uncombining form', () => {
-    expect(ta3.uncombiningSequences[0]).toContain('pauw');
+  test('check the standalone form', () => {
+    expect(ta3.standaloneSequences[0]).toContain('pauw');
   });
 
   const ta4 = cli.processTonal('koxay');
 
-  test('check the uncombining form', () => {
-    expect(ta4.uncombiningSequences[0]).toContain('kox');
+  test('check the standalone form', () => {
+    expect(ta4.standaloneSequences[0]).toContain('kox');
   });
 
   const ta5 = cli.processTonal('huexay');
 
-  test('check the uncombining form', () => {
-    expect(ta5.uncombiningSequences[0]).toContain('huez');
+  test('check the standalone form', () => {
+    expect(ta5.standaloneSequences[0]).toContain('huez');
   });
 
   const ta6 = cli.processTonal('mihfay');
 
-  test('check the uncombining form', () => {
-    expect(ta6.uncombiningSequences[0]).toContain('mih');
+  test('check the standalone form', () => {
+    expect(ta6.standaloneSequences[0]).toContain('mih');
   });
 
   const ta7 = cli.processTonal('hiurhxay');
 
-  test('check the uncombining form', () => {
-    expect(ta7.uncombiningSequences[0]).toContain('hiurhh');
+  test('check the standalone form', () => {
+    expect(ta7.standaloneSequences[0]).toContain('hiurhh');
   });
 
   const ta8 = cli.processTonal('citfay');
 
-  test('check the uncombining form', () => {
-    expect(ta8.uncombiningSequences[0]).toContain('cit');
+  test('check the standalone form', () => {
+    expect(ta8.standaloneSequences[0]).toContain('cit');
   });
 
   const ta9 = cli.processTonal('puatxay');
 
-  test('check the uncombining form', () => {
-    expect(ta9.uncombiningSequences[0]).toContain('puatt');
+  test('check the standalone form', () => {
+    expect(ta9.standaloneSequences[0]).toContain('puatt');
   });
 
   const ta10 = cli.processTonal('kakfay');
 
-  test('check the uncombining form', () => {
-    expect(ta10.uncombiningSequences[0]).toContain('kak');
+  test('check the standalone form', () => {
+    expect(ta10.standaloneSequences[0]).toContain('kak');
   });
 
   const ta11 = cli.processTonal('lokxay');
 
-  test('check the uncombining form', () => {
-    expect(ta11.uncombiningSequences[0]).toContain('lokk');
+  test('check the standalone form', () => {
+    expect(ta11.standaloneSequences[0]).toContain('lokk');
   });
 
   const ta12 = cli.processTonal('kapfay');
 
-  test('check the uncombining form', () => {
-    expect(ta12.uncombiningSequences[0]).toContain('kap');
+  test('check the standalone form', () => {
+    expect(ta12.standaloneSequences[0]).toContain('kap');
   });
 
   const ta13 = cli.processTonal('liapxay');
 
-  test('check the uncombining form', () => {
-    expect(ta13.uncombiningSequences[0]).toContain('liapp');
+  test('check the standalone form', () => {
+    expect(ta13.standaloneSequences[0]).toContain('liapp');
   });
 });
 
-describe('NGay testing, uncombining form of the first syllable', () => {
+describe('NGay testing, standalone form of the first syllable', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('putfngay');
 
-  test('check the uncombining form', () => {
-    expect(ta1.uncombiningSequences[0]).toContain('put');
+  test('check the standalone form', () => {
+    expect(ta1.standaloneSequences[0]).toContain('put');
   });
 
   const ta2 = cli.processTonal('angzchuay');
 
-  test('check the uncombining form', () => {
-    expect(ta2.uncombiningSequences[0]).toContain('angx');
+  test('check the standalone form', () => {
+    expect(ta2.standaloneSequences[0]).toContain('angx');
   });
 });

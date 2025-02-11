@@ -20,7 +20,7 @@ describe('Utility testing', () => {
   });
 
   const frms = getStandaloneForms('o');
-  test('check the uncombining forms', () => {
+  test('check the standalone forms', () => {
     expect(frms[0]).toEqual('oy');
   });
 
@@ -44,7 +44,7 @@ describe('Utility testing, empty input', () => {
   });
 
   const frms = getStandaloneForms(inputEmpty);
-  test('check the uncombining forms', () => {
+  test('check the standalone forms', () => {
     expect(frms.length).toEqual(0);
   });
 
@@ -68,7 +68,7 @@ describe('Utility testing, undefined input', () => {
   });
 
   const frms = getStandaloneForms(inputUnd);
-  test('check the uncombining forms', () => {
+  test('check the standalone forms', () => {
     expect(frms.length).toEqual(0);
   });
 

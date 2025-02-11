@@ -50,7 +50,7 @@ export {
   TonalCompoundPhraseme,
   SerialPhraseme,
 } from './change/phraseme';
-export { KanaUncombiningMorpheme } from './kana/morpheme';
+export { KanaStandaloneMorpheme } from './kana/morpheme';
 
 export {
   initialConsonantsTonal,

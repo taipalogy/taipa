@@ -1,5 +1,5 @@
 import { GraphemeMaker, AlphabeticGrapheme } from '../unit';
-import { KanaUncombiningMorphemeMaker } from './morpheme';
+import { KanaStandaloneMorphemeMaker } from './morpheme';
 import { lowerLettersKana } from './kanares';
 import { KanaCombiningMetaplasm } from '../metaplasm';
 
@@ -26,7 +26,7 @@ export const kanaLemmatizationAnalyzer = {
       graphemes = graphAnalyzeKana(x);
     }
 
-    const mm = new KanaUncombiningMorphemeMaker(new KanaCombiningMetaplasm());
+    const mm = new KanaStandaloneMorphemeMaker(new KanaCombiningMetaplasm());
     return mm.makeMorphemes(graphemes);
   },
 };

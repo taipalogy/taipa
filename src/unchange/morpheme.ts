@@ -200,7 +200,7 @@ export function syllabifyTonal(
             )
           ) {
             // this combining form is not present in the pool,
-            // but its uncombining forms are. e.g. aw.
+            // but its standalone forms are. e.g. aw.
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
             break;
@@ -208,7 +208,7 @@ export function syllabifyTonal(
         }
         if (matched.length > 0 && matchedLtrs.length > 0) break;
       } else {
-        // no uncombining forms for this combining form. e.g. ax.
+        // no standalone forms for this combining form. e.g. ax.
         matched = '';
         matchedLtrs = [];
       }
@@ -240,7 +240,7 @@ export function syllabifyTonal(
           // console.log(literal,gotFinalConsonants,isUncombingFormPresent,literalWithoutFinal,`i: ${i}`);
 
           if (isUncombingFormPresent) {
-            // at least one uncombining form is present
+            // at least one standalone form is present
             matched = literal;
             Object.assign(matchedLtrs, ltrs);
           }
@@ -259,7 +259,7 @@ export function syllabifyTonal(
         const tnls = !rules ? [] : rules;
         for (let t of tnls) {
           // append second tonal letter
-          // check the uncombining forms
+          // check the standalone forms
           if (isInSyllableTable(literal + t.toString())) {
             // if the free first tone's lemma is included
             matched = literal;
@@ -339,7 +339,7 @@ export function syllabifyTonal(
   return mp;
 }
 
-/** A syllable and its uncombining forms. */
+/** A syllable and its standalone forms. */
 export class TonalStandaloneMorpheme extends Morpheme {
   syllable: TonalSyllable;
   allomorph: Allomorph;
@@ -748,7 +748,7 @@ export class TonalStandaloneMorphemeMaker extends MorphemeMaker {
           );
         } else {
           // no sandhi letters to unchange, just pass an empty array
-          // the metaplasm argument would be either TonalUncombiningForms or PhrasalVerbParticleUncombining
+          // the metaplasm argument would be either TonalStandaloneForms or PhrasalVerbParticleStandalone
           morphemes.push(this.createMorpheme(ptn, this.metaplasm));
         }
         if (this.isEkEkkAvailableForRimeIet(matched) && i < matched.length - 1) {

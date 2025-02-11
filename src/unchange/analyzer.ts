@@ -55,7 +55,7 @@ export const tonalLemmatizationAnalyzer = {
 
   /**
    * Analyzes a string or morphemes into a lexeme. Lexical analysis.
-   * @param x A string or uncombining morphemes
+   * @param x A string or standalone morphemes
    */
   lexAnalyze(
     x: string | Array<TonalStandaloneMorpheme>

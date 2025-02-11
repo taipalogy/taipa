@@ -3,7 +3,7 @@ import { checkNumberOfLetterTonal, getBlocks } from './tonal/init';
 import { tonalLemmatizationAnalyzer } from './unchange/analyzer';
 
 import { getKanaBlocks, checkNumberOfLettersKana } from './kana/init';
-import { KanaUncombiningMorpheme } from './kana/morpheme';
+import { KanaStandaloneMorpheme } from './kana/morpheme';
 import { kanaLemmatizationAnalyzer } from './kana/analyzer';
 import { Word, Sound } from './unit';
 import { TonalStandaloneForms } from './unchange/metaplasm';
@@ -22,8 +22,8 @@ export class TokenAnalysis {
    * Multiple sequences could be pushed into this array of strings.
    */
   blockSequences: string[] = [];
-  /** Uncombining form sequences. */
-  uncombiningSequences: Array<string[]> = new Array(); // uncombining form sequences
+  /** Standalone form sequences. */
+  standaloneSequences: Array<string[]> = new Array(); // standalone form sequences
 }
 
 export class Client {
@@ -33,7 +33,7 @@ export class Client {
     let ta: TokenAnalysis = new TokenAnalysis();
     if (str) {
       const ka = kanaLemmatizationAnalyzer;
-      const morphemes: KanaUncombiningMorpheme[] = ka.morphAnalyze(str);
+      const morphemes: KanaStandaloneMorpheme[] = ka.morphAnalyze(str);
       ta.blockSequences = getKanaBlocks(morphemes);
 
       for (const m of morphemes) {
@@ -61,7 +61,7 @@ export class Client {
       for (const m of morphemes) {
         ta.soundSequences.push(m.sounds);
         // TODO: first free tone to fourth. first checked tone to eighth
-        ta.uncombiningSequences.push(m.getForms().map((it) => it.literal));
+        ta.standaloneSequences.push(m.getForms().map((it) => it.literal));
       }
     }
 

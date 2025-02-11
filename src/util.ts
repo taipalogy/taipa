@@ -64,7 +64,7 @@ export function analyzeIntoSequence(input: string) {
   return pairs;
 }
 
-/** Get the uncombining forms of a syllable. */
+/** Get the standalone forms of a syllable. */
 export function getStandaloneForms(syl: string) {
   if (!syl) return [];
   const cli = new Client();

@@ -13,7 +13,7 @@ import {
   KanaLetterTags,
   otherKanas,
 } from './kanares';
-import { KanaUncombiningMorpheme } from './morpheme';
+import { KanaStandaloneMorpheme } from './morpheme';
 
 export function checkNumberOfLettersKana() {
   if (kanaPositionalSounds.size !== lowerLettersKana.size) {
@@ -65,7 +65,7 @@ function lookUpOtherKanas(str: string) {
   }
 }
 
-export function getKanaBlocks(morphemes: KanaUncombiningMorpheme[]): string[] {
+export function getKanaBlocks(morphemes: KanaStandaloneMorpheme[]): string[] {
   // string one is hiragana, string two is katakana, string three is chouon
   const kanaSequences: string[] = [];
   kanaSequences[0] = '';

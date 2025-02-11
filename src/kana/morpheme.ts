@@ -18,7 +18,7 @@ import { KanaCombiningMetaplasm } from '../metaplasm';
 export class KanaSyllable extends Syllable {}
 
 /** A syllable. */
-export class KanaUncombiningMorpheme extends Morpheme {
+export class KanaStandaloneMorpheme extends Morpheme {
   syllable: KanaSyllable;
   sounds: Array<Sound>;
 
@@ -266,7 +266,7 @@ function syllabifyKana(
   return mp;
 }
 
-export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
+export class KanaStandaloneMorphemeMaker extends MorphemeMaker {
   private metaplasm: KanaCombiningMetaplasm;
 
   constructor(kcm: KanaCombiningMetaplasm) {
@@ -275,11 +275,11 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
   }
 
   protected createArray() {
-    return new Array<KanaUncombiningMorpheme>();
+    return new Array<KanaStandaloneMorpheme>();
   }
 
   protected createMorpheme(msp: MatchedPattern) {
-    return new KanaUncombiningMorpheme(
+    return new KanaStandaloneMorpheme(
       new KanaSyllable(msp.letters),
       msp.pattern,
       this.metaplasm
@@ -288,7 +288,7 @@ export class KanaUncombiningMorphemeMaker extends MorphemeMaker {
 
   protected postprocess(
     patterns: MatchedPattern[]
-  ): Array<KanaUncombiningMorpheme> {
+  ): Array<KanaStandaloneMorpheme> {
     let morphemes = this.createArray();
     for (let i in patterns) {
       morphemes.push(this.createMorpheme(patterns[i]));
