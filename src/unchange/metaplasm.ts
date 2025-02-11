@@ -482,8 +482,8 @@ export class TransfixStandalone extends TonalStandaloneMetaplasm {
   }
 }
 
-/** Change ~ietf or ietw to ~ik or ~ikk. */
-export class StandaloneFormsIetfIetwToIkIkk extends TonalStandaloneMetaplasm {
+/** Change ~ietf or ietw to ~ek or ~ekk. */
+export class StandaloneFormsIetfIetwToEkEkk extends TonalStandaloneMetaplasm {
   apply(sounds: Array<Sound>, allomorph: Allomorph): TonalSyllable[] {
     if (allomorph) {
       const ics = sounds.filter(
@@ -495,7 +495,7 @@ export class StandaloneFormsIetfIetwToIkIkk extends TonalStandaloneMetaplasm {
           // in case of ~ietf
           const s: TonalSyllable = new TonalSyllable([
             new AlphabeticLetter(ics[0].characters),
-            lowerLettersTonal.get(TonalLetterTags.i),
+            lowerLettersTonal.get(TonalLetterTags.e),
             lowerLettersTonal.get(TonalLetterTags.k),
           ]);
           return [s];
@@ -503,7 +503,7 @@ export class StandaloneFormsIetfIetwToIkIkk extends TonalStandaloneMetaplasm {
           // in case of ~ietw
           const s: TonalSyllable = new TonalSyllable([
             new AlphabeticLetter(ics[0].characters),
-            lowerLettersTonal.get(TonalLetterTags.i),
+            lowerLettersTonal.get(TonalLetterTags.e),
             lowerLettersTonal.get(TonalLetterTags.kk),
           ]);
           return [s];

@@ -160,13 +160,13 @@ describe('Lemma testing, voiced final consonant followed by ay', () => {
   });
 });
 
-describe('Standalone form testing, ietf or ietw to ik or ikk', () => {
+describe('Standalone form testing, ietf or ietw to ek or ekk', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze(
     'pietfkew',
     new TonalStandaloneForms([])
   );
   test('check the standalone form, changed rime', () => {
-    expect(ms1[0].getForms()[1].literal).toEqual('pik');
+    expect(ms1[0].getForms()[1].literal).toEqual('pek');
   });
 
   const ms2 = tonalLemmatizationAnalyzer.morphAnalyze(
@@ -174,7 +174,7 @@ describe('Standalone form testing, ietf or ietw to ik or ikk', () => {
     new TonalStandaloneForms([])
   );
   test('check the standalone form, changed rime', () => {
-    expect(ms2[0].getForms()[1].literal).toEqual('pikk');
+    expect(ms2[0].getForms()[1].literal).toEqual('pekk');
   });
 
   const ms3 = tonalLemmatizationAnalyzer.morphAnalyze(
@@ -188,11 +188,11 @@ describe('Standalone form testing, ietf or ietw to ik or ikk', () => {
 
 describe('Standalone form testing', () => {
   const ms1 = tonalLemmatizationAnalyzer.morphAnalyze(
-    'tikwting',
+    'tekwting',
     new TonalStandaloneForms([])
   );
-  test('check the standalone form, tikw to tikk, changed rime', () => {
-    expect(ms1[0].getForms()[0].literal).toEqual('tikk');
+  test('check the standalone form, tekw to tekk, changed rime', () => {
+    expect(ms1[0].getForms()[0].literal).toEqual('tekk');
   });
 });
 

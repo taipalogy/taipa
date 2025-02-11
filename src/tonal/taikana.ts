@@ -136,17 +136,17 @@ export function composeTaiKana(morphemes: TonalStandaloneMorpheme[]) {
     const nslz = morphemes[i].sounds.filter(
       (it) => it.name === TonalSpellingTags.nasalization
     );
-    const finalsForIToKanaIE = stpFnl
+    const finalsForEToKanaIe = stpFnl
       .filter(
         (it) =>
           it.name === TonalSpellingTags.stopFinalConsonant &&
-          finalsForIKigikkigging.includes(it.toString())
+          finalsForEkIgEkkIggIng.includes(it.toString())
       )
       .concat(
         nslFnl.filter(
           (it) =>
             it.name === TonalSpellingTags.nasalFinalConsonant &&
-            finalsForIKigikkigging.includes(it.toString())
+            finalsForEkIgEkkIggIng.includes(it.toString())
         )
       );
 
@@ -227,14 +227,20 @@ export function composeTaiKana(morphemes: TonalStandaloneMorpheme[]) {
               ) {
                 kanas[i] += getSmallKanaVowel(mdls[j].toString());
               } else if (
-                mdls[j].toString() === TonalLetterTags.i &&
+                mdls[j].toString() === TonalLetterTags.e &&
                 mdls.length == 1 &&
                 nslz.length == 0 &&
                 stpFnl.length == 1 &&
-                finalsForIToKanaIE.length == 1 &&
+                finalsForEToKanaIe.length == 1 &&
                 !neutralFinalConsonantsTonal.includes(stpFnl[0].toString())
               ) {
-                // in case of syllables -ik and -ikk with an initial.
+                // replace initial syllabogram
+                // remove initial syllabogram which has vowel e
+                kanas[i] = '';
+                // add initial syllabogram which has vowel i
+                const kn = handleCombiningDotBelowOverline(initl[0].toString(), TonalLetterTags.i);
+                if (kn) kanas[i] += kn;
+                // in case of syllables -ek and -ekk with an initial.
                 // an extra small kana e will be appended
                 kanas[i] += getSmallKanaVowel(TonalLetterTags.e);
                 // console.log('medials>' + mdls + ', finals>' + stpFnl + ', ' + kanas);
@@ -277,15 +283,16 @@ export function composeTaiKana(morphemes: TonalStandaloneMorpheme[]) {
               // get small kana for 3rd vowel
               kanas[i] += getSmallKanaVowel(mdls[j].toString());
             } else if (
-              mdls[j].toString() === TonalLetterTags.i &&
+              mdls[j].toString() === TonalLetterTags.e &&
               mdls.length == 1 &&
               nslz.length == 0 &&
               stpFnl.length == 1 &&
-              finalsForIToKanaIE.length == 1
+              finalsForEToKanaIe.length == 1
             ) {
-              // in case of syllables ik and ikk without an initial
+              // initial syllabogram
               const kn = hiraganaKatakana.get(TonalLetterTags.i);
               if (kn) kanas[i] += kn[1];
+              // in case of syllables ek and ekk without an initial
               // an extra small kana e will be appended
               kanas[i] += getSmallKanaVowel(TonalLetterTags.e);
               // console.log('medials>' + mdls + ', finals>' + stpFnl + ', ' + kanas);
@@ -672,7 +679,7 @@ const mappingNasalization = new Map<string, string>()
   .set(TonalLetterTags.p + TonalLetterTags.e, '㋬' + '\u{309a}') // ㋬゚
   .set(TonalLetterTags.p + TonalLetterTags.o, '㋭' + '\u{309a}'); // ㋭゚
 
-const finalsForIKigikkigging = [
+const finalsForEkIgEkkIggIng = [
   TonalLetterTags.k.toString(),
   TonalLetterTags.g.toString(),
   TonalLetterTags.kk.toString(),

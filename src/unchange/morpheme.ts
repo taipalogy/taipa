@@ -27,9 +27,10 @@ import {
   smJsW,
   smBgkpWx,
   smMngFywxz,
-  smIK,
+  smEk,
   smVowelMng,
   smLWx,
+  smIk,
 } from './matcher';
 import {
   epentheticLetters,
@@ -45,7 +46,7 @@ import {
   PrecedingExStandalone,
   TonalStandaloneForms,
   TransfixStandalone,
-  StandaloneFormsIetfIetwToIkIkk,
+  StandaloneFormsIetfIetwToEkEkk,
 } from './metaplasm';
 import {
   TonalCombiningMetaplasm,
@@ -244,8 +245,8 @@ export function syllabifyTonal(
             Object.assign(matchedLtrs, ltrs);
           }
         }
-      } else if (smIK(ltrs[ltrs.length - 2], ltrs[ltrs.length - 1])) {
-        // match for -ik
+      } else if (smEk(ltrs[ltrs.length - 2], ltrs[ltrs.length - 1]) || smIk(ltrs[ltrs.length - 2], ltrs[ltrs.length - 1])) {
+        // match for -ek or -ik
         matched = literal;
         Object.assign(matchedLtrs, ltrs);
       } else if (smVowelMng(ltrs[ltrs.length - 2], ltrs[ltrs.length - 1])) {
@@ -644,8 +645,8 @@ export class TonalStandaloneMorphemeMaker extends MorphemeMaker {
     return false;
   }
 
-  /** Check if ~ik or ~ikk available for the ~iet syllable. */
-  private isIKIkkAvailableRimeIet(syllables: MatchedPattern[]) {
+  /** Check if ~ek or ~ekk available for the ~iet syllable. */
+  private isEkEkkAvailableForRimeIet(syllables: MatchedPattern[]) {
     if (syllables.length >= 2) {
       const vs = syllables[syllables.length - 2].pattern.filter(
         (i) => i.name === TonalSpellingTags.vowel
@@ -750,10 +751,10 @@ export class TonalStandaloneMorphemeMaker extends MorphemeMaker {
           // the metaplasm argument would be either TonalUncombiningForms or PhrasalVerbParticleUncombining
           morphemes.push(this.createMorpheme(ptn, this.metaplasm));
         }
-        if (this.isIKIkkAvailableRimeIet(matched) && i < matched.length - 1) {
+        if (this.isEkEkkAvailableForRimeIet(matched) && i < matched.length - 1) {
           const forms = this.createMorpheme(
             ptn,
-            new StandaloneFormsIetfIetwToIkIkk()
+            new StandaloneFormsIetfIetwToEkEkk()
           ).getForms();
           if (forms && forms.length == 1) {
             morphemes[i].addForms(forms);

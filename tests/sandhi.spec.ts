@@ -90,26 +90,26 @@ describe('Reduplication testing', () => {
 describe('Voiced final consonant testing', () => {
   const cli = new Client();
 
-  const ta = cli.processTonal('tig');
-  test('check if it handles sandhi final consonants', () => {
+  const ta = cli.processTonal('teg');
+  test('check if it handles sandhi final consonants, teg as in tegfay', () => {
     expect(ta.soundSequences[0].map((it) => it.toString()).join('')).toEqual(
-      'tig'
+      'teg'
     );
   });
 });
 
-describe('-ik ending testing', () => {
+describe('-ik combining form testing', () => {
   const cli = new Client();
 
   const ta1 = cli.processTonal('tik');
-  test('check if it handles sandhi rime, tik of tikw, tikw of tikk', () => {
+  test('check if it handles combining form, tik as in tikw, tikw is the combining form of titt', () => {
     expect(ta1.soundSequences[0].map((it) => it.toString()).join('')).toEqual(
       'tik'
     );
   });
 
   const ta2 = cli.processTonal('chik');
-  test('check if it handles sandhi final consonants, chik of chikf, chikf of chit', () => {
+  test('check if it handles combining form, chik as in chikf, chikf is the combining form of chit', () => {
     expect(ta2.soundSequences[0].map((it) => it.toString()).join('')).toEqual(
       'chik'
     );

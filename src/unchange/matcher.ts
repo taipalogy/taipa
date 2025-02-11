@@ -137,8 +137,16 @@ export const smVowelMng = function (medial: string, finalMng: string) {
   return false;
 };
 
+// -ek
+export const smEk = function (medialE: string, medialK: string) {
+  if (medialE === TonalLetterTags.e && medialK === TonalLetterTags.k)
+    return true;
+
+  return false;
+};
+
 // -ik
-export const smIK = function (medialI: string, medialK: string) {
+export const smIk = function (medialI: string, medialK: string) {
   if (medialI === TonalLetterTags.i && medialK === TonalLetterTags.k)
     return true;
 
