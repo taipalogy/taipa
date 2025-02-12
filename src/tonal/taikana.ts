@@ -599,7 +599,7 @@ const mappingLettersToPseudoEncoding = new Map()
 
 const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.p, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
-  .set(TonalLetterTags.t, kogakimoji.get(KanaLetterTags.ch + KanaLetterTags.u))
+  .set(TonalLetterTags.t, kogakimoji.get(KanaLetterTags.ts + KanaLetterTags.u))
   .set(TonalLetterTags.k, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u))
   .set(TonalLetterTags.b, otherKanas.get(KanaLetterTags.b + KanaLetterTags.u))
   .set(TonalLetterTags.g, otherKanas.get(KanaLetterTags.g + KanaLetterTags.u))
@@ -607,7 +607,7 @@ const mappingStopFinal = new Map<string, string[] | undefined>()
   .set(TonalLetterTags.l, otherKanas.get(KanaLetterTags.r + KanaLetterTags.u))
   .set(TonalLetterTags.s, otherKanas.get(KanaLetterTags.s + KanaLetterTags.u))
   .set(TonalLetterTags.pp, otherKanas.get(KanaLetterTags.p + KanaLetterTags.u))
-  .set(TonalLetterTags.tt, kogakimoji.get(KanaLetterTags.ch + KanaLetterTags.u))
+  .set(TonalLetterTags.tt, kogakimoji.get(KanaLetterTags.ts + KanaLetterTags.u))
   .set(TonalLetterTags.kk, otherKanas.get(KanaLetterTags.k + KanaLetterTags.u))
   .set(TonalLetterTags.bb, otherKanas.get(KanaLetterTags.b + KanaLetterTags.u))
   .set(TonalLetterTags.gg, otherKanas.get(KanaLetterTags.g + KanaLetterTags.u))
@@ -764,15 +764,15 @@ const mappingInitialC = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.ng,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   )
   .set(
     TonalLetterTags.ir,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   )
   .set(
     TonalLetterTags.m,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   );
 
 const mappingInitialG = new Map<string, string[] | undefined>()
@@ -1111,11 +1111,11 @@ const mappingInitialT = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.ng,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   )
   .set(
     TonalLetterTags.ir,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   )
   .set(
     TonalLetterTags.ur,

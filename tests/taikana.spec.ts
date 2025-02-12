@@ -506,6 +506,16 @@ describe('Taiwanese kana testing, initials', () => {
   test('taikanas, ト̣オ', () => {
     expect(ta20.blockSequences[0]).toEqual('ト' + '\u0323' + 'オ');
   });
+
+  const ta21 = cli.processTonal('chng');
+  test('taikanas, fetch tsu from kana', () => {
+    expect(ta21.blockSequences[0]).toEqual('ツン');
+  });
+
+  const ta22 = cli.processTonal('tngy');
+  test('taikanas, fetch tsu from kana', () => {
+    expect(ta22.blockSequences[0]).toEqual('ツ̅ン⎛');
+  });
 });
 
 describe('Taiwanese kana testing, neutral finals', () => {
@@ -556,6 +566,20 @@ describe('Taiwanese kana testing, neutral finals', () => {
     expect(ta9.blockSequences[0]).toEqual('㋓ェ⤆');
   });
   */
+});
+
+describe('Taiwanese kana testing, stop finals', () => {
+  const cli = new Client();
+
+  const ta1 = cli.processTonal('chut');
+  test('taikanas, fetch tsu from kana', () => {
+    expect(ta1.blockSequences[0]).toEqual('ツッ⤆');
+  });
+
+  const ta2 = cli.processTonal('chutt');
+  test('taikanas, fetch tsu from kana', () => {
+    expect(ta2.blockSequences[0]).toEqual('ツッ⤇');
+  });
 });
 
 describe('Taiwanese kana testing, sandhi final', () => {
