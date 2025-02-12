@@ -756,7 +756,7 @@ const mappingInitialC = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.u,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   )
   .set(
     TonalLetterTags.ur,
@@ -1057,7 +1057,7 @@ const mappingInitialS = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.i,
-    hiraganaKatakana.get(KanaLetterTags.s + KanaLetterTags.i)
+    hiraganaKatakana.get(KanaLetterTags.sh + KanaLetterTags.i)
   )
   .set(
     TonalLetterTags.o,
@@ -1107,7 +1107,7 @@ const mappingInitialT = new Map<string, string[] | undefined>()
   )
   .set(
     TonalLetterTags.u,
-    hiraganaKatakana.get(KanaLetterTags.ch + KanaLetterTags.u)
+    hiraganaKatakana.get(KanaLetterTags.ts + KanaLetterTags.u)
   )
   .set(
     TonalLetterTags.ng,

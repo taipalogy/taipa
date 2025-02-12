@@ -85,13 +85,13 @@ describe('Kana testing', () => {
     expect(ta13.blockSequences[1]).toEqual('ワヰヱヲ');
   });
 
-  const ta14 = cli.processKana('mitchu');
+  const ta14 = cli.processKana('mittsu');
   test('kanas', () => {
     expect(ta14.blockSequences[0]).toEqual('みっつ');
     expect(ta14.blockSequences[1]).toEqual('ミッツ');
   });
 
-  const ta15 = cli.processKana('tchu');
+  const ta15 = cli.processKana('ttsu');
   test('kanas', () => {
     expect(ta15.blockSequences[0]).toEqual('っつ');
     expect(ta15.blockSequences[1]).toEqual('ッツ');
@@ -127,7 +127,7 @@ describe('Kana testing', () => {
     expect(ta20.blockSequences[1]).toEqual('ラッ');
   });
 
-  const ta21 = cli.processKana('sit');
+  const ta21 = cli.processKana('shit');
   test('kanas', () => {
     expect(ta21.blockSequences[0]).toEqual('しっ');
     expect(ta21.blockSequences[1]).toEqual('シッ');

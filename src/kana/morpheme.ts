@@ -3,7 +3,7 @@ import { Syllable, MatchedPattern, Morpheme } from '../unit';
 import { MorphemeMaker } from '../maker';
 import {
   hiraganaKatakana,
-  gailaigo,
+  gairaigo,
   initialConsonantsKana,
   vowelsKana,
   semivowelsKana,
@@ -47,7 +47,7 @@ function syllabifyKana(
   for (let i = beginOfSyllable; i < letters.length; i++) {
     literal = literal + letters[i].literal;
     ltrs.push(letters[i].literal);
-    if (hiraganaKatakana.has(literal) || gailaigo.has(literal)) {
+    if (hiraganaKatakana.has(literal) || gairaigo.has(literal)) {
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
       if (i + 1 < letters.length) lookAhead = letters[i + 1].literal; // look-ahead
@@ -62,11 +62,11 @@ function syllabifyKana(
     } else if (
       ltrs.length == 3 &&
       (ltrs[0] === ltrs[1] ||
-        (ltrs[0] === KanaLetterTags.t && ltrs[1] === KanaLetterTags.ch)) &&
+        (ltrs[0] === KanaLetterTags.t && ltrs[1] === KanaLetterTags.ts)) &&
       vowelsKana.includes(ltrs[2])
     ) {
       // initial sokuon. e.g. ggu, kku, ppa, etc.
-      // when a final t followed by an initial ch
+      // when a final t followed by an initial ts
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
       lookAhead = '';

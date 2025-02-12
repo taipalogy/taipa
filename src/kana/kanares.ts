@@ -27,11 +27,13 @@ export enum KanaLetterTags {
   m = 'm',
   r = 'r',
   s = 's',
+  sh = 'sh',
   v = 'v',
 
   z = 'z',
   p = 'p',
   t = 't',
+  ts = 'ts',
 
   w = 'w',
   y = 'y',
@@ -91,10 +93,12 @@ export const lowerLettersKana = new LettersOfKana([
   KanaLetterTags.m,
   KanaLetterTags.r,
   KanaLetterTags.s,
+  KanaLetterTags.sh,
   KanaLetterTags.v,
   KanaLetterTags.z,
   KanaLetterTags.p,
   KanaLetterTags.t,
+  KanaLetterTags.ts,
   KanaLetterTags.w,
   KanaLetterTags.y,
   KanaLetterTags.n,
@@ -170,8 +174,14 @@ class InitialConsonantR extends InitialConsonant {
 class InitialConsonantS extends InitialConsonant {
   characters = this.makeCharacters(KanaLetterTags.s);
 }
+class InitialConsonantSH extends InitialConsonant {
+  characters = this.makeCharacters(KanaLetterTags.sh);
+}
 class InitialConsonantT extends InitialConsonant {
   characters = this.makeCharacters(KanaLetterTags.t);
+}
+class InitialConsonantTS extends InitialConsonant {
+  characters = this.makeCharacters(KanaLetterTags.ts);
 }
 class InitialConsonantV extends InitialConsonant {
   characters = this.makeCharacters(KanaLetterTags.v);
@@ -272,7 +282,9 @@ export const initialConsonantsKana = soundSequence([
   new InitialConsonantP(),
   new InitialConsonantR(),
   new InitialConsonantS(),
+  new InitialConsonantSH(),
   new InitialConsonantT(),
+  new InitialConsonantTS(),
   new InitialConsonantV(),
   new InitialConsonantW(),
   new InitialConsonantY(),
@@ -367,11 +379,13 @@ const psS = positionalSounds([
   new FinalConsonantS(),
   new GeminatedConsonantS(),
 ]);
+const psSH = positionalSounds([new InitialConsonantSH()]);
 const psT = positionalSounds([
   new InitialConsonantT(),
   new FinalConsonantT(),
   new GeminatedConsonantT(),
 ]);
+const psTS = positionalSounds([new InitialConsonantTS()]);
 const psU = positionalSounds([new VowelU()]);
 const psV = positionalSounds([new InitialConsonantV()]);
 const psW = positionalSounds([new InitialConsonantW(), new SemivowelW()]);
@@ -401,7 +415,9 @@ export const kanaPositionalSounds = new Map<
   .set(KanaLetterTags.p, psP)
   .set(KanaLetterTags.r, psR)
   .set(KanaLetterTags.s, psS)
+  .set(KanaLetterTags.sh, psSH)
   .set(KanaLetterTags.t, psT)
+  .set(KanaLetterTags.ts, psTS)
   .set(KanaLetterTags.u, psU)
   .set(KanaLetterTags.v, psV)
   .set(KanaLetterTags.w, psW)
@@ -409,7 +425,7 @@ export const kanaPositionalSounds = new Map<
   .set(KanaLetterTags.z, psZ);
 
 export const kogakimoji = new Map<string, Array<string>>().set(
-  KanaLetterTags.ch + KanaLetterTags.u,
+  KanaLetterTags.ts + KanaLetterTags.u,
   ['っ', 'ッ']
 );
 
@@ -469,13 +485,13 @@ export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.k + KanaLetterTags.e, ['け', 'ケ'])
   .set(KanaLetterTags.k + KanaLetterTags.o, ['こ', 'コ'])
   .set(KanaLetterTags.s + KanaLetterTags.a, ['さ', 'サ'])
-  .set(KanaLetterTags.s + KanaLetterTags.i, ['し', 'シ'])
+  .set(KanaLetterTags.sh + KanaLetterTags.i, ['し', 'シ'])
   .set(KanaLetterTags.s + KanaLetterTags.u, ['す', 'ス'])
   .set(KanaLetterTags.s + KanaLetterTags.e, ['せ', 'セ'])
   .set(KanaLetterTags.s + KanaLetterTags.o, ['そ', 'ソ'])
   .set(KanaLetterTags.t + KanaLetterTags.a, ['た', 'タ'])
   .set(KanaLetterTags.ch + KanaLetterTags.i, ['ち', 'チ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.u, ['つ', 'ツ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.u, ['つ', 'ツ'])
   .set(KanaLetterTags.t + KanaLetterTags.e, ['て', 'テ'])
   .set(KanaLetterTags.t + KanaLetterTags.o, ['と', 'ト'])
   .set(KanaLetterTags.n + KanaLetterTags.a, ['な', 'ナ'])
@@ -531,18 +547,23 @@ export const hiraganaKatakana = new Map<string, Array<string>>()
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.a, ['きゃ', 'キャ'])
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.u, ['きゅ', 'キュ'])
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.o, ['きょ', 'キョ'])
-  .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.a, ['しゃ', 'シャ'])
-  .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.u, ['しゅ', 'シュ'])
-  .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.o, ['しょ', 'ショ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.a, [
+  .set(KanaLetterTags.sh + KanaLetterTags.a, ['しゃ', 'シャ'])
+  .set(KanaLetterTags.sh + KanaLetterTags.u, ['しゅ', 'シュ'])
+  .set(KanaLetterTags.sh + KanaLetterTags.e, ['しぇ', 'シェ'])
+  .set(KanaLetterTags.sh + KanaLetterTags.o, ['しょ', 'ショ'])
+  .set(KanaLetterTags.ch + KanaLetterTags.a, [
     'ちゃ',
     'チャ',
   ])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.u, [
+  .set(KanaLetterTags.ch + KanaLetterTags.u, [
     'ちゅ',
     'チュ',
   ])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.o, [
+  .set(KanaLetterTags.ch + KanaLetterTags.e, [
+    'ちぇ',
+    'チェ',
+  ])
+  .set(KanaLetterTags.ch + KanaLetterTags.o, [
     'ちょ',
     'チョ',
   ])
@@ -583,9 +604,8 @@ export const hiraganaKatakana = new Map<string, Array<string>>()
     'ピョ',
   ]);
 
-export const gailaigo = new Map<string, Array<string>>()
+export const gairaigo = new Map<string, Array<string>>()
   .set(KanaLetterTags.s + KanaLetterTags.i, ['', 'スィ'])
-  .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.e, ['', 'シェ'])
   .set(KanaLetterTags.z + KanaLetterTags.i, ['', 'ズィ'])
   .set(KanaLetterTags.j + KanaLetterTags.e, ['', 'ジェ'])
   .set(KanaLetterTags.j + KanaLetterTags.w + KanaLetterTags.a, ['', 'ジュァ'])
@@ -594,16 +614,15 @@ export const gailaigo = new Map<string, Array<string>>()
   .set(KanaLetterTags.j + KanaLetterTags.w + KanaLetterTags.o, ['', 'ジュォ'])
   .set(KanaLetterTags.t + KanaLetterTags.i, ['', 'ティ'])
   .set(KanaLetterTags.t + KanaLetterTags.u, ['', 'トゥ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.e, ['', 'チェ'])
   .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.e, ['', 'ヂェ'])
   .set(KanaLetterTags.ch + KanaLetterTags.w + KanaLetterTags.a, ['', 'チュァ'])
   .set(KanaLetterTags.ch + KanaLetterTags.w + KanaLetterTags.i, ['', 'チュィ'])
   .set(KanaLetterTags.ch + KanaLetterTags.w + KanaLetterTags.e, ['', 'チュェ'])
   .set(KanaLetterTags.ch + KanaLetterTags.w + KanaLetterTags.o, ['', 'チュォ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.a, ['', 'ツァ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.i, ['', 'ツィ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.e, ['', 'ツェ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.o, ['', 'ツォ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.a, ['', 'ツァ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.i, ['', 'ツィ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.e, ['', 'ツェ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.o, ['', 'ツォ'])
   .set(KanaLetterTags.d + KanaLetterTags.i, ['', 'ディ'])
   .set(KanaLetterTags.d + KanaLetterTags.u, ['', 'ドゥ'])
   .set(KanaLetterTags.f + KanaLetterTags.a, ['', 'ファ'])
@@ -722,10 +741,10 @@ export const special = new Map<string, Array<string>>()
   .set(KanaLetterTags.ng + KanaLetterTags.o, ['', 'コ゚'])
   .set(KanaLetterTags.s + KanaLetterTags.i, ['', 'セィ'])
   .set(KanaLetterTags.z + KanaLetterTags.i, ['', 'ゼィ'])
-  .set(KanaLetterTags.s + KanaLetterTags.y + KanaLetterTags.i, ['', 'シィ'])
+  .set(KanaLetterTags.sh + KanaLetterTags.i, ['', 'シィ'])
   .set(KanaLetterTags.j + KanaLetterTags.i, ['', 'ジィ'])
   .set(KanaLetterTags.ch + KanaLetterTags.i, ['', 'チィ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.u, ['', 'ツゥ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.u, ['', 'ツゥ'])
   .set(KanaLetterTags.j + KanaLetterTags.y + KanaLetterTags.i, ['', 'ヂィ'])
   .set(KanaLetterTags.h + KanaLetterTags.u, ['', 'ホゥ'])
   .set(KanaLetterTags.f + KanaLetterTags.u, ['', 'フゥ'])
@@ -746,9 +765,9 @@ export const specialY = new Map<string, Array<string>>()
   .set(KanaLetterTags.ng + KanaLetterTags.y + KanaLetterTags.u, ['', 'キ゚ュ'])
   .set(KanaLetterTags.ng + KanaLetterTags.y + KanaLetterTags.o, ['', 'キ゚ョ'])
   .set(KanaLetterTags.t + KanaLetterTags.y + KanaLetterTags.e, ['', 'テェ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.a, ['', 'ツャ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.u, ['', 'ツュ'])
-  .set(KanaLetterTags.ch + KanaLetterTags.y + KanaLetterTags.o, ['', 'ツョ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.y + KanaLetterTags.a, ['', 'ツャ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.y + KanaLetterTags.u, ['', 'ツュ'])
+  .set(KanaLetterTags.ts + KanaLetterTags.y + KanaLetterTags.o, ['', 'ツョ'])
   .set(KanaLetterTags.b + KanaLetterTags.y + KanaLetterTags.i, ['', 'ビィ'])
   .set(KanaLetterTags.p + KanaLetterTags.y + KanaLetterTags.i, ['', 'ピィ'])
   .set(KanaLetterTags.l + KanaLetterTags.y + KanaLetterTags.a, ['', 'リ゚ャ'])
