@@ -4,7 +4,9 @@
   "description": "Taiwanese morphological parsing library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "bin": "bin/app.js",
+  "bin": {
+    "taipa": "bin/app.js"
+  },
   "scripts": {
     "build": "tsc --outDir lib",
     "test": "jest --env=node --colors --coverage test",
