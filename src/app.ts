@@ -12,12 +12,12 @@ import * as fs from 'fs';
 const stdin = process.openStdin();
 
 // process.argv.forEach(function (val, index, array) {
-//   console.log(index + ': ' + val);
+//   console.debug(index + ': ' + val);
 // });
 
 if (process.argv.length == 3) {
   if (!fs.existsSync(process.argv[2])) {
-    console.log('File not found');
+    console.debug('File not found');
   }
 }
 
@@ -30,10 +30,10 @@ stdin.addListener('data', function (d) {
       .flatMap((v) => {
         return v;
       })
-      .map((v) => console.log(v.toString() + ' - ' + v.name));
+      .map((v) => console.info(v.toString() + ' - ' + v.name));
   } else if (process.argv.length == 3) {
     if (!fs.existsSync(process.argv[2])) {
-      console.log('File not found');
+      console.debug('File not found');
     } else {
       const input = d.toString().trim();
       let fileContents = '';
@@ -41,15 +41,15 @@ stdin.addListener('data', function (d) {
       fileContents = fs.readFileSync(process.argv[2], 'utf-8');
       const dict = JSON.parse(fileContents) || {};
       const keys = Object.keys(dict);
-      // console.info(keys)
+      // console.debug(keys)
       for (const key of keys) {
         if (key.slice(0, input.length) === input) {
-          // console.log(key,key.slice(0, input.length), input);
+          // console.debug(key,key.slice(0, input.length), input);
           const arr: [] = dict[key];
           const chrs = arr.join(',');
           console.info(chrs);
           // for(const chr of arr)
-          // console.log(chr)
+          // console.debug(chr)
         }
       }
     }
