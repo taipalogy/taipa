@@ -78,6 +78,7 @@ export function getKanaBlocks(morphemes: KanaStandaloneMorpheme[]): string[] {
 
   for (const m of morphemes) {
     const ks = lookUp(m.syllable.literal);
+
     if (ks != undefined && ks[0] != undefined) {
       // in case the kana is absent, we check against ks[0]
       kanaSequences[0] += ks[0];

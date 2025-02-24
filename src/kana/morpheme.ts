@@ -41,7 +41,7 @@ function syllabifyKana(
   let literal = '';
   let matched = '';
   let lookAhead = '';
-  let ltrs: Array<string> = new Array();
+  const ltrs: Array<string> = new Array();
   let matchedLtrs: Array<string> = new Array();
 
   for (let i = beginOfSyllable; i < letters.length; i++) {
@@ -50,7 +50,8 @@ function syllabifyKana(
     if (hiraganaKatakana.has(literal) || gairaigo.has(literal)) {
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
-      if (i + 1 < letters.length) lookAhead = letters[i + 1].literal; // look-ahead
+      // look-ahead
+      if (i + 1 < letters.length) lookAhead = letters[i + 1].literal;
     } else if (
       literal.length == 3 &&
       letters[0].literal === KanaLetterTags.ng &&
@@ -63,13 +64,17 @@ function syllabifyKana(
       ltrs.length == 3 &&
       (ltrs[0] === ltrs[1] ||
         (ltrs[0] === KanaLetterTags.t && ltrs[1] === KanaLetterTags.ts)) &&
-      vowelsKana.includes(ltrs[2])
+      vowelsKana.includes(ltrs[2]) && !vowelsKana.includes(ltrs[0])
     ) {
-      // initial sokuon. e.g. ggu, kku, ppa, etc.
-      // when a final t followed by an initial ts
+      // Initial sokuon. e.g. ggu, kku, ppa, etc.
+      // When a final t followed by an initial ts.
+      // In addition to that, the first two letters are not vowels.
+      // Given that the condition is the first two letters should be the same,
+      // we check out if the first letter is not a vowel.
       matched = literal;
       Object.assign(matchedLtrs, ltrs);
       lookAhead = '';
+      // console.debug(">>>GOT<<<, ltrs:", ltrs, "matchedLtrs:", matchedLtrs)
     } else if (
       finalConsonantsKana.includes(lookAhead) &&
       i + 1 == letters.length
@@ -121,15 +126,15 @@ function syllabifyKana(
 
   let list: Array<Sound[]> = new Array();
   if (matched.length > 0) {
-    // console.log(matchedLtrs, lookAhead);
+    // console.debug("matchedLtrs:", matchedLtrs.join('-'), "lookAhead:", lookAhead);
     const ksg = new KanaSoundGenerator();
     list = ksg.generate(matchedLtrs, lookAhead);
-    // console.log(list);
+    // console.debug(list);
   }
 
-  let arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
+  const arraysOfLetters: Array<AlphabeticLetter[]> = new Array();
 
-  let mp = new MatchedPattern();
+  const mp = new MatchedPattern();
   let sounds = new Array<Sound>();
 
   for (let m in list) {
@@ -289,7 +294,7 @@ export class KanaStandaloneMorphemeMaker extends MorphemeMaker {
   protected postprocess(
     patterns: MatchedPattern[]
   ): Array<KanaStandaloneMorpheme> {
-    let morphemes = this.createArray();
+    const morphemes = this.createArray();
     for (let i in patterns) {
       morphemes.push(this.createMorpheme(patterns[i]));
     }

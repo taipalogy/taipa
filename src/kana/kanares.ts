@@ -641,7 +641,7 @@ export const gairaigo = new Map<string, Array<string>>()
   .set(KanaLetterTags.v + KanaLetterTags.e, ['', 'ヴェ'])
   .set(KanaLetterTags.v + KanaLetterTags.o, ['', 'ヴォ']);
 
-export const gailaigoY = new Map<string, Array<string>>()
+export const gairaigoY = new Map<string, Array<string>>()
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.i, ['', 'キィ'])
   .set(KanaLetterTags.k + KanaLetterTags.y + KanaLetterTags.e, ['', 'キェ'])
   .set(KanaLetterTags.g + KanaLetterTags.y + KanaLetterTags.i, ['', 'ギィ'])
@@ -688,7 +688,7 @@ export const gailaigoY = new Map<string, Array<string>>()
   .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.e, ['', 'ヴィェ'])
   .set(KanaLetterTags.v + KanaLetterTags.y + KanaLetterTags.o, ['', 'ヴョ']);
 
-export const gailaigoW = new Map<string, Array<string>>()
+export const gairaigoW = new Map<string, Array<string>>()
   .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.a, ['', 'クァ'])
   .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.i, ['', 'クィ'])
   .set(KanaLetterTags.k + KanaLetterTags.w + KanaLetterTags.u, ['', 'クゥ'])
